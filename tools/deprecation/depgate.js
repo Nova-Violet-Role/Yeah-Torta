@@ -20,6 +20,7 @@
 // Counts are per key because a symbol legitimately appears several times in one file (NetworkInfo
 // occurs 4x in the legacy broadcast handler).
 const fs = require("fs");
+const { parseWarningLine, keyOf } = require(__dirname + "/parse.js");
 const path = require("path");
 
 const MODE = process.argv[2];                    // "check" | "write"
@@ -70,18 +71,21 @@ function isGated(file, line, depth, seen) {
 const observed = {};
 let unresolved = 0, total = 0, gated = 0;
 for (const l of fs.readFileSync(LOG, "utf8").split(/\r?\n/)) {
-  const m = l.match(/w: file:\/\/\/(\S+?\.kt):(\d+):\d+\s+(.*)$/);
-  if (!m) continue;
+  // Parsing lives in parse.js -- ONE copy, shared with depclass.js, covered by a conformance
+  // corpus (parse-conformance.js) that is mutation-tested. It used to be an inline regex here and
+  // an identical inline regex there: two things that can drift, feeding every number this project
+  // reports about the backlog. DeprecationKeying.lean proves the COMPARISON is sound; nothing
+  // proved the EXTRACTION, and a mis-parse satisfies every theorem while measuring nothing.
+  const parsed = parseWarningLine(l);
+  if (!parsed) continue;
   total++;
-  const base = decodeURIComponent(m[1]).split(/[\\/]/).pop();
+  const base = parsed.base;
   const p = byBase.get(base);
   if (!p) { unresolved++; console.log("  UNRESOLVED PATH: " + base); continue; }
-  if (isGated(p, +m[2], 3, new Set())) { gated++; continue; }
-  // the deprecated symbol, out of the compiler's own quoted message
-  const sm = m[3].match(/'([^']+)'/);
-  let sym = sm ? sm[1] : m[3].slice(0, 40);
-  sym = sym.replace(/^(?:static field |val |var |fun |class )/, "").replace(/[:(].*$/, "").trim();
-  const key = base + "|" + sym;
+  if (isGated(p, parsed.line, 3, new Set())) { gated++; continue; }
+  // The key, from the shared parser -- (basename, symbol), never the line. See
+  // Proofs/DeprecationKeying.lean::line_moves_are_invisible for why the line is absent.
+  const key = keyOf(parsed);
   observed[key] = (observed[key] || 0) + 1;
 }
 

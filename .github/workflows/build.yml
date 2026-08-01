@@ -577,6 +577,16 @@ jobs:
       #
       # Runs only on arm64 so the two APK jobs do not duplicate a ~2 minute recompile, and runs
       # AFTER assemble + unit tests so a stripped tree can never reach the shipped artifact.
+      # The parser is the front door of every deprecation number. DeprecationKeying.lean proves
+      # the ceiling COMPARISON is sound and line-move invariant; nothing proved the EXTRACTION,
+      # and a mis-parse would satisfy every theorem while measuring nothing. This runs the real
+      # parser over a corpus of verbatim compiler output plus the adversarial branches the live
+      # log does not reach (no-quote fallback, non-ASCII filename, error line, .java line, CR).
+      # Mutation-tested: 6 mutations of parse.js, 6 killed.
+      - name: the deprecation parser must match its corpus
+        if: matrix.flavor == 'arm64'
+        run: node tools/deprecation/parse-conformance.js
+
       - name: the suppressed-deprecation backlog must not grow
         if: matrix.flavor == 'arm64'
         run: |

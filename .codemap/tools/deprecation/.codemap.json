@@ -2,17 +2,17 @@
   "directory": "tools\\deprecation",
   "files": {
     "depclass.js": {
-      "hash": "a80c97695403",
-      "indexed_at": "2026-08-01T13:53:08.516876+00:00",
+      "hash": "54808fd0331c",
+      "indexed_at": "2026-08-01T13:58:46.834787+00:00",
       "language": "javascript",
-      "lines": 154,
-      "mtime_ns": 1785592360693546500,
-      "size": 7692,
+      "lines": 159,
+      "mtime_ns": 1785592644382546500,
+      "size": 7988,
       "symbols": [
         {
           "lines": [
-            71,
-            71
+            72,
+            72
           ],
           "name": "indentOf",
           "signature": "(s)",
@@ -21,8 +21,8 @@
         {
           "docstring": "The name of the function STRUCTURALLY enclosing `line` (1-based), or null. Indentation-aware, and that is not a nicety. Scanning upward for the neares",
           "lines": [
-            84,
-            91
+            85,
+            92
           ],
           "name": "enclosingFun",
           "signature": "(src, line)",
@@ -31,8 +31,8 @@
         {
           "docstring": "Is `line` within `win` lines below an SDK_INT test, inside the same file?",
           "lines": [
-            94,
-            96
+            95,
+            97
           ],
           "name": "gatedAt",
           "signature": "(src, line, win = 15)",
@@ -41,8 +41,8 @@
         {
           "docstring": "Every call site of `name` across the module, as {file, line}.",
           "lines": [
-            99,
-            110
+            100,
+            111
           ],
           "name": "callSites",
           "signature": "(name)",
@@ -51,8 +51,8 @@
         {
           "docstring": "Gated directly, or gated at every call site (transitively, bounded depth).",
           "lines": [
-            113,
-            126
+            114,
+            127
           ],
           "name": "isGated",
           "signature": "(file, line, depth, seen)",
@@ -61,17 +61,17 @@
       ]
     },
     "depgate.js": {
-      "hash": "b19836c32864",
-      "indexed_at": "2026-08-01T11:37:14.331620+00:00",
+      "hash": "20c6a23390bc",
+      "indexed_at": "2026-08-01T13:58:47.110924+00:00",
       "language": "javascript",
-      "lines": 143,
-      "mtime_ns": 1785584175334682900,
-      "size": 7520,
+      "lines": 147,
+      "mtime_ns": 1785592619944546000,
+      "size": 7934,
       "symbols": [
         {
           "lines": [
-            46,
-            46
+            47,
+            47
           ],
           "name": "indentOf",
           "signature": "(s)",
@@ -79,8 +79,8 @@
         },
         {
           "lines": [
-            47,
-            51
+            48,
+            52
           ],
           "name": "enclosingFun",
           "signature": "(src, line)",
@@ -88,8 +88,8 @@
         },
         {
           "lines": [
-            52,
-            52
+            53,
+            53
           ],
           "name": "gatedAt",
           "signature": "(src, line, win = 15)",
@@ -97,8 +97,8 @@
         },
         {
           "lines": [
-            53,
-            58
+            54,
+            59
           ],
           "name": "callSites",
           "signature": "(name)",
@@ -106,8 +106,8 @@
         },
         {
           "lines": [
-            59,
-            67
+            60,
+            68
           ],
           "name": "isGated",
           "signature": "(file, line, depth, seen)",
@@ -115,11 +115,50 @@
         },
         {
           "lines": [
-            120,
-            120
+            124,
+            124
           ],
           "name": "sum",
           "signature": "(o)",
+          "type": "function"
+        }
+      ]
+    },
+    "parse-conformance.js": {
+      "hash": "99abad2638a2",
+      "indexed_at": "2026-08-01T13:58:47.663724+00:00",
+      "language": "javascript",
+      "lines": 94,
+      "mtime_ns": 1785592521878546900,
+      "size": 5136,
+      "symbols": []
+    },
+    "parse.js": {
+      "hash": "95a1a5a7a3de",
+      "indexed_at": "2026-08-01T13:58:47.386675+00:00",
+      "language": "javascript",
+      "lines": 58,
+      "mtime_ns": 1785592546431545000,
+      "size": 2960,
+      "symbols": [
+        {
+          "docstring": "Parse one line of Kotlin compiler output.",
+          "lines": [
+            33,
+            53
+          ],
+          "name": "parseWarningLine",
+          "signature": "(l)",
+          "type": "function"
+        },
+        {
+          "docstring": "The gate's comparison key. Deliberately free of the line number -- see DeprecationKeying.lean.",
+          "lines": [
+            56,
+            56
+          ],
+          "name": "keyOf",
+          "signature": "(p)",
           "type": "function"
         }
       ]
@@ -144,6 +183,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T13:53:08.518448+00:00",
+  "generated_at": "2026-08-01T13:58:47.665229+00:00",
   "version": "1.0"
 }

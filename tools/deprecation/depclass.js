@@ -43,6 +43,7 @@
 // rather than hidden, and anything it cannot resolve is counted as UNGATED (fail-loud, never
 // fail-quiet: an unclassifiable warning must never be silently absolved).
 const fs = require("fs");
+const { parseWarningLine } = require(__dirname + "/parse.js");
 const path = require("path");
 
 const ROOT = "libumdnscrypt/src/main";
@@ -128,13 +129,17 @@ function isGated(file, line, depth, seen) {
 // ---- read the warnings ------------------------------------------------------------------------
 const rows = [];
 for (const l of fs.readFileSync(LOG, "utf8").split(/\r?\n/)) {
-  const m = l.match(/w: file:\/\/\/(\S+?\.kt):(\d+):\d+\s+(.*)$/);
-  if (!m) continue;
-  // Resolve by BASENAME from the on-disk index. Do NOT trust the percent-decoded URL: this repo's
-  // path contains a non-ASCII character and decoding it yields a path that will not open, which an
-  // earlier version hid behind catch/continue and reported as a backlog of zero.
-  const base = decodeURIComponent(m[1]).split(/[\\/]/).pop();
-  rows.push({ base, line: +m[2], msg: m[3] });
+  // Parsing lives in parse.js -- the SAME copy depgate.js uses, so the classifier and the gate can
+  // never disagree about what a warning line means. They previously held identical inline regexes;
+  // identical today is not the same as identical tomorrow.
+  //
+  // Resolve by BASENAME from the on-disk index. Do NOT trust the percent-decoded URL as a path:
+  // this repo's directory name contains a non-ASCII character and decoding it yields a path that
+  // will not open, which an earlier version hid behind catch/continue and reported as a backlog of
+  // zero.
+  const parsed = parseWarningLine(l);
+  if (!parsed) continue;
+  rows.push({ base: parsed.base, line: parsed.line, msg: parsed.message });
 }
 
 let gated = 0, unresolved = 0;
