@@ -1,0 +1,1202 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src",
+  "files": {
+    "bindgen_paths.rs": {
+      "hash": "ebeb19b0b6a7",
+      "indexed_at": "2026-07-24T20:35:12.758972+00:00",
+      "language": "rust",
+      "lines": 95,
+      "mtime_ns": 1782136568000000000,
+      "size": 3251,
+      "symbols": [
+        {
+          "lines": [
+            17,
+            19
+          ],
+          "name": "BindgenPaths",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Requires the `cargo-metadata` feature.",
+              "lines": [
+                26,
+                31
+              ],
+              "name": "add_cargo_metadata_layer",
+              "signature": "(&mut self, no_deps: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "This can be used to add custom path finding logic.",
+              "lines": [
+                36,
+                38
+              ],
+              "name": "add_layer",
+              "signature": "(&mut self, layer: impl BindgenPathsLayer + 'static)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the root directory for a crate",
+              "lines": [
+                41,
+                45
+              ],
+              "name": "get_crate_root",
+              "signature": "(&self, crate_name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the config file path for a crate",
+              "lines": [
+                48,
+                52
+              ],
+              "name": "get_config_path",
+              "signature": "(&self, crate_name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the UDL path for a crate",
+              "lines": [
+                55,
+                59
+              ],
+              "name": "get_udl_path",
+              "signature": "(&self, crate_name: &str, udl_name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the UDL source for a crate",
+              "lines": [
+                62,
+                67
+              ],
+              "name": "get_udl",
+              "signature": "(&self, crate_name: &str, udl_name: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            68
+          ],
+          "name": "BindgenPaths",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Find the root directory of a crate.",
+              "lines": [
+                76,
+                78
+              ],
+              "name": "get_crate_root",
+              "signature": "(&self, _crate_name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Default implementation returns `{crate_root}/uniffi.toml`.",
+              "lines": [
+                83,
+                86
+              ],
+              "name": "get_config_path",
+              "signature": "(&self, crate_name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Default implementation returns `{crate_root}/src/{udl_name}.udl`.",
+              "lines": [
+                91,
+                94
+              ],
+              "name": "get_udl_path",
+              "signature": "(&self, crate_name: &str, udl_name: &str)",
+              "type": "method"
+            }
+          ],
+          "docstring": "have default implementations that derive from the crate root.",
+          "lines": [
+            74,
+            95
+          ],
+          "name": "BindgenPathsLayer",
+          "type": "trait"
+        }
+      ]
+    },
+    "cargo_metadata.rs": {
+      "hash": "3634ce4bfc54",
+      "indexed_at": "2026-07-24T20:35:12.759843+00:00",
+      "language": "rust",
+      "lines": 93,
+      "mtime_ns": 1782136568000000000,
+      "size": 3281,
+      "symbols": [
+        {
+          "lines": [
+            16,
+            18
+          ],
+          "name": "CrateConfigSupplier",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Create a new `CrateConfigSupplier` by running `cargo metadata`",
+              "lines": [
+                22,
+                29
+              ],
+              "name": "from_cargo_metadata_command",
+              "signature": "(no_deps: bool)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            20,
+            30
+          ],
+          "name": "CrateConfigSupplier",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                34,
+                36
+              ],
+              "name": "get_crate_root",
+              "signature": "(&self, crate_name: &str)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Newer trait for finding crate roots and paths",
+          "lines": [
+            33,
+            37
+          ],
+          "name": "BindgenPathsLayer",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                41,
+                55
+              ],
+              "name": "get_toml",
+              "signature": "(&self, crate_name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                57,
+                66
+              ],
+              "name": "get_udl",
+              "signature": "(&self, crate_name: &str, udl_name: &str)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Older trait for finding config paths",
+          "lines": [
+            40,
+            67
+          ],
+          "name": "BindgenCrateConfigSupplier",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                70,
+                92
+              ],
+              "name": "from",
+              "signature": "(metadata: Metadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            69,
+            93
+          ],
+          "name": "CrateConfigSupplier",
+          "type": "impl"
+        }
+      ]
+    },
+    "global_config.rs": {
+      "hash": "bdac420cac89",
+      "indexed_at": "2026-07-24T20:35:12.761984+00:00",
+      "language": "rust",
+      "lines": 404,
+      "mtime_ns": 1782136568000000000,
+      "size": 13882,
+      "symbols": [
+        {
+          "docstring": "A [BindgenPathsLayer] backed by an explicit `[crate-roots]` mapping.",
+          "lines": [
+            14,
+            16
+          ],
+          "name": "CrateRootsLayer",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "get_crate_root",
+              "signature": "(&self, crate_name: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            18,
+            22
+          ],
+          "name": "BindgenPathsLayer",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            26,
+            33
+          ],
+          "name": "GlobalConfigFile",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            40,
+            43
+          ],
+          "name": "GlobalConfig",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "calling `get_config`.",
+              "lines": [
+                51,
+                95
+              ],
+              "name": "from_file",
+              "signature": "(path: &Utf8Path)",
+              "type": "method"
+            },
+            {
+              "docstring": "then `[crates.{name}]` from the global config.",
+              "lines": [
+                101,
+                119
+              ],
+              "name": "get_config",
+              "signature": "(&self, paths: &BindgenPaths, crate_name: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            45,
+            120
+          ],
+          "name": "GlobalConfig",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "A simple BindgenPathsLayer that maps one crate to a fixed root path.",
+              "lines": [
+                129,
+                132
+              ],
+              "name": "StaticLayer",
+              "type": "struct"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    135,
+                    141
+                  ],
+                  "name": "get_crate_root",
+                  "signature": "(&self, crate_name: &str)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                134,
+                142
+              ],
+              "name": "BindgenPathsLayer",
+              "type": "impl"
+            },
+            {
+              "lines": [
+                144,
+                148
+              ],
+              "name": "write_file",
+              "signature": "(dir: &TempDir, name: &str, contents: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                150,
+                157
+              ],
+              "name": "paths_for",
+              "signature": "(crate_name: &str, root: &Utf8PathBuf)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                160,
+                178
+              ],
+              "name": "test_defaults_fill_in_absent_keys",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                181,
+                190
+              ],
+              "name": "test_empty_global_config",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                193,
+                218
+              ],
+              "name": "test_defaults_only",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                221,
+                251
+              ],
+              "name": "test_crate_config_overrides_defaults",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                254,
+                297
+              ],
+              "name": "test_per_crate_overrides_win",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                300,
+                343
+              ],
+              "name": "test_deep_merge",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                346,
+                378
+              ],
+              "name": "test_crate_roots_layer",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                381,
+                403
+              ],
+              "name": "test_old_style_config_returns_default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            123,
+            404
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "b2905a179555",
+      "indexed_at": "2026-07-24T20:35:12.765187+00:00",
+      "language": "rust",
+      "lines": 715,
+      "mtime_ns": 1782136568000000000,
+      "size": 25991,
+      "symbols": [
+        {
+          "lines": [
+            104,
+            104
+          ],
+          "name": "bindgen_paths",
+          "type": "module"
+        },
+        {
+          "lines": [
+            105,
+            105
+          ],
+          "name": "bindings",
+          "type": "module"
+        },
+        {
+          "lines": [
+            106,
+            106
+          ],
+          "name": "global_config",
+          "type": "module"
+        },
+        {
+          "lines": [
+            107,
+            107
+          ],
+          "name": "interface",
+          "type": "module"
+        },
+        {
+          "lines": [
+            108,
+            108
+          ],
+          "name": "library_mode",
+          "type": "module"
+        },
+        {
+          "lines": [
+            109,
+            109
+          ],
+          "name": "loader",
+          "type": "module"
+        },
+        {
+          "lines": [
+            110,
+            110
+          ],
+          "name": "macro_metadata",
+          "type": "module"
+        },
+        {
+          "lines": [
+            111,
+            111
+          ],
+          "name": "pipeline",
+          "type": "module"
+        },
+        {
+          "lines": [
+            112,
+            112
+          ],
+          "name": "scaffolding",
+          "type": "module"
+        },
+        {
+          "lines": [
+            115,
+            115
+          ],
+          "name": "cargo_metadata",
+          "type": "module"
+        },
+        {
+          "lines": [
+            137,
+            141
+          ],
+          "name": "GenerationSettings",
+          "type": "struct"
+        },
+        {
+          "docstring": "you control the binding generation process more directly.",
+          "lines": [
+            150,
+            179
+          ],
+          "name": "BindingGenerator",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "docstring": "to language specific naming conventions.",
+              "lines": [
+                197,
+                197
+              ],
+              "name": "visit_callback_interface",
+              "signature": "(&self, _iface: &mut CallbackInterface)",
+              "type": "method"
+            },
+            {
+              "docstring": "to language specific naming conventions.",
+              "lines": [
+                201,
+                201
+              ],
+              "name": "visit_field",
+              "signature": "(&self, _field: &mut Field)",
+              "type": "method"
+            },
+            {
+              "docstring": "to language specific naming conventions.",
+              "lines": [
+                205,
+                205
+              ],
+              "name": "visit_ffi_field",
+              "signature": "(&self, _ffi_field: &mut FfiField)",
+              "type": "method"
+            },
+            {
+              "docstring": "to language specific naming conventions.",
+              "lines": [
+                209,
+                209
+              ],
+              "name": "visit_ffi_argument",
+              "signature": "(&self, _ffi_argument: &mut FfiArgument)",
+              "type": "method"
+            },
+            {
+              "docstring": "to language specific naming conventions.",
+              "lines": [
+                213,
+                213
+              ],
+              "name": "visit_ffi_type",
+              "signature": "(&self, _ffi_type: &mut interface::FfiType)",
+              "type": "method"
+            },
+            {
+              "docstring": "adjust it to language specific naming conventions.",
+              "lines": [
+                221,
+                221
+              ],
+              "name": "visit_variant",
+              "signature": "(&self, _is_error: bool, _variant: &mut Variant)",
+              "type": "method"
+            },
+            {
+              "docstring": "adjust it to language specific naming conventions.",
+              "lines": [
+                239,
+                239
+              ],
+              "name": "visit_argument",
+              "signature": "(&self, _argument: &mut Argument)",
+              "type": "method"
+            }
+          ],
+          "docstring": "functions to be able to generate language specific templates.",
+          "lines": [
+            186,
+            248
+          ],
+          "name": "VisitMut",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            252,
+            255
+          ],
+          "name": "Component",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Get a `toml::value::Table` instance for the crate.",
+              "lines": [
+                265,
+                267
+              ],
+              "name": "get_toml",
+              "signature": "(&self, _crate_name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "This is usually the `uniffi.toml` path in the root of the crate source.",
+              "lines": [
+                272,
+                274
+              ],
+              "name": "get_toml_path",
+              "signature": "(&self, _crate_name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Obtains the contents of the named UDL file which was referenced by the type metadata.",
+              "lines": [
+                277,
+                279
+              ],
+              "name": "get_udl",
+              "signature": "(&self, crate_name: &str, udl_name: &str)",
+              "type": "method"
+            }
+          ],
+          "docstring": "more environments.",
+          "lines": [
+            263,
+            280
+          ],
+          "name": "BindgenCrateConfigSupplier",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            282,
+            282
+          ],
+          "name": "EmptyCrateConfigSupplier",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            283,
+            283
+          ],
+          "name": "BindgenCrateConfigSupplier",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                286,
+                288
+              ],
+              "name": "get_toml",
+              "signature": "(&self, crate_name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                290,
+                292
+              ],
+              "name": "get_toml_path",
+              "signature": "(&self, crate_name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                294,
+                296
+              ],
+              "name": "get_udl",
+              "signature": "(&self, crate_name: &str, udl_name: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            285,
+            297
+          ],
+          "name": "BindgenCrateConfigSupplier",
+          "type": "impl"
+        },
+        {
+          "docstring": "in places cdylibs are required.",
+          "lines": [
+            301,
+            303
+          ],
+          "name": "is_cdylib",
+          "signature": "(library_file: impl AsRef<Utf8Path>)",
+          "type": "function"
+        },
+        {
+          "docstring": "you control the binding generation process more directly.",
+          "lines": [
+            320,
+            372
+          ],
+          "name": "generate_external_bindings",
+          "signature": "(\n    binding_generator: &T,\n    udl_file: impl AsRef<Utf8Path>,\n    config_file_override: Option...",
+          "type": "function"
+        },
+        {
+          "docstring": "Locates and parses Cargo.toml to determine the name of the crate.",
+          "lines": [
+            377,
+            385
+          ],
+          "name": "generate_component_scaffolding",
+          "signature": "(\n    udl_file: &Utf8Path,\n    out_dir_override: Option<&Utf8Path>,\n    format_code: bool,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "the specified crate name.",
+          "lines": [
+            390,
+            399
+          ],
+          "name": "generate_component_scaffolding_for_crate",
+          "signature": "(\n    udl_file: &Utf8Path,\n    crate_name: &str,\n    out_dir_override: Option<&Utf8Path>,\n    for...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            401,
+            417
+          ],
+          "name": "generate_component_scaffolding_inner",
+          "signature": "(\n    component: ComponentInterface,\n    udl_file: &Utf8Path,\n    out_dir_override: Option<&Utf8P...",
+          "type": "function"
+        },
+        {
+          "docstring": "you control the binding generation process more directly.",
+          "lines": [
+            424,
+            442
+          ],
+          "name": "generate_bindings",
+          "signature": "(\n    udl_file: &Utf8Path,\n    config_file_override: Option<&Utf8Path>,\n    binding_generator: T,...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            444,
+            448
+          ],
+          "name": "print_repr",
+          "signature": "(library_path: &Utf8Path)",
+          "type": "function"
+        },
+        {
+          "docstring": "isn't trivial and it's not particularly complicated so we've just copied it.",
+          "lines": [
+            454,
+            484
+          ],
+          "name": "crate_name_from_cargo_toml",
+          "signature": "(udl_file: &Utf8Path)",
+          "type": "function"
+        },
+        {
+          "docstring": "future.",
+          "lines": [
+            491,
+            501
+          ],
+          "name": "guess_crate_root",
+          "signature": "(udl_file: &Utf8Path)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            503,
+            515
+          ],
+          "name": "get_out_dir",
+          "signature": "(udl_file: &Utf8Path, out_dir_override: Option<&Utf8Path>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            517,
+            522
+          ],
+          "name": "parse_udl",
+          "signature": "(udl_file: &Utf8Path, crate_name: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            524,
+            536
+          ],
+          "name": "format_code_with_rustfmt",
+          "signature": "(path: &Utf8Path)",
+          "type": "function"
+        },
+        {
+          "docstring": "Load TOML from file if the file exists.",
+          "lines": [
+            539,
+            552
+          ],
+          "name": "load_toml_file",
+          "signature": "(source: Option<&Utf8Path>)",
+          "type": "function"
+        },
+        {
+          "docstring": "Load the default `uniffi.toml` config, merge TOML trees with `config_file_override` if specified.",
+          "lines": [
+            555,
+            564
+          ],
+          "name": "overridden_config_value",
+          "signature": "(\n    mut config: toml::value::Table,\n    config_file_override: Option<&Utf8Path>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            566,
+            588
+          ],
+          "name": "merge_toml",
+          "signature": "(a: &mut toml::value::Table, b: toml::value::Table)",
+          "type": "function"
+        },
+        {
+          "docstring": "should only be needed by \"filters\", otherwise anyhow etc work directly.",
+          "lines": [
+            592,
+            594
+          ],
+          "name": "to_askama_error",
+          "signature": "(t: &T)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            599,
+            599
+          ],
+          "name": "BindingsTemplateError",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                602,
+                604
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            601,
+            605
+          ],
+          "name": "BindingsTemplateError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            607,
+            607
+          ],
+          "name": "BindingsTemplateError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            616,
+            618
+          ],
+          "name": "__unused",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                625,
+                640
+              ],
+              "name": "test_guessing_of_crate_root_directory_from_udl_file",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                643,
+                692
+              ],
+              "name": "test_merge_toml",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                695,
+                714
+              ],
+              "name": "test_merge_toml_wrong_types",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            621,
+            715
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "library_mode.rs": {
+      "hash": "8e1c6e938bc4",
+      "indexed_at": "2026-07-24T20:35:12.766599+00:00",
+      "language": "rust",
+      "lines": 244,
+      "mtime_ns": 1782136568000000000,
+      "size": 9258,
+      "symbols": [
+        {
+          "docstring": "you control the binding generation process more directly.",
+          "lines": [
+            40,
+            99
+          ],
+          "name": "generate_bindings",
+          "signature": "(\n    library_path: &Utf8Path,\n    crate_name: Option<String>,\n    binding_generator: &T,\n    con...",
+          "type": "function"
+        },
+        {
+          "docstring": "If `library_path` is a C dynamic library, return its name",
+          "lines": [
+            102,
+            112
+          ],
+          "name": "calc_cdylib_name",
+          "signature": "(library_path: &Utf8Path)",
+          "type": "function"
+        },
+        {
+          "docstring": "`config_supplier` is used to find UDL files on disk and load config data.",
+          "lines": [
+            121,
+            155
+          ],
+          "name": "find_cis",
+          "signature": "(\n    library_path: &Utf8Path,\n    config_supplier: &dyn BindgenCrateConfigSupplier,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "`config_supplier` is used to find UDL files on disk and load config data.",
+          "lines": [
+            164,
+            177
+          ],
+          "name": "find_components",
+          "signature": "(\n    library_path: &Utf8Path,\n    config_supplier: &dyn BindgenCrateConfigSupplier,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            179,
+            209
+          ],
+          "name": "load_udl_metadata",
+          "signature": "(\n    group: &MetadataGroup,\n    crate_name: &str,\n    config_supplier: &dyn BindgenCrateConfigSu...",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                216,
+                229
+              ],
+              "name": "calc_cdylib_name_is_correct",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Currently fails.",
+              "lines": [
+                238,
+                243
+              ],
+              "name": "calc_cdylib_name_is_correct_on_windows",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            212,
+            244
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "loader.rs": {
+      "hash": "6a466119ce5f",
+      "indexed_at": "2026-07-24T20:35:12.768183+00:00",
+      "language": "rust",
+      "lines": 273,
+      "mtime_ns": 1782136568000000000,
+      "size": 10812,
+      "symbols": [
+        {
+          "docstring": "Bindings generators use this to load all of the inputs they need to render their code.",
+          "lines": [
+            25,
+            28
+          ],
+          "name": "BindgenLoader",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                31,
+                36
+              ],
+              "name": "new",
+              "signature": "(bindgen_paths: BindgenPaths, global_config: GlobalConfig)",
+              "type": "method"
+            },
+            {
+              "docstring": "- A UDL file.  The UDL will be parsed and converted into metadata.",
+              "lines": [
+                45,
+                47
+              ],
+              "name": "load_metadata",
+              "signature": "(&self, source_path: &Utf8Path)",
+              "type": "method"
+            },
+            {
+              "docstring": "Use this function when you want to support specialized library formats.",
+              "lines": [
+                57,
+                94
+              ],
+              "name": "load_metadata_specialized",
+              "signature": "(\n        &self,\n        source_path: &Utf8Path,\n        specialized_parser: P,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "Add checksums for metadata parsed from UDL",
+              "lines": [
+                97,
+                119
+              ],
+              "name": "add_checksums_to_udl_group",
+              "signature": "(metadata_group: &mut MetadataGroup)",
+              "type": "method"
+            },
+            {
+              "docstring": "derived information about the interface, like FFI functions signatures.",
+              "lines": [
+                125,
+                149
+              ],
+              "name": "load_cis",
+              "signature": "(&self, metadata: MetadataGroupMap)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                151,
+                183
+              ],
+              "name": "load_udl_metadata",
+              "signature": "(\n        &self,\n        group: &MetadataGroup,\n        crate_name: &str,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "to extract the data for your bindings.",
+              "lines": [
+                194,
+                212
+              ],
+              "name": "load_components",
+              "signature": "(\n        &self,\n        cis: Vec<ComponentInterface>,\n        mut parse_config: P,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "Load a [pipeline::initial::Root] value from the metadata",
+              "lines": [
+                215,
+                241
+              ],
+              "name": "load_pipeline_initial_root",
+              "signature": "(\n        &self,\n        source_path: &Utf8Path,\n        metadata: MetadataGroupMap,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "For libraries it will remove the leading `lib`.",
+              "lines": [
+                247,
+                259
+              ],
+              "name": "source_basename",
+              "signature": "(&self, source_path: &'a Utf8Path)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                261,
+                266
+              ],
+              "name": "is_udl",
+              "signature": "(&self, source_path: &Utf8Path)",
+              "type": "method"
+            },
+            {
+              "docstring": "This is the filename, without the extension and leading `lib`.",
+              "lines": [
+                269,
+                272
+              ],
+              "name": "library_name",
+              "signature": "(&self, source_path: &'a Utf8Path)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            30,
+            273
+          ],
+          "name": "BindgenLoader",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.753682+00:00",
+  "version": "1.0"
+}

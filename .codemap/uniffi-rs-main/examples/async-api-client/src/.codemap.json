@@ -1,0 +1,483 @@
+{
+  "directory": "uniffi-rs-main\\examples\\async-api-client\\src",
+  "files": {
+    "api_client.rs": {
+      "hash": "74142fc312b4",
+      "indexed_at": "2026-07-24T20:35:12.284313+00:00",
+      "language": "rust",
+      "lines": 77,
+      "mtime_ns": 1782136568000000000,
+      "size": 2077,
+      "symbols": [
+        {
+          "lines": [
+            10,
+            12
+          ],
+          "name": "HttpClient",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                15,
+                19
+              ],
+              "name": "from",
+              "signature": "(e: serde_json::Error)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            14,
+            20
+          ],
+          "name": "ApiError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            23,
+            27
+          ],
+          "name": "Issue",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            30,
+            35
+          ],
+          "name": "IssueState",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            37,
+            40
+          ],
+          "name": "ApiClient",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Pretend this is a blocking call that needs to load the credentials from disk/network",
+              "lines": [
+                44,
+                46
+              ],
+              "name": "load_credentials_sync",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                48,
+                54
+              ],
+              "name": "load_credentials",
+              "signature": "(self: Arc<Self>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            42,
+            55
+          ],
+          "name": "ApiClient",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                58,
+                63
+              ],
+              "name": "new",
+              "signature": "(http_client: Arc<dyn HttpClient>, task_runner: Arc<dyn TaskRunner>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                65,
+                76
+              ],
+              "name": "get_issue",
+              "signature": "(\n        self: Arc<Self>,\n        owner: String,\n        repository: String,\n        issue_numbe...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            57,
+            77
+          ],
+          "name": "ApiClient",
+          "type": "impl"
+        }
+      ]
+    },
+    "async-api-client.udl": {
+      "hash": "fab52fafbdbb",
+      "indexed_at": "2026-07-24T20:35:12.284954+00:00",
+      "language": "udl",
+      "lines": 49,
+      "mtime_ns": 1782136568000000000,
+      "size": 932,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                2,
+                2
+              ],
+              "name": "test_response_data",
+              "signature": "() : string",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1,
+            3
+          ],
+          "name": "async_api_client",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                7
+              ],
+              "name": "Http",
+              "signature": "(string reason)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                8,
+                8
+              ],
+              "name": "Api",
+              "signature": "(string reason)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "Json",
+              "signature": "(string reason)",
+              "type": "variant"
+            }
+          ],
+          "lines": [
+            6,
+            10
+          ],
+          "name": "ApiError",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "fetch",
+              "signature": "(string url, string credentials) : string",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            14,
+            17
+          ],
+          "name": "HttpClient",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "run_task",
+              "signature": "(RustTask task) : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            22,
+            25
+          ],
+          "name": "TaskRunner",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                29,
+                29
+              ],
+              "name": "execute",
+              "signature": "() : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            28,
+            30
+          ],
+          "name": "RustTask",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                33,
+                33
+              ],
+              "name": "url",
+              "signature": "string",
+              "type": "field"
+            },
+            {
+              "lines": [
+                34,
+                34
+              ],
+              "name": "title",
+              "signature": "string",
+              "type": "field"
+            },
+            {
+              "lines": [
+                35,
+                35
+              ],
+              "name": "state",
+              "signature": "IssueState",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            32,
+            36
+          ],
+          "name": "Issue",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            38,
+            41
+          ],
+          "name": "IssueState",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                45
+              ],
+              "name": "constructor",
+              "signature": "(HttpClient http_client, TaskRunner task_runner)",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                48,
+                48
+              ],
+              "name": "get_issue",
+              "signature": "(string owner, string repository, u32 issue_number) : Issue",
+              "type": "method"
+            }
+          ],
+          "docstring": "Implemented by the Rust code",
+          "lines": [
+            44,
+            49
+          ],
+          "name": "ApiClient",
+          "type": "interface"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "880b4fd94e0c",
+      "indexed_at": "2026-07-24T20:35:12.285548+00:00",
+      "language": "rust",
+      "lines": 25,
+      "mtime_ns": 1782136568000000000,
+      "size": 759,
+      "symbols": [
+        {
+          "docstring": "/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file,",
+          "lines": [
+            5,
+            5
+          ],
+          "name": "api_client",
+          "type": "module"
+        },
+        {
+          "lines": [
+            6,
+            6
+          ],
+          "name": "tasks",
+          "type": "module"
+        },
+        {
+          "lines": [
+            7,
+            7
+          ],
+          "name": "test_data",
+          "type": "module"
+        },
+        {
+          "lines": [
+            14,
+            21
+          ],
+          "name": "ApiError",
+          "type": "enum"
+        }
+      ]
+    },
+    "tasks.rs": {
+      "hash": "59590142cb5b",
+      "indexed_at": "2026-07-24T20:35:12.286417+00:00",
+      "language": "rust",
+      "lines": 92,
+      "mtime_ns": 1782136568000000000,
+      "size": 2495,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "TaskRunner",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            14,
+            16
+          ],
+          "name": "RustTask",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            18,
+            28
+          ],
+          "name": "run_task",
+          "signature": "(runner: &Arc<dyn TaskRunner>, closure: F)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            30,
+            36
+          ],
+          "name": "TaskClosure",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            38,
+            47
+          ],
+          "name": "TaskClosureInner",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                54,
+                58
+              ],
+              "name": "new",
+              "signature": "(closure: F)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                60,
+                72
+              ],
+              "name": "take_result",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            49,
+            73
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                80,
+                91
+              ],
+              "name": "execute",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            75,
+            92
+          ],
+          "name": "RustTask",
+          "type": "impl"
+        }
+      ]
+    },
+    "test_data.rs": {
+      "hash": "6a89c38b8082",
+      "indexed_at": "2026-07-24T20:35:12.286964+00:00",
+      "language": "rust",
+      "lines": 76,
+      "mtime_ns": 1782136568000000000,
+      "size": 3217,
+      "symbols": [
+        {
+          "docstring": "The tests don't make real HTTP calls to avoid them failing because of network errors.",
+          "lines": [
+            8,
+            76
+          ],
+          "name": "test_response_data",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.641288+00:00",
+  "version": "1.0"
+}

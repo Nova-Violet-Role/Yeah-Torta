@@ -1,0 +1,3615 @@
+{
+  "directory": "rust\\torta_core\\src\\beast",
+  "files": {
+    "beastsim.rs": {
+      "hash": "e267a7bc0318",
+      "indexed_at": "2026-07-31T06:51:47.434646+00:00",
+      "language": "rust",
+      "lines": 505,
+      "mtime_ns": 1785480509661045500,
+      "size": 22341,
+      "symbols": [
+        {
+          "lines": [
+            56,
+            60
+          ],
+          "name": "Arrivals",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            64,
+            75
+          ],
+          "name": "Outcome",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            77,
+            83
+          ],
+          "name": "priority_of",
+          "signature": "(idx: usize)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            85,
+            91
+          ],
+          "name": "tin_index",
+          "signature": "(p: ProbePriority)",
+          "type": "function"
+        },
+        {
+          "docstring": "`rtt_ms` is fed to the window brain each round so `cwnd` evolves exactly as it does live.",
+          "lines": [
+            96,
+            145
+          ],
+          "name": "run",
+          "signature": "(\n    yeah: YeahProfile,\n    sched: TortaProfile,\n    arrivals: Arrivals,\n    rounds: usize,\n    ...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            151,
+            219
+          ],
+          "name": "the_real_datapath_under_overload",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            230,
+            254
+          ],
+          "name": "the_aqm_path_does_not_starve_the_bulk_tin",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            265,
+            293
+          ],
+          "name": "a_purely_critical_workload_never_fills_the_window",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            309,
+            389
+          ],
+          "name": "tcp_and_udp_run_together_and_alone_on_every_profile",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            397,
+            430
+          ],
+          "name": "the_enqueue_path_has_no_per_tin_bound_on_any_profile",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            455,
+            505
+          ],
+          "name": "the_resolver_path_does_move_the_window",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "linksim.rs": {
+      "hash": "21229d14b9eb",
+      "indexed_at": "2026-07-31T03:37:21.834860+00:00",
+      "language": "rust",
+      "lines": 530,
+      "mtime_ns": 1785467308079624500,
+      "size": 23800,
+      "symbols": [
+        {
+          "lines": [
+            51,
+            61
+          ],
+          "name": "Link",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            65,
+            74
+          ],
+          "name": "Round",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                77,
+                79
+              ],
+              "name": "new",
+              "signature": "(capacity_per_round: u64, prop_delay_ms: f64, queue_limit: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "queued_before + accepted`, and the queue stays within `[0, queue_limit]`.",
+              "lines": [
+                86,
+                103
+              ],
+              "name": "step",
+              "signature": "(&mut self, offered: u64)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            76,
+            104
+          ],
+          "name": "Link",
+          "type": "impl"
+        },
+        {
+          "docstring": "is told what happened.",
+          "lines": [
+            108,
+            113
+          ],
+          "name": "Sender",
+          "type": "trait"
+        },
+        {
+          "docstring": "The REAL shipped controller, TCP family.",
+          "lines": [
+            116,
+            119
+          ],
+          "name": "YeahTcp",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                122,
+                124
+              ],
+              "name": "window_segments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                125,
+                127
+              ],
+              "name": "on_sample",
+              "signature": "(&mut self, rtt_ms: f64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                128,
+                130
+              ],
+              "name": "on_loss",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                131,
+                133
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            121,
+            134
+          ],
+          "name": "Sender",
+          "type": "impl"
+        },
+        {
+          "docstring": "The REAL shipped controller, independent UDP family \u2014 the thing this whole rung is about.",
+          "lines": [
+            137,
+            140
+          ],
+          "name": "YeahUdp",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                143,
+                145
+              ],
+              "name": "window_segments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                146,
+                148
+              ],
+              "name": "on_sample",
+              "signature": "(&mut self, rtt_ms: f64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                149,
+                151
+              ],
+              "name": "on_loss",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                152,
+                154
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            142,
+            155
+          ],
+          "name": "Sender",
+          "type": "impl"
+        },
+        {
+          "docstring": "point of comparison: it will fill whatever buffer it is given.",
+          "lines": [
+            161,
+            163
+          ],
+          "name": "RenoRef",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                166,
+                168
+              ],
+              "name": "window_segments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                169,
+                171
+              ],
+              "name": "on_sample",
+              "signature": "(&mut self, _rtt_ms: f64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                172,
+                174
+              ],
+              "name": "on_loss",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                175,
+                177
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            165,
+            178
+          ],
+          "name": "Sender",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            182,
+            197
+          ],
+          "name": "Outcome",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "bottleneck perfectly busy.",
+              "lines": [
+                202,
+                207
+              ],
+              "name": "link_utilisation",
+              "signature": "(&self, link_capacity_per_round: u64)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            199,
+            208
+          ],
+          "name": "Outcome",
+          "type": "impl"
+        },
+        {
+          "docstring": "Run one sender over one link for `rounds` rounds, fully deterministically.",
+          "lines": [
+            211,
+            247
+          ],
+          "name": "run",
+          "signature": "(sender: &mut dyn Sender, link: &mut Link, rounds: u64)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "docstring": "canonical bufferbloat setup \u2014 a dumb oversized FIFO on the last mile.",
+              "lines": [
+                255,
+                258
+              ],
+              "name": "bloated_link",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                260,
+                262
+              ],
+              "name": "yeah_udp",
+              "signature": "(p: YeahProfile)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                264,
+                266
+              ],
+              "name": "yeah_tcp",
+              "signature": "(p: YeahProfile)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                272,
+                299
+              ],
+              "name": "the_link_conserves_every_byte",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                313,
+                404
+              ],
+              "name": "bufferbloat_and_speed_measured_together_on_a_bloated_link",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                412,
+                448
+              ],
+              "name": "the_window_ceiling_is_measured_against_a_small_buffer_link",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                462,
+                529
+              ],
+              "name": "a_capacity_sweep_shows_where_each_profile_bloats",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            250,
+            530
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "log.rs": {
+      "hash": "a0e50edec169",
+      "indexed_at": "2026-07-31T10:54:19.021257+00:00",
+      "language": "rust",
+      "lines": 261,
+      "mtime_ns": 1785490983564000100,
+      "size": 11490,
+      "symbols": [
+        {
+          "lines": [
+            43,
+            48
+          ],
+          "name": "BeastLogKind",
+          "type": "enum"
+        },
+        {
+          "docstring": "The short kind token for the log line's second field.",
+          "lines": [
+            55,
+            62
+          ],
+          "name": "kind_token",
+          "signature": "(kind: BeastLogKind)",
+          "type": "function"
+        },
+        {
+          "docstring": "`-` if blank (never a torn field). No PII \u2014 counts + labels only, device-local + bounded (the T20 ring).",
+          "lines": [
+            76,
+            102
+          ],
+          "name": "format_beast_line",
+          "signature": "(\r\n    now_ms: u64,\r\n    kind: BeastLogKind,\r\n    s: &BeastSnapshot,\r\n    relay: &str,\r\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "IO \u2014 the same fail-open belt the Warden's log wears).",
+          "lines": [
+            109,
+            123
+          ],
+          "name": "append_beast_event",
+          "signature": "(\r\n    path: &Path,\r\n    now_ms: u64,\r\n    kind: BeastLogKind,\r\n    s: &BeastSnapshot,\r\n    relay...",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "docstring": "`BeastSnapshot` (so this construction site compiles against the widened Record \u2014 Chroma F10).",
+              "lines": [
+                133,
+                188
+              ],
+              "name": "sample_snapshot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                191,
+                204
+              ],
+              "name": "format_beast_line_is_deterministic",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                207,
+                213
+              ],
+              "name": "kind_tokens_are_distinct_and_greppable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                216,
+                227
+              ],
+              "name": "blank_relay_renders_dash",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                230,
+                260
+              ],
+              "name": "round_trips_through_log_tier",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            126,
+            261
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "mod.rs": {
+      "hash": "3b5cd5f6dd60",
+      "indexed_at": "2026-07-31T10:54:19.330819+00:00",
+      "language": "rust",
+      "lines": 1225,
+      "mtime_ns": 1785490235286871200,
+      "size": 65043,
+      "symbols": [
+        {
+          "lines": [
+            25,
+            25
+          ],
+          "name": "scheduler",
+          "type": "module"
+        },
+        {
+          "lines": [
+            26,
+            26
+          ],
+          "name": "yeah",
+          "type": "module"
+        },
+        {
+          "docstring": "ONLY from the explicit review-channel seam ([`Beast::log_event`]) \u2014 never the hot dispatch/apply path.",
+          "lines": [
+            31,
+            31
+          ],
+          "name": "log",
+          "type": "module"
+        },
+        {
+          "lines": [
+            35,
+            35
+          ],
+          "name": "linksim",
+          "type": "module"
+        },
+        {
+          "lines": [
+            37,
+            37
+          ],
+          "name": "spec_binding",
+          "type": "module"
+        },
+        {
+          "lines": [
+            39,
+            39
+          ],
+          "name": "beastsim",
+          "type": "module"
+        },
+        {
+          "lines": [
+            40,
+            40
+          ],
+          "name": "tests",
+          "type": "module"
+        },
+        {
+          "lines": [
+            53,
+            57
+          ],
+          "name": "YeahProfile",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            62,
+            69
+          ],
+          "name": "TortaProfile",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            74,
+            79
+          ],
+          "name": "YeahMode",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "The original wire/display label (YeahMode.kt:14-17): \"SLOW-START\", \"YEAH\", \"COMPETING\", \"RECOVERY\".",
+              "lines": [
+                83,
+                90
+              ],
+              "name": "label",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            81,
+            91
+          ],
+          "name": "YeahMode",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            96,
+            100
+          ],
+          "name": "ProbePriority",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            104,
+            107
+          ],
+          "name": "ProbeProtocol",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            112,
+            118
+          ],
+          "name": "ProbeRequest",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Construct with defaults matching the Kotlin data-class defaults (endpoint 0, TCP, enqueued 0).",
+              "lines": [
+                122,
+                130
+              ],
+              "name": "new",
+              "signature": "(domain: String, priority: ProbePriority)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            120,
+            131
+          ],
+          "name": "ProbeRequest",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            144,
+            263
+          ],
+          "name": "BeastSnapshot",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            271,
+            273
+          ],
+          "name": "BeastMetricSink",
+          "type": "trait"
+        },
+        {
+          "docstring": "poison-bricking every subsequent Beast call into a permanent FFI exception storm.",
+          "lines": [
+            283,
+            319
+          ],
+          "name": "BeastInner",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            324,
+            326
+          ],
+          "name": "Beast",
+          "type": "struct"
+        },
+        {
+          "docstring": "governed cwnd (and their session high-water is retained \u2014 the CLEAR CONDITION 4 layer below).",
+          "lines": [
+            345,
+            351
+          ],
+          "name": "live_beast",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "by [`crate::beast_set_yeah_profile`] on the settings-apply / restore path (NEVER the thermometer).",
+          "lines": [
+            371,
+            373
+          ],
+          "name": "store_live_yeah_profile",
+          "signature": "(id: i32)",
+          "type": "function"
+        },
+        {
+          "docstring": "[`crate::beast_set_tunables`] on the settings-apply / restore path.",
+          "lines": [
+            377,
+            381
+          ],
+          "name": "store_live_tunables",
+          "signature": "(max_window: i32, free_thresh_milli: i32, compete_thresh_milli: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            388,
+            394
+          ],
+          "name": "live_yeah_profile",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            401,
+            407
+          ],
+          "name": "apply_live_tune",
+          "signature": "(yeah: &mut YeahController)",
+          "type": "function"
+        },
+        {
+          "docstring": "`beast_gov::now_ms`.",
+          "lines": [
+            422,
+            425
+          ],
+          "name": "now_ms_monotonic",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "of A/AAAA queries PROVES the tin filled instead of vanishing between two polls.",
+          "lines": [
+            437,
+            449
+          ],
+          "name": "AqmRetention",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                452,
+                460
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "pane's three tin rows render, so the getters map straight to the display).",
+              "lines": [
+                464,
+                470
+              ],
+              "name": "idx",
+              "signature": "(priority: ProbePriority)",
+              "type": "method"
+            },
+            {
+              "docstring": "Count one real classified query into its tin's lifetime throughput.",
+              "lines": [
+                473,
+                475
+              ],
+              "name": "record",
+              "signature": "(&self, priority: ProbePriority)",
+              "type": "method"
+            },
+            {
+              "docstring": "tick never lowers a peak).",
+              "lines": [
+                480,
+                486
+              ],
+              "name": "sample_depth",
+              "signature": "(&self, critical: i32, high: i32, normal: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "count) \u2014 same `fetch_max`, same ignore-non-positive discipline.",
+              "lines": [
+                490,
+                500
+              ],
+              "name": "sample_yeah",
+              "signature": "(&self, zeta: i32, shed: i32, reno: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "Lifetime per-tin throughput [Critical, High, Normal].",
+              "lines": [
+                503,
+                509
+              ],
+              "name": "throughput",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Session-peak per-tin depth [Critical, High, Normal].",
+              "lines": [
+                512,
+                518
+              ],
+              "name": "peak_depth",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Session-peak YeAH triple (zeta streak, shed streak, reno count).",
+              "lines": [
+                521,
+                527
+              ],
+              "name": "peak_yeah",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            451,
+            528
+          ],
+          "name": "AqmRetention",
+          "type": "impl"
+        },
+        {
+          "docstring": "never touches JNI, so it is safe to run for the process life.",
+          "lines": [
+            542,
+            556
+          ],
+          "name": "spawn_aqm_pump",
+          "signature": "(beast: Arc<Beast>)",
+          "type": "function"
+        },
+        {
+          "docstring": "to shed under CoDel pressure): everything else.",
+          "lines": [
+            563,
+            569
+          ],
+          "name": "classify_priority",
+          "signature": "(qtype: u16)",
+          "type": "function"
+        },
+        {
+          "docstring": "FAIL-OPEN + in-RAM alongside [`feed_live_rtt`]: it can never change \u2014 or panic \u2014 the answer it rides.",
+          "lines": [
+            579,
+            581
+          ],
+          "name": "feed_live_aqm",
+          "signature": "(qtype: u16, domain: &str, is_udp: bool, ok: bool)",
+          "type": "function"
+        },
+        {
+          "docstring": "valve move are unit-testable without mutating the process-globals [`LIVE_BEAST`]/[`LIVE_RETENTION`].",
+          "lines": [
+            585,
+            611
+          ],
+          "name": "feed_aqm_into",
+          "signature": "(\n    beast: &Beast,\n    retain: &AqmRetention,\n    qtype: u16,\n    domain: &str,\n    is_udp: boo...",
+          "type": "function"
+        },
+        {
+          "docstring": "any traffic. See [`AqmRetention`].",
+          "lines": [
+            618,
+            633
+          ],
+          "name": "live_beast_aqm_retention",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "panic \u2014 the resolve it rides alongside (the same law as the sibling `underground::feed`).",
+          "lines": [
+            643,
+            645
+          ],
+          "name": "feed_live_rtt",
+          "signature": "(family: i32, rtt_ms: f64)",
+          "type": "function"
+        },
+        {
+          "docstring": "pacing stays untouched. The sample gate inside the fold drops non-finite/non-positive values.",
+          "lines": [
+            652,
+            654
+          ],
+          "name": "feed_live_tcp_dial",
+          "signature": "(rtt_ms: f64)",
+          "type": "function"
+        },
+        {
+          "docstring": "already pays per flow \u2014 not per packet.",
+          "lines": [
+            667,
+            669
+          ],
+          "name": "feed_live_flow_shape",
+          "signature": "(rtt_ms: f64, cwnd: i32)",
+          "type": "function"
+        },
+        {
+          "docstring": "congestion, not merely that an I/O error occurred.",
+          "lines": [
+            674,
+            676
+          ],
+          "name": "feed_live_flow_loss",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "network RTT, ignored. A non-finite or negative sample is dropped before it can poison an EWMA.",
+          "lines": [
+            682,
+            691
+          ],
+          "name": "feed_rtt_into",
+          "signature": "(beast: &Beast, family: i32, rtt_ms: f64)",
+          "type": "function"
+        },
+        {
+          "docstring": "`apply_*` (the D22 idiom), so this can never change \u2014 or panic \u2014 the flow it rides.",
+          "lines": [
+            727,
+            729
+          ],
+          "name": "feed_live_flow_rtt",
+          "signature": "(rtt_ms: f64, is_udp: bool)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                735,
+                754
+              ],
+              "name": "new",
+              "signature": "(yeah_profile: YeahProfile, sched_profile: TortaProfile)",
+              "type": "method"
+            },
+            {
+              "docstring": "paces the next dispatch. Pushes a snapshot to the attached sink if any.",
+              "lines": [
+                758,
+                764
+              ],
+              "name": "apply_sample",
+              "signature": "(&self, rtt_ms: f64)",
+              "type": "method"
+            },
+            {
+              "docstring": "An empty batch is a no-op (nothing changed \u21d2 nothing pushed).",
+              "lines": [
+                772,
+                782
+              ],
+              "name": "apply_samples",
+              "signature": "(&self, rtt_ms: Vec<f64>)",
+              "type": "method"
+            },
+            {
+              "docstring": "the UDP base_rtt is tracked separately for the dual-line dashboard.",
+              "lines": [
+                786,
+                799
+              ],
+              "name": "apply_udp_sample",
+              "signature": "(&self, rtt_ms: f64)",
+              "type": "method"
+            },
+            {
+              "docstring": "samples into the EWMA in ONE call, ONE snapshot push after the batch. Empty batch \u21d2 no-op.",
+              "lines": [
+                803,
+                814
+              ],
+              "name": "apply_udp_samples",
+              "signature": "(&self, rtt_ms: Vec<f64>)",
+              "type": "method"
+            },
+            {
+              "docstring": "Signal a loss/timeout to the YeAH controller (the H2/M1 canonical reaction or the Legacy penalty).",
+              "lines": [
+                817,
+                821
+              ],
+              "name": "on_loss",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Hard failover (relay switch) \u2014 collapse the window + re-learn the floor.",
+              "lines": [
+                824,
+                828
+              ],
+              "name": "on_failover",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Enqueue a probe into the Tort\u00e4 scheduler.",
+              "lines": [
+                831,
+                833
+              ],
+              "name": "enqueue_probe",
+              "signature": "(&self, req: ProbeRequest)",
+              "type": "method"
+            },
+            {
+              "docstring": "tear apart (the old two-lock read could race a concurrent `apply_sample` between them).",
+              "lines": [
+                838,
+                842
+              ],
+              "name": "dispatch",
+              "signature": "(&self, now_ms: i64)",
+              "type": "method"
+            },
+            {
+              "docstring": "Notify the adaptive valve of a timeout/fail for a tin (the Kotlin `onTimeoutOrFail`).",
+              "lines": [
+                845,
+                847
+              ],
+              "name": "on_timeout_or_fail",
+              "signature": "(&self, priority: ProbePriority)",
+              "type": "method"
+            },
+            {
+              "docstring": "Notify the adaptive valve of a success for a tin (the Kotlin `onSuccess`).",
+              "lines": [
+                850,
+                852
+              ],
+              "name": "on_success",
+              "signature": "(&self, priority: ProbePriority)",
+              "type": "method"
+            },
+            {
+              "docstring": "The current YeAH congestion window (1..16) \u2014 pacing for the next dispatch.",
+              "lines": [
+                855,
+                857
+              ],
+              "name": "cwnd",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "on every profile. Proof of the law it obeys: `Proofs/YeahUdpIndependence.lean`.",
+              "lines": [
+                861,
+                863
+              ],
+              "name": "udp_cwnd",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The UDP family's own fair-share estimate.",
+              "lines": [
+                866,
+                868
+              ],
+              "name": "udp_fair_cwnd",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The adaptive read timeout (ms) given a jitter estimate.",
+              "lines": [
+                871,
+                873
+              ],
+              "name": "adaptive_timeout_ms",
+              "signature": "(&self, jitter_ms: f64)",
+              "type": "method"
+            },
+            {
+              "docstring": "[`snapshot_of`](Self::snapshot_of) reader (no push\u2194pull drift). Pure surface \u2014 no engine math.",
+              "lines": [
+                879,
+                881
+              ],
+              "name": "snapshot",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Attach (or replace) the metric sink. Rust will call `on_metrics` once per cycle after this.",
+              "lines": [
+                885,
+                887
+              ],
+              "name": "attach_sink",
+              "signature": "(&self, sink: Arc<dyn BeastMetricSink>)",
+              "type": "method"
+            },
+            {
+              "docstring": "review-channel seam [`log_event`](Self::log_event) is a silent no-op (no dir \u2192 no path \u2192 no log).",
+              "lines": [
+                892,
+                894
+              ],
+              "name": "bind_log_dir",
+              "signature": "(&self, dir: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "The guard is dropped BEFORE the file append \u2014 the engine lock never spans IO.",
+              "lines": [
+                903,
+                913
+              ],
+              "name": "log_event",
+              "signature": "(\n        &self,\n        now_ms: u64,\n        kind: log::BeastLogKind,\n        snapshot: BeastSna...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            732,
+            914
+          ],
+          "name": "Beast",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "InternalException storm into the Kotlin engine loop) rather than self-healing.",
+              "lines": [
+                924,
+                926
+              ],
+              "name": "lock_inner",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "(fail-safe). Pushes a fresh snapshot so the dashboard reflects the reset at once.",
+              "lines": [
+                940,
+                949
+              ],
+              "name": "set_yeah_profile",
+              "signature": "(&self, id: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "honest cost of a queue swap). Any other id -> Legacy.",
+              "lines": [
+                955,
+                963
+              ],
+              "name": "set_cake_profile",
+              "signature": "(&self, id: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "seam lands. Pushes a fresh snapshot.",
+              "lines": [
+                970,
+                976
+              ],
+              "name": "set_tunables",
+              "signature": "(&self, max_window: i32, free_thresh_milli: i32, compete_thresh_milli: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "Fold one UDP RTT sample into the EWMA (same alpha as the TCP estimator; first sample seeds).",
+              "lines": [
+                979,
+                991
+              ],
+              "name": "fold_udp_sample",
+              "signature": "(inner: &mut BeastInner, rtt_ms: f64)",
+              "type": "method"
+            },
+            {
+              "docstring": "conflicting window update. Empty batch \u21d2 no-op (no push). ONE snapshot push after the batch (D12).",
+              "lines": [
+                1000,
+                1010
+              ],
+              "name": "fold_udp_display_samples",
+              "signature": "(&self, rtt_ms: Vec<f64>)",
+              "type": "method"
+            },
+            {
+              "docstring": "push after the batch (D12).",
+              "lines": [
+                1021,
+                1045
+              ],
+              "name": "fold_tcp_display_samples",
+              "signature": "(&self, rtt_ms: Vec<f64>)",
+              "type": "method"
+            },
+            {
+              "docstring": "would bias the mean toward whichever flows happen to be slow.",
+              "lines": [
+                1062,
+                1080
+              ],
+              "name": "fold_shaped_sample",
+              "signature": "(&self, rtt_ms: f64, cwnd: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "CONGESTION REACTION the shaper took because of it. They can legitimately differ.",
+              "lines": [
+                1085,
+                1089
+              ],
+              "name": "fold_shaped_loss",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "the real `on_success`/`on_timeout_or_fail` outcome path.",
+              "lines": [
+                1100,
+                1103
+              ],
+              "name": "would_shed_normal",
+              "signature": "(&self, now_ms: i64)",
+              "type": "method"
+            },
+            {
+              "docstring": "the engine lock (a re-entrant `snapshot()`/`log_event` from inside the callback cannot deadlock).",
+              "lines": [
+                1109,
+                1116
+              ],
+              "name": "push_metrics",
+              "signature": "(inner: MutexGuard<'_, BeastInner>)",
+              "type": "method"
+            },
+            {
+              "docstring": "existing accessors + the pub `profile` fields; touches ZERO Tort\u00e4/YeAH algorithm.",
+              "lines": [
+                1123,
+                1179
+              ],
+              "name": "snapshot_of",
+              "signature": "(inner: &BeastInner)",
+              "type": "method"
+            },
+            {
+              "docstring": "`None` when UNBOUND (RAM-only; the engine still runs, it simply writes no review log \u2014 the fail-safe).",
+              "lines": [
+                1183,
+                1188
+              ],
+              "name": "query_beast_log_path",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "docstring": "`query_warden_log_path`).",
+          "lines": [
+            919,
+            1189
+          ],
+          "name": "Beast",
+          "type": "impl"
+        },
+        {
+          "docstring": "Pacing rate (probes/sec) = cwnd / base_rtt_seconds. 0 before any sample.",
+          "lines": [
+            1192,
+            1198
+          ],
+          "name": "pacing_rate",
+          "signature": "(cwnd: i32, base_rtt_ms: f64)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "docstring": "`heavier_tin_never_waits_longer`.",
+              "lines": [
+                1214,
+                1216
+              ],
+              "name": "tin_weight_table",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "once\" \u2014 two states that want opposite responses and look identical in a total-depth number.",
+              "lines": [
+                1222,
+                1224
+              ],
+              "name": "flow_census",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "docstring": "to compile, which is how this was found.",
+          "lines": [
+            1204,
+            1225
+          ],
+          "name": "Beast",
+          "type": "impl"
+        }
+      ]
+    },
+    "scheduler.rs": {
+      "hash": "884b2add0b01",
+      "indexed_at": "2026-07-31T23:18:18.533395+00:00",
+      "language": "rust",
+      "lines": 1392,
+      "mtime_ns": 1785539866240565100,
+      "size": 62493,
+      "symbols": [
+        {
+          "docstring": "Legacy keeps the ladder, because there the per-tin trim really is the governing bound.",
+          "lines": [
+            65,
+            73
+          ],
+          "name": "fill_denominator",
+          "signature": "(profile: TortaProfile, tin: usize)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            183,
+            192
+          ],
+          "name": "Flow",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                195,
+                204
+              ],
+              "name": "new",
+              "signature": "(key: i64, endpoint_idx: i32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            194,
+            205
+          ],
+          "name": "Flow",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            210,
+            233
+          ],
+          "name": "TinAqm",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                236,
+                250
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Rung B constructor \u2014 the Soft-cake + Mochi-Dango law (TortaProfile::SoftCake).",
+              "lines": [
+                253,
+                258
+              ],
+              "name": "new_soft",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Returns true to SHED this head.",
+              "lines": [
+                262,
+                311
+              ],
+              "name": "should_shed",
+              "signature": "(\n        &mut self,\n        sojourn: i64,\n        now_ms: i64,\n        target_ms: i64,\n        i...",
+              "type": "method"
+            },
+            {
+              "docstring": "ceiling, windowed count memory, Mochi-Dango idle decay run inline).",
+              "lines": [
+                315,
+                379
+              ],
+              "name": "should_shed_soft",
+              "signature": "(\n        &mut self,\n        sojourn: i64,\n        now_ms: i64,\n        target_ms: i64,\n        i...",
+              "type": "method"
+            },
+            {
+              "docstring": "(CakeScheduler.kt:534-540).",
+              "lines": [
+                383,
+                389
+              ],
+              "name": "on_good_or_undroppable",
+              "signature": "(&mut self, sojourn: i64, target_ms: i64)",
+              "type": "method"
+            },
+            {
+              "docstring": "M2: a tin draining to empty resets the CoDel virtual clock (CakeScheduler.kt:544-549).",
+              "lines": [
+                392,
+                397
+              ],
+              "name": "on_drained",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                399,
+                401
+              ],
+              "name": "on_fail",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                403,
+                405
+              ],
+              "name": "on_success",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "packet also RECORDS the count memory before the reset. Baseline path delegates byte-identical.",
+              "lines": [
+                409,
+                424
+              ],
+              "name": "on_good_or_undroppable_at",
+              "signature": "(&mut self, sojourn: i64, target_ms: i64, now_ms: i64)",
+              "type": "method"
+            },
+            {
+              "docstring": "forgets). Then the M2 reset itself is identical.",
+              "lines": [
+                429,
+                435
+              ],
+              "name": "on_drained_at",
+              "signature": "(&mut self, now_ms: i64)",
+              "type": "method"
+            },
+            {
+              "docstring": "MOCHI_STREAK_CAP x faster than the original's fixed p_inc, sch_cake.c:2423).",
+              "lines": [
+                440,
+                454
+              ],
+              "name": "on_fail_at",
+              "signature": "(&mut self, now_ms: i64)",
+              "type": "method"
+            },
+            {
+              "docstring": "successes is never slower), plus the streak reset.",
+              "lines": [
+                458,
+                469
+              ],
+              "name": "on_success_at",
+              "signature": "(&mut self, now_ms: i64)",
+              "type": "method"
+            },
+            {
+              "docstring": "serviced-but-empty events (cobalt_queue_empty, sch_cake.c:483-509) \u2014 pure wall-clock here.",
+              "lines": [
+                474,
+                495
+              ],
+              "name": "mochi_idle_decay",
+              "signature": "(&mut self, now_ms: i64)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            235,
+            496
+          ],
+          "name": "TinAqm",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                499,
+                501
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            498,
+            502
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "docstring": "No allocation, test-stable. DO NOT swap for a real RNG.",
+          "lines": [
+            506,
+            519
+          ],
+          "name": "pseudo_rand",
+          "signature": "(now_ms: i64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            523,
+            575
+          ],
+          "name": "TortaScheduler",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Default construction \u2014 Legacy profile (the Kotlin no-arg path).",
+              "lines": [
+                579,
+                581
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Construct with a profile + the original tunables (CakeScheduler.kt:38-50).",
+              "lines": [
+                584,
+                593
+              ],
+              "name": "with_profile",
+              "signature": "(profile: TortaProfile)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                596,
+                654
+              ],
+              "name": "with_tunables",
+              "signature": "(\n        profile: TortaProfile,\n        tin_weights: [i64; TIN_COUNT],\n        quantum: i32,\n   ...",
+              "type": "method"
+            },
+            {
+              "docstring": "(`heavier_tin_never_waits_longer`).",
+              "lines": [
+                669,
+                687
+              ],
+              "name": "tin_weight_table",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "opposite responses and look identical in a total-depth number.",
+              "lines": [
+                695,
+                715
+              ],
+              "name": "flow_census",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "---- Public read accessors (CakeScheduler.kt:155-167) ----",
+              "lines": [
+                718,
+                724
+              ],
+              "name": "aqm_dropped",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                725,
+                727
+              ],
+              "name": "shed_dropped",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                728,
+                730
+              ],
+              "name": "drr_sparse_served",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Current valve drop probability of the busiest tin (max across tins) \u2014 for the dashboard.",
+              "lines": [
+                732,
+                741
+              ],
+              "name": "valve_prob",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "valve-logic change. 0.0 under the Legacy AQM (no adaptive valve runs).",
+              "lines": [
+                745,
+                751
+              ],
+              "name": "valve_prob_tin",
+              "signature": "(&self, priority: ProbePriority)",
+              "type": "method"
+            },
+            {
+              "docstring": "READ; 0 under Legacy/Baseline (only the Mochi-Dango valve law counts a streak).",
+              "lines": [
+                755,
+                761
+              ],
+              "name": "valve_streak",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "READ; 0 under Legacy/Baseline (only the Soft-cake law records it).",
+              "lines": [
+                765,
+                771
+              ],
+              "name": "soft_memory",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "honest zero in normal operation). The Beast dashboard's OVERLOAD tile reads this.",
+              "lines": [
+                776,
+                778
+              ],
+              "name": "overload_sheds",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                780,
+                782
+              ],
+              "name": "outage_absorbed",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "byte-identical.",
+              "lines": [
+                789,
+                794
+              ],
+              "name": "observe_rtt",
+              "signature": "(&mut self, rtt_ms: f64)",
+              "type": "method"
+            },
+            {
+              "docstring": "drop-rate memory horizon scales with the path RTT too.",
+              "lines": [
+                800,
+                805
+              ],
+              "name": "effective_interval_ms",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                807,
+                813
+              ],
+              "name": "pipeline_depth",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                814,
+                821
+              ],
+              "name": "queue_depth",
+              "signature": "(&self, priority: ProbePriority)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                823,
+                828
+              ],
+              "name": "tin_depth",
+              "signature": "(&self, tin: usize)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                830,
+                832
+              ],
+              "name": "tin_has_work",
+              "signature": "(&self, tin: usize)",
+              "type": "method"
+            },
+            {
+              "docstring": "============================ ENQUEUE (CakeScheduler.kt:183-230) ============================",
+              "lines": [
+                836,
+                842
+              ],
+              "name": "enqueue",
+              "signature": "(&mut self, request: ProbeRequest)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                844,
+                905
+              ],
+              "name": "enqueue_aqm",
+              "signature": "(&mut self, request: ProbeRequest)",
+              "type": "method"
+            },
+            {
+              "docstring": "Flows emptied here are lazily retired by dispatch (`retire_flow_if_empty`).",
+              "lines": [
+                918,
+                961
+              ],
+              "name": "overload_shed",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Uses an explicit `now_ms` for deterministic AQM sojourn (the Kotlin `dispatchAt` test seam).",
+              "lines": [
+                967,
+                972
+              ],
+              "name": "dispatch",
+              "signature": "(&mut self, cwnd: i32, now_ms: i64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                974,
+                996
+              ],
+              "name": "dispatch_legacy",
+              "signature": "(&mut self, cwnd: i32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                998,
+                1056
+              ],
+              "name": "dispatch_aqm",
+              "signature": "(&mut self, cwnd: i32, now_ms: i64)",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2014 but only droppable probes (CRITICAL real queries are floor-protected).",
+              "lines": [
+                1061,
+                1165
+              ],
+              "name": "serve_one_from_tin",
+              "signature": "(&mut self, tin: usize, now_ms: i64)",
+              "type": "method"
+            },
+            {
+              "docstring": "Pop the head probe off a flow's queue (returns None if flow/queue absent).",
+              "lines": [
+                1168,
+                1172
+              ],
+              "name": "pop_head_of_flow",
+              "signature": "(&mut self, tin: usize, key: i64)",
+              "type": "method"
+            },
+            {
+              "docstring": "round-robin. Still-backlogged served flows demote to the tail of old-flows.",
+              "lines": [
+                1176,
+                1210
+              ],
+              "name": "advance_flow",
+              "signature": "(&mut self, tin: usize, key: i64, was_sparse: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "`retireFlowIfEmpty` (CakeScheduler.kt:431-438): remove an empty flow from its lists + bucket.",
+              "lines": [
+                1213,
+                1239
+              ],
+              "name": "retire_flow_if_empty",
+              "signature": "(&mut self, tin: usize, key: i64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1241,
+                1245
+              ],
+              "name": "remove_new",
+              "signature": "(&mut self, tin: usize, key: i64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1246,
+                1250
+              ],
+              "name": "remove_old",
+              "signature": "(&mut self, tin: usize, key: i64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1252,
+                1258
+              ],
+              "name": "purge_stale_list_entry",
+              "signature": "(&mut self, tin: usize, key: i64, from_new: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "with no cross-class view) and the YeAH failover machinery owns the real problem.",
+              "lines": [
+                1268,
+                1288
+              ],
+              "name": "on_timeout_or_fail",
+              "signature": "(&mut self, priority: ProbePriority)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1289,
+                1294
+              ],
+              "name": "on_success",
+              "signature": "(&mut self, priority: ProbePriority)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            577,
+            1295
+          ],
+          "name": "TortaScheduler",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1298,
+                1300
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1297,
+            1301
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "docstring": "(endpoint_idx, qname) -> 64-bit flow key (CakeScheduler.kt:454-459). FNV-ish, exact.",
+          "lines": [
+            1304,
+            1311
+          ],
+          "name": "flow_key",
+          "signature": "(endpoint_idx: i32, qname: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "is droppable; a CRITICAL real query is floor-protected.",
+          "lines": [
+            1315,
+            1317
+          ],
+          "name": "is_droppable",
+          "signature": "(req: &ProbeRequest)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1329,
+                1331
+              ],
+              "name": "sched_with",
+              "signature": "(weights: [i64; TIN_COUNT])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1336,
+                1345
+              ],
+              "name": "a_zero_weight_does_not_panic_and_clamps_to_one",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1349,
+                1356
+              ],
+              "name": "negative_weights_clamp_to_one",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1360,
+                1366
+              ],
+              "name": "valid_weights_pass_through_untouched",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1371,
+                1384
+              ],
+              "name": "heavier_tins_never_wait_longer",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1388,
+                1391
+              ],
+              "name": "an_idle_scheduler_reports_an_empty_census",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1326,
+            1392
+          ],
+          "name": "tin_weight_clamp_tests",
+          "type": "module"
+        }
+      ]
+    },
+    "spec_binding.rs": {
+      "hash": "cd6b7ecd8ed5",
+      "indexed_at": "2026-08-01T04:01:07.724985+00:00",
+      "language": "rust",
+      "lines": 416,
+      "mtime_ns": 1785556379689898600,
+      "size": 21089,
+      "symbols": [
+        {
+          "docstring": "Repository root, derived from this crate's manifest dir (`rust/torta_core`).",
+          "lines": [
+            54,
+            58
+          ],
+          "name": "repo_root",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "distinctive region first, so there is nothing clever to get wrong here.",
+          "lines": [
+            62,
+            79
+          ],
+          "name": "ints_in",
+          "signature": "(s: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            86,
+            109
+          ],
+          "name": "the_kotlin_tin_ladder_matches_the_engine",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            115,
+            145
+          ],
+          "name": "the_slint_basin_caps_match_the_engine",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            153,
+            174
+          ],
+          "name": "the_slint_caps_cite_a_file_that_exists",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            192,
+            251
+          ],
+          "name": "the_torta_ui_fill_denominators_match_the_engine",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            258,
+            267
+          ],
+          "name": "the_tin_ladder_is_strictly_increasing",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            323,
+            416
+          ],
+          "name": "the_netstack_forwarder_is_not_wired_to_the_beast",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "tests.rs": {
+      "hash": "8d5dc3e67ffa",
+      "indexed_at": "2026-07-31T23:18:18.829970+00:00",
+      "language": "rust",
+      "lines": 2478,
+      "mtime_ns": 1785539837225118500,
+      "size": 106590,
+      "symbols": [
+        {
+          "lines": [
+            29,
+            31
+          ],
+          "name": "CaptureSink",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                34,
+                39
+              ],
+              "name": "on_metrics",
+              "signature": "(&self, snapshot: BeastSnapshot)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            33,
+            40
+          ],
+          "name": "BeastMetricSink",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            47,
+            52
+          ],
+          "name": "legacy_initial_state_is_slow_start_cwnd1_no_base_rtt",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            55,
+            61
+          ],
+          "name": "legacy_first_sample_seeds_base_rtt_without_moving_cwnd",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            64,
+            78
+          ],
+          "name": "legacy_slow_start_doubles_cwnd_on_free_bandwidth_up_to_max",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            81,
+            89
+          ],
+          "name": "legacy_congestion_during_slow_start_exits_to_competing_and_halves",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            92,
+            102
+          ],
+          "name": "legacy_yeah_additive_plus_one_on_free_bandwidth_post_slow_start",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            105,
+            119
+          ],
+          "name": "legacy_competition_post_slow_start_halves_cwnd_exact_integer",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            122,
+            130
+          ],
+          "name": "legacy_stable_zone_moves_competing_into_recovery",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            133,
+            138
+          ],
+          "name": "legacy_adaptive_timeout_default_then_floored_at_500",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "=====================================================================================",
+          "lines": [
+            144,
+            146
+          ],
+          "name": "canonical",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            149,
+            155
+          ],
+          "name": "canonical_seeds_separate_rtt_base_floor_without_disturbing_legacy_fields",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            158,
+            165
+          ],
+          "name": "canonical_slow_start_doubles_on_free_low_rtt",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            168,
+            185
+          ],
+          "name": "canonical_precautionary_sheds_when_q_exceeds_threshold",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            188,
+            207
+          ],
+          "name": "canonical_isolated_loss_gentle_clamp_never_below_half",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            210,
+            224
+          ],
+          "name": "canonical_proven_contention_full_reno_halve",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            227,
+            238
+          ],
+          "name": "canonical_failover_hard_resets_window_and_floor",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "=====================================================================================",
+          "lines": [
+            244,
+            252
+          ],
+          "name": "probe",
+          "signature": "(domain: &str, priority: ProbePriority, enq: i64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            255,
+            262
+          ],
+          "name": "torta_legacy_strict_priority_serves_critical_first",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            265,
+            276
+          ],
+          "name": "torta_legacy_overflow_drops_when_remaining_depth_exceeds_limit",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "=====================================================================================",
+          "lines": [
+            282,
+            284
+          ],
+          "name": "baseline_sched",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            287,
+            295
+          ],
+          "name": "baseline_critical_floor_protected_never_shed",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            298,
+            314
+          ],
+          "name": "baseline_codel_grace_then_drop_on_sustained_sojourn",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            317,
+            331
+          ],
+          "name": "baseline_valve_rises_on_fail_and_caps",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            334,
+            343
+          ],
+          "name": "baseline_drr_sparse_served_counter_increments",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            350,
+            383
+          ],
+          "name": "sfq_cwnd1_no_cross_tin_starvation",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            386,
+            400
+          ],
+          "name": "sfq_stride_matches_weights",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            403,
+            432
+          ],
+          "name": "sfq_activation_rebase_pulls_idle_tin_up_not_down",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            439,
+            443
+          ],
+          "name": "beast_construction_and_handle",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            446,
+            463
+          ],
+          "name": "beast_apply_sample_grows_cwnd_and_pushes_snapshot",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            466,
+            479
+          ],
+          "name": "beast_dispatch_paced_by_cwnd",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            482,
+            493
+          ],
+          "name": "beast_udp_sample_updates_udp_base_rtt_without_changing_cwnd",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            496,
+            512
+          ],
+          "name": "beast_on_loss_canonical_does_not_collapse_below_half",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            515,
+            521
+          ],
+          "name": "beast_no_sink_no_panic",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            529,
+            546
+          ],
+          "name": "pseudo_rand_is_in_unit_range_for_all_inputs",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            555,
+            574
+          ],
+          "name": "snapshot_pull_matches_push_no_drift",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            578,
+            587
+          ],
+          "name": "snapshot_pull_works_without_sink",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            591,
+            596
+          ],
+          "name": "snapshot_pull_reflects_udp_base_rtt",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            602,
+            625
+          ],
+          "name": "tcp_display_lane_fed_by_dials_only_and_never_drives_the_window",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            631,
+            673
+          ],
+          "name": "shaped_plane_reports_real_flow_windows_and_never_drives_the_window",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            677,
+            688
+          ],
+          "name": "shaped_losses_count_the_reaction_not_the_io_event",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            693,
+            703
+          ],
+          "name": "snapshot_carries_both_profiles",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            707,
+            715
+          ],
+          "name": "snapshot_carries_canonical_rtt_base_floor",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            721,
+            732
+          ],
+          "name": "snapshot_carries_per_tin_valve",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            736,
+            744
+          ],
+          "name": "snapshot_legacy_aqm_has_no_valve",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            753,
+            793
+          ],
+          "name": "log_event_writes_query_beast_log_when_bound",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            798,
+            823
+          ],
+          "name": "log_event_unbound_is_silent_noop",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            827,
+            838
+          ],
+          "name": "query_beast_log_path_is_under_the_bound_dir",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            849,
+            872
+          ],
+          "name": "apply_samples_batch_pushes_once_and_matches_per_sample_state",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            876,
+            887
+          ],
+          "name": "apply_samples_empty_batch_is_a_no_op",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            891,
+            911
+          ],
+          "name": "apply_udp_samples_batch_folds_ewma_once_pushed",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            927,
+            929
+          ],
+          "name": "soft_sched",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            935,
+            956
+          ],
+          "name": "softcake_hard_ceiling_sheds_stale_head_baseline_serves_it",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            964,
+            1003
+          ],
+          "name": "softcake_count_memory_reconverges_faster_after_brief_dip",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1009,
+            1030
+          ],
+          "name": "mochi_freeze_window_absorbs_correlated_fail_burst",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1043,
+            1063
+          ],
+          "name": "mochi_streak_cap_is_8_and_the_breach_is_loud",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1069,
+            1099
+          ],
+          "name": "mochi_escalation_opens_faster_under_sustained_failure",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1106,
+            1139
+          ],
+          "name": "mochi_idle_decay_recovers_valve_baseline_stays_stuck",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1144,
+            1156
+          ],
+          "name": "mochi_success_decay_matches_baseline_law",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1161,
+            1167
+          ],
+          "name": "softcake_critical_floor_protection_holds",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1173,
+            1217
+          ],
+          "name": "softcake_ab_post_outage_recovery_surpasses_baseline",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1221,
+            1228
+          ],
+          "name": "softcake_snapshot_reports_profile",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "=====================================================================================",
+          "lines": [
+            1235,
+            1237
+          ],
+          "name": "linerate",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1242,
+            1255
+          ],
+          "name": "linerate_udp_fast_samples_grow_cwnd_canonical_stays_blind",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1260,
+            1275
+          ],
+          "name": "linerate_udp_congestion_sheds_canonical_ignores",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1280,
+            1296
+          ],
+          "name": "linerate_single_spike_holds_window_canonical_sheds",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1301,
+            1311
+          ],
+          "name": "linerate_sustained_congestion_still_sheds",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1317,
+            1332
+          ],
+          "name": "linerate_random_loss_keeps_seven_eighths_canonical_halves",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1338,
+            1361
+          ],
+          "name": "linerate_big_queue_loss_drains_half_canonical_barely_reduces",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1367,
+            1394
+          ],
+          "name": "linerate_zeta_hysteresis_keeps_competition_memory",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1399,
+            1413
+          ],
+          "name": "linerate_loss_halves_memory_canonical_resets",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1419,
+            1433
+          ],
+          "name": "linerate_per_family_floors_no_cross_poison",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1439,
+            1462
+          ],
+          "name": "linerate_failover_clears_all_linerate_state",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1474,
+            1497
+          ],
+          "name": "linerate_fair_share_floor_parks_sustained_congestion_loss_still_pierces",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1502,
+            1515
+          ],
+          "name": "linerate_fair_share_zeta_unlearns",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1520,
+            1538
+          ],
+          "name": "linerate_fair_share_loss_decay_floors_at_min_unlearned_stays_zero",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1548,
+            1576
+          ],
+          "name": "linerate_rho_interrupted_congestion_takes_the_surgical_backoff",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1584,
+            1605
+          ],
+          "name": "linerate_rho_sustained_congestion_halves_and_the_counter_survives_the_loss",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1612,
+            1631
+          ],
+          "name": "linerate_rho_counter_snaps_on_fast_and_middle_zone_but_memory_survives",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1639,
+            1656
+          ],
+          "name": "linerate_udp_fair_share_parks_and_loss_pierces",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1673,
+            1688
+          ],
+          "name": "linerate_mixed_family_fair_shares_are_per_family",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1695,
+            1707
+          ],
+          "name": "linerate_alternating_jitter_never_sheds_growth_survives",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1714,
+            1731
+          ],
+          "name": "linerate_udp_floor_releases_after_improvement",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1738,
+            1765
+          ],
+          "name": "yeah_nonfinite_samples_are_noops_both_ears",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1771,
+            1793
+          ],
+          "name": "beast_linerate_udp_fair_share_end_to_end_batch_agrees",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1799,
+            1827
+          ],
+          "name": "beast_linerate_udp_drives_cwnd_batch_twin_agrees",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1834,
+            1890
+          ],
+          "name": "wiring_snapshot_carries_linerate_softcake_telemetry",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1897,
+            1916
+          ],
+          "name": "live_feed_udp_family_moves_the_udp_lane",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1919,
+            1932
+          ],
+          "name": "live_feed_tcp_family_moves_the_shared_window",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1935,
+            1952
+          ],
+          "name": "live_feed_ignores_no_forward_and_poison_samples",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1959,
+            1985
+          ],
+          "name": "classify_priority_matches_nautilus_diffserv_map",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1988,
+            2012
+          ],
+          "name": "feed_aqm_into_enqueues_by_tin_and_tallies_throughput",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2015,
+            2035
+          ],
+          "name": "aqm_retention_fetch_max_holds_the_session_high_water",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2038,
+            2048
+          ],
+          "name": "feed_aqm_into_fail_outcome_takes_the_timeout_path_without_panic",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2051,
+            2062
+          ],
+          "name": "live_beast_aqm_retention_export_is_nine_slots",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2065,
+            2105
+          ],
+          "name": "live_tune_surface_swaps_profiles_and_tunables",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2120,
+            2137
+          ],
+          "name": "rungd_rtt_coupled_interval_stretches_grace_softcake_only",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2146,
+            2167
+          ],
+          "name": "rungd_rtt_interval_clamped_floor_and_cap",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2174,
+            2202
+          ],
+          "name": "rungd_dango_outage_cross_tin_fails_absorbed_softcake",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2207,
+            2217
+          ],
+          "name": "rungd_dango_outage_law_inert_under_baseline",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2225,
+            2240
+          ],
+          "name": "rungd_beast_facade_udp_rtt_feed_couples_codel_clock",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2250,
+            2272
+          ],
+          "name": "runge_overload_cap_sheds_fattest_flow_head_not_the_arrival",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2278,
+            2298
+          ],
+          "name": "runge_overload_tiebreak_sheds_the_stalest_head",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2303,
+            2310
+          ],
+          "name": "runge_overload_law_inert_under_baseline",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2321,
+            2341
+          ],
+          "name": "linerate_local_echo_never_poisons_floors_or_window",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2356,
+            2378
+          ],
+          "name": "snapshot_carries_live_doing_reno_now",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2383,
+            2393
+          ],
+          "name": "snapshot_doing_reno_now_is_honest_zero_when_calm",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2400,
+            2415
+          ],
+          "name": "canonical_brain_leaves_linerate_only_metrics_at_zero",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2428,
+            2478
+          ],
+          "name": "every_profile_has_an_independent_udp_congestion_algorithm",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "yeah.rs": {
+      "hash": "0a486cb2910c",
+      "indexed_at": "2026-07-31T23:02:57.962967+00:00",
+      "language": "rust",
+      "lines": 978,
+      "mtime_ns": 1785537635088593100,
+      "size": 46350,
+      "symbols": [
+        {
+          "lines": [
+            94,
+            97
+          ],
+          "name": "SampleFamily",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            104,
+            163
+          ],
+          "name": "YeahController",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            172,
+            190
+          ],
+          "name": "Brain",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "The same starting state a fresh controller gives the TCP family (`with_profile`).",
+              "lines": [
+                194,
+                211
+              ],
+              "name": "fresh",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            192,
+            212
+          ],
+          "name": "Brain",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Default construction \u2014 Legacy profile, original constants (the Kotlin no-arg path).",
+              "lines": [
+                216,
+                218
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Construct with a profile + the original tunables (YeahController.kt:35-47).",
+              "lines": [
+                221,
+                252
+              ],
+              "name": "with_profile",
+              "signature": "(profile: YeahProfile)",
+              "type": "method"
+            },
+            {
+              "docstring": "Load a family's brain. TCP's lives in the flat fields; UDP's in `udp_brain`.",
+              "lines": [
+                255,
+                275
+              ],
+              "name": "load_brain",
+              "signature": "(&self, family: SampleFamily)",
+              "type": "method"
+            },
+            {
+              "docstring": "TCP path's behaviour is bit-for-bit what it was before the split.",
+              "lines": [
+                279,
+                299
+              ],
+              "name": "store_brain",
+              "signature": "(&mut self, family: SampleFamily, b: Brain)",
+              "type": "method"
+            },
+            {
+              "docstring": "no independent UDP brain runs, it reports the shared window so callers see one truth.",
+              "lines": [
+                305,
+                307
+              ],
+              "name": "udp_cwnd",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The UDP family's phase, on whichever profile is active. -/",
+              "lines": [
+                310,
+                312
+              ],
+              "name": "udp_mode",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "whole-number stepper can carry the 1.05 / 1.25 ratios as 1050 / 1250.",
+              "lines": [
+                319,
+                329
+              ],
+              "name": "set_tunables",
+              "signature": "(&mut self, max_window: i32, free_thresh_milli: i32, compete_thresh_milli: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "---- Read accessors (the @Volatile var ... private set surface) ----",
+              "lines": [
+                332,
+                334
+              ],
+              "name": "max_window",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                335,
+                337
+              ],
+              "name": "cwnd",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                338,
+                340
+              ],
+              "name": "mode",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                341,
+                343
+              ],
+              "name": "base_rtt",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "gated by `dead_code` because the non-test lib build only reads it via the canonical path.",
+              "lines": [
+                346,
+                348
+              ],
+              "name": "rtt_base_floor",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                349,
+                351
+              ],
+              "name": "q_packets",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                352,
+                354
+              ],
+              "name": "reno_count",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                355,
+                357
+              ],
+              "name": "fast_mode",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "rule's actual input.",
+              "lines": [
+                365,
+                367
+              ],
+              "name": "q_smooth",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "floor (`rtt_base_floor` doubles as the TCP floor).",
+              "lines": [
+                370,
+                372
+              ],
+              "name": "udp_floor",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "memory (`reno_count`) survives until it fills.",
+              "lines": [
+                375,
+                377
+              ],
+              "name": "fast_streak",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "one spike holds the window.",
+              "lines": [
+                380,
+                382
+              ],
+              "name": "congest_streak",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "0 the instant any non-congested sample lands. The #25 Beast dashboard lift will consume this.",
+              "lines": [
+                386,
+                388
+              ],
+              "name": "doing_reno_now",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "competing (tcp_yeah.c:37); 0 = unlearned. WIRED: carried by `BeastSnapshot::fair_cwnd`.",
+              "lines": [
+                391,
+                393
+              ],
+              "name": "fair_cwnd",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "alone, so it can never be seeded or floored by what the TCP flow saw.",
+              "lines": [
+                397,
+                399
+              ],
+              "name": "udp_fair_cwnd",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "canonical). Samples arriving here are TCP-family (probe transactions).",
+              "lines": [
+                403,
+                411
+              ],
+              "name": "apply",
+              "signature": "(&mut self, rtt: f64)",
+              "type": "method"
+            },
+            {
+              "docstring": "result does not depend on WHICH profile computed it).",
+              "lines": [
+                419,
+                483
+              ],
+              "name": "apply_family",
+              "signature": "(&mut self, rtt: f64, family: SampleFamily)",
+              "type": "method"
+            },
+            {
+              "docstring": "just LineRate \u2014 the formulae differ between profiles, the independence law does not.",
+              "lines": [
+                489,
+                567
+              ],
+              "name": "apply_canonical_family",
+              "signature": "(&mut self, rtt: f64, family: SampleFamily)",
+              "type": "method"
+            },
+            {
+              "docstring": "is stored, so it can never re-enter a decision.",
+              "lines": [
+                578,
+                584
+              ],
+              "name": "feed_metric_base_rtt",
+              "signature": "(&mut self, rtt: f64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                586,
+                591
+              ],
+              "name": "family_floor",
+              "signature": "(&self, family: SampleFamily)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                593,
+                598
+              ],
+              "name": "set_family_floor",
+              "signature": "(&mut self, family: SampleFamily, v: f64)",
+              "type": "method"
+            },
+            {
+              "docstring": "inputs, judged against their OWN true-min floor.",
+              "lines": [
+                606,
+                619
+              ],
+              "name": "apply_udp",
+              "signature": "(&mut self, rtt: f64)",
+              "type": "method"
+            },
+            {
+              "docstring": "true-min, the FLOOR_LEAK law (identical to the Udp branch of `apply_linerate`, but nothing else).",
+              "lines": [
+                627,
+                636
+              ],
+              "name": "observe_udp_floor",
+              "signature": "(&mut self, rtt: f64)",
+              "type": "method"
+            },
+            {
+              "docstring": "`on_loss_linerate` (Canonical feeds one raw sample into an inverted clamp).",
+              "lines": [
+                649,
+                828
+              ],
+              "name": "apply_linerate",
+              "signature": "(&mut self, rtt: f64, family: SampleFamily)",
+              "type": "method"
+            },
+            {
+              "docstring": "Canonical loss/timeout reaction (YeahController.kt:273-296) \u2014 the H2/M1 fix.",
+              "lines": [
+                831,
+                857
+              ],
+              "name": "on_loss_or_timeout",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "HIGHER post-loss window) \u2014 kept there untouched, its pins depend on it; the fix lives here.",
+              "lines": [
+                864,
+                866
+              ],
+              "name": "on_loss_linerate",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "cross-talk on the way down that `udp_tick` growth was on the way up.",
+              "lines": [
+                871,
+                908
+              ],
+              "name": "on_loss_linerate_family",
+              "signature": "(&mut self, family: SampleFamily)",
+              "type": "method"
+            },
+            {
+              "docstring": "no profile silently ignores a loss.",
+              "lines": [
+                914,
+                920
+              ],
+              "name": "on_udp_loss_or_timeout",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Timeout penalty (YeahController.kt:299-305) \u2014 Legacy signals competition.",
+              "lines": [
+                923,
+                931
+              ],
+              "name": "apply_timeout_penalty",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Hard failover penalty (YeahController.kt:308-321) \u2014 relay-switch hard reset.",
+              "lines": [
+                934,
+                962
+              ],
+              "name": "apply_failover_penalty",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "(YeahController.kt:324-327).",
+              "lines": [
+                966,
+                971
+              ],
+              "name": "adaptive_timeout_ms",
+              "signature": "(&self, jitter_ms: f64)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            214,
+            972
+          ],
+          "name": "YeahController",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                975,
+                977
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            974,
+            978
+          ],
+          "name": "Default",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:01:07.726830+00:00",
+  "version": "1.0"
+}

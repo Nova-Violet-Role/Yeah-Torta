@@ -1,0 +1,70 @@
+[bindings.swift.custom_types.Url]
+# Name of the type in the Swift code
+type_name = "URL"
+# Modules that need to be imported
+imports = ["Foundation"]
+# Function to lift a string from Rust into a Swift URL.
+lift = "URL(string: {})!"
+# and to lower it to a Rust string
+lower = "String(describing: {})"
+
+[bindings.swift.custom_types.TimeIntervalMs]
+# Name of the type in the Swift code
+type_name = "Date"
+# Modules that need to be imported
+imports = ["Foundation"]
+lift = "Date(timeIntervalSince1970: TimeInterval({}) / 1000.0)"
+lower = "Int64({}.timeIntervalSince1970 * 1000.0)"
+
+[bindings.swift.custom_types.TimeIntervalSecDbl]
+# Name of the type in the Swift code
+type_name = "Date"
+# Modules that need to be imported
+imports = ["Foundation"]
+# Functions to convert between f64 and TimeIntervalSecDbl
+lift = "Date(timeIntervalSince1970: {})"
+lower = "{}.timeIntervalSince1970"
+
+[bindings.swift.custom_types.TimeIntervalSecFlt]
+# Name of the type in the Swift code
+type_name = "Date"
+# Modules that need to be imported
+imports = ["Foundation"]
+# Functions to convert between f32 and TimeIntervalSecFlt
+# (here we use the deprecated names instead of `lift` and `lower`)
+into_custom = "Date(timeIntervalSince1970: TimeInterval({}))"
+from_custom = "Float({}.timeIntervalSince1970)"
+
+[bindings.ruby.custom_types.Url]
+# Ruby's builtin URI class acts as the native URI type.
+type_name = "URI"
+imports = ["uri"]
+# Lift a string from Rust into a Ruby URI.
+lift = "URI.parse({})"
+# Lower a Ruby URI into a Rust string.
+lower = "{}.to_s"
+
+[bindings.kotlin]
+package_name = "customtypes"
+
+[bindings.kotlin.custom_types.Url]
+# Name of the type in the Kotlin code
+type_name = "URL"
+# Classes that need to be imported
+imports = [ "java.net.URI", "java.net.URL" ]
+# Function to lift a string from Rust into a Kotlin URL.
+lift = "URI({}).toURL()"
+# and to lower it to a Rust string
+lower = "{}.toString()"
+
+[bindings.python.custom_types.Url]
+# We're going to be the urllib.parse.ParseResult class, which is the closest
+# thing Python has to a Url class. 
+
+# `type_name` is optional, but it improves Python's optional type-checking
+type_name = "urllib.parse.ParseResult"
+imports = ["urllib.parse"]
+# Function to lift a string from Rust into a Python URL.
+lift = "urllib.parse.urlparse({})"
+# and to lower it to a Rust string
+lower = "urllib.parse.urlunparse({})"

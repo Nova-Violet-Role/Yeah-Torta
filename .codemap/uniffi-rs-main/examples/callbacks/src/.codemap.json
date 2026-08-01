@@ -1,0 +1,264 @@
+{
+  "directory": "uniffi-rs-main\\examples\\callbacks\\src",
+  "files": {
+    "callbacks.udl": {
+      "hash": "0e46d43c1979",
+      "indexed_at": "2026-07-24T20:35:12.294811+00:00",
+      "language": "udl",
+      "lines": 28,
+      "mtime_ns": 1782136568000000000,
+      "size": 612,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            3
+          ],
+          "name": "callbacks",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                8
+              ],
+              "name": "name",
+              "signature": "() : string",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            7,
+            9
+          ],
+          "name": "SimCard",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            12,
+            15
+          ],
+          "name": "TelephoneError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                18,
+                18
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "call",
+              "signature": "(SimCard sim, CallAnswerer answerer) : string",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            17,
+            21
+          ],
+          "name": "Telephone",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "answer",
+              "signature": "() : string",
+              "type": "method"
+            }
+          ],
+          "docstring": "callback interfaces are discouraged now that foreign code can implement traits, but here's one!",
+          "lines": [
+            25,
+            28
+          ],
+          "name": "CallAnswerer",
+          "type": "callback_interface"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "1e0d2d801481",
+      "indexed_at": "2026-07-24T20:35:12.295787+00:00",
+      "language": "rust",
+      "lines": 93,
+      "mtime_ns": 1782136568000000000,
+      "size": 2320,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            13
+          ],
+          "name": "TelephoneError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                18,
+                20
+              ],
+              "name": "from",
+              "signature": "(_: uniffi::UnexpectedUniFFICallbackError)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Callback Interfaces section of the handbook for more info.",
+          "lines": [
+            17,
+            21
+          ],
+          "name": "TelephoneError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            25,
+            27
+          ],
+          "name": "SimCard",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            29,
+            29
+          ],
+          "name": "RustySim",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                31,
+                33
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            30,
+            34
+          ],
+          "name": "SimCard",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            38,
+            40
+          ],
+          "name": "get_sim_cards",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "The call-answer, callback interface.",
+          "lines": [
+            43,
+            45
+          ],
+          "name": "CallAnswerer",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            48,
+            48
+          ],
+          "name": "Telephone",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                50,
+                52
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                54,
+                65
+              ],
+              "name": "call",
+              "signature": "(\n        &self,\n        // Traits are Arc<>, callbacks Box<>.\n        sim: Arc<dyn SimCard>,\n   ...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            49,
+            66
+          ],
+          "name": "Telephone",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            70,
+            70
+          ],
+          "name": "FancyTelephone",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                75,
+                77
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Exact same signature as the UDL version.",
+              "lines": [
+                80,
+                90
+              ],
+              "name": "call",
+              "signature": "(\n        &self,\n        sim: Arc<dyn SimCard>,\n        answerer: Box<dyn CallAnswerer>,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            73,
+            91
+          ],
+          "name": "FancyTelephone",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.643418+00:00",
+  "version": "1.0"
+}

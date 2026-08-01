@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+# Yeah! Tortä — THE BUDGET GATE
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+#
+# The goal's [!PERFORMANCE] block: "Budget then hold it ... Each needs a number, a measurement, and
+# a regression that fails LOUDLY." This is the regression. It measures the running app on the AVD
+# and EXITS NON-ZERO when any budget is exceeded.
+#
+# THE CEILINGS ARE JUSTIFIED FROM FIRST PRINCIPLES, NOT TUNED TO WHAT PASSES TODAY. A budget set to
+# the current measurement is not a budget, it is a screenshot: it goes red on noise and teaches
+# everyone to ignore it. Each ceiling below names the external standard it derives from, and the
+# headroom over today's measurement is stated so a drift of that size is caught before a user sees
+# it.
+#
+# A MISSING MEASUREMENT IS A FAILURE, NEVER A PASS. That is the same trap as a missing golden: a
+# gate that treats "could not measure" as "nothing wrong" can never fail. Every probe below is
+# checked for emptiness FIRST.
+#
+# NEGATIVE CONTROL: `tools/budgets --self-test` forces every budget to 0 and asserts the gate goes
+# red. An instrument is GUILTY until proven able to FAIL.
+set -uo pipefail
+cd "$(dirname "$0")/.."
+ADB=./tools/tadb
+PKG=app.torta.yeah
+
+# --- THE BUDGETS ---------------------------------------------------------------------------------
+# COLD_START_MS: Android's own vitals call a cold start SLOW at 5000 ms. 3000 leaves the platform's
+#   own margin intact while catching a 40% regression over today's 2144 ms.
+# PSS_KB: the AVD is a 2 GB device; Android begins killing background apps well before 512 MB of
+#   PSS. 260 MB is half that headroom and ~40% above today's 184 MB.
+# RESOLVER_P95_MS: a DNS client typically gives up at 5000 ms. A p95 above 1200 ms means most of a
+#   page's lookups are visibly slow, so the gate fires long before the timeout does. Today: 502 ms.
+COLD_START_MS=${BUDGET_COLD_START_MS:-3000}
+PSS_KB=${BUDGET_PSS_KB:-266240}
+RESOLVER_P95_MS=${BUDGET_RESOLVER_P95_MS:-1200}
+
+if [ "${1:-}" = "--self-test" ]; then
+  # Force every ceiling to 0: a passing gate is IMPOSSIBLE, so a green here means the gate is broken.
+  COLD_START_MS=0; PSS_KB=0; RESOLVER_P95_MS=0
+  echo "SELF-TEST: every budget forced to 0 -- the gate MUST go red"
+fi
+
+fail=0
+check() { # name value ceiling unit
+  local name=$1 val=$2 ceil=$3 unit=$4
+  if [ -z "$val" ]; then
+    printf 'FAIL %-16s MEASUREMENT MISSING (never counted as a pass)\n' "$name"
+    fail=$((fail + 1)); return
+  fi
+  if [ "$val" -gt "$ceil" ]; then
+    printf 'FAIL %-16s %s%s > budget %s%s\n' "$name" "$val" "$unit" "$ceil" "$unit"
+    fail=$((fail + 1))
+  else
+    printf 'ok   %-16s %s%s <= %s%s\n' "$name" "$val" "$unit" "$ceil" "$unit"
+  fi
+}
+
+state=$($ADB get-state </dev/null 2>&1 | tail -1 | tr -d '\r')
+if [ "$state" != "device" ]; then
+  echo "FAIL: no device (get-state=[$state]). A gate that cannot measure must not report green."
+  exit 2
+fi
+
+ACT=$($ADB shell "cmd package resolve-activity --brief $PKG | tail -1" </dev/null 2>/dev/null | tr -d '\r')
+$ADB shell am force-stop $PKG </dev/null >/dev/null 2>&1
+sleep 4
+COLD=$($ADB shell "am start -W -n $ACT" </dev/null 2>/dev/null | tr -d '\r' | awk -F': *' '/^TotalTime:/{print $2}')
+sleep 10
+PSS=$($ADB shell "dumpsys meminfo $PKG" </dev/null 2>/dev/null | tr -d '\r' | awk '/TOTAL PSS:/{print $3; exit}')
+$ADB shell "run-as $PKG cat /data/data/$PKG/cache/query.log" </dev/null 2>/dev/null | tr -d '\r' \
+  | awk -F'\t' '{print $6}' | grep -oE '^[0-9]+' | awk '$1>0' | sort -n > /tmp/budget_ms.txt
+N=$(wc -l < /tmp/budget_ms.txt)
+if [ "$N" -gt 0 ]; then
+  P95=$(awk -v n="$N" 'NR==int(n*95/100)+0{print; exit}' /tmp/budget_ms.txt)
+else
+  P95=""   # deliberately empty -> check() fails it. No samples is not "fast".
+fi
+
+echo "--- Tortä budget gate ---"
+check cold_start "$COLD" "$COLD_START_MS" ms
+check pss        "$PSS"  "$PSS_KB"        KB
+check resolver_p95 "$P95" "$RESOLVER_P95_MS" ms
+echo "resolver samples (non-zero): $N"
+echo "$fail budget(s) exceeded"
+[ "$fail" -gt 0 ] && exit 1
+exit 0

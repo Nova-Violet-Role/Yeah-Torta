@@ -1,0 +1,72 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\regressions\\enum-without-i32-helpers\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "c5886844aa0f",
+      "indexed_at": "2026-07-24T20:35:12.621342+00:00",
+      "language": "rust",
+      "lines": 18,
+      "mtime_ns": 1782136568000000000,
+      "size": 392,
+      "symbols": [
+        {
+          "docstring": "/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file,",
+          "lines": [
+            5,
+            8
+          ],
+          "name": "Which",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            10,
+            16
+          ],
+          "name": "which",
+          "signature": "(arg: bool)",
+          "type": "function"
+        }
+      ]
+    },
+    "test.udl": {
+      "hash": "66645ad12ee0",
+      "indexed_at": "2026-07-24T20:35:12.621921+00:00",
+      "language": "udl",
+      "lines": 15,
+      "mtime_ns": 1782136568000000000,
+      "size": 482,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            11
+          ],
+          "name": "Which",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                14
+              ],
+              "name": "which",
+              "signature": "(boolean arg) : Which",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            13,
+            15
+          ],
+          "name": "regression_test_i356",
+          "type": "namespace"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.718965+00:00",
+  "version": "1.0"
+}

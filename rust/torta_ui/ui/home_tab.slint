@@ -1,0 +1,283 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä HOME tab — the dnsmasq × rethink HYBRID (OMEGA Stage-D · D3, charter step 8: the first
+// of the Design Finale's 4 tabs).
+//
+// The hybrid, made concrete:
+//   · the RETHINK half — ONE crown card: the app identity + the engine state + the MASTER switch
+//     (start/stop the shield), plain-words "what is my DNS doing right now" honesty.
+//   · the DNSMASQ half — the resolver counter block: QUERIES / ANSWERED / BLOCKED / CACHE HITS /
+//     STALE SERVED / CDN LOCAL, each tile wearing its OWNER pillar's brand accent (B7-G2 canon:
+//     blocked = the Warden eye, cache = the Masque violet, CDN local = the Centauri cyan).
+//   · the pillar HEALTH CHIPS — one compact row per pillar (live dot + honest status), tap →
+//     `open-pillar(id)` (the host routes to the ||| burger's private tabs, the D2 surface).
+//
+// DATA FLOW (house law): the host pushes typed truth, intents flow back as callbacks:
+//   engine-running / counters  <- the typed torta_core reads (`MaskSolver::snapshot()` counters +
+//                                 `Centauri::snapshot().served_locally` — REAL Records, never JSON)
+//   engine-toggled(on)         -> the module runner (Kotlin ModulesStateLoop's authority — the D09
+//                                 law; the spike .so never fakes a start)
+//   open-pillar(id)            -> the ||| burger's PILLARS section (the step-7 navigation surface)
+//
+// HONESTY FLAG: `host-live` — the ENGINE state lives with the Kotlin module runner, which the
+// spike-local .so cannot read (the D1 two-instance boundary). Until the Kotlin bridge pushes real
+// state, host-live stays false and the pane says PREVIEW — values shown are REAL spike-local reads,
+// never presented as the running engine (the felt-truth law).
+// This pane inherits Rectangle — embeddable from birth (the G2 idiom the D2 sections set).
+
+import { Monokuma } from "monokuma_palette.slint";
+import { SectionTitle, RowCard, AlertBanner, StatTile, ToggleSwitch } from "widgets.slint";
+import { PillarTabRow } from "advanced_burger.slint";
+import { ThemeBook, MotifWash } from "theme_tokens.slint";
+
+// One compact pillar health chip — accent spine, name + live dot, honest status; tap routes.
+component PillarChip inherits RowCard {
+    in property <PillarTabRow> chip;
+    callback tapped(string);
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Rectangle {
+            width: 4px;
+            border-radius: 2px;
+            background: root.chip.accent;
+        }
+        Text {
+            text: root.chip.name;
+            color: Monokuma.bone;
+            font-size: 11px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        VerticalLayout {
+            alignment: center;
+            Rectangle {
+                width: 8px;
+                height: 8px;
+                border-radius: 4px;
+                background: root.chip.live ? Monokuma.safe : Monokuma.iron;
+            }
+        }
+        Text {
+            horizontal-stretch: 1;
+            text: root.chip.status;
+            color: root.chip.live ? root.chip.accent : Monokuma.dim;
+            font-size: 9px;
+            font-weight: 700;
+            vertical-alignment: center;
+            wrap: word-wrap;
+        }
+    }
+    TouchArea {
+        height: max(parent.height, 48px);
+        y: (parent.height - self.height) / 2;
+        clicked => { root.tapped(root.chip.id); }
+    }
+}
+
+export component HomeTab inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.home; width: 100%; height: 100%; }
+    background: transparent;
+
+    // ── Host-pushed truth ──
+    in-out property <bool> host-live: false;
+    in-out property <bool> engine-running: false;
+    in-out property <string> engine-state-line: "engine state not yet pushed";
+    in-out property <int> queries: 0;
+    in-out property <int> answered: 0;
+    in-out property <int> blocked: 0;
+    in-out property <int> cache-hits: 0;
+    in-out property <int> stale-served: 0;
+    in-out property <int> served-local: 0;
+    in-out property <[PillarTabRow]> pillar-chips: [
+        { id: "warden", name: "WARDEN", blurb: "the per-app firewall courtroom", status: "no live read yet", live: false, accent: #d83a2c },
+        { id: "centauri", name: "CENTAURI", blurb: "the offline-CDN constellation", status: "no live read yet", live: false, accent: #28c8d8 },
+        { id: "masksolver", name: "MASKSOLVER", blurb: "the resolver & warm cache", status: "no live read yet", live: false, accent: #a78bfa },
+        { id: "beast", name: "BEAST", blurb: "the Tortä × YeAH TCP/UDP flow engine", status: "no live read yet", live: false, accent: #ffb454 },
+        { id: "rotation", name: "ROTATION", blurb: "rotates your DNS servers", status: "no live read yet", live: false, accent: #5e8bff },
+        { id: "inu", name: "WIRE CAKE INU", blurb: "no-root ADB self-elevation", status: "no live read yet", live: false, accent: #34b3a4 },
+        { id: "dnscrypt", name: "DNSCRYPT", blurb: "the encrypted-DNS resolver config", status: "no live read yet", live: false, accent: #e7ad42 },
+        // #15 UNDERGROUND H — the 8th pillar row, seated DIRECTLY UNDER DNSCRYPT (the standing
+        // directive): the DNSCrypt-native antivirus in his OWN space.
+        { id: "underground", name: "UNDERGROUND LAYER", blurb: "the DNSCrypt-native antivirus", status: "no live read yet", live: false, accent: #2fe26a },
+    ];
+
+    // ── Intents (the host owns the truth; no local echo on the master switch) ──
+    callback engine-toggled(bool);
+    callback open-pillar(string);
+
+    // ── Derived honesty (the felt-truth voice) ──
+    out property <string> crown-line: root.engine-running
+        ? "SHIELDED — queries ride the encrypted DNSCrypt tunnel"
+        : "OPEN — queries ride the plain system resolver";
+    out property <bool> warn-engine-off: !root.engine-running;
+    out property <bool> note-cold: root.engine-running && root.queries == 0;
+    out property <bool> note-preview: !root.host-live;
+
+    VerticalLayout {
+        padding: 12px;
+        spacing: 10px;
+
+        // ---- THE CROWN (the rethink half): identity + state + the master switch ----
+        Rectangle {
+            background: @linear-gradient(180deg, Monokuma.coal.with-alpha(0.70) 0%, Monokuma.night.with-alpha(0.48) 100%);
+            border-radius: 10px;
+            border-width: 1px;
+            border-color: root.engine-running ? Monokuma.safe : Monokuma.iron;
+            HorizontalLayout {
+                padding: 14px;
+                spacing: 12px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    spacing: 4px;
+                    HorizontalLayout {
+                        spacing: 8px;
+                        Text {
+                            text: "YEAH! TORTÄ";
+                            color: Monokuma.bone;
+                            font-size: 20px;
+                            font-weight: 900;
+                        }
+                        VerticalLayout {
+                            alignment: center;
+                            Rectangle {
+                                width: 10px;
+                                height: 10px;
+                                border-radius: 5px;
+                                background: root.engine-running ? Monokuma.safe : Monokuma.risk;
+                            }
+                        }
+                        Rectangle { }
+                    }
+                    Text {
+                        text: root.crown-line;
+                        color: root.engine-running ? Monokuma.safe : Monokuma.caution;
+                        font-size: 11px;
+                        font-weight: 800;
+                        wrap: word-wrap;
+                    }
+                    Text {
+                        text: root.engine-state-line;
+                        color: Monokuma.ash;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+                VerticalLayout {
+                    alignment: center;
+                    spacing: 4px;
+                    ToggleSwitch {
+                        on: root.engine-running;
+                        on-color: Monokuma.safe;
+                        toggled(on) => { root.engine-toggled(on); }
+                    }
+                    Text {
+                        text: root.engine-running ? "ON" : "OFF";
+                        color: root.engine-running ? Monokuma.safe : Monokuma.ash;
+                        font-size: 9px;
+                        font-weight: 900;
+                        horizontal-alignment: center;
+                    }
+                }
+            }
+        }
+
+        // ---- The felt-truth banners ----
+        if root.note-preview : AlertBanner {
+            accent: Monokuma.caution;
+            message: "ENGINE OFF -> flip the master switch to start DNSCrypt. The resolver ledger below fills with live counts from the running engine once it is up.";
+        }
+        if root.warn-engine-off : AlertBanner {
+            accent: Monokuma.wound;
+            message: "THE TUNNEL IS DOWN -> DNS rides the system resolver in the clear. Flip the master switch to shield queries.";
+        }
+
+        // ---- THE COUNTERS (the dnsmasq half) — each tile wears its owner pillar's accent ----
+        SectionTitle { text: "THE RESOLVER LEDGER"; }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "queries"; value: "\{root.queries}"; tint: Monokuma.bone; horizontal-stretch: 1; }
+            StatTile { label: "answered"; value: "\{root.answered}"; tint: Monokuma.safe; horizontal-stretch: 1; }
+            StatTile { label: "blocked"; value: "\{root.blocked}"; tint: Monokuma.risk; horizontal-stretch: 1; }
+        }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "cache hits"; value: "\{root.cache-hits}"; tint: #a78bfa; horizontal-stretch: 1; }
+            StatTile { label: "stale served"; value: "\{root.stale-served}"; tint: Monokuma.caution; horizontal-stretch: 1; }
+            StatTile { label: "CDN local"; value: "\{root.served-local}"; tint: #28c8d8; horizontal-stretch: 1; }
+        }
+        if root.note-cold : Text {
+            text: "no queries yet — the ledger fills as traffic flows";
+            color: Monokuma.dim;
+            font-size: 10px;
+        }
+
+        // ---- #34 THE HOME CREST (Socio directive 2026-07-22) — the Tortä cake icon, upper
+        //      side above THE PILLARS header: three dessert tiers sampling the pillar
+        //      spectrum (inu teal → beast amber / masksolver violet → warden red / bone
+        //      frosting), a live candle flame, one orbiting ember. Pure animation-tick;
+        //      zero timers; the first living objects on the HOME surface. ----
+        home-crest := Rectangle {
+            height: 76px;
+            property <float> tk: animation-tick() / 1ms;
+            // #34B — the 8 pillar accents, the Hashira roster ringing the dessert throne:
+            //        inu / beast / masksolver / warden / rotation / underground / centauri / dnscrypt
+            property <[color]> ring: [#28c8d8, #ffb454, #a78bfa, #e6323c, #5e8bff, #2ecc71, #f5c2e7, #f39c12];
+            Rectangle {
+                x: parent.width / 2 - 36px; y: 6px;
+                width: 72px; height: 64px;
+                background: transparent;
+                // the plate
+                Rectangle { x: 4px; y: 56px; width: 64px; height: 4px; border-radius: 2px; background: #f5f5f0.with-alpha(0.25); }
+                // tier 1 — the base (inu teal → beast amber)
+                Rectangle { x: 8px; y: 40px; width: 56px; height: 16px; border-radius: 5px;
+                    background: @linear-gradient(90deg, #28c8d8.with-alpha(0.85) 0%, #ffb454.with-alpha(0.85) 100%); }
+                // tier 2 — the middle (masksolver violet → warden red)
+                Rectangle { x: 16px; y: 26px; width: 40px; height: 14px; border-radius: 5px;
+                    background: @linear-gradient(90deg, #a78bfa.with-alpha(0.85) 0%, #e6323c.with-alpha(0.75) 100%); }
+                // tier 3 — the crown tier (bone frosting)
+                Rectangle { x: 24px; y: 14px; width: 24px; height: 12px; border-radius: 5px; background: #f5f5f0.with-alpha(0.80); }
+                // the candle
+                Rectangle { x: 34px; y: 4px; width: 4px; height: 10px; border-radius: 2px; background: #f5f5f0.with-alpha(0.55); }
+                // the flame — flickers on the tick, never the same twice
+                Rectangle {
+                    property <float> fl: sin(360deg * Math.mod(home-crest.tk / 900.0, 1.0));
+                    x: 33.5px; y: -4px - 1.5px * self.fl;
+                    width: 5px; height: 7px + 2px * self.fl;
+                    border-radius: 2.5px;
+                    background: #ffb454.with-alpha(0.75 + 0.20 * self.fl);
+                }
+                // ---- #34B THE HASHIRA RING — the 8 pillars orbit the cake kingdom in
+                //      staggered eighths, each mote wearing its pillar accent; the radius
+                //      breathes so the roster never freezes (heroes circling the throne). ----
+                for i in [0, 1, 2, 3, 4, 5, 6, 7] : Rectangle {
+                    property <float> op: Math.mod(home-crest.tk / 6400.0 + i / 8.0, 1.0);
+                    property <float> rr: 38.0 + 5.0 * sin(360deg * Math.mod(home-crest.tk / 2600.0 + i / 8.0, 1.0));
+                    x: 34px + 1px * (self.rr * cos(360deg * self.op));
+                    y: 30px + 1px * (self.rr * 0.62 * sin(360deg * self.op));
+                    width: 5px; height: 5px; border-radius: 2.5px;
+                    background: home-crest.ring[i].with-alpha(0.50 + 0.35 * sin(360deg * Math.mod(home-crest.tk / 1300.0 + i / 8.0, 1.0)));
+                }
+                // ---- the steam — three wisps rising off the crown tier, forever ----
+                for w in [0, 1, 2] : Rectangle {
+                    property <float> wp: Math.mod(home-crest.tk / 3400.0 + w / 3.0, 1.0);
+                    x: 26px + 10px * w + 4px * sin(360deg * self.wp);
+                    y: 10px - 18px * self.wp;
+                    width: 3px; height: 8px; border-radius: 1.5px;
+                    background: #f5f5f0.with-alpha(0.30 * (1.0 - self.wp));
+                }
+            }
+        }
+
+        // ---- THE PILLARS — health chips, tap routes to the ||| private tabs ----
+        SectionTitle { text: "THE PILLARS"; }
+        for c in root.pillar-chips : PillarChip {
+            chip: c;
+            tapped(id) => { root.open-pillar(id); }
+        }
+        Rectangle { }
+    }
+}

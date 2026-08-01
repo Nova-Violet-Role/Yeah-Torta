@@ -1,0 +1,127 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\dns_engine\\beast",
+  "files": {
+    "BeastMetricSinkImpl.kt": {
+      "hash": "a10bb7193f25",
+      "indexed_at": "2026-08-01T03:59:31.983737+00:00",
+      "language": "kotlin",
+      "lines": 391,
+      "mtime_ns": 1785556376215900800,
+      "size": 20405,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                104,
+                106
+              ],
+              "name": "bindBeast",
+              "signature": "(beast: Beast?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                123
+              ],
+              "name": "updateEngineContext",
+              "signature": "(context: EngineContext?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                135,
+                149
+              ],
+              "name": "onMetrics",
+              "signature": "(snapshot: BeastSnapshot)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                165,
+                251
+              ],
+              "name": "writePillarLogs",
+              "signature": "(pushed: BeastSnapshot, m: DnsEngineMetrics)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                258,
+                262
+              ],
+              "name": "acquireLogLatch",
+              "signature": "(modeChanged: Boolean, now: Long)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            78,
+            272
+          ],
+          "name": "BeastMetricSinkImpl",
+          "type": "class"
+        },
+        {
+          "lines": [
+            280,
+            293
+          ],
+          "name": "EngineContext",
+          "type": "class"
+        },
+        {
+          "lines": [
+            300,
+            316
+          ],
+          "name": "foldEngineContext",
+          "signature": "(context: EngineContext?)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            334,
+            391
+          ],
+          "name": "toDnsEngineMetrics",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "BeastTuneBrain.kt": {
+      "hash": "60a62cafd586",
+      "indexed_at": "2026-08-01T03:59:32.287358+00:00",
+      "language": "kotlin",
+      "lines": 120,
+      "mtime_ns": 1785556376228900900,
+      "size": 7377,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                92,
+                119
+              ],
+              "name": "invoke",
+              "signature": "(rttMs: Double, warmupSamples: Int)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            70,
+            120
+          ],
+          "name": "BeastTuneBrain",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:32.288743+00:00",
+  "version": "1.0"
+}

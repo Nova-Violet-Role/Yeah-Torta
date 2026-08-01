@@ -1,0 +1,125 @@
+{
+  "directory": "uniffi-rs-main\\examples\\arithmetic\\src",
+  "files": {
+    "arithmetic.udl": {
+      "hash": "8554c6907ece",
+      "indexed_at": "2026-07-24T20:35:12.273636+00:00",
+      "language": "udl",
+      "lines": 16,
+      "mtime_ns": 1782136568000000000,
+      "size": 258,
+      "symbols": [
+        {
+          "lines": [
+            2,
+            4
+          ],
+          "name": "ArithmeticError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                8
+              ],
+              "name": "add",
+              "signature": "(u64 a, u64 b) : u64",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11,
+                11
+              ],
+              "name": "sub",
+              "signature": "(u64 a, u64 b) : u64",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                13
+              ],
+              "name": "div",
+              "signature": "(u64 dividend, u64 divisor) : u64",
+              "type": "method"
+            },
+            {
+              "lines": [
+                15,
+                15
+              ],
+              "name": "equal",
+              "signature": "(u64 a, u64 b) : boolean",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            6,
+            16
+          ],
+          "name": "arithmetic",
+          "type": "namespace"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "c454193443e9",
+      "indexed_at": "2026-07-24T20:35:12.274279+00:00",
+      "language": "rust",
+      "lines": 34,
+      "mtime_ns": 1782136568000000000,
+      "size": 919,
+      "symbols": [
+        {
+          "lines": [
+            6,
+            9
+          ],
+          "name": "ArithmeticError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            11,
+            14
+          ],
+          "name": "add",
+          "signature": "(a: u64, b: u64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            16,
+            19
+          ],
+          "name": "sub",
+          "signature": "(a: u64, b: u64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            21,
+            26
+          ],
+          "name": "div",
+          "signature": "(dividend: u64, divisor: u64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            28,
+            30
+          ],
+          "name": "equal",
+          "signature": "(a: u64, b: u64)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.639787+00:00",
+  "version": "1.0"
+}

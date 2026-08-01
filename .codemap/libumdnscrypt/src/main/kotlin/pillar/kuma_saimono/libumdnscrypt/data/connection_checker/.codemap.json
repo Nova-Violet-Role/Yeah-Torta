@@ -1,0 +1,193 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\data\\connection_checker",
+  "files": {
+    "ConnectionCheckerDataSource.kt": {
+      "hash": "1d9c7a370193",
+      "indexed_at": "2026-08-01T03:59:14.003827+00:00",
+      "language": "kotlin",
+      "lines": 42,
+      "mtime_ns": 1785556375269900300,
+      "size": 1162,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                26
+              ],
+              "name": "checkInternetAvailableOverHttp",
+              "signature": "(\n        site: String,\n        proxyAddress: String,\n        proxyPort: Int,\n        proxyUser: ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                35
+              ],
+              "name": "checkInternetAvailableOverSocks",
+              "signature": "(\n        ip: String,\n        port: Int,\n        proxyAddress: String,\n        proxyPort: Int,\n  ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                37
+              ],
+              "name": "checkNetworkAvailable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                39
+              ],
+              "name": "isWiFiActive",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                41,
+                41
+              ],
+              "name": "isCaptivePortalDetected",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            42
+          ],
+          "name": "ConnectionCheckerDataSource",
+          "type": "interface"
+        }
+      ]
+    },
+    "ConnectionCheckerDataSourceImpl.kt": {
+      "hash": "78df2df6338c",
+      "indexed_at": "2026-08-01T03:59:14.298530+00:00",
+      "language": "kotlin",
+      "lines": 69,
+      "mtime_ns": 1785556375282899700,
+      "size": 2352,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                33,
+                40
+              ],
+              "name": "checkInternetAvailableOverHttp",
+              "signature": "(\n        site: String,\n        proxyAddress: String,\n        proxyPort: Int,\n        proxyUser: ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                42,
+                56
+              ],
+              "name": "checkInternetAvailableOverSocks",
+              "signature": "(\n        ip: String,\n        port: Int,\n        proxyAddress: String,\n        proxyPort: Int,\n  ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                58,
+                59
+              ],
+              "name": "checkNetworkAvailable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                61,
+                61
+              ],
+              "name": "isWiFiActive",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                67
+              ],
+              "name": "isCaptivePortalDetected",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            28,
+            69
+          ],
+          "name": "ConnectionCheckerDataSourceImpl",
+          "type": "class"
+        }
+      ]
+    },
+    "ConnectionCheckerRepositoryImpl.kt": {
+      "hash": "45bcb7bad935",
+      "indexed_at": "2026-08-01T03:59:14.633244+00:00",
+      "language": "kotlin",
+      "lines": 67,
+      "mtime_ns": 1785556375294901200,
+      "size": 2048,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                26,
+                40
+              ],
+              "name": "checkInternetAvailableOverHttp",
+              "signature": "(\n        site: String,\n        proxyAddress: String,\n        proxyPort: Int,\n        proxyUser: ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                42,
+                58
+              ],
+              "name": "checkInternetAvailableOverSocks",
+              "signature": "(\n        ip: String,\n        port: Int,\n        proxyAddress: String,\n        proxyPort: Int,\n  ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                60,
+                62
+              ],
+              "name": "checkNetworkAvailable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                64,
+                66
+              ],
+              "name": "isCaptivePortalOnWiFiDetected",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            22,
+            67
+          ],
+          "name": "ConnectionCheckerRepositoryImpl",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:14.635700+00:00",
+  "version": "1.0"
+}

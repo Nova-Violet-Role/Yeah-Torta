@@ -1,0 +1,1818 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_core\\src\\ffi",
+  "files": {
+    "callbackinterface.rs": {
+      "hash": "47819b0b5019",
+      "indexed_at": "2026-07-24T20:35:13.149084+00:00",
+      "language": "rust",
+      "lines": 210,
+      "mtime_ns": 1782136568000000000,
+      "size": 6840,
+      "symbols": [
+        {
+          "lines": [
+            113,
+            115
+          ],
+          "name": "UnexpectedUniFFICallbackError",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                118,
+                122
+              ],
+              "name": "new",
+              "signature": "(reason: impl fmt::Display)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            117,
+            123
+          ],
+          "name": "UnexpectedUniFFICallbackError",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                126,
+                132
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            125,
+            133
+          ],
+          "name": "UnexpectedUniFFICallbackError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            135,
+            135
+          ],
+          "name": "UnexpectedUniFFICallbackError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            148,
+            148
+          ],
+          "name": "UnexpectedUniFFICallbackErrorConverterGeneric",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                151,
+                156
+              ],
+              "name": "try_convert_unexpected_callback_error",
+              "signature": "(\n        &self,\n        e: UnexpectedUniFFICallbackError,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            150,
+            157
+          ],
+          "name": "UnexpectedUniFFICallbackErrorConverterGeneric",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            161,
+            161
+          ],
+          "name": "UnexpectedUniFFICallbackErrorConverterSpecialized",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                164,
+                172
+              ],
+              "name": "try_convert_unexpected_callback_error",
+              "signature": "(\n        &self,\n        e: UnexpectedUniFFICallbackError,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            163,
+            173
+          ],
+          "name": "UnexpectedUniFFICallbackErrorConverterSpecialized",
+          "type": "impl"
+        }
+      ]
+    },
+    "ffidefault.rs": {
+      "hash": "6613567f6f1d",
+      "indexed_at": "2026-07-24T20:35:13.149973+00:00",
+      "language": "rust",
+      "lines": 66,
+      "mtime_ns": 1782136568000000000,
+      "size": 1700,
+      "symbols": [
+        {
+          "docstring": "! supported FFI types.",
+          "lines": [
+            11,
+            13
+          ],
+          "name": "FfiDefault",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                35,
+                35
+              ],
+              "name": "ffi_default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "Implement FfiDefault for the remaining types",
+          "lines": [
+            34,
+            36
+          ],
+          "name": "FfiDefault",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                39,
+                41
+              ],
+              "name": "ffi_default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            38,
+            42
+          ],
+          "name": "FfiDefault",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                47
+              ],
+              "name": "ffi_default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            44,
+            48
+          ],
+          "name": "FfiDefault",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                51,
+                53
+              ],
+              "name": "ffi_default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            50,
+            54
+          ],
+          "name": "FfiDefault",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                57,
+                59
+              ],
+              "name": "ffi_default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            56,
+            60
+          ],
+          "name": "FfiDefault",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                63,
+                65
+              ],
+              "name": "ffi_default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            62,
+            66
+          ],
+          "name": "FfiDefault",
+          "type": "impl"
+        }
+      ]
+    },
+    "ffiserialize.rs": {
+      "hash": "e5e1cf533e2d",
+      "indexed_at": "2026-07-24T20:35:13.152507+00:00",
+      "language": "rust",
+      "lines": 375,
+      "mtime_ns": 1782136568000000000,
+      "size": 14056,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                29,
+                31
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            28,
+            32
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "buf must have a length of at least `Self::Size`",
+              "lines": [
+                72,
+                76
+              ],
+              "name": "read",
+              "signature": "(buf: &mut &[FfiBufferElement])",
+              "type": "method"
+            },
+            {
+              "docstring": "buf must have a length of at least `Self::Size`",
+              "lines": [
+                81,
+                86
+              ],
+              "name": "write",
+              "signature": "(buf: &mut &mut [FfiBufferElement], value: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            53,
+            87
+          ],
+          "name": "FfiSerialize",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                136,
+                139
+              ],
+              "name": "get",
+              "signature": "(buf: &[FfiBufferElement])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                141,
+                144
+              ],
+              "name": "put",
+              "signature": "(buf: &mut [FfiBufferElement], value: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            133,
+            145
+          ],
+          "name": "FfiSerialize",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                150,
+                153
+              ],
+              "name": "get",
+              "signature": "(buf: &[FfiBufferElement])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                155,
+                158
+              ],
+              "name": "put",
+              "signature": "(buf: &mut [FfiBufferElement], value: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            147,
+            159
+          ],
+          "name": "FfiSerialize",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                164,
+                167
+              ],
+              "name": "get",
+              "signature": "(buf: &[FfiBufferElement])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                169,
+                171
+              ],
+              "name": "put",
+              "signature": "(buf: &mut [FfiBufferElement], value: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            161,
+            172
+          ],
+          "name": "FfiSerialize",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                177,
+                177
+              ],
+              "name": "get",
+              "signature": "(_buf: &[FfiBufferElement])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                179,
+                179
+              ],
+              "name": "put",
+              "signature": "(_buf: &mut [FfiBufferElement], _value: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            174,
+            180
+          ],
+          "name": "FfiSerialize",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                185,
+                188
+              ],
+              "name": "get",
+              "signature": "(buf: &[FfiBufferElement])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                190,
+                192
+              ],
+              "name": "put",
+              "signature": "(buf: &mut [FfiBufferElement], value: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            182,
+            193
+          ],
+          "name": "FfiSerialize",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                198,
+                200
+              ],
+              "name": "get",
+              "signature": "(buf: &[FfiBufferElement])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                202,
+                204
+              ],
+              "name": "put",
+              "signature": "(buf: &mut [FfiBufferElement], value: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            195,
+            205
+          ],
+          "name": "FfiSerialize",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                210,
+                214
+              ],
+              "name": "get",
+              "signature": "(buf: &[FfiBufferElement])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                216,
+                220
+              ],
+              "name": "put",
+              "signature": "(buf: &mut [FfiBufferElement], value: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            207,
+            221
+          ],
+          "name": "FfiSerialize",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                226,
+                230
+              ],
+              "name": "get",
+              "signature": "(buf: &[FfiBufferElement])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                232,
+                235
+              ],
+              "name": "put",
+              "signature": "(buf: &mut [FfiBufferElement], value: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            223,
+            236
+          ],
+          "name": "FfiSerialize",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                241,
+                248
+              ],
+              "name": "get",
+              "signature": "(buf: &[FfiBufferElement])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                250,
+                253
+              ],
+              "name": "put",
+              "signature": "(buf: &mut [FfiBufferElement], value: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            238,
+            254
+          ],
+          "name": "FfiSerialize",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                262,
+                282
+              ],
+              "name": "test_ffi_buffer_size",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                285,
+                292
+              ],
+              "name": "test_ffi_serialize_foreign_bytes",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                295,
+                374
+              ],
+              "name": "test_ffi_serialize",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            257,
+            375
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "foreignbytes.rs": {
+      "hash": "846281b71973",
+      "indexed_at": "2026-07-24T20:35:13.153724+00:00",
+      "language": "rust",
+      "lines": 160,
+      "mtime_ns": 1782136568000000000,
+      "size": 5318,
+      "symbols": [
+        {
+          "lines": [
+            26,
+            32
+          ],
+          "name": "ForeignBytes",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "You must ensure that the raw parts uphold the documented invariants of this class.",
+              "lines": [
+                43,
+                45
+              ],
+              "name": "from_raw_parts",
+              "signature": "(data: *const u8, len: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "Panics if the provided length is negative.",
+              "lines": [
+                53,
+                60
+              ],
+              "name": "as_slice",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Panics if the provided length is negative.",
+              "lines": [
+                67,
+                71
+              ],
+              "name": "len",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Returns true if the length of this slice of bytes is 0.",
+              "lines": [
+                74,
+                76
+              ],
+              "name": "is_empty",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            34,
+            77
+          ],
+          "name": "ForeignBytes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                80,
+                82
+              ],
+              "name": "borrow",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            79,
+            83
+          ],
+          "name": "ForeignBytes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                88,
+                90
+              ],
+              "name": "try_lift",
+              "signature": "(v: Self::FfiType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                92,
+                94
+              ],
+              "name": "try_read",
+              "signature": "(_buf: &mut &[u8])",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            85,
+            95
+          ],
+          "name": "ForeignBytes",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            97,
+            101
+          ],
+          "name": "ForeignBytes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                107,
+                112
+              ],
+              "name": "test_foreignbytes_access",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                115,
+                120
+              ],
+              "name": "test_foreignbytes_empty",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                123,
+                126
+              ],
+              "name": "test_foreignbytes_null_means_empty",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                130,
+                133
+              ],
+              "name": "test_foreignbytes_null_must_have_zero_length",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                137,
+                141
+              ],
+              "name": "test_foreignbytes_provided_len_must_be_non_negative",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                144,
+                150
+              ],
+              "name": "test_foreignbytes_borrow_as_slice",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                153,
+                159
+              ],
+              "name": "test_foreignbytes_lift",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            104,
+            160
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "foreigncallbacks.rs": {
+      "hash": "8850b789e500",
+      "indexed_at": "2026-07-24T20:35:13.154416+00:00",
+      "language": "rust",
+      "lines": 45,
+      "mtime_ns": 1782136568000000000,
+      "size": 1499,
+      "symbols": [
+        {
+          "lines": [
+            18,
+            18
+          ],
+          "name": "UniffiForeignPointerCell",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                21,
+                23
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                27
+              ],
+              "name": "set",
+              "signature": "(&self, callback: NonNull<T>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                35
+              ],
+              "name": "get",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            20,
+            36
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                39,
+                41
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            38,
+            42
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            44,
+            44
+          ],
+          "name": "Send",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            45,
+            45
+          ],
+          "name": "Sync",
+          "type": "impl"
+        }
+      ]
+    },
+    "foreignfuture.rs": {
+      "hash": "77b6dd7cac00",
+      "indexed_at": "2026-07-24T20:35:13.155934+00:00",
+      "language": "rust",
+      "lines": 249,
+      "mtime_ns": 1782136568000000000,
+      "size": 9326,
+      "symbols": [
+        {
+          "lines": [
+            30,
+            35
+          ],
+          "name": "ForeignFutureResult",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            42,
+            45
+          ],
+          "name": "ForeignFutureDroppedCallbackStruct",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "This will be used for languages that don't set their own callbacks.",
+              "lines": [
+                50,
+                56
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            47,
+            57
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                60,
+                62
+              ],
+              "name": "drop",
+              "signature": "(&mut self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            59,
+            63
+          ],
+          "name": "Drop",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            65,
+            65
+          ],
+          "name": "Send",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            67,
+            91
+          ],
+          "name": "foreign_async_call",
+          "signature": "(call_scaffolding_function: F)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            93,
+            99
+          ],
+          "name": "foreign_future_complete",
+          "signature": "(\n    oneshot_handle: u64,\n    result: ForeignFutureResult<T::ReturnType>,\n)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                116,
+                120
+              ],
+              "name": "MockForeignFuture",
+              "type": "struct"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    123,
+                    150
+                  ],
+                  "name": "new",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    152,
+                    160
+                  ],
+                  "name": "poll",
+                  "signature": "(&mut self)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    162,
+                    171
+                  ],
+                  "name": "complete_success",
+                  "signature": "(&self, value: String)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    173,
+                    182
+                  ],
+                  "name": "complete_error",
+                  "signature": "(&self, error_message: String)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    184,
+                    186
+                  ],
+                  "name": "drop_future",
+                  "signature": "(&mut self)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    188,
+                    190
+                  ],
+                  "name": "free_count",
+                  "signature": "(&self)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    192,
+                    195
+                  ],
+                  "name": "future_drapped_callback",
+                  "signature": "(handle: u64)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                122,
+                196
+              ],
+              "name": "MockForeignFuture",
+              "type": "impl"
+            },
+            {
+              "lines": [
+                198,
+                198
+              ],
+              "name": "NoopWaker",
+              "type": "struct"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    201,
+                    201
+                  ],
+                  "name": "wake",
+                  "signature": "(self: Arc<Self>)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                200,
+                202
+              ],
+              "name": "Wake",
+              "type": "impl"
+            },
+            {
+              "lines": [
+                205,
+                215
+              ],
+              "name": "test_foreign_future",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                219,
+                224
+              ],
+              "name": "test_foreign_future_error",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                227,
+                238
+              ],
+              "name": "test_drop_after_complete",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                241,
+                248
+              ],
+              "name": "test_drop_before_complete",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            102,
+            249
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "handle.rs": {
+      "hash": "9b684d1cbbca",
+      "indexed_at": "2026-07-24T20:35:13.156837+00:00",
+      "language": "rust",
+      "lines": 107,
+      "mtime_ns": 1782136568000000000,
+      "size": 3694,
+      "symbols": [
+        {
+          "lines": [
+            22,
+            22
+          ],
+          "name": "Handle",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                27
+              ],
+              "name": "from_pointer",
+              "signature": "(ptr: *const T)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                31
+              ],
+              "name": "as_pointer",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Was this handle generated by the foreign side of the FFI?",
+              "lines": [
+                34,
+                39
+              ],
+              "name": "is_foreign",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The raw value must be a valid handle as described above.",
+              "lines": [
+                43,
+                49
+              ],
+              "name": "from_raw",
+              "signature": "(raw: u64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                51,
+                53
+              ],
+              "name": "from_raw_unchecked",
+              "signature": "(raw: u64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                55,
+                57
+              ],
+              "name": "as_raw",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Create a handle from an Arc",
+              "lines": [
+                60,
+                62
+              ],
+              "name": "from_arc",
+              "signature": "(arc: Arc<T>)",
+              "type": "method"
+            },
+            {
+              "docstring": "* The handle must only be used once",
+              "lines": [
+                70,
+                72
+              ],
+              "name": "into_arc",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "borrowed handle is passed to returns.",
+              "lines": [
+                86,
+                89
+              ],
+              "name": "into_arc_borrowed",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The handle must have been created from `Handle::from_arc`.",
+              "lines": [
+                96,
+                100
+              ],
+              "name": "clone_arc_handle",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            24,
+            101
+          ],
+          "name": "Handle",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                104,
+                106
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            103,
+            107
+          ],
+          "name": "Handle",
+          "type": "impl"
+        }
+      ]
+    },
+    "mod.rs": {
+      "hash": "e4d46229ccda",
+      "indexed_at": "2026-07-24T20:35:13.157447+00:00",
+      "language": "rust",
+      "lines": 29,
+      "mtime_ns": 1782136568000000000,
+      "size": 825,
+      "symbols": [
+        {
+          "docstring": "! Types that can cross the FFI boundary.",
+          "lines": [
+            7,
+            7
+          ],
+          "name": "callbackinterface",
+          "type": "module"
+        },
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "ffidefault",
+          "type": "module"
+        },
+        {
+          "lines": [
+            10,
+            10
+          ],
+          "name": "ffiserialize",
+          "type": "module"
+        },
+        {
+          "lines": [
+            11,
+            11
+          ],
+          "name": "foreignbytes",
+          "type": "module"
+        },
+        {
+          "lines": [
+            12,
+            12
+          ],
+          "name": "foreigncallbacks",
+          "type": "module"
+        },
+        {
+          "lines": [
+            13,
+            13
+          ],
+          "name": "foreignfuture",
+          "type": "module"
+        },
+        {
+          "lines": [
+            14,
+            14
+          ],
+          "name": "handle",
+          "type": "module"
+        },
+        {
+          "lines": [
+            15,
+            15
+          ],
+          "name": "rustbuffer",
+          "type": "module"
+        },
+        {
+          "lines": [
+            16,
+            16
+          ],
+          "name": "rustcalls",
+          "type": "module"
+        },
+        {
+          "lines": [
+            17,
+            17
+          ],
+          "name": "rustfuture",
+          "type": "module"
+        }
+      ]
+    },
+    "rustbuffer.rs": {
+      "hash": "679aee669101",
+      "indexed_at": "2026-07-24T20:35:13.159198+00:00",
+      "language": "rust",
+      "lines": 335,
+      "mtime_ns": 1782136568000000000,
+      "size": 13773,
+      "symbols": [
+        {
+          "lines": [
+            53,
+            62
+          ],
+          "name": "RustBuffer",
+          "type": "struct"
+        },
+        {
+          "docstring": "is required to send `RustBuffer` inside a `RustFuture`",
+          "lines": [
+            67,
+            67
+          ],
+          "name": "Send",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "arrange to call `destroy` or `destroy_into_vec` when finished with it.",
+              "lines": [
+                75,
+                77
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "You must ensure that the raw parts uphold the documented invariants of this class.",
+              "lines": [
+                84,
+                90
+              ],
+              "name": "from_raw_parts",
+              "signature": "(data: *mut u8, len: u64, capacity: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "platform has `usize` being `u32` or smaller.",
+              "lines": [
+                102,
+                106
+              ],
+              "name": "len",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                112
+              ],
+              "name": "capacity",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get a pointer to the data",
+              "lines": [
+                115,
+                117
+              ],
+              "name": "data_pointer",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Returns true if the length of the buffer is 0.",
+              "lines": [
+                120,
+                122
+              ],
+              "name": "is_empty",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "hence would risk incompatibility with some foreign-language code.",
+              "lines": [
+                133,
+                135
+              ],
+              "name": "new_with_size",
+              "signature": "(size: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "and hence would risk incompatibility with some foreign-language code.",
+              "lines": [
+                146,
+                151
+              ],
+              "name": "from_vec",
+              "signature": "(v: Vec<u8>)",
+              "type": "method"
+            },
+            {
+              "docstring": "which does not respect the invairiants on `len` and `capacity`.",
+              "lines": [
+                163,
+                182
+              ],
+              "name": "destroy_into_vec",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "which does not respect the invairiants on `len` and `capacity`.",
+              "lines": [
+                190,
+                192
+              ],
+              "name": "destroy",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            69,
+            193
+          ],
+          "name": "RustBuffer",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                196,
+                198
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            195,
+            199
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "docstring": "below, or by passing ownership of the buffer back into Rust code.",
+          "lines": [
+            211,
+            213
+          ],
+          "name": "uniffi_rustbuffer_alloc",
+          "signature": "(size: u64, call_status: &mut RustCallStatus)",
+          "type": "function"
+        },
+        {
+          "docstring": "make sure the `ForeignBytes` struct contains a valid pointer and length.",
+          "lines": [
+            223,
+            231
+          ],
+          "name": "uniffi_rustbuffer_from_bytes",
+          "signature": "(\n    bytes: ForeignBytes,\n    call_status: &mut RustCallStatus,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "corrupting the allocator state.",
+          "lines": [
+            239,
+            244
+          ],
+          "name": "uniffi_rustbuffer_free",
+          "signature": "(buf: RustBuffer, call_status: &mut RustCallStatus)",
+          "type": "function"
+        },
+        {
+          "docstring": "corrupting the allocator state.",
+          "lines": [
+            261,
+            274
+          ],
+          "name": "uniffi_rustbuffer_reserve",
+          "signature": "(\n    buf: RustBuffer,\n    additional: u64,\n    call_status: &mut RustCallStatus,\n)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                280,
+                284
+              ],
+              "name": "test_rustbuffer_from_vec",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                287,
+                293
+              ],
+              "name": "test_rustbuffer_empty",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                296,
+                303
+              ],
+              "name": "test_rustbuffer_new_with_size",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                306,
+                310
+              ],
+              "name": "test_rustbuffer_null_means_empty",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                314,
+                318
+              ],
+              "name": "test_rustbuffer_null_must_have_no_capacity",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                321,
+                325
+              ],
+              "name": "test_rustbuffer_null_must_have_zero_length",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                329,
+                334
+              ],
+              "name": "test_rustbuffer_provided_len_must_not_exceed_capacity",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            277,
+            335
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "rustcalls.rs": {
+      "hash": "7a3f94be607b",
+      "indexed_at": "2026-07-24T20:35:13.160864+00:00",
+      "language": "rust",
+      "lines": 311,
+      "mtime_ns": 1782136568000000000,
+      "size": 12368,
+      "symbols": [
+        {
+          "lines": [
+            43,
+            53
+          ],
+          "name": "RustCallStatus",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                56,
+                61
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            55,
+            62
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                65,
+                70
+              ],
+              "name": "cancelled",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                72,
+                77
+              ],
+              "name": "error",
+              "signature": "(message: impl Into<String>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            64,
+            78
+          ],
+          "name": "RustCallStatus",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            84,
+            98
+          ],
+          "name": "RustCallStatusCode",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                103,
+                111
+              ],
+              "name": "try_from",
+              "signature": "(value: i8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            100,
+            112
+          ],
+          "name": "RustCallStatusCode",
+          "type": "impl"
+        },
+        {
+          "docstring": "lift the arguments).",
+          "lines": [
+            120,
+            129
+          ],
+          "name": "RustCallError",
+          "type": "enum"
+        },
+        {
+          "docstring": "Error when trying to lift arguments to pass to the scaffolding call",
+          "lines": [
+            132,
+            135
+          ],
+          "name": "LiftArgsError",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                138,
+                142
+              ],
+              "name": "to_internal_error",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            137,
+            143
+          ],
+          "name": "LiftArgsError",
+          "type": "impl"
+        },
+        {
+          "docstring": "- `FfiDefault::ffi_default()` is returned, although foreign code should ignore this value",
+          "lines": [
+            164,
+            170
+          ],
+          "name": "rust_call",
+          "signature": "(out_status: &mut RustCallStatus, callback: F)",
+          "type": "function"
+        },
+        {
+          "docstring": "If the call fails (including Err results), this returns Err(RustCallStatus).",
+          "lines": [
+            183,
+            192
+          ],
+          "name": "try_rust_call",
+          "signature": "(callback: F)",
+          "type": "function"
+        },
+        {
+          "docstring": "This contains the shared code between `rust_call` and `rustfuture::do_wake`.",
+          "lines": [
+            200,
+            251
+          ],
+          "name": "rust_call_with_out_status",
+          "signature": "(\n    out_status: &mut RustCallStatus,\n    callback: F,\n)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                260,
+                310
+              ],
+              "name": "test_rust_call",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            254,
+            311
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.788961+00:00",
+  "version": "1.0"
+}

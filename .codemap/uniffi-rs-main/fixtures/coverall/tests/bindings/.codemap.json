@@ -1,0 +1,877 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\coverall\\tests\\bindings",
+  "files": {
+    "test_coverall.kts": {
+      "hash": "6fd67c1e8bd8",
+      "indexed_at": "2026-07-24T20:35:12.432488+00:00",
+      "language": "kotlin",
+      "lines": 594,
+      "mtime_ns": 1782136568000000000,
+      "size": 19246,
+      "symbols": [
+        {
+          "docstring": "The number alive then should be zero.",
+          "lines": [
+            261,
+            265
+          ],
+          "name": "makeCoveralls",
+          "signature": "(n: Int)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                272,
+                274
+              ],
+              "name": "getBool",
+              "signature": "(v: Boolean, arg2: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                276,
+                286
+              ],
+              "name": "getString",
+              "signature": "(v: String, arg2: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                288,
+                302
+              ],
+              "name": "getOption",
+              "signature": "(v: String, arg2: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                304,
+                310
+              ],
+              "name": "getList",
+              "signature": "(v: List<Int>, arg2: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                312,
+                313
+              ],
+              "name": "getNothing",
+              "signature": "(v: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                315,
+                317
+              ],
+              "name": "roundTripObject",
+              "signature": "(coveralls: Coveralls)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            271,
+            318
+          ],
+          "name": "KotlinGetters",
+          "type": "class"
+        },
+        {
+          "lines": [
+            332,
+            377
+          ],
+          "name": "testGettersFromKotlin",
+          "signature": "(getters: Getters)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                382,
+                382
+              ],
+              "name": "name",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                384,
+                386
+              ],
+              "name": "setParent",
+              "signature": "(parent: NodeTrait?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                388,
+                388
+              ],
+              "name": "getParent",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                390,
+                392
+              ],
+              "name": "strongCount",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            379,
+            393
+          ],
+          "name": "KotlinNode",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                509,
+                509
+              ],
+              "name": "`getColor`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "Test fakes using open classes",
+          "lines": [
+            508,
+            510
+          ],
+          "name": "FakePatch",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                515,
+                517
+              ],
+              "name": "`addPatch`",
+              "signature": "(patch: Patch)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                519,
+                521
+              ],
+              "name": "`getRepairs`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            512,
+            522
+          ],
+          "name": "FakeCoveralls",
+          "type": "class"
+        }
+      ]
+    },
+    "test_coverall.py": {
+      "hash": "6b6da36fb28a",
+      "indexed_at": "2026-07-24T20:35:12.439863+00:00",
+      "language": "python",
+      "lines": 535,
+      "mtime_ns": 1782136568000000000,
+      "size": 22528,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                14
+              ],
+              "name": "tearDown",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                16,
+                54
+              ],
+              "name": "test_some_dict",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                84
+              ],
+              "name": "test_none_dict",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                86,
+                109
+              ],
+              "name": "test_constructors",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                139
+              ],
+              "name": "test_simple_errors",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                141,
+                160
+              ],
+              "name": "test_flat_errors",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                162,
+                197
+              ],
+              "name": "test_complex_errors",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                199,
+                208
+              ],
+              "name": "test_error_values",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                210,
+                220
+              ],
+              "name": "test_enums",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                222,
+                225
+              ],
+              "name": "test_self_by_arc",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                227,
+                249
+              ],
+              "name": "test_arcs",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                251,
+                279
+              ],
+              "name": "test_return_objects",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                281,
+                285
+              ],
+              "name": "test_throwing_constructor",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                287,
+                292
+              ],
+              "name": "test_bad_objects",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "This does not call Rust code.",
+              "lines": [
+                294,
+                307
+              ],
+              "name": "test_dict_with_defaults",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                309,
+                319
+              ],
+              "name": "test_dict_with_non_string_keys",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                321,
+                323
+              ],
+              "name": "test_bytes",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                325,
+                330
+              ],
+              "name": "test_return_only_dict",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            330
+          ],
+          "name": "TestCoverall",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                333,
+                334
+              ],
+              "name": "get_bool",
+              "signature": "(self, v, arg2)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                336,
+                344
+              ],
+              "name": "get_string",
+              "signature": "(self, v, arg2)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                346,
+                357
+              ],
+              "name": "get_option",
+              "signature": "(self, v, arg2)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                359,
+                363
+              ],
+              "name": "get_list",
+              "signature": "(self, v, arg2)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                365,
+                366
+              ],
+              "name": "get_nothing",
+              "signature": "(self, _v)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                368,
+                369
+              ],
+              "name": "round_trip_object",
+              "signature": "(self, coveralls)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            332,
+            369
+          ],
+          "name": "PyGetters",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                372,
+                373
+              ],
+              "name": "__init__",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                375,
+                376
+              ],
+              "name": "name",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                378,
+                379
+              ],
+              "name": "set_parent",
+              "signature": "(self, parent)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                381,
+                382
+              ],
+              "name": "get_parent",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                384,
+                385
+              ],
+              "name": "strong_count",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            371,
+            385
+          ],
+          "name": "PyNode",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                394,
+                395
+              ],
+              "name": "test_python_getters",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                398,
+                428
+              ],
+              "name": "check_getters_from_python",
+              "signature": "(self, getters)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                430,
+                466
+              ],
+              "name": "test_path",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                468,
+                491
+              ],
+              "name": "test_struct_traits",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                493,
+                498
+              ],
+              "name": "test_round_tripping",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                500,
+                503
+              ],
+              "name": "test_rust_only_traits",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                505,
+                514
+              ],
+              "name": "test_pass_object_to_function_that_input_trait",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                516,
+                518
+              ],
+              "name": "test_html_error",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            387,
+            518
+          ],
+          "name": "TraitsTest",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                521,
+                532
+              ],
+              "name": "test_annotations",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            520,
+            532
+          ],
+          "name": "Annotations",
+          "type": "class"
+        }
+      ]
+    },
+    "test_coverall.rb": {
+      "hash": "56f25168fbe1",
+      "indexed_at": "2026-07-24T20:35:12.442100+00:00",
+      "language": "ruby",
+      "lines": 288,
+      "mtime_ns": 1782136568000000000,
+      "size": 8894,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                12,
+                57
+              ],
+              "name": "test_some_dict",
+              "type": "method"
+            },
+            {
+              "lines": [
+                59,
+                90
+              ],
+              "name": "test_none_dict",
+              "type": "method"
+            },
+            {
+              "lines": [
+                92,
+                126
+              ],
+              "name": "test_constructors",
+              "type": "method"
+            },
+            {
+              "lines": [
+                128,
+                149
+              ],
+              "name": "test_simple_errors",
+              "type": "method"
+            },
+            {
+              "lines": [
+                151,
+                185
+              ],
+              "name": "test_complex_errors",
+              "type": "method"
+            },
+            {
+              "lines": [
+                187,
+                192
+              ],
+              "name": "test_self_by_arc",
+              "type": "method"
+            },
+            {
+              "lines": [
+                194,
+                237
+              ],
+              "name": "test_arcs",
+              "type": "method"
+            },
+            {
+              "lines": [
+                239,
+                265
+              ],
+              "name": "test_return_objects",
+              "type": "method"
+            },
+            {
+              "lines": [
+                267,
+                274
+              ],
+              "name": "test_bad_objects",
+              "type": "method"
+            },
+            {
+              "lines": [
+                276,
+                280
+              ],
+              "name": "test_bytes",
+              "type": "method"
+            },
+            {
+              "lines": [
+                282,
+                286
+              ],
+              "name": "test_html_error",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            288
+          ],
+          "name": "TestCoverall",
+          "type": "class"
+        }
+      ]
+    },
+    "test_coverall.swift": {
+      "hash": "05602757728a",
+      "indexed_at": "2026-07-24T20:35:12.447427+00:00",
+      "language": "swift",
+      "lines": 526,
+      "mtime_ns": 1782136568000000000,
+      "size": 15920,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "almostEquals",
+              "type": "method"
+            }
+          ],
+          "docstring": "Floats should be \"close enough\" for testing purposes.",
+          "lines": [
+            12,
+            16
+          ],
+          "name": "Double",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "almostEquals",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            18,
+            22
+          ],
+          "name": "Float",
+          "type": "class"
+        },
+        {
+          "lines": [
+            315,
+            315
+          ],
+          "name": "SomeOtherError",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                319,
+                319
+              ],
+              "name": "getBool",
+              "type": "method"
+            },
+            {
+              "lines": [
+                320,
+                328
+              ],
+              "name": "getString",
+              "type": "method"
+            },
+            {
+              "lines": [
+                329,
+                345
+              ],
+              "name": "getOption",
+              "type": "method"
+            },
+            {
+              "lines": [
+                346,
+                346
+              ],
+              "name": "getList",
+              "type": "method"
+            },
+            {
+              "lines": [
+                347,
+                348
+              ],
+              "name": "getNothing",
+              "type": "method"
+            },
+            {
+              "lines": [
+                350,
+                352
+              ],
+              "name": "roundTripObject",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            318,
+            353
+          ],
+          "name": "SwiftGetters",
+          "type": "class"
+        },
+        {
+          "lines": [
+            370,
+            421
+          ],
+          "name": "testGettersFromSwift",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                426,
+                428
+              ],
+              "name": "name",
+              "type": "method"
+            },
+            {
+              "lines": [
+                430,
+                432
+              ],
+              "name": "setParent",
+              "type": "method"
+            },
+            {
+              "lines": [
+                434,
+                436
+              ],
+              "name": "getParent",
+              "type": "method"
+            },
+            {
+              "lines": [
+                438,
+                440
+              ],
+              "name": "strongCount",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            423,
+            441
+          ],
+          "name": "SwiftNode",
+          "type": "class"
+        }
+      ]
+    },
+    "test_handlerace.kts": {
+      "hash": "434b44e80a01",
+      "indexed_at": "2026-07-24T20:35:12.448238+00:00",
+      "language": "kotlin",
+      "lines": 52,
+      "mtime_ns": 1782136568000000000,
+      "size": 2407,
+      "symbols": []
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.673825+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,524 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\vpn",
+  "files": {
+    "Allowed.kt": {
+      "hash": "056e33c4a916",
+      "indexed_at": "2026-08-01T04:00:52.396497+00:00",
+      "language": "kotlin",
+      "lines": 25,
+      "mtime_ns": 1785556379143899600,
+      "size": 750,
+      "symbols": [
+        {
+          "lines": [
+            21,
+            25
+          ],
+          "name": "Allowed",
+          "type": "class"
+        }
+      ]
+    },
+    "Forward.kt": {
+      "hash": "185575cb5651",
+      "indexed_at": "2026-08-01T04:00:52.703786+00:00",
+      "language": "kotlin",
+      "lines": 43,
+      "mtime_ns": 1785556379155898800,
+      "size": 1014,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                41,
+                42
+              ],
+              "name": "toString",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            43
+          ],
+          "name": "Forward",
+          "type": "class"
+        }
+      ]
+    },
+    "IPUtil.kt": {
+      "hash": "a12024bd5a04",
+      "indexed_at": "2026-08-01T04:00:53.033330+00:00",
+      "language": "kotlin",
+      "lines": 135,
+      "mtime_ns": 1785556379167899100,
+      "size": 3990,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                29
+              ],
+              "name": "toCIDR",
+              "signature": "(start: String, end: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                31,
+                58
+              ],
+              "name": "toCIDR",
+              "signature": "(start: InetAddress, end: InetAddress)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                60,
+                63
+              ],
+              "name": "minus1",
+              "signature": "(addr: InetAddress?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                65,
+                68
+              ],
+              "name": "plus1",
+              "signature": "(addr: InetAddress?)",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    91,
+                    93
+                  ],
+                  "name": "getStart",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    95,
+                    97
+                  ],
+                  "name": "getEnd",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    99,
+                    101
+                  ],
+                  "name": "toString",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    103,
+                    107
+                  ],
+                  "name": "compareTo",
+                  "signature": "(other: CIDR)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                70,
+                108
+              ],
+              "name": "CIDR",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            23,
+            109
+          ],
+          "name": "IPUtil",
+          "type": "class"
+        },
+        {
+          "lines": [
+            111,
+            113
+          ],
+          "name": "prefix2mask",
+          "signature": "(bits: Int)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            115,
+            121
+          ],
+          "name": "inet2long",
+          "signature": "(addr: InetAddress?)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            123,
+            135
+          ],
+          "name": "long2inet",
+          "signature": "(addr: Long)",
+          "type": "function"
+        }
+      ]
+    },
+    "Packet.kt": {
+      "hash": "1c17cb1c2a20",
+      "indexed_at": "2026-08-01T04:00:53.351049+00:00",
+      "language": "kotlin",
+      "lines": 58,
+      "mtime_ns": 1785556379180902000,
+      "size": 1180,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                56,
+                57
+              ],
+              "name": "toString",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            58
+          ],
+          "name": "Packet",
+          "type": "class"
+        }
+      ]
+    },
+    "ResourceRecord.kt": {
+      "hash": "6b9034f45a90",
+      "indexed_at": "2026-08-01T04:00:53.669883+00:00",
+      "language": "kotlin",
+      "lines": 155,
+      "mtime_ns": 1785556379193901100,
+      "size": 4595,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                53,
+                75
+              ],
+              "name": "deepCopy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                88
+              ],
+              "name": "trimToNotASCIISymbols",
+              "signature": "(line: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                90,
+                104
+              ],
+              "name": "rCodeToString",
+              "signature": "(Rcode: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                106,
+                132
+              ],
+              "name": "toString",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                134,
+                144
+              ],
+              "name": "equals",
+              "signature": "(o: Any?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                146,
+                148
+              ],
+              "name": "hashCode",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            30,
+            155
+          ],
+          "name": "ResourceRecord",
+          "type": "class"
+        }
+      ]
+    },
+    "Rule.kt": {
+      "hash": "1b152dc390d5",
+      "indexed_at": "2026-08-01T04:00:53.990343+00:00",
+      "language": "kotlin",
+      "lines": 103,
+      "mtime_ns": 1785556379206901200,
+      "size": 3517,
+      "symbols": [
+        {
+          "lines": [
+            31,
+            103
+          ],
+          "name": "Rule",
+          "type": "class"
+        }
+      ]
+    },
+    "Usage.kt": {
+      "hash": "13261c37bcfc",
+      "indexed_at": "2026-08-01T04:00:57.707665+00:00",
+      "language": "kotlin",
+      "lines": 60,
+      "mtime_ns": 1785556379219900700,
+      "size": 1432,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                50,
+                55
+              ],
+              "name": "toString",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            24,
+            60
+          ],
+          "name": "Usage",
+          "type": "class"
+        }
+      ]
+    },
+    "VpnUtils.kt": {
+      "hash": "28e8d5ab2a42",
+      "indexed_at": "2026-08-01T04:00:58.027471+00:00",
+      "language": "kotlin",
+      "lines": 472,
+      "mtime_ns": 1785556379233900700,
+      "size": 18314,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                120,
+                123
+              ],
+              "name": "isResolverNativePushLanded",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                125,
+                128
+              ],
+              "name": "isWardenNativePushLanded",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                143,
+                152
+              ],
+              "name": "setResolverNativeEnabled",
+              "signature": "(enabled: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                167,
+                173
+              ],
+              "name": "setWardenNativeEnabled",
+              "signature": "(enabled: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                175,
+                183
+              ],
+              "name": "getSelfVersionName",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                185,
+                194
+              ],
+              "name": "getSelfVersionCode",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                196,
+                225
+              ],
+              "name": "getDefaultDNS",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                227,
+                235
+              ],
+              "name": "isNumericAddress",
+              "signature": "(ip: String?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                237,
+                253
+              ],
+              "name": "isNumericIpv6",
+              "signature": "(ip: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                255,
+                263
+              ],
+              "name": "isSystem",
+              "signature": "(packageName: String, context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                265,
+                268
+              ],
+              "name": "hasInternet",
+              "signature": "(packageName: String, context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                270,
+                283
+              ],
+              "name": "isEnabled",
+              "signature": "(info: PackageInfo, context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                285,
+                316
+              ],
+              "name": "canFilterAsynchronous",
+              "signature": "(serviceVPN: ServiceVPN?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                318,
+                333
+              ],
+              "name": "canFilter",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                341,
+                352
+              ],
+              "name": "getPrivateDnsMode",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                354,
+                362
+              ],
+              "name": "getPrivateDnsModeAsInt",
+              "signature": "(mode: String?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                364,
+                393
+              ],
+              "name": "isIpInSubnetOld",
+              "signature": "(ip: String, network: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                395,
+                445
+              ],
+              "name": "isIpInSubnet",
+              "signature": "(ip: String, network: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                447,
+                471
+              ],
+              "name": "isIpInLanRange",
+              "signature": "(destAddress: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            41,
+            472
+          ],
+          "name": "VpnUtils",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:58.029211+00:00",
+  "version": "1.0"
+}

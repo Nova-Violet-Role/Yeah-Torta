@@ -1,0 +1,228 @@
+{
+  "directory": "rust\\torta_core\\src\\bin",
+  "files": {
+    "blocklist_vectors.rs": {
+      "hash": "903680c9f927",
+      "indexed_at": "2026-07-31T15:59:52.098328+00:00",
+      "language": "rust",
+      "lines": 236,
+      "mtime_ns": 1785513091777887200,
+      "size": 11101,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "Never reached by the parity modes; see the module comment.",
+              "lines": [
+                61,
+                67
+              ],
+              "name": "reputation_rows",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Never reached by the parity modes; see the module comment.",
+              "lines": [
+                70,
+                76
+              ],
+              "name": "corroborates_bad",
+              "signature": "(_host: &str)",
+              "type": "method"
+            }
+          ],
+          "docstring": "failure the master names.",
+          "lines": [
+            59,
+            77
+          ],
+          "name": "underground",
+          "type": "module"
+        },
+        {
+          "lines": [
+            80,
+            80
+          ],
+          "name": "blocklist",
+          "type": "module"
+        },
+        {
+          "lines": [
+            106,
+            118
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "`text.as_bytes()` back through, so a valid-UTF-8 list round-trips byte-identically here.",
+          "lines": [
+            125,
+            135
+          ],
+          "name": "run_text",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "non-empty line of `<file>`; otherwise the args ARE the probe domains.",
+          "lines": [
+            146,
+            187
+          ],
+          "name": "run_artifact",
+          "signature": "(rest: Vec<String>)",
+          "type": "function"
+        },
+        {
+          "docstring": "Read the artifact bytes from `path` (if `Some`) or STDIN (if `None`).",
+          "lines": [
+            190,
+            199
+          ],
+          "name": "read_artifact",
+          "signature": "(path: Option<&str>)",
+          "type": "function"
+        },
+        {
+          "docstring": "- `[\"a.com\", \"b.com\", \u2026]`    \u2192 those domains, verbatim",
+          "lines": [
+            205,
+            224
+          ],
+          "name": "collect_probes",
+          "signature": "(args: Vec<String>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            226,
+            236
+          ],
+          "name": "usage",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "catalog_verify_oracle.rs": {
+      "hash": "c3d1374eb2dc",
+      "indexed_at": "2026-07-31T15:59:52.385172+00:00",
+      "language": "rust",
+      "lines": 155,
+      "mtime_ns": 1785513108809316300,
+      "size": 6612,
+      "symbols": [
+        {
+          "docstring": "minisign line-2 / pub-blob base64 the producer renders. Returns Err on a non-alphabet byte / bad length.",
+          "lines": [
+            41,
+            67
+          ],
+          "name": "b64_decode",
+          "signature": "(s: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            69,
+            145
+          ],
+          "name": "run",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            147,
+            155
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "dns_validate_oracle.rs": {
+      "hash": "b8cd1baecedd",
+      "indexed_at": "2026-07-29T00:46:21.730357+00:00",
+      "language": "rust",
+      "lines": 125,
+      "mtime_ns": 1785284654453338400,
+      "size": 4974,
+      "symbols": [
+        {
+          "lines": [
+            42,
+            42
+          ],
+          "name": "dns",
+          "type": "module"
+        },
+        {
+          "docstring": "The stable wire token \u2014 MUST match `BeastSpec.hs`'s `verdictToken`.",
+          "lines": [
+            48,
+            61
+          ],
+          "name": "token",
+          "signature": "(r: Result<(), RejectReason>)",
+          "type": "function"
+        },
+        {
+          "docstring": "Decode a lowercase/uppercase hex string into bytes. Returns Err on odd length / non-hex.",
+          "lines": [
+            64,
+            79
+          ],
+          "name": "from_hex",
+          "signature": "(s: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            81,
+            88
+          ],
+          "name": "hex_nibble",
+          "signature": "(b: u8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            90,
+            125
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "uniffi-bindgen.rs": {
+      "hash": "64dbd3056d8a",
+      "indexed_at": "2026-07-26T19:12:57.872998+00:00",
+      "language": "rust",
+      "lines": 17,
+      "mtime_ns": 1785030832452604400,
+      "size": 827,
+      "symbols": [
+        {
+          "docstring": "!     generate --library target/release/libtorta_core.so --language kotlin --out-dir <dir>",
+          "lines": [
+            15,
+            17
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-31T15:59:52.386902+00:00",
+  "version": "1.0"
+}

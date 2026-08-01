@@ -1,0 +1,677 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä |||  ADVANCED HAMBURGER — the SLINT navigation surface (OMEGA Stage-D · D2, charter
+// §2.2 step 7: "the SLINT navigation surface; the overhauled DNSCrypt section + the pillar private
+// tabs; the remaining general-settings .java retire → SLINT + Kotlin-Inject").
+//
+// ONE Window, three organs (the B4-G4 fix realized):
+//   · THE RAIL — the ||| drawer (animated collapse) listing the navigation entries: PILLARS ·
+//     DNSCRYPT · GENERAL. A `NavState`-style routing pair (`active-section` + `drawer-open`) lives
+//     on the root so the host (Rust android_main / the lib.rs proof harness / the future Kotlin
+//     bridge) reads + drives navigation as typed state.
+//   · THE PER-PILLAR PRIVATE TABS — every pillar gets its own private tab row (accent-branded,
+//     live status line, DASHBOARD · SETTINGS chips). The chips fire `open-pillar-dashboard(id)` /
+//     `open-pillar-settings(id)` — the host routes to the pillar's own Window (the 12 surfaces all
+//     `inherit Window` today; EMBEDDING them as panes is the Design-Finale G2 refactor, step 8 —
+//     this surface is the NAVIGATION that will host them).
+//   · THE EMBEDDED SECTIONS — the overhauled DNSCRYPT section (dnscrypt_section.slint, the K5 typed
+//     surface) + the GENERAL section (general_section.slint, the retired-general-settings home) are
+//     REAL embeddable panes (inherit Rectangle) hosted inside the content region, wrapped in a
+//     ScrollView (the G5 no-clip law honored from birth on the new surfaces).
+//
+// The root's forwarding aliases (`<=>`) expose both panes' host-pushed state + intents on the
+// burger itself — the ONE component the host constructs (generated Rust: `AdvancedBurger`).
+// Monokuma is the chrome (the B4-G9 app-shell base-theme direction: the judge-bear grammar carries
+// the shell; each pillar keeps its own accent inside its tab).
+
+import { VerticalBox, HorizontalBox, Button, ScrollView } from "std-widgets.slint";
+import { Monokuma } from "monokuma_palette.slint";
+// #33 THE THEME-TOKEN SPINE — the burger CHROME binds `ThemeBook.burger` (the Demon-Slayer
+// duality set: Hashira heroes ↔ Akuma Upper Moons), flipped at runtime by `ThemeBook.akuma`.
+import { ThemeBook, MotifWash } from "theme_tokens.slint";
+import { DnscryptSection, Candle, PickerRow } from "dnscrypt_section.slint";
+import { GeneralSection } from "general_section.slint";
+
+// The per-pillar private-tab entry — the host pushes one row per pillar with a LIVE status line
+// (a cold/unreachable engine reads honestly as live=false, never fabricated).
+export struct PillarTabRow {
+    id: string,      // "warden" | "centauri" | "masksolver" | "beast" | "rotation" | "inu"
+    name: string,    // the tab label
+    blurb: string,   // the one-line what-it-is
+    status: string,  // the live status line (host-pushed, honest)
+    live: bool,      // a real engine read backs the status
+    accent: color,   // the pillar's brand accent (the B7-G2 parity canon)
+}
+
+// One pillar private-tab row: accent spine · name+status · the two private chips.
+// EXPORTED (1B): the shell's in-shell ADVANCED overlay mounts the SAME row component — the
+// single-surface law (lib.rs android_main) killed the on-device window-swap, so home_shell.slint
+// hosts these rows itself; one component, two hosts, zero drift.
+export component PillarTab inherits Rectangle {
+    in property <PillarTabRow> tab;
+    callback open-dashboard(string);
+    callback open-settings(string);
+    background: ThemeBook.burger.floor;
+    border-radius: 8px;
+    // ★ A6 — THE ROW STACKS. Measured, after two refuted attempts at redistributing width:
+    //
+    // The text column rendered ~226 DEVICE px. At this AVD's density (1080px / ~393dp ~= 2.75)
+    // that is ~82 LOGICAL px, while "MASKSOLVER" at font-size 14 / weight 900 needs ~95-100.
+    // The word DOES NOT FIT, so no stretch flag could ever have fixed it -- `wrap: word-wrap`
+    // then falls back to CHARACTER breaking and renders "MASKSOL VER", "UNDERGR OUND",
+    // "DNSCRYP T". Both earlier attempts (stretch on the name, then pinning the greedy spacer)
+    // were REFUTED by the device render, which is the only instrument that can judge this.
+    //
+    // The 92px button column plus paddings consumed most of the ~250 logical px this pane has.
+    // Redistribution cannot create width; removing the COMPETITION can. The buttons now sit on
+    // their own line BELOW the text, so the name owns the row's full width.
+    //
+    // Stated as the property rather than a tuned constant: no fixed-width control shares a line
+    // with the pillar NAME. That holds for a name of any length and for any pane width, so a
+    // longer pillar or a narrower device cannot reintroduce this.
+    VerticalLayout {
+        padding: 10px;
+        spacing: 8px;
+    HorizontalLayout {
+        spacing: 10px;
+        Rectangle {
+            width: 4px;
+            border-radius: 2px;
+            background: root.tab.accent;
+        }
+        VerticalLayout {
+            horizontal-stretch: 1;
+            spacing: 2px;
+            HorizontalLayout {
+                spacing: 6px;
+                Text {
+                    text: root.tab.name;
+                    color: ThemeBook.burger.bright;
+                    font-size: 14px;
+                    font-weight: 900;
+                    // The ONLY Text in this component that did not wrap — the blurb and the status
+                    // line below both do. Unwrapped, a long pillar name sets a minimum width on this
+                    // stretched column and shoves the 92px action buttons past the right edge:
+                    // measured on the AVD, UNDERGROUND LAYER and NETSTACK FORWARDER rendered their
+                    // controls as "DAS"/"SET", and WIRE CAKE INU's were clipped too. The buttons are
+                    // the entire point of the row, so this is reachability, not typography.
+                    wrap: word-wrap;
+                    // ★ A6 — the NAME must take this row's spare width, or `word-wrap` degrades into
+                    // CHARACTER breaking: "MASKSOL VER", "UNDERGR OUND", "DNSCRYP T".
+                    //
+                    // `wrap: word-wrap` was never the defect and adding it did not fix this. It
+                    // cannot break between words that do not exist, so once the line box is narrower
+                    // than a single word Slint splits mid-word. The line box was narrow because a
+                    // BARE `Rectangle { }` sat in this same HorizontalLayout as a greedy spacer: an
+                    // unconstrained Rectangle claims the slack, and a wrapping Text has a tiny
+                    // minimum width, so the spacer won every time and the name collapsed.
+                    //
+                    // Measured refutation of the first attempt: giving only this Text a stretch
+                    // still rendered "MASKSOL VER" on the AVD, because the spacer was ALSO stretchy
+                    // and the two split the slack. The spacer is now pinned to zero.
+                    //
+                    // Stated as the property, not a tuned constant: the NAME takes the slack, the
+                    // dot takes its 8px, the spacer takes nothing. Holds for a pillar name of any
+                    // length, so a longer pillar added later cannot reintroduce this.
+                    horizontal-stretch: 1;
+                }
+                VerticalLayout {
+                    alignment: center;
+                    // Fixed ornament — never bids for the width the name needs.
+                    horizontal-stretch: 0;
+                    Rectangle {
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 4px;
+                        background: root.tab.live ? ThemeBook.burger.good : ThemeBook.burger.edge;
+                    }
+                }
+                // The former greedy spacer, pinned: it must consume NO slack.
+                Rectangle { horizontal-stretch: 0; width: 0px; }
+            }
+            Text {
+                text: root.tab.blurb;
+                color: ThemeBook.burger.muted;
+                font-size: 10px;
+                wrap: word-wrap;
+            }
+            Text {
+                text: root.tab.status;
+                color: root.tab.live ? root.tab.accent : ThemeBook.burger.faint;
+                font-size: 10px;
+                font-weight: 700;
+                wrap: word-wrap;
+            }
+        }
+        }
+        // The action chips, on their OWN line so they never bid against the name's width.
+        HorizontalLayout {
+            spacing: 6px;
+            alignment: end;
+            Rectangle {
+                width: 92px;
+                height: 26px;
+                border-radius: 6px;
+                background: ThemeBook.burger.panel;
+                border-width: 1px;
+                border-color: root.tab.accent;
+                Text {
+                    text: "DASHBOARD";
+                    color: root.tab.accent;
+                    font-size: 9px;
+                    font-weight: 900;
+                    horizontal-alignment: center;
+                    vertical-alignment: center;
+                }
+                TouchArea {
+                    height: max(parent.height, 48px);
+                    y: (parent.height - self.height) / 2;
+                    clicked => { root.open-dashboard(root.tab.id); }
+                }
+            }
+            Rectangle {
+                width: 92px;
+                height: 26px;
+                border-radius: 6px;
+                background: ThemeBook.burger.panel;
+                border-width: 1px;
+                border-color: ThemeBook.burger.edge;
+                Text {
+                    text: "SETTINGS  |||";
+                    color: ThemeBook.burger.bright;
+                    font-size: 9px;
+                    font-weight: 900;
+                    horizontal-alignment: center;
+                    vertical-alignment: center;
+                }
+                TouchArea {
+                    height: max(parent.height, 48px);
+                    y: (parent.height - self.height) / 2;
+                    clicked => { root.open-settings(root.tab.id); }
+                }
+            }
+        }
+    }
+}
+
+// ── #36 "THE DESCENT" — the ||| PILLARS overlay ambient (the Hashira dive into the burning
+//    castle): an ember window depth-field falling outward from the hot core far below, the
+//    katana streak flashing past, and the haori ribbons — Tanjiro's checker, Obanai's stripes,
+//    Sanemi's 殺 — breathing in the dark. The GLASS WIRE panels ride above it (the ThemeBook
+//    burger glass tokens carry alpha, so this wash breathes through the ENTIRE overlay).
+//    Pure animation-tick; zero timers; no hit surface. EXPORTED for the in-shell mount. ──
+export component DescentWash inherits Rectangle {
+    clip: true;
+    background: transparent;
+    property <float> tk: animation-tick() / 1ms;
+
+    // THE HOT CORE — the burning heart of the castle, far below
+    Rectangle {
+        x: parent.width / 2 - self.width / 2;
+        y: parent.height * 0.46 - self.height / 2;
+        width: 240px; height: 240px;
+        border-radius: 120px;
+        background: @radial-gradient(circle, #f0a848.with-alpha(0.16) 0%, #c4501e.with-alpha(0.07) 55%, transparent 75%);
+        opacity: 0.70 + 0.30 * sin(360deg * Math.mod(root.tk / 5100.0, 1.0));
+    }
+
+    // THE WINDOW DEPTH-FIELD — eighteen ember windows falling outward from the core
+    // (golden-angle spread); each is born small at the heart, swells as it nears, and
+    // dies at the rim — the endless vertigo of the dive. No two share a phase.
+    for w in 18 : Rectangle {
+        property <float> p: Math.mod(root.tk / 9000.0 + w * 0.318, 1.0);
+        property <float> r: 0.06 + 0.50 * self.p;
+        x: parent.width * (0.5 + self.r * Math.cos(360deg * Math.mod(w * 0.382, 1.0))) - self.width / 2;
+        y: parent.height * (0.46 + self.r * Math.sin(360deg * Math.mod(w * 0.382, 1.0))) - self.height / 2;
+        width: 3px + 9px * self.p;
+        height: 4px + 12px * self.p;
+        border-radius: 1px;
+        background: Math.mod(w, 3) == 0 ? #ffd98a : Math.mod(w, 3) == 1 ? #f0a848 : #c47830;
+        opacity: 0.65 * Math.sin(180deg * self.p);
+    }
+
+    // THE KATANA STREAK — a Hashira dives past every 7.3s (cold steel in the warm dark)
+    Rectangle {
+        property <float> p: Math.mod(root.tk / 7300.0, 1.0);
+        x: parent.width * (0.15 + 0.70 * Math.min(self.p, 0.10) / 0.10) - 60px;
+        y: parent.height * (0.10 + 0.55 * Math.min(self.p, 0.10) / 0.10);
+        width: 120px; height: 2px;
+        transform-rotation: 38deg;
+        opacity: self.p < 0.10 ? 0.5 * (1 - self.p / 0.10) : 0;
+        background: @linear-gradient(90deg, transparent 0%, #cfe8ff 60%, #ffffff 100%);
+    }
+
+    // TANJIRO'S CHECKER — the green-black haori ribbon, swaying as it falls
+    Rectangle {
+        x: parent.width * 0.06; y: parent.height * 0.80;
+        width: 192px; height: 32px;
+        background: transparent;
+        opacity: 0.14;
+        transform-rotation: -8deg + 4deg * sin(360deg * Math.mod(root.tk / 5700.0, 1.0));
+        for c in 12 : Rectangle {
+            x: c * 16px; y: 0;
+            width: 16px; height: 16px;
+            background: Math.mod(c, 2) == 0 ? #1f8a4c : #0c1a12;
+        }
+        for c in 12 : Rectangle {
+            x: c * 16px; y: 16px;
+            width: 16px; height: 16px;
+            background: Math.mod(c, 2) == 0 ? #0c1a12 : #1f8a4c;
+        }
+    }
+
+    // OBANAI'S STRIPES — the serpent ribbon riding the right edge
+    Rectangle {
+        x: parent.width - 34px; y: parent.height * 0.16;
+        width: 26px; height: 180px;
+        background: transparent;
+        opacity: 0.12;
+        transform-rotation: 6deg * sin(360deg * Math.mod(root.tk / 6900.0, 1.0));
+        for s in 9 : Rectangle {
+            x: 0; y: s * 20px;
+            width: 100%; height: 20px;
+            background: Math.mod(s, 2) == 0 ? #e8e8e6 : #101014;
+        }
+    }
+
+    // 殺 — Sanemi's back, breathing faint in the dark (the kill vow)
+    Text {
+        x: parent.width * 0.10; y: parent.height * 0.12;
+        text: "殺";
+        font-size: 64px; font-weight: 900;
+        color: #f5f5f0;
+        opacity: 0.05 + 0.05 * Math.abs(sin(360deg * Math.mod(root.tk / 8100.0, 1.0)));
+    }
+}
+
+// One rail entry (the drawer's navigation row). EXPORTED (1B) for the shell's in-shell overlay.
+export component RailEntry inherits Rectangle {
+    in property <string> label;
+    in property <string> glyph;
+    in property <bool> selected;
+    // #33: the default rail accent IS the duality accent — Hashira pillar-blue flips to
+    // Upper-Moon magenta with the chrome; an explicit accent (the DNSCRYPT candle) still wins.
+    in property <color> accent: ThemeBook.burger.accent;
+    callback tapped();
+    height: 44px;
+    border-radius: 8px;
+    background: root.selected ? ThemeBook.burger.panel : transparent;
+    HorizontalLayout {
+        padding-left: 10px;
+        padding-right: 10px;
+        spacing: 8px;
+        Text {
+            text: root.glyph;
+            color: root.selected ? root.accent : ThemeBook.burger.muted;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.label;
+            color: root.selected ? ThemeBook.burger.bright : ThemeBook.burger.muted;
+            font-size: 12px;
+            font-weight: 800;
+            vertical-alignment: center;
+        }
+    }
+    TouchArea {
+        clicked => { root.tapped(); }
+    }
+}
+
+// =================================================================================================
+// THE ||| ADVANCED BURGER WINDOW — the navigation surface the host constructs.
+// =================================================================================================
+export component AdvancedBurger inherits Window {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.burger; width: 100%; height: 100%; }
+    // #36 THE DESCENT — the Hashira-dive ambient under the GLASS WIRE panels (D2 window mount).
+    DescentWash { width: 100%; height: 100%; }
+    title: "Yeah! Tortä —  |||  Advanced";
+    preferred-width: 440px;
+    preferred-height: 900px;
+    background: ThemeBook.burger.ground;
+
+    // ── The NavState pair (host-readable + host-drivable routing truth) ──
+    in-out property <string> active-section: "pillars";  // "pillars" | "dnscrypt" | "general"
+    in-out property <bool> drawer-open: true;
+
+    // ── The per-pillar private tabs (host pushes REAL statuses; these sample rows carry the
+    //    B7-G2 canonical accents and honest live=false placeholders until a host feeds them) ──
+    in-out property <[PillarTabRow]> pillar-tabs: [
+        { id: "warden", name: "WARDEN", blurb: "the per-app firewall courtroom", status: "no live read yet", live: false, accent: #d83a2c },
+        { id: "centauri", name: "CENTAURI", blurb: "the offline-CDN constellation", status: "no live read yet", live: false, accent: #28c8d8 },
+        { id: "masksolver", name: "MASKSOLVER", blurb: "the resolver & warm cache", status: "no live read yet", live: false, accent: #a78bfa },
+        { id: "beast", name: "BEAST", blurb: "the Tortä × YeAH TCP/UDP flow engine", status: "no live read yet", live: false, accent: #ffb454 },
+        { id: "rotation", name: "ROTATION", blurb: "rotates your DNS servers", status: "no live read yet", live: false, accent: #5e8bff },
+        { id: "inu", name: "WIRE CAKE INU", blurb: "no-root ADB self-elevation", status: "no live read yet", live: false, accent: #34b3a4 },
+        { id: "dnscrypt", name: "DNSCRYPT", blurb: "the encrypted-DNS resolver config", status: "no live read yet", live: false, accent: #e7ad42 },
+        // #15 UNDERGROUND H — the 8th pillar, seated DIRECTLY UNDER DNSCRYPT (the standing
+        // directive): the DNSCrypt-native antivirus in his OWN space, out of the ENGINE tab.
+        { id: "underground", name: "UNDERGROUND LAYER", blurb: "the DNSCrypt-native antivirus", status: "no live read yet", live: false, accent: #2fe26a },
+    ];
+
+    // ── Navigation intents the host routes (the pillar Windows stay host-run until the G2 pane
+    //    refactor embeds them — Design Finale, step 8) ──
+    callback open-pillar-dashboard(string);
+    callback open-pillar-settings(string);
+    callback close-advanced();
+
+    // ── DNSCRYPT section forwarding (the ONE host-facing surface — aliases onto the embedded pane) ──
+    in-out property <bool> require-dnssec <=> dc.require-dnssec;
+    in-out property <bool> require-nolog <=> dc.require-nolog;
+    in-out property <bool> require-nofilter <=> dc.require-nofilter;
+    // ★ #98 — the PQDNSCrypt gate needs a name in EVERY parent that mounts DnscryptSection, or the
+    //   Rust push has no setter to call on this component (the alias IS the seam).
+    in-out property <bool> pqdnscrypt <=> dc.pqdnscrypt;
+    in-out property <bool> dnscrypt-servers <=> dc.dnscrypt-servers;
+    in-out property <bool> doh-servers <=> dc.doh-servers;
+    in-out property <bool> odoh-servers <=> dc.odoh-servers;
+    in-out property <bool> ipv4-servers <=> dc.ipv4-servers;
+    in-out property <bool> ipv6-servers <=> dc.ipv6-servers;
+    in-out property <bool> force-tcp <=> dc.force-tcp;
+    in-out property <bool> http3 <=> dc.http3;
+    in-out property <bool> ignore-system-dns <=> dc.ignore-system-dns;
+    in-out property <bool> tunnel-only <=> dc.tunnel-only;              // #22 s5A-ext kill switch #2
+    in-out property <bool> proxy-enabled <=> dc.proxy-enabled;
+    in-out property <int> proxy-port <=> dc.proxy-port;
+    in-out property <int> listen-port <=> dc.listen-port;
+    in-out property <string> bootstrap-resolvers <=> dc.bootstrap-resolvers;
+    in-out property <bool> dns64-on <=> dc.dns64-on;
+    in-out property <string> dns64-prefix <=> dc.dns64-prefix;
+    in-out property <bool> block-ipv6 <=> dc.block-ipv6;
+    in-out property <bool> block-unqualified <=> dc.block-unqualified;
+    in-out property <bool> block-undelegated <=> dc.block-undelegated;
+    in-out property <bool> query-log-on <=> dc.query-log-on;
+    in-out property <bool> nx-log-on <=> dc.nx-log-on;
+    in-out property <bool> cache-on <=> dc.cache-on;
+    in-out property <int> cache-size <=> dc.cache-size;
+    in-out property <int> timeout-ms <=> dc.timeout-ms;
+    in-out property <int> server-names-count <=> dc.server-names-count;
+    in-out property <int> relay-routes <=> dc.relay-routes;
+    in-out property <int> relay-hops <=> dc.relay-hops;
+    in-out property <int> sources-refresh-hours <=> dc.sources-refresh-hours;
+    in-out property <int> relays-refresh-hours <=> dc.relays-refresh-hours;
+    out property <bool> warn-no-server-type <=> dc.warn-no-server-type;
+    out property <bool> warn-no-ip-family <=> dc.warn-no-ip-family;
+    out property <bool> warn-proxy-no-tcp <=> dc.warn-proxy-no-tcp;
+    out property <bool> warn-dns64-no-prefix <=> dc.warn-dns64-no-prefix;
+    out property <bool> note-strict-filters <=> dc.note-strict-filters;
+    out property <bool> warn-any <=> dc.warn-any;
+    out property <string> pool-summary <=> dc.pool-summary;
+    callback requirement-toggled <=> dc.requirement-toggled;
+    callback server-type-toggled <=> dc.server-type-toggled;
+    callback transport-toggled <=> dc.transport-toggled;
+    callback tunnel-only-toggled <=> dc.tunnel-only-toggled;            // #22 s5A-ext kill switch #2
+    callback listen-port-edited <=> dc.listen-port-edited;
+    callback proxy-port-edited <=> dc.proxy-port-edited;
+    callback bootstrap-edited <=> dc.bootstrap-edited;
+    callback dns64-prefix-edited <=> dc.dns64-prefix-edited;
+    callback sources-refresh-stepped <=> dc.sources-refresh-stepped;
+    callback relays-refresh-stepped <=> dc.relays-refresh-stepped;
+    callback open-servers-picker <=> dc.open-servers-picker;
+    callback open-relays-picker <=> dc.open-relays-picker;
+    callback reload-config <=> dc.reload-config;
+    callback apply-config <=> dc.apply-config;
+    // ── THE MANUAL PICKER forwarding (the host fills the entries on open, pins on toggle) ──
+    in property <[PickerRow]> server-entries <=> dc.server-entries;
+    in property <[PickerRow]> relay-entries <=> dc.relay-entries;
+    in-out property <bool> show-server-picker <=> dc.show-server-picker;
+    in-out property <bool> show-relay-picker <=> dc.show-relay-picker;
+    callback pin-toggled <=> dc.pin-toggled;
+    // #22 s5B: per-resolver relay pairing forwarding (PAIR chip → panel → one-route edits)
+    in property <[PickerRow]> pairing-relay-entries <=> dc.pairing-relay-entries;
+    in-out property <string> pairing-server <=> dc.pairing-server;
+    callback pair-server-selected <=> dc.pair-server-selected;
+    callback route-relay-toggled <=> dc.route-relay-toggled;
+
+    // ── GENERAL section forwarding ──
+    in-out property <int> preset-active <=> gen.preset-active;
+    in-out property <bool> rotation-on <=> gen.rotation-on;
+    in-out property <bool> solver-on <=> gen.solver-on;
+    in-out property <bool> warden-on <=> gen.warden-on;
+    in-out property <bool> rebind-protect-on <=> gen.rebind-protect-on;
+    in-out property <bool> boot-autostart-on <=> gen.boot-autostart-on;
+    in-out property <int> autostart-delay-secs <=> gen.autostart-delay-secs;
+    in-out property <bool> notification-on <=> gen.notification-on;
+    in-out property <bool> general-host-live <=> gen.host-live;
+    out property <bool> warn-all-pillars-off <=> gen.warn-all-pillars-off;
+    out property <bool> note-boot-off <=> gen.note-boot-off;
+    out property <string> preset-label <=> gen.preset-label;
+    callback preset-picked <=> gen.preset-picked;
+    callback pillar-toggled <=> gen.pillar-toggled;
+    callback boot-toggled <=> gen.boot-toggled;
+    callback autostart-delay-stepped <=> gen.autostart-delay-stepped;
+    callback notification-toggled <=> gen.notification-toggled;
+    callback open-battery-settings <=> gen.open-battery-settings;
+    callback open-query-log <=> gen.open-query-log;
+    callback open-nx-log <=> gen.open-nx-log;
+    callback open-expert <=> gen.open-expert;
+
+    VerticalLayout {
+        // ---- The top strip: the ||| toggle + the title + close (#33: ThemeBook.burger chrome —
+        //      the ADVANCED title wears the duality accent, the visible witness of the flip) ----
+        Rectangle {
+            height: 54px;
+            background: ThemeBook.burger.floor;
+            HorizontalLayout {
+                padding: 5px;
+                padding-left: 12px;
+                padding-right: 12px;
+                spacing: 10px;
+                Rectangle {
+                    width: 44px;
+                    border-radius: 8px;
+                    background: root.drawer-open ? ThemeBook.burger.panel : transparent;
+                    Text {
+                        text: "|||";
+                        color: ThemeBook.burger.bright;
+                        font-size: 18px;
+                        font-weight: 900;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                    TouchArea {
+                        clicked => { root.drawer-open = !root.drawer-open; }
+                    }
+                }
+                VerticalLayout {
+                    alignment: center;
+                    Text {
+                        text: "ADVANCED";
+                        color: ThemeBook.burger.accent;
+                        font-size: ThemeBook.burger.title-size;
+                        font-weight: ThemeBook.burger.title-weight;
+                    }
+                    Text {
+                        text: root.active-section == "dnscrypt" ? "the DNSCrypt section"
+                            : root.active-section == "general" ? "general settings · " + ThemeBook.burger.name
+                            : "the pillar private tabs · " + ThemeBook.burger.name;
+                        color: ThemeBook.burger.muted;
+                        font-size: 10px;
+                    }
+                }
+                Rectangle { }
+                Rectangle {
+                    width: 44px;
+                    border-radius: 8px;
+                    background: burger-close-ta.pressed ? ThemeBook.burger.panel : transparent;
+                    animate background { duration: 160ms; }
+                    // #GLOSS: the TRUE ✕ — stroke-DRAWN (never a checkmark, never grey)
+                    Path {
+                        x: (parent.width - self.width) / 2;
+                        y: (parent.height - self.height) / 2;
+                        width: 14px;
+                        height: 14px;
+                        viewbox-width: 14;
+                        viewbox-height: 14;
+                        commands: "M 1 1 L 13 13 M 13 1 L 1 13";
+                        stroke: burger-close-ta.pressed ? ThemeBook.burger.accent : ThemeBook.burger.bright;
+                        stroke-width: 2.5px;
+                    }
+                    burger-close-ta := TouchArea {
+                        clicked => { root.close-advanced(); }
+                    }
+                }
+            }
+        }
+
+        // ---- The body: rail + routed content ----
+        HorizontalLayout {
+            // THE RAIL (animated collapse — the burger drawer). #33: navigating flips the
+            // Demon-Slayer duality — ⚙ GENERAL walks the Infinity Castle (Akuma chrome, the
+            // task-36 lean); ◆ PILLARS / ★ DNSCRYPT return to the Hashira side.
+            Rectangle {
+                width: root.drawer-open ? 148px : 0px;
+                clip: true;
+                background: ThemeBook.burger.floor;
+                animate width { duration: 160ms; easing: ease-out; }
+                VerticalLayout {
+                    padding: 8px;
+                    spacing: 4px;
+                    RailEntry {
+                        label: "PILLARS";
+                        glyph: "◆";
+                        selected: root.active-section == "pillars";
+                        tapped => { root.active-section = "pillars"; ThemeBook.akuma = false; }
+                    }
+                    RailEntry {
+                        label: "DNSCRYPT";
+                        glyph: "★";
+                        accent: Candle.candle;
+                        selected: root.active-section == "dnscrypt";
+                        tapped => { root.active-section = "dnscrypt"; ThemeBook.akuma = false; }
+                    }
+                    RailEntry {
+                        label: "GENERAL";
+                        glyph: "⚙";
+                        selected: root.active-section == "general";
+                        tapped => { root.active-section = "general"; ThemeBook.akuma = true; }
+                    }
+                    Rectangle { }
+                }
+            }
+
+            // THE CONTENT REGION — the three views OVERLAY (each fills the region) and the routing
+            // state flips `visible:`. The embedded sections live OUTSIDE any `if` (a conditional
+            // element cannot carry the root's forwarding aliases — visibility-switched overlays keep
+            // the aliases + the pane state stable across navigation). Each view scrolls (the G5 law).
+            Rectangle {
+                horizontal-stretch: 1;
+                background: ThemeBook.burger.ground;
+
+                // ── MUGENJO UNDERLAY — the Infinity-Castle treatment WIRED to the
+                // pillars section (user report: "still matt" — the treatment existed
+                // on HOME only and was never routed here). Interlocking beams sliding
+                // past each other + shoji lantern warmth breathing behind the rows;
+                // pure animation-tick, zero timers, alphas kept low so the per-pillar
+                // cards stay fully readable. ──
+                mugenjo := Rectangle {
+                    width: 100%;
+                    height: 100%;
+                    visible: root.active-section == "pillars";
+                    clip: true;
+                    property <float> drift: Math.sin(360deg * (animation-tick() / 18s));
+                    property <float> slide: Math.sin(360deg * (animation-tick() / 13s));
+                    property <float> ph: 0.5 + 0.5 * Math.sin(360deg * (animation-tick() / 7.5s));
+                    // the vertical beams — the castle lattice, sliding against itself
+                    for b in [0, 1, 2, 3, 4] : Rectangle {
+                        x: parent.width * (0.08 + 0.21 * b)
+                            + 10px * mugenjo.drift * (Math.mod(b, 2) == 0 ? 1 : -1);
+                        y: 0;
+                        width: 3px;
+                        height: parent.height;
+                        background: #caa96a.with-alpha(0.10);
+                    }
+                    // the cross-rails — floors of the castle, gliding sideways
+                    for r in [0, 1, 2] : Rectangle {
+                        x: parent.width * 0.04
+                            + 16px * mugenjo.slide * (Math.mod(r, 2) == 0 ? -1 : 1);
+                        y: parent.height * (0.18 + 0.30 * r);
+                        width: parent.width * 0.92;
+                        height: 2px;
+                        background: #caa96a.with-alpha(0.08);
+                    }
+                    // shoji panels — warm paper glow breathing behind the lattice
+                    for s in [0, 1, 2] : Rectangle {
+                        x: parent.width * (0.10 + 0.30 * s);
+                        y: parent.height * (0.14 + 0.26 * s);
+                        width: parent.width * 0.22;
+                        height: parent.height * 0.14;
+                        border-radius: 3px;
+                        background: #ffb86c.with-alpha(0.035 + 0.035 * mugenjo.ph);
+                        border-width: 1px;
+                        border-color: #caa96a.with-alpha(0.10);
+                    }
+                    // the lantern procession — three warm motes, breathing in phase
+                    for l in [0, 1, 2] : Rectangle {
+                        x: parent.width * (0.16 + 0.28 * l)
+                            + 6px * Math.sin(360deg * (animation-tick() / 9.5s) + l * 120deg);
+                        y: parent.height * (0.10 + 0.30 * l);
+                        width: 7px; height: 9px;
+                        border-radius: 3px;
+                        background: #ffb86c.with-alpha(0.10 + 0.10 * mugenjo.ph);
+                        border-width: 1px;
+                        border-color: #caa96a.with-alpha(0.22);
+                    }
+                }
+
+                ScrollView {
+                    width: 100%;
+                    height: 100%;
+                    visible: root.active-section == "pillars";
+                    viewport-width: self.visible-width;
+                    VerticalLayout {
+                        padding: 12px;
+                        spacing: 8px;
+                        Text {
+                            text: "PER-PILLAR PRIVATE TABS";
+                            color: ThemeBook.burger.faint;
+                            font-size: 11px;
+                            font-weight: 800;
+                        }
+                        for t in root.pillar-tabs : PillarTab {
+                            tab: t;
+                            // The DNSCrypt pillar (the 7th, the namesake) routes to the EMBEDDED K5
+                            // DnscryptSection pane (active-section "dnscrypt") — its live dashboard AND
+                            // its advanced settings ARE that one typed DNSCrypt surface; the other 6
+                            // stay host-routed via the private-chip intents (the D2 contract).
+                            open-dashboard(id) => {
+                                if (id == "dnscrypt") { root.active-section = "dnscrypt"; }
+                                root.open-pillar-dashboard(id);
+                            }
+                            open-settings(id) => {
+                                if (id == "dnscrypt") { root.active-section = "dnscrypt"; }
+                                root.open-pillar-settings(id);
+                            }
+                        }
+                        Rectangle { }
+                    }
+                }
+
+                ScrollView {
+                    width: 100%;
+                    height: 100%;
+                    visible: root.active-section == "dnscrypt";
+                    viewport-width: self.visible-width;
+                    VerticalLayout {
+                        dc := DnscryptSection { }
+                    }
+                }
+
+                ScrollView {
+                    width: 100%;
+                    height: 100%;
+                    visible: root.active-section == "general";
+                    viewport-width: self.visible-width;
+                    VerticalLayout {
+                        gen := GeneralSection { }
+                    }
+                }
+            }
+        }
+    }
+}

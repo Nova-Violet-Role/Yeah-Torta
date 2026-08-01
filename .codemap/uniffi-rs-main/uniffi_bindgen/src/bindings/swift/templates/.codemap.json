@@ -1,0 +1,1289 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src\\bindings\\swift\\templates",
+  "files": {
+    "Async.swift": {
+      "hash": "ed38520ba1dc",
+      "indexed_at": "2026-07-24T20:35:12.932761+00:00",
+      "language": "swift",
+      "lines": 142,
+      "mtime_ns": 1782136568000000000,
+      "size": 5705,
+      "symbols": [
+        {
+          "lines": [
+            51,
+            80
+          ],
+          "name": "uniffiTraitInterfaceCallAsync",
+          "type": "function"
+        },
+        {
+          "lines": [
+            82,
+            109
+          ],
+          "name": "uniffiTraitInterfaceCallAsyncWithError",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                120,
+                120
+              ],
+              "name": "cancel",
+              "type": "method"
+            }
+          ],
+          "docstring": "with the task object itself, since has generic parameters.",
+          "lines": [
+            119,
+            121
+          ],
+          "name": "UniffiForeignFutureTask",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            123,
+            123
+          ],
+          "name": "Task",
+          "type": "class"
+        },
+        {
+          "lines": [
+            125,
+            135
+          ],
+          "name": "uniffiForeignFutureDroppedCallback",
+          "type": "function"
+        }
+      ]
+    },
+    "BooleanHelper.swift": {
+      "hash": "66d5223e1b83",
+      "indexed_at": "2026-07-24T20:35:12.933590+00:00",
+      "language": "swift",
+      "lines": 23,
+      "mtime_ns": 1782136568000000000,
+      "size": 615,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                10
+              ],
+              "name": "lift",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "lower",
+              "type": "method"
+            },
+            {
+              "lines": [
+                16,
+                18
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                20,
+                22
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            23
+          ],
+          "name": "FfiConverterBool",
+          "type": "struct"
+        }
+      ]
+    },
+    "BridgingHeaderTemplate.h": {
+      "hash": "e3518589b3ab",
+      "indexed_at": "2026-07-24T20:35:12.936287+00:00",
+      "language": "c",
+      "lines": 85,
+      "mtime_ns": 1782136568000000000,
+      "size": 3429,
+      "symbols": [
+        {
+          "docstring": "\u26a0\ufe0f increment the version suffix in all instances of UNIFFI_SHARED_HEADER_V4 in this file.           \u26a0\ufe0f",
+          "lines": [
+            25,
+            30
+          ],
+          "name": "RustBuffer",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            32,
+            36
+          ],
+          "name": "ForeignBytes",
+          "type": "typedef"
+        },
+        {
+          "docstring": "Error definitions",
+          "lines": [
+            39,
+            42
+          ],
+          "name": "RustCallStatus",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            53,
+            54
+          ],
+          "name": "when",
+          "type": "typedef"
+        }
+      ]
+    },
+    "CallbackInterfaceImpl.swift": {
+      "hash": "2bb1876327d0",
+      "indexed_at": "2026-07-24T20:35:12.942096+00:00",
+      "language": "swift",
+      "lines": 131,
+      "mtime_ns": 1782136568000000000,
+      "size": 5963,
+      "symbols": []
+    },
+    "CallbackInterfaceRuntime.swift": {
+      "hash": "a5def6b3b416",
+      "indexed_at": "2026-07-24T20:35:12.942786+00:00",
+      "language": "swift",
+      "lines": 7,
+      "mtime_ns": 1782136568000000000,
+      "size": 356,
+      "symbols": []
+    },
+    "CallbackInterfaceTemplate.swift": {
+      "hash": "bfc46baf28a4",
+      "indexed_at": "2026-07-24T20:35:12.945581+00:00",
+      "language": "swift",
+      "lines": 75,
+      "mtime_ns": 1782136568000000000,
+      "size": 2255,
+      "symbols": []
+    },
+    "CustomType.swift": {
+      "hash": "5d4a57ac9fa1",
+      "indexed_at": "2026-07-24T20:35:12.951301+00:00",
+      "language": "swift",
+      "lines": 92,
+      "mtime_ns": 1782136568000000000,
+      "size": 3224,
+      "symbols": []
+    },
+    "DataHelper.swift": {
+      "hash": "7e85e521a718",
+      "indexed_at": "2026-07-24T20:35:12.952148+00:00",
+      "language": "swift",
+      "lines": 17,
+      "mtime_ns": 1782136568000000000,
+      "size": 534,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                10
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                16
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            17
+          ],
+          "name": "FfiConverterData",
+          "type": "struct"
+        }
+      ]
+    },
+    "DurationHelper.swift": {
+      "hash": "2b93e85236b7",
+      "indexed_at": "2026-07-24T20:35:12.953064+00:00",
+      "language": "swift",
+      "lines": 27,
+      "mtime_ns": 1782136568000000000,
+      "size": 947,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                11
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                26
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            27
+          ],
+          "name": "FfiConverterDuration",
+          "type": "struct"
+        }
+      ]
+    },
+    "EnumTemplate.swift": {
+      "hash": "a38d052be61e",
+      "indexed_at": "2026-07-24T20:35:12.960144+00:00",
+      "language": "swift",
+      "lines": 98,
+      "mtime_ns": 1782136568000000000,
+      "size": 3939,
+      "symbols": []
+    },
+    "ErrorTemplate.swift": {
+      "hash": "2b38d69234e6",
+      "indexed_at": "2026-07-24T20:35:12.967135+00:00",
+      "language": "swift",
+      "lines": 126,
+      "mtime_ns": 1782136568000000000,
+      "size": 4218,
+      "symbols": []
+    },
+    "Float32Helper.swift": {
+      "hash": "67bd1e273f04",
+      "indexed_at": "2026-07-24T20:35:12.967926+00:00",
+      "language": "swift",
+      "lines": 15,
+      "mtime_ns": 1782136568000000000,
+      "size": 449,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                10
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            15
+          ],
+          "name": "FfiConverterFloat",
+          "type": "struct"
+        }
+      ]
+    },
+    "Float64Helper.swift": {
+      "hash": "88467778f7ce",
+      "indexed_at": "2026-07-24T20:35:12.968739+00:00",
+      "language": "swift",
+      "lines": 15,
+      "mtime_ns": 1782136568000000000,
+      "size": 456,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                10
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            15
+          ],
+          "name": "FfiConverterDouble",
+          "type": "struct"
+        }
+      ]
+    },
+    "HandleMap.swift": {
+      "hash": "bdecf329f9bf",
+      "indexed_at": "2026-07-24T20:35:12.969812+00:00",
+      "language": "swift",
+      "lines": 60,
+      "mtime_ns": 1782136568000000000,
+      "size": 1730,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                12,
+                16
+              ],
+              "name": "insert",
+              "type": "method"
+            },
+            {
+              "docstring": "Low-level insert function, this assumes `lock` is held.",
+              "lines": [
+                19,
+                24
+              ],
+              "name": "doInsert",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                33
+              ],
+              "name": "get",
+              "type": "method"
+            },
+            {
+              "lines": [
+                35,
+                42
+              ],
+              "name": "clone",
+              "type": "method"
+            },
+            {
+              "lines": [
+                44,
+                52
+              ],
+              "name": "remove",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            6,
+            59
+          ],
+          "name": "UniffiHandleMap",
+          "type": "class"
+        }
+      ]
+    },
+    "Helpers.swift": {
+      "hash": "bb21cba27538",
+      "indexed_at": "2026-07-24T20:35:12.971760+00:00",
+      "language": "swift",
+      "lines": 140,
+      "mtime_ns": 1782136568000000000,
+      "size": 4919,
+      "symbols": [
+        {
+          "lines": [
+            112,
+            123
+          ],
+          "name": "uniffiTraitInterfaceCall",
+          "type": "function"
+        },
+        {
+          "lines": [
+            125,
+            140
+          ],
+          "name": "uniffiTraitInterfaceCallWithError",
+          "type": "function"
+        }
+      ]
+    },
+    "Int16Helper.swift": {
+      "hash": "4ee962e38679",
+      "indexed_at": "2026-07-24T20:35:12.972525+00:00",
+      "language": "swift",
+      "lines": 15,
+      "mtime_ns": 1782136568000000000,
+      "size": 445,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                10
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            15
+          ],
+          "name": "FfiConverterInt16",
+          "type": "struct"
+        }
+      ]
+    },
+    "Int32Helper.swift": {
+      "hash": "56153b6caecb",
+      "indexed_at": "2026-07-24T20:35:12.973282+00:00",
+      "language": "swift",
+      "lines": 15,
+      "mtime_ns": 1782136568000000000,
+      "size": 445,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                10
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            15
+          ],
+          "name": "FfiConverterInt32",
+          "type": "struct"
+        }
+      ]
+    },
+    "Int64Helper.swift": {
+      "hash": "75bc655d7876",
+      "indexed_at": "2026-07-24T20:35:12.974036+00:00",
+      "language": "swift",
+      "lines": 15,
+      "mtime_ns": 1782136568000000000,
+      "size": 445,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                10
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            15
+          ],
+          "name": "FfiConverterInt64",
+          "type": "struct"
+        }
+      ]
+    },
+    "Int8Helper.swift": {
+      "hash": "cce51f3d8d8c",
+      "indexed_at": "2026-07-24T20:35:12.974804+00:00",
+      "language": "swift",
+      "lines": 15,
+      "mtime_ns": 1782136568000000000,
+      "size": 440,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                10
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            15
+          ],
+          "name": "FfiConverterInt8",
+          "type": "struct"
+        }
+      ]
+    },
+    "MapTemplate.swift": {
+      "hash": "c32d5826f053",
+      "indexed_at": "2026-07-24T20:35:12.995882+00:00",
+      "language": "swift",
+      "lines": 25,
+      "mtime_ns": 1782136568000000000,
+      "size": 887,
+      "symbols": []
+    },
+    "ObjectTemplate.swift": {
+      "hash": "7f5641e56bf9",
+      "indexed_at": "2026-07-24T20:35:13.004604+00:00",
+      "language": "swift",
+      "lines": 231,
+      "mtime_ns": 1782136568000000000,
+      "size": 7840,
+      "symbols": [
+        {
+          "lines": [
+            132,
+            132
+          ],
+          "name": "lift",
+          "type": "function"
+        },
+        {
+          "lines": [
+            153,
+            153
+          ],
+          "name": "read",
+          "type": "function"
+        }
+      ]
+    },
+    "OptionalTemplate.swift": {
+      "hash": "10787cf1bbaf",
+      "indexed_at": "2026-07-24T20:35:13.005610+00:00",
+      "language": "swift",
+      "lines": 23,
+      "mtime_ns": 1782136568000000000,
+      "size": 763,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            14
+          ],
+          "name": "write",
+          "type": "function"
+        },
+        {
+          "lines": [
+            16,
+            22
+          ],
+          "name": "read",
+          "type": "function"
+        }
+      ]
+    },
+    "Protocol.swift": {
+      "hash": "ba2e92953fcb",
+      "indexed_at": "2026-07-24T20:35:13.007335+00:00",
+      "language": "swift",
+      "lines": 11,
+      "mtime_ns": 1782136568000000000,
+      "size": 570,
+      "symbols": []
+    },
+    "RecordTemplate.swift": {
+      "hash": "32b2e6b19088",
+      "indexed_at": "2026-07-24T20:35:13.011615+00:00",
+      "language": "swift",
+      "lines": 73,
+      "mtime_ns": 1782136568000000000,
+      "size": 2578,
+      "symbols": []
+    },
+    "RustBufferTemplate.swift": {
+      "hash": "e62e8edc706e",
+      "indexed_at": "2026-07-24T20:35:13.014339+00:00",
+      "language": "swift",
+      "lines": 247,
+      "mtime_ns": 1782136568000000000,
+      "size": 9267,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                10,
+                12
+              ],
+              "name": "empty",
+              "type": "method"
+            },
+            {
+              "lines": [
+                14,
+                16
+              ],
+              "name": "from",
+              "type": "method"
+            },
+            {
+              "docstring": "The buffer must not be used after this is called.",
+              "lines": [
+                20,
+                22
+              ],
+              "name": "deallocate",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1,
+            23
+          ],
+          "name": "RustBuffer",
+          "type": "class"
+        },
+        {
+          "lines": [
+            25,
+            36
+          ],
+          "name": "ForeignBytes",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                54,
+                58
+              ],
+              "name": "lower",
+              "type": "method"
+            },
+            {
+              "lines": [
+                60,
+                62
+              ],
+              "name": "lower",
+              "type": "method"
+            },
+            {
+              "lines": [
+                64,
+                66
+              ],
+              "name": "lift",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                70
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                72,
+                74
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "docstring": "the closure body.",
+          "lines": [
+            50,
+            75
+          ],
+          "name": "FfiConverterByRefBytes",
+          "type": "enum"
+        },
+        {
+          "docstring": "Someday, this will be in a library of its own.",
+          "lines": [
+            84,
+            92
+          ],
+          "name": "Data",
+          "type": "class"
+        },
+        {
+          "docstring": "Instead, the read() method and these helper functions input a tuple of data",
+          "lines": [
+            108,
+            110
+          ],
+          "name": "createReader",
+          "type": "function"
+        },
+        {
+          "docstring": "offset past the end of the buffer.",
+          "lines": [
+            115,
+            129
+          ],
+          "name": "readInt",
+          "type": "function"
+        },
+        {
+          "docstring": "raw bytes, this is useful when lifting strings",
+          "lines": [
+            133,
+            144
+          ],
+          "name": "readBytes",
+          "type": "function"
+        },
+        {
+          "docstring": "Reads a float at the current offset.",
+          "lines": [
+            147,
+            149
+          ],
+          "name": "readFloat",
+          "type": "function"
+        },
+        {
+          "docstring": "Reads a float at the current offset.",
+          "lines": [
+            152,
+            154
+          ],
+          "name": "readDouble",
+          "type": "function"
+        },
+        {
+          "docstring": "Indicates if the offset has reached the end of the buffer.",
+          "lines": [
+            157,
+            159
+          ],
+          "name": "hasRemaining",
+          "type": "function"
+        },
+        {
+          "docstring": "types work.  See the above discussion on Readers for details.",
+          "lines": [
+            165,
+            167
+          ],
+          "name": "createWriter",
+          "type": "function"
+        },
+        {
+          "lines": [
+            169,
+            171
+          ],
+          "name": "writeBytes",
+          "type": "function"
+        },
+        {
+          "docstring": "is in the correct type!",
+          "lines": [
+            177,
+            180
+          ],
+          "name": "writeInt",
+          "type": "function"
+        },
+        {
+          "lines": [
+            182,
+            184
+          ],
+          "name": "writeFloat",
+          "type": "function"
+        },
+        {
+          "lines": [
+            186,
+            188
+          ],
+          "name": "writeDouble",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                196,
+                196
+              ],
+              "name": "lift",
+              "type": "method"
+            },
+            {
+              "lines": [
+                197,
+                197
+              ],
+              "name": "lower",
+              "type": "method"
+            },
+            {
+              "lines": [
+                198,
+                198
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                199,
+                199
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "docstring": "analogous to the Rust trait of the same name.",
+          "lines": [
+            192,
+            200
+          ],
+          "name": "FfiConverter",
+          "type": "interface"
+        },
+        {
+          "docstring": "Types conforming to `Primitive` pass themselves directly over the FFI.",
+          "lines": [
+            203,
+            203
+          ],
+          "name": "FfiConverterPrimitive",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                207,
+                211
+              ],
+              "name": "lift",
+              "type": "method"
+            },
+            {
+              "lines": [
+                213,
+                217
+              ],
+              "name": "lower",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            205,
+            218
+          ],
+          "name": "FfiConverterPrimitive",
+          "type": "class"
+        },
+        {
+          "docstring": "Used for complex types where it's hard to write a custom lift/lower.",
+          "lines": [
+            222,
+            222
+          ],
+          "name": "FfiConverterRustBuffer",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                226,
+                236
+              ],
+              "name": "lift",
+              "type": "method"
+            },
+            {
+              "lines": [
+                238,
+                244
+              ],
+              "name": "lower",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            224,
+            245
+          ],
+          "name": "FfiConverterRustBuffer",
+          "type": "class"
+        }
+      ]
+    },
+    "SequenceTemplate.swift": {
+      "hash": "94ab811635b6",
+      "indexed_at": "2026-07-24T20:35:13.015563+00:00",
+      "language": "swift",
+      "lines": 24,
+      "mtime_ns": 1782136568000000000,
+      "size": 776,
+      "symbols": [
+        {
+          "lines": [
+            15,
+            15
+          ],
+          "name": "read",
+          "type": "function"
+        }
+      ]
+    },
+    "SetTemplate.swift": {
+      "hash": "74777877743a",
+      "indexed_at": "2026-07-24T20:35:13.016723+00:00",
+      "language": "swift",
+      "lines": 23,
+      "mtime_ns": 1782136568000000000,
+      "size": 759,
+      "symbols": []
+    },
+    "StringHelper.swift": {
+      "hash": "590fbd769713",
+      "indexed_at": "2026-07-24T20:35:13.017850+00:00",
+      "language": "swift",
+      "lines": 45,
+      "mtime_ns": 1782136568000000000,
+      "size": 1825,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                21
+              ],
+              "name": "lift",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                32
+              ],
+              "name": "lower",
+              "type": "method"
+            },
+            {
+              "lines": [
+                34,
+                38
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                40,
+                44
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            45
+          ],
+          "name": "FfiConverterString",
+          "type": "struct"
+        }
+      ]
+    },
+    "TimestampHelper.swift": {
+      "hash": "7ca34f4fbb54",
+      "indexed_at": "2026-07-24T20:35:13.019061+00:00",
+      "language": "swift",
+      "lines": 42,
+      "mtime_ns": 1782136568000000000,
+      "size": 1817,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                22
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                41
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            42
+          ],
+          "name": "FfiConverterTimestamp",
+          "type": "struct"
+        }
+      ]
+    },
+    "TopLevelFunctionTemplate.swift": {
+      "hash": "c41ab5f58b5c",
+      "indexed_at": "2026-07-24T20:35:13.019941+00:00",
+      "language": "swift",
+      "lines": 1,
+      "mtime_ns": 1782136568000000000,
+      "size": 66,
+      "symbols": []
+    },
+    "Types.swift": {
+      "hash": "e5ae9fba3621",
+      "indexed_at": "2026-07-24T20:35:13.031880+00:00",
+      "language": "swift",
+      "lines": 105,
+      "mtime_ns": 1782136568000000000,
+      "size": 2773,
+      "symbols": []
+    },
+    "UInt16Helper.swift": {
+      "hash": "56baf47f786f",
+      "indexed_at": "2026-07-24T20:35:13.032738+00:00",
+      "language": "swift",
+      "lines": 15,
+      "mtime_ns": 1782136568000000000,
+      "size": 453,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                10
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            15
+          ],
+          "name": "FfiConverterUInt16",
+          "type": "struct"
+        }
+      ]
+    },
+    "UInt32Helper.swift": {
+      "hash": "93177c2b3b23",
+      "indexed_at": "2026-07-24T20:35:13.033509+00:00",
+      "language": "swift",
+      "lines": 15,
+      "mtime_ns": 1782136568000000000,
+      "size": 453,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                10
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            15
+          ],
+          "name": "FfiConverterUInt32",
+          "type": "struct"
+        }
+      ]
+    },
+    "UInt64Helper.swift": {
+      "hash": "1db2b06d1f7c",
+      "indexed_at": "2026-07-24T20:35:13.034270+00:00",
+      "language": "swift",
+      "lines": 15,
+      "mtime_ns": 1782136568000000000,
+      "size": 453,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                10
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            15
+          ],
+          "name": "FfiConverterUInt64",
+          "type": "struct"
+        }
+      ]
+    },
+    "UInt8Helper.swift": {
+      "hash": "8f92de2074aa",
+      "indexed_at": "2026-07-24T20:35:13.035033+00:00",
+      "language": "swift",
+      "lines": 15,
+      "mtime_ns": 1782136568000000000,
+      "size": 445,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                10
+              ],
+              "name": "read",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "write",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            15
+          ],
+          "name": "FfiConverterUInt8",
+          "type": "struct"
+        }
+      ]
+    },
+    "macros.swift": {
+      "hash": "b377aef3a7bd",
+      "indexed_at": "2026-07-24T20:35:12.994675+00:00",
+      "language": "swift",
+      "lines": 252,
+      "mtime_ns": 1782136568000000000,
+      "size": 9248,
+      "symbols": []
+    },
+    "wrapper.swift": {
+      "hash": "46588a5410fd",
+      "indexed_at": "2026-07-24T20:35:13.037607+00:00",
+      "language": "swift",
+      "lines": 80,
+      "mtime_ns": 1782136568000000000,
+      "size": 2628,
+      "symbols": []
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.771281+00:00",
+  "version": "1.0"
+}

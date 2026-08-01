@@ -1,0 +1,1909 @@
+{
+  "directory": "uniffi-rs-main\\bindgen-tests\\ruby\\tests",
+  "files": {
+    "bytes.rb": {
+      "hash": "f48873d72e11",
+      "indexed_at": "2026-07-24T20:35:12.114499+00:00",
+      "language": "ruby",
+      "lines": 42,
+      "mtime_ns": 1782136568000000000,
+      "size": 1132,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                17
+              ],
+              "name": "test_roundtrip_bytes",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "test_roundtrip_empty_bytes",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                27
+              ],
+              "name": "test_roundtrip_binary_bytes",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                33
+              ],
+              "name": "test_bytes_encoding",
+              "type": "method"
+            },
+            {
+              "docstring": "Zero-copy &[u8] \u2014 proc-macro path",
+              "lines": [
+                36,
+                41
+              ],
+              "name": "zero_copy_bytes",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            42
+          ],
+          "name": "TestBytes",
+          "type": "class"
+        }
+      ]
+    },
+    "callback_interfaces.rb": {
+      "hash": "81ef27da7426",
+      "indexed_at": "2026-07-24T20:35:12.115652+00:00",
+      "language": "ruby",
+      "lines": 126,
+      "mtime_ns": 1782136568000000000,
+      "size": 3583,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                15,
+                17
+              ],
+              "name": "callback_ref_count",
+              "type": "singleton_method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "reset_callback_ref_count",
+              "type": "singleton_method"
+            },
+            {
+              "lines": [
+                23,
+                25
+              ],
+              "name": "finalizer",
+              "type": "singleton_method"
+            },
+            {
+              "lines": [
+                27,
+                31
+              ],
+              "name": "initialize",
+              "signature": "(value)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                33,
+                33
+              ],
+              "name": "noop",
+              "type": "method"
+            },
+            {
+              "lines": [
+                35,
+                37
+              ],
+              "name": "get_value",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                41
+              ],
+              "name": "set_value",
+              "signature": "(value)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                43,
+                51
+              ],
+              "name": "throw_if_equal",
+              "signature": "(numbers)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                53,
+                55
+              ],
+              "name": "echo",
+              "signature": "(s)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            56
+          ],
+          "name": "CallbackImpl",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                61,
+                77
+              ],
+              "name": "test_callback_interface",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                85
+              ],
+              "name": "test_echo",
+              "type": "method"
+            },
+            {
+              "lines": [
+                87,
+                96
+              ],
+              "name": "test_throw",
+              "type": "method"
+            },
+            {
+              "lines": [
+                98,
+                105
+              ],
+              "name": "test_raises_unexpected_error",
+              "type": "method"
+            },
+            {
+              "lines": [
+                107,
+                117
+              ],
+              "name": "test_raises_unexpected_error_converted",
+              "type": "method"
+            },
+            {
+              "lines": [
+                119,
+                125
+              ],
+              "name": "test_callback_interface_calls_and_errors",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            58,
+            126
+          ],
+          "name": "TestCallbackInterfaces",
+          "type": "class"
+        }
+      ]
+    },
+    "collections.rb": {
+      "hash": "64a9331de1e7",
+      "indexed_at": "2026-07-24T20:35:12.116731+00:00",
+      "language": "ruby",
+      "lines": 83,
+      "mtime_ns": 1782136568000000000,
+      "size": 2751,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                28
+              ],
+              "name": "test_vecs",
+              "type": "method"
+            },
+            {
+              "lines": [
+                30,
+                40
+              ],
+              "name": "test_hash_map",
+              "type": "method"
+            },
+            {
+              "lines": [
+                42,
+                50
+              ],
+              "name": "test_hash_set",
+              "type": "method"
+            },
+            {
+              "lines": [
+                52,
+                57
+              ],
+              "name": "test_rec_with_collections",
+              "type": "method"
+            },
+            {
+              "lines": [
+                59,
+                66
+              ],
+              "name": "test_complex_collection_type",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                75
+              ],
+              "name": "record_with_collection",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                82
+              ],
+              "name": "complex_collection_type",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            83
+          ],
+          "name": "TestCollections",
+          "type": "class"
+        }
+      ]
+    },
+    "custom_types.rb": {
+      "hash": "007af951ff01",
+      "indexed_at": "2026-07-24T20:35:12.117326+00:00",
+      "language": "ruby",
+      "lines": 22,
+      "mtime_ns": 1782136568000000000,
+      "size": 725,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "CustomType1 has no foreign-side config: treat as raw u64",
+              "lines": [
+                14,
+                16
+              ],
+              "name": "test_custom_type1",
+              "type": "method"
+            },
+            {
+              "docstring": "CustomType2 is lifted/lowered via a Ruby Hash per uniffi.toml Ruby config",
+              "lines": [
+                19,
+                21
+              ],
+              "name": "test_custom_type2",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            22
+          ],
+          "name": "TestEnums",
+          "type": "class"
+        }
+      ]
+    },
+    "defaults.rb": {
+      "hash": "b1dc6b176b45",
+      "indexed_at": "2026-07-24T20:35:12.118094+00:00",
+      "language": "ruby",
+      "lines": 58,
+      "mtime_ns": 1782136568000000000,
+      "size": 1448,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                18
+              ],
+              "name": "test_record_with_defaults",
+              "type": "method"
+            },
+            {
+              "lines": [
+                20,
+                25
+              ],
+              "name": "test_record_override_defaults",
+              "type": "method"
+            },
+            {
+              "lines": [
+                27,
+                31
+              ],
+              "name": "test_enum_other_variant_default_fields",
+              "type": "method"
+            },
+            {
+              "lines": [
+                33,
+                37
+              ],
+              "name": "test_enum_other_variant_override",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                41
+              ],
+              "name": "test_func_with_default",
+              "type": "method"
+            },
+            {
+              "lines": [
+                43,
+                45
+              ],
+              "name": "test_func_with_default_override",
+              "type": "method"
+            },
+            {
+              "lines": [
+                47,
+                51
+              ],
+              "name": "test_interface_method_with_default",
+              "type": "method"
+            },
+            {
+              "lines": [
+                53,
+                57
+              ],
+              "name": "test_interface_method_with_default_override",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            58
+          ],
+          "name": "TestDefaults",
+          "type": "class"
+        }
+      ]
+    },
+    "enums.rb": {
+      "hash": "c7130d86f15a",
+      "indexed_at": "2026-07-24T20:35:12.119545+00:00",
+      "language": "ruby",
+      "lines": 132,
+      "mtime_ns": 1782136568000000000,
+      "size": 4089,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "--- EnumWithData (flat enum) ---",
+              "lines": [
+                15,
+                19
+              ],
+              "name": "test_enum_no_data_roundtrip",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                24
+              ],
+              "name": "test_enum_no_data_distinct",
+              "type": "method"
+            },
+            {
+              "docstring": "--- EnumWithData (non-flat enum) ---",
+              "lines": [
+                27,
+                44
+              ],
+              "name": "test_enums_with_data",
+              "type": "method"
+            },
+            {
+              "lines": [
+                46,
+                57
+              ],
+              "name": "test_methods",
+              "type": "method"
+            },
+            {
+              "docstring": "--- ComplexEnum ---",
+              "lines": [
+                61,
+                70
+              ],
+              "name": "test_complex_enum_a",
+              "type": "method"
+            },
+            {
+              "lines": [
+                72,
+                83
+              ],
+              "name": "test_complex_enum_b",
+              "type": "method"
+            },
+            {
+              "lines": [
+                85,
+                95
+              ],
+              "name": "test_complex_enum_c",
+              "type": "method"
+            },
+            {
+              "docstring": "--- ExplicitValuedEnum ---",
+              "lines": [
+                99,
+                111
+              ],
+              "name": "test_discriminents",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                117
+              ],
+              "name": "test_explicit_valued_enum_distinct",
+              "type": "method"
+            },
+            {
+              "docstring": "GappedEnum is a separate type - just verify constants exists",
+              "lines": [
+                122,
+                126
+              ],
+              "name": "test_gapped_enum_roundtrip",
+              "type": "method"
+            },
+            {
+              "lines": [
+                128,
+                131
+              ],
+              "name": "test_gapped_enum_distinct",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            132
+          ],
+          "name": "TestEnums",
+          "type": "class"
+        }
+      ]
+    },
+    "errors.rb": {
+      "hash": "7e9e70620888",
+      "indexed_at": "2026-07-24T20:35:12.120510+00:00",
+      "language": "ruby",
+      "lines": 71,
+      "mtime_ns": 1782136568000000000,
+      "size": 2005,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                17
+              ],
+              "name": "test_failure1",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                24
+              ],
+              "name": "test_failure2",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                31
+              ],
+              "name": "test_failure3",
+              "type": "method"
+            },
+            {
+              "lines": [
+                33,
+                35
+              ],
+              "name": "test_flat_error",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                44
+              ],
+              "name": "test_error_no_data",
+              "type": "method"
+            },
+            {
+              "docstring": "Should not raise",
+              "lines": [
+                47,
+                50
+              ],
+              "name": "test_success",
+              "type": "method"
+            },
+            {
+              "docstring": "All variants are subclasses of StandardError",
+              "lines": [
+                53,
+                58
+              ],
+              "name": "test_error_hierarchy",
+              "type": "method"
+            },
+            {
+              "lines": [
+                60,
+                70
+              ],
+              "name": "test_rescue_by_base_class",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            71
+          ],
+          "name": "TestErrors",
+          "type": "class"
+        }
+      ]
+    },
+    "futures.rb": {
+      "hash": "147548623d46",
+      "indexed_at": "2026-07-24T20:35:12.121612+00:00",
+      "language": "ruby",
+      "lines": 104,
+      "mtime_ns": 1782136568000000000,
+      "size": 3049,
+      "symbols": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "lines": [
+                    16,
+                    18
+                  ],
+                  "name": "reset_ref_count",
+                  "type": "singleton_method"
+                },
+                {
+                  "lines": [
+                    20,
+                    22
+                  ],
+                  "name": "define_finalizer",
+                  "type": "singleton_method"
+                },
+                {
+                  "lines": [
+                    24,
+                    28
+                  ],
+                  "name": "initialize",
+                  "signature": "(value)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    30,
+                    31
+                  ],
+                  "name": "noop",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    33,
+                    35
+                  ],
+                  "name": "get_value",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    37,
+                    39
+                  ],
+                  "name": "set_value",
+                  "signature": "(value)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    41,
+                    46
+                  ],
+                  "name": "throw_if_equal",
+                  "signature": "(numbers)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                13,
+                47
+              ],
+              "name": "AsyncCallbackImpl",
+              "type": "class"
+            },
+            {
+              "lines": [
+                49,
+                66
+              ],
+              "name": "test_simple_calls",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                70
+              ],
+              "name": "test_errors",
+              "type": "method"
+            },
+            {
+              "lines": [
+                72,
+                78
+              ],
+              "name": "test_methods",
+              "type": "method"
+            },
+            {
+              "lines": [
+                80,
+                103
+              ],
+              "name": "test_async_callback_interfaces",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            104
+          ],
+          "name": "TestFutures",
+          "type": "class"
+        }
+      ]
+    },
+    "interfaces.rb": {
+      "hash": "9e49469ad474",
+      "indexed_at": "2026-07-24T20:35:12.122476+00:00",
+      "language": "ruby",
+      "lines": 81,
+      "mtime_ns": 1782136568000000000,
+      "size": 2084,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                17
+              ],
+              "name": "test_basic_interface",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                24
+              ],
+              "name": "test_clone_interface",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                31
+              ],
+              "name": "test_optional_interface",
+              "type": "method"
+            },
+            {
+              "lines": [
+                33,
+                37
+              ],
+              "name": "test_secondary_constructor",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                48
+              ],
+              "name": "test_records_with_interface_fields",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                56
+              ],
+              "name": "test_enums_with_intefaces",
+              "type": "method"
+            },
+            {
+              "lines": [
+                58,
+                74
+              ],
+              "name": "test_interface_ref_count",
+              "type": "method"
+            },
+            {
+              "lines": [
+                76,
+                80
+              ],
+              "name": "test_multi_word_arg",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            81
+          ],
+          "name": "TestInterfaces",
+          "type": "class"
+        }
+      ]
+    },
+    "options.rb": {
+      "hash": "6f8162a62579",
+      "indexed_at": "2026-07-24T20:35:12.123289+00:00",
+      "language": "ruby",
+      "lines": 47,
+      "mtime_ns": 1782136568000000000,
+      "size": 2174,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                29
+              ],
+              "name": "test_option_some",
+              "type": "method"
+            },
+            {
+              "lines": [
+                31,
+                46
+              ],
+              "name": "test_option_none",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            47
+          ],
+          "name": "TestOptions",
+          "type": "class"
+        }
+      ]
+    },
+    "primitive_types.rb": {
+      "hash": "87fff540b9f5",
+      "indexed_at": "2026-07-24T20:35:12.124244+00:00",
+      "language": "ruby",
+      "lines": 66,
+      "mtime_ns": 1782136568000000000,
+      "size": 2797,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                11,
+                24
+              ],
+              "name": "test_input",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                39
+              ],
+              "name": "test_output",
+              "type": "method"
+            },
+            {
+              "lines": [
+                41,
+                55
+              ],
+              "name": "test_roundtrip",
+              "type": "method"
+            },
+            {
+              "lines": [
+                57,
+                61
+              ],
+              "name": "test_sum_with_many_types",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                65
+              ],
+              "name": "test_func_with_multi_word_arg",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            66
+          ],
+          "name": "TestPrimitiveTypes",
+          "type": "class"
+        }
+      ]
+    },
+    "records.rb": {
+      "hash": "0fed1876c271",
+      "indexed_at": "2026-07-24T20:35:12.125031+00:00",
+      "language": "ruby",
+      "lines": 59,
+      "mtime_ns": 1782136568000000000,
+      "size": 1694,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                18
+              ],
+              "name": "test_simple_rec",
+              "type": "method"
+            },
+            {
+              "lines": [
+                20,
+                22
+              ],
+              "name": "test_unit_rec",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                54
+              ],
+              "name": "test_complex_rec",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                58
+              ],
+              "name": "test_methods",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            59
+          ],
+          "name": "TestRecords",
+          "type": "class"
+        }
+      ]
+    },
+    "recursive_types.rb": {
+      "hash": "e5fcec81495d",
+      "indexed_at": "2026-07-24T20:35:12.126352+00:00",
+      "language": "ruby",
+      "lines": 173,
+      "mtime_ns": 1782136568000000000,
+      "size": 4229,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "--- Self-recursive tree ---",
+              "lines": [
+                15,
+                17
+              ],
+              "name": "test_tree_leaf",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                26
+              ],
+              "name": "test_tree_node",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                38
+              ],
+              "name": "test_tree_nested",
+              "type": "method"
+            },
+            {
+              "docstring": "--- Mutally recursive Expr / BoolExpr ---",
+              "lines": [
+                42,
+                44
+              ],
+              "name": "test_expr_lit",
+              "type": "method"
+            },
+            {
+              "lines": [
+                46,
+                54
+              ],
+              "name": "test_expr_if_true",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                64
+              ],
+              "name": "test_expr_if_false",
+              "type": "method"
+            },
+            {
+              "lines": [
+                66,
+                69
+              ],
+              "name": "test_bool_not",
+              "type": "method"
+            },
+            {
+              "lines": [
+                71,
+                74
+              ],
+              "name": "test_bool_is_zero",
+              "type": "method"
+            },
+            {
+              "docstring": "--- LinkedList ---",
+              "lines": [
+                78,
+                80
+              ],
+              "name": "test_linked_list_nil",
+              "type": "method"
+            },
+            {
+              "lines": [
+                82,
+                86
+              ],
+              "name": "test_linked_list_single",
+              "type": "method"
+            },
+            {
+              "lines": [
+                88,
+                98
+              ],
+              "name": "test_linked_list_multiple",
+              "type": "method"
+            },
+            {
+              "docstring": "-- Trie --",
+              "lines": [
+                102,
+                104
+              ],
+              "name": "test_trie_leaf",
+              "type": "method"
+            },
+            {
+              "lines": [
+                106,
+                119
+              ],
+              "name": "test_trie_branch",
+              "type": "method"
+            },
+            {
+              "docstring": "-- RoseTree (cycle through a record: RoseTree \u2192 RoseData \u2192 Vec<RoseTree>) --",
+              "lines": [
+                123,
+                125
+              ],
+              "name": "test_rose_tree_leaf",
+              "type": "method"
+            },
+            {
+              "lines": [
+                127,
+                162
+              ],
+              "name": "test_rose_tree_branch",
+              "type": "method"
+            },
+            {
+              "docstring": "--- Recursive EvalError ---",
+              "lines": [
+                166,
+                168
+              ],
+              "name": "test_maybe_throw_no_error",
+              "type": "method"
+            },
+            {
+              "lines": [
+                170,
+                172
+              ],
+              "name": "test_maybe_throw_error",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            173
+          ],
+          "name": "TestRecursiveTypes",
+          "type": "class"
+        }
+      ]
+    },
+    "references.rb": {
+      "hash": "600343b61e64",
+      "indexed_at": "2026-07-24T20:35:12.126987+00:00",
+      "language": "ruby",
+      "lines": 32,
+      "mtime_ns": 1782136568000000000,
+      "size": 972,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                16
+              ],
+              "name": "test_value_ref",
+              "type": "method"
+            },
+            {
+              "lines": [
+                18,
+                25
+              ],
+              "name": "test_interface_ref",
+              "type": "method"
+            },
+            {
+              "lines": [
+                27,
+                31
+              ],
+              "name": "test_trait_interface_ref",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            32
+          ],
+          "name": "TestReferences",
+          "type": "class"
+        }
+      ]
+    },
+    "renames.rb": {
+      "hash": "0b88080b2d38",
+      "indexed_at": "2026-07-24T20:35:12.127931+00:00",
+      "language": "ruby",
+      "lines": 99,
+      "mtime_ns": 1782136568000000000,
+      "size": 2432,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "Rust-side renames via #[uniffi(name = ...)] ---",
+              "lines": [
+                15,
+                18
+              ],
+              "name": "test_rename_record",
+              "type": "method"
+            },
+            {
+              "lines": [
+                20,
+                28
+              ],
+              "name": "test_rename_enum",
+              "type": "method"
+            },
+            {
+              "lines": [
+                30,
+                34
+              ],
+              "name": "test_renamed_enum_variant",
+              "type": "method"
+            },
+            {
+              "lines": [
+                36,
+                40
+              ],
+              "name": "test_rename_object",
+              "type": "method"
+            },
+            {
+              "lines": [
+                42,
+                46
+              ],
+              "name": "test_rename_trait",
+              "type": "method"
+            },
+            {
+              "docstring": "--- Binding-specific renames via uniffi.toml [bindings.ruby.rename] ---",
+              "lines": [
+                50,
+                54
+              ],
+              "name": "test_rb_record",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                63
+              ],
+              "name": "test_rb_enum",
+              "type": "method"
+            },
+            {
+              "lines": [
+                65,
+                74
+              ],
+              "name": "test_rb_enum_with_fields",
+              "type": "method"
+            },
+            {
+              "lines": [
+                76,
+                82
+              ],
+              "name": "test_rb_function",
+              "type": "method"
+            },
+            {
+              "lines": [
+                84,
+                86
+              ],
+              "name": "test_rb_function_raises",
+              "type": "method"
+            },
+            {
+              "lines": [
+                88,
+                92
+              ],
+              "name": "test_rb_object",
+              "type": "method"
+            },
+            {
+              "lines": [
+                94,
+                98
+              ],
+              "name": "test_rb_trait",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            99
+          ],
+          "name": "TestRenames",
+          "type": "class"
+        }
+      ]
+    },
+    "rust_traits.rb": {
+      "hash": "17c990352a62",
+      "indexed_at": "2026-07-24T20:35:12.128812+00:00",
+      "language": "ruby",
+      "lines": 55,
+      "mtime_ns": 1782136568000000000,
+      "size": 1927,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                16
+              ],
+              "name": "test_debug",
+              "type": "method"
+            },
+            {
+              "lines": [
+                18,
+                21
+              ],
+              "name": "test_display",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                27
+              ],
+              "name": "test_eq",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                35
+              ],
+              "name": "test_ord",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                41
+              ],
+              "name": "test_hash",
+              "type": "method"
+            },
+            {
+              "lines": [
+                43,
+                54
+              ],
+              "name": "test_hash_fn",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            55
+          ],
+          "name": "TestRustTraits",
+          "type": "class"
+        }
+      ]
+    },
+    "simple_fns.rb": {
+      "hash": "a20d2befbb0a",
+      "indexed_at": "2026-07-24T20:35:12.129401+00:00",
+      "language": "ruby",
+      "lines": 23,
+      "mtime_ns": 1782136568000000000,
+      "size": 663,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "test_func",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                22
+              ],
+              "name": "test_unexpected_error_func",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            23
+          ],
+          "name": "TestSimpleFns",
+          "type": "class"
+        }
+      ]
+    },
+    "time.rb": {
+      "hash": "a3026f64c35f",
+      "indexed_at": "2026-07-24T20:35:12.130387+00:00",
+      "language": "ruby",
+      "lines": 92,
+      "mtime_ns": 1782136568000000000,
+      "size": 2859,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                19,
+                26
+              ],
+              "name": "test_roundtrip_duration_whole_seconds",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                34
+              ],
+              "name": "test_roundtrip_duration_with_nanoseconds",
+              "type": "method"
+            },
+            {
+              "lines": [
+                36,
+                42
+              ],
+              "name": "test_roundtrip_duration_zero",
+              "type": "method"
+            },
+            {
+              "lines": [
+                44,
+                48
+              ],
+              "name": "test_roundtrip_duration_negative_raises",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                56
+              ],
+              "name": "test_roundtrip_systemtime_epoch",
+              "type": "method"
+            },
+            {
+              "lines": [
+                58,
+                65
+              ],
+              "name": "test_roundtrip_systemtime_post_epoch",
+              "type": "method"
+            },
+            {
+              "lines": [
+                67,
+                73
+              ],
+              "name": "test_roundtrip_systemtime_with_nanoseconds",
+              "type": "method"
+            },
+            {
+              "lines": [
+                75,
+                82
+              ],
+              "name": "test_roundtrip_systemtime_pre_epoch",
+              "type": "method"
+            },
+            {
+              "lines": [
+                84,
+                91
+              ],
+              "name": "test_roundtrip_systemtime_pre_epoch_with_nanoseconds",
+              "type": "method"
+            }
+          ],
+          "docstring": "SystemTime maps to a UTC Time around the Unix epoch.",
+          "lines": [
+            14,
+            92
+          ],
+          "name": "TestTime",
+          "type": "class"
+        }
+      ]
+    },
+    "trait_interfaces.rb": {
+      "hash": "ab224d8202eb",
+      "indexed_at": "2026-07-24T20:35:12.132568+00:00",
+      "language": "ruby",
+      "lines": 348,
+      "mtime_ns": 1782136568000000000,
+      "size": 9360,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                15,
+                17
+              ],
+              "name": "ref_count",
+              "type": "singleton_method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "finalizer",
+              "type": "singleton_method"
+            },
+            {
+              "lines": [
+                23,
+                27
+              ],
+              "name": "initialize",
+              "signature": "(value)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                29
+              ],
+              "name": "noop",
+              "type": "method"
+            },
+            {
+              "lines": [
+                31,
+                33
+              ],
+              "name": "get_value",
+              "type": "method"
+            },
+            {
+              "lines": [
+                35,
+                37
+              ],
+              "name": "set_value",
+              "signature": "(value)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                41
+              ],
+              "name": "roundtrip_record",
+              "signature": "(value)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                43,
+                45
+              ],
+              "name": "roundtrip_enum",
+              "signature": "(value)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                47,
+                49
+              ],
+              "name": "roundtrip_interface",
+              "signature": "(value)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                51,
+                55
+              ],
+              "name": "throw_if_equal",
+              "signature": "(numbers)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            56
+          ],
+          "name": "TraitImpl",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                61,
+                78
+              ],
+              "name": "check_rust_impl",
+              "signature": "(trait_impl)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                80,
+                108
+              ],
+              "name": "check_rb_impl",
+              "signature": "(trait_impl)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                110,
+                112
+              ],
+              "name": "test_rust_impl",
+              "type": "method"
+            },
+            {
+              "lines": [
+                114,
+                120
+              ],
+              "name": "test_rust_impl_roundtripped",
+              "type": "method"
+            },
+            {
+              "lines": [
+                122,
+                128
+              ],
+              "name": "test_rust_impl_roundtripped_list",
+              "type": "method"
+            },
+            {
+              "lines": [
+                130,
+                135
+              ],
+              "name": "test_rb_impl",
+              "type": "method"
+            },
+            {
+              "lines": [
+                137,
+                146
+              ],
+              "name": "test_rb_impl_roundtripped_list",
+              "type": "method"
+            },
+            {
+              "lines": [
+                148,
+                157
+              ],
+              "name": "test_rb_impl_roundtripped",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            58,
+            158
+          ],
+          "name": "TestTraitInterfaces",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "lines": [
+                    166,
+                    168
+                  ],
+                  "name": "reset_ref_count",
+                  "type": "singleton_method"
+                },
+                {
+                  "lines": [
+                    170,
+                    172
+                  ],
+                  "name": "ref_count",
+                  "type": "singleton_method"
+                },
+                {
+                  "lines": [
+                    174,
+                    176
+                  ],
+                  "name": "define_finalizer",
+                  "type": "singleton_method"
+                },
+                {
+                  "lines": [
+                    178,
+                    182
+                  ],
+                  "name": "initialize",
+                  "signature": "(value)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    184,
+                    185
+                  ],
+                  "name": "noop",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    187,
+                    189
+                  ],
+                  "name": "get_value",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    191,
+                    193
+                  ],
+                  "name": "set_value",
+                  "signature": "(value)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    195,
+                    200
+                  ],
+                  "name": "throw_if_equal",
+                  "signature": "(numbers)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                163,
+                201
+              ],
+              "name": "AsyncTraitImpl",
+              "type": "class"
+            },
+            {
+              "lines": [
+                203,
+                219
+              ],
+              "name": "check_async_rust_impl",
+              "signature": "(async_rust_trait_impl)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                221,
+                236
+              ],
+              "name": "check_async_rb_impl",
+              "signature": "(async_rb_trait_impl)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                238,
+                240
+              ],
+              "name": "test_async_rust_impl",
+              "type": "method"
+            },
+            {
+              "lines": [
+                242,
+                248
+              ],
+              "name": "test_async_rust_impl_roundtripped",
+              "type": "method"
+            },
+            {
+              "lines": [
+                250,
+                256
+              ],
+              "name": "test_async_rust_impl_roundtripped_list",
+              "type": "method"
+            },
+            {
+              "lines": [
+                258,
+                267
+              ],
+              "name": "test_async_rb_impl",
+              "type": "method"
+            },
+            {
+              "lines": [
+                269,
+                278
+              ],
+              "name": "test_async_rb_impl_roundtripped",
+              "type": "method"
+            },
+            {
+              "lines": [
+                280,
+                289
+              ],
+              "name": "test_async_rb_impl_roundtripped_list",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            160,
+            290
+          ],
+          "name": "TestAsyncTraitInterfaces",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                295,
+                304
+              ],
+              "name": "check_rust_only_impl",
+              "signature": "(impl)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                306,
+                308
+              ],
+              "name": "test_rust_only_impl",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            292,
+            309
+          ],
+          "name": "TestRustOnlyTraitInterfaces",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "lines": [
+                    317,
+                    321
+                  ],
+                  "name": "throw_if_equal",
+                  "signature": "(numbers)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                314,
+                322
+              ],
+              "name": "ForeignOnlyImpl",
+              "type": "class"
+            },
+            {
+              "lines": [
+                324,
+                339
+              ],
+              "name": "check_foreign_only_impl",
+              "signature": "(impl)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                341,
+                343
+              ],
+              "name": "test_foreign_only_impl",
+              "type": "method"
+            },
+            {
+              "lines": [
+                345,
+                347
+              ],
+              "name": "test_foreign_only_impl_roundtripped",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            311,
+            348
+          ],
+          "name": "TestFireignOnlyTraitInterfaces",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.586952+00:00",
+  "version": "1.0"
+}

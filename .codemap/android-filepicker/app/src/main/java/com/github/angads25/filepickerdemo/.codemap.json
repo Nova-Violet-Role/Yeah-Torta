@@ -1,0 +1,293 @@
+{
+  "directory": "android-filepicker\\app\\src\\main\\java\\com\\github\\angads25\\filepickerdemo",
+  "files": {
+    "FileListAdapter.java": {
+      "hash": "7ec5af5edb06",
+      "indexed_at": "2026-07-24T20:35:09.738452+00:00",
+      "language": "java",
+      "lines": 75,
+      "mtime_ns": 1782501335902834700,
+      "size": 2205,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                38,
+                41
+              ],
+              "name": "FileListAdapter",
+              "signature": "(ArrayList<ListItem> listItems, Context context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                43,
+                47
+              ],
+              "name": "onCreateViewHolder",
+              "signature": "(ViewGroup parent, int viewType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                53
+              ],
+              "name": "onBindViewHolder",
+              "signature": "(FileListViewHolder holder, int position)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                55,
+                58
+              ],
+              "name": "getItemId",
+              "signature": "(int i)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                60,
+                63
+              ],
+              "name": "getItemCount",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    69,
+                    73
+                  ],
+                  "name": "FileListViewHolder",
+                  "signature": "(View itemView)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                65,
+                74
+              ],
+              "name": "FileListViewHolder",
+              "type": "class"
+            }
+          ],
+          "docstring": "<p> Created by Angad Singh on 11-07-2016. </p>",
+          "lines": [
+            34,
+            75
+          ],
+          "name": "FileListAdapter",
+          "type": "class"
+        }
+      ]
+    },
+    "FilePickerApplication.java": {
+      "hash": "764812f47b9f",
+      "indexed_at": "2026-07-24T20:35:09.739357+00:00",
+      "language": "java",
+      "lines": 23,
+      "mtime_ns": 1782501335903834500,
+      "size": 432,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                15,
+                22
+              ],
+              "name": "onCreate",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "<p> Created by Angad on 28-10-2017. </p>",
+          "lines": [
+            13,
+            23
+          ],
+          "name": "FilePickerApplication",
+          "type": "class"
+        }
+      ]
+    },
+    "ListItem.java": {
+      "hash": "8988a468c30c",
+      "indexed_at": "2026-07-24T20:35:09.740237+00:00",
+      "language": "java",
+      "lines": 41,
+      "mtime_ns": 1782501335903834500,
+      "size": 1018,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                26,
+                28
+              ],
+              "name": "getName",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                30,
+                32
+              ],
+              "name": "setName",
+              "signature": "(String name)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                34,
+                36
+              ],
+              "name": "getPath",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                38,
+                40
+              ],
+              "name": "setPath",
+              "signature": "(String path)",
+              "type": "method"
+            }
+          ],
+          "docstring": "<p> Created by Angad Singh on 11-07-2016. </p>",
+          "lines": [
+            23,
+            41
+          ],
+          "name": "ListItem",
+          "type": "class"
+        }
+      ]
+    },
+    "MainActivity.java": {
+      "hash": "239eecb4f3ce",
+      "indexed_at": "2026-07-24T20:35:09.742069+00:00",
+      "language": "java",
+      "lines": 246,
+      "mtime_ns": 1782501335903834500,
+      "size": 10306,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                50,
+                201
+              ],
+              "name": "onCreate",
+              "signature": "(Bundle savedInstanceState)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                203,
+                211
+              ],
+              "name": "countCommas",
+              "signature": "(String fextension)",
+              "type": "method"
+            },
+            {
+              "docstring": "Add this method to show Dialog when the required permission has been granted to the app.",
+              "lines": [
+                214,
+                229
+              ],
+              "name": "onRequestPermissionsResult",
+              "signature": "(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                231,
+                235
+              ],
+              "name": "onCreateOptionsMenu",
+              "signature": "(Menu menu)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                237,
+                245
+              ],
+              "name": "onOptionsItemSelected",
+              "signature": "(MenuItem item)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            44,
+            246
+          ],
+          "name": "MainActivity",
+          "type": "class"
+        }
+      ]
+    },
+    "SettingsActivity.java": {
+      "hash": "cc2e7fa956ca",
+      "indexed_at": "2026-07-24T20:35:09.743368+00:00",
+      "language": "java",
+      "lines": 103,
+      "mtime_ns": 1782501335902834700,
+      "size": 4000,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                43,
+                50
+              ],
+              "name": "onCreate",
+              "signature": "(Bundle savedInstanceState)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                52,
+                91
+              ],
+              "name": "onPostCreate",
+              "signature": "(Bundle savedInstanceState)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                102
+              ],
+              "name": "onPreferenceChange",
+              "signature": "(Preference preference, Object o)",
+              "type": "method"
+            }
+          ],
+          "docstring": "<p> Created by Angad on 22/07/2016. </p>",
+          "lines": [
+            42,
+            103
+          ],
+          "name": "SettingsActivity",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.304696+00:00",
+  "version": "1.0"
+}

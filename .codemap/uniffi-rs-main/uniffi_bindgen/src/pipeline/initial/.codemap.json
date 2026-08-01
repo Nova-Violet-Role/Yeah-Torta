@@ -1,0 +1,637 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src\\pipeline\\initial",
+  "files": {
+    "context.rs": {
+      "hash": "35cd727a941c",
+      "indexed_at": "2026-07-24T20:35:13.107877+00:00",
+      "language": "rust",
+      "lines": 145,
+      "mtime_ns": 1782136568000000000,
+      "size": 5125,
+      "symbols": [
+        {
+          "lines": [
+            16,
+            39
+          ],
+          "name": "Context",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                42,
+                48
+              ],
+              "name": "get_namespace_name",
+              "signature": "(&self, module_path: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                56
+              ],
+              "name": "get_orig_name",
+              "signature": "(&self, module_path: &str, type_name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                58,
+                60
+              ],
+              "name": "new_callable_id",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                62,
+                87
+              ],
+              "name": "methods_for_type",
+              "signature": "(&self, module_path: &str, type_name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                89,
+                106
+              ],
+              "name": "constructors_for_type",
+              "signature": "(\n        &self,\n        module_path: &str,\n        type_name: &str,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                125
+              ],
+              "name": "uniffi_traits_for_type",
+              "signature": "(\n        &self,\n        module_path: &str,\n        type_name: &str,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                127,
+                144
+              ],
+              "name": "trait_impls_for_type",
+              "signature": "(\n        &self,\n        module_path: &str,\n        type_name: &str,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            41,
+            145
+          ],
+          "name": "Context",
+          "type": "impl"
+        }
+      ]
+    },
+    "from_uniffi_meta.rs": {
+      "hash": "605faca79b11",
+      "indexed_at": "2026-07-24T20:35:13.110247+00:00",
+      "language": "rust",
+      "lines": 360,
+      "mtime_ns": 1782136568000000000,
+      "size": 15454,
+      "symbols": [
+        {
+          "lines": [
+            18,
+            42
+          ],
+          "name": "UniffiMetaConverter",
+          "type": "struct"
+        },
+        {
+          "docstring": "Utility trait used to insert metadata items into a BTreeMap, but bail on duplicates",
+          "lines": [
+            45,
+            47
+          ],
+          "name": "InsertUnique",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                54,
+                70
+              ],
+              "name": "insert_unique",
+              "signature": "(&mut self, k: K, v: V)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            49,
+            71
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Add a [uniffi_meta::Metadata] item to be converted",
+              "lines": [
+                75,
+                230
+              ],
+              "name": "add_metadata_item",
+              "signature": "(&mut self, meta: uniffi_meta::Metadata)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                232,
+                239
+              ],
+              "name": "update_orig_names",
+              "signature": "(&mut self, module_path: &str, orig_name: &Option<String>, name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                241,
+                248
+              ],
+              "name": "add_module_config_toml",
+              "signature": "(\n        &mut self,\n        module_name: String,\n        table: toml::Table,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "items",
+              "lines": [
+                254,
+                256
+              ],
+              "name": "add_module_docstring",
+              "signature": "(&mut self, namespace: String, docstring: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                258,
+                340
+              ],
+              "name": "try_into_initial_ir",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            73,
+            341
+          ],
+          "name": "UniffiMetaConverter",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            343,
+            345
+          ],
+          "name": "module_path_to_crate_name",
+          "signature": "(module_path: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            347,
+            360
+          ],
+          "name": "get_namespace",
+          "signature": "(\n    module_path_map: &BTreeMap<String, String>,\n    root: &'a mut Root,\n    module_path: &str,\n)",
+          "type": "function"
+        }
+      ]
+    },
+    "mod.rs": {
+      "hash": "68cef15ea947",
+      "indexed_at": "2026-07-24T20:35:13.111543+00:00",
+      "language": "rust",
+      "lines": 167,
+      "mtime_ns": 1782136568000000000,
+      "size": 6427,
+      "symbols": [
+        {
+          "docstring": "!    * Types can have methods/constructors etc. as their children.",
+          "lines": [
+            13,
+            13
+          ],
+          "name": "context",
+          "type": "module"
+        },
+        {
+          "lines": [
+            14,
+            14
+          ],
+          "name": "from_uniffi_meta",
+          "type": "module"
+        },
+        {
+          "lines": [
+            15,
+            15
+          ],
+          "name": "nodes",
+          "type": "module"
+        },
+        {
+          "lines": [
+            16,
+            16
+          ],
+          "name": "types",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                30,
+                77
+              ],
+              "name": "from_library",
+              "signature": "(\n        bindgen_paths: &BindgenPaths,\n        global_config: &GlobalConfig,\n        path: &Utf8...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                99
+              ],
+              "name": "from_udl",
+              "signature": "(\n        bindgen_paths: &BindgenPaths,\n        global_config: &GlobalConfig,\n        path: &Utf8...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                101,
+                153
+              ],
+              "name": "add_metadata_from_udl",
+              "signature": "(\n        metadata_converter: &mut UniffiMetaConverter,\n        bindgen_paths: &BindgenPaths,\n   ...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            29,
+            154
+          ],
+          "name": "Root",
+          "type": "impl"
+        },
+        {
+          "docstring": "If `library_path` is a C dynamic library, return its name",
+          "lines": [
+            157,
+            167
+          ],
+          "name": "calc_cdylib_name",
+          "signature": "(library_path: &Utf8Path)",
+          "type": "function"
+        }
+      ]
+    },
+    "nodes.rs": {
+      "hash": "1bac202d8df6",
+      "indexed_at": "2026-07-24T20:35:13.113625+00:00",
+      "language": "rust",
+      "lines": 369,
+      "mtime_ns": 1782136568000000000,
+      "size": 10443,
+      "symbols": [
+        {
+          "lines": [
+            16,
+            20
+          ],
+          "name": "Root",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            23,
+            31
+          ],
+          "name": "Namespace",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            35,
+            47
+          ],
+          "name": "Function",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            50,
+            56
+          ],
+          "name": "TypeDefinition",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            60,
+            71
+          ],
+          "name": "Constructor",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            76,
+            88
+          ],
+          "name": "Method",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            92,
+            106
+          ],
+          "name": "TraitMethod",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            110,
+            116
+          ],
+          "name": "Argument",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "`ForeignBytes` FFI path instead of the owned `RustBuffer` path.",
+              "lines": [
+                121,
+                123
+              ],
+              "name": "is_borrowed_bytes",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            118,
+            124
+          ],
+          "name": "Argument",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            128,
+            131
+          ],
+          "name": "DefaultValue",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            135,
+            154
+          ],
+          "name": "Literal",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            159,
+            167
+          ],
+          "name": "Record",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            172,
+            178
+          ],
+          "name": "Field",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            183,
+            193
+          ],
+          "name": "Enum",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            198,
+            204
+          ],
+          "name": "Variant",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            209,
+            218
+          ],
+          "name": "Interface",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            223,
+            228
+          ],
+          "name": "CallbackInterface",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            233,
+            239
+          ],
+          "name": "UniffiTrait",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            243,
+            246
+          ],
+          "name": "ObjectTraitImpl",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            251,
+            256
+          ],
+          "name": "CustomType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            261,
+            322
+          ],
+          "name": "Type",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                325,
+                333
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            324,
+            334
+          ],
+          "name": "TypeDefinition",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                337,
+                346
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                348,
+                357
+              ],
+              "name": "orig_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                359,
+                368
+              ],
+              "name": "namespace",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            336,
+            369
+          ],
+          "name": "Type",
+          "type": "impl"
+        }
+      ]
+    },
+    "types.rs": {
+      "hash": "c6a4cd6438d4",
+      "indexed_at": "2026-07-24T20:35:13.114955+00:00",
+      "language": "rust",
+      "lines": 163,
+      "mtime_ns": 1782136568000000000,
+      "size": 6513,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            79
+          ],
+          "name": "map_type",
+          "signature": "(ty: uniffi_meta::Type, context: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            81,
+            91
+          ],
+          "name": "map_record",
+          "signature": "(input: uniffi_meta::RecordMetadata, context: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            93,
+            105
+          ],
+          "name": "map_enum",
+          "signature": "(input: uniffi_meta::EnumMetadata, context: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            107,
+            118
+          ],
+          "name": "map_interface",
+          "signature": "(input: uniffi_meta::ObjectMetadata, context: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            120,
+            131
+          ],
+          "name": "map_callback_interface",
+          "signature": "(\n    input: uniffi_meta::CallbackInterfaceMetadata,\n    context: &Context,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            133,
+            143
+          ],
+          "name": "map_custom_type",
+          "signature": "(\n    input: uniffi_meta::CustomTypeMetadata,\n    context: &Context,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            145,
+            153
+          ],
+          "name": "map_variant",
+          "signature": "(input: uniffi_meta::VariantMetadata, context: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            155,
+            163
+          ],
+          "name": "map_field",
+          "signature": "(input: uniffi_meta::FieldMetadata, context: &Context)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.783628+00:00",
+  "version": "1.0"
+}

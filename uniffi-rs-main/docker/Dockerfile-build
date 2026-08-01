@@ -1,0 +1,107 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# This builds a docker image containing all the tools we need to run our
+# test suite in CI, including rust, kotlin, and swift.
+
+FROM swift:6.3-noble
+
+SHELL ["/bin/bash", "-exo", "pipefail", "-c"]
+
+# via https://github.com/CircleCI-Public/cimg-base/blob/28e038550d165a5e421a1ffada523ebe11ad525f/24.04/Dockerfile
+ENV DEBIAN_FRONTEND=noninteractive \
+    TERM=dumb \
+    PAGER=cat
+
+# Configure environment
+RUN echo 'APT::Get::Assume-Yes "true";' > /etc/apt/apt.conf.d/90circleci && \
+	echo 'DPkg::Options "--force-confnew";' >> /etc/apt/apt.conf.d/90circleci && \
+	apt-get update && apt-get install -y \
+		curl \
+		locales \
+		sudo \
+		openjdk-21-jdk-headless \
+		ruby \
+		ruby-dev \
+		unzip \
+		zip \
+		git \
+		build-essential \
+		clang \
+	&& \
+	locale-gen en_US.UTF-8 && \
+	rm -rf /var/lib/apt/lists/* && \
+	\
+	groupadd --gid=1002 circleci && \
+	useradd --uid=1001 --gid=circleci --create-home circleci && \
+	echo 'circleci ALL=NOPASSWD: ALL' >> /etc/sudoers.d/50-circleci && \
+	echo 'Defaults    env_keep += "DEBIAN_FRONTEND"' >> /etc/sudoers.d/env_keep && \
+	sudo -u circleci mkdir /home/circleci/project && \
+	sudo -u circleci mkdir /home/circleci/bin && \
+	sudo -u circleci mkdir -p /home/circleci/.local/bin && \
+	\
+	dockerizeArch=arm64 && \
+	if uname -p | grep "x86_64"; then \
+		dockerizeArch=x86_64; \
+	fi && \
+	curl -sSL --fail --retry 3 --output /usr/local/bin/dockerize "https://github.com/powerman/dockerize/releases/download/v0.8.0/dockerize-linux-${dockerizeArch}" && \
+	chmod +x /usr/local/bin/dockerize && \
+	dockerize --version
+
+ENV PATH=/home/circleci/bin:/home/circleci/.local/bin:$PATH \
+	LANG=en_US.UTF-8 \
+	LANGUAGE=en_US:en \
+	LC_ALL=en_US.UTF-8
+
+USER circleci
+# opt-out of the new security feature, not needed in a CI environment
+RUN git config --global --add safe.directory '*'
+
+# Match the default CircleCI working directory
+WORKDIR /home/circleci/project
+
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh -s && \
+  /home/circleci/.local/bin/uv python install 3.14 && \
+  ln -s python3.14 /home/circleci/.local/bin/python3
+RUN curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain none
+ENV PATH="/home/circleci/.cargo/bin:/home/circleci/.local/bin:${PATH}"
+
+# This should automatically install the version specified in rust-toolchain.toml
+ADD rust-toolchain.toml rust-toolchain.toml
+RUN rustup update \
+  && rustup show \
+  && rm rust-toolchain.toml
+
+RUN mkdir -p /tmp/setup-kotlin \
+    && cd /tmp/setup-kotlin \
+    && curl -o sdk.install.sh https://get.sdkman.io \
+    # XXX TODO: should check a sha256sum or something here...
+    && bash ./sdk.install.sh \
+    && . /home/circleci/.sdkman/bin/sdkman-init.sh \
+    && sdk install kotlin \
+    && echo ". /home/circleci/.sdkman/bin/sdkman-init.sh" >> /home/circleci/.profile \
+    && cd ../ \
+    && rm -rf ./setup-kotlin
+
+RUN mkdir -p /tmp/setup-jna \
+    && cd /tmp/setup-jna \
+    && curl -o jna.jar https://repo1.maven.org/maven2/net/java/dev/jna/jna/5.13.0/jna-5.13.0.jar \
+    # XXX TODO: should check a sha256sum or something here...
+    && sudo mv jna.jar /opt \
+    && echo "export CLASSPATH=\"\$CLASSPATH:/opt/jna.jar\"" >> /home/circleci/.bashrc \
+    && echo "export CLASSPATH=\"\$CLASSPATH:/opt/jna.jar\"" >> /home/circleci/.profile \
+    && cd ../ \
+    && rm -rf ./setup-jna
+
+RUN mkdir -p /tmp/setup-kotlinx \
+    && cd /tmp/setup-kotlinx \
+    && curl -o kotlinx-coroutines-core-jvm.jar https://repo1.maven.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.6.4/kotlinx-coroutines-core-jvm-1.6.4.jar \
+    # XXX TODO: should check a sha256sum or something here...
+    && sudo mv kotlinx-coroutines-core-jvm.jar /opt \
+    && echo "export CLASSPATH=\"\$CLASSPATH:/opt/kotlinx-coroutines-core-jvm.jar\"" >> /home/circleci/.bashrc \
+    && echo "export CLASSPATH=\"\$CLASSPATH:/opt/kotlinx-coroutines-core-jvm.jar\"" >> /home/circleci/.profile \
+    && cd ../ \
+    && rm -rf ./setup-kotlinx
+
+RUN sudo gem install ffi --no-document

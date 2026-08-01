@@ -1,0 +1,415 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\ext-types\\custom-types\\src",
+  "files": {
+    "custom_types.udl": {
+      "hash": "84bfa94b618f",
+      "indexed_at": "2026-07-24T20:35:12.488666+00:00",
+      "language": "udl",
+      "lines": 35,
+      "mtime_ns": 1782136568000000000,
+      "size": 803,
+      "symbols": [
+        {
+          "lines": [
+            2,
+            2
+          ],
+          "name": "Guid",
+          "signature": "string",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            6,
+            6
+          ],
+          "name": "ANestedGuid",
+          "signature": "Guid",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "GuidError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                14
+              ],
+              "name": "guid",
+              "signature": "Guid",
+              "type": "field"
+            },
+            {
+              "lines": [
+                15,
+                15
+              ],
+              "name": "guids",
+              "signature": "sequence<Guid>",
+              "type": "field"
+            },
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "maybe_guid",
+              "signature": "Guid?",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            13,
+            17
+          ],
+          "name": "GuidHelper",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "run",
+              "signature": "(Guid arg) : Guid",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            21
+          ],
+          "name": "GuidCallback",
+          "type": "callback_interface"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Note this intentionally does not throw an error - uniffi will panic if a Guid can't be converted.",
+              "lines": [
+                26,
+                26
+              ],
+              "name": "get_guid",
+              "signature": "(optional Guid? value) : Guid",
+              "type": "method"
+            },
+            {
+              "lines": [
+                31,
+                31
+              ],
+              "name": "try_get_guid",
+              "signature": "(optional Guid? value) : Guid",
+              "type": "method"
+            },
+            {
+              "lines": [
+                33,
+                33
+              ],
+              "name": "get_guid_helper",
+              "signature": "(optional GuidHelper? values) : GuidHelper",
+              "type": "method"
+            },
+            {
+              "lines": [
+                34,
+                34
+              ],
+              "name": "run_callback",
+              "signature": "(GuidCallback callback) : Guid",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            35
+          ],
+          "name": "ext_types_custom",
+          "type": "namespace"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "281108e69f84",
+      "indexed_at": "2026-07-24T20:35:12.490087+00:00",
+      "language": "rust",
+      "lines": 187,
+      "mtime_ns": 1782136568000000000,
+      "size": 5257,
+      "symbols": [
+        {
+          "docstring": "A trivial guid, declared as `[Custom]` in the UDL.",
+          "lines": [
+            4,
+            4
+          ],
+          "name": "Guid",
+          "type": "struct"
+        },
+        {
+          "docstring": "Ditto, using a proc-macro.",
+          "lines": [
+            7,
+            7
+          ],
+          "name": "Ouid",
+          "type": "struct"
+        },
+        {
+          "docstring": "Not used directly in this crate.",
+          "lines": [
+            11,
+            11
+          ],
+          "name": "Ouid2",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            16,
+            19
+          ],
+          "name": "GuidError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            24,
+            27
+          ],
+          "name": "InternalError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            29,
+            41
+          ],
+          "name": "get_guid",
+          "signature": "(guid: Option<Guid>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            43,
+            57
+          ],
+          "name": "try_get_guid",
+          "signature": "(guid: Option<Guid>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            60,
+            62
+          ],
+          "name": "get_ouid",
+          "signature": "(ouid: Option<Ouid>)",
+          "type": "function"
+        },
+        {
+          "docstring": "A custom-type wrapping a simple ffitype which is also consumed as an external type (#2025)",
+          "lines": [
+            65,
+            65
+          ],
+          "name": "HandleU8",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            69,
+            71
+          ],
+          "name": "get_handle_u8",
+          "signature": "(h: Option<HandleU8>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            73,
+            77
+          ],
+          "name": "GuidHelper",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            79,
+            91
+          ],
+          "name": "get_guid_helper",
+          "signature": "(vals: Option<GuidHelper>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            93,
+            95
+          ],
+          "name": "GuidCallback",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            97,
+            99
+          ],
+          "name": "run_callback",
+          "signature": "(callback: Box<dyn GuidCallback>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            118,
+            118
+          ],
+          "name": "ANestedGuid",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            123,
+            125
+          ],
+          "name": "get_nested_guid",
+          "signature": "(nguid: Option<ANestedGuid>)",
+          "type": "function"
+        },
+        {
+          "docstring": "a bug here because of the alphabetical order of these types.",
+          "lines": [
+            129,
+            129
+          ],
+          "name": "ANestedOuid",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            133,
+            135
+          ],
+          "name": "get_nested_ouid",
+          "signature": "(nouid: Option<ANestedOuid>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            140,
+            140
+          ],
+          "name": "StringWrapper",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            143,
+            143
+          ],
+          "name": "IntWrapper",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            146,
+            146
+          ],
+          "name": "MapUsingStringWrapper",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            150,
+            152
+          ],
+          "name": "get_map_using_string_wrapper",
+          "signature": "(maybe_map: Option<MapUsingStringWrapper>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            156,
+            156
+          ],
+          "name": "InnerObject",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                161,
+                163
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            159,
+            164
+          ],
+          "name": "InnerObject",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            166,
+            166
+          ],
+          "name": "NestedObject",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            170,
+            172
+          ],
+          "name": "get_nested_object",
+          "signature": "(n: NestedObject)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            175,
+            177
+          ],
+          "name": "InnerRecord",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            179,
+            179
+          ],
+          "name": "NestedRecord",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            183,
+            185
+          ],
+          "name": "get_nested_record",
+          "signature": "(n: NestedRecord)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.684688+00:00",
+  "version": "1.0"
+}

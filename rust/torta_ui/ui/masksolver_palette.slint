@@ -1,0 +1,69 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// ============================================================================
+//  masksolver_palette.slint — THE MASQUERADE PALETTE  (MaskSolver overhaul, slice 10)
+//  ⬜ Soleil facet · SLINT/Rust color set — NO XML (the no-XML law).
+// ============================================================================
+//
+// The Resolver&Cache pillar's colors, centralized as ONE SLINT global — density
+// without loss: every token is consumed by masksolver.slint (slice 8, the dashboard)
+// OR reserved for masksolver_settings.slint (slice 9, the ||| controls — `track` the
+// toggle OFF rail, `caution` the decision-point warning); none is dead, and after this
+// file there is ZERO magic hex anywhere in the MaskSolver UI surface.
+// The motif is THE MASQUERADE MASK: MaskSolver wears the upstream's face while it
+// SOLVES resiliently (the FlareSolver cross) and CACHES on RAM⊗NAND (the dnsmasq
+// cross) — a masked resolver at a midnight masquerade, resolving identities behind
+// its own veil. That masquerade identity IS the resolver's verdict language:
+//
+//   • the VEIL scale   → the masked night: the dark grounds a card/tile lifts off of
+//   • MOONLIGHT scale  → the bright values + the muted speech struck on the dark
+//   • the MASK violet  → the mask itself: headings + the pillar's brand accent
+//   • CACHE cyan       → the RAM-hot glow: a cache HIT, the served-from-memory win
+//   • RESOLVE green    → GOT THROUGH: a solve success, the ladder answered
+//   • stale amber      → the DASHBOARD degraded-states: serve-stale / retry / ladder-storm (old answers)
+//   • caution amber    → the SETTINGS decision-point: review-before-you-arm (the sibling-standard caution)
+//   • breach red       → the silent killers: SILENT MISS / DEAD POOL / REBIND LEAK
+//
+// This is the SLINT/Rust replacement for a would-be `colors_masksolver.xml` (the
+// no-XML law) — a distinct identity from the Warden's Monokuma courtroom (black/
+// white/red) and Centauri's stellar constellation (deep-space cyan), a sibling in
+// house style to monokuma_palette + centauri_palette. THE single source of truth,
+// imported by masksolver.slint (slice 8, the dashboard) AND masksolver_settings.slint
+// (slice 9, the ||| resolver controls).
+//
+// USAGE — a SLINT global is a shared singleton of read-only constants:
+//   import { Masque } from "masksolver_palette.slint";
+//   background: Masque.veil-void;   color: Masque.moon;   accent: Masque.cache;
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android
+// cross-compile spike #69; the palette is host-side constants, no device claim.
+// Compiled via build.rs (main.slint → masksolver.slint → here, the import graph).
+// ============================================================================
+
+export global Masque {
+    // ── THE VEIL — the masked-night ground scale (deepest → faintest), so a card
+    //    lifts off the window and a tile lifts off the card by GROUND alone. ─────
+    out property <color> veil-void: #0b0912;  // deepest — the dashboard Window ground
+    out property <color> abyss:     #100d1b;  // one step up — the recent-resolve feed rows
+    out property <color> veil:      #16122a;  // the CROWN / health card panel
+    out property <color> panel:     #1a1630;  // the metric (StatTile) panels
+    out property <color> hairline:  #2b2544;  // hairline borders / rules on the dark
+    out property <color> track:     #3a3a3a;  // inactive control track — the toggle OFF rail (settings reuse)
+
+    // ── MOONLIGHT — the bright strike + the muted speech (brightest → faintest). ──
+    out property <color> moon: #f1ecfb;  // primary text — the bright values
+    out property <color> haze: #9a92b4;  // secondary text — labels, the muted voice
+    out property <color> dim:  #675f83;  // tertiary text — section titles, the faintest read
+
+    // ── THE MASK & the verdict accents — the resolver's ruling. ──────────────────
+    out property <color> mask:    #a78bfa;  // THE MASK — headings / the pillar brand accent (violet)
+    out property <color> cache:   #4fc3f7;  // cyan — the RAM-hot cache HIT glow (served from memory)
+    out property <color> resolve: #34d399;  // green — GOT THROUGH / solve success (the ladder answered)
+    out property <color> stale:   #f0a830;  // amber — DASHBOARD degraded: serve-stale / retry / ladder-storm (old answers)
+    out property <color> caution: #f0a830;  // amber — SETTINGS decision-point review (masksolver_settings.slint, slice 9); house-amber sibling of `stale`
+    out property <color> breach:  #ef4d57;  // red — SILENT MISS / DEAD POOL / REBIND LEAK / panic
+    out property <color> wound:   #a5283a;  // the deeper blood-red — alert-banner FILL (≠ the stroke)
+    out property <color> strike:  white;    // the bright text struck on a filled alert banner
+}

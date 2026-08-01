@@ -1,0 +1,146 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_testing\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "761b8eb5849f",
+      "indexed_at": "2026-07-24T20:35:13.232005+00:00",
+      "language": "rust",
+      "lines": 192,
+      "mtime_ns": 1782136568000000000,
+      "size": 6632,
+      "symbols": [
+        {
+          "lines": [
+            20,
+            23
+          ],
+          "name": "CompileSource",
+          "type": "struct"
+        },
+        {
+          "docstring": "- The fixture crate, and any external-crates, has 1 UDL file in it's src/ directory",
+          "lines": [
+            39,
+            42
+          ],
+          "name": "UniFFITestHelper",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                49
+              ],
+              "name": "new",
+              "signature": "(package_name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                51,
+                61
+              ],
+              "name": "find_package",
+              "signature": "(name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                102
+              ],
+              "name": "find_name_and_cdylib_path",
+              "signature": "(package: &Package)",
+              "type": "method"
+            },
+            {
+              "docstring": "path collutions when 2 scripts run against the same fixture.",
+              "lines": [
+                116,
+                130
+              ],
+              "name": "create_out_dir",
+              "signature": "(\n        &self,\n        temp_dir: impl AsRef<Utf8Path>,\n        script_path: impl AsRef<Utf8Path...",
+              "type": "method"
+            },
+            {
+              "docstring": "Returns the path to the copied library",
+              "lines": [
+                137,
+                142
+              ],
+              "name": "copy_cdylib_to_out_dir",
+              "signature": "(&self, out_dir: impl AsRef<Utf8Path>)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the path to the cdylib file for this package",
+              "lines": [
+                145,
+                147
+              ],
+              "name": "cdylib_path",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                149,
+                151
+              ],
+              "name": "crate_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                153,
+                155
+              ],
+              "name": "cargo_metadata",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            44,
+            156
+          ],
+          "name": "UniFFITestHelper",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            158,
+            162
+          ],
+          "name": "get_cargo_metadata",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            164,
+            186
+          ],
+          "name": "get_cargo_build_messages",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            188,
+            192
+          ],
+          "name": "hash_path",
+          "signature": "(path: &Utf8Path)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.804147+00:00",
+  "version": "1.0"
+}

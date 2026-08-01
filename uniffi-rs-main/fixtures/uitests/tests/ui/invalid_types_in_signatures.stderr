@@ -1,0 +1,90 @@
+error[E0277]: the trait bound `Result<(), ErrorType>: Lift<UniFfiTag>` is not satisfied
+  --> tests/ui/invalid_types_in_signatures.rs:17:1
+   |
+17 | #[uniffi::export]
+   | ^^^^^^^^^^^^^^^^^ the trait `Lift<UniFfiTag>` is not implemented for `Result<(), ErrorType>`
+   |
+   = help: the following other types implement trait `Lift<UT>`:
+             Arc<T>
+             Box<T>
+             Duration
+             ErrorType
+             ForeignBytes
+             HashMap<K, V>
+             HashSet<T>
+             Option<T>
+           and $N others
+   = note: this error originates in the attribute macro `uniffi::export` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `Result<(), ErrorType>: uniffi::Lower<UniFfiTag>` is not satisfied
+  --> tests/ui/invalid_types_in_signatures.rs:20:1
+   |
+20 | #[uniffi::export]
+   | ^^^^^^^^^^^^^^^^^ the trait `uniffi::Lower<UniFfiTag>` is not implemented for `Result<(), ErrorType>`
+   |
+   = help: the following other types implement trait `uniffi::Lower<UT>`:
+             Arc<T>
+             Box<T>
+             Duration
+             ErrorType
+             HashMap<K, V>
+             HashSet<T>
+             Option<T>
+             String
+           and $N others
+   = note: required for `Option<Result<(), ErrorType>>` to implement `uniffi::Lower<UniFfiTag>`
+   = note: required for `Option<Result<(), ErrorType>>` to implement `LowerReturn<UniFfiTag>`
+   = note: this error originates in the attribute macro `uniffi::export` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0277]: the trait bound `Result<(), ErrorType>: Lift<UniFfiTag>` is not satisfied
+  --> tests/ui/invalid_types_in_signatures.rs:18:25
+   |
+18 | pub fn input_result(_r: Result<(), ErrorType>) { }
+   |                         ^^^^^^^^^^^^^^^^^^^^^ the trait `Lift<UniFfiTag>` is not implemented for `Result<(), ErrorType>`
+   |
+   = help: the following other types implement trait `Lift<UT>`:
+             Arc<T>
+             Box<T>
+             Duration
+             ErrorType
+             ForeignBytes
+             HashMap<K, V>
+             HashSet<T>
+             Option<T>
+           and $N others
+
+error[E0277]: the trait bound `Result<(), ErrorType>: Lift<UniFfiTag>` is not satisfied
+  --> tests/ui/invalid_types_in_signatures.rs:18:21
+   |
+18 | pub fn input_result(_r: Result<(), ErrorType>) { }
+   |                     ^^ the trait `Lift<UniFfiTag>` is not implemented for `Result<(), ErrorType>`
+   |
+   = help: the following other types implement trait `Lift<UT>`:
+             Arc<T>
+             Box<T>
+             Duration
+             ErrorType
+             ForeignBytes
+             HashMap<K, V>
+             HashSet<T>
+             Option<T>
+           and $N others
+
+error[E0277]: the trait bound `Result<(), ErrorType>: uniffi::Lower<UniFfiTag>` is not satisfied
+  --> tests/ui/invalid_types_in_signatures.rs:20:1
+   |
+20 | #[uniffi::export]
+   | ^^^^^^^^^^^^^^^^^ the trait `uniffi::Lower<UniFfiTag>` is not implemented for `Result<(), ErrorType>`
+   |
+   = help: the following other types implement trait `uniffi::Lower<UT>`:
+             Arc<T>
+             Box<T>
+             Duration
+             ErrorType
+             HashMap<K, V>
+             HashSet<T>
+             Option<T>
+             String
+           and $N others
+   = note: required for `Option<Result<(), ErrorType>>` to implement `uniffi::Lower<UniFfiTag>`
+   = note: this error originates in the attribute macro `uniffi::export` (in Nightly builds, run with -Z macro-backtrace for more info)

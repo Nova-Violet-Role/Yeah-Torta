@@ -1,0 +1,273 @@
+{
+  "directory": "rust\\torta_iconforge\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "0228e1a713c2",
+      "indexed_at": "2026-07-31T19:08:58.076405+00:00",
+      "language": "rust",
+      "lines": 200,
+      "mtime_ns": 1785514223726467900,
+      "size": 7557,
+      "symbols": [
+        {
+          "lines": [
+            35,
+            44
+          ],
+          "name": "DiffVerdict",
+          "type": "struct"
+        },
+        {
+          "docstring": "A buffer too small to hold one pixel is blank by definition \u2014 nothing is there to have drawn.",
+          "lines": [
+            53,
+            59
+          ],
+          "name": "is_blank",
+          "signature": "(rgba: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "pixel-by-pixel yields a meaningless number that LOOKS like a measurement.",
+          "lines": [
+            65,
+            100
+          ],
+          "name": "diff_rgba",
+          "signature": "(\n    rendered: &[u8],\n    golden: &[u8],\n    rendered_dims: (u32, u32),\n    golden_dims: (u32, u...",
+          "type": "function"
+        },
+        {
+          "docstring": "failure it exists to catch.",
+          "lines": [
+            107,
+            109
+          ],
+          "name": "verdict_is_pass",
+          "signature": "(v: &DiffVerdict)",
+          "type": "function"
+        },
+        {
+          "docstring": "A human-readable reason, so a red build says WHAT broke rather than only THAT it broke.",
+          "lines": [
+            112,
+            122
+          ],
+          "name": "verdict_reason",
+          "signature": "(v: &DiffVerdict)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Two differing pixels, so the frame is genuinely drawn and the diff is meaningful.",
+              "lines": [
+                129,
+                131
+              ],
+              "name": "drawn",
+              "signature": "(a: u8, b: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                134,
+                139
+              ],
+              "name": "identical_drawn_frames_pass",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                142,
+                151
+              ],
+              "name": "a_single_changed_pixel_fails_loudly",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                154,
+                165
+              ],
+              "name": "a_blank_render_fails_even_against_a_blank_golden",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                168,
+                172
+              ],
+              "name": "a_missing_pane_is_a_size_mismatch_not_a_close_match",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                175,
+                182
+              ],
+              "name": "an_all_transparent_frame_is_blank",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                185,
+                199
+              ],
+              "name": "the_instrument_can_go_both_ways",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            125,
+            200
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "main.rs": {
+      "hash": "1ca2bb32a4d4",
+      "indexed_at": "2026-07-30T18:38:03.688884+00:00",
+      "language": "rust",
+      "lines": 372,
+      "mtime_ns": 1785436511435068700,
+      "size": 16600,
+      "symbols": [
+        {
+          "docstring": "is the #17 animation-frame hook \u2014 set it per frame to render a scene at an arbitrary animation tick.",
+          "lines": [
+            51,
+            54
+          ],
+          "name": "ForgePlatform",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                56,
+                60
+              ],
+              "name": "create_window_adapter",
+              "signature": "(\n        &self,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                61,
+                63
+              ],
+              "name": "duration_since_start",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            55,
+            64
+          ],
+          "name": "ForgePlatform",
+          "type": "impl"
+        },
+        {
+          "docstring": "Render IconScene at `size` with the given variant params -> straight (un-associated) RGBA8 bytes.",
+          "lines": [
+            67,
+            107
+          ],
+          "name": "rasterize",
+          "signature": "(\n    window: &MinimalSoftwareWindow,\n    ui: &IconScene,\n    size: u32,\n    on_background: bool,...",
+          "type": "function"
+        },
+        {
+          "docstring": "geometry \u2014 deterministic (the bake law holds).",
+          "lines": [
+            114,
+            131
+          ],
+          "name": "apply_round_mask",
+          "signature": "(rgba: &mut [u8], size: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            133,
+            143
+          ],
+          "name": "write_png",
+          "signature": "(path: &Path, size: u32, rgba: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "The launcher family: per density, an adaptive foreground + a legacy square + a legacy round.",
+          "lines": [
+            146,
+            170
+          ],
+          "name": "forge_launcher",
+          "signature": "(out_dir: &Path, window: &MinimalSoftwareWindow, ui: &IconScene)",
+          "type": "function"
+        },
+        {
+          "docstring": "clock instead of frozen at rest. (Also advances the platform clock so animation-tick() scenes bake.)",
+          "lines": [
+            175,
+            200
+          ],
+          "name": "forge_anim",
+          "signature": "(\n    out_dir: &Path,\n    window: &MinimalSoftwareWindow,\n    ui: &IconScene,\n    clock: &Rc<Cell...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            202,
+            204
+          ],
+          "name": "flag",
+          "signature": "(args: &[String], name: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "golden must never be mistaken for a matching one, so callers treat `None` as a hard failure.",
+          "lines": [
+            215,
+            226
+          ],
+          "name": "read_png",
+          "signature": "(path: &Path)",
+          "type": "function"
+        },
+        {
+          "docstring": "to ignore it.",
+          "lines": [
+            234,
+            244
+          ],
+          "name": "render_scene_for_golden",
+          "signature": "(\n    window: &MinimalSoftwareWindow,\n    ui: &IconScene,\n    clock: &Rc<Cell<Duration>>,\n    sce...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            246,
+            372
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-31T19:09:00.675818+00:00",
+  "version": "1.0"
+}

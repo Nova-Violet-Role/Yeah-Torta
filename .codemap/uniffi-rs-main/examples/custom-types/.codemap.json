@@ -1,0 +1,531 @@
+{
+  "directory": "uniffi-rs-main\\examples\\custom-types",
+  "files": {
+    "Cargo.toml": {
+      "hash": "c33ed717605c",
+      "indexed_at": "2026-07-24T20:35:12.302462+00:00",
+      "language": "toml",
+      "lines": 25,
+      "mtime_ns": 1782136568000000000,
+      "size": 464,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                2,
+                2
+              ],
+              "name": "name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "edition",
+              "type": "key"
+            },
+            {
+              "lines": [
+                4,
+                4
+              ],
+              "name": "version",
+              "type": "key"
+            },
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "license",
+              "type": "key"
+            },
+            {
+              "lines": [
+                6,
+                6
+              ],
+              "name": "publish",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            1,
+            7
+          ],
+          "name": "package",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "crate-type",
+              "type": "key"
+            },
+            {
+              "lines": [
+                10,
+                10
+              ],
+              "name": "name",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            8,
+            11
+          ],
+          "name": "lib",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                13
+              ],
+              "name": "anyhow",
+              "type": "key"
+            },
+            {
+              "lines": [
+                14,
+                14
+              ],
+              "name": "bytes",
+              "type": "key"
+            },
+            {
+              "lines": [
+                15,
+                15
+              ],
+              "name": "uniffi",
+              "type": "key"
+            },
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "url",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            12,
+            17
+          ],
+          "name": "dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                19,
+                19
+              ],
+              "name": "uniffi",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            18,
+            20
+          ],
+          "name": "build-dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "uniffi",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            21,
+            23
+          ],
+          "name": "dev-dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "ffi-trace",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            24,
+            26
+          ],
+          "name": "features",
+          "type": "table"
+        }
+      ]
+    },
+    "build.rs": {
+      "hash": "b7fe81a84cec",
+      "indexed_at": "2026-07-24T20:35:12.301947+00:00",
+      "language": "rust",
+      "lines": 7,
+      "mtime_ns": 1782136568000000000,
+      "size": 287,
+      "symbols": [
+        {
+          "docstring": "/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file,",
+          "lines": [
+            5,
+            7
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "uniffi.toml": {
+      "hash": "642d365a2765",
+      "indexed_at": "2026-07-24T20:35:12.303142+00:00",
+      "language": "toml",
+      "lines": 70,
+      "mtime_ns": 1782136568000000000,
+      "size": 2343,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "type_name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "imports",
+              "type": "key"
+            },
+            {
+              "lines": [
+                7,
+                7
+              ],
+              "name": "lift",
+              "type": "key"
+            },
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "lower",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            1,
+            10
+          ],
+          "name": "bindings.swift.custom_types.Url",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                13
+              ],
+              "name": "type_name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                15,
+                15
+              ],
+              "name": "imports",
+              "type": "key"
+            },
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "lift",
+              "type": "key"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "lower",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            11,
+            18
+          ],
+          "name": "bindings.swift.custom_types.TimeIntervalMs",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "type_name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "imports",
+              "type": "key"
+            },
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "lift",
+              "type": "key"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "lower",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            19,
+            27
+          ],
+          "name": "bindings.swift.custom_types.TimeIntervalSecDbl",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                30,
+                30
+              ],
+              "name": "type_name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                32,
+                32
+              ],
+              "name": "imports",
+              "type": "key"
+            },
+            {
+              "lines": [
+                35,
+                35
+              ],
+              "name": "into_custom",
+              "type": "key"
+            },
+            {
+              "lines": [
+                36,
+                36
+              ],
+              "name": "from_custom",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            28,
+            37
+          ],
+          "name": "bindings.swift.custom_types.TimeIntervalSecFlt",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                40,
+                40
+              ],
+              "name": "type_name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                41,
+                41
+              ],
+              "name": "imports",
+              "type": "key"
+            },
+            {
+              "lines": [
+                43,
+                43
+              ],
+              "name": "lift",
+              "type": "key"
+            },
+            {
+              "lines": [
+                45,
+                45
+              ],
+              "name": "lower",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            38,
+            46
+          ],
+          "name": "bindings.ruby.custom_types.Url",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                48,
+                48
+              ],
+              "name": "package_name",
+              "type": "key"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    52,
+                    52
+                  ],
+                  "name": "type_name",
+                  "type": "key"
+                },
+                {
+                  "lines": [
+                    54,
+                    54
+                  ],
+                  "name": "imports",
+                  "type": "key"
+                },
+                {
+                  "lines": [
+                    56,
+                    56
+                  ],
+                  "name": "lift",
+                  "type": "key"
+                },
+                {
+                  "lines": [
+                    58,
+                    58
+                  ],
+                  "name": "lower",
+                  "type": "key"
+                }
+              ],
+              "lines": [
+                50,
+                59
+              ],
+              "name": "bindings.kotlin.custom_types.Url",
+              "type": "table"
+            }
+          ],
+          "lines": [
+            47,
+            49
+          ],
+          "name": "bindings.kotlin",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                65,
+                65
+              ],
+              "name": "type_name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                66,
+                66
+              ],
+              "name": "imports",
+              "type": "key"
+            },
+            {
+              "lines": [
+                68,
+                68
+              ],
+              "name": "lift",
+              "type": "key"
+            },
+            {
+              "lines": [
+                70,
+                70
+              ],
+              "name": "lower",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            60,
+            71
+          ],
+          "name": "bindings.python.custom_types.Url",
+          "type": "table"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.644955+00:00",
+  "version": "1.0"
+}

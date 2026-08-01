@@ -1,0 +1,291 @@
+{
+  "directory": "uniffi-rs-main\\bindgen-tests\\kotlin\\experimental-unsigned-types\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "ac4d23ac216a",
+      "indexed_at": "2026-07-24T20:35:12.045935+00:00",
+      "language": "rust",
+      "lines": 50,
+      "mtime_ns": 1782136568000000000,
+      "size": 1136,
+      "symbols": [
+        {
+          "docstring": "/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file,",
+          "lines": [
+            5,
+            7
+          ],
+          "name": "returns_u16",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "accepts_and_returns_unsigned",
+          "signature": "(a: u8, b: u16, c: u32, d: u64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            13,
+            15
+          ],
+          "name": "accepts_unsigned_returns_void",
+          "signature": "(a: u8, b: u16, c: u32, d: u64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            17,
+            23
+          ],
+          "name": "DirectlyUsesU8",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            25,
+            28
+          ],
+          "name": "UnsignedEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            30,
+            33
+          ],
+          "name": "RecursivelyUsesU8",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            36,
+            38
+          ],
+          "name": "InterfaceUsingUnsigned",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                41,
+                43
+              ],
+              "name": "new",
+              "signature": "(new: u64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                45,
+                47
+              ],
+              "name": "uses_unsigned_struct",
+              "signature": "(&self, mut p1: RecursivelyUsesU8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            40,
+            48
+          ],
+          "name": "InterfaceUsingUnsigned",
+          "type": "impl"
+        }
+      ]
+    },
+    "test.udl": {
+      "hash": "3bc7768cc2bb",
+      "indexed_at": "2026-07-24T20:35:12.046679+00:00",
+      "language": "udl",
+      "lines": 36,
+      "mtime_ns": 1782136568000000000,
+      "size": 810,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                7
+              ],
+              "name": "returns_u16",
+              "signature": "() : u16",
+              "type": "method"
+            },
+            {
+              "lines": [
+                8,
+                8
+              ],
+              "name": "accepts_and_returns_unsigned",
+              "signature": "(u8 a, u16 b, u32 c, u64 d) : u64",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "accepts_unsigned_returns_void",
+              "signature": "(u8 a, u16 b, u32 c, u64 d) : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            6,
+            10
+          ],
+          "name": "regression_test_kt_unsigned_types",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                14
+              ],
+              "name": "V1",
+              "signature": "(u8 q1)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                15,
+                15
+              ],
+              "name": "V2",
+              "signature": "(string addr)",
+              "type": "variant"
+            }
+          ],
+          "lines": [
+            13,
+            16
+          ],
+          "name": "UnsignedEnum",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                19,
+                19
+              ],
+              "name": "member",
+              "signature": "u8",
+              "type": "field"
+            },
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "member_two",
+              "signature": "u16",
+              "type": "field"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "member_three",
+              "signature": "u32",
+              "type": "field"
+            },
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "member_four",
+              "signature": "u64",
+              "type": "field"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "other",
+              "signature": "string",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            18,
+            25
+          ],
+          "name": "DirectlyUsesU8",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "member",
+              "signature": "DirectlyUsesU8",
+              "type": "field"
+            },
+            {
+              "lines": [
+                29,
+                29
+              ],
+              "name": "member_two",
+              "signature": "UnsignedEnum",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            27,
+            30
+          ],
+          "name": "RecursivelyUsesU8",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                33,
+                33
+              ],
+              "name": "constructor",
+              "signature": "(u64 a)",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                35,
+                35
+              ],
+              "name": "uses_unsigned_struct",
+              "signature": "(RecursivelyUsesU8 p1) : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            32,
+            36
+          ],
+          "name": "InterfaceUsingUnsigned",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.574057+00:00",
+  "version": "1.0"
+}

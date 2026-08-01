@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+# This file is part of Yeah! Torta.
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+#
+# tadb - adb, with a heartbeat.
+#
+# Every invocation touches the beat file that `tools/avd-guard.ps1` watches, then hands the
+# arguments to the real adb unchanged. Using this instead of adb directly is what keeps the
+# idle timer from closing an AVD that IS being driven.
+#
+#   tools/tadb shell input tap 88 200
+#   tools/tadb install -r path/to.apk
+#
+# MSYS_NO_PATHCONV=1 is set here because Git Bash otherwise rewrites device-side paths such as
+# /sdcard/shot.png into Windows paths before adb ever sees them.
+
+set -eu
+
+SDK="${ANDROID_SDK_ROOT:-D:/android-sdk}"
+ADB="$SDK/platform-tools/adb.exe"
+BEAT_DIR="$(CDPATH='' cd -- "$(dirname -- "$0")/.." && pwd)/.avd-guard"
+
+[ -d "$BEAT_DIR" ] || mkdir -p "$BEAT_DIR"
+# The watchdog reads this file's MTIME, so an empty touch is enough.
+: > "$BEAT_DIR/beat"
+
+MSYS_NO_PATHCONV=1 exec "$ADB" "$@"

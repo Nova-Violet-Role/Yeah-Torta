@@ -1,0 +1,176 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä QUERY tab (OMEGA Stage-D · D3, charter step 8: the fourth of the Design Finale's
+// 4 tabs) — the unified query-log surface (the InviZible query-log heritage, made per-pillar).
+//
+// ONE feed over the ONE log substrate: every pillar writes its own `query-<pillar>.log` through the
+// shared `log_tier` / PillarLog format ("[yyyy-MM-dd HH:mm:ss] <pillar> <event> k=v …" —
+// PillarLog.kt:30, torta_core log_tier), and this tab tails WHICHEVER source the chips pick through
+// the SAME `log_tail_recent` / `log_stale_secs` RAM⊗NAND read path the dashboards use (torta_core
+// lib.rs:1302/1330 — the flat fns Kotlin reaches as `logTailRecent`/`logStaleSecs`).
+// One FORMAT, several measured HOMES (#53 — feed_shape::query_log_path is the single map): most
+// pillars under `logs/`, dnscrypt-proxy's own pair under `cache/`, CENTAURI beside its cache (D40),
+// MASKSOLVER beside its durable records (`app_data/runtime_tier/`), INU beside its state blob
+// (`files/wire-cake-inu-spike/`).
+//
+// The typed feed row: the host (Rust android feed / Kotlin bridge) parses + CLASSIFIES each line
+// into a `QueryRow` — time column, event body, and a DISPLAY verdict (BLOCK/FAULT/STALE/CACHE/OK/
+// EVENT) with the matching accent. The classification is a display heuristic over event keywords,
+// NEVER a verdict authority (the engines' own counters are the truth — this feed is the debug eye).
+//
+// HONESTY: `log-present` gates the staleness banner (an absent log is "not written yet", never
+// "stale"); an empty feed says so; rows render through a VIRTUALIZED ListView (the G5 law — the
+// first ListView in the crate, feeds must never render unvirtualized).
+// This pane inherits Rectangle — embeddable from birth (the G2 idiom); it manages its OWN scrolling
+// (the ListView), so the shell hosts it WITHOUT an outer ScrollView.
+
+import { ListView } from "std-widgets.slint";
+import { Monokuma } from "monokuma_palette.slint";
+import { SectionTitle, RowCard, AlertBanner, Chip } from "widgets.slint";
+import { ThemeBook, MotifWash } from "theme_tokens.slint";
+
+// One classified log line — host-parsed, host-classified (typed, never a bare flat line).
+export struct QueryRow {
+    time: string,    // the "[yyyy-MM-dd HH:mm:ss]" column ("" when the line carries none)
+    line: string,    // the event body (pillar + event + k=v fields)
+    verdict: string, // BLOCK | FAULT | STALE | CACHE | OK | EVENT — display heuristic only
+    accent: color,   // the verdict's accent (host pushes the palette color)
+}
+
+export component QueryTab inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.dnscrypt; width: 100%; height: 100%; }
+    background: transparent;
+
+    // ── Host-pushed truth ──
+    in-out property <[QueryRow]> rows: [];
+    in-out property <string> source: "dnscrypt";
+    in-out property <int> stale-secs: -1;   // seconds since the source log moved; -1 = absent
+    in-out property <bool> log-present: false;
+
+    // ── Intents ──
+    callback source-picked(string);
+    callback refresh-tapped();
+
+    // ── Derived honesty ──
+    out property <bool> stale-banner: root.log-present && root.stale-secs > 300;
+    out property <bool> note-empty: root.rows.length == 0;
+
+    VerticalLayout {
+        padding: 12px;
+        spacing: 8px;
+
+        // ---- Header: the feed identity + refresh ----
+        HorizontalLayout {
+            spacing: 8px;
+            SectionTitle {
+                text: "THE QUERY FEED · query-*.log";
+                horizontal-stretch: 1;
+                vertical-alignment: center;
+            }
+            Chip {
+                label: "REFRESH";
+                selected: true;
+                accent: Monokuma.safe;
+                tapped => { root.refresh-tapped(); }
+            }
+        }
+
+        // ---- The source chips (one-of-N; tap re-tails that pillar's log) ----
+        // #53 — the FULL roster: every log the app actually writes has a chip, every chip binds to
+        // its MEASURED on-disk home (feed_shape::query_log_path). MASKSOLVER is the pillar identity
+        // (the D40 Rust-canon resolve feed under app_data/runtime_tier/) — it takes the seat the
+        // legacy DNSMASQ label held; the Kotlin engine-tick substrate (tag `dnsmasq` on disk,
+        // PillarLog.kt) stays reachable under its honest function name ENGINE. GITHUB-TRUST (#18)
+        // and INU (files/wire-cake-inu-spike/) were written but unreachable — now wired. WARDEN has
+        // no writer yet (PillarLog: reserved) ⇒ NO chip: a chip must never point at a function that
+        // does not exist.
+        HorizontalLayout {
+            spacing: 6px;
+            Chip { label: "DNSCRYPT"; selected: root.source == "dnscrypt"; accent: #e7ad42; horizontal-stretch: 1;
+                tapped => { root.source = "dnscrypt"; root.source-picked("dnscrypt"); } }
+            Chip { label: "NX"; selected: root.source == "nx"; accent: Monokuma.risk; horizontal-stretch: 1;
+                tapped => { root.source = "nx"; root.source-picked("nx"); } }
+            Chip { label: "MASKSOLVER"; selected: root.source == "masksolver"; accent: #a78bfa; horizontal-stretch: 1;
+                tapped => { root.source = "masksolver"; root.source-picked("masksolver"); } }
+            Chip { label: "SOLVER"; selected: root.source == "solver"; accent: #c084fc; horizontal-stretch: 1;
+                tapped => { root.source = "solver"; root.source-picked("solver"); } }
+        }
+        HorizontalLayout {
+            spacing: 6px;
+            Chip { label: "ENGINE"; selected: root.source == "dnsmasq"; accent: #8c8c8c; horizontal-stretch: 1;
+                tapped => { root.source = "dnsmasq"; root.source-picked("dnsmasq"); } }
+            Chip { label: "BEAST"; selected: root.source == "beast"; accent: #ffb454; horizontal-stretch: 1;
+                tapped => { root.source = "beast"; root.source-picked("beast"); } }
+            Chip { label: "ROTATION"; selected: root.source == "rotation"; accent: #5e8bff; horizontal-stretch: 1;
+                tapped => { root.source = "rotation"; root.source-picked("rotation"); } }
+            Chip { label: "CENTAURI"; selected: root.source == "centauri"; accent: #28c8d8; horizontal-stretch: 1;
+                tapped => { root.source = "centauri"; root.source-picked("centauri"); } }
+        }
+        HorizontalLayout {
+            spacing: 6px;
+            Chip { label: "BLOCKLIST"; selected: root.source == "blocklist"; accent: Monokuma.risk; horizontal-stretch: 1;
+                tapped => { root.source = "blocklist"; root.source-picked("blocklist"); } }
+            Chip { label: "GITHUB-TRUST"; selected: root.source == "github-trust"; accent: #2ecc71; horizontal-stretch: 1;
+                tapped => { root.source = "github-trust"; root.source-picked("github-trust"); } }
+            Chip { label: "INU"; selected: root.source == "inu"; accent: #34b3a4; horizontal-stretch: 1;
+                tapped => { root.source = "inu"; root.source-picked("inu"); } }
+        }
+
+        // ---- The staleness / absence honesty ----
+        if root.stale-banner : AlertBanner {
+            accent: Monokuma.caution;
+            message: "STALE FEED -> the \{root.source} log hasn't moved in \{root.stale-secs}s. The pillar may be idle — or not running.";
+        }
+        if !root.log-present : Text {
+            text: "no \{root.source} log on disk yet — it appears when the pillar first writes an event";
+            color: Monokuma.dim;
+            font-size: 10px;
+            wrap: word-wrap;
+        }
+        if root.log-present && root.note-empty : Text {
+            text: "the \{root.source} log is present but empty — an honest zero, not a broken feed";
+            color: Monokuma.dim;
+            font-size: 10px;
+            wrap: word-wrap;
+        }
+
+        // ---- THE FEED (virtualized — newest first, host-ordered) ----
+        ListView {
+            vertical-stretch: 1;
+            for r in root.rows : Rectangle {
+                height: inner.preferred-height + 6px;
+                inner := RowCard {
+                    width: parent.width;
+                    VerticalLayout {
+                        padding: 8px;
+                        spacing: 2px;
+                        HorizontalLayout {
+                            spacing: 8px;
+                            Text {
+                                text: r.verdict;
+                                color: r.accent;
+                                font-size: 9px;
+                                font-weight: 900;
+                            }
+                            Text {
+                                text: r.time;
+                                color: Monokuma.dim;
+                                font-size: 9px;
+                                horizontal-stretch: 1;
+                            }
+                        }
+                        Text {
+                            text: r.line;
+                            color: Monokuma.bone;
+                            font-size: 10px;
+                            wrap: word-wrap;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

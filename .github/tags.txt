@@ -1,0 +1,89 @@
+# This file is part of Yeah! Tortä.
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+#
+# ===========================================================================
+# THE SINGLE SOURCE OF TRUTH FOR THE TAG SET -- TWO TIERS, AND THE DIFFERENCE
+# BETWEEN THEM IS A HARD API LIMIT, NOT AN EDITORIAL CHOICE.
+# ===========================================================================
+#
+# TIER 1 -- [TOPICS]. GitHub repo topics. Capped at TWENTY by the server; the
+#   API rejects the 21st. Nothing written here changes that. These are the
+#   structured, browsable tags: each becomes a crawlable github.com/topics/<t>
+#   page, which is the highest-value discovery surface a repo has.
+#
+# TIER 2 -- [SIGNATURE]. The README signature block. NO LIMIT. Visible markdown
+#   text is what survives GitHub's sanitizer intact, which makes it the true
+#   descendant of the old forum signature. Everything true belongs here.
+#
+# THE RULE THAT GOVERNS BOTH TIERS: every tag must name something GENUINELY
+# PRESENT IN THIS TREE. A tag is a claim about the repository, and a claim
+# nobody checked is exactly the kind of decoration this project refuses
+# everywhere else. The count beside each tag below is the number of tracked
+# files containing that term, measured with:
+#
+#   git ls-files -z | xargs -0 grep -lIi "<tag>" | wc -l
+#
+# Re-measure rather than trusting these numbers; if a tag's evidence has gone
+# to zero, the honest move is to DELETE THE TAG, not to keep advertising it.
+
+[TOPICS]
+# Exactly 20 or fewer. Ordered by how likely a stranger is to search for it.
+dns
+dns-privacy
+dnscrypt
+doh
+android
+rust
+kotlin
+slint
+adblock
+blocklist
+dns-server
+privacy
+cdn
+formal-verification
+lean4
+vpn
+no-root
+uniffi
+dns-resolver
+android-app
+
+[SIGNATURE]
+# No cap. Every one of these is backed by code in this tree -- the parenthetical
+# is the measured file count at the time of writing.
+#dns                      (the whole engine)
+#dnscrypt                 (662 files)
+#doh                      (101 files -- both as a transport AND as the bypass we sinkhole)
+#odoh                     (54 files -- oblivious DoH)
+#dnssec                   (49 files)
+#dns64                    (26 files)
+#svcb                     (17 files -- SVCB/HTTPS records)
+#cdn                      (100 files -- Centauri, the content-addressed local mirror)
+#blocklist                (94 files)
+#homograph                (18 files -- IDN homograph detection)
+#rebind                   (52 files -- DNS rebinding defence)
+#warden                   (121 files -- the datapath firewall)
+#slint                    (135 files -- the entire UI is compiled Rust)
+#uniffi                   (1199 files -- the Rust<->Kotlin bridge)
+#rust
+#kotlin
+#android
+#privacy
+#adblock
+#no-root
+#lean4
+#formal-verification
+#content-addressed
+#local-cdn
+#dns-filtering
+#network-security
+#vpn-service
+#tun
+#post-quantum
+#open-source
+#agpl
+#eupl
+#alpha
+#pre-release

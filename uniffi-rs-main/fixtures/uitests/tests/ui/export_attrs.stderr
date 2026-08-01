@@ -1,0 +1,73 @@
+error: uniffi::export on a struct must supply a builtin trait name. Did you mean `#[derive(uniffi::Object)]`?
+ --> tests/ui/export_attrs.rs:5:1
+  |
+5 | #[uniffi::export]
+  | ^^^^^^^^^^^^^^^^^
+  |
+  = note: this error originates in the attribute macro `uniffi::export` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error: uniffi::export struct attributes must be builtin trait names; `Dixplay` is invalid
+ --> tests/ui/export_attrs.rs:8:18
+  |
+8 | #[uniffi::export(Dixplay)]
+  |                  ^^^^^^^
+
+error: uniffi::export attribute `callback_interface` is not supported here.
+  --> tests/ui/export_attrs.rs:14:18
+   |
+14 | #[uniffi::export(callback_interface)]
+   |                  ^^^^^^^^^^^^^^^^^^
+
+error: attribute `with_foreign` is not supported here.
+  --> tests/ui/export_attrs.rs:17:18
+   |
+17 | #[uniffi::export(with_foreign)]
+   |                  ^^^^^^^^^^^^
+
+error: attribute `flat_error` is not supported here.
+  --> tests/ui/export_attrs.rs:22:10
+   |
+22 | #[uniffi(flat_error)]
+   |          ^^^^^^^^^^
+
+error: expected `default` or `name`
+  --> tests/ui/export_attrs.rs:27:14
+   |
+27 |     #[uniffi(flat_error)]
+   |              ^^^^^^^^^^
+
+error: expected `name`
+  --> tests/ui/export_attrs.rs:34:14
+   |
+34 |     #[uniffi(flat_error)]
+   |              ^^^^^^^^^^
+
+error: attribute `foo = bar` is not supported here.
+  --> tests/ui/export_attrs.rs:44:27
+   |
+44 |     #[uniffi::constructor(foo = bar)]
+   |                           ^^^
+
+error: attribute `foo` is not supported here.
+  --> tests/ui/export_attrs.rs:50:22
+   |
+50 |     #[uniffi::method(foo)]
+   |                      ^^^
+
+error: Unknown default argument: fooo
+  --> tests/ui/export_attrs.rs:55:26
+   |
+55 | #[uniffi::export(default(fooo = 0))]
+   |                          ^^^^
+
+error: Unknown default argument: fooo
+  --> tests/ui/export_attrs.rs:65:35
+   |
+65 |     #[uniffi::constructor(default(fooo = 0))]
+   |                                   ^^^^
+
+error: Unknown default argument: fooo
+  --> tests/ui/export_attrs.rs:73:30
+   |
+73 |     #[uniffi::method(default(fooo = 0))]
+   |                              ^^^^

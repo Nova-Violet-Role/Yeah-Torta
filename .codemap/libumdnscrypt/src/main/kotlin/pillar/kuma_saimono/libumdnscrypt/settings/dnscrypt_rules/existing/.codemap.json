@@ -1,0 +1,128 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\settings\\dnscrypt_rules\\existing",
+  "files": {
+    "RemixExistingDnsRulesWorker.kt": {
+      "hash": "8d6eea75dd78",
+      "indexed_at": "2026-08-01T04:00:18.388314+00:00",
+      "language": "kotlin",
+      "lines": 119,
+      "mtime_ns": 1785556377885899800,
+      "size": 5566,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                57,
+                76
+              ],
+              "name": "doWork",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                78,
+                87
+              ],
+              "name": "updateRules",
+              "signature": "(\n        ruleType: DnsRuleType,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                89,
+                92
+              ],
+              "name": "isRemoteDnsRulesImportingInProgress",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                95,
+                102
+              ],
+              "name": "getRemoteWorkName",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                104,
+                107
+              ],
+              "name": "isLocalDnsRulesImportingInProgress",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                110,
+                117
+              ],
+              "name": "getLocalWorkName",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            46,
+            119
+          ],
+          "name": "RemixExistingDnsRulesWorker",
+          "type": "class"
+        }
+      ]
+    },
+    "RemixExistingRulesWorkManager.kt": {
+      "hash": "633f8388f9df",
+      "indexed_at": "2026-08-01T04:00:18.681337+00:00",
+      "language": "kotlin",
+      "lines": 91,
+      "mtime_ns": 1785556377897899800,
+      "size": 3212,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                35,
+                61
+              ],
+              "name": "startMix",
+              "signature": "(ruleType: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                66
+              ],
+              "name": "stopMix",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                75
+              ],
+              "name": "getWorkName",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            31,
+            91
+          ],
+          "name": "RemixExistingRulesWorkManager",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:18.683656+00:00",
+  "version": "1.0"
+}

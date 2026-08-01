@@ -1,0 +1,786 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT MaskSolver ||| SETTINGS section — slice 9 of the MaskSolver (Resolver&Cache) overhaul (🎷 Violet).
+//
+// This is the rust-native (SLINT, NO XML / NO Java / NO Compose) MaskSolver settings surface reached from the
+// ||| triple-burger — the resolver controls the |||  Advanced burger opens onto. It reads + writes the live
+// `MaskSolver` UniFFI Object (torta_core `resolver::object`, object.rs:304) through the host: SLINT can't mutate a
+// Rust struct directly, so the user's edits surface as typed CALLBACKS the host (the Kotlin SurfaceView bridge /
+// the slint-viewer preview / the lib.rs proof test) wires to the Object surface. The host pushes the CURRENT armed
+// state onto the `in-out` scalar inputs; the user's intents flow back out as callbacks; the host owns the truth
+// (one-way data flow — the live engine is the single source, no engine fork, Chroma F1/F2).
+//
+// ── GROUND-TRUTH honesty (the felt-truth law — every callback's real destination MEASURED from the tree) ──
+//   REAL `MaskSolver` `&self` Expert setters (object.rs, panic-firewalled thin delegations to `resolver::set_*`):
+//     - `solve-ladder-toggled(on)`   -> MaskSolver::set_solve_ladder(on)        (object.rs:591, the SLICE-2 resilient ladder, default-OFF)
+//     - `all-servers-toggled(on)`    -> MaskSolver::set_all_servers(on)         (object.rs:583, the --all-servers concurrent race, R6)
+//     - `rebind-protect-toggled(on)` -> MaskSolver::set_rebind_enforce(on)      (object.rs:555, the P12 --stop-dns-rebind guard)
+//     - `bogus-priv-toggled(on)`     -> MaskSolver::set_bogus_priv(on)          (object.rs:560, R5)
+//     - `proxy-dnssec-toggled(on)`   -> MaskSolver::set_proxy_dnssec(on)        (object.rs:565, N3)
+//     - `never-forward-toggled(on)`  -> MaskSolver::set_never_forward_enabled(on) (object.rs:596)
+//     - `cache-rr-toggled(on)`       -> MaskSolver::set_cache_rr(on)            (object.rs:578)
+//   CONFIG-carried (there is NO runtime Object setter — these are `configure()` values; the host RE-APPLIES via
+//   `MaskSolver::configure(specs_json, timeout_ms, cache_cap)` (object.rs:404 → resolver::configure, mod.rs:478,
+//   which rebuilds `Cache::new(cache_cap.max(1))`, mod.rs:570). Serve-stale + the TTL clamps are the Cache POLICY
+//   the reconfigure carries (the slice-3 `StaleMode`/`ttl_floor`/`ttl_ceiling`). So these callbacks signal INTENT;
+//   the host stages the value + re-applies on `reapply-config()` — legible + honest, NOT a fabricated live setter):
+//     - `cache-cap-stepped(dir)`     -> stage cache_cap        -> configure(cache_cap)     (the RAM-hot cache size)
+//     - `timeout-stepped(dir)`       -> stage timeout_ms       -> configure(timeout_ms)    (the per-query deadline)
+//     - `serve-stale-toggled(on)` / `serve-stale-secs-stepped(dir)` -> stage the serve-stale window (RFC 8767)
+//     - `ttl-floor-stepped(dir)` / `ttl-ceiling-stepped(dir)`       -> stage the cache TTL clamps
+//     - `reapply-config()`           -> MaskSolver::configure(...) with the staged cache/deadline/policy values
+//   HOST/Kotlin-owned (torta_core holds NO live in-RAM rotation — the `RotationManager` owns the in-flight cursor
+//   + persists it; `MaskSolverRotation` (object.rs:177) is the LAST-PERSISTED read only). So the cadence is a
+//   display + INTENT; the host RotationManager owns the write:
+//     - `rotation-cadence-stepped(dir)` -> the Kotlin RotationManager (the 12h-diversity cadence, host-driven)
+//   BANKED (real Object setters that need a RICHER input than a toggle — NOT fabricated as bools this slice):
+//     `set_dns64_prefixes(csv)` (object.rs:602, a CSV) · `set_filter_rr(drop_types, any_defang)` (object.rs:571,
+//     a u16 type-list) · `set_centauri_cloak(on)` (object.rs:609, mirror-gated — lives on the Centauri settings).
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android cross-compile spike #69.
+//
+// 🎷 THE DECISION-POINT GUARD (the Violet facet's load-bearing job — read the felt-truth, warn WHERE the choice is
+// MADE, not after it bites): the dashboard (slice 8) surfaces a fault AFTER it strands resolution; the SETTINGS
+// surface warns AT the knob. Arming the resilient ladder against ZERO upstreams (dead-pool), disabling the rebind
+// guard while an attack is already SEEN, setting a sub-200ms deadline that defeats the retry you just armed, a
+// serve-stale toggle with a 0s window that looks on but does nothing, a cache so small it never warms — each reads
+// as a colored banner at the moment of the choice, with the live witness number beside the knob so the non-geek
+// SEES it (the feedback-simple-ux law: raw knobs simple + legible, the Expert set behind a reveal).
+//
+// NOTE: slint uses `:` for property bindings (not `=`); `\{expr}` is string interpolation; `out property` values
+// are derived + host-readable (the proof test asserts the guard derivations fire); interactive controls are built
+// on the core `TouchArea` (zero std-widget-style dependency) + the proven `Button`.
+
+import { VerticalBox, HorizontalBox, Button } from "std-widgets.slint";
+// The MaskSolver masquerade palette (slice 10) — the single source of truth, shared with masksolver.slint (slice 8).
+import { Masque } from "masksolver_palette.slint";
+import { ThemeBook, MotifWash, UpperMoonChip } from "theme_tokens.slint";
+
+// ===========================================================================================
+// Local controls (TouchArea-built — zero std-widget-style dependency; the host build proves them green).
+// ===========================================================================================
+
+// A pill toggle. Visual reads the host-owned `on`; a tap fires `toggled(!on)` so the host updates state + calls the
+// Object setter (one-way to the engine, the single source of truth).
+component ToggleSwitch inherits Rectangle {
+    in property <bool> on: false;
+    in property <color> on-color: Masque.mask;
+    callback toggled(bool);
+    width: 42px;
+    height: 24px;
+    border-radius: 12px;
+    background: root.on ? root.on-color : Masque.track;
+    animate background { duration: 120ms; }
+    Rectangle {
+        width: 18px;
+        height: 18px;
+        border-radius: 9px;
+        background: white;
+        x: root.on ? parent.width - self.width - 3px : 3px;
+        y: (parent.height - self.height) / 2;
+        animate x { duration: 120ms; }
+    }
+    TouchArea {
+        clicked => {
+            root.toggled(!root.on);
+        }
+    }
+}
+
+// A section title.
+component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: Masque.dim;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+// A row card shell.
+component RowCard inherits Rectangle {
+    background: @linear-gradient(90deg, Masque.abyss.with-alpha(0.55) 0%, Masque.veil-void.with-alpha(0.30) 100%);
+    border-radius: 6px;
+}
+
+// A decision-point alert banner (local) — instantiated via a guarding `if`, so an inactive warning occupies ZERO
+// layout space. The danger reads colored, at the moment the choice is made.
+component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: Masque.wound;
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: Masque.strike;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: Masque.strike;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A single -/+ tap pill for a numeric stepper.
+component StepPill inherits Rectangle {
+    in property <string> glyph;
+    callback tapped();
+    width: 26px;
+    height: 24px;
+    border-radius: 6px;
+    background: @linear-gradient(180deg, Masque.panel.with-alpha(0.62) 0%, Masque.abyss.with-alpha(0.38) 100%);
+    border-width: 1px;
+    border-color: Masque.hairline;
+    HorizontalLayout {
+        alignment: center;
+        Text {
+            text: root.glyph;
+            color: Masque.mask;
+            font-size: 15px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+    }
+    TouchArea {
+        clicked => {
+            root.tapped();
+        }
+    }
+}
+
+// A numeric knob row — a label + a hint + a host-owned value with -/+ pills. A tap fires `stepped(-1|+1)`; the
+// HOST owns the step magnitude (cache_cap by 256, deadline by 250ms, stale by 30s, TTL by 60s, cadence by 3600s)
+// + the clamp, then pushes the clamped value back (the single source of truth stays the engine/host).
+component StepperRow inherits RowCard {
+    in property <string> label;
+    in property <string> hint;
+    in property <string> value;
+    in property <color> value-tint: Masque.moon;
+    callback stepped(int);
+    HorizontalLayout {
+        padding: 10px;
+        spacing: 10px;
+        VerticalLayout {
+            horizontal-stretch: 1;
+            Text {
+                text: root.label;
+                color: Masque.moon;
+                font-size: 13px;
+                font-weight: 700;
+            }
+            Text {
+                text: root.hint;
+                color: Masque.haze;
+                font-size: 10px;
+                wrap: word-wrap;
+            }
+        }
+        HorizontalLayout {
+            spacing: 6px;
+            alignment: center;
+            StepPill {
+                glyph: "-";
+                tapped => {
+                    root.stepped(-1);
+                }
+            }
+            Text {
+                text: root.value;
+                color: root.value-tint;
+                font-size: 15px;
+                font-weight: 900;
+                min-width: 68px;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+            StepPill {
+                glyph: "+";
+                tapped => {
+                    root.stepped(1);
+                }
+            }
+        }
+    }
+}
+
+// A read-only witness chip — the live counter beside a knob that makes the guard legible (turn the warning into a
+// number the non-geek can SEE, the feedback-simple-ux law).
+component StatChip inherits Rectangle {
+    in property <string> label;
+    in property <string> value;
+    in property <color> tint: Masque.moon;
+    min-width: 64px;
+    border-radius: 6px;
+    background: @linear-gradient(180deg, Masque.panel.with-alpha(0.62) 0%, Masque.abyss.with-alpha(0.38) 100%);
+    border-width: 1px;
+    border-color: Masque.hairline;
+    VerticalLayout {
+        padding: 7px;
+        spacing: 1px;
+        Text {
+            text: root.value;
+            color: root.tint;
+            font-size: 15px;
+            font-weight: 900;
+            horizontal-alignment: center;
+        }
+        Text {
+            text: root.label;
+            color: Masque.haze;
+            font-size: 9px;
+            horizontal-alignment: center;
+        }
+    }
+}
+
+// A toggle row card — the label + hint on the left, the ToggleSwitch on the right (the primary settings shape).
+component ToggleRow inherits RowCard {
+    in property <string> label;
+    in property <string> hint;
+    in property <bool> on: false;
+    in property <color> on-color: Masque.mask;
+    callback toggled(bool);
+    HorizontalLayout {
+        padding: 10px;
+        spacing: 10px;
+        VerticalLayout {
+            horizontal-stretch: 1;
+            Text {
+                text: root.label;
+                color: Masque.moon;
+                font-size: 13px;
+                font-weight: 700;
+            }
+            Text {
+                text: root.hint;
+                color: Masque.haze;
+                font-size: 10px;
+                wrap: word-wrap;
+            }
+        }
+        ToggleSwitch {
+            on: root.on;
+            on-color: root.on-color;
+            toggled(v) => {
+                root.toggled(v);
+            }
+        }
+    }
+}
+
+// 2-FEED-MaskSolver (SETTINGS): the embeddable Rectangle body (the #23 cross-pillar wave — the Warden /
+// Centauri Pane precedent). home_shell mounts THIS in the "ms-settings" advanced section on the single
+// android surface; the MaskSolverSettings Window below is a thin forwarder kept for the desktop preview +
+// the host decision-point-guard test (lib.rs). All content is unchanged — `root` is now the Pane.
+export component MaskSolverSettingsPane inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.masksolver; width: 100%; height: 100%; }
+    // ===== "THE MASQUERADE" settings signature — one violet veil-fall at the left wing. =====
+    Rectangle { x: 0; width: 3px; height: 100%; background: @linear-gradient(180deg, Masque.mask.with-alpha(0.42) 0%, transparent 100%); }
+    background: Masque.veil-void.with-alpha(0.44);
+
+    // ===== POOL POSTURE (host pushes from MaskSolver::snapshot; makes the dead-pool guard legible) =====
+    in-out property <bool> configured: false;        // snapshot.configured (a pool is installed)
+    in-out property <int> transports: 0;             // snapshot.transports (0 ⇒ arming a strategy is a dead pool)
+
+    // ===== RESOLUTION STRATEGY (the SOLVE retry/failover knobs — REAL Object setters) =====
+    in-out property <bool> solve-ladder-on: false;   // set_solve_ladder — the slice-2 resilient retry ladder (default OFF)
+    in-out property <bool> all-servers-on: false;    // set_all_servers — the concurrent happy-eyeballs race (R6)
+    in-out property <int> strategy: 0;               // solve_state.strategy ordinal: 0 StrictOrder·1 AllServers·2 Fastest (host truth)
+    in-out property <int> timeout-ms: 0;             // solve_state.timeout_ms — the per-query deadline (config-carried)
+
+    // ===== CACHE (size / serve-stale / TTL — config-carried via configure(), re-applied on reapply-config) =====
+    in-out property <int> cache-cap: 0;              // the RAM-hot cache capacity (configure cache_cap)
+    in-out property <int> cache-entries: 0;          // snapshot.cache_entries (the live fill — makes the tiny-cache warn legible)
+    in-out property <bool> serve-stale-on: false;    // serve-stale (RFC 8767) armed (Cache StaleMode)
+    in-out property <int> serve-stale-secs: 0;       // the serve-stale window in seconds (0 ⇒ inert)
+    in-out property <int> serve-stale-served: 0;     // snapshot.serve_stale_served (the running witness)
+    in-out property <int> ttl-floor-secs: 0;         // the cache TTL floor clamp
+    in-out property <int> ttl-ceiling-secs: 0;       // the cache TTL ceiling clamp
+
+    // ===== SECURITY GUARD (the P12 rebind protection — a REAL Object setter) =====
+    in-out property <bool> rebind-protect-on: false; // set_rebind_enforce — the --stop-dns-rebind guard
+    in-out property <int> rebind-observed: 0;        // snapshot.rebind_observed (public→private answers SEEN)
+    in-out property <int> rebind-rejected: 0;        // snapshot.rebind_rejected (dropped by the guard)
+
+    // ===== ROTATION (the 12h-diversity cadence — HOST/Kotlin RotationManager owned; display + intent only) =====
+    in-out property <int> rotation-cadence-secs: 0;  // rotation.cadence_secs (last-persisted)
+    in-out property <string> rotation-family: "";    // rotation.last_family (last-persisted diversity family)
+
+    // ===== EXPERT (the raw knobs behind a reveal — feedback-simple-ux; each a REAL Object setter) =====
+    in-out property <bool> expert-open: false;
+    in-out property <bool> bogus-priv-on: false;     // set_bogus_priv (R5)
+    in-out property <bool> proxy-dnssec-on: false;   // set_proxy_dnssec (N3)
+    in-out property <bool> never-forward-on: false;  // set_never_forward_enabled
+    in-out property <bool> cache-rr-on: false;       // set_cache_rr
+
+    // ===== 🎷 THE DECISION-POINT GUARD — derived, host-readable (the proof test asserts these fire) =====
+    // (1) DEAD-POOL ARM — a retry/failover strategy armed against ZERO upstreams (the settings-time DEAD POOL).
+    out property <bool> warn-dead-pool-arm: (root.solve-ladder-on || root.all-servers-on) && root.configured && root.transports == 0;
+    // (2) REBIND OFF UNDER ATTACK — the P12 guard is OFF while a public→private answer has already been SEEN.
+    out property <bool> warn-rebind-off: !root.rebind-protect-on && root.rebind-observed > 0;
+    // (3) SHORT DEADLINE vs the resilient ladder — a sub-200ms budget can exhaust before the ladder retries.
+    out property <bool> warn-short-deadline: root.solve-ladder-on && root.timeout-ms > 0 && root.timeout-ms < 200;
+    // (4) SERVE-STALE INERT — armed but the window is 0s → nothing is ever served stale (looks on, does nothing).
+    out property <bool> warn-stale-inert: root.serve-stale-on && root.serve-stale-secs == 0;
+    // (5) TINY CACHE — a cache this small barely caches; the hit-rate stays near zero (the cold-cache felt-truth).
+    out property <bool> warn-tiny-cache: root.cache-cap > 0 && root.cache-cap < 64;
+    // Soft/informational — no pool installed yet; the controls stage + apply on the next configure (NOT a red alarm).
+    out property <bool> note-unconfigured: !root.configured;
+    // Master of the ACTIONABLE dangers (the soft unconfigured note is excluded — it is not a misconfiguration).
+    out property <bool> warn-any: root.warn-dead-pool-arm || root.warn-rebind-off || root.warn-short-deadline
+        || root.warn-stale-inert || root.warn-tiny-cache;
+
+    // The active-strategy label (decode the host-pushed ordinal — the engine's live active_strategy() truth).
+    out property <string> strategy-label: root.strategy == 2 ? "FASTEST (health-ordered)"
+        : (root.strategy == 1 ? "ALL-SERVERS (race)" : "STRICT-ORDER (ladder)");
+    // The plain-words posture summary (the Violet felt-truth: tell the non-geek what their knobs MEAN).
+    out property <string> stale-desc: root.serve-stale-on ? "\{root.serve-stale-secs}s" : "off";
+    out property <string> posture-line: "\{root.strategy-label} · rebind \{root.rebind-protect-on ? "ON" : "OFF"} · cache \{root.cache-cap} · stale \{root.stale-desc}";
+
+    // ===== The user's edit intents — the host wires each to its destination (see the GROUND-TRUTH header) =====
+    callback solve-ladder-toggled(bool);      // -> MaskSolver::set_solve_ladder
+    callback all-servers-toggled(bool);       // -> MaskSolver::set_all_servers
+    callback rebind-protect-toggled(bool);    // -> MaskSolver::set_rebind_enforce
+    callback bogus-priv-toggled(bool);        // -> MaskSolver::set_bogus_priv
+    callback proxy-dnssec-toggled(bool);      // -> MaskSolver::set_proxy_dnssec
+    callback never-forward-toggled(bool);     // -> MaskSolver::set_never_forward_enabled
+    callback cache-rr-toggled(bool);          // -> MaskSolver::set_cache_rr
+    callback serve-stale-toggled(bool);       // -> stage the serve-stale window (config-carried)
+    callback cache-cap-stepped(int);          // -> stage cache_cap   (configure)
+    callback timeout-stepped(int);            // -> stage timeout_ms  (configure)
+    callback serve-stale-secs-stepped(int);   // -> stage the serve-stale window (configure)
+    callback ttl-floor-stepped(int);          // -> stage the TTL floor clamp (configure)
+    callback ttl-ceiling-stepped(int);        // -> stage the TTL ceiling clamp (configure)
+    callback rotation-cadence-stepped(int);   // -> the Kotlin RotationManager (host-owned)
+    callback expert-toggled(bool);            // -> reveal the raw Expert knobs
+    callback reapply-config();                // -> MaskSolver::configure(...) with the staged cache/deadline/policy
+    callback close-settings();
+
+    VerticalBox {
+        padding: 14px;
+        spacing: 12px;
+
+        // ---- Header + the plain-words posture summary ----
+        HorizontalBox {
+            spacing: 8px;
+            VerticalLayout {
+                Text {
+                    text: "MASKSOLVER  |||";
+                    color: Masque.mask;
+                    font-size: 22px;
+                    font-weight: 900;
+                }
+                Text {
+                    text: "the resilient resolver — retry · cache · guard";
+                    color: Masque.haze;
+                    font-size: 11px;
+                }
+            }
+            Rectangle { }  // spacer
+            Text {
+                text: root.configured ? "\{root.transports} upstream(s)" : "unconfigured";
+                color: root.configured ? (root.transports == 0 ? Masque.breach : Masque.resolve) : Masque.haze;
+                font-size: 11px;
+                font-weight: 800;
+                vertical-alignment: center;
+                horizontal-alignment: right;
+            }
+        }
+        RowCard {
+            HorizontalLayout {
+                padding: 8px;
+                Text {
+                    text: root.posture-line;
+                    color: Masque.haze;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+            }
+        }
+
+        // ---- 🎷 The decision-point guard banners (each exists ONLY while its danger is live) ----
+        if root.warn-dead-pool-arm : AlertBanner {
+            accent: Masque.wound;
+            message: "DEAD POOL -> you armed a retry/failover strategy but the resolver has ZERO upstreams. Every query will miss and fall through. Configure an upstream set first.";
+        }
+        if root.warn-rebind-off : AlertBanner {
+            accent: Masque.wound;
+            message: "REBIND GUARD OFF -> \{root.rebind-observed} public->private answer(s) were already SEEN, and you are turning the rebind guard OFF. A live rebinding attack would pass. Keep it armed.";
+        }
+        if root.warn-short-deadline : AlertBanner {
+            accent: Masque.stale;
+            message: "SHORT DEADLINE -> a \{root.timeout-ms}ms budget can exhaust before the resilient ladder retries a slow upstream — it defeats the retry you just armed. Give it >= 200ms.";
+        }
+        if root.warn-stale-inert : AlertBanner {
+            accent: Masque.stale;
+            message: "SERVE-STALE INERT -> serve-stale is ON but the window is 0s, so nothing is ever served stale. Set a window (e.g. 60s) or the toggle does nothing.";
+        }
+        if root.warn-tiny-cache : AlertBanner {
+            accent: Masque.stale;
+            message: "TINY CACHE -> a cache of \{root.cache-cap} entries barely caches; the hit-rate will stay near zero. Raise the cap so the RAM-hot cache can warm.";
+        }
+        if root.note-unconfigured : AlertBanner {
+            accent: Masque.panel;
+            message: "No upstream set is installed yet — these controls STAGE and take effect on the next configure. Set them, then Re-apply.";
+        }
+
+        // ---- RESOLUTION STRATEGY: the SOLVE retry/failover knobs (REAL Object setters) ----
+        SectionTitle { text: "RESOLUTION  (retry · failover)"; }
+        ToggleRow {
+            label: "Resilient ladder (retry)";
+            hint: "Ladder past a soft-failing upstream (SERVFAIL/timeout/truncated) to a healthier one, ordered by RTT/loss. Default OFF — byte-identical resolution until armed.";
+            on: root.solve-ladder-on;
+            on-color: Masque.resolve;
+            toggled(v) => {
+                root.solve-ladder-on = v;
+                root.solve-ladder-toggled(v);
+            }
+        }
+        ToggleRow {
+            label: "All-servers (race)";
+            hint: "Race all upstreams concurrently and take the first that answers (happy-eyeballs). Faster on flaky links; more upstream traffic.";
+            on: root.all-servers-on;
+            on-color: Masque.cache;
+            toggled(v) => {
+                root.all-servers-on = v;
+                root.all-servers-toggled(v);
+            }
+        }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    Text {
+                        text: "Active mode";
+                        color: Masque.moon;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "the resolved egress strategy (the engine's live truth)";
+                        color: Masque.haze;
+                        font-size: 10px;
+                        // MUST WRAP - the same defect SectionTitle documents at the top of this file
+                        // ("Slint Text defaults to no-wrap ... whatever it carried went with it"),
+                        // and this row is where it was still biting. Unwrapped, this single long
+                        // line takes the whole card, and because the VerticalLayout above carries
+                        // `horizontal-stretch: 1` the strategy value next to it is squeezed to zero
+                        // width. Measured on the AVD: the row rendered "Active mode" and its
+                        // subtitle with NO value at all, while every sibling row showed one
+                        // (5000ms, 4096). The label was never missing - it had nowhere to go.
+                        wrap: word-wrap;
+                    }
+                }
+                Text {
+                    text: root.strategy-label;
+                    color: root.strategy == 2 ? Masque.resolve : (root.strategy == 1 ? Masque.cache : Masque.haze);
+                    font-size: 11px;
+                    font-weight: 800;
+                    vertical-alignment: center;
+                }
+            }
+        }
+        StepperRow {
+            label: "Per-query deadline";
+            hint: "The hard budget one resolve gets before it falls through. Too short defeats the resilient ladder; too long stalls a miss.";
+            value: root.timeout-ms > 0 ? "\{root.timeout-ms}ms" : "default";
+            value-tint: root.warn-short-deadline ? Masque.breach : Masque.moon;
+            stepped(d) => {
+                root.timeout-stepped(d);
+            }
+        }
+
+        // ---- CACHE: the RAM⊗NAND size / serve-stale / TTL controls (config-carried, re-applied on configure) ----
+        SectionTitle { text: "CACHE  (RAM⊗NAND size · serve-stale · TTL)"; }
+        StepperRow {
+            label: "Cache size (entries)";
+            hint: "The RAM-hot cache capacity. A larger cache warms to a higher hit-rate; the NAND tier persists it across a reboot.";
+            value: "\{root.cache-cap}";
+            value-tint: root.warn-tiny-cache ? Masque.breach : Masque.cache;
+            stepped(d) => {
+                root.cache-cap-stepped(d);
+            }
+        }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 8px;
+                StatChip {
+                    label: "entries now";
+                    value: "\{root.cache-entries}";
+                    tint: root.cache-entries > 0 ? Masque.cache : Masque.haze;
+                }
+                StatChip {
+                    label: "stale served";
+                    value: "\{root.serve-stale-served}";
+                    tint: root.serve-stale-served > 0 ? Masque.stale : Masque.haze;
+                }
+                Rectangle { }  // spacer
+            }
+        }
+        ToggleRow {
+            label: "Serve stale (RFC 8767)";
+            hint: "Answer instantly from an expired entry while a fresh copy is fetched in the background — resilience when an upstream is slow/down. Needs a window > 0.";
+            on: root.serve-stale-on;
+            on-color: Masque.stale;
+            toggled(v) => {
+                root.serve-stale-on = v;
+                root.serve-stale-toggled(v);
+            }
+        }
+        if root.serve-stale-on : StepperRow {
+            label: "Serve-stale window";
+            hint: "How long after expiry an entry may still be served while it revalidates.";
+            value: "\{root.serve-stale-secs}s";
+            value-tint: root.warn-stale-inert ? Masque.breach : Masque.stale;
+            stepped(d) => {
+                root.serve-stale-secs-stepped(d);
+            }
+        }
+        StepperRow {
+            label: "TTL floor";
+            hint: "Clamp every answer's minimum lifetime — a tiny upstream TTL is held at least this long (fewer re-fetches).";
+            value: "\{root.ttl-floor-secs}s";
+            stepped(d) => {
+                root.ttl-floor-stepped(d);
+            }
+        }
+        StepperRow {
+            label: "TTL ceiling";
+            hint: "Clamp every answer's maximum lifetime — a huge upstream TTL is capped so stale records cannot linger too long.";
+            value: "\{root.ttl-ceiling-secs}s";
+            stepped(d) => {
+                root.ttl-ceiling-stepped(d);
+            }
+        }
+
+        // ---- SECURITY GUARD: the P12 rebind protection (a REAL Object setter) ----
+        SectionTitle { text: "GUARD  (rebind protection · P12)"; }
+        ToggleRow {
+            label: "Block DNS rebinding";
+            hint: "Refuse to cache or serve a PUBLIC name that answers a PRIVATE/loopback address (a rebinding attack on your LAN). Keep it ON.";
+            on: root.rebind-protect-on;
+            on-color: Masque.resolve;
+            toggled(v) => {
+                root.rebind-protect-on = v;
+                root.rebind-protect-toggled(v);
+            }
+        }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 8px;
+                StatChip {
+                    label: "rebind seen";
+                    value: "\{root.rebind-observed}";
+                    tint: root.rebind-observed > 0 ? Masque.stale : Masque.haze;
+                }
+                StatChip {
+                    label: "blocked";
+                    value: "\{root.rebind-rejected}";
+                    tint: root.warn-rebind-off ? Masque.breach : Masque.resolve;
+                }
+                Rectangle { }  // spacer
+                Text {
+                    text: root.rebind-protect-on ? "guard armed" : "guard OFF";
+                    color: root.rebind-protect-on ? Masque.resolve : Masque.breach;
+                    font-size: 11px;
+                    font-weight: 800;
+                    vertical-alignment: center;
+                }
+            }
+        }
+
+        // ---- ROTATION: the 12h-diversity cadence (HOST/Kotlin RotationManager owned — display + intent) ----
+        SectionTitle { text: "ROTATION  (\{root.rotation-family != "" ? root.rotation-family : "cold"} diversity)"; }
+        StepperRow {
+            label: "Rotation cadence";
+            hint: "How often the resolver rotates its upstream servers for diversity (privacy). Managed by the host rotation manager.";
+            value: "\{root.rotation-cadence-secs}s";
+            value-tint: Masque.mask;
+            stepped(d) => {
+                root.rotation-cadence-stepped(d);
+            }
+        }
+
+        // ---- EXPERT: the raw knobs behind a reveal (feedback-simple-ux — each a REAL Object setter) ----
+        ToggleRow {
+            label: "Expert controls";
+            hint: "Reveal the raw resolver privacy knobs. Most people never need these.";
+            on: root.expert-open;
+            on-color: Masque.mask;
+            toggled(v) => {
+                root.expert-open = v;
+                root.expert-toggled(v);
+            }
+        }
+        if root.expert-open : VerticalLayout {
+            spacing: 8px;
+            ToggleRow {
+                label: "Bogus-priv (R5)";
+                hint: "Return NXDOMAIN for reverse (PTR) lookups of private RFC1918 addresses — they never leak upstream.";
+                on: root.bogus-priv-on;
+                on-color: Masque.cache;
+                toggled(v) => {
+                    root.bogus-priv-on = v;
+                    root.bogus-priv-toggled(v);
+                }
+            }
+            ToggleRow {
+                label: "Proxy DNSSEC (N3)";
+                hint: "Pass the upstream's DNSSEC AD bit through instead of stripping it (trust the resolver's validation).";
+                on: root.proxy-dnssec-on;
+                on-color: Masque.cache;
+                toggled(v) => {
+                    root.proxy-dnssec-on = v;
+                    root.proxy-dnssec-toggled(v);
+                }
+            }
+            ToggleRow {
+                label: "Never-forward guard";
+                hint: "Refuse to forward unqualified / local-only names to an upstream (a privacy guard for LAN queries).";
+                on: root.never-forward-on;
+                on-color: Masque.cache;
+                toggled(v) => {
+                    root.never-forward-on = v;
+                    root.never-forward-toggled(v);
+                }
+            }
+            ToggleRow {
+                label: "Cache resource records";
+                hint: "Cache uncommon RR types (not just A/AAAA/CNAME). Off keeps the cache lean.";
+                on: root.cache-rr-on;
+                on-color: Masque.cache;
+                toggled(v) => {
+                    root.cache-rr-on = v;
+                    root.cache-rr-toggled(v);
+                }
+            }
+        }
+
+        // ---- Footer: re-apply the config-carried values + close ----
+        HorizontalBox {
+            spacing: 8px;
+            Button {
+                text: "Re-apply (cache & TTL)";
+                clicked => {
+                    root.reapply-config();
+                }
+            }
+            Rectangle { }  // spacer
+            Button {
+                text: "Done";
+                clicked => {
+                    root.close-settings();
+                }
+            }
+        }
+
+        Rectangle { }  // tail spacer
+    }
+
+    // ===== #36 THE UPPER MOON SEAL — the dash is the Hashira; the settings pane bears the
+    //       matching demon's rank (the mask meets the smiling cult). Declared LAST. =====
+    UpperMoonChip {
+        x: parent.width - self.width - 10px;
+        y: 8px;
+        kanji: "上弦・弐";
+        moon-name: "UPPER TWO — DOMA";
+        tint: #58c8d8;
+    }
+}
+
+// The thin Window forwarder (the WardenSettings / CentauriSettings precedent): a non-Window pane exported
+// from the root generates no standalone Rust struct, so this wrapper keeps `MaskSolverSettings` as a
+// constructable surface for the desktop preview + the host decision-point-guard test (lib.rs). Every input,
+// derived output, and intent callback aliases byte-equal to the embedded pane — one surface, two entry points.
+export component MaskSolverSettings inherits Window {
+    title: "Yeah! Tortä — MaskSolver  |||";
+    preferred-width: 440px;
+    preferred-height: 1080px;
+    background: Masque.veil-void.with-alpha(0.44);
+
+    // ---- pool posture ----
+    in-out property <bool> configured <=> pane.configured;
+    in-out property <int> transports <=> pane.transports;
+
+    // ---- resolution strategy ----
+    in-out property <bool> solve-ladder-on <=> pane.solve-ladder-on;
+    in-out property <bool> all-servers-on <=> pane.all-servers-on;
+    in-out property <int> strategy <=> pane.strategy;
+    in-out property <int> timeout-ms <=> pane.timeout-ms;
+
+    // ---- cache ----
+    in-out property <int> cache-cap <=> pane.cache-cap;
+    in-out property <int> cache-entries <=> pane.cache-entries;
+    in-out property <bool> serve-stale-on <=> pane.serve-stale-on;
+    in-out property <int> serve-stale-secs <=> pane.serve-stale-secs;
+    in-out property <int> serve-stale-served <=> pane.serve-stale-served;
+    in-out property <int> ttl-floor-secs <=> pane.ttl-floor-secs;
+    in-out property <int> ttl-ceiling-secs <=> pane.ttl-ceiling-secs;
+
+    // ---- security guard ----
+    in-out property <bool> rebind-protect-on <=> pane.rebind-protect-on;
+    in-out property <int> rebind-observed <=> pane.rebind-observed;
+    in-out property <int> rebind-rejected <=> pane.rebind-rejected;
+
+    // ---- rotation (display) ----
+    in-out property <int> rotation-cadence-secs <=> pane.rotation-cadence-secs;
+    in-out property <string> rotation-family <=> pane.rotation-family;
+
+    // ---- expert raw knobs ----
+    in-out property <bool> expert-open <=> pane.expert-open;
+    in-out property <bool> bogus-priv-on <=> pane.bogus-priv-on;
+    in-out property <bool> proxy-dnssec-on <=> pane.proxy-dnssec-on;
+    in-out property <bool> never-forward-on <=> pane.never-forward-on;
+    in-out property <bool> cache-rr-on <=> pane.cache-rr-on;
+
+    // ---- derived decision-point guard (host-readable) ----
+    out property <bool> warn-dead-pool-arm <=> pane.warn-dead-pool-arm;
+    out property <bool> warn-rebind-off <=> pane.warn-rebind-off;
+    out property <bool> warn-short-deadline <=> pane.warn-short-deadline;
+    out property <bool> warn-stale-inert <=> pane.warn-stale-inert;
+    out property <bool> warn-tiny-cache <=> pane.warn-tiny-cache;
+    out property <bool> note-unconfigured <=> pane.note-unconfigured;
+    out property <bool> warn-any <=> pane.warn-any;
+    out property <string> strategy-label <=> pane.strategy-label;
+    out property <string> stale-desc <=> pane.stale-desc;
+    out property <string> posture-line <=> pane.posture-line;
+
+    // ---- intents ----
+    callback solve-ladder-toggled <=> pane.solve-ladder-toggled;
+    callback all-servers-toggled <=> pane.all-servers-toggled;
+    callback rebind-protect-toggled <=> pane.rebind-protect-toggled;
+    callback bogus-priv-toggled <=> pane.bogus-priv-toggled;
+    callback proxy-dnssec-toggled <=> pane.proxy-dnssec-toggled;
+    callback never-forward-toggled <=> pane.never-forward-toggled;
+    callback cache-rr-toggled <=> pane.cache-rr-toggled;
+    callback serve-stale-toggled <=> pane.serve-stale-toggled;
+    callback cache-cap-stepped <=> pane.cache-cap-stepped;
+    callback timeout-stepped <=> pane.timeout-stepped;
+    callback serve-stale-secs-stepped <=> pane.serve-stale-secs-stepped;
+    callback ttl-floor-stepped <=> pane.ttl-floor-stepped;
+    callback ttl-ceiling-stepped <=> pane.ttl-ceiling-stepped;
+    callback rotation-cadence-stepped <=> pane.rotation-cadence-stepped;
+    callback expert-toggled <=> pane.expert-toggled;
+    callback reapply-config <=> pane.reapply-config;
+    callback close-settings <=> pane.close-settings;
+
+    pane := MaskSolverSettingsPane { }
+}

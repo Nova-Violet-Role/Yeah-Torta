@@ -1,0 +1,1015 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\proc-macro\\src",
+  "files": {
+    "callback_interface.rs": {
+      "hash": "d5c505b2e901",
+      "indexed_at": "2026-07-24T20:35:12.588499+00:00",
+      "language": "rust",
+      "lines": 21,
+      "mtime_ns": 1782136568000000000,
+      "size": 844,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            16
+          ],
+          "name": "TestCallbackInterface",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            19,
+            21
+          ],
+          "name": "OtherCallbackInterface",
+          "type": "trait"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "2140d39fb7fb",
+      "indexed_at": "2026-07-24T20:35:12.591310+00:00",
+      "language": "rust",
+      "lines": 535,
+      "mtime_ns": 1782136568000000000,
+      "size": 11685,
+      "symbols": [
+        {
+          "lines": [
+            10,
+            10
+          ],
+          "name": "callback_interface",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                17,
+                19
+              ],
+              "name": "One",
+              "type": "struct"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    23,
+                    25
+                  ],
+                  "name": "get_inner_value",
+                  "signature": "(&self)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    28,
+                    28
+                  ],
+                  "name": "parses_with_doc_attribute",
+                  "signature": "(&self)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                22,
+                29
+              ],
+              "name": "One",
+              "type": "impl"
+            }
+          ],
+          "docstring": "Test proc-macro definitions in a submodule (#2728)",
+          "lines": [
+            15,
+            30
+          ],
+          "name": "one",
+          "type": "module"
+        },
+        {
+          "lines": [
+            34,
+            36
+          ],
+          "name": "one_inner_by_ref",
+          "signature": "(one: &One)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            39,
+            41
+          ],
+          "name": "Two",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            44,
+            47
+          ],
+          "name": "NestedRecord",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            50,
+            52
+          ],
+          "name": "Three",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            55,
+            57
+          ],
+          "name": "RecordWithBytes",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            62,
+            62
+          ],
+          "name": "Unused",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                67,
+                69
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            65,
+            70
+          ],
+          "name": "Unused",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            73,
+            78
+          ],
+          "name": "Trait",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            80,
+            80
+          ],
+          "name": "TraitImpl",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                83,
+                85
+              ],
+              "name": "concat_strings",
+              "signature": "(&self, a: &str, b: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            82,
+            86
+          ],
+          "name": "Trait",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            89,
+            91
+          ],
+          "name": "TraitWithForeign",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            93,
+            93
+          ],
+          "name": "RustTraitImpl",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                96,
+                98
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            95,
+            99
+          ],
+          "name": "TraitWithForeign",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            103,
+            105
+          ],
+          "name": "StructWithTrait",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                110,
+                112
+              ],
+              "name": "new",
+              "signature": "(name: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            108,
+            113
+          ],
+          "name": "StructWithTrait",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                117,
+                119
+              ],
+              "name": "concat_strings",
+              "signature": "(&self, a: &str, b: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            116,
+            120
+          ],
+          "name": "Trait",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            124,
+            124
+          ],
+          "name": "Object",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                129,
+                131
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                134,
+                139
+              ],
+              "name": "named_ctor",
+              "signature": "(arg: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                141,
+                143
+              ],
+              "name": "is_heavy",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                145,
+                147
+              ],
+              "name": "is_other_heavy",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                149,
+                151
+              ],
+              "name": "get_trait",
+              "signature": "(&self, inc: Option<Arc<dyn Trait>>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                153,
+                158
+              ],
+              "name": "get_trait_with_foreign",
+              "signature": "(\n        &self,\n        inc: Option<Arc<dyn TraitWithForeign>>,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                160,
+                163
+              ],
+              "name": "take_error",
+              "signature": "(&self, e: BasicError)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            127,
+            164
+          ],
+          "name": "Object",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            167,
+            169
+          ],
+          "name": "concat_strings_by_ref",
+          "signature": "(t: &dyn Trait, a: &str, b: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            172,
+            174
+          ],
+          "name": "make_one",
+          "signature": "(inner: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            177,
+            179
+          ],
+          "name": "take_two",
+          "signature": "(two: Two)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            182,
+            184
+          ],
+          "name": "make_hashmap",
+          "signature": "(k: i8, v: u64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            187,
+            189
+          ],
+          "name": "return_hashmap",
+          "signature": "(h: HashMap<i8, u64>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            192,
+            194
+          ],
+          "name": "make_hash_set",
+          "signature": "(v: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            197,
+            199
+          ],
+          "name": "return_hash_set",
+          "signature": "(h: HashSet<String>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            202,
+            204
+          ],
+          "name": "take_record_with_bytes",
+          "signature": "(rwb: RecordWithBytes)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            207,
+            230
+          ],
+          "name": "call_callback_interface",
+          "signature": "(cb: Box<dyn TestCallbackInterface>)",
+          "type": "function"
+        },
+        {
+          "docstring": "Type that's defined in the UDL and not wrapped with #[uniffi::export]",
+          "lines": [
+            233,
+            235
+          ],
+          "name": "Zero",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            238,
+            242
+          ],
+          "name": "make_zero",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            245,
+            249
+          ],
+          "name": "make_record_with_bytes",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            252,
+            256
+          ],
+          "name": "MaybeBool",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                260,
+                266
+              ],
+              "name": "next",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            259,
+            267
+          ],
+          "name": "MaybeBool",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            270,
+            277
+          ],
+          "name": "MixedEnum",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                281,
+                283
+              ],
+              "name": "is_not_none",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            280,
+            284
+          ],
+          "name": "MixedEnum",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            287,
+            289
+          ],
+          "name": "get_mixed_enum",
+          "signature": "(v: Option<MixedEnum>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            293,
+            298
+          ],
+          "name": "ReprU8",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            301,
+            303
+          ],
+          "name": "enum_identity",
+          "signature": "(value: MaybeBool)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            306,
+            313
+          ],
+          "name": "BasicError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                317,
+                319
+              ],
+              "name": "is_unexpected",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            316,
+            320
+          ],
+          "name": "BasicError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            323,
+            326
+          ],
+          "name": "SimpleError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                329,
+                331
+              ],
+              "name": "from",
+              "signature": "(e: uniffi::UnexpectedUniFFICallbackError)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            328,
+            332
+          ],
+          "name": "BasicError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            335,
+            337
+          ],
+          "name": "always_fails",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            342,
+            349
+          ],
+          "name": "FlatError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                353,
+                361
+              ],
+              "name": "do_stuff",
+              "signature": "(&self, times: u32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            352,
+            362
+          ],
+          "name": "Object",
+          "type": "impl"
+        },
+        {
+          "docstring": "defined in UDL.",
+          "lines": [
+            365,
+            367
+          ],
+          "name": "get_one",
+          "signature": "(one: Option<One>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            369,
+            371
+          ],
+          "name": "get_bool",
+          "signature": "(b: Option<MaybeBool>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            373,
+            375
+          ],
+          "name": "get_object",
+          "signature": "(o: Option<Arc<Object>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            377,
+            379
+          ],
+          "name": "get_trait",
+          "signature": "(o: Option<Arc<dyn Trait>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            381,
+            383
+          ],
+          "name": "get_trait_with_foreign",
+          "signature": "(o: Option<Arc<dyn TraitWithForeign>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            386,
+            389
+          ],
+          "name": "Externals",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            391,
+            393
+          ],
+          "name": "get_externals",
+          "signature": "(e: Option<Externals>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            396,
+            398
+          ],
+          "name": "join",
+          "signature": "(parts: &[String], sep: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            402,
+            402
+          ],
+          "name": "Renamed",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                408,
+                410
+              ],
+              "name": "renamed_new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                413,
+                415
+              ],
+              "name": "renamed_func",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            406,
+            416
+          ],
+          "name": "Renamed",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            419,
+            421
+          ],
+          "name": "renamed_rename_test",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            424,
+            424
+          ],
+          "name": "CustomInteger",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            430,
+            455
+          ],
+          "name": "RecordWithDefaults",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            459,
+            497
+          ],
+          "name": "RecordWithImplicitDefaults",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            501,
+            503
+          ],
+          "name": "double_with_default",
+          "signature": "(num: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            507,
+            509
+          ],
+          "name": "sum_with_default",
+          "signature": "(num1: i32, num2: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            513,
+            515
+          ],
+          "name": "ObjectWithDefaults",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                520,
+                522
+              ],
+              "name": "new",
+              "signature": "(num: i32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                525,
+                527
+              ],
+              "name": "add_to_num",
+              "signature": "(&self, other: i32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                530,
+                532
+              ],
+              "name": "add_to_implicit_num",
+              "signature": "(&self, other: i32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            518,
+            533
+          ],
+          "name": "ObjectWithDefaults",
+          "type": "impl"
+        }
+      ]
+    },
+    "proc-macro.udl": {
+      "hash": "5a51bca011c3",
+      "indexed_at": "2026-07-24T20:35:12.591913+00:00",
+      "language": "udl",
+      "lines": 27,
+      "mtime_ns": 1782136568000000000,
+      "size": 757,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "inner",
+              "signature": "string",
+              "type": "field"
+            }
+          ],
+          "docstring": "Use this to test that types defined in the UDL can be used in the proc-macros",
+          "lines": [
+            2,
+            4
+          ],
+          "name": "Zero",
+          "type": "dictionary"
+        },
+        {
+          "docstring": "And all of these for the opposite - proc-macro types used in UDL.",
+          "lines": [
+            7,
+            7
+          ],
+          "name": "One",
+          "signature": "record",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "MaybeBool",
+          "signature": "enum",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            9,
+            9
+          ],
+          "name": "Object",
+          "signature": "interface",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            10,
+            10
+          ],
+          "name": "Trait",
+          "signature": "trait",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            11,
+            11
+          ],
+          "name": "TraitWithForeign",
+          "signature": "trait_with_foreign",
+          "type": "typedef"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                15,
+                15
+              ],
+              "name": "one",
+              "signature": "One?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "bool",
+              "signature": "MaybeBool?",
+              "type": "field"
+            }
+          ],
+          "docstring": "Then stuff defined in UDL but referencing proc-macro types.",
+          "lines": [
+            14,
+            17
+          ],
+          "name": "Externals",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "get_one",
+              "signature": "(One? one) : One",
+              "type": "method"
+            },
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "get_bool",
+              "signature": "(MaybeBool? b) : MaybeBool",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "get_object",
+              "signature": "(Object? o) : Object",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "get_trait",
+              "signature": "(Trait? t) : Trait",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "get_trait_with_foreign",
+              "signature": "(TraitWithForeign? t) : TraitWithForeign",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "get_externals",
+              "signature": "(Externals? e) : Externals",
+              "type": "method"
+            }
+          ],
+          "docstring": "Namespace different from crate name.",
+          "lines": [
+            20,
+            27
+          ],
+          "name": "proc_macro",
+          "type": "namespace"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.713054+00:00",
+  "version": "1.0"
+}

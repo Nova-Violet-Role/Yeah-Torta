@@ -1,0 +1,437 @@
+{
+  "directory": "uniffi-rs-main\\bindgen-tests\\kotlin\\keywords\\src",
+  "files": {
+    "keywords.udl": {
+      "hash": "c4a52d2aed3f",
+      "indexed_at": "2026-07-24T20:35:12.051111+00:00",
+      "language": "udl",
+      "lines": 51,
+      "mtime_ns": 1782136568000000000,
+      "size": 770,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                2,
+                2
+              ],
+              "name": "if",
+              "signature": "(u8 break) : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1,
+            3
+          ],
+          "name": "keywords_kotlin",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                6,
+                6
+              ],
+              "name": "class",
+              "signature": "(u8 object) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                7,
+                7
+              ],
+              "name": "object",
+              "signature": "(u8? class) : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            5,
+            8
+          ],
+          "name": "break",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                11,
+                11
+              ],
+              "name": "return",
+              "signature": "(return v) : return",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                12
+              ],
+              "name": "continue",
+              "signature": "() : continue?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                13
+              ],
+              "name": "break",
+              "signature": "(break? v) : record<u8, break>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                14,
+                14
+              ],
+              "name": "while",
+              "signature": "(sequence<while> while) : while",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            16
+          ],
+          "name": "continue",
+          "type": "callback_interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                19,
+                19
+              ],
+              "name": "false",
+              "signature": "() : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            18,
+            20
+          ],
+          "name": "true",
+          "type": "callback_interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "class",
+              "signature": "u8",
+              "type": "field"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "object",
+              "signature": "u8?",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            22,
+            25
+          ],
+          "name": "return",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "class",
+              "signature": "return",
+              "type": "field"
+            },
+            {
+              "lines": [
+                29,
+                29
+              ],
+              "name": "fun",
+              "signature": "return?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                30,
+                30
+              ],
+              "name": "object",
+              "signature": "sequence<return>",
+              "type": "field"
+            },
+            {
+              "lines": [
+                31,
+                31
+              ],
+              "name": "break",
+              "signature": "record<u8, return>",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            27,
+            32
+          ],
+          "name": "while",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            35,
+            37
+          ],
+          "name": "false",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            39,
+            41
+          ],
+          "name": "class",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            44,
+            46
+          ],
+          "name": "fun",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            49,
+            51
+          ],
+          "name": "Error",
+          "type": "interface"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "4e1f6f72f169",
+      "indexed_at": "2026-07-24T20:35:12.052073+00:00",
+      "language": "rust",
+      "lines": 102,
+      "mtime_ns": 1782136568000000000,
+      "size": 2286,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            9
+          ],
+          "name": "r#if",
+          "signature": "(_object: u8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            12,
+            12
+          ],
+          "name": "r#break",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                15,
+                15
+              ],
+              "name": "class",
+              "signature": "(&self, _object: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "object",
+              "signature": "(&self, _class: Option<u8>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            14,
+            17
+          ],
+          "name": "r#break",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                21,
+                23
+              ],
+              "name": "r#return",
+              "signature": "(&self, _v: r#return)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                26
+              ],
+              "name": "r#continue",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                27,
+                29
+              ],
+              "name": "r#break",
+              "signature": "(&self, _v: Option<Arc<r#break>>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                30,
+                32
+              ],
+              "name": "r#while",
+              "signature": "(&self, _v: Vec<r#while>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                33,
+                35
+              ],
+              "name": "class",
+              "signature": "(&self, _v: HashMap<u8, Vec<class>>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            20,
+            36
+          ],
+          "name": "r#continue",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            39,
+            41
+          ],
+          "name": "r#true",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                47
+              ],
+              "name": "r#false",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            44,
+            48
+          ],
+          "name": "r#true",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            51,
+            54
+          ],
+          "name": "r#return",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            57,
+            62
+          ],
+          "name": "r#while",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            65,
+            68
+          ],
+          "name": "r#false",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            72,
+            74
+          ],
+          "name": "class",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            78,
+            81
+          ],
+          "name": "fun",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            88,
+            91
+          ],
+          "name": "Error",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            94,
+            94
+          ],
+          "name": "r#else",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            98,
+            100
+          ],
+          "name": "get_else",
+          "signature": "(e: r#else)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.575692+00:00",
+  "version": "1.0"
+}

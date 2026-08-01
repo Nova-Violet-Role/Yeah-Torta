@@ -1,0 +1,328 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.google.devtools.ksp'
+    id "kotlin-parcelize"
+}
+
+android {
+    compileSdkVersion 37
+
+    namespace 'pillar.kuma_saimono.libumdnscrypt'
+
+    // The app source now lives under src/main/kotlin (Kotlin-first; the last
+    // .java are being ported out). Point the java sourceSet there so javac still
+    // compiles the remaining .java, and the Kotlin plugin picks up the .kt.
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        // #74 hygiene: the test sourceSet mirrors main's kotlin-first layout (src/test/kotlin/pillar/...).
+        // Its files already declare package pillar.* — only the physical dir was the stale java/pan/
+        // leftover. (debug/release held only the now-retired MultidexActivator, so no kotlin srcDir left.)
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+
+    // fdroid flavor RETIRED (#74): Yeah Tortae ships direct-to-GIT (not F-Droid/Play), so the
+    // version dimension collapses to nothing — only the processor (ABI) dimension remains.
+    flavorDimensions = ["processor"]
+
+    productFlavors {
+
+        armv7a {
+            dimension = 'processor'
+            resValue 'string', 'appProcVersion', 'armv7a'
+            versionCode = 2
+
+            ndk {
+                abiFilters 'armeabi-v7a'
+            }
+        }
+
+        arm64 {
+            dimension = 'processor'
+            resValue 'string', 'appProcVersion', 'arm64'
+            versionCode = 3
+
+            ndk {
+                abiFilters 'arm64-v8a'
+            }
+        }
+
+        universal {
+            dimension = 'processor'
+            resValue 'string', 'appProcVersion', 'universal'
+            versionCode = 10
+
+            // x86_64 Universal = Rust × Kotlin × UniFFI ONLY (no Haskell — Hatter can't target x86_64).
+            // x86_64-ONLY on purpose: no dormant arm64-v8a Haskell leg bundled in (the host-test build).
+            ndk {
+                abiFilters 'x86_64'
+            }
+        }
+
+    }
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 37
+        multiDexEnabled = true
+        versionCode 270
+
+        // Folded in from the retired fdroid flavor (#74). App identity + the Verifier-lockstep
+        // strings (were src/fdroid/res/values/encoded.xml) now live here as the single base.
+        // appVersion stays "fd" so the flavor-branch signals + Verifier debug-branch are unchanged.
+        applicationId "app.torta.yeah"
+        versionName "1.0.0"
+        resValue 'string', 'package_name', 'app.torta.yeah'
+        resValue 'string', 'appVersion', 'fd'
+        // ä (NOT a literal ä) so Gradle's build-script charset can't mojibake the app label.
+        resValue 'string', 'main_activity_label', 'Yeah! Tortä'
+        resValue 'string', 'encoded', 'cGFuLmt1bWFfc2FpbW9uby50b3JkbnNjcnlwdC5hY3Rpb24uVE9QX0JST0FEQ0FTVA=='
+        // #68 X5: the ONLY strings that survived #69's torta_text migration + the old-era settings
+        // retirement — ok/cancel (DnsmasqStoreEditor dialogs). The former @string/app_name (manifest
+        // label) folds onto main_activity_label above (same value); the other ~1284 strings.xml entries
+        // were dead. Source strings.xml is deleted this slice — these live on as config-as-code resValue.
+        resValue 'string', 'ok', 'OK'
+        resValue 'string', 'cancel', 'Cancel'
+        resourceConfigurations += ['en', 'ru', 'pl', 'de', 'fa', 'fi', 'in', 'fr', 'ja', 'zh', 'es', 'pt', 'pt-rBR', 'el', 'tr', 'it', 'uk', 'bg', 'ar', 'nl', 'ta']
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        def buildDate = System.getenv("SOURCE_DATE_EPOCH") == null
+                ? System.currentTimeMillis() : 1000 * Long.parseLong(System.getenv("SOURCE_DATE_EPOCH"))
+        buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + buildDate + "L)"
+        // ★ 2.1.18-absorb — the Rust layer's audited parity coordinate (upstream deltas through
+        // v2.1.18 absorbed or N/A-by-architecture; see dnscrypt_update.rs `current_envelope`).
+        // Bump ONLY alongside a real audit: this string gates the notify-only update check.
+        buildConfigField "String", "DNSCRYPT_BUNDLED_VERSION", '"2.1.18"'
+
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // F-Droid re-signs from source with its own key; this debug-signing only makes local
+            // release builds installable for on-device smoke testing (set a real key for other distribution).
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = 17
+        targetCompatibility = 17
+    }
+    buildToolsVersion = '36.0.0'
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
+    // Go binaries (libdnscrypt-proxy/libdnstt/libnflog) REMOVED — pure-Rust resolver (lib.rs:1971)
+    // is the only DNS engine. AGP default jniLibs source set (src/main/jniLibs, where cargo-ndk
+    // writes libtorta_core.so) applies; no bundled-libs additive is needed (S2 spec §4, Task 4B).
+    packagingOptions {
+        jniLibs.useLegacyPackaging = true
+
+    }
+
+    applicationVariants.configureEach { variant ->
+
+        def abiVersion = variant.mergedFlavor.versionCode
+
+        // #68 X5 (Socio 2026-07-16): the shipped APK is libumdnscrypt-<flavor>-alpha.apk.
+        // debug buildType -> the "alpha" channel label; other buildTypes keep their own name.
+        def channel = variant.buildType.name == 'debug' ? 'alpha' : variant.buildType.name
+
+        variant.outputs.each { output ->
+            output.versionCodeOverride = abiVersion + defaultConfig.versionCode * 100
+            output.outputFileName = "libumdnscrypt-${variant.flavorName}-${channel}.apk"
+        }
+    }
+
+    ndkVersion '23.1.7779620'
+
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
+        }
+    }
+
+    ksp {
+        arg("dagger.fastInit", "enabled")
+    }
+
+    dependenciesInfo {
+        // Disables dependency metadata when building APKs.
+        includeInApk = false
+        // Disables dependency metadata when building Android App Bundles.
+        includeInBundle = false
+    }
+
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'androidx.preference:preference-ktx:1.2.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.13.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'androidx.recyclerview:recyclerview:1.4.0'
+    implementation 'androidx.lifecycle:lifecycle-process:2.9.4'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.9.4'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
+    implementation 'eu.chainfire:libsuperuser:1.1.1'
+    implementation 'com.jrummyapps:android-shell:1.0.1'
+    implementation 'androidx.core:core-ktx:1.17.0'
+    //Tortä splash — Android-12 SplashScreen (compat back to API 21)
+    implementation 'androidx.core:core-splashscreen:1.0.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
+    // #9/#10 UniFFI runtime — the generated uniffi.torta_core.* Kotlin calls the Rust .so via JNA (libffi),
+    // NOT hand-JNI. The @aar pulls JNA's per-ABI libjnidispatch.so (incl. arm64-v8a, which runs translated on
+    // the AVD). Pinned 5.12.0 per the UniFFI gradle guide.
+    implementation 'net.java.dev.jna:jna:5.12.0@aar'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation project(':filepicker')
+
+    //DI — Dagger (the legacy, being retired) + Kotlin-Inject (the Dagger replacement; KSP, compile-time,
+    //zero reflection). Both present during the parallel migration; Dagger deleted once the graph moves over.
+    implementation "com.google.dagger:dagger:$dagger_version"
+    ksp "com.google.dagger:dagger-compiler:$dagger_version"
+    implementation "me.tatarka.inject:kotlin-inject-runtime:$kotlin_inject_version"
+    ksp "me.tatarka.inject:kotlin-inject-compiler-ksp:$kotlin_inject_version"
+    //Persistent Work Manager
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    //P6 Wireless Debug (no-root) — on-device ADB pairing engine (Apache-2.0, via JitPack)
+    implementation 'com.github.MuntashirAkon:libadb-android:3.1.1'
+    implementation 'com.github.MuntashirAkon:sun-security-android:1.1'
+    implementation 'org.conscrypt:conscrypt-android:2.5.3'
+}
+
+// XML-ELIMINATION (#68 X3b): app colors/styles/themes are canonical in torta_res_gen.gradle
+// (config-as-code, Groovy). The generator writes real values xml into AGP's injected build/ dir
+// at build time; no values .xml lives in git src/. AGP's Variant API wires it into resource merge.
+apply from: "$projectDir/torta_res_gen.gradle"
+
+// =====================================================================================
+// A14 GUARD — stale UniFFI bindings fail the BUILD, not the device.
+// =====================================================================================
+// `assembleDebug` exiting 0 proves the Kotlin compiled. It does NOT prove the generated bindings
+// still match the Rust records they were generated from. Add a field to a `#[derive(uniffi::Record)]`
+// struct, forget to regenerate, and BOTH sides still compile — the disagreement surfaces as a UniFFI
+// contract abort at library-load time, on a device, in front of the user. For the arm64 flavour that
+// cannot even be reproduced on this machine (the AVD refuses arm64 on an x86_64 host), so build time
+// is the only honest place to catch it.
+//
+// This wiring is what turns tools/check_uniffi_records.js from an orphaned script someone must
+// remember into a guard nobody can forget. A checker not wired into a build closes an alarm ONCE;
+// it does not keep it closed.
+//
+// CONFIGURATION-CACHE SAFE, and that was not optional: the first version referenced `rootDir` from
+// inside the task action and Gradle rejected it outright —
+//   "Invocation of 'rootDir' references a Gradle script object from a Groovy closure at execution
+//    time, which is unsupported with the configuration cache."
+// The path is therefore resolved HERE, at configuration time, into a plain String, and the task is a
+// typed Exec whose command line is fixed before execution begins.
+//
+// EXIT CODES (deliberately distinct — "did not run" must never read as "found nothing wrong"):
+//   0 = every record agrees   1 = mismatch → build fails   2 = checker could not run → build fails
+def a14ScriptPath = new File(rootDir, 'tools/check_uniffi_records.js').absolutePath
+if (!new File(a14ScriptPath).exists()) {
+    throw new GradleException("A14 GUARD: ${a14ScriptPath} is missing. The guard cannot run, so the build must not pass.")
+}
+
+tasks.register('checkUniffiRecords', Exec) {
+    group = 'verification'
+    description = 'Fail the build if any #[derive(uniffi::Record)] disagrees with its generated Kotlin data class.'
+    // PORTABLE INVOCATION (load-bearing for CI). This read `cmd, /c, node` — Windows-only, so on
+    // a Linux GitHub runner the guard could not start at all. Exit code 2 means "checker could not
+    // run" and the build fails, which is the correct policy, but a gate that CANNOT run on the
+    // machine that will build every release is a gate that never runs. The whole point of exit-2
+    // being distinct from exit-1 is that "did not run" must never read as "found nothing wrong".
+    if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+        commandLine 'cmd', '/c', 'node', a14ScriptPath
+    } else {
+        commandLine 'node', a14ScriptPath
+    }
+    // Exec fails the build on any non-zero exit by default. That default is exactly the policy here,
+    // so it is left in place rather than softened with ignoreExitValue.
+}
+
+// Bind it to every variant's Kotlin compile, so it cannot be bypassed by building another flavour.
+tasks.matching { it.name.startsWith('compile') && it.name.endsWith('Kotlin') }.configureEach {
+    dependsOn 'checkUniffiRecords'
+}
+
+// =====================================================================================
+// A4 GOLDEN GATE — a drifted or blank UI pane fails the BUILD.
+// =====================================================================================
+// torta_iconforge rasterizes every Slint scene headless and diffs it against the goldens IN THE
+// REPO. The instrument was real and passing long before this block existed; what did not exist was
+// anything that RAN it. An instrument nobody runs is an untested alarm.
+//
+// A FIRST ATTEMPT AT THIS GATE FAILED ITS OWN CONTROL, which is the only reason this task exists in
+// this form. The verify call was originally appended to the res-gen task in torta_res_gen.gradle.
+// It ran, and it passed, inside a real APK build. Then the control -- change ONE pixel of a golden
+// and require the build to fail -- produced:
+//     BUILD SUCCESSFUL in 1s
+// because Gradle found the res-gen task UP-TO-DATE and skipped it entirely. The goldens were not
+// among its declared inputs, so mutating one invalidated nothing. A gate that executes only when
+// unrelated inputs happen to change is not a gate, and it would have sat there reading like one.
+//
+// Hence: its own task, `outputs.upToDateWhen { false }` so it ALWAYS runs, bound to every variant's
+// Kotlin compile exactly as the A14 guard is -- the pattern already proved able to fail a build.
+//
+// Configuration-cache safe: both paths are resolved HERE, at configuration time, into plain Strings.
+//
+// `verify` exits 1 on ANY failure -- a missing golden, a size mismatch, pixel drift, or a BLANK
+// render. The PASS/FAIL decision itself (`verdict_is_pass`, torta_iconforge/src/main.rs:345) is
+// proved in Lean for ALL inputs by D:/Lean/proofs/Proofs/GoldenDiffVerdict.lean, including that no
+// golden can ever license a blank render -- the failure a headless rasterizer produces when a scene
+// does not load.
+def a4Manifest = new File(rootDir, 'rust/torta_iconforge/Cargo.toml').absolutePath
+def a4Goldens  = new File(rootDir, 'rust/torta_iconforge/goldens').absolutePath
+if (!new File(a4Manifest).exists()) {
+    throw new GradleException("A4 GOLDEN GATE: ${a4Manifest} is missing. The gate cannot run, so the build must not pass.")
+}
+if (!new File(a4Goldens).exists()) {
+    throw new GradleException("A4 GOLDEN GATE: ${a4Goldens} is missing. A gate with no goldens would pass vacuously.")
+}
+
+tasks.register('verifyIconGoldens', Exec) {
+    group = 'verification'
+    description = 'Fail the build if any Slint scene no longer matches its golden raster in the repo.'
+    // PORTABLE INVOCATION — same reason as the A14 guard above: `cmd /c` cannot run on the Linux
+    // runner that builds every published APK, and a golden gate that cannot execute is decoration.
+    if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+        commandLine 'cmd', '/c', 'cargo', 'run', '--quiet', '--manifest-path', a4Manifest, '--',
+                    'verify', '--goldens', a4Goldens
+    } else {
+        commandLine 'cargo', 'run', '--quiet', '--manifest-path', a4Manifest, '--',
+                    'verify', '--goldens', a4Goldens
+    }
+    // ALWAYS run. The whole point of this block is that an up-to-date check silently disarmed the
+    // first version of this gate.
+    outputs.upToDateWhen { false }
+}
+
+tasks.matching { it.name.startsWith('compile') && it.name.endsWith('Kotlin') }.configureEach {
+    dependsOn 'verifyIconGoldens'
+}

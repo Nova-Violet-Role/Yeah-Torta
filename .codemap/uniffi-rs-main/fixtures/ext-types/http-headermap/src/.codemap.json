@@ -1,0 +1,146 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\ext-types\\http-headermap\\src",
+  "files": {
+    "http_headermap.udl": {
+      "hash": "fe6536af0cb9",
+      "indexed_at": "2026-07-24T20:35:12.497967+00:00",
+      "language": "udl",
+      "lines": 17,
+      "mtime_ns": 1782136568000000000,
+      "size": 317,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                2,
+                2
+              ],
+              "name": "key",
+              "signature": "string",
+              "type": "field"
+            },
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "val",
+              "signature": "string",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            1,
+            4
+          ],
+          "name": "HttpHeader",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            7,
+            7
+          ],
+          "name": "HeaderMap",
+          "signature": "sequence<HttpHeader>",
+          "type": "typedef"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                10,
+                10
+              ],
+              "name": "run",
+              "signature": "(HeaderMap arg) : HeaderMap",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            9,
+            11
+          ],
+          "name": "HeaderMapCallback",
+          "type": "callback_interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                14
+              ],
+              "name": "get_headermap",
+              "signature": "(string value) : HeaderMap",
+              "type": "method"
+            },
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "run_callback",
+              "signature": "(HeaderMapCallback arg) : HeaderMap",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            13,
+            17
+          ],
+          "name": "ext_types_http_headermap",
+          "type": "namespace"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "899706cdccad",
+      "indexed_at": "2026-07-24T20:35:12.498853+00:00",
+      "language": "rust",
+      "lines": 53,
+      "mtime_ns": 1782136568000000000,
+      "size": 1550,
+      "symbols": [
+        {
+          "docstring": "A single HttpHeader for Uniffi bindings",
+          "lines": [
+            6,
+            9
+          ],
+          "name": "HttpHeader",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            34,
+            39
+          ],
+          "name": "get_headermap",
+          "signature": "(v: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            41,
+            43
+          ],
+          "name": "HeaderMapCallback",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            45,
+            51
+          ],
+          "name": "run_callback",
+          "signature": "(callback: Box<dyn HeaderMapCallback>)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.687544+00:00",
+  "version": "1.0"
+}

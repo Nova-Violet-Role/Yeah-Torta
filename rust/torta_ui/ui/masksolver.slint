@@ -1,0 +1,827 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT MaskSolver dashboard — slice 8 of the MaskSolver (Resolver&Cache) overhaul (the 🩸 Carnage facet).
+//
+// This is the rust-native (SLINT, NO XML / NO Java / NO Compose) one-glance MaskSolver surface — THE MASQUERADE.
+// It renders a `MaskSolverSnapshot` (torta_core `resolver::object::MaskSolverSnapshot`, object.rs:105) + a
+// `MaskSolverSolveState` (object.rs:204) + a `MaskSolverRotation` (object.rs:177) the HOST sets: the SOLVE-form
+// resilience (answered / retries / soft-fails / hard-negatives / ladder-exhausted / promotions + per-transport
+// RTT/loss EWMA + the active strategy), the CACHE-form witnesses (cache entries/hits/hit-rate + serve-stale +
+// neg-cache on RAM⊗NAND), and the resolution-safety guard (rebind observed/rejected + panics). Every number is a
+// REAL read of the SAME live `Stats` atomics the flat `resolver_stats()` renders (the single-source proof, no
+// engine fork — Chroma F1/F2); the two derived rates are Rust-computed + zero-guarded in the snapshot, never here.
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android cross-compile spike #69.
+// SLINT can't read a Rust struct directly; the host (Kotlin SurfaceView bridge / the slint-viewer preview /
+// the lib.rs proof test) constructs `MaskSolverDashboard`, pulls a live `MaskSolver::snapshot()`/`solve_state()`
+// via the UniFFI Object, and pushes each field onto the `in-out` inputs. The recent-resolve feed is the tail of
+// the per-pillar `query-masksolver.log` (`MaskSolver::query_masksolver_log_path()` → `log_tier::log_tail_recent`).
+//
+// 🩸 THE HIDDEN-FAULT HUNT (the facet's load-bearing job): a resolver's worst SILENT failures are not loud
+// crashes — they are the ways the mask LIES while looking "on". (1) THE DEAD POOL: configured but `transports==0`
+// — armed with NO upstream, every query misses (the resolver's BLACKHOLE, the SOLVE-form parallel of Centauri's
+// empty-catalog). (2) THE SILENT MISS: traffic arrives (`queries>0`) but `answered==0` — resolving NOTHING, every
+// query silently falls through to dnscrypt-proxy. (3) THE REBIND LEAK: a public name resolved to a private/loopback
+// address was OBSERVED but not REJECTED (`rebind_observed > rebind_rejected`) — the P12 guard is dormant while an
+// attack is seen. (4) STALE-SERVING: more expired-cache serves than fresh hits (`serve_stale_served > cache_hits`)
+// — the fresh path is broken, living on old answers (the CACHE-cross parallel of Centauri's fallback-dominant).
+// (5) LADDER STORM: the resilient ladder exhausts more often than it answers (`solve_ladder_exhausted > answered`)
+// — upstreams broadly failing. (6) PANIC: the datapath firewall caught a bug (`panics>0`). The dashboard derives +
+// surfaces these (the `out property` flags below) as alert banners + a one-glance crown verdict.
+//
+// NOTE: slint uses `:` for property bindings (not `=`); `\{expr}` is string interpolation; `out property`
+// values are derived + host-readable (the proof test asserts the hidden-fault derivations fire).
+
+import { VerticalBox, HorizontalBox } from "std-widgets.slint";
+// The MaskSolver masquerade palette (slice 10) — the single source of truth for the
+// resolver colors. Shared with masksolver_settings.slint (slice 9). NO XML.
+import { Masque } from "masksolver_palette.slint";
+import { ThemeBook, MotifWash } from "theme_tokens.slint";
+
+// One recent-resolve feed row — the host fills this from the tail of the per-pillar `query-masksolver.log`
+// (`MaskSolver::query_masksolver_log_path()`, object.rs:393 → `log_tier::log_tail_recent`). `outcome` = the
+// `ResolveOutcome` token (log.rs:54 — HIT / STALE / SOLVE / LOCAL / BLOCK / GUARD / REBIND / REJECT / MISS),
+// `qtype` = the numeric record type label, `transport` = the upstream id or `-`, `rtt` = "12ms" or `-`. T20:
+// COUNTS + type labels only, NEVER a qname / client-IP. This is the masquerade's live resolve feed.
+export struct MaskRow {
+    outcome: string,
+    qtype: string,
+    transport: string,
+    rtt: string,
+}
+
+// One per-upstream health row — the host fills this from `MaskSolverSolveState.transports` (the R7 RTT/loss
+// EWMA twin, object.rs:161). `id` = the stable transport id (a label, never an upstream url/host — T20);
+// `rtt` = the smoothed RTT pre-formatted ("12ms" / "—"); `loss` = the smoothed loss fraction [0,1]; `samples`
+// = exchanges attempted. This is the SOLVE-form felt-truth: which upstream is healthy, which is failing.
+export struct MaskTransportRow {
+    id: string,
+    rtt: string,
+    loss: float,
+    samples: int,
+}
+
+// A compact metric tile (local, non-exported). `tint` colors the value + lifts a critical number at a glance
+// (the resolve green for a solve win, the breach red for a silent miss, the cache cyan for a RAM-hot hit).
+component StatTile inherits Rectangle {
+    in property <string> label;
+    in property <string> value;
+    in property <color> tint: Masque.moon;
+    min-width: 70px;
+    min-height: 52px;
+    border-radius: 8px;
+    background: @linear-gradient(180deg, Masque.panel.with-alpha(0.62) 0%, Masque.abyss.with-alpha(0.38) 100%);
+    border-width: 1px;
+    border-color: Masque.hairline;
+    VerticalLayout {
+        padding: 8px;
+        spacing: 2px;
+        Text {
+            text: root.value;
+            color: root.tint;
+            font-size: 19px;
+            font-weight: 800;
+        }
+        Text {
+            text: root.label;
+            color: Masque.haze;
+            font-size: 10px;
+        }
+    }
+}
+
+// A hidden-fault alert banner (local). Only instantiated (via a guarding `if`) when its fault is live, so an
+// inactive alert occupies ZERO layout space — the stack collapses to exactly the live faults.
+component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: Masque.wound;
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: Masque.strike;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: Masque.strike;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A section title (local).
+component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: Masque.dim;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+// ============================================================================
+// #26 PERSONA-5 IDENTITY — MaskFlare: the on-touch FLARE (the CakeBurst/SparkBurst
+// house precedent, beast.slint:208, re-cut in Masque violet). `fired` jumps, `p`
+// chases it (850ms ease-out), so k = fired − p is a 1→0 energy envelope; the
+// moonlight ring, four razor shards + the masquerade guests ride k outward
+// while fading. At rest k = 0 — the layer costs nothing and draws nothing.
+// ============================================================================
+component MaskFlare inherits Rectangle {
+    in-out property <int> fired: 0;
+    in property <length> reach: 120px;
+    property <float> p: root.fired;
+    animate p { duration: 850ms; easing: ease-out; }
+    property <float> k: root.fired - root.p;
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    // the moonlight ring — an expanding violet halo, fading as it grows
+    Rectangle {
+        property <length> r: root.reach * 1.4 * (1 - root.k);
+        x: -self.r;
+        y: -self.r;
+        width: 2 * self.r;
+        height: 2 * self.r;
+        border-radius: self.r;
+        border-width: 2px;
+        border-color: Masque.mask.with-alpha(0.9);
+        background: Masque.mask.with-alpha(0.10);
+        opacity: root.k;
+    }
+    // the cache-cyan heart — the RAM-hot flash at the tap point
+    Rectangle {
+        property <length> r: root.reach * 0.45 * (1 - root.k);
+        x: -self.r;
+        y: -self.r;
+        width: 2 * self.r;
+        height: 2 * self.r;
+        border-radius: self.r;
+        background: Masque.cache.with-alpha(0.28);
+        opacity: root.k * 0.9;
+    }
+    // 4 razor shards on the diagonals — the P5 angular cut, spinning as they fly
+    for d in [{ dx: 0.71, dy: 0.71 }, { dx: -0.71, dy: 0.71 }, { dx: -0.71, dy: -0.71 }, { dx: 0.71, dy: -0.71 }]: Rectangle {
+        width: 26px * (1 - 0.4 * (1 - root.k));
+        height: 3px;
+        background: Masque.mask;
+        opacity: root.k * 0.9;
+        x: d.dx * root.reach * (1 - root.k) - self.width / 2;
+        y: d.dy * root.reach * (1 - root.k) - self.height / 2;
+        transform-rotation: 45deg * d.dx * d.dy + 120deg * (1 - root.k) * d.dx;
+    }
+    // 4 masquerade guests on the long ring — the party the tap invited
+    for g in [{ dx: 1.0, dy: 0.0 }, { dx: 0.0, dy: 1.0 }, { dx: -1.0, dy: 0.0 }, { dx: 0.0, dy: -1.0 }]: Text {
+        text: "🎭";
+        font-size: 12px;
+        opacity: root.k * 0.85;
+        x: g.dx * root.reach * 1.2 * (1 - root.k) - self.width / 2;
+        y: g.dy * root.reach * 1.2 * (1 - root.k) - self.height / 2;
+        transform-rotation: 90deg * (1 - root.k) * g.dx;
+    }
+}
+
+// THE P5 MASK — the pillar's SIGNATURE purple mask, pure Masque geometry (no asset,
+// no XML): a violet face shard with void eye-slits + one cache-cyan brow glint.
+component P5Mask inherits Rectangle {
+    in property <length> face: 30px;
+    width: root.face;
+    height: root.face * 0.6;
+    Rectangle {
+        // the face — moonlit violet, lifted off the velvet
+        width: 100%;
+        height: 100%;
+        border-radius: root.face * 0.28;
+        background: @linear-gradient(135deg, Masque.mask 0%, Masque.mask.darker(0.45) 100%);
+        border-width: 1px;
+        border-color: Masque.moon.with-alpha(0.35);
+    }
+    Rectangle {
+        // left eye slit — the void looking back
+        x: root.face * 0.18;
+        y: root.height * 0.32;
+        width: root.face * 0.22;
+        height: root.height * 0.22;
+        border-radius: self.height / 2;
+        background: Masque.veil-void;
+    }
+    Rectangle {
+        // right eye slit
+        x: root.face * 0.60;
+        y: root.height * 0.32;
+        width: root.face * 0.22;
+        height: root.height * 0.22;
+        border-radius: self.height / 2;
+        background: Masque.veil-void;
+    }
+    Rectangle {
+        // the cache glint — one RAM-hot spark on the brow
+        x: root.face * 0.46;
+        y: root.height * 0.12;
+        width: root.face * 0.08;
+        height: self.width;
+        border-radius: self.width / 2;
+        background: Masque.cache.with-alpha(0.85);
+    }
+}
+
+// THE EMBEDDABLE PANE (SLINT substitution · 2-FEED-MaskSolver) — the dashboard body as a
+// Rectangle-rooted pane, so the shell mounts it IN-SHELL (the G2 idiom the D2/D3 panes set:
+// "inherits Rectangle — embeddable from birth"; a Window can never be a child element). The Window
+// wrapper below re-wraps it for the slint-viewer preview + the main.slint re-export; the on-device
+// host feeds THIS pane (mounted in home_shell.slint via the ||| → PILLARS → MASKSOLVER dashboard
+// chip) field-for-field from the live `MaskSolver::snapshot()`/`solve_state()` Records.
+export component MaskSolverPane inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.masksolver; width: 100%; height: 100%; }
+    // ===== "THE MASQUERADE" scenery — velvet wings at the edges + one slow moon-sheen
+    // silk sweep (the Masque grammar: phantom light, never fully arrived). =====
+    Rectangle {
+        width: 100%; height: 100%; clip: true;
+        Rectangle { x: 0; width: parent.width * 0.16; height: 100%; background: @linear-gradient(90deg, Masque.veil.with-alpha(0.30) 0%, transparent 100%); }
+        Rectangle { x: parent.width * 0.84; width: parent.width * 0.16; height: 100%; background: @linear-gradient(270deg, Masque.veil.with-alpha(0.30) 0%, transparent 100%); }
+        Rectangle {
+            property <float> p: Math.mod(animation-tick() / 7.9s, 1);
+            x: parent.width * (-0.25 + 1.5 * self.p); width: parent.width * 0.20; height: 100%;
+            background: @linear-gradient(90deg, transparent 0%, Masque.moon.with-alpha(0.06) 50%, transparent 100%);
+        }
+    }
+    background: Masque.veil-void.with-alpha(0.44);
+
+    // ===== #26 ANONYMOUS ENTANGLEMENT — two moonlit strands interlacing across the
+    // masquerade (phase-opposed sine weave, beneath the glass panels) + one phantom
+    // guest drifting the velvet: the Guy-Fawkes thread woven through the mask. =====
+    Rectangle {
+        width: 100%;
+        height: 100%;
+        clip: true;
+        for s in [{ ph: 0.0, top: 0.08 }, { ph: 0.5, top: 0.13 }]: Rectangle {
+            property <float> w: Math.mod(animation-tick() / 12.7s + s.ph, 1);
+            x: parent.width * (-0.30 + 1.6 * self.w);
+            y: parent.height * (s.top + 0.05 * Math.sin(360deg * (2 * self.w + s.ph)));
+            width: parent.width * 0.30;
+            height: 2px;
+            opacity: 0.20;
+            background: @linear-gradient(90deg, transparent 0%, (s.ph == 0.0 ? Masque.mask : Masque.cache) 50%, transparent 100%);
+        }
+        Text {
+            // the phantom guest — never fully arrived (the Masque grammar)
+            property <float> w: Math.mod(animation-tick() / 19.3s, 1);
+            text: "🎭";
+            font-size: 14px;
+            opacity: 0.10 + 0.06 * Math.sin(360deg * self.w);
+            x: parent.width * (0.94 - 0.88 * self.w);
+            y: parent.height * (0.03 + 0.025 * Math.sin(360deg * 3 * self.w));
+        }
+        // #36 the rising dominoes — three carnival masks float up the velvet like champagne
+        for m in [{ ph: 0.00, cx: 0.20 }, { ph: 0.37, cx: 0.55 }, { ph: 0.71, cx: 0.84 }]: Rectangle {
+            property <float> p: Math.mod(animation-tick() / 16.9s + m.ph, 1);
+            x: parent.width * (m.cx + 0.03 * Math.sin(360deg * 3 * self.p)) - self.width / 2;
+            y: parent.height * (1.02 - 1.08 * self.p);
+            width: 30px; height: 14px;
+            border-radius: 7px;
+            opacity: 0.28 * Math.sin(180deg * self.p);
+            background: Masque.mask.with-alpha(0.35);
+            Rectangle { x: 5px; y: 4px; width: 6px; height: 6px; border-radius: 3px; background: Masque.veil-void; }
+            Rectangle { x: parent.width - 11px; y: 4px; width: 6px; height: 6px; border-radius: 3px; background: Masque.veil-void; }
+        }
+        // #36 the P5 spark — a four-point glint snapping awake over the right wing
+        Rectangle {
+            property <float> p: Math.mod(animation-tick() / 6.1s, 1);
+            x: parent.width * 0.88; y: parent.height * 0.20;
+            width: 14px; height: 2px; border-radius: 1px;
+            opacity: Math.max(0.0, 0.55 * sin(180deg * self.p) - 0.25);
+            background: Masque.moon;
+            Rectangle { x: parent.width / 2 - 1px; y: -6px; width: 2px; height: 14px; border-radius: 1px; background: Masque.moon; }
+        }
+    }
+
+    // ===== MaskSolverSnapshot inputs (host sets each from `MaskSolver::snapshot()`, object.rs:427) =====
+    in-out property <bool> configured: false;           // snapshot.configured (a pool is installed)
+    in-out property <int> transports: 0;                // snapshot.transports (live upstream count)
+    in-out property <int> cache-entries: 0;             // snapshot.cache_entries (RAM hot-tier entries)
+    // the DERIVED rates the cross adds (Rust-computed + zero-guarded in the snapshot; [0.0,1.0]) —
+    in-out property <float> cache-hit-rate: 0.0;        // snapshot.cache_hit_rate (cache_hits / queries)
+    in-out property <float> solve-success-rate: 0.0;    // snapshot.solve_success_rate (answered / queries)
+    // the raw counters (the SAME fields `resolver_stats()` renders) —
+    in-out property <int> queries: 0;                   // snapshot.queries
+    in-out property <int> blocked: 0;                   // snapshot.blocked
+    in-out property <int> cache-hits: 0;                // snapshot.cache_hits (fresh RAM-hot hits)
+    in-out property <int> answered: 0;                  // snapshot.answered (got-through resolutions)
+    in-out property <int> rejected: 0;                  // snapshot.rejected
+    in-out property <int> transport-miss: 0;            // snapshot.transport_miss (ladder exhausted, no answer)
+    in-out property <int> panics: 0;                    // snapshot.panics (datapath firewall catches)
+    // the CACHE-cross + rebind witnesses —
+    in-out property <int> rebind-observed: 0;           // snapshot.rebind_observed (public→private answers seen)
+    in-out property <int> rebind-rejected: 0;           // snapshot.rebind_rejected (dropped by the P12 guard)
+    in-out property <int> serve-stale-served: 0;        // snapshot.serve_stale_served (RFC 8767 expired-but-served)
+    in-out property <int> neg-cache: 0;                 // snapshot.neg_cache (NXDOMAIN/NODATA gauge)
+    // the dnsmasq-completion + sovereign-rewire guard telemetry (honest ZERO until each feature wires) —
+    in-out property <int> local-record-hits: 0;         // snapshot.local_record_hits
+    in-out property <int> never-forward-stops: 0;       // snapshot.never_forward_stops
+    in-out property <int> dns64-synth: 0;               // snapshot.dns64_synth
+
+    // ===== MaskSolverSolveState inputs (host sets each from `MaskSolver::solve_state()`, object.rs:490) =====
+    in-out property <int> timeout-ms: 0;                // solve_state.timeout_ms (the per-query deadline)
+    in-out property <int> strategy: 0;                  // solve_state.strategy ordinal: 0 StrictOrder·1 AllServers·2 Fastest
+    in-out property <int> solve-retries: 0;             // solve_state.solve_retries (ladder advanced past first)
+    in-out property <int> solve-soft-fails: 0;          // solve_state.solve_soft_fails (retryable skips)
+    in-out property <int> solve-hard-negatives: 0;      // solve_state.solve_hard_negatives (terminal NXDOMAIN)
+    in-out property <int> solve-ladder-exhausted: 0;    // solve_state.solve_ladder_exhausted (resilient miss)
+    in-out property <int> solve-upstream-promotions: 0; // solve_state.solve_upstream_promotions (health re-order)
+
+    // ===== MaskSolverRotation inputs (host sets each from `solve_state.rotation`, object.rs:177) =====
+    in-out property <string> rotation-family: "";       // rotation.last_family (last-persisted diversity family)
+    in-out property <int> rotation-cadence-secs: 0;     // rotation.cadence_secs
+    in-out property <int> rotation-index: 0;            // rotation.rotation_index
+    in-out property <int> rotation-hint-count: 0;       // rotation.hint_count (warm RTT-hints across reboot)
+
+    // ===== the per-upstream health feed (host fills from `solve_state.transports`) =====
+    in-out property <[MaskTransportRow]> transport-rows: [
+        { id: "quad9-doh", rtt: "18ms", loss: 0.0, samples: 240 },
+        { id: "cloudflare-doh", rtt: "12ms", loss: 0.02, samples: 512 },
+    ];
+
+    // ===== the recent-resolve masquerade feed (host fills from the query-masksolver.log tail) =====
+    in-out property <[MaskRow]> recent-resolves: [
+        { outcome: "HIT", qtype: "A", transport: "-", rtt: "-" },
+        { outcome: "SOLVE", qtype: "AAAA", transport: "cloudflare-doh", rtt: "12ms" },
+        { outcome: "STALE", qtype: "A", transport: "-", rtt: "-" },
+    ];
+
+    // ===== 🩸 THE HIDDEN-FAULT HUNT — derived, host-readable (the proof test asserts these fire) =====
+    // The mask is healthy: traffic arrived AND it got through.
+    out property <bool> resolving: root.queries > 0 && root.answered > 0;
+    // (1) THE DEAD POOL — armed but NO upstream → every query misses (the resolver's BLACKHOLE).
+    out property <bool> dead-pool: root.configured && root.transports == 0;
+    // (2) THE SILENT MISS — traffic arrived but answered NOTHING (resolving into the void).
+    out property <bool> silent-miss: root.queries > 0 && root.answered == 0;
+    // (3) THE REBIND LEAK — a public→private answer was OBSERVED but not REJECTED (the guard is dormant).
+    out property <bool> rebind-passthrough: root.rebind-observed > root.rebind-rejected;
+    // (4) STALE-SERVING — more expired-cache serves than fresh hits (the fresh path is broken).
+    out property <bool> stale-dominant: root.serve-stale-served > 0 && root.serve-stale-served > root.cache-hits;
+    // (5) LADDER STORM — the resilient ladder exhausts more often than it answers (upstreams broadly failing).
+    out property <bool> ladder-storm: root.solve-ladder-exhausted > 0 && root.solve-ladder-exhausted > root.answered;
+    // (6) PANIC — the datapath panic firewall caught a bug.
+    out property <bool> panic-seen: root.panics > 0;
+    // Master: ANY hidden fault surfaced.
+    out property <bool> hidden-fault-any: root.dead-pool || root.silent-miss || root.rebind-passthrough
+        || root.stale-dominant || root.ladder-storm || root.panic-seen;
+
+    // The active-strategy label (decode the ordinal — the host pushes `MaskSolverStrategy` as an ordinal).
+    out property <string> strategy-label: root.strategy == 2 ? "FASTEST (health-ordered)"
+        : (root.strategy == 1 ? "ALL-SERVERS (race)" : "STRICT-ORDER (ladder)");
+
+    // THE CROWN headline — the masquerade's one-glance verdict (state machine, breach beats win; the DEAD
+    // POOL root-cause beats the SILENT MISS symptom it causes).
+    out property <string> crown-headline: root.dead-pool ? "DEAD POOL"
+        : (root.panic-seen ? "PANIC"
+        : (root.silent-miss ? "SILENT MISS"
+        : (root.rebind-passthrough ? "REBIND LEAK"
+        : (root.stale-dominant ? "STALE-SERVING"
+        : (root.ladder-storm ? "LADDER STORM"
+        : (root.resolving ? "RESOLVING"
+        : (root.configured ? "ARMED" : "DORMANT")))))));
+    out property <color> crown-color: (root.dead-pool || root.panic-seen || root.silent-miss
+            || root.rebind-passthrough) ? Masque.breach
+        : ((root.stale-dominant || root.ladder-storm) ? Masque.stale
+        : (root.resolving ? Masque.resolve
+        : (root.configured ? Masque.cache : Masque.dim)));
+
+    callback close-dashboard();
+
+    // ===== #26 ON-TOUCH FLARES — a tap on the velvet ignites a MaskFlare at the tap
+    // point (the CakeBurst precedent, beast.slint:291). Early sibling = every real
+    // control (later in the tree) still wins its own taps; only the masquerade's
+    // empty velvet flares. =====
+    ms-flare-ta := TouchArea {
+        width: 100%;
+        height: 100%;
+        clicked => {
+            ms-flare.x = self.pressed-x;
+            ms-flare.y = self.pressed-y;
+            ms-flare.fired += 1;
+        }
+    }
+    ms-flare := MaskFlare { x: -200px; y: -200px; }
+
+    VerticalBox {
+        padding: 14px;
+        spacing: 12px;
+
+        // ---- Header ----
+        HorizontalBox {
+            spacing: 8px;
+            VerticalLayout {
+                // ===== #26 the SIGNATURE — the purple P5 mask wears the title =====
+                alignment: center;
+                P5Mask { face: 34px; }
+            }
+            VerticalLayout {
+                Text {
+                    text: "MASKSOLVER";
+                    color: Masque.mask;
+                    font-size: 24px;
+                    font-weight: 900;
+                }
+                Text {
+                    text: "the resilient resolver + RAM⊗NAND cache";
+                    color: Masque.haze;
+                    font-size: 11px;
+                }
+            }
+            Rectangle { }  // spacer
+            VerticalLayout {
+                alignment: center;
+                Text {
+                    text: root.configured ? "\{root.transports} UPSTREAM(S)" : "UNCONFIGURED";
+                    color: root.dead-pool ? Masque.breach
+                        : (root.configured ? Masque.resolve : Masque.haze);
+                    font-size: 12px;
+                    font-weight: 800;
+                    horizontal-alignment: right;
+                }
+                Text {
+                    text: root.timeout-ms > 0 ? "deadline \{root.timeout-ms}ms" : "(no deadline)";
+                    color: Masque.haze;
+                    font-size: 10px;
+                    horizontal-alignment: right;
+                }
+            }
+        }
+
+        // ---- THE CROWN card — the masquerade's headline verdict + the solve-success witness ----
+        Rectangle {
+            border-radius: 10px;
+            background: @linear-gradient(145deg, Masque.veil.with-alpha(0.64) 0%, Masque.abyss.with-alpha(0.40) 100%);
+            border-width: 1px;
+            border-color: root.crown-color;
+            VerticalLayout {
+                padding: 12px;
+                spacing: 6px;
+                HorizontalLayout {
+                    spacing: 8px;
+                    VerticalLayout {
+                        Text {
+                            text: "GOT THROUGH";
+                            color: Masque.haze;
+                            font-size: 11px;
+                            font-weight: 700;
+                        }
+                        Text {
+                            text: "\{Math.round(root.solve-success-rate * 100)}%";
+                            color: root.crown-color;
+                            font-size: 40px;
+                            font-weight: 900;
+                        }
+                        Text {
+                            text: "\{root.answered} / \{root.queries} queries answered";
+                            color: Masque.haze;
+                            font-size: 10px;
+                        }
+                    }
+                    Rectangle { }  // spacer
+                    VerticalLayout {
+                        alignment: start;
+                        Text {
+                            text: root.crown-headline;
+                            color: root.crown-color;
+                            font-size: 16px;
+                            font-weight: 900;
+                            horizontal-alignment: right;
+                        }
+                        Text {
+                            text: root.strategy-label;
+                            color: root.strategy == 2 ? Masque.resolve : Masque.haze;
+                            font-size: 10px;
+                            horizontal-alignment: right;
+                        }
+                        Text {
+                            text: "cache hit \{Math.round(root.cache-hit-rate * 100)}%";
+                            color: root.cache-hits > 0 ? Masque.cache : Masque.haze;
+                            font-size: 10px;
+                            horizontal-alignment: right;
+                        }
+                    }
+                }
+            }
+        }
+
+        // ---- 🩸 The hidden-fault alert stack (each banner exists ONLY while its fault is live) ----
+        if root.dead-pool : AlertBanner {
+            accent: Masque.wound;
+            message: "DEAD POOL -> the resolver is configured but has ZERO upstreams. Every query misses and falls through. Configure an upstream set before relying on it.";
+        }
+        if root.silent-miss : AlertBanner {
+            accent: Masque.wound;
+            message: "SILENT MISS -> \{root.queries} queries arrived but the resolver answered NONE. It is resolving into the void — every query silently falls through to dnscrypt-proxy.";
+        }
+        if root.panic-seen : AlertBanner {
+            accent: Masque.wound;
+            message: "PANIC -> the datapath firewall caught \{root.panics} bug(s). A resolve panicked and fell to a miss; the crash was contained but the datapath hit an internal fault.";
+        }
+        if root.rebind-passthrough : AlertBanner {
+            accent: Masque.wound;
+            message: "REBIND LEAK -> \{root.rebind-observed} public->private answer(s) were SEEN but only \{root.rebind-rejected} rejected. The rebind guard is dormant while an attack is observed — arm --stop-dns-rebind.";
+        }
+        if root.stale-dominant : AlertBanner {
+            accent: Masque.stale;
+            message: "STALE-SERVING -> \{root.serve-stale-served} expired-cache serves vs \{root.cache-hits} fresh hits. The fresh path is degraded; the resolver is living on old answers.";
+        }
+        if root.ladder-storm : AlertBanner {
+            accent: Masque.stale;
+            message: "LADDER STORM -> the resilient ladder exhausted \{root.solve-ladder-exhausted} time(s), more than the \{root.answered} it answered. Upstreams are broadly failing.";
+        }
+
+        // ---- The SOLVE-form witness tiles (the FlareSolver cross — resilient resolution) ----
+        SectionTitle { text: "SOLVE  (resilient resolution)"; }
+        // TWO per row, never four — the portrait content column with the ||| rail open is only
+        // ~268 logical px, and 4×70 + 3×8 = 304px overflows it. Slint honours `min-width` and
+        // pushes the surplus tiles off-screen, invisible and unreachable.
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile {
+                    label: "answered";
+                    value: "\{root.answered}";
+                    tint: root.answered > 0 ? Masque.resolve : Masque.moon;
+                }
+                StatTile {
+                    label: "retries";
+                    value: "\{root.solve-retries}";
+                    tint: root.solve-retries > 0 ? Masque.stale : Masque.haze;
+                }
+            }
+            Row {
+                StatTile {
+                    label: "soft-fails";
+                    value: "\{root.solve-soft-fails}";
+                    tint: Masque.haze;
+                }
+                StatTile {
+                    label: "ladder out";
+                    value: "\{root.solve-ladder-exhausted}";
+                    tint: root.ladder-storm ? Masque.breach : Masque.haze;
+                }
+            }
+        }
+
+        // ---- The CACHE-form witness tiles (the dnsmasq cross on RAM⊗NAND) ----
+        SectionTitle { text: "CACHE  (RAM⊗NAND)"; }
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile {
+                    label: "entries";
+                    value: "\{root.cache-entries}";
+                    tint: Masque.cache;
+                }
+                StatTile {
+                    label: "hits";
+                    value: "\{root.cache-hits}";
+                    tint: root.cache-hits > 0 ? Masque.cache : Masque.haze;
+                }
+            }
+            Row {
+                StatTile {
+                    label: "stale served";
+                    value: "\{root.serve-stale-served}";
+                    tint: root.stale-dominant ? Masque.stale : Masque.haze;
+                }
+                StatTile {
+                    label: "neg cache";
+                    value: "\{root.neg-cache}";
+                    tint: Masque.haze;
+                }
+            }
+        }
+
+        // ---- The resolution-safety guard tiles (the P12 rebind guard + the datapath firewall) ----
+        SectionTitle { text: "GUARD  (rebind · integrity)"; }
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile {
+                    label: "rebind seen";
+                    value: "\{root.rebind-observed}";
+                    tint: root.rebind-observed > 0 ? Masque.stale : Masque.haze;
+                }
+                StatTile {
+                    label: "rebind blocked";
+                    value: "\{root.rebind-rejected}";
+                    tint: root.rebind-passthrough ? Masque.breach : Masque.resolve;
+                }
+            }
+            Row {
+                StatTile {
+                    label: "panics";
+                    value: "\{root.panics}";
+                    tint: root.panic-seen ? Masque.breach : Masque.resolve;
+                }
+                StatTile {
+                    label: "ladder miss";
+                    value: "\{root.transport-miss}";
+                    tint: Masque.haze;
+                }
+            }
+        }
+
+        // ---- The rotation diversity strip (the last-persisted 12h-diversity cursor) ----
+        SectionTitle { text: "ROTATION  (\{root.rotation-family != "" ? root.rotation-family : "cold"} · idx \{root.rotation-index})"; }
+        Rectangle {
+            border-radius: 8px;
+            background: @linear-gradient(145deg, Masque.veil.with-alpha(0.64) 0%, Masque.abyss.with-alpha(0.40) 100%);
+            border-width: 1px;
+            border-color: Masque.hairline;
+            // Wrapped 2 + 1, not a single row: a `Text` reports its natural width as its minimum,
+            // so three of them plus the spacer overflowed the ~268px portrait column and
+            // `promotions` — the only one of the three that ever carries an alarming value — was
+            // the one cut off. The spacer is gone; the grid carries the alignment instead.
+            GridLayout {
+                padding: 8px;
+                spacing: 12px;
+                Row {
+                    Text {
+                        text: "cadence \{root.rotation-cadence-secs}s";
+                        color: Masque.haze;
+                        font-size: 11px;
+                    }
+                    Text {
+                        text: "warm hints \{root.rotation-hint-count}";
+                        color: Masque.haze;
+                        font-size: 11px;
+                    }
+                }
+                Row {
+                    Text {
+                        text: "promotions \{root.solve-upstream-promotions}";
+                        color: root.solve-upstream-promotions > 0 ? Masque.resolve : Masque.haze;
+                        font-size: 11px;
+                    }
+                }
+            }
+        }
+
+        // ---- The per-upstream health list (the R7 RTT/loss EWMA — which mask is healthy) ----
+        SectionTitle { text: "UPSTREAM HEALTH  (\{root.transport-rows.length} in pool)"; }
+        VerticalLayout {
+            spacing: 4px;
+            for t in root.transport-rows : Rectangle {
+                background: @linear-gradient(90deg, Masque.abyss.with-alpha(0.55) 0%, Masque.veil-void.with-alpha(0.30) 100%);
+                border-radius: 6px;
+                HorizontalLayout {
+                    padding: 6px;
+                    spacing: 8px;
+                    Text {
+                        text: t.id;
+                        color: Masque.moon;
+                        font-size: 11px;
+                        font-weight: 700;
+                        overflow: elide;
+                    }
+                    Rectangle { }  // spacer
+                    Text {
+                        text: t.rtt;
+                        color: Masque.cache;
+                        font-size: 11px;
+                    }
+                    Text {
+                        text: "loss \{Math.round(t.loss * 100)}%";
+                        color: t.loss > 0.1 ? Masque.breach
+                            : (t.loss > 0.0 ? Masque.stale : Masque.resolve);
+                        font-size: 10px;
+                        width: 66px;
+                        horizontal-alignment: right;
+                    }
+                    Text {
+                        text: "n=\{t.samples}";
+                        color: Masque.dim;
+                        font-size: 10px;
+                        width: 54px;
+                        horizontal-alignment: right;
+                    }
+                }
+            }
+        }
+
+        // ---- The recent-resolve masquerade feed (the query-masksolver.log tail) ----
+        SectionTitle { text: "RECENT RESOLVES"; }
+        VerticalLayout {
+            spacing: 4px;
+            for r in root.recent-resolves : Rectangle {
+                background: @linear-gradient(90deg, Masque.abyss.with-alpha(0.55) 0%, Masque.veil-void.with-alpha(0.30) 100%);
+                border-radius: 6px;
+                HorizontalLayout {
+                    padding: 6px;
+                    spacing: 8px;
+                    Text {
+                        text: r.outcome;
+                        color: (r.outcome == "HIT" || r.outcome == "LOCAL" || r.outcome == "SOLVE") ? Masque.resolve
+                            : (r.outcome == "STALE" ? Masque.stale
+                            : ((r.outcome == "REBIND" || r.outcome == "REJECT") ? Masque.breach
+                            : ((r.outcome == "BLOCK" || r.outcome == "GUARD") ? Masque.cache : Masque.haze)));
+                        font-size: 11px;
+                        font-weight: 800;
+                        width: 56px;
+                    }
+                    Text {
+                        text: r.qtype;
+                        color: Masque.moon;
+                        font-size: 11px;
+                        width: 44px;
+                    }
+                    Text {
+                        text: r.transport;
+                        color: Masque.haze;
+                        font-size: 11px;
+                        overflow: elide;
+                    }
+                    Rectangle { }  // spacer
+                    Text {
+                        text: r.rtt;
+                        color: Masque.cache;
+                        font-size: 10px;
+                    }
+                }
+            }
+        }
+
+        Rectangle { }  // tail spacer
+    }
+}
+
+// THE WINDOW WRAPPER (SLINT substitution · 2-FEED-MaskSolver) — a Window around the pane for the
+// slint-viewer preview + the main.slint re-export + the lib.rs proof test. FORWARDING by necessity: a
+// non-Window component exported at the compiled root generates NO standalone Rust code (measured —
+// "Exported component 'MaskSolverPane' doesn't inherit Window. No code will be generated"), so the
+// proof test cannot construct the pane directly. This Window re-exposes the pane's FULL API through
+// `<=>` aliases (inputs + the 🩸 hidden-fault-derivation outputs), so the test drives the Window and
+// the values reach the pane. On-device the shell mounts the PANE directly (home_shell.slint).
+export component MaskSolverDashboard inherits Window {
+    title: "Yeah! Tortä — MaskSolver";
+    preferred-width: 420px;
+    preferred-height: 1040px;
+
+    // ── the MaskSolverSnapshot inputs ──
+    in-out property <bool> configured <=> pane.configured;
+    in-out property <int> transports <=> pane.transports;
+    in-out property <int> cache-entries <=> pane.cache-entries;
+    in-out property <float> cache-hit-rate <=> pane.cache-hit-rate;
+    in-out property <float> solve-success-rate <=> pane.solve-success-rate;
+    in-out property <int> queries <=> pane.queries;
+    in-out property <int> blocked <=> pane.blocked;
+    in-out property <int> cache-hits <=> pane.cache-hits;
+    in-out property <int> answered <=> pane.answered;
+    in-out property <int> rejected <=> pane.rejected;
+    in-out property <int> transport-miss <=> pane.transport-miss;
+    in-out property <int> panics <=> pane.panics;
+    in-out property <int> rebind-observed <=> pane.rebind-observed;
+    in-out property <int> rebind-rejected <=> pane.rebind-rejected;
+    in-out property <int> serve-stale-served <=> pane.serve-stale-served;
+    in-out property <int> neg-cache <=> pane.neg-cache;
+    in-out property <int> local-record-hits <=> pane.local-record-hits;
+    in-out property <int> never-forward-stops <=> pane.never-forward-stops;
+    in-out property <int> dns64-synth <=> pane.dns64-synth;
+    // ── the MaskSolverSolveState inputs ──
+    in-out property <int> timeout-ms <=> pane.timeout-ms;
+    in-out property <int> strategy <=> pane.strategy;
+    in-out property <int> solve-retries <=> pane.solve-retries;
+    in-out property <int> solve-soft-fails <=> pane.solve-soft-fails;
+    in-out property <int> solve-hard-negatives <=> pane.solve-hard-negatives;
+    in-out property <int> solve-ladder-exhausted <=> pane.solve-ladder-exhausted;
+    in-out property <int> solve-upstream-promotions <=> pane.solve-upstream-promotions;
+    // ── the rotation cursor inputs ──
+    in-out property <string> rotation-family <=> pane.rotation-family;
+    in-out property <int> rotation-cadence-secs <=> pane.rotation-cadence-secs;
+    in-out property <int> rotation-index <=> pane.rotation-index;
+    in-out property <int> rotation-hint-count <=> pane.rotation-hint-count;
+    // ── the typed feed models ──
+    in-out property <[MaskTransportRow]> transport-rows <=> pane.transport-rows;
+    in-out property <[MaskRow]> recent-resolves <=> pane.recent-resolves;
+    // ── the 🩸 hidden-fault-hunt derivations (host-readable — the proof test asserts these fire) ──
+    out property <bool> resolving <=> pane.resolving;
+    out property <bool> dead-pool <=> pane.dead-pool;
+    out property <bool> silent-miss <=> pane.silent-miss;
+    out property <bool> rebind-passthrough <=> pane.rebind-passthrough;
+    out property <bool> stale-dominant <=> pane.stale-dominant;
+    out property <bool> ladder-storm <=> pane.ladder-storm;
+    out property <bool> panic-seen <=> pane.panic-seen;
+    out property <bool> hidden-fault-any <=> pane.hidden-fault-any;
+    out property <string> strategy-label <=> pane.strategy-label;
+    out property <string> crown-headline <=> pane.crown-headline;
+    out property <color> crown-color <=> pane.crown-color;
+    callback close-dashboard <=> pane.close-dashboard;
+
+    pane := MaskSolverPane { }
+}

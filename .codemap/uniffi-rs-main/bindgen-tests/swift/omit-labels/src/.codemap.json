@@ -1,0 +1,92 @@
+{
+  "directory": "uniffi-rs-main\\bindgen-tests\\swift\\omit-labels\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "c820556d4218",
+      "indexed_at": "2026-07-24T20:35:12.175124+00:00",
+      "language": "rust",
+      "lines": 17,
+      "mtime_ns": 1782136568000000000,
+      "size": 406,
+      "symbols": [
+        {
+          "docstring": "/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file,",
+          "lines": [
+            5,
+            7
+          ],
+          "name": "no_args",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "one_arg",
+          "signature": "(amount: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            13,
+            15
+          ],
+          "name": "multiple_args",
+          "signature": "(amount: i32, _msg: String)",
+          "type": "function"
+        }
+      ]
+    },
+    "omit_argument_labels.udl": {
+      "hash": "40f26e7ead7c",
+      "indexed_at": "2026-07-24T20:35:12.175684+00:00",
+      "language": "udl",
+      "lines": 5,
+      "mtime_ns": 1782136568000000000,
+      "size": 131,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                2,
+                2
+              ],
+              "name": "no_args",
+              "signature": "() : i32",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "one_arg",
+              "signature": "(i32 amount) : i32",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4,
+                4
+              ],
+              "name": "multiple_args",
+              "signature": "(i32 amount, string msg) : i32",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1,
+            5
+          ],
+          "name": "omit_argument_labels",
+          "type": "namespace"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.599896+00:00",
+  "version": "1.0"
+}

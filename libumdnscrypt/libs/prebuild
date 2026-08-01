@@ -1,0 +1,89 @@
+ #!/bin/bash
+
+cd "$( dirname "${BASH_SOURCE[0]}" )"
+
+lyrebird_branch=prod
+lyrebird_commit=582c1a8e7d883612078f620ab537cab6e3257c93
+
+dnscryptproxy_branch=prod
+dnscryptproxy_commit=434f38d1e27f1a3dfc9de9e3ba3aea5c647e4290
+
+snowflake_branch=feat/check-dns-ip
+snowflake_commit=17007899b492651d14b02c13e5601081dbeb2376
+
+libzmq_version=v4.3.5
+
+conjure_branch=prod
+conjure_commit=6ddeaf147899d84bf268e1286daf01cc086c3bf9
+
+dnstt_branch=master
+dnstt_commit=f1b9b97a269f83bad41d2ceef291b4d2c161cd11
+
+tor_branch=prod-0.4.9
+tor_commit=9c3f99922c743cd30d8a4ac47b3fd8f353093a12
+tor_openssl_version=openssl-3.6.2
+libevent_version=release-2.1.12-stable
+zstd_version=v1.4.9
+xz_version=v5.2.4
+
+i2pd_version=2.60.0
+i2pd_openssl_version=openssl-3.6.2
+miniupnpc_version=miniupnpc_2_2_8
+
+git clone --single-branch --branch $lyrebird_branch https://gitlab.torproject.org/Gedsh/lyrebird
+pushd lyrebird/
+git checkout -f $lyrebird_commit -b $lyrebird_commit
+popd
+
+git clone --single-branch --branch $dnscryptproxy_branch https://github.com/Gedsh/dnscrypt-proxy
+pushd dnscrypt-proxy/
+git checkout -f $dnscryptproxy_commit -b $dnscryptproxy_commit
+popd
+
+
+git clone --single-branch --branch $snowflake_branch https://gitlab.torproject.org/Gedsh/snowflake.git
+pushd snowflake/
+git checkout -f $snowflake_commit -b $snowflake_commit
+popd
+
+git clone --single-branch --branch $libzmq_version https://github.com/zeromq/libzmq
+
+git clone --single-branch --branch $conjure_branch https://gitlab.torproject.org/Gedsh/conjure
+pushd conjure/
+git checkout -f $conjure_commit -b $conjure_commit
+popd
+
+git clone --single-branch --branch $dnstt_branch https://github.com/Gedsh/dnstt
+pushd dnstt/
+git checkout -f $dnstt_commit -b $dnstt_commit
+popd
+
+git clone https://github.com/Gedsh/Nflog-android
+
+pushd ../../TorBuildScript/external/
+git clone --single-branch --branch $tor_openssl_version https://github.com/openssl/openssl.git
+git clone --single-branch --branch $libevent_version https://github.com/libevent/libevent.git
+git clone --single-branch --branch $zstd_version https://github.com/facebook/zstd.git
+git clone --single-branch --branch $xz_version https://git.tukaani.org/xz.git
+git clone --single-branch --branch $tor_branch https://gitlab.torproject.org/Gedsh/tor.git
+pushd tor/
+git checkout -f $tor_commit -b $tor_commit
+popd
+popd
+
+pushd ../../PurpleI2PBuildScript/external/
+mkdir -p libs
+pushd libs/
+git clone --single-branch --branch $i2pd_openssl_version https://github.com/openssl/openssl.git
+git clone https://github.com/moritz-wundke/Boost-for-Android.git
+git clone https://github.com/miniupnp/miniupnp.git
+pushd miniupnp/
+git checkout -f $miniupnpc_version -b $miniupnpc_version
+popd
+git clone https://github.com/PurpleI2P/android-ifaddrs.git
+popd
+git clone https://github.com/PurpleI2P/i2pd.git
+pushd i2pd/
+git checkout -f $i2pd_version -b $i2pd_version
+popd
+popd

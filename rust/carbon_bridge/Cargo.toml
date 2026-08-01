@@ -1,0 +1,21 @@
+[package]
+name = "carbon_bridge"
+version = "0.1.0"
+edition = "2021"
+description = "Torta Carbon Browser bridge - assimilated pure-Rust layers from carbonyl (BSD-3, notice retained in LICENSE.carbonyl.md)"
+license = "BSD-3-Clause"
+publish = false
+
+[dependencies]
+# gfx + input layers are dependency-free pure Rust by design; keep them that way.
+# chrono rides in ONLY for the assimilated utils::log timestamps (upstream's exact pin).
+chrono = "0.4.23"
+
+# libc is UNIX-ONLY (Android/NDK lane): input/tty.rs is the terminal seam — it is
+# cfg(unix)-gated in input.rs and never builds on the win32 dev host.
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[lib]
+name = "carbon_bridge"
+path = "src/lib.rs"

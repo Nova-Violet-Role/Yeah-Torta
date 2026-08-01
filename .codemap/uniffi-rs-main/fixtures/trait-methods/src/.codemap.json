@@ -1,0 +1,960 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\trait-methods\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "0276fe53ee21",
+      "indexed_at": "2026-07-24T20:35:12.689312+00:00",
+      "language": "rust",
+      "lines": 441,
+      "mtime_ns": 1782136568000000000,
+      "size": 11868,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "TraitMethods",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                16
+              ],
+              "name": "new",
+              "signature": "(val: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            13,
+            17
+          ],
+          "name": "TraitMethods",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                22
+              ],
+              "name": "partial_cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            23
+          ],
+          "name": "PartialOrd",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                26,
+                28
+              ],
+              "name": "cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            25,
+            29
+          ],
+          "name": "Ord",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                32,
+                34
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut std::fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            31,
+            35
+          ],
+          "name": "TraitMethods",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            39,
+            41
+          ],
+          "name": "ProcTraitMethods",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                46,
+                48
+              ],
+              "name": "new",
+              "signature": "(val: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            44,
+            49
+          ],
+          "name": "ProcTraitMethods",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                52,
+                54
+              ],
+              "name": "partial_cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            51,
+            55
+          ],
+          "name": "PartialOrd",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                58,
+                60
+              ],
+              "name": "cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            57,
+            61
+          ],
+          "name": "Ord",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                64,
+                66
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut std::fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            63,
+            67
+          ],
+          "name": "ProcTraitMethods",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            76,
+            79
+          ],
+          "name": "TraitRecord",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                83,
+                85
+              ],
+              "name": "cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "docstring": "only compare the string, not the int",
+          "lines": [
+            82,
+            86
+          ],
+          "name": "Ord",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                89,
+                91
+              ],
+              "name": "partial_cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            88,
+            92
+          ],
+          "name": "PartialOrd",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                95,
+                97
+              ],
+              "name": "eq",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            94,
+            98
+          ],
+          "name": "PartialEq",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            100,
+            100
+          ],
+          "name": "Eq",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                103,
+                105
+              ],
+              "name": "hash",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            102,
+            106
+          ],
+          "name": "Hash",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            109,
+            112
+          ],
+          "name": "UdlRecord",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                116,
+                118
+              ],
+              "name": "cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "docstring": "only compare the string, not the int",
+          "lines": [
+            115,
+            119
+          ],
+          "name": "Ord",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                122,
+                124
+              ],
+              "name": "partial_cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            121,
+            125
+          ],
+          "name": "PartialOrd",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                128,
+                130
+              ],
+              "name": "eq",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            127,
+            131
+          ],
+          "name": "PartialEq",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            133,
+            133
+          ],
+          "name": "Eq",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                136,
+                138
+              ],
+              "name": "hash",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            135,
+            139
+          ],
+          "name": "Hash",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            144,
+            148
+          ],
+          "name": "TraitEnum",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                151,
+                157
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut std::fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            150,
+            158
+          ],
+          "name": "TraitEnum",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                162,
+                179
+              ],
+              "name": "cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "docstring": "only compare the variant, not the content",
+          "lines": [
+            161,
+            180
+          ],
+          "name": "Ord",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                182,
+                184
+              ],
+              "name": "partial_cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            181,
+            185
+          ],
+          "name": "PartialOrd",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                188,
+                190
+              ],
+              "name": "eq",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            187,
+            191
+          ],
+          "name": "PartialEq",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            193,
+            193
+          ],
+          "name": "Eq",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                196,
+                198
+              ],
+              "name": "hash",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            195,
+            199
+          ],
+          "name": "Hash",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            202,
+            205
+          ],
+          "name": "UdlEnum",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                208,
+                213
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut std::fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            207,
+            214
+          ],
+          "name": "UdlEnum",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                218,
+                230
+              ],
+              "name": "cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "docstring": "only compare the variant, not the content",
+          "lines": [
+            217,
+            231
+          ],
+          "name": "Ord",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                233,
+                235
+              ],
+              "name": "partial_cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            232,
+            236
+          ],
+          "name": "PartialOrd",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                239,
+                241
+              ],
+              "name": "eq",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            238,
+            242
+          ],
+          "name": "PartialEq",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            244,
+            244
+          ],
+          "name": "Eq",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                247,
+                249
+              ],
+              "name": "hash",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            246,
+            250
+          ],
+          "name": "Hash",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            255,
+            259
+          ],
+          "name": "FlatTraitEnum",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                262,
+                269
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut std::fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            261,
+            270
+          ],
+          "name": "FlatTraitEnum",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            273,
+            279
+          ],
+          "name": "get_flat_trait_enum",
+          "signature": "(index: u8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            284,
+            291
+          ],
+          "name": "FlatError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            294,
+            300
+          ],
+          "name": "throw_flat_error",
+          "signature": "(i: u8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            305,
+            310
+          ],
+          "name": "MultipleTraitError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            315,
+            320
+          ],
+          "name": "ApiFailure",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                323,
+                330
+              ],
+              "name": "cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            322,
+            331
+          ],
+          "name": "Ord",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                334,
+                336
+              ],
+              "name": "partial_cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            333,
+            337
+          ],
+          "name": "PartialOrd",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                340,
+                342
+              ],
+              "name": "eq",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            339,
+            343
+          ],
+          "name": "PartialEq",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            345,
+            345
+          ],
+          "name": "Eq",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                348,
+                350
+              ],
+              "name": "hash",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            347,
+            351
+          ],
+          "name": "Hash",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            354,
+            359
+          ],
+          "name": "throw_api_failure",
+          "signature": "(i: u8)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                362,
+                373
+              ],
+              "name": "cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            361,
+            374
+          ],
+          "name": "Ord",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                377,
+                379
+              ],
+              "name": "partial_cmp",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            376,
+            380
+          ],
+          "name": "PartialOrd",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                383,
+                385
+              ],
+              "name": "eq",
+              "signature": "(&self, other: &Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            382,
+            386
+          ],
+          "name": "PartialEq",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            388,
+            388
+          ],
+          "name": "Eq",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                391,
+                393
+              ],
+              "name": "hash",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            390,
+            394
+          ],
+          "name": "Hash",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            397,
+            402
+          ],
+          "name": "throw_multiple_trait_error",
+          "signature": "(i: u8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            407,
+            414
+          ],
+          "name": "XYZEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            419,
+            439
+          ],
+          "name": "test_traitenum_traits",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "trait_methods.udl": {
+      "hash": "58457c70ca64",
+      "indexed_at": "2026-07-24T20:35:12.689870+00:00",
+      "language": "udl",
+      "lines": 18,
+      "mtime_ns": 1782136568000000000,
+      "size": 303,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "trait_methods",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "constructor",
+              "signature": "(string name)",
+              "type": "constructor"
+            }
+          ],
+          "lines": [
+            4,
+            6
+          ],
+          "name": "TraitMethods",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                10,
+                10
+              ],
+              "name": "S",
+              "signature": "(string s)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                11,
+                11
+              ],
+              "name": "I",
+              "signature": "(i8 i)",
+              "type": "variant"
+            }
+          ],
+          "lines": [
+            9,
+            12
+          ],
+          "name": "UdlEnum",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "s",
+              "signature": "string",
+              "type": "field"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "i",
+              "signature": "i8",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            15,
+            18
+          ],
+          "name": "UdlRecord",
+          "type": "dictionary"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.736989+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,23 @@
+# self-contained workspace root: detaches torta_iconforge from any parent workspace under rust/.
+# HOST-ONLY build-tool crate (#75) — renders the Slint-authored launcher icon (the cake) via
+# Slint's SOFTWARE renderer to PNG at each mipmap density. The app's own engine draws its own icon.
+[workspace]
+
+[package]
+name = "torta_iconforge"
+version = "0.1.0"
+edition = "2021"
+license = "EUPL-1.2 OR AGPL-3.0-or-later"
+description = "Build-time raster of the Slint-authored Tortae launcher icon -> PNG (software renderer, headless)."
+
+[[bin]]
+name = "torta_iconforge"
+path = "src/main.rs"
+
+[dependencies]
+# renderer-software = headless (no GPU/display/backend). We install a custom Platform via set_platform.
+slint = { version = "1.17", default-features = false, features = ["std", "compat-1-2", "renderer-software"] }
+png = "0.17"
+
+[build-dependencies]
+slint-build = "1.17"

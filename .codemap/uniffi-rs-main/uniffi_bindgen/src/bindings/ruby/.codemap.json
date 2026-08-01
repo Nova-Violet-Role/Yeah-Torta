@@ -1,0 +1,100 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src\\bindings\\ruby",
+  "files": {
+    "mod.rs": {
+      "hash": "a54eedaaf6aa",
+      "indexed_at": "2026-07-24T20:35:12.882523+00:00",
+      "language": "rust",
+      "lines": 98,
+      "mtime_ns": 1782136568000000000,
+      "size": 3339,
+      "symbols": [
+        {
+          "lines": [
+            13,
+            13
+          ],
+          "name": "gen_ruby",
+          "type": "module"
+        },
+        {
+          "lines": [
+            15,
+            15
+          ],
+          "name": "test",
+          "type": "module"
+        },
+        {
+          "lines": [
+            18,
+            52
+          ],
+          "name": "generate",
+          "signature": "(loader: &BindgenLoader, options: GenerateOptions)",
+          "type": "function"
+        },
+        {
+          "docstring": "Generate ruby bindings for the given ComponentInterface, as a string.",
+          "lines": [
+            55,
+            60
+          ],
+          "name": "generate_ruby_bindings",
+          "signature": "(config: &Config, ci: &ComponentInterface)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            62,
+            77
+          ],
+          "name": "parse_config",
+          "signature": "(\n    ci: &ComponentInterface,\n    root_toml: toml::Value,\n    cdylib: Option<String>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            79,
+            98
+          ],
+          "name": "apply_renames",
+          "signature": "(components: &mut Vec<Component<Config>>)",
+          "type": "function"
+        }
+      ]
+    },
+    "test.rs": {
+      "hash": "6534457d8c51",
+      "indexed_at": "2026-07-24T20:35:12.883332+00:00",
+      "language": "rust",
+      "lines": 56,
+      "mtime_ns": 1782136568000000000,
+      "size": 1999,
+      "symbols": [
+        {
+          "docstring": "Run Ruby tests for a UniFFI test fixture",
+          "lines": [
+            14,
+            24
+          ],
+          "name": "run_test",
+          "signature": "(tmp_dir: &str, fixture_name: &str, script_file: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "Create a `Command` instance that runs a test script",
+          "lines": [
+            27,
+            56
+          ],
+          "name": "test_script_command",
+          "signature": "(\n    tmp_dir: &str,\n    fixture_name: &str,\n    script_file: &str,\n)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.765791+00:00",
+  "version": "1.0"
+}

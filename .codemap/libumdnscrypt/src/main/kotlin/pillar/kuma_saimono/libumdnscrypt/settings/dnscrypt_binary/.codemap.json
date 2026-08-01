@@ -1,0 +1,100 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\settings\\dnscrypt_binary",
+  "files": {
+    "CheckDnsCryptBinaryUpdateWorker.kt": {
+      "hash": "4f509d06d7c1",
+      "indexed_at": "2026-08-01T04:00:16.881989+00:00",
+      "language": "kotlin",
+      "lines": 234,
+      "mtime_ns": 1785556377825899600,
+      "size": 11288,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                77,
+                98
+              ],
+              "name": "doWork",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                142
+              ],
+              "name": "syncDnscryptLayer",
+              "signature": "(latest: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                144,
+                151
+              ],
+              "name": "fetchLatestVersion",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                165,
+                175
+              ],
+              "name": "distillUpstreamEnvelope",
+              "signature": "(latest: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                178,
+                178
+              ],
+              "name": "isAtLeast",
+              "signature": "(latest: String, floor: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                181,
+                188
+              ],
+              "name": "isNewer",
+              "signature": "(latest: String, bundled: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                190,
+                195
+              ],
+              "name": "parse",
+              "signature": "(version: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "follow the runtime guard, so the check is suppressed here.",
+              "lines": [
+                200,
+                226
+              ],
+              "name": "notifyUpdateAvailable",
+              "signature": "(version: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            58,
+            234
+          ],
+          "name": "CheckDnsCryptBinaryUpdateWorker",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:16.883414+00:00",
+  "version": "1.0"
+}

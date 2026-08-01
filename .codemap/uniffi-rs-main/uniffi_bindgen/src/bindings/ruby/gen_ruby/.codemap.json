@@ -1,0 +1,501 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src\\bindings\\ruby\\gen_ruby",
+  "files": {
+    "mod.rs": {
+      "hash": "3d8b945b8b61",
+      "indexed_at": "2026-07-24T20:35:12.887703+00:00",
+      "language": "rust",
+      "lines": 772,
+      "mtime_ns": 1782136568000000000,
+      "size": 29337,
+      "symbols": [
+        {
+          "lines": [
+            22,
+            24
+          ],
+          "name": "is_reserved_word",
+          "signature": "(word: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "unique canonical name, constructed recursively from the names of its component types (if any).",
+          "lines": [
+            32,
+            79
+          ],
+          "name": "canonical_name",
+          "signature": "(t: &Type)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            83,
+            90
+          ],
+          "name": "CustomTypeConfig",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Produce a Ruby expression that lifts a raw-builtin value `nm` into the custom type.",
+              "lines": [
+                94,
+                101
+              ],
+              "name": "lift",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Produce a Ruby expression that lowers a value `nm` to its raw builtin.",
+              "lines": [
+                104,
+                111
+              ],
+              "name": "lower",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "True if this config actually specifies conversion expressions.",
+              "lines": [
+                114,
+                116
+              ],
+              "name": "has_conversion",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            92,
+            117
+          ],
+          "name": "CustomTypeConfig",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            123,
+            132
+          ],
+          "name": "Config",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                135,
+                139
+              ],
+              "name": "cdylib_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                141,
+                143
+              ],
+              "name": "custom_cdylib_path",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                145,
+                147
+              ],
+              "name": "cdylib_path",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            134,
+            148
+          ],
+          "name": "Config",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            152,
+            155
+          ],
+          "name": "RubyWrapper",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                157,
+                159
+              ],
+              "name": "new",
+              "signature": "(config: Config, ci: &'a ComponentInterface)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            156,
+            160
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            162,
+            164
+          ],
+          "name": "class_name_rb_inner",
+          "signature": "(nm: &str)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                170,
+                194
+              ],
+              "name": "type_ffi",
+              "signature": "(type_: &FfiType, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                199,
+                220
+              ],
+              "name": "ffi_write_return_rb",
+              "signature": "(\n        return_type: &Type,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                224,
+                243
+              ],
+              "name": "ffi_default_value_rb",
+              "signature": "(\n        return_type: &Type,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                247,
+                252
+              ],
+              "name": "foreign_future_result_rb",
+              "signature": "(\n        method: &Method,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                254,
+                259
+              ],
+              "name": "default_rb_inner",
+              "signature": "(default: &DefaultValue)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                261,
+                296
+              ],
+              "name": "literal_rb_inner",
+              "signature": "(literal: &Literal)",
+              "type": "method"
+            },
+            {
+              "docstring": "Return the Ruby zero/default value for a type (used for `#[uniffi::default]`).",
+              "lines": [
+                299,
+                329
+              ],
+              "name": "type_zero_value_rb",
+              "signature": "(ty: &Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                333,
+                347
+              ],
+              "name": "field_default_rb",
+              "signature": "(\n        field: &Field,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                351,
+                359
+              ],
+              "name": "arg_default_rb",
+              "signature": "(arg: &Argument, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                362,
+                364
+              ],
+              "name": "class_name_rb",
+              "signature": "(nm: &str, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                367,
+                369
+              ],
+              "name": "fn_name_rb",
+              "signature": "(nm: &str, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                372,
+                377
+              ],
+              "name": "var_name_rb",
+              "signature": "(nm: &str, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                380,
+                382
+              ],
+              "name": "enum_name_rb",
+              "signature": "(nm: &str, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                384,
+                386
+              ],
+              "name": "enum_name_rb_inner",
+              "signature": "(nm: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                389,
+                397
+              ],
+              "name": "coerce_rb",
+              "signature": "(\n        nm: S1,\n        _: &dyn askama::Values,\n        ns: S2,\n        type_: &Type,\n        c...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                399,
+                475
+              ],
+              "name": "coerce_rb_inner",
+              "signature": "(\n        nm: S1,\n        ns: S2,\n        type_: &Type,\n        custom_types: &HashMap<String, Cu...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                478,
+                513
+              ],
+              "name": "check_lower_rb",
+              "signature": "(\n        nm: S,\n        _: &dyn askama::Values,\n        type_: &Type,\n        config: &Config,\n ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                515,
+                525
+              ],
+              "name": "lower_rb_inner",
+              "signature": "(\n        nm: &str,\n        type_: &Type,\n        custom_types: &HashMap<String, CustomTypeConfig...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                527,
+                545
+              ],
+              "name": "lower_rb_inner_no_box",
+              "signature": "(\n        nm: &str,\n        type_: &Type,\n        custom_types: &HashMap<String, CustomTypeConfig...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                547,
+                585
+              ],
+              "name": "lower_rb_inner_dispatch",
+              "signature": "(nm: &str, type_: &Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                588,
+                595
+              ],
+              "name": "lower_rb",
+              "signature": "(\n        nm: impl AsRef<str>,\n        _: &dyn askama::Values,\n        type_: &Type,\n        conf...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                597,
+                607
+              ],
+              "name": "lift_rb_inner",
+              "signature": "(\n        nm: &str,\n        type_: &Type,\n        custom_types: &HashMap<String, CustomTypeConfig...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                609,
+                627
+              ],
+              "name": "lift_rb_inner_no_box",
+              "signature": "(\n        nm: &str,\n        type_: &Type,\n        custom_types: &HashMap<String, CustomTypeConfig...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                629,
+                679
+              ],
+              "name": "lift_rb_inner_dispatch",
+              "signature": "(\n        nm: &str,\n        type_: &Type,\n        custom_types: &HashMap<String, CustomTypeConfig...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                682,
+                689
+              ],
+              "name": "lift_rb",
+              "signature": "(\n        nm: &str,\n        _: &dyn askama::Values,\n        type_: &Type,\n        config: &Config...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                695,
+                705
+              ],
+              "name": "lower_method_self_rb",
+              "signature": "(\n        meth: &Method,\n        _: &dyn askama::Values,\n        config: &Config,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                709,
+                725
+              ],
+              "name": "variant_discr_literal",
+              "signature": "(\n        e: &Enum,\n        _: &dyn askama::Values,\n        index: &usize,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            166,
+            726
+          ],
+          "name": "filters",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                733,
+                763
+              ],
+              "name": "test_canonical_names",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                766,
+                768
+              ],
+              "name": "test_class_name",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            729,
+            769
+          ],
+          "name": "test_type",
+          "type": "module"
+        },
+        {
+          "lines": [
+            772,
+            772
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "tests.rs": {
+      "hash": "e856d2be95a2",
+      "indexed_at": "2026-07-24T20:35:12.888497+00:00",
+      "language": "rust",
+      "lines": 41,
+      "mtime_ns": 1782136568000000000,
+      "size": 834,
+      "symbols": [
+        {
+          "lines": [
+            4,
+            6
+          ],
+          "name": "when_reserved_word",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "when_not_reserved_word",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            14,
+            25
+          ],
+          "name": "cdylib_name",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            28,
+            41
+          ],
+          "name": "cdylib_path",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.766191+00:00",
+  "version": "1.0"
+}

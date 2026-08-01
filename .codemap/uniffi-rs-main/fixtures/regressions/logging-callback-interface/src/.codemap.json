@@ -1,0 +1,156 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\regressions\\logging-callback-interface\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "c884f49a92f2",
+      "indexed_at": "2026-07-24T20:35:12.631756+00:00",
+      "language": "rust",
+      "lines": 48,
+      "mtime_ns": 1782136568000000000,
+      "size": 1289,
+      "symbols": [
+        {
+          "docstring": "Logger trait that the foreign code implements",
+          "lines": [
+            8,
+            10
+          ],
+          "name": "Logger",
+          "type": "trait"
+        },
+        {
+          "docstring": "Logger struct that implements the `log::Log` trait.",
+          "lines": [
+            13,
+            13
+          ],
+          "name": "RustLogger",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                18,
+                20
+              ],
+              "name": "enabled",
+              "signature": "(&self, _: &log::Metadata<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                22,
+                26
+              ],
+              "name": "log",
+              "signature": "(&self, record: &log::Record<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "flush",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            17,
+            29
+          ],
+          "name": "RustLogger",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            31,
+            37
+          ],
+          "name": "init",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            39,
+            42
+          ],
+          "name": "install_logger",
+          "signature": "(logger: Box<dyn Logger>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            44,
+            46
+          ],
+          "name": "log_something",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "test.udl": {
+      "hash": "ac6fc8704223",
+      "indexed_at": "2026-07-24T20:35:12.632345+00:00",
+      "language": "udl",
+      "lines": 8,
+      "mtime_ns": 1782136568000000000,
+      "size": 185,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                2,
+                2
+              ],
+              "name": "install_logger",
+              "signature": "(Logger logger) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "log_something",
+              "signature": "() : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1,
+            4
+          ],
+          "name": "regression_logging_callback_interface",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                7
+              ],
+              "name": "log_message",
+              "signature": "(string message) : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            6,
+            8
+          ],
+          "name": "Logger",
+          "type": "callback_interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.721800+00:00",
+  "version": "1.0"
+}

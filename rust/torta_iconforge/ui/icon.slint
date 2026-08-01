@@ -1,0 +1,157 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Slint-authored Tortae launcher art — a slice of cake (Tortae): coral frosting on cream sponge
+// with a cherry. The SAME 108-unit geometry as the round-trip-proven ic_launcher_foreground, now in
+// Slint's own scene graph (Path/viewbox) and rendered by Slint's engine (#75). This is scene #1 of
+// the graphics engine that #17 grows (per-pillar animated themes) — hence CakeArt is a reusable
+// sub-component, not inlined.
+
+// CakeArt — the cake, drawn in a 108-unit viewbox scaled by `zoom` (1.0 = adaptive safe-zone inset;
+// >1 zooms in so the cake fills a tighter legacy frame). viewbox centered on the cake centroid ~(54,52).
+component CakeArt inherits Rectangle {
+    in property <float> zoom: 1.0;
+    in property <bool> animated: false;
+    in property <float> tick-ms: 0;
+    background: transparent;
+    // #17 animation hook: when `animated`, the cake "breathes" — a deterministic tick-driven pulse.
+    // The forge sweeps `tick-ms` per baked frame (sprite/animation baking); at runtime #17 binds it to
+    // Slint's animation-tick(). tick-ms=0 + animated=false -> the static resting icon (the launcher).
+    property <angle> phase: root.tick-ms * 0.36deg;          // 1000ms -> 360deg == 1 Hz
+    property <float> pulse: root.animated ? 1.0 + 0.12 * sin(root.phase) : 1.0;
+    property <float> eff-zoom: root.zoom * root.pulse;
+    property <float> vbw: 108 / root.eff-zoom;
+    property <float> vbx: 54 - root.vbw / 2;
+    property <float> vby: 52 - root.vbw / 2;
+
+    // cherry stem (stroke only) — stroke-width tracks both render size AND zoom (viewbox scales the
+    // path commands, not the stroke, so we scale it in element pixels ourselves).
+    Path {
+        width: 100%; height: 100%;
+        viewbox-x: root.vbx; viewbox-y: root.vby; viewbox-width: root.vbw; viewbox-height: root.vbw;
+        commands: "M55,30 q4,-7 10,-8";
+        stroke: #C9743A;
+        stroke-width: root.width * 2.2 * root.eff-zoom / 108;
+    }
+    // cherry
+    Path {
+        width: 100%; height: 100%;
+        viewbox-x: root.vbx; viewbox-y: root.vby; viewbox-width: root.vbw; viewbox-height: root.vbw;
+        commands: "M54,33 m-5.5,0 a5.5,5.5 0 1,0 11,0 a5.5,5.5 0 1,0 -11,0";
+        fill: #FF5E5B;
+    }
+    // sponge wedge (cream)
+    Path {
+        width: 100%; height: 100%;
+        viewbox-x: root.vbx; viewbox-y: root.vby; viewbox-width: root.vbw; viewbox-height: root.vbw;
+        commands: "M30,48 L78,48 L54,83 Z";
+        fill: #F4D9A6;
+    }
+    // filling stripe
+    Path {
+        width: 100%; height: 100%;
+        viewbox-x: root.vbx; viewbox-y: root.vby; viewbox-width: root.vbw; viewbox-height: root.vbw;
+        commands: "M41,62 L67,62 L63,68 L45,68 Z";
+        fill: #FF5E5B;
+    }
+    // frosting band with drips (coral)
+    Path {
+        width: 100%; height: 100%;
+        viewbox-x: root.vbx; viewbox-y: root.vby; viewbox-width: root.vbw; viewbox-height: root.vbw;
+        commands: "M28,40 L80,40 L80,49 q-6.5,6 -13,0 q-6.5,6 -13,0 q-6.5,6 -13,0 q-6.5,6 -13,0 Z";
+        fill: #FF5E5B;
+    }
+}
+
+import { JesdictArt } from "jesdict.slint";
+import { BeastOvenArt, CentauriSkyArt, InuDenArt, MasqueVeilArt, WheelOrbitArt, WardenCourtArt, UndergroundRainArt, DangoDaikazokuArt } from "scenebook.slint";
+
+// IconScene — the render target, now SCENE-KEYED (#24/#32: the scene gate generalized).
+//   · scene="icon"    -> the cake (launcher art; on-background/round variants as before).
+//   · scene="jesdict" -> the flying "THX to JESDICT" animated calligraphy (DNSCrypt pillar);
+//                        on-background composites it on the Candle wax ground (#100e09).
+// Variants selected by properties:
+//   · on-background=false      -> adaptive FOREGROUND: transparent canvas (OS composites + masks).
+//   · on-background=true, round=false -> legacy SQUARE icon (cake on #2B2B33), for API<26.
+//   · on-background=true, round=true  -> legacy ROUND icon (cake on a circular #2B2B33).
+export component IconScene inherits Window {
+    in property <string> scene: "icon";
+    in property <bool> on-background: false;
+    in property <bool> round: false;
+    in property <float> zoom: 1.0;
+    in property <bool> animated: false;
+    in property <float> tick-ms: 0;
+    background: transparent;
+
+    // legacy composited icon: brand background (square, or a circle via border-radius) + the cake.
+    if root.scene == "icon" && root.on-background : Rectangle {
+        width: 100%; height: 100%;
+        background: #2B2B33;
+        border-radius: root.round ? self.width / 2 : 0px;
+        CakeArt { width: 100%; height: 100%; zoom: root.zoom; animated: root.animated; tick-ms: root.tick-ms; }
+    }
+    // adaptive foreground: the cake on transparent.
+    if root.scene == "icon" && !root.on-background : CakeArt {
+        width: 100%; height: 100%; zoom: root.zoom; animated: root.animated; tick-ms: root.tick-ms;
+    }
+    // the JESDICT calligraphy (DNSCrypt pillar, #24) — on the Candle wax when composited.
+    if root.scene == "jesdict" : Rectangle {
+        width: 100%; height: 100%;
+        background: root.on-background ? #100e09 : transparent;
+        border-radius: root.round ? self.width / 2 : 0px;
+        JesdictArt { width: 100%; height: 100%; animated: root.animated; tick-ms: root.tick-ms; }
+    }
+
+    // ===== #32 THE SCENE REGISTRY — the per-pillar seed scenes. Each composites on its OWN pillar
+    // ground when on-background (no shared wax — the anti-slop law); grounds mirror the pillar
+    // palettes (the parity law). clip:true so full-bleed scenery honors the round mask. =====
+    if root.scene == "beast-oven" : Rectangle {          // Beast.abyss ground
+        width: 100%; height: 100%; clip: true;
+        background: root.on-background ? #0d0b08 : transparent;
+        border-radius: root.round ? self.width / 2 : 0px;
+        BeastOvenArt { width: 100%; height: 100%; animated: root.animated; tick-ms: root.tick-ms; }
+    }
+    if root.scene == "centauri-sky" : Rectangle {        // Centauri.void ground
+        width: 100%; height: 100%; clip: true;
+        background: root.on-background ? #0a0e14 : transparent;
+        border-radius: root.round ? self.width / 2 : 0px;
+        CentauriSkyArt { width: 100%; height: 100%; animated: root.animated; tick-ms: root.tick-ms; }
+    }
+    if root.scene == "inu-den" : Rectangle {             // Inu.den ground
+        width: 100%; height: 100%; clip: true;
+        background: root.on-background ? #12100c : transparent;
+        border-radius: root.round ? self.width / 2 : 0px;
+        InuDenArt { width: 100%; height: 100%; animated: root.animated; tick-ms: root.tick-ms; }
+    }
+    if root.scene == "masque-veil" : Rectangle {         // Masque.veil-void ground
+        width: 100%; height: 100%; clip: true;
+        background: root.on-background ? #0b0912 : transparent;
+        border-radius: root.round ? self.width / 2 : 0px;
+        MasqueVeilArt { width: 100%; height: 100%; animated: root.animated; tick-ms: root.tick-ms; }
+    }
+    if root.scene == "wheel-orbit" : Rectangle {         // Wheel.orbit-void ground
+        width: 100%; height: 100%; clip: true;
+        background: root.on-background ? #0a0c14 : transparent;
+        border-radius: root.round ? self.width / 2 : 0px;
+        WheelOrbitArt { width: 100%; height: 100%; animated: root.animated; tick-ms: root.tick-ms; }
+    }
+    if root.scene == "warden-court" : Rectangle {        // Monokuma.night ground
+        width: 100%; height: 100%; clip: true;
+        background: root.on-background ? #0c0c0c : transparent;
+        border-radius: root.round ? self.width / 2 : 0px;
+        WardenCourtArt { width: 100%; height: 100%; animated: root.animated; tick-ms: root.tick-ms; }
+    }
+    if root.scene == "underground-rain" : Rectangle {    // Monokuma.night ground
+        width: 100%; height: 100%; clip: true;
+        background: root.on-background ? #0c0c0c : transparent;
+        border-radius: root.round ? self.width / 2 : 0px;
+        UndergroundRainArt { width: 100%; height: 100%; animated: root.animated; tick-ms: root.tick-ms; }
+    }
+    if root.scene == "dango-daikazoku" : Rectangle {     // Beast.abyss ground (the dessert family)
+        width: 100%; height: 100%; clip: true;
+        background: root.on-background ? #0d0b08 : transparent;
+        border-radius: root.round ? self.width / 2 : 0px;
+        DangoDaikazokuArt { width: 100%; height: 100%; animated: root.animated; tick-ms: root.tick-ms; }
+    }
+}

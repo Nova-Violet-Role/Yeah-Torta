@@ -1,0 +1,243 @@
+{
+  "directory": "tools",
+  "files": {
+    "AVD-HAZARDS.md": {
+      "hash": "1f5c9d055c10",
+      "indexed_at": "2026-08-01T04:01:09.857696+00:00",
+      "language": "markdown",
+      "lines": 93,
+      "mtime_ns": 1785556379754899900,
+      "size": 4946,
+      "symbols": [
+        {
+          "docstring": "**Symptom.** `adb devices` reports `emulator-5554  offline` forever. `adb reconnect`, `kill-server`, `connect localhost:5555` all fail. A cold boot wi",
+          "lines": [
+            8,
+            57
+          ],
+          "name": "H1 \u2014 Tapping \"Wireless debugging\" in Settings WEDGES adb, and the wedge SURVIVES a cold boot",
+          "type": "section"
+        },
+        {
+          "docstring": "`Get-Process qemu* | Stop-Process` and `pkill -f` will match things you did not mean, and on this machine a pattern kill has taken out the local proxy",
+          "lines": [
+            58,
+            65
+          ],
+          "name": "H2 \u2014 Never stop a process by pattern",
+          "type": "section"
+        },
+        {
+          "docstring": "Recorded in full in the header of `tools/avd-ipv6`. Short form:",
+          "lines": [
+            66,
+            80
+          ],
+          "name": "H3 \u2014 Three IPv6 instruments that returned confident false negatives",
+          "type": "section"
+        },
+        {
+          "docstring": "Read `$?` / `$LASTEXITCODE` directly from the command itself, then inspect the output separately. This has produced a false green here.",
+          "lines": [
+            81,
+            87
+          ],
+          "name": "H4 \u2014 `lake build X | tail` reports tail's exit code, not the build's",
+          "type": "section"
+        },
+        {
+          "docstring": "A successful `cargo ndk build` does not mean the new library shipped. Copy it into `libumdnscrypt/src/main/jniLibs/<abi>/`, assert the byte sizes matc",
+          "lines": [
+            88,
+            94
+          ],
+          "name": "H5 \u2014 Gradle packages from `jniLibs/`, NOT from the cargo target dir",
+          "type": "section"
+        }
+      ]
+    },
+    "check_cadence_contract.py": {
+      "hash": "3d409bcb3a6d",
+      "indexed_at": "2026-08-01T04:01:10.172622+00:00",
+      "language": "python",
+      "lines": 242,
+      "mtime_ns": 1785556379766898600,
+      "size": 11992,
+      "symbols": [
+        {
+          "lines": [
+            48,
+            52
+          ],
+          "name": "read",
+          "signature": "(path: Path) -> str",
+          "type": "function"
+        },
+        {
+          "docstring": "Extract exactly one integer. A constant that has MOVED or been renamed exits 2 rather than\nbeing treated as absent-and-therefore-fine -- the failure m",
+          "lines": [
+            55,
+            68
+          ],
+          "name": "grab_int",
+          "signature": "(text: str, path: Path, pattern: str, what: str) -> int",
+          "type": "function"
+        },
+        {
+          "lines": [
+            71,
+            73
+          ],
+          "name": "check",
+          "signature": "(cond: bool, msg: str) -> None",
+          "type": "function"
+        }
+      ]
+    },
+    "check_uniffi_abi.py": {
+      "hash": "e8da7c18a815",
+      "indexed_at": "2026-08-01T04:01:10.484824+00:00",
+      "language": "python",
+      "lines": 216,
+      "mtime_ns": 1785556379779900100,
+      "size": 8415,
+      "symbols": [
+        {
+          "lines": [
+            62,
+            64
+          ],
+          "name": "die",
+          "signature": "(msg: str, code: int=2) -> None",
+          "type": "function"
+        },
+        {
+          "lines": [
+            67,
+            77
+          ],
+          "name": "find_llvm_nm",
+          "signature": "() -> Path",
+          "type": "function"
+        },
+        {
+          "lines": [
+            80,
+            88
+          ],
+          "name": "wanted_symbols",
+          "signature": "(bindings: Path, crate: str) -> tuple[set[str], set[str]]",
+          "type": "function"
+        },
+        {
+          "lines": [
+            91,
+            102
+          ],
+          "name": "exported_symbols",
+          "signature": "(nm: Path, so: Path, crate: str) -> tuple[set[str], set[str]]",
+          "type": "function"
+        },
+        {
+          "docstring": "Return a list of failure strings; empty means this APK passed.",
+          "lines": [
+            105,
+            149
+          ],
+          "name": "check_apk",
+          "signature": "(apk: Path, abi: str, crate: str, bindings: Path, nm: Path) -> list[str]",
+          "type": "function"
+        },
+        {
+          "docstring": "A checker nobody has broken on purpose is an untested alarm. Prove the diff can FAIL.",
+          "lines": [
+            152,
+            166
+          ],
+          "name": "self_test",
+          "signature": "(bindings: Path, crate: str) -> None",
+          "type": "function"
+        },
+        {
+          "lines": [
+            169,
+            212
+          ],
+          "name": "main",
+          "signature": "() -> int",
+          "type": "function"
+        }
+      ]
+    },
+    "check_uniffi_records.js": {
+      "hash": "5d3395eb4ef2",
+      "indexed_at": "2026-08-01T04:01:10.831410+00:00",
+      "language": "javascript",
+      "lines": 270,
+      "mtime_ns": 1785556379791900900,
+      "size": 10043,
+      "symbols": [
+        {
+          "lines": [
+            41,
+            44
+          ],
+          "name": "die",
+          "signature": "(code, msg)",
+          "type": "function"
+        },
+        {
+          "docstring": "STRIP COMMENTS BEFORE PARSING ANYTHING. This is not tidiness, it is the difference between a working instrument and a false alarm generator. MEASURED:",
+          "lines": [
+            69,
+            114
+          ],
+          "name": "stripComments",
+          "signature": "(src)",
+          "type": "function"
+        },
+        {
+          "docstring": "---------- collect .rs files ----------",
+          "lines": [
+            117,
+            124
+          ],
+          "name": "walk",
+          "signature": "(dir, out = [])",
+          "type": "function"
+        },
+        {
+          "docstring": "Brace-matched so a nested type in a field cannot end the struct early.",
+          "lines": [
+            128,
+            182
+          ],
+          "name": "parseRustRecords",
+          "signature": "(files)",
+          "type": "function"
+        },
+        {
+          "docstring": "---------- parse Kotlin data classes ----------",
+          "lines": [
+            185,
+            213
+          ],
+          "name": "parseKotlin",
+          "signature": "(src)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            215,
+            215
+          ],
+          "name": "snake",
+          "signature": "(s)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:01:10.833180+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,588 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\domain\\dns_rules",
+  "files": {
+    "DnsRuleType.kt": {
+      "hash": "9251a72e3c28",
+      "indexed_at": "2026-08-01T03:59:56.512758+00:00",
+      "language": "kotlin",
+      "lines": 25,
+      "mtime_ns": 1785556376929900700,
+      "size": 711,
+      "symbols": [
+        {
+          "lines": [
+            19,
+            25
+          ],
+          "name": "DnsRuleType",
+          "type": "class"
+        }
+      ]
+    },
+    "DnsRulesInteractor.kt": {
+      "hash": "9d60e425e5bf",
+      "indexed_at": "2026-08-01T03:59:55.320032+00:00",
+      "language": "kotlin",
+      "lines": 32,
+      "mtime_ns": 1785556376942899700,
+      "size": 1383,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "getMixedRulesMetadata",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "getSingleRules",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "saveSingleRules",
+              "signature": "(type: DnsRuleType, rules: List<DnsRuleRecycleItem.DnsSingleRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "getRemoteRulesMetadata",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "getLocalRulesMetadata",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "clearRemoteRules",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                29
+              ],
+              "name": "clearLocalRules",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                31,
+                31
+              ],
+              "name": "isExternalStorageAllowsDirectAccess",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            32
+          ],
+          "name": "DnsRulesInteractor",
+          "type": "interface"
+        }
+      ]
+    },
+    "DnsRulesInteractorImpl.kt": {
+      "hash": "a5d7c9078c9f",
+      "indexed_at": "2026-08-01T03:59:55.596222+00:00",
+      "language": "kotlin",
+      "lines": 117,
+      "mtime_ns": 1785556376955901600,
+      "size": 5433,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                34,
+                43
+              ],
+              "name": "getMixedRulesMetadata",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                45,
+                54
+              ],
+              "name": "getSingleRules",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                67
+              ],
+              "name": "saveSingleRules",
+              "signature": "(\n        type: DnsRuleType,\n        rules: List<DnsRuleRecycleItem.DnsSingleRule>\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                69,
+                79
+              ],
+              "name": "getRemoteRulesMetadata",
+              "signature": "(\n        type: DnsRuleType\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                81,
+                91
+              ],
+              "name": "getLocalRulesMetadata",
+              "signature": "(\n        type: DnsRuleType\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                101
+              ],
+              "name": "clearRemoteRules",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                111
+              ],
+              "name": "clearLocalRules",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                116
+              ],
+              "name": "isExternalStorageAllowsDirectAccess",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            28,
+            117
+          ],
+          "name": "DnsRulesInteractorImpl",
+          "type": "class"
+        }
+      ]
+    },
+    "DnsRulesMetadata.kt": {
+      "hash": "bdbe4d24b848",
+      "indexed_at": "2026-08-01T03:59:55.889139+00:00",
+      "language": "kotlin",
+      "lines": 42,
+      "mtime_ns": 1785556376969899700,
+      "size": 1085,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                23,
+                29
+              ],
+              "name": "RemoteDnsRulesMetadata",
+              "type": "class"
+            },
+            {
+              "lines": [
+                31,
+                36
+              ],
+              "name": "LocalDnsRulesMetadata",
+              "type": "class"
+            },
+            {
+              "lines": [
+                38,
+                40
+              ],
+              "name": "MixedDnsRulesMetadata",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            21,
+            42
+          ],
+          "name": "DnsRulesMetadata",
+          "type": "class"
+        }
+      ]
+    },
+    "DnsRulesRepository.kt": {
+      "hash": "22275d40f37e",
+      "indexed_at": "2026-08-01T03:59:56.192170+00:00",
+      "language": "kotlin",
+      "lines": 67,
+      "mtime_ns": 1785556376985900400,
+      "size": 3425,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "getMixedBlacklistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "getSingleBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "saveSingleBlacklistRules",
+              "signature": "(rules: List<DnsRuleRecycleItem.DnsSingleRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "getRemoteBlacklistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "clearRemoteBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "getLocalBlacklistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                29
+              ],
+              "name": "clearLocalBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                31,
+                31
+              ],
+              "name": "getMixedWhitelistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                32,
+                32
+              ],
+              "name": "getSingleWhitelistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                33,
+                33
+              ],
+              "name": "saveSingleWhitelistRules",
+              "signature": "(rules: List<DnsRuleRecycleItem.DnsSingleRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                34,
+                34
+              ],
+              "name": "getRemoteWhitelistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                35,
+                35
+              ],
+              "name": "clearRemoteWhitelistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                36,
+                36
+              ],
+              "name": "getLocalWhitelistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                37
+              ],
+              "name": "clearLocalWhitelistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                39
+              ],
+              "name": "getMixedIpBlacklistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                40,
+                40
+              ],
+              "name": "getSingleIpBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                41,
+                41
+              ],
+              "name": "saveSingleIpBlacklistRules",
+              "signature": "(rules: List<DnsRuleRecycleItem.DnsSingleRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                42,
+                42
+              ],
+              "name": "getRemoteIpBlacklistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                43,
+                43
+              ],
+              "name": "clearRemoteIpBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                44,
+                44
+              ],
+              "name": "getLocalIpBlacklistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                45,
+                45
+              ],
+              "name": "clearLocalIpBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                47,
+                47
+              ],
+              "name": "getMixedForwardingRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                48,
+                48
+              ],
+              "name": "getSingleForwardingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                49
+              ],
+              "name": "saveSingleForwardingRules",
+              "signature": "(rules: List<DnsRuleRecycleItem.DnsSingleRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                50
+              ],
+              "name": "getRemoteForwardingRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                51,
+                51
+              ],
+              "name": "clearRemoteForwardingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                52,
+                52
+              ],
+              "name": "getLocalForwardingRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                53,
+                53
+              ],
+              "name": "clearLocalForwardingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                55,
+                55
+              ],
+              "name": "getMixedCloakingRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                56
+              ],
+              "name": "getSingleCloakingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                57,
+                57
+              ],
+              "name": "saveSingleCloakingRules",
+              "signature": "(rules: List<DnsRuleRecycleItem.DnsSingleRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                58,
+                58
+              ],
+              "name": "getRemoteCloakingRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                59,
+                59
+              ],
+              "name": "clearRemoteCloakingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                60,
+                60
+              ],
+              "name": "getLocalCloakingRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                61,
+                61
+              ],
+              "name": "clearLocalCloakingRules",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            67
+          ],
+          "name": "DnsRulesRepository",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:56.514330+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,1098 @@
+{
+  "directory": "uniffi-rs-main\\.circleci",
+  "files": {
+    "config.yml": {
+      "hash": "8a38c4a56f2d",
+      "indexed_at": "2026-07-24T20:35:12.032871+00:00",
+      "language": "yaml",
+      "lines": 201,
+      "mtime_ns": 1782136568000000000,
+      "size": 6467,
+      "symbols": [
+        {
+          "docstring": "2.1",
+          "lines": [
+            3,
+            4
+          ],
+          "name": "version",
+          "type": "key"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "docstring": "Install Material for MkDocs",
+                          "lines": [
+                            9,
+                            9
+                          ],
+                          "name": "name",
+                          "type": "key"
+                        },
+                        {
+                          "lines": [
+                            10,
+                            17
+                          ],
+                          "name": "command",
+                          "type": "multiline"
+                        }
+                      ],
+                      "lines": [
+                        8,
+                        17
+                      ],
+                      "name": "run",
+                      "type": "item"
+                    }
+                  ],
+                  "lines": [
+                    7,
+                    17
+                  ],
+                  "name": "steps",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                6,
+                17
+              ],
+              "name": "install-mkdocs",
+              "type": "section"
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "docstring": "rustup self update",
+                      "lines": [
+                        21,
+                        21
+                      ],
+                      "name": "run",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "rustup toolchain install",
+                      "lines": [
+                        22,
+                        22
+                      ],
+                      "name": "run",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "rustup target add wasm32-unknown-unknown",
+                      "lines": [
+                        23,
+                        24
+                      ],
+                      "name": "run",
+                      "type": "item"
+                    }
+                  ],
+                  "lines": [
+                    19,
+                    24
+                  ],
+                  "name": "steps",
+                  "type": "section"
+                }
+              ],
+              "lines": [
+                18,
+                24
+              ],
+              "name": "prepare-rust-target-version",
+              "type": "section"
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "docstring": "rustup override set 1.90.0",
+                      "lines": [
+                        27,
+                        27
+                      ],
+                      "name": "run",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "rustup update",
+                      "lines": [
+                        28,
+                        28
+                      ],
+                      "name": "run",
+                      "type": "item"
+                    }
+                  ],
+                  "lines": [
+                    26,
+                    28
+                  ],
+                  "name": "steps",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                25,
+                28
+              ],
+              "name": "prepare-rust-min-version",
+              "type": "section"
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "docstring": "Build API Docs",
+                          "lines": [
+                            32,
+                            34
+                          ],
+                          "name": "name",
+                          "type": "key"
+                        },
+                        {
+                          "docstring": "cargo doc --no-deps --document-private-items --lib -p uniffi_bindgen -p uniffi -p uniffi_build -p un...",
+                          "lines": [
+                            35,
+                            35
+                          ],
+                          "name": "command",
+                          "type": "key"
+                        },
+                        {
+                          "children": [
+                            {
+                              "docstring": "-Dwarnings -Arustdoc::private-intra-doc-links",
+                              "lines": [
+                                37,
+                                38
+                              ],
+                              "name": "RUSTDOCFLAGS",
+                              "type": "key"
+                            }
+                          ],
+                          "lines": [
+                            36,
+                            38
+                          ],
+                          "name": "environment",
+                          "type": "section"
+                        }
+                      ],
+                      "lines": [
+                        31,
+                        38
+                      ],
+                      "name": "run",
+                      "type": "item"
+                    }
+                  ],
+                  "lines": [
+                    30,
+                    38
+                  ],
+                  "name": "steps",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                29,
+                38
+              ],
+              "name": "build-api-docs",
+              "type": "section"
+            }
+          ],
+          "lines": [
+            5,
+            38
+          ],
+          "name": "commands",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "sugarshin/gh-pages@0.0.6",
+              "lines": [
+                40,
+                40
+              ],
+              "name": "gh-pages",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            39,
+            40
+          ],
+          "name": "orbs",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "docstring": "cimg/rust:1.90",
+                  "lines": [
+                    44,
+                    44
+                  ],
+                  "name": "image",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                43,
+                44
+              ],
+              "name": "docker",
+              "type": "list"
+            },
+            {
+              "docstring": "small",
+              "lines": [
+                45,
+                45
+              ],
+              "name": "resource_class",
+              "type": "key"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "rustup component add rustfmt",
+                  "lines": [
+                    49,
+                    49
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "docstring": "rustfmt --version",
+                  "lines": [
+                    50,
+                    50
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "docstring": "cargo fmt -- --check",
+                  "lines": [
+                    51,
+                    52
+                  ],
+                  "name": "run",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                46,
+                52
+              ],
+              "name": "steps",
+              "type": "list"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "cimg/rust:1.90",
+                  "lines": [
+                    54,
+                    54
+                  ],
+                  "name": "image",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                53,
+                54
+              ],
+              "name": "docker",
+              "type": "list"
+            },
+            {
+              "docstring": "large",
+              "lines": [
+                55,
+                55
+              ],
+              "name": "resource_class",
+              "type": "key"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "rustup component add clippy",
+                  "lines": [
+                    59,
+                    59
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "docstring": "cargo clippy --version",
+                  "lines": [
+                    60,
+                    60
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "docstring": "cargo clippy --all --all-targets -- -D warnings",
+                  "lines": [
+                    61,
+                    61
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "lines": [
+                    62,
+                    69
+                  ],
+                  "name": "run",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                56,
+                69
+              ],
+              "name": "steps",
+              "type": "list"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "cimg/rust:1.90",
+                  "lines": [
+                    71,
+                    71
+                  ],
+                  "name": "image",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                70,
+                71
+              ],
+              "name": "docker",
+              "type": "list"
+            },
+            {
+              "docstring": "small",
+              "lines": [
+                72,
+                72
+              ],
+              "name": "resource_class",
+              "type": "key"
+            },
+            {
+              "lines": [
+                73,
+                77
+              ],
+              "name": "steps",
+              "type": "list"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "janerik/uniffi-ci-test:2026.05",
+                  "lines": [
+                    79,
+                    79
+                  ],
+                  "name": "image",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                78,
+                79
+              ],
+              "name": "docker",
+              "type": "list"
+            },
+            {
+              "docstring": "large",
+              "lines": [
+                80,
+                80
+              ],
+              "name": "resource_class",
+              "type": "key"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "cat ~/.profile >> $BASH_ENV",
+                  "lines": [
+                    82,
+                    84
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "\"Print the Rust version, to help with debugging\"",
+                      "lines": [
+                        86,
+                        86
+                      ],
+                      "name": "name",
+                      "type": "key"
+                    },
+                    {
+                      "docstring": "rustc --version",
+                      "lines": [
+                        87,
+                        87
+                      ],
+                      "name": "command",
+                      "type": "key"
+                    }
+                  ],
+                  "lines": [
+                    85,
+                    87
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "\"Set RUSTFLAGS to fail the build if there are warnings\"",
+                      "lines": [
+                        89,
+                        89
+                      ],
+                      "name": "name",
+                      "type": "key"
+                    },
+                    {
+                      "docstring": "echo 'export RUSTFLAGS=\"-D warnings\"' >> $BASH_ENV",
+                      "lines": [
+                        90,
+                        90
+                      ],
+                      "name": "command",
+                      "type": "key"
+                    }
+                  ],
+                  "lines": [
+                    88,
+                    90
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "Build all code",
+                      "lines": [
+                        92,
+                        92
+                      ],
+                      "name": "name",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        93,
+                        95
+                      ],
+                      "name": "command",
+                      "type": "multiline"
+                    }
+                  ],
+                  "lines": [
+                    91,
+                    95
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "Build WASM crates",
+                      "lines": [
+                        97,
+                        97
+                      ],
+                      "name": "name",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        98,
+                        103
+                      ],
+                      "name": "command",
+                      "type": "multiline"
+                    }
+                  ],
+                  "lines": [
+                    96,
+                    103
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "docstring": "cargo test --features=uniffi/ffi-trace",
+                  "lines": [
+                    104,
+                    104
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "mypy Python typechecks",
+                      "lines": [
+                        106,
+                        106
+                      ],
+                      "name": "name",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        107,
+                        113
+                      ],
+                      "name": "command",
+                      "type": "multiline"
+                    }
+                  ],
+                  "lines": [
+                    105,
+                    113
+                  ],
+                  "name": "run",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                81,
+                113
+              ],
+              "name": "steps",
+              "type": "list"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "janerik/uniffi-ci-test:2026.05",
+                  "lines": [
+                    115,
+                    115
+                  ],
+                  "name": "image",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                114,
+                115
+              ],
+              "name": "docker",
+              "type": "list"
+            },
+            {
+              "docstring": "large",
+              "lines": [
+                116,
+                116
+              ],
+              "name": "resource_class",
+              "type": "key"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "cat ~/.profile >> $BASH_ENV",
+                  "lines": [
+                    118,
+                    120
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "\"Print the Rust version, to help with debugging\"",
+                      "lines": [
+                        122,
+                        122
+                      ],
+                      "name": "name",
+                      "type": "key"
+                    },
+                    {
+                      "docstring": "rustc --version",
+                      "lines": [
+                        123,
+                        123
+                      ],
+                      "name": "command",
+                      "type": "key"
+                    }
+                  ],
+                  "lines": [
+                    121,
+                    123
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "Build all code",
+                      "lines": [
+                        125,
+                        125
+                      ],
+                      "name": "name",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        126,
+                        131
+                      ],
+                      "name": "command",
+                      "type": "multiline"
+                    }
+                  ],
+                  "lines": [
+                    124,
+                    131
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "docstring": "cargo test -- --skip trybuild_ui_tests",
+                  "lines": [
+                    132,
+                    133
+                  ],
+                  "name": "run",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                117,
+                133
+              ],
+              "name": "steps",
+              "type": "list"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "cimg/rust:1.90",
+                  "lines": [
+                    135,
+                    135
+                  ],
+                  "name": "image",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                134,
+                135
+              ],
+              "name": "docker",
+              "type": "list"
+            },
+            {
+              "docstring": "small",
+              "lines": [
+                136,
+                136
+              ],
+              "name": "resource_class",
+              "type": "key"
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "docstring": "Deploy docs",
+                      "lines": [
+                        143,
+                        144
+                      ],
+                      "name": "name",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        145,
+                        151
+                      ],
+                      "name": "command",
+                      "type": "multiline"
+                    }
+                  ],
+                  "lines": [
+                    142,
+                    151
+                  ],
+                  "name": "run",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                137,
+                151
+              ],
+              "name": "steps",
+              "type": "list"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "cimg/python:3.11",
+                  "lines": [
+                    153,
+                    153
+                  ],
+                  "name": "image",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                152,
+                153
+              ],
+              "name": "docker",
+              "type": "list"
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "docstring": "Build container image",
+                      "lines": [
+                        159,
+                        159
+                      ],
+                      "name": "name",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        160,
+                        161
+                      ],
+                      "name": "command",
+                      "type": "multiline"
+                    }
+                  ],
+                  "lines": [
+                    158,
+                    161
+                  ],
+                  "name": "run",
+                  "type": "item"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "Push to Dockerhub",
+                      "lines": [
+                        163,
+                        163
+                      ],
+                      "name": "name",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        164,
+                        172
+                      ],
+                      "name": "command",
+                      "type": "multiline"
+                    }
+                  ],
+                  "lines": [
+                    162,
+                    172
+                  ],
+                  "name": "run",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                154,
+                172
+              ],
+              "name": "steps",
+              "type": "list"
+            }
+          ],
+          "lines": [
+            41,
+            172
+          ],
+          "name": "jobs",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "2",
+              "lines": [
+                174,
+                174
+              ],
+              "name": "version",
+              "type": "key"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    176,
+                    177
+                  ],
+                  "name": "jobs",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                175,
+                177
+              ],
+              "name": "check-formatting",
+              "type": "section"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    179,
+                    180
+                  ],
+                  "name": "jobs",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                178,
+                180
+              ],
+              "name": "clippy",
+              "type": "section"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    182,
+                    183
+                  ],
+                  "name": "jobs",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                181,
+                183
+              ],
+              "name": "docs",
+              "type": "section"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    185,
+                    187
+                  ],
+                  "name": "jobs",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                184,
+                187
+              ],
+              "name": "run-tests",
+              "type": "section"
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "docstring": "main",
+                              "lines": [
+                                193,
+                                193
+                              ],
+                              "name": "only",
+                              "type": "key"
+                            }
+                          ],
+                          "lines": [
+                            192,
+                            193
+                          ],
+                          "name": "branches",
+                          "type": "section"
+                        }
+                      ],
+                      "lines": [
+                        191,
+                        193
+                      ],
+                      "name": "filters",
+                      "type": "section"
+                    }
+                  ],
+                  "lines": [
+                    189,
+                    193
+                  ],
+                  "name": "jobs",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                188,
+                193
+              ],
+              "name": "deploy-website",
+              "type": "section"
+            },
+            {
+              "children": [
+                {
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "docstring": "/.*/",
+                              "lines": [
+                                199,
+                                199
+                              ],
+                              "name": "ignore",
+                              "type": "key"
+                            }
+                          ],
+                          "lines": [
+                            198,
+                            199
+                          ],
+                          "name": "branches",
+                          "type": "section"
+                        },
+                        {
+                          "children": [
+                            {
+                              "docstring": "/^docker-v.*/",
+                              "lines": [
+                                201,
+                                202
+                              ],
+                              "name": "only",
+                              "type": "key"
+                            }
+                          ],
+                          "lines": [
+                            200,
+                            202
+                          ],
+                          "name": "tags",
+                          "type": "section"
+                        }
+                      ],
+                      "lines": [
+                        197,
+                        202
+                      ],
+                      "name": "filters",
+                      "type": "section"
+                    }
+                  ],
+                  "lines": [
+                    195,
+                    202
+                  ],
+                  "name": "jobs",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                194,
+                202
+              ],
+              "name": "deploy-docker",
+              "type": "section"
+            }
+          ],
+          "lines": [
+            173,
+            202
+          ],
+          "name": "workflows",
+          "type": "section"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.569276+00:00",
+  "version": "1.0"
+}

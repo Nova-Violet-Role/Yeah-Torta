@@ -1,0 +1,779 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_macros\\src\\export",
+  "files": {
+    "attributes.rs": {
+      "hash": "b71edc0004e9",
+      "indexed_at": "2026-07-24T20:35:13.202487+00:00",
+      "language": "rust",
+      "lines": 461,
+      "mtime_ns": 1782136568000000000,
+      "size": 14565,
+      "symbols": [
+        {
+          "lines": [
+            30,
+            40
+          ],
+          "name": "ExportTraitArgs",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                43,
+                45
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            42,
+            46
+          ],
+          "name": "Parse",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                49,
+                81
+              ],
+              "name": "parse_one",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                83,
+                109
+              ],
+              "name": "merge",
+              "signature": "(self, other: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            48,
+            110
+          ],
+          "name": "UniffiAttributeArgs",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            116,
+            120
+          ],
+          "name": "ExportFnArgs",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                123,
+                125
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            122,
+            126
+          ],
+          "name": "Parse",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                129,
+                157
+              ],
+              "name": "parse_one",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                159,
+                165
+              ],
+              "name": "merge",
+              "signature": "(self, other: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            128,
+            166
+          ],
+          "name": "UniffiAttributeArgs",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            169,
+            172
+          ],
+          "name": "ExportImplArgs",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                175,
+                177
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            174,
+            178
+          ],
+          "name": "Parse",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                181,
+                204
+              ],
+              "name": "parse_one",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                206,
+                211
+              ],
+              "name": "merge",
+              "signature": "(self, other: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            180,
+            212
+          ],
+          "name": "UniffiAttributeArgs",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            215,
+            217
+          ],
+          "name": "ExportStructArgs",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                220,
+                222
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            219,
+            223
+          ],
+          "name": "Parse",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                226,
+                261
+              ],
+              "name": "parse_one",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                263,
+                267
+              ],
+              "name": "merge",
+              "signature": "(self, other: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            225,
+            268
+          ],
+          "name": "UniffiAttributeArgs",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            271,
+            273
+          ],
+          "name": "AsyncRuntime",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                276,
+                285
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            275,
+            286
+          ],
+          "name": "Parse",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                289,
+                293
+              ],
+              "name": "to_tokens",
+              "signature": "(&self, tokens: &mut TokenStream)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            288,
+            294
+          ],
+          "name": "ToTokens",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            297,
+            300
+          ],
+          "name": "ExportedImplFnAttributes",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                303,
+                324
+              ],
+              "name": "new",
+              "signature": "(attrs: &[Attribute])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                326,
+                375
+              ],
+              "name": "process_path",
+              "signature": "(&mut self, path: &Path, attr: &Attribute, meta: &Meta)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            302,
+            376
+          ],
+          "name": "ExportedImplFnAttributes",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            378,
+            383
+          ],
+          "name": "is_uniffi_path",
+          "signature": "(path: &Path)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            385,
+            390
+          ],
+          "name": "is_cfg_attr",
+          "signature": "(attr: &Attribute)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            392,
+            398
+          ],
+          "name": "ensure_no_path_args",
+          "signature": "(seg: &PathSegment)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            402,
+            404
+          ],
+          "name": "DefaultMap",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                407,
+                411
+              ],
+              "name": "merge",
+              "signature": "(self, other: Self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                413,
+                415
+              ],
+              "name": "remove",
+              "signature": "(&mut self, ident: &Ident)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                417,
+                419
+              ],
+              "name": "idents",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            406,
+            420
+          ],
+          "name": "DefaultMap",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                423,
+                431
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            422,
+            432
+          ],
+          "name": "Parse",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            434,
+            437
+          ],
+          "name": "DefaultPair",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                440,
+                460
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            439,
+            461
+          ],
+          "name": "Parse",
+          "type": "impl"
+        }
+      ]
+    },
+    "callback_interface.rs": {
+      "hash": "650f7e0f135f",
+      "indexed_at": "2026-07-24T20:35:13.204517+00:00",
+      "language": "rust",
+      "lines": 297,
+      "mtime_ns": 1782136568000000000,
+      "size": 10496,
+      "symbols": [
+        {
+          "docstring": "* An implementation of the trait using that VTable",
+          "lines": [
+            25,
+            140
+          ],
+          "name": "trait_impl",
+          "signature": "(\n    mod_path: &str,\n    trait_ident: &Ident,\n    items: &[ImplItem],\n    for_trait_interface: b...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            142,
+            147
+          ],
+          "name": "trait_impl_ident",
+          "signature": "(trait_name: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            149,
+            198
+          ],
+          "name": "ffi_converter_callback_interface_impl",
+          "signature": "(\n    trait_ident: &Ident,\n    trait_impl_ident: &Ident,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "foreign-supplied callback.",
+          "lines": [
+            202,
+            271
+          ],
+          "name": "gen_method_impl",
+          "signature": "(sig: &FnSignature, vtable_cell: &Ident)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            273,
+            297
+          ],
+          "name": "metadata_items",
+          "signature": "(\n    self_ident: &Ident,\n    items: &[ImplItem],\n    docstring: String,\n)",
+          "type": "function"
+        }
+      ]
+    },
+    "item.rs": {
+      "hash": "b5c322d2fe93",
+      "indexed_at": "2026-07-24T20:35:13.206083+00:00",
+      "language": "rust",
+      "lines": 289,
+      "mtime_ns": 1782136568000000000,
+      "size": 10156,
+      "symbols": [
+        {
+          "docstring": "HashSet iteration order is random per process; sorting ensures reproducible builds.",
+          "lines": [
+            18,
+            22
+          ],
+          "name": "sorted_traits",
+          "signature": "(args: ExportStructArgs)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            24,
+            51
+          ],
+          "name": "ExportItem",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                54,
+                72
+              ],
+              "name": "new",
+              "signature": "(item: syn::Item, attr_args: TokenStream)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                74,
+                153
+              ],
+              "name": "from_impl",
+              "signature": "(item: syn::ItemImpl, attr_args: TokenStream)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                155,
+                237
+              ],
+              "name": "from_trait",
+              "signature": "(item: syn::ItemTrait, attr_args: TokenStream)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                239,
+                252
+              ],
+              "name": "from_struct",
+              "signature": "(item: syn::ItemStruct, attr_args: TokenStream)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                254,
+                267
+              ],
+              "name": "from_enum",
+              "signature": "(item: syn::ItemEnum, attr_args: TokenStream)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            53,
+            268
+          ],
+          "name": "ExportItem",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            270,
+            273
+          ],
+          "name": "ImplItem",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            275,
+            282
+          ],
+          "name": "type_as_type_path",
+          "signature": "(ty: &syn::Type)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            284,
+            289
+          ],
+          "name": "type_not_supported",
+          "signature": "(ty: &impl ToTokens)",
+          "type": "function"
+        }
+      ]
+    },
+    "scaffolding.rs": {
+      "hash": "fb00cc5b06cd",
+      "indexed_at": "2026-07-24T20:35:13.208509+00:00",
+      "language": "rust",
+      "lines": 367,
+      "mtime_ns": 1782136568000000000,
+      "size": 13734,
+      "symbols": [
+        {
+          "lines": [
+            15,
+            43
+          ],
+          "name": "gen_fn_scaffolding",
+          "signature": "(\n    sig: FnSignature,\n    ar: Option<&AsyncRuntime>,\n    udl_mode: bool,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            45,
+            65
+          ],
+          "name": "gen_constructor_scaffolding",
+          "signature": "(\n    sig: FnSignature,\n    ar: Option<&AsyncRuntime>,\n    udl_mode: bool,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            67,
+            90
+          ],
+          "name": "gen_method_scaffolding",
+          "signature": "(\n    sig: FnSignature,\n    ar: Option<&AsyncRuntime>,\n    udl_mode: bool,\n    use_trait: Option<...",
+          "type": "function"
+        },
+        {
+          "docstring": "Pieces of code for the scaffolding function",
+          "lines": [
+            93,
+            105
+          ],
+          "name": "ScaffoldingBits",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                108,
+                126
+              ],
+              "name": "new_for_function",
+              "signature": "(sig: &FnSignature, udl_mode: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                128,
+                173
+              ],
+              "name": "new_for_method",
+              "signature": "(\n        sig: &FnSignature,\n        self_ident: &Ident,\n        is_trait: bool,\n        udl_mode...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                175,
+                196
+              ],
+              "name": "new_for_constructor",
+              "signature": "(sig: &FnSignature, self_ident: &Ident, udl_mode: bool)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            107,
+            197
+          ],
+          "name": "ScaffoldingBits",
+          "type": "impl"
+        },
+        {
+          "docstring": "`rust_fn` is the Rust function to call.",
+          "lines": [
+            203,
+            304
+          ],
+          "name": "gen_ffi_function",
+          "signature": "(\n    sig: &FnSignature,\n    ar: Option<&AsyncRuntime>,\n    udl_mode: bool,\n    use_trait: Option...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            307,
+            357
+          ],
+          "name": "ffi_buffer_scaffolding_fn",
+          "signature": "(\n    fn_ident: &Ident,\n    return_type: &TokenStream,\n    param_types: &[TokenStream],\n    has_r...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            360,
+            367
+          ],
+          "name": "ffi_buffer_scaffolding_fn",
+          "signature": "(\n    _fn_ident: &Ident,\n    _return_type: &TokenStream,\n    _param_types: &[TokenStream],\n    _a...",
+          "type": "function"
+        }
+      ]
+    },
+    "trait_interface.rs": {
+      "hash": "7cfbc7b7d030",
+      "indexed_at": "2026-07-24T20:35:13.210602+00:00",
+      "language": "rust",
+      "lines": 287,
+      "mtime_ns": 1782136568000000000,
+      "size": 12003,
+      "symbols": [
+        {
+          "lines": [
+            20,
+            121
+          ],
+          "name": "gen_trait_scaffolding",
+          "signature": "(\n    mod_path: &str,\n    args: ExportTraitArgs,\n    self_ident: Ident,\n    items: Vec<ImplItem>,...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            123,
+            259
+          ],
+          "name": "ffi_converter",
+          "signature": "(trait_ident: &Ident, trait_kind: TraitKind)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            261,
+            287
+          ],
+          "name": "alter_trait",
+          "signature": "(item: &ItemTrait)",
+          "type": "function"
+        }
+      ]
+    },
+    "utrait.rs": {
+      "hash": "d76994bc77e7",
+      "indexed_at": "2026-07-24T20:35:13.212215+00:00",
+      "language": "rust",
+      "lines": 211,
+      "mtime_ns": 1782136568000000000,
+      "size": 9326,
+      "symbols": [
+        {
+          "lines": [
+            13,
+            175
+          ],
+          "name": "expand_uniffi_trait_export",
+          "signature": "(\n    self_ident: Ident,\n    uniffi_traits: Vec<UniffiTraitDiscriminants>,\n    include_metadata: ...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            177,
+            211
+          ],
+          "name": "process_uniffi_trait_method",
+          "signature": "(\n    method: &TokenStream,\n    self_ident: &Ident,\n)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.797581+00:00",
+  "version": "1.0"
+}

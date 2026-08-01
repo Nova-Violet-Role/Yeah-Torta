@@ -1,0 +1,753 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT Beast ||| SETTINGS section — the Beast surface overhaul, slice 9 (🎷 Violet).
+//
+// This is the rust-native (SLINT, NO XML / NO Java / NO Compose) Beast settings surface reached from the
+// |||  triple-burger — the CAKE × YeAH flow-engine controls the ||| Advanced burger opens onto. It reads +
+// writes the live `Beast` UniFFI Object (torta_core `beast::mod`, mod.rs:153) through the host: SLINT can't
+// mutate a Rust struct directly, so the user's edits surface as typed CALLBACKS the host (the Kotlin
+// SurfaceView bridge / the slint-viewer preview / the lib.rs proof test) wires to the Object surface + the
+// flat preset/clamp fns. The host pushes the CURRENT applied state onto the `in-out` scalar inputs; the
+// user's intents flow back out as callbacks; the host owns the truth (one-way data flow — the live engine is
+// the single source, no engine fork).
+//
+// ── GROUND-TRUTH honesty (the felt-truth law — every callback's real destination MEASURED from the tree) ──
+//   THE PROFILE is CONSTRUCTION-TIME, not a runtime setter (there is NO `Beast::set_*_profile`): the brain +
+//   queue are chosen at `Beast::new(yeah_profile, cake_profile)` (mod.rs:165). So a profile change RE-BUILDS
+//   the Beast (the host reconstructs the Object) — which RESETS the live window (cwnd) + the RTT learning to
+//   seed. That reset is a real cost, so the profile picks STAGE (`profile-dirty`) and take effect on Apply —
+//   the honest twin of the MaskSolver `reapply-config` pattern:
+//     - `yeah-profile-picked(id)`  -> stage YeahProfile (0 Legacy · 1 Canonical · 2 LineRate) (enum mod.rs:40)
+//     - `cake-profile-picked(id)`  -> stage CakeProfile (0 Legacy · 1 Soft-cake)               (enum mod.rs:49)
+//     - `reapply-profile()`        -> host rebuilds `Beast::new(staged yeah, staged cake)` + re-applies the
+//                                     preset/tunables (resets cwnd + base-RTT — the reset the witnesses show).
+//   THE TUNE table is the flat `beastPreset` / `beastClamp` surface (#129 muscle 5 — the CAKE/YeAH preset +
+//   Expert safe-range clamp; the host resolves the values, pushes them back — the single source stays the fn):
+//     - `preset-picked(id)`        -> host: `beast_preset(id, field)` (lib.rs:376) resolves the 4 tunables
+//                                     (0 DEFAULT · 1 FAST_PING · 2 OMEGA_BANDWIDTH · 3 UPLOAD_DOWNLOAD;
+//                                      field 0 cycleMs · 1 maxWindow · 2 freeThreshMilli · 3 competeThreshMilli).
+//     - `cycle-ms-stepped(dir)`      -> host: `beast_clamp(0, raw)` (lib.rs:417) -> cycle-ms   (safe 1000..60000)
+//     - `max-window-stepped(dir)`    -> host: `beast_clamp(1, raw)`             -> max-window   (safe 2..64)
+//     - `free-thresh-stepped(dir)`   -> host: `beast_clamp(2, raw)`             -> free-thresh  (safe 1000..2000m)
+//     - `compete-thresh-stepped(dir)`-> host: `beast_clamp(3, raw)`            -> compete-thresh (safe 1010..3000m)
+//   The host owns the step magnitude + calls `beast_clamp`; if the clamp COERCED the raw value it sets
+//   `tunable-clamped` so the surface tells the user (never a silent coercion). The live posture the host
+//   pushes onto `yeah-profile`/`cake-profile` is the applied `BeastSnapshot.yeah_profile`/`.cake_profile`
+//   (mod.rs:150 / mod.rs:171) — the engine's real truth, never asserted.
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android cross-compile spike #69.
+//
+// 🎷 THE DECISION-POINT GUARD (the Violet facet's load-bearing job — read the felt-truth, warn/inform WHERE the
+// choice is MADE, not after it puzzles): the dashboard (slice 8) profile-GATES the canonical/Soft-cake cards so a
+// Legacy brain's inert 0s never read as live congestion (Chroma F6). The SETTINGS surface tells the user WHY
+// the deep cards will be dark AT the moment they pick Legacy — the honesty surfaced where the choice is made,
+// not left to puzzle over a graph of zeros. Legacy is a VALID, lighter choice (not an error) → those read as
+// soft informational NOTES; the only actionable WARNING is a coerced Expert value (your input did not stick).
+// Simple for non-geeks: the brain/queue/tune read as plain-language segmented picks, the raw knobs behind an
+// Expert reveal, the danger a colored banner (the feedback-simple-ux law).
+//
+// NOTE: slint uses `:` for property bindings (not `=`); `\{expr}` is string interpolation; `out property`
+// values are derived + host-readable (the proof test asserts the guard derivations fire); interactive controls
+// are built on the core `TouchArea` (zero std-widget-style dependency) + the proven `Button`.
+
+import { VerticalBox, HorizontalBox, Button } from "std-widgets.slint";
+// The Beast molten-fountain palette (slice 10) — the single source of truth, shared with beast.slint (slice 8).
+import { Beast } from "beast_palette.slint";
+import { ThemeBook, MotifWash, UpperMoonChip } from "theme_tokens.slint";
+
+// ===========================================================================================
+// Local controls (TouchArea-built — zero std-widget-style dependency; the host build proves them green).
+// File-scoped: not exported, so they never collide with the sibling settings' identically-named controls.
+// ===========================================================================================
+
+// A section title.
+component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: Beast.dim;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+// A row card shell — a tile lifts off the window by GROUND alone (the molten abyss scale), not by border.
+component RowCard inherits Rectangle {
+    background: @linear-gradient(180deg, Beast.pit.with-alpha(0.62) 0%, Beast.trough.with-alpha(0.38) 100%);
+    border-radius: 6px;
+}
+
+// A segment in a segmented selector — a tappable pill; the active one fills with its accent (the gear/heat
+// color), so the live choice reads at a glance. A tap fires `picked()`; the host stages + the caller marks dirty.
+component Segment inherits Rectangle {
+    in property <string> text;
+    in property <bool> active: false;
+    in property <color> accent: Beast.flow;
+    callback picked();
+    height: 32px;
+    horizontal-stretch: 1;
+    border-radius: 6px;
+    background: root.active ? root.accent : Beast.panel;
+    border-width: 1px;
+    border-color: root.active ? root.accent : Beast.hairline;
+    animate background { duration: 120ms; }
+    HorizontalLayout {
+        alignment: center;
+        Text {
+            text: root.text;
+            color: root.active ? Beast.abyss : Beast.mist;
+            font-size: 11px;
+            font-weight: root.active ? 900 : 700;
+            vertical-alignment: center;
+        }
+    }
+    TouchArea {
+        clicked => {
+            root.picked();
+        }
+    }
+}
+
+// A decision-point banner (local) — instantiated via a guarding `if`, so an inactive note occupies ZERO layout
+// space. The soft/informational notes read on a muted panel; the actionable warning reads colored (the wound).
+component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: Beast.wound;
+    in property <color> text-color: Beast.strike;
+    in property <string> glyph: "[!]";
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: root.glyph;
+            color: root.text-color;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: root.text-color;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A read-only witness chip — the live number that makes a note legible (turn the felt-truth into a number the
+// non-geek can SEE, the feedback-simple-ux law). Used for the resolved preset values + the reset-cost witnesses.
+component StatChip inherits Rectangle {
+    in property <string> label;
+    in property <string> value;
+    in property <color> tint: Beast.ink;
+    min-width: 62px;
+    horizontal-stretch: 1;
+    border-radius: 6px;
+    background: @linear-gradient(0deg, Beast.trough.with-alpha(0.55) 0%, Beast.abyss.with-alpha(0.30) 100%);
+    border-width: 1px;
+    border-color: Beast.hairline;
+    VerticalLayout {
+        padding: 7px;
+        spacing: 1px;
+        Text {
+            text: root.value;
+            color: root.tint;
+            font-size: 14px;
+            font-weight: 900;
+            horizontal-alignment: center;
+        }
+        Text {
+            text: root.label;
+            color: Beast.mist;
+            font-size: 9px;
+            horizontal-alignment: center;
+        }
+    }
+}
+
+// A single -/+ tap pill for a numeric stepper.
+component StepPill inherits Rectangle {
+    in property <string> glyph;
+    callback tapped();
+    width: 26px;
+    height: 24px;
+    border-radius: 6px;
+    background: @linear-gradient(160deg, Beast.panel.with-alpha(0.66) 0%, Beast.pit.with-alpha(0.42) 100%);
+    border-width: 1px;
+    border-color: Beast.hairline;
+    HorizontalLayout {
+        alignment: center;
+        Text {
+            text: root.glyph;
+            color: Beast.flow;
+            font-size: 15px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+    }
+    TouchArea {
+        clicked => {
+            root.tapped();
+        }
+    }
+}
+
+// A numeric knob row — a label + a safe-range hint + a host-owned value with -/+ pills. A tap fires
+// `stepped(-1|+1)`; the HOST owns the step magnitude + calls `beast_clamp`, then pushes the clamped value back.
+component StepperRow inherits RowCard {
+    in property <string> label;
+    in property <string> hint;
+    in property <string> value;
+    in property <color> value-tint: Beast.ink;
+    callback stepped(int);
+    HorizontalLayout {
+        padding: 10px;
+        spacing: 10px;
+        VerticalLayout {
+            horizontal-stretch: 1;
+            Text {
+                text: root.label;
+                color: Beast.ink;
+                font-size: 13px;
+                font-weight: 700;
+                wrap: word-wrap;   // let the title collapse so the [-] value [+] cluster stays on-screen in the narrow ||| column
+            }
+            Text {
+                text: root.hint;
+                color: Beast.mist;
+                font-size: 10px;
+                wrap: word-wrap;
+            }
+        }
+        HorizontalLayout {
+            spacing: 6px;
+            alignment: center;
+            StepPill {
+                glyph: "-";
+                tapped => {
+                    root.stepped(-1);
+                }
+            }
+            Text {
+                text: root.value;
+                color: root.value-tint;
+                font-size: 15px;
+                font-weight: 900;
+                min-width: 74px;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+            StepPill {
+                glyph: "+";
+                tapped => {
+                    root.stepped(1);
+                }
+            }
+        }
+    }
+}
+
+// ── The embeddable pane (single-android-surface form — the shell mounts THIS; the Window forwarder
+// below re-exposes every prop + callback via `<=>` so the standalone host test is unchanged). The
+// MaskSolver/Rotation embed precedent (CP-MASKSOLVER-SETTINGS / CP-ROTATION-SETTINGS). ──
+export component BeastSettingsPane inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.beast; width: 100%; height: 100%; }
+    // ── settings signature: the BANKED ember hairline — a cooling oven, not the roaring mouth. ──
+    Rectangle { y: 0; height: 2px; width: 100%; background: @linear-gradient(90deg, transparent 0%, Beast.backoff.with-alpha(0.45) 50%, transparent 100%); }
+    background: Beast.abyss.with-alpha(0.45);
+
+    // ===== THE BRAIN (YeahProfile — CONSTRUCTION-TIME; host pushes BeastSnapshot.yeah_profile, mod.rs:150) =====
+    in-out property <int> yeah-profile: 1;   // 0 Legacy · 1 Canonical · 2 LineRate (Beast::new arg, mod.rs:165)
+
+    // ===== THE QUEUE (CakeProfile — CONSTRUCTION-TIME; host pushes BeastSnapshot.cake_profile, mod.rs:171) =====
+    in-out property <int> cake-profile: 1;   // 0 Legacy · 1 Soft-cake (SoftCake AQM; Beast::new arg, mod.rs:165)
+
+    // ===== THE TUNE (the beast_preset table — the host resolves the 4 tunables via beast_preset, lib.rs:376) =====
+    in-out property <int> preset: 0;                  // 0 DEFAULT · 1 FAST_PING · 2 OMEGA_BANDWIDTH · 3 UPLOAD_DOWNLOAD
+    in-out property <int> cycle-ms: 0;                // beast_preset field 0 / beast_clamp field 0 (applied, ms)
+    in-out property <int> max-window: 0;             // field 1 (applied, probes)
+    in-out property <int> free-thresh-milli: 0;      // field 2 (applied, milli)
+    in-out property <int> compete-thresh-milli: 0;   // field 3 (applied, milli)
+    in-out property <bool> tunable-clamped: false;   // host: the last beast_clamp COERCED the raw value (surface it)
+
+    // ===== STAGING (a profile/preset change rebuilds the Beast → stage, then Apply — the reapply-config twin) =====
+    in-out property <bool> profile-dirty: false;     // a staged change awaits Apply (the rebuild that resets cwnd/RTT)
+    in-out property <bool> expert-open: false;       // the raw Expert knobs behind a reveal (feedback-simple-ux)
+
+    // ===== LIVE WITNESSES (host pushes from BeastSnapshot — makes the "a rebuild resets this" cost legible) =====
+    in-out property <int> cwnd: 0;                   // snapshot.cwnd (the live window a rebuild reseeds)
+    in-out property <string> mode: "";               // snapshot.mode label (the live YeAH phase)
+    in-out property <float> base-rtt-ms: 0;          // snapshot.base_rtt_ms (the RTT learning a rebuild resets)
+
+    // ===== Plain-words decoders (the Violet felt-truth: tell the non-geek what their picks MEAN) =====
+    out property <string> yeah-profile-label: root.yeah-profile == 2 ? "LINE-RATE"
+        : (root.yeah-profile == 1 ? "CANONICAL" : "LEGACY");
+    out property <string> cake-profile-label: root.cake-profile == 1 ? "SOFT-CAKE" : "LEGACY-AQM";
+    out property <string> preset-label: root.preset == 1 ? "FAST PING"
+        : (root.preset == 2 ? "OMEGA BANDWIDTH" : (root.preset == 3 ? "UPLOAD/DOWNLOAD" : "DEFAULT"));
+    out property <string> preset-desc: root.preset == 1 ? "Chase the lowest latency — tight cycle, quick probes. Best for gaming + calls."
+        : (root.preset == 2 ? "Maximize throughput — a wide probe window. Best for big downloads + streaming."
+        : (root.preset == 3 ? "Balanced under heavy upload AND download at the same time."
+        : "The balanced tune — good for everyday browsing."));
+    // The one-line posture summary — the whole setup in plain words.
+    out property <string> posture-line: "\{root.yeah-profile-label} brain · \{root.cake-profile-label} queue · \{root.preset-label} tune";
+
+    // ===== 🎷 THE DECISION-POINT GUARD — derived, host-readable (the proof test asserts these fire) =====
+    // (F6 honesty, surfaced WHERE the choice is made) The Legacy AQM has no Soft-cake valves → the dashboard's
+    // per-tin Mochi-Dango / shed cards will read 0. Informational (Legacy is a valid, lighter choice — not an error).
+    out property <bool> note-legacy-cake-dark: root.cake-profile == 0;
+    // (F6 honesty) The Legacy brain doesn't compute the canonical telemetry → the dashboard's backlog / reno /
+    // fast-mode cards will stay 0. Informational.
+    out property <bool> note-legacy-yeah-dark: root.yeah-profile == 0;
+    // Line-rate ramps hard — great on a fast, clean link; on a lossy/mobile link it can over-probe. Caution.
+    out property <bool> note-linerate-aggressive: root.yeah-profile == 2;
+    // A staged profile/preset change has not been applied yet — Apply rebuilds the Beast (resets cwnd + RTT).
+    out property <bool> note-profile-dirty: root.profile-dirty;
+    // ACTIONABLE: an Expert value was outside the safe range and beast_clamp coerced it (your input did not stick).
+    out property <bool> warn-tunable-clamped: root.tunable-clamped;
+    // Master of the ACTIONABLE dangers (the soft F6/caution/dirty NOTES are excluded — they are not misconfig).
+    out property <bool> warn-any: root.warn-tunable-clamped;
+    // Master of the informational notes (for a potential host badge; distinct from the actionable warn-any).
+    out property <bool> note-any: root.note-legacy-cake-dark || root.note-legacy-yeah-dark
+        || root.note-linerate-aggressive || root.note-profile-dirty;
+
+    // ===== The user's edit intents — the host wires each to its destination (see the GROUND-TRUTH header) =====
+    callback yeah-profile-picked(int);     // -> stage YeahProfile (reapply-profile rebuilds Beast::new)
+    callback cake-profile-picked(int);     // -> stage CakeProfile
+    callback preset-picked(int);           // -> host: beast_preset(id, field) resolves the 4 tunables
+    callback cycle-ms-stepped(int);        // -> host: beast_clamp(0, raw)  -> cycle-ms
+    callback max-window-stepped(int);      // -> host: beast_clamp(1, raw)  -> max-window
+    callback free-thresh-stepped(int);     // -> host: beast_clamp(2, raw)  -> free-thresh-milli
+    callback compete-thresh-stepped(int);  // -> host: beast_clamp(3, raw)  -> compete-thresh-milli
+    callback expert-toggled(bool);         // -> reveal the raw Expert knobs
+    callback reapply-profile();            // -> host: rebuild Beast::new(staged yeah, cake) + re-apply the tune
+    callback close-settings();
+
+    VerticalBox {
+        padding: 14px;
+        spacing: 12px;
+
+        // ---- Header + the live phase + the plain-words posture summary ----
+        HorizontalBox {
+            spacing: 8px;
+            VerticalLayout {
+                horizontal-stretch: 1;
+                Text {
+                    text: "BEAST  |||";
+                    color: Beast.flow;
+                    font-size: 22px;
+                    font-weight: 900;
+                }
+                Text {
+                    text: "the flow engine — Tortä × YeAH TCP/UDP · pick the brain, queue + tune";
+                    color: Beast.mist;
+                    font-size: 11px;
+                    wrap: word-wrap;
+                }
+            }
+            Text {
+                text: root.base-rtt-ms > 0 ? "\{root.mode} · cwnd \{root.cwnd}" : "no sample yet";
+                color: root.base-rtt-ms > 0 ? Beast.thrust : Beast.mist;
+                font-size: 11px;
+                font-weight: 800;
+                vertical-alignment: center;
+                horizontal-alignment: right;
+                wrap: word-wrap;
+            }
+        }
+        RowCard {
+            HorizontalLayout {
+                padding: 8px;
+                Text {
+                    text: root.posture-line;
+                    color: Beast.mist;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+            }
+        }
+
+        // ---- 🎷 The decision-point banners (each exists ONLY while its state is live) ----
+        // The actionable warning first (colored), then the informational notes (muted panel).
+        if root.warn-tunable-clamped : AlertBanner {
+            accent: Beast.caution;
+            text-color: Beast.abyss;
+            message: "CLAMPED -> your Expert value was outside the safe range and was clamped to keep the Beast stable. The number shown is what actually applied.";
+        }
+        if root.note-legacy-cake-dark : AlertBanner {
+            accent: Beast.panel;
+            text-color: Beast.mist;
+            glyph: "(i)";
+            message: "LEGACY QUEUE -> the simple strict-priority queue has no Soft-cake valves, so the dashboard's per-tin Mochi-Dango / shed cards will read 0. Pick Soft-cake for the smart AQM + the deep flow view.";
+        }
+        if root.note-legacy-yeah-dark : AlertBanner {
+            accent: Beast.panel;
+            text-color: Beast.mist;
+            glyph: "(i)";
+            message: "LEGACY BRAIN -> the proven UDP-YeAH brain does not compute the canonical telemetry, so the dashboard's backlog / contention / fast-mode cards will stay 0. Pick Canonical for the deep YeAH view.";
+        }
+        if root.note-linerate-aggressive : AlertBanner {
+            accent: Beast.caution;
+            text-color: Beast.abyss;
+            glyph: "(i)";
+            message: "LINE-RATE -> ramps hard for fast, clean links. On a lossy or mobile link it can over-probe; Canonical is the safe all-rounder.";
+        }
+        if root.note-profile-dirty : AlertBanner {
+            accent: Beast.panel;
+            text-color: Beast.mist;
+            glyph: "(i)";
+            message: "STAGED -> a brain / queue / tune change is pending. Apply rebuilds the flow engine, which reseeds the live window (cwnd) + RTT learning. Fine to do — the graph just restarts.";
+        }
+
+        // ---- THE BRAIN: the YeAH congestion brain (3-way; a change rebuilds the Beast) ----
+        SectionTitle { text: "THE BRAIN  (YeAH congestion control)"; }
+        RowCard {
+            VerticalLayout {
+                padding: 10px;
+                spacing: 8px;
+                HorizontalLayout {
+                    spacing: 6px;
+                    Segment {
+                        text: "Legacy";
+                        active: root.yeah-profile == 0;
+                        accent: Beast.warming;
+                        picked => {
+                            root.yeah-profile = 0;
+                            root.profile-dirty = true;
+                            root.yeah-profile-picked(0);
+                        }
+                    }
+                    Segment {
+                        text: "Canonical";
+                        active: root.yeah-profile == 1;
+                        accent: Beast.thrust;
+                        picked => {
+                            root.yeah-profile = 1;
+                            root.profile-dirty = true;
+                            root.yeah-profile-picked(1);
+                        }
+                    }
+                    Segment {
+                        text: "Line-rate";
+                        active: root.yeah-profile == 2;
+                        accent: Beast.backoff;
+                        picked => {
+                            root.yeah-profile = 2;
+                            root.profile-dirty = true;
+                            root.yeah-profile-picked(2);
+                        }
+                    }
+                }
+                Text {
+                    text: root.yeah-profile == 0 ? "Legacy — the proven UDP-YeAH brain. Simple + steady; the lightest choice."
+                        : (root.yeah-profile == 2 ? "Line-rate — aggressive ramp built for fast links."
+                        : "Canonical — the full academic YeAH: precautionary backoff, contention-proof, STCP fast-start. Smartest under competition.");
+                    color: Beast.mist;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+            }
+        }
+
+        // ---- THE QUEUE: the CAKE/AQM mechanism (2-way; a change rebuilds the Beast) ----
+        SectionTitle { text: "THE QUEUE  (CAKE / AQM)"; }
+        RowCard {
+            VerticalLayout {
+                padding: 10px;
+                spacing: 8px;
+                HorizontalLayout {
+                    spacing: 6px;
+                    Segment {
+                        text: "Legacy AQM";
+                        active: root.cake-profile == 0;
+                        accent: Beast.warming;
+                        picked => {
+                            root.cake-profile = 0;
+                            root.profile-dirty = true;
+                            root.cake-profile-picked(0);
+                        }
+                    }
+                    Segment {
+                        text: "Soft-cake";
+                        active: root.cake-profile == 1;
+                        accent: Beast.cool;
+                        picked => {
+                            root.cake-profile = 1;
+                            root.profile-dirty = true;
+                            root.cake-profile-picked(1);
+                        }
+                    }
+                }
+                Text {
+                    text: root.cake-profile == 1
+                        ? "Soft-cake — the surpassing AQM: Mochi-Dango valves shed early (SERVFAIL-fast, never silent), the Tortä scheduler keeps every flow fair."
+                        : "Legacy AQM — a simple strict-priority queue, tail-drop when full. No smart shedding, no per-tin valves.";
+                    color: Beast.mist;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+            }
+        }
+
+        // ---- THE TUNE: the beast_preset table (a plain-language 2x2 pick) + the resolved values ----
+        SectionTitle { text: "THE TUNE  (preset)"; }
+        RowCard {
+            VerticalLayout {
+                padding: 10px;
+                spacing: 8px;
+                HorizontalLayout {
+                    spacing: 6px;
+                    Segment {
+                        text: "Balanced";
+                        active: root.preset == 0;
+                        accent: Beast.flow;
+                        picked => {
+                            root.preset = 0;
+                            root.profile-dirty = true;
+                            root.preset-picked(0);
+                        }
+                    }
+                    Segment {
+                        text: "Fast ping";
+                        active: root.preset == 1;
+                        accent: Beast.thrust;
+                        picked => {
+                            root.preset = 1;
+                            root.profile-dirty = true;
+                            root.preset-picked(1);
+                        }
+                    }
+                }
+                HorizontalLayout {
+                    spacing: 6px;
+                    Segment {
+                        text: "Bandwidth";
+                        active: root.preset == 2;
+                        accent: Beast.cool;
+                        picked => {
+                            root.preset = 2;
+                            root.profile-dirty = true;
+                            root.preset-picked(2);
+                        }
+                    }
+                    Segment {
+                        text: "Up + Down";
+                        active: root.preset == 3;
+                        accent: Beast.warm;
+                        picked => {
+                            root.preset = 3;
+                            root.profile-dirty = true;
+                            root.preset-picked(3);
+                        }
+                    }
+                }
+                Text {
+                    text: root.preset-desc;
+                    color: Beast.mist;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+                // The resolved tunables (read-only — host pushes from beast_preset; the preset made concrete).
+                // 2x2 grid (not a single 4-wide row) so the strip fits the narrow ||| settings column.
+                HorizontalLayout {
+                    spacing: 6px;
+                    StatChip {
+                        label: "cycle (ms)";
+                        value: "\{root.cycle-ms}";
+                        tint: Beast.flow;
+                    }
+                    StatChip {
+                        label: "max win";
+                        value: "\{root.max-window}";
+                        tint: Beast.thrust;
+                    }
+                }
+                HorizontalLayout {
+                    spacing: 6px;
+                    StatChip {
+                        label: "free (m)";
+                        value: "\{root.free-thresh-milli}";
+                        tint: Beast.cool;
+                    }
+                    StatChip {
+                        label: "compete (m)";
+                        value: "\{root.compete-thresh-milli}";
+                        tint: Beast.backoff;
+                    }
+                }
+            }
+        }
+
+        // ---- APPLY: the staged rebuild (gated on a pending change; the reset-cost witnesses are legible here) ----
+        if root.profile-dirty : RowCard {
+            background: @linear-gradient(160deg, Beast.panel.with-alpha(0.66) 0%, Beast.pit.with-alpha(0.42) 100%);
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    Text {
+                        text: "Apply the staged tune";
+                        color: Beast.ink;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "Rebuilds the flow engine — reseeds cwnd \{root.cwnd} + the RTT learning. The live graph restarts.";
+                        color: Beast.mist;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+                Button {
+                    text: "Apply";
+                    clicked => {
+                        root.reapply-profile();
+                    }
+                }
+            }
+        }
+
+        // ---- EXPERT: the raw knobs behind a reveal (feedback-simple-ux — raw tunables only for the geeks) ----
+        SectionTitle { text: "EXPERT  (raw tunables — safe-range clamped)"; }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    Text {
+                        text: "Show the raw knobs";
+                        color: Beast.ink;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "The individual cycle / window / threshold values. Each is clamped to a safe range so a bad value can't destabilize the Beast.";
+                        color: Beast.mist;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+                Button {
+                    text: root.expert-open ? "Hide" : "Show";
+                    clicked => {
+                        root.expert-open = !root.expert-open;
+                        root.expert-toggled(root.expert-open);
+                    }
+                }
+            }
+        }
+        if root.expert-open : VerticalLayout {
+            spacing: 6px;
+            StepperRow {
+                label: "Control cycle (ms)";
+                hint: "How often the Beast re-tunes. Safe range 1000-60000.";
+                value: "\{root.cycle-ms}";
+                value-tint: Beast.flow;
+                stepped(d) => {
+                    root.cycle-ms-stepped(d);
+                }
+            }
+            StepperRow {
+                label: "Max probe window";
+                hint: "The ceiling on concurrent probes. Safe range 2-64.";
+                value: "\{root.max-window}";
+                value-tint: Beast.thrust;
+                stepped(d) => {
+                    root.max-window-stepped(d);
+                }
+            }
+            StepperRow {
+                label: "Free-flow threshold (m)";
+                hint: "When the link is treated as idle. Safe range 1000-2000.";
+                value: "\{root.free-thresh-milli}";
+                value-tint: Beast.cool;
+                stepped(d) => {
+                    root.free-thresh-stepped(d);
+                }
+            }
+            StepperRow {
+                label: "Competing threshold (m)";
+                hint: "When contention is sensed. Safe range 1010-3000.";
+                value: "\{root.compete-thresh-milli}";
+                value-tint: Beast.backoff;
+                stepped(d) => {
+                    root.compete-thresh-stepped(d);
+                }
+            }
+        }
+
+        Rectangle { }  // tail spacer
+    }
+
+    // ===== #36 THE UPPER MOON SEAL — the dash is the Hashira; the settings pane bears the
+    //       matching demon's rank (the sibling duo mirrors the CAKE×YeAH twin engine). Declared LAST. =====
+    UpperMoonChip {
+        x: parent.width - self.width - 10px;
+        y: 8px;
+        kanji: "上弦・陸";
+        moon-name: "UPPER SIX — GYUTARO & DAKI";
+        tint: #9ad048;
+    }
+}
+
+// ── The standalone Window forwarder — keeps `BeastSettings::new()` (the host test + any standalone
+// preview) valid by re-exposing the pane's whole surface via `<=>`. The shell embeds BeastSettingsPane
+// directly; this wrapper is the single-window entry the binding test constructs. ──
+export component BeastSettings inherits Window {
+    title: "Yeah! Tortä — Beast  |||";
+    preferred-width: 440px;
+    preferred-height: 1000px;
+    background: Beast.abyss.with-alpha(0.45);
+
+    // inputs the host pushes (BeastSnapshot + staged tune)
+    in-out property <int> yeah-profile <=> pane.yeah-profile;
+    in-out property <int> cake-profile <=> pane.cake-profile;
+    in-out property <int> preset <=> pane.preset;
+    in-out property <int> cycle-ms <=> pane.cycle-ms;
+    in-out property <int> max-window <=> pane.max-window;
+    in-out property <int> free-thresh-milli <=> pane.free-thresh-milli;
+    in-out property <int> compete-thresh-milli <=> pane.compete-thresh-milli;
+    in-out property <bool> tunable-clamped <=> pane.tunable-clamped;
+    in-out property <bool> profile-dirty <=> pane.profile-dirty;
+    in-out property <bool> expert-open <=> pane.expert-open;
+    in-out property <int> cwnd <=> pane.cwnd;
+    in-out property <string> mode <=> pane.mode;
+    in-out property <float> base-rtt-ms <=> pane.base-rtt-ms;
+
+    // derived read-outs (the host/proof reads these)
+    out property <string> yeah-profile-label <=> pane.yeah-profile-label;
+    out property <string> cake-profile-label <=> pane.cake-profile-label;
+    out property <string> preset-label <=> pane.preset-label;
+    out property <string> preset-desc <=> pane.preset-desc;
+    out property <string> posture-line <=> pane.posture-line;
+    out property <bool> note-legacy-cake-dark <=> pane.note-legacy-cake-dark;
+    out property <bool> note-legacy-yeah-dark <=> pane.note-legacy-yeah-dark;
+    out property <bool> note-linerate-aggressive <=> pane.note-linerate-aggressive;
+    out property <bool> note-profile-dirty <=> pane.note-profile-dirty;
+    out property <bool> warn-tunable-clamped <=> pane.warn-tunable-clamped;
+    out property <bool> warn-any <=> pane.warn-any;
+    out property <bool> note-any <=> pane.note-any;
+
+    // the user's edit intents (the host wires each to its destination)
+    callback yeah-profile-picked <=> pane.yeah-profile-picked;
+    callback cake-profile-picked <=> pane.cake-profile-picked;
+    callback preset-picked <=> pane.preset-picked;
+    callback cycle-ms-stepped <=> pane.cycle-ms-stepped;
+    callback max-window-stepped <=> pane.max-window-stepped;
+    callback free-thresh-stepped <=> pane.free-thresh-stepped;
+    callback compete-thresh-stepped <=> pane.compete-thresh-stepped;
+    callback expert-toggled <=> pane.expert-toggled;
+    callback reapply-profile <=> pane.reapply-profile;
+    callback close-settings <=> pane.close-settings;
+
+    pane := BeastSettingsPane { }
+}

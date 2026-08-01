@@ -1,0 +1,1489 @@
+{
+  "directory": "libumdnscrypt\\src\\test\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\dns_engine\\wire_cake_inu\\elevation",
+  "files": {
+    "AdbDiscoveryTest.kt": {
+      "hash": "45be2d775b33",
+      "indexed_at": "2026-08-01T04:01:03.119789+00:00",
+      "language": "kotlin",
+      "lines": 121,
+      "mtime_ns": 1785556379533899500,
+      "size": 4843,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "---- classify: pairing vs connect are DIFFERENT mDNS services on DIFFERENT ports ----",
+              "lines": [
+                28,
+                31
+              ],
+              "name": "`classify recognizes the pairing service`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                33,
+                36
+              ],
+              "name": "`classify recognizes the connect service - the one P6 never discovered`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                38,
+                42
+              ],
+              "name": "`classify tolerates trailing dots and the local suffix from different OEMs`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                44,
+                47
+              ],
+              "name": "`classify is case-insensitive`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                54
+              ],
+              "name": "`classify maps unknown, blank, and null service types to UNKNOWN`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- isSelfHost: the security keystone \u2014 connect ONLY to this device ----",
+              "lines": [
+                58,
+                63
+              ],
+              "name": "`isSelfHost accepts IPv4 loopback across the whole 127 block`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                65,
+                71
+              ],
+              "name": "`isSelfHost accepts IPv6 loopback and its forms`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                73,
+                77
+              ],
+              "name": "`isSelfHost accepts the localhost literal and strips an IPv6 zone id`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                86
+              ],
+              "name": "`isSelfHost REJECTS LAN and public addresses - kills the rogue-LAN fake endpoint`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                88,
+                97
+              ],
+              "name": "`isSelfHost rejects garbage and a 128-dot-prefix near-miss`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- Resolved.valid: endpoint + port range + self-host all together ----",
+              "lines": [
+                101,
+                106
+              ],
+              "name": "`Resolved is valid only when endpoint known, port in range, and host is self`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                113
+              ],
+              "name": "`Resolved is INVALID for a non-self host even with a good endpoint and port`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                115,
+                120
+              ],
+              "name": "`Resolved is invalid for an out-of-range port or unknown endpoint`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            24,
+            121
+          ],
+          "name": "AdbDiscoveryTest",
+          "type": "class"
+        }
+      ]
+    },
+    "AdbSentinelTest.kt": {
+      "hash": "f0d8e93f100c",
+      "indexed_at": "2026-08-01T04:01:03.435451+00:00",
+      "language": "kotlin",
+      "lines": 113,
+      "mtime_ns": 1785556379545899800,
+      "size": 4116,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                32
+              ],
+              "name": "`wrap appends an echo of the exit sentinel with semicolon not ampersand`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                34,
+                42
+              ],
+              "name": "`parse recovers exit 0 and strips the marker from the output`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                44,
+                51
+              ],
+              "name": "`parse recovers a non-zero exit from a failing command`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                53,
+                59
+              ],
+              "name": "`parse handles empty command output - just the marker line`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                61,
+                67
+              ],
+              "name": "`parse handles multi-line output preserving the body, stripping only the marker`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                69,
+                75
+              ],
+              "name": "`parse normalizes CRLF from toybox echo on some ROMs`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                84
+              ],
+              "name": "`parse takes the LAST marker when the command output itself echoes the token`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                86,
+                93
+              ],
+              "name": "`parse with no marker reads as UNKNOWN failure - a truncated stream is never success`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                95,
+                101
+              ],
+              "name": "`parse with a non-numeric tail after the marker reads as UNKNOWN failure`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                112
+              ],
+              "name": "`wrap then parse round-trips a typical settings-get read-back`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            113
+          ],
+          "name": "AdbSentinelTest",
+          "type": "class"
+        }
+      ]
+    },
+    "BootReapplyPolicyTest.kt": {
+      "hash": "d220a2ed580b",
+      "indexed_at": "2026-08-01T04:01:03.783821+00:00",
+      "language": "kotlin",
+      "lines": 116,
+      "mtime_ns": 1785556379556899100,
+      "size": 5575,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                31,
+                37
+              ],
+              "name": "`unprotected device does nothing - no reconnect, no work`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                48
+              ],
+              "name": "`protected device re-applies drift-prone powers and re-verifies durable ones`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                57
+              ],
+              "name": "`unverified powers are skipped - only what was granted is re-established`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                59,
+                71
+              ],
+              "name": "`protected but every power unverified means no real work - no reconnect`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                73,
+                77
+              ],
+              "name": "`protected with an empty power set opens no connection`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                85
+              ],
+              "name": "`only drift-prone powers exist - reapply only, still reconnects`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                94,
+                115
+              ],
+              "name": "`real PowerCatalogue partitions across the boot policy - drift-prone re-apply, durable re-verify`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            25,
+            116
+          ],
+          "name": "BootReapplyPolicyTest",
+          "type": "class"
+        }
+      ]
+    },
+    "ElevationRoutingTest.kt": {
+      "hash": "2c4cbea4baa8",
+      "indexed_at": "2026-08-01T04:01:04.134329+00:00",
+      "language": "kotlin",
+      "lines": 297,
+      "mtime_ns": 1785556379567898600,
+      "size": 12824,
+      "symbols": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "lines": [
+                    48,
+                    51
+                  ],
+                  "name": "probe",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    53,
+                    59
+                  ],
+                  "name": "acquire",
+                  "signature": "(request: ElevationRequest)",
+                  "type": "method"
+                }
+              ],
+              "docstring": "---- a scriptable fake provider -----------------------------------------",
+              "lines": [
+                38,
+                60
+              ],
+              "name": "FakeProvider",
+              "type": "class"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    67,
+                    68
+                  ],
+                  "name": "exec",
+                  "signature": "(command: String, timeoutMs: Long)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    69,
+                    72
+                  ],
+                  "name": "close",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                62,
+                73
+              ],
+              "name": "FakeSession",
+              "type": "class"
+            },
+            {
+              "lines": [
+                75,
+                76
+              ],
+              "name": "providersOf",
+              "signature": "(vararg p: ElevationProvider)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                78,
+                79
+              ],
+              "name": "manager",
+              "signature": "(vararg p: ElevationProvider)",
+              "type": "method"
+            },
+            {
+              "docstring": "---- state machine: legal transitions -----------------------------------",
+              "lines": [
+                90,
+                96
+              ],
+              "name": "`idle advances only to discovering or failed`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                98,
+                102
+              ],
+              "name": "`discovering can skip pairing straight to connecting (shizuku one-tap)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                104,
+                116
+              ],
+              "name": "`the full self-adb happy path is a legal chain`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                118,
+                121
+              ],
+              "name": "`connecting cannot leap back to discovering`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                123,
+                128
+              ],
+              "name": "`elevated is ephemeral - drops back to idle, may fail on session loss`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                130,
+                141
+              ],
+              "name": "`failed is absorbing except a retry reset to idle`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                143,
+                149
+              ],
+              "name": "`terminal recognises only elevated and failed`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- routing: Shizuku-first -> self-ADB fallback -> none -----------------",
+              "lines": [
+                153,
+                160
+              ],
+              "name": "`detect picks shizuku when both are ready`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                162,
+                167
+              ],
+              "name": "`detect falls back to self-adb when shizuku is unavailable`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                169,
+                176
+              ],
+              "name": "`detect returns null and NoneAvailable when neither works`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                178,
+                182
+              ],
+              "name": "`a NeedsSetup channel is still selectable (the wizard will guide it)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                184,
+                190
+              ],
+              "name": "`a probe that throws degrades that channel and falls through`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- acquire routing + flow contracts -----------------------------------",
+              "lines": [
+                194,
+                207
+              ],
+              "name": "`acquire drives shizuku to elevated and never touches self-adb`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                209,
+                221
+              ],
+              "name": "`acquire falls through an unavailable shizuku into self-adb`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                223,
+                240
+              ],
+              "name": "`acquire does NOT fall through a provider-specific failure (wrong code stays put)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                242,
+                251
+              ],
+              "name": "`acquire with no providers emits a single NO_PROVIDER failure, never throws`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                253,
+                264
+              ],
+              "name": "`forceProvider pins self-adb even when shizuku is ready (Expert override)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                266,
+                279
+              ],
+              "name": "`release closes the held session and resets status (ephemeral steady state)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- contract sanity on the value types ---------------------------------",
+              "lines": [
+                283,
+                289
+              ],
+              "name": "`ShellResult ok is exit-zero and value trims stdout`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                291,
+                296
+              ],
+              "name": "`ProviderId round-trips through its display id`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            34,
+            297
+          ],
+          "name": "ElevationRoutingTest",
+          "type": "class"
+        }
+      ]
+    },
+    "GrantCrashAtomicityTest.kt": {
+      "hash": "8ce1faaa7254",
+      "indexed_at": "2026-08-01T04:01:04.472327+00:00",
+      "language": "kotlin",
+      "lines": 157,
+      "mtime_ns": 1785556379579899300,
+      "size": 6837,
+      "symbols": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "lines": [
+                    55,
+                    61
+                  ],
+                  "name": "exec",
+                  "signature": "(command: String, timeoutMs: Long)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    63,
+                    65
+                  ],
+                  "name": "close",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                47,
+                66
+              ],
+              "name": "FakeSession",
+              "type": "class"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    75,
+                    75
+                  ],
+                  "name": "load",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    76,
+                    79
+                  ],
+                  "name": "save",
+                  "signature": "(states: List<PowerState>)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                72,
+                80
+              ],
+              "name": "RecordingStore",
+              "type": "class"
+            },
+            {
+              "lines": [
+                83,
+                93
+              ],
+              "name": "happyResponder",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                114
+              ],
+              "name": "everyPowerIsPersistedBeforeTheNextOneRuns",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                136
+              ],
+              "name": "aKillPartWayThroughKeepsEveryPowerAlreadyGranted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                142,
+                156
+              ],
+              "name": "aCompleteRunEndsInTheSameStateAsBefore",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            42,
+            157
+          ],
+          "name": "GrantCrashAtomicityTest",
+          "type": "class"
+        }
+      ]
+    },
+    "PowerSetTest.kt": {
+      "hash": "fd31f5595ebe",
+      "indexed_at": "2026-08-01T04:01:04.806717+00:00",
+      "language": "kotlin",
+      "lines": 540,
+      "mtime_ns": 1785556379591899500,
+      "size": 26195,
+      "symbols": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "lines": [
+                    51,
+                    60
+                  ],
+                  "name": "exec",
+                  "signature": "(command: String, timeoutMs: Long)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    62,
+                    64
+                  ],
+                  "name": "close",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "docstring": "after the simulated command output. `responder` maps the UNWRAPPED command \u2192 (output, exit).",
+              "lines": [
+                42,
+                65
+              ],
+              "name": "FakeSession",
+              "type": "class"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    69,
+                    69
+                  ],
+                  "name": "load",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    70,
+                    70
+                  ],
+                  "name": "save",
+                  "signature": "(states: List<PowerState>)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                67,
+                71
+              ],
+              "name": "MemStore",
+              "type": "class"
+            },
+            {
+              "lines": [
+                74,
+                95
+              ],
+              "name": "happySession",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "========================================================================",
+              "lines": [
+                103,
+                113
+              ],
+              "name": "`wrap then merged-shell then parse round-trips the read-back path the GrantEngine relies on`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "========================================================================",
+              "lines": [
+                119,
+                137
+              ],
+              "name": "`every command targets the self package only - no other pkg appears`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                139,
+                145
+              ],
+              "name": "`the always-on VPN command matches the P6 grant verbatim (self-target)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                147,
+                152
+              ],
+              "name": "`the lockdown kill-switch command matches the P6 grant verbatim`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                154,
+                160
+              ],
+              "name": "`lockdown is applied AFTER always-on (anti-brick ordering)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                162,
+                165
+              ],
+              "name": "`the explicit-empty lockdown allowlist anti-brick valve is in the default set`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                167,
+                173
+              ],
+              "name": "`standby-bucket is the drift-prone power flagged for boot re-apply`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                175,
+                184
+              ],
+              "name": "`NOT-shipping powers are absent - no network ADB, no BIND_VPN, no pm disable`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                186,
+                194
+              ],
+              "name": "`WRITE_SECURE_SETTINGS is a Tier-3 Expert opt-in via the shell, never a default`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                214,
+                222
+              ],
+              "name": "`every S2 amplification power is Tier-3 Expert - never a default`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                224,
+                232
+              ],
+              "name": "`every S2 amplification power is reversible and read-backable - never claims held blind`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                234,
+                244
+              ],
+              "name": "`the two DNS-sovereignty powers own DISTINCT global keys - no redundant elevation`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                246,
+                254
+              ],
+              "name": "`advanced-VPN power is the ACTIVATE_VPN appop, self-target, NOT BIND_VPN_SERVICE`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                256,
+                267
+              ],
+              "name": "`S2 appop read-backs are contains-token 'allow' and global settings are exact-equals`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                269,
+                273
+              ],
+              "name": "`the catalogue grew to 21 powers (12 base + 9 S2 amplification)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                275,
+                281
+              ],
+              "name": "`the new battery-survival powers (doze, wake-lock, run-in-background) are Tier-1 defaults`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                283,
+                291
+              ],
+              "name": "`READ_LOGS and Data-Saver bypass are Tier-3 Expert (absent from the default set)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                293,
+                299
+              ],
+              "name": "`Data-Saver bypass is omitted without a UID and UID-keyed when present`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                301,
+                306
+              ],
+              "name": "`every power carries a reverse command so disable-protection is clean`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                308,
+                315
+              ],
+              "name": "`doze whitelist is held by contains-token on the package`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                317,
+                324
+              ],
+              "name": "`standby-bucket is held at ACTIVE(10) or EXEMPTED(5), not at a throttled bucket`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                326,
+                331
+              ],
+              "name": "`POST_NOTIFICATIONS is a non-read-backable runtime grant (exit-only)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                333,
+                343
+              ],
+              "name": "`isHeld is exact-equals for settings and contains-token for appops`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "========================================================================",
+              "lines": [
+                349,
+                360
+              ],
+              "name": "`applyAll converges every tier-1 power to held against a happy session`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                362,
+                375
+              ],
+              "name": "`apply is idempotent - an already-held power runs NO set command`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                377,
+                397
+              ],
+              "name": "`apply sets then verifies when the power is initially absent`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                399,
+                417
+              ],
+              "name": "`apply NEVER claims held when the set silently fails the read-back (Done cannot lie)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                419,
+                432
+              ],
+              "name": "`apply records a non-zero set exit as not-held`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                434,
+                443
+              ],
+              "name": "`a non-read-backable power is held on a clean apply exit only`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                445,
+                458
+              ],
+              "name": "`a power that throws mid-exec is recorded as not-held, never aborts the pass`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                460,
+                475
+              ],
+              "name": "`applyAll persists the per-power map and isFullyProtected reflects a missing power`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                477,
+                495
+              ],
+              "name": "`revertAll runs every reverse command and clears the persisted protection`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                497,
+                505
+              ],
+              "name": "`revertAll never throws on a single power and still completes the pass`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "========================================================================",
+              "lines": [
+                511,
+                519
+              ],
+              "name": "`codec round-trips the per-power map`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                521,
+                526
+              ],
+              "name": "`codec decodes empty or null as no powers (fail-closed, never fake protected)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                528,
+                539
+              ],
+              "name": "`codec skips garbled or unknown-key lines, keeps valid ones`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            32,
+            540
+          ],
+          "name": "PowerSetTest",
+          "type": "class"
+        }
+      ]
+    },
+    "ReadBackVerifierTest.kt": {
+      "hash": "23257d6845e8",
+      "indexed_at": "2026-08-01T04:01:05.128585+00:00",
+      "language": "kotlin",
+      "lines": 164,
+      "mtime_ns": 1785556379603900000,
+      "size": 6865,
+      "symbols": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "lines": [
+                    42,
+                    46
+                  ],
+                  "name": "exec",
+                  "signature": "(cmd: String)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                40,
+                47
+              ],
+              "name": "FakeShell",
+              "type": "class"
+            },
+            {
+              "lines": [
+                49,
+                49
+              ],
+              "name": "ok",
+              "signature": "(value: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                50
+              ],
+              "name": "fail",
+              "signature": "(msg: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                52,
+                59
+              ],
+              "name": "`matches requires both ok AND the trimmed value to equal expected`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                61,
+                71
+              ],
+              "name": "`converge is idempotent - an already-applied power costs one read and NO write`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                73,
+                91
+              ],
+              "name": "`converge sets then re-verifies a missing power`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                107
+              ],
+              "name": "`converge is HONEST - a silent-reject ROM that never applies the value is NOT verified`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                109,
+                120
+              ],
+              "name": "`converge treats a failing set+read as unverified`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                122,
+                135
+              ],
+              "name": "`convergeAll verifies every power when all take`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                137,
+                154
+              ],
+              "name": "`convergeAll stops at the first unverifiable power - partial, never lying`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                156,
+                163
+              ],
+              "name": "`allVerified is false when fewer outcomes than expected even if all present passed`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            24,
+            164
+          ],
+          "name": "ReadBackVerifierTest",
+          "type": "class"
+        }
+      ]
+    },
+    "ShizukuElevationTest.kt": {
+      "hash": "cbeafb865c2b",
+      "indexed_at": "2026-08-01T04:01:05.481081+00:00",
+      "language": "kotlin",
+      "lines": 277,
+      "mtime_ns": 1785556379615900900,
+      "size": 11041,
+      "symbols": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "lines": [
+                    39,
+                    39
+                  ],
+                  "name": "pingBinder",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    41,
+                    41
+                  ],
+                  "name": "hasPermission",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    43,
+                    46
+                  ],
+                  "name": "newProcess",
+                  "signature": "(command: String)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                31,
+                47
+              ],
+              "name": "FakeBridge",
+              "type": "class"
+            },
+            {
+              "docstring": "---- sentinel codec -----------------------------------------------------",
+              "lines": [
+                51,
+                57
+              ],
+              "name": "`wrap appends the exit sentinel`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                59,
+                67
+              ],
+              "name": "`parse recovers exit code and strips the sentinel line`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                69,
+                77
+              ],
+              "name": "`parse trusts the sentinel exit over the process exit when they disagree`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                85
+              ],
+              "name": "`parse falls back to process exit when no sentinel is present`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                87,
+                91
+              ],
+              "name": "`parse preserves multi-line stdout above the sentinel`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- availability state machine -----------------------------------------",
+              "lines": [
+                95,
+                100
+              ],
+              "name": "`availability is NOT_INSTALLED when the api is absent`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                106
+              ],
+              "name": "`availability is NOT_RUNNING when present but binder does not answer`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                112
+              ],
+              "name": "`availability is PERMISSION_NEEDED when running but ungranted`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                114,
+                120
+              ],
+              "name": "`availability is READY when present running and granted`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- connect + honest degrade -------------------------------------------",
+              "lines": [
+                124,
+                133
+              ],
+              "name": "`connect fails honestly when not ready`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                135,
+                152
+              ],
+              "name": "`reflective bridge degrades to absent on the real classpath without the dep`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- deepened surface: permission handshake + middle-man identity + linkToDeath -------------",
+              "lines": [
+                156,
+                177
+              ],
+              "name": "`serverPrivilege decodes the middle-man server uid honestly`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                179,
+                200
+              ],
+              "name": "`requestPermission delegates to the bridge and reports dispatch`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                202,
+                226
+              ],
+              "name": "`exec reports not-alive when the binder dies mid-session`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- exec wires through the sentinel + spawns only what it is given ------",
+              "lines": [
+                230,
+                249
+              ],
+              "name": "`exec sends the sentinel-wrapped command and parses the result`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                251,
+                259
+              ],
+              "name": "`exec degrades honestly when the process cannot be spawned`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                261,
+                276
+              ],
+              "name": "`exec never concatenates anything beyond the given command plus sentinel`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            28,
+            277
+          ],
+          "name": "ShizukuElevationTest",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:01:05.482944+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,365 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\nflog",
+  "files": {
+    "NflogManager.kt": {
+      "hash": "ef56e389f766",
+      "indexed_at": "2026-08-01T04:00:13.252462+00:00",
+      "language": "kotlin",
+      "lines": 416,
+      "mtime_ns": 1785556377655900100,
+      "size": 13127,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                106,
+                106
+              ],
+              "name": "startNflog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                108
+              ],
+              "name": "stopNflog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                110,
+                126
+              ],
+              "name": "startSequence",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                128,
+                148
+              ],
+              "name": "stopSequence",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                150,
+                196
+              ],
+              "name": "openNflogShell",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Waits for the nflog to close and than releases resources",
+              "lines": [
+                199,
+                220
+              ],
+              "name": "closeNflogShell",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                222,
+                247
+              ],
+              "name": "startNfLogHandlerThread",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                249,
+                256
+              ],
+              "name": "getNflogStartCommand",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                258,
+                301
+              ],
+              "name": "killNflog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                303,
+                333
+              ],
+              "name": "getNflogKillCommand",
+              "signature": "(pid: String, signal: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                335,
+                339
+              ],
+              "name": "stopNflogHandlerThread",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                341,
+                354
+              ],
+              "name": "readNflogPidFile",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                356,
+                356
+              ],
+              "name": "getPidFilePath",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                358,
+                387
+              ],
+              "name": "handleConnectionRecordLine",
+              "signature": "(line: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                389,
+                392
+              ],
+              "name": "NflogCommand",
+              "type": "class"
+            },
+            {
+              "lines": [
+                394,
+                394
+              ],
+              "name": "getRealTimeLogs",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                396,
+                398
+              ],
+              "name": "clearRealTimeLogs",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                400,
+                404
+              ],
+              "name": "onConnectionChecked",
+              "signature": "(available: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                406,
+                406
+              ],
+              "name": "isActive",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                408,
+                410
+              ],
+              "name": "listenConnectionChanges",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                412,
+                414
+              ],
+              "name": "unlistenConnectionChanges",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            52,
+            416
+          ],
+          "name": "NflogManager",
+          "type": "class"
+        }
+      ]
+    },
+    "NflogParser.kt": {
+      "hash": "0b4c29a4d5b5",
+      "indexed_at": "2026-08-01T04:00:13.549002+00:00",
+      "language": "kotlin",
+      "lines": 138,
+      "mtime_ns": 1785556377667898600,
+      "size": 5002,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                41,
+                47
+              ],
+              "name": "parse",
+              "signature": "(line: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                94
+              ],
+              "name": "parsePacket",
+              "signature": "(line: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                96,
+                123
+              ],
+              "name": "parseDNS",
+              "signature": "(line: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                125,
+                131
+              ],
+              "name": "parseError",
+              "signature": "(line: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                133,
+                135
+              ],
+              "name": "parseUnknown",
+              "signature": "(line: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                137,
+                137
+              ],
+              "name": "toUnicode",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            29,
+            138
+          ],
+          "name": "NflogParser",
+          "type": "class"
+        }
+      ]
+    },
+    "NflogSessionsHolder.kt": {
+      "hash": "485fd3eda1ea",
+      "indexed_at": "2026-08-01T04:00:13.837814+00:00",
+      "language": "kotlin",
+      "lines": 95,
+      "mtime_ns": 1785556377679900500,
+      "size": 2782,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                28,
+                42
+              ],
+              "name": "addSession",
+              "signature": "(\n        uid: Int,\n        protocol: String,\n        saddr: String,\n        sport: Int,\n        ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                44,
+                50
+              ],
+              "name": "getUid",
+              "signature": "(\n        protocol: String,\n        saddr: String,\n        sport: Int,\n        daddr: String,\n   ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                53,
+                61
+              ],
+              "name": "clearOldSessions",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    71,
+                    84
+                  ],
+                  "name": "equals",
+                  "signature": "(other: Any?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    86,
+                    93
+                  ],
+                  "name": "hashCode",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                63,
+                94
+              ],
+              "name": "Session",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            24,
+            95
+          ],
+          "name": "NflogSessionsHolder",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:13.839012+00:00",
+  "version": "1.0"
+}

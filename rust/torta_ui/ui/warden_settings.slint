@@ -1,0 +1,596 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT Warden ||| SETTINGS section — slice 9 of the R4 Warden overhaul (the Violet facet).
+//
+// This is the rust-native (SLINT, NO XML / NO Java / NO Compose) Warden settings surface reached from the
+// |||  triple-burger. It REPLACES every legacy Garmatin firewall settings screen (preferences_firewall.xml +
+// FirewallFragment + the per-app firewall list) — zero Garmatin survives (slice 7 strips them; this is their
+// successor). It reads + writes the live `WardenObject` (torta_core `warden::object`) through the host: SLINT
+// can't mutate a Rust struct directly, so the user's edits surface as typed CALLBACKS the host (the Kotlin
+// SurfaceView bridge / the slint-viewer preview / the lib.rs proof test) wires to the Object setters:
+//   - `posture-changed`      -> WardenObject::set_fail_closed                          (the paranoid knob)
+//   - `universal-toggled`    -> WardenObject::set_universal_toggles                    (TIER 2, the 9 toggles)
+//   - `add-rule`/`remove-rule` -> WardenObject::install_domain_rules / install_cidr_rules (the rules editor)
+//   - `app-mode-cycled` / `app-metered-cycled` / `app-pause-toggled` -> WardenObject::set_app_row (TIER 3 matrix)
+// (There is deliberately NO trust control here: by the engine's own design law — warden/mod.rs "TRUST trashed"
+//  §2 — there is no trust field, no trust weight, no allow-bypass anywhere in the Warden layer. Blocklist-source
+//  trust scoring is a SEPARATE pillar (the Underground layer / GithubTrustEngine), not a Warden setting.)
+// The host pushes the CURRENT armed state onto the `in-out` model/scalar inputs; the user's intents flow back
+// out as callbacks; the host owns the truth (one-way data flow, the live engine is the single source).
+//
+// EMBEDDED IN-SHELL (2-FEED-Warden SETTINGS): the surface is split — `WardenSettingsPane inherits Rectangle`
+// mounts as the shell's "warden-settings" advanced section (reached via ||| -> PILLARS -> WARDEN settings
+// chip), fed field-for-field from the live datapath `WardenObject` (via the canonical `WardenDatapathGate`
+// cross-.so bridge). The `WardenSettings inherits Window` below is the thin `<=>` forwarder that keeps the
+// host-preview proof test (`WardenSettings::new()`) + the main.slint export alive. The precedent Centauri
+// (CentauriSettingsPane) established: a non-Window pane generates NO standalone Rust struct, so the Window
+// forwards the pane's full API.
+//
+// THE FELT-TRUTH GUARD (the facet's load-bearing job): the dashboard (slice 8) surfaces over-block AFTER
+// the wall traps the user. The SETTINGS surface warns AT THE DECISION POINT — the moment the user flips
+// LOCKDOWN or sets fail-closed with no policy is the moment to surface the cost. The
+// `warn-*` derivations below (from the host-pushed summary scalars, mirroring the dashboard's over-block
+// hunt) raise an inline banner where the dangerous choice is made, not after it strands traffic. Simple for
+// non-geeks; the raw rule/CIDR knobs read as plain rows, the danger reads as a colored banner.
+//
+// NOTE: slint uses `:` for property bindings (not `=`); `\{expr}` is string interpolation; `out property`
+// values are derived + host-readable (the proof test asserts the felt-truth derivations fire); interactive
+// controls are built on the core `TouchArea` (zero std-widget-style dependency) + the proven `Button`.
+
+import { VerticalBox, HorizontalBox, Button, LineEdit } from "std-widgets.slint";
+import { ThemeBook, MotifWash, UpperMoonChip } from "theme_tokens.slint";
+
+// ===========================================================================================
+// Exported row structs — the host fills these models from the live `WardenObject`.
+// Each maps 1:1 to a typed torta_core surface (object.rs); never a flat opaque blob.
+// ===========================================================================================
+
+// One TIER-2 universal toggle row — a `WardenUniversalToggles` bit (object.rs:441) + its defense-in-depth
+// `WardenUniversalRule` arm (object.rs:205). `key` is the stable CANONICAL wire field the host maps to the
+// setter bit (new_apps / unknown / metered / lockdown / device_lock / background / udp_ntp / http /
+// dns_bypass — the SAME keys `setWardenUniversalToggle` round-trips, so the callback passes straight
+// through); `rule-armed` shows the matching universal rule is also armed (a toggle fires only when BOTH
+// hold — the stale-write defense).
+export struct UniversalToggle {
+    key: string,
+    label: string,
+    hint: string,
+    on: bool,
+    rule-armed: bool,
+}
+
+// One block-rule row — a `WardenDomainRule` (object.rs:354) OR a `WardenCidrRule` (object.rs:367). `kind` =
+// "domain" | "cidr"; `text` = the domain apex ("ads.example.com") or the CIDR ("203.0.113.0/24"); `scope` =
+// "universal" (uid 0, TIER 4) | "uid <n>" (per-app, TIER 3); `status` = "BLOCK" | "BYPASS".
+export struct RuleEntry {
+    kind: string,
+    text: string,
+    scope: string,
+    wildcard: bool,
+    status: string,
+}
+
+// One per-app matrix editor row — a `WardenAppRow` (object.rs:412): the per-app `WardenAppMode` (object.rs:252,
+// NONE/ISOLATE/UNTRACKED/BYPASS*) x `WardenNetClass` meteredness (object.rs:284, BOTH/UNMETERED/METERED/ALLOW)
+// x a live temp-allow pause (RULE19). Distinct name from warden.slint's read-only `AppRow` (this one is editable).
+export struct AppToggleRow {
+    uid: int,
+    name: string,
+    mode: string,
+    metered: string,
+    paused: bool,
+}
+
+// (No trust-source row struct: blocklist-source trust scoring is NOT a Warden concern by the engine's design
+//  law — see the header note. It lives in the Underground pillar / GithubTrustEngine, a separate surface.)
+
+// ===========================================================================================
+// Local controls (TouchArea-built — zero std-widget-style dependency; the host build proves them green).
+// ===========================================================================================
+
+// A pill toggle. Visual reads the host-owned `on`; a tap fires `toggled(!on)` so the host updates the model +
+// calls the Object setter (one-way to the engine, the single source of truth).
+component ToggleSwitch inherits Rectangle {
+    in property <bool> on: false;
+    in property <color> on-color: #2ecc71;
+    callback toggled(bool);
+    width: 42px;
+    height: 24px;
+    border-radius: 12px;
+    background: root.on ? root.on-color : #3a3a3a;
+    animate background { duration: 120ms; }
+    Rectangle {
+        width: 18px;
+        height: 18px;
+        border-radius: 9px;
+        background: white;
+        x: root.on ? parent.width - self.width - 3px : 3px;
+        y: (parent.height - self.height) / 2;
+        animate x { duration: 120ms; }
+    }
+    TouchArea {
+        clicked => {
+            root.toggled(!root.on);
+        }
+    }
+}
+
+// A section title.
+component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: #6f6f6f;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+// A row card shell.
+component RowCard inherits Rectangle {
+    background: #141414;
+    border-radius: 6px;
+}
+
+// A felt-truth alert banner (local) — instantiated via a guarding `if`, so an inactive warning occupies ZERO
+// layout space. The danger reads colored, at the decision point.
+component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: #c0392b;
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: white;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A small mode "chip" — a tap cycles the value (the host advances the enum + calls set_app_row). Simpler for
+// non-geeks than a combo of raw enum names (the feedback-simple-ux law).
+component CycleChip inherits Rectangle {
+    in property <string> text;
+    in property <color> tint: #cfcfcf;
+    callback cycled();
+    min-width: 64px;
+    height: 24px;
+    border-radius: 6px;
+    background: #1d1d1d;
+    border-width: 1px;
+    border-color: #2e2e2e;
+    HorizontalLayout {
+        alignment: center;
+        Text {
+            text: root.text;
+            color: root.tint;
+            font-size: 11px;
+            font-weight: 700;
+            vertical-alignment: center;
+        }
+    }
+    TouchArea {
+        clicked => {
+            root.cycled();
+        }
+    }
+}
+
+// ===========================================================================================
+// The EMBEDDABLE pane (inherits Rectangle — the shell mounts it in-shell as the "warden-settings" advanced
+// section). A non-Window pane generates NO standalone Rust struct (the CentauriSettingsPane precedent), so the
+// standalone `WardenSettings` Window below FORWARDS this pane's full API for the host-preview proof test
+// (`WardenSettings::new()`). The shell drives the pane's props through its own `ws-*` aliases + wires the
+// callbacks to the armed engine (the canonical WardenDatapathGate the datapath itself consults).
+// ===========================================================================================
+export component WardenSettingsPane inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.warden; width: 100%; height: 100%; }
+    background: #0c0c0c;
+
+    // ===== Monokuma palette (inline; slice 10 centralizes these into a SLINT/Rust color global) =====
+    property <color> mono-bone: #f4f4f4;
+    property <color> mono-ash: #8c8c8c;
+    property <color> mono-dim: #6f6f6f;
+    property <color> mono-safe: #2ecc71;
+    property <color> mono-caution: #f39c12;
+    property <color> mono-risk: #d83a2c;
+
+    // ===== POSTURE (host pushes from WardenObject::snapshot; the paranoid knob writes set_fail_closed) =====
+    in-out property <bool> fail-closed: false;
+    in-out property <bool> policy-loaded: true;
+
+    // ===== TIER-2 universal toggles (host fills from WardenUniversalToggles; CANONICAL wire keys) =====
+    in-out property <[UniversalToggle]> universal-toggles: [
+        { key: "new_apps", label: "Block new apps", hint: "RULE1B — deny apps not yet seen", on: false, rule-armed: true },
+        { key: "unknown", label: "Block unknown UIDs", hint: "deny untracked-UID connections", on: false, rule-armed: true },
+        { key: "metered", label: "Block metered", hint: "RULE1F — deny cellular / roaming", on: false, rule-armed: true },
+        { key: "lockdown", label: "Lockdown", hint: "RULE11 — block everything except the allow-list", on: false, rule-armed: true },
+        { key: "device_lock", label: "Block on lock", hint: "RULE3 — deny while the screen is off", on: false, rule-armed: true },
+        { key: "background", label: "Foreground only", hint: "RULE4 — deny background data", on: false, rule-armed: true },
+        { key: "udp_ntp", label: "Block UDP-NTP", hint: "RULE6 — deny port 123 / UDP", on: false, rule-armed: true },
+        { key: "http", label: "Block plain HTTP", hint: "RULE10 — deny port 80", on: false, rule-armed: true },
+        { key: "dns_bypass", label: "No DNS bypass", hint: "RULE7 — deny queries skipping the resolver", on: false, rule-armed: true },
+    ];
+
+    // ===== The rules editor (host fills from the armed WardenDomainRule + WardenCidrRule sets) =====
+    in-out property <[RuleEntry]> rules: [];
+    // The add-rule input state (the LineEdit text + the kind/wildcard the user picks before Add).
+    in-out property <string> draft-text: "";
+    in-out property <bool> draft-is-cidr: false;
+    in-out property <bool> draft-wildcard: true;
+
+    // ===== Per-app toggles (host fills from the live WardenObject matrix) =====
+    in-out property <[AppToggleRow]> app-matrix: [];
+
+    // ===== Host-pushed summary scalars (the host folds the live lists; slint can't aggregate a model in an
+    //       expression, so the host computes these and pushes them — the dashboard's scalar pattern) =====
+    in-out property <int> armed-rule-count: 0;
+    in-out property <bool> lockdown-on: false;     // mirrors the lockdown toggle (host keeps consistent)
+
+    // ===== THE FELT-TRUTH GUARD — derived, host-readable (the proof test asserts these fire) =====
+    // APEX: fail-closed with NO policy → every connection denies the moment it is set. Warn here, not after.
+    out property <bool> warn-fail-closed-no-policy: root.fail-closed && !root.policy-loaded;
+    // LOCKDOWN blocks everything except the allow-list — the heaviest toggle; warn on flip.
+    out property <bool> warn-lockdown: root.lockdown-on;
+    // Master: ANY decision-point danger surfaced.
+    out property <bool> warn-any: root.warn-fail-closed-no-policy || root.warn-lockdown;
+
+    // ===== The user's edit intents — the host wires each to the WardenObject / GithubTrustEngine setter =====
+    callback posture-changed(bool);            // fail-closed -> set_fail_closed
+    callback universal-toggled(string, bool);  // key, on    -> set_universal_toggles
+    callback add-rule(string, string, bool);   // kind, text, wildcard -> install_domain_rules / install_cidr_rules
+    callback remove-rule(int);                 // index      -> re-install the set without the row
+    callback app-mode-cycled(int);             // uid        -> set_app_row (advance WardenAppMode)
+    callback app-metered-cycled(int);          // uid        -> set_app_row (advance WardenNetClass)
+    callback app-pause-toggled(int);           // uid        -> set_app_row (set/clear temp_allow_until)
+    callback close-settings();
+
+    VerticalBox {
+        padding: 14px;
+        spacing: 12px;
+
+        // ---- Header ----
+        HorizontalBox {
+            spacing: 8px;
+            VerticalLayout {
+                Text {
+                    text: "WARDEN  |||";
+                    color: root.mono-bone;
+                    font-size: 22px;
+                    font-weight: 900;
+                }
+                Text {
+                    text: "firewall settings — the sovereign rules";
+                    color: root.mono-ash;
+                    font-size: 11px;
+                }
+            }
+            Rectangle { }  // spacer
+            Text {
+                text: "\{root.armed-rule-count} block rules";
+                color: root.mono-dim;
+                font-size: 10px;
+                vertical-alignment: center;
+                horizontal-alignment: right;
+            }
+        }
+
+        // ---- The decision-point felt-truth banners (each exists ONLY while its danger is live) ----
+        if root.warn-fail-closed-no-policy : AlertBanner {
+            accent: root.mono-risk;
+            message: "FAIL-CLOSED with NO policy -> every connection will be DENIED. Load a policy or relax the posture.";
+        }
+        if root.warn-lockdown : AlertBanner {
+            accent: root.mono-caution;
+            message: "LOCKDOWN armed -> everything is blocked except the allow-list (RULE11). This is the heaviest switch.";
+        }
+
+        // ---- POSTURE: the fail-closed paranoid knob ----
+        SectionTitle { text: "POSTURE"; }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    Text {
+                        text: "Fail closed";
+                        color: root.mono-bone;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "When no policy is loaded, DENY instead of falling to last-known-good.";
+                        color: root.mono-ash;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+                Rectangle { }  // spacer
+                ToggleSwitch {
+                    on: root.fail-closed;
+                    on-color: root.mono-risk;
+                    toggled(v) => {
+                        root.fail-closed = v;
+                        root.posture-changed(v);
+                    }
+                }
+            }
+        }
+
+        // ---- UNIVERSAL-RULE BLOCK LIST: the TIER-2 global DENY switches (the heart of the |||  section) ----
+        SectionTitle { text: "UNIVERSAL BLOCKS  (TIER 2)"; }
+        VerticalLayout {
+            spacing: 4px;
+            for t in root.universal-toggles : RowCard {
+                HorizontalLayout {
+                    padding: 8px;
+                    spacing: 10px;
+                    VerticalLayout {
+                        Text {
+                            text: t.label;
+                            color: root.mono-bone;
+                            font-size: 12px;
+                            font-weight: 700;
+                        }
+                        Text {
+                            text: t.hint;
+                            color: root.mono-ash;
+                            font-size: 10px;
+                            wrap: word-wrap;
+                        }
+                    }
+                    Rectangle { }  // spacer
+                    if !t.rule-armed : Text {
+                        text: "(rule off)";
+                        color: root.mono-caution;
+                        font-size: 9px;
+                        vertical-alignment: center;
+                    }
+                    ToggleSwitch {
+                        on: t.on;
+                        on-color: t.key == "lockdown" ? root.mono-caution : root.mono-safe;
+                        toggled(v) => {
+                            root.universal-toggled(t.key, v);
+                        }
+                    }
+                }
+            }
+        }
+
+        // ---- THE RULES EDITOR: the domain + CIDR BLOCK rules (add / remove) ----
+        SectionTitle { text: "RULES EDITOR  (domain · CIDR)"; }
+        RowCard {
+            VerticalLayout {
+                padding: 8px;
+                spacing: 6px;
+                HorizontalLayout {
+                    spacing: 6px;
+                    LineEdit {
+                        placeholder-text: root.draft-is-cidr ? "203.0.113.0/24" : "ads.example.com";
+                        text <=> root.draft-text;
+                        horizontal-stretch: 1;
+                    }
+                    CycleChip {
+                        text: root.draft-is-cidr ? "CIDR" : "DOMAIN";
+                        tint: root.mono-bone;
+                        cycled => {
+                            root.draft-is-cidr = !root.draft-is-cidr;
+                        }
+                    }
+                }
+                HorizontalLayout {
+                    spacing: 8px;
+                    Text {
+                        text: "wildcard (*. apex + subdomains)";
+                        color: root.mono-ash;
+                        font-size: 10px;
+                        vertical-alignment: center;
+                    }
+                    Rectangle { }  // spacer — shove the wildcard toggle to the right rail
+                    ToggleSwitch {
+                        on: root.draft-wildcard;
+                        toggled(v) => {
+                            root.draft-wildcard = v;
+                        }
+                    }
+                }
+                // The Add button rides its OWN full-width row — the wildcard row above can't also carry it
+                // without clipping the label off the card's right edge (a control you can't tap is a dead one).
+                Button {
+                    text: "Add block rule";
+                    enabled: root.draft-text != "";
+                    clicked => {
+                        root.add-rule(root.draft-is-cidr ? "cidr" : "domain", root.draft-text, root.draft-wildcard);
+                        root.draft-text = "";
+                    }
+                }
+            }
+        }
+        if root.rules.length == 0 : Text {
+            // Count-aware: Add-rule WRITES the live engine (the header count reflects it), and the live rule
+            // list re-feeds on the next tick — so a just-bumped count never contradicts a bare "none armed".
+            text: root.armed-rule-count > 0
+                ? root.armed-rule-count + " block rule(s) armed — the list refreshes in a moment."
+                : "no block rules armed — add a domain or CIDR above.";
+            color: root.mono-dim;
+            font-size: 10px;
+            wrap: word-wrap;
+        }
+        VerticalLayout {
+            spacing: 4px;
+            for entry[idx] in root.rules : RowCard {
+                HorizontalLayout {
+                    padding: 6px;
+                    spacing: 8px;
+                    Text {
+                        text: entry.kind == "cidr" ? "[net]" : "[dom]";
+                        color: entry.kind == "cidr" ? root.mono-caution : root.mono-ash;
+                        font-size: 10px;
+                        font-weight: 800;
+                        width: 38px;
+                        vertical-alignment: center;
+                    }
+                    VerticalLayout {
+                        horizontal-stretch: 1;
+                        Text {
+                            text: entry.wildcard ? "*." + entry.text : entry.text;
+                            color: root.mono-bone;
+                            font-size: 12px;
+                            overflow: elide;
+                        }
+                        Text {
+                            text: entry.scope + "  ·  " + entry.status;
+                            color: entry.status == "BYPASS" ? root.mono-caution : root.mono-ash;
+                            font-size: 10px;
+                        }
+                    }
+                    Button {
+                        text: "Remove";
+                        clicked => {
+                            root.remove-rule(idx);
+                        }
+                    }
+                }
+            }
+        }
+
+        // ---- PER-APP TOGGLES: the matrix editor (mode · meteredness · temp-allow pause) ----
+        SectionTitle { text: "PER-APP TOGGLES  (TIER 3 matrix)"; }
+        if root.app-matrix.length == 0 : Text {
+            text: "no per-app rows held — tap a flow in the dashboard to isolate an app.";
+            color: root.mono-dim;
+            font-size: 10px;
+        }
+        VerticalLayout {
+            spacing: 4px;
+            for app in root.app-matrix : RowCard {
+                HorizontalLayout {
+                    padding: 6px;
+                    spacing: 8px;
+                    VerticalLayout {
+                        width: 110px;
+                        Text {
+                            text: app.name;
+                            color: root.mono-bone;
+                            font-size: 12px;
+                            overflow: elide;
+                        }
+                        Text {
+                            text: "uid \{app.uid}";
+                            color: root.mono-ash;
+                            font-size: 10px;
+                        }
+                    }
+                    CycleChip {
+                        text: app.mode;
+                        tint: app.mode == "ISOLATE" ? root.mono-risk : root.mono-bone;
+                        cycled => {
+                            root.app-mode-cycled(app.uid);
+                        }
+                    }
+                    CycleChip {
+                        text: app.metered;
+                        tint: app.metered == "ALLOW" ? root.mono-ash : root.mono-caution;
+                        cycled => {
+                            root.app-metered-cycled(app.uid);
+                        }
+                    }
+                    Rectangle { }  // spacer
+                    VerticalLayout {
+                        alignment: center;
+                        Text {
+                            text: app.paused ? "PAUSED" : "pause";
+                            color: app.paused ? root.mono-caution : root.mono-ash;
+                            font-size: 9px;
+                            horizontal-alignment: center;
+                        }
+                        ToggleSwitch {
+                            on: app.paused;
+                            on-color: root.mono-caution;
+                            toggled(v) => {
+                                root.app-pause-toggled(app.uid);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // (No TRUST BANDS section: by the engine's design law the Warden layer has no trust concept — blocklist-
+        //  source trust scoring is the Underground pillar's surface, not a firewall setting. See the header note.)
+
+        // ---- Close ----
+        Button {
+            text: "Close settings";
+            clicked => {
+                root.close-settings();
+            }
+        }
+
+        Rectangle { }  // tail spacer
+    }
+
+    // ===== #36 THE UPPER MOON SEAL — the dash is the Hashira; the settings pane bears the
+    //       matching demon's rank. Declared LAST = drawn above the drench (no z-index law). =====
+    UpperMoonChip {
+        x: parent.width - self.width - 10px;
+        y: 8px;
+        kanji: "上弦・壱";
+        moon-name: "UPPER ONE — KOKUSHIBO";
+        tint: #8a4ad0;
+    }
+}
+
+// ===========================================================================================
+// The standalone host-preview Window — a THIN forwarder over the embeddable pane's full API through `<=>`
+// aliases so the proof test drives the Window and the values reach the pane (the CentauriSettings precedent).
+// The shell never instantiates this; it mounts `WardenSettingsPane` directly + drives it through `ws-*`.
+// ===========================================================================================
+export component WardenSettings inherits Window {
+    title: "Yeah! Tortä — Warden  |||";
+    preferred-width: 440px;
+    preferred-height: 1000px;
+    background: #0c0c0c;
+
+    in-out property <bool> fail-closed <=> pane.fail-closed;
+    in-out property <bool> policy-loaded <=> pane.policy-loaded;
+    in-out property <[UniversalToggle]> universal-toggles <=> pane.universal-toggles;
+    in-out property <[RuleEntry]> rules <=> pane.rules;
+    in-out property <string> draft-text <=> pane.draft-text;
+    in-out property <bool> draft-is-cidr <=> pane.draft-is-cidr;
+    in-out property <bool> draft-wildcard <=> pane.draft-wildcard;
+    in-out property <[AppToggleRow]> app-matrix <=> pane.app-matrix;
+    in-out property <int> armed-rule-count <=> pane.armed-rule-count;
+    in-out property <bool> lockdown-on <=> pane.lockdown-on;
+
+    out property <bool> warn-fail-closed-no-policy <=> pane.warn-fail-closed-no-policy;
+    out property <bool> warn-lockdown <=> pane.warn-lockdown;
+    out property <bool> warn-any <=> pane.warn-any;
+
+    callback posture-changed <=> pane.posture-changed;
+    callback universal-toggled <=> pane.universal-toggled;
+    callback add-rule <=> pane.add-rule;
+    callback remove-rule <=> pane.remove-rule;
+    callback app-mode-cycled <=> pane.app-mode-cycled;
+    callback app-metered-cycled <=> pane.app-metered-cycled;
+    callback app-pause-toggled <=> pane.app-pause-toggled;
+    callback close-settings <=> pane.close-settings;
+
+    pane := WardenSettingsPane { }
+}

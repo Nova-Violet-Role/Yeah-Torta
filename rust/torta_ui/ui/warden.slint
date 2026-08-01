@@ -1,0 +1,1245 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT Warden dashboard — slice 8 of the R4 Warden overhaul (the 🩸 Carnage facet).
+//
+// This is the rust-native (SLINT, NO XML / NO Java / NO Compose) one-glance Warden surface. It renders a
+// `WardenSnapshot` (torta_core `warden::object::WardenSnapshot`, object.rs:483) the HOST sets: the verdict
+// tallies + the per-tier deny attribution (TIER 2 toggle · TIER 3 app · TIER 4 universal-rule · TIER 5
+// dns-blocked), the armed rule-set / matrix counts, the fail-closed posture, the Trust-crown band
+// (github.rs `SafetyBand`, derived from the 0..100 trust_score), and the per-app matrix.
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android cross-compile spike #69.
+// SLINT can't read a Rust struct directly; the host (Kotlin SurfaceView bridge / the slint-viewer preview /
+// the lib.rs proof test) constructs `WardenDashboard`, pulls a live `WardenSnapshot` via the UniFFI Object,
+// and pushes each field onto the `in-out` inputs. Every number is a REAL engine read — never a faked count.
+//
+// 🩸 THE OVER-BLOCK HUNT (the facet's load-bearing job): a firewall's worst silent failure is OVER-BLOCK —
+// stranding the user behind a wall they can't see. The dashboard derives + surfaces five strandings the
+// snapshot makes visible (the `out property overblock-*` flags below): the APEX fail-closed-with-no-policy
+// total deny, the all-denied/zero-allow stranding, the TIER-5 DNS-blocklist over-block, the Trust-crown
+// RISKY-armed-source web-over-block, and the universal lockdown. Surfacing them is the whole point of the
+// Trust crown + the per-tier attribution — a band the user reads BEFORE the wall traps them.
+//
+// NOTE: slint uses `:` for property bindings (not `=`); `\{expr}` is string interpolation; `out property`
+// values are derived + host-readable (the proof test asserts the over-block derivations fire).
+
+import { VerticalBox, HorizontalBox, ScrollView } from "std-widgets.slint";
+// The Monokuma judge-motif palette (slice 10) — the single source of truth for the
+// Warden judge-scene colors. Shared with warden_settings.slint (slice 9). NO XML.
+import { Monokuma } from "monokuma_palette.slint";
+import { ThemeBook, MotifWash } from "theme_tokens.slint";
+
+// One per-app matrix row — the host fills this from the live `WardenObject` matrix (the snapshot carries
+// only the COUNT, `app_rows`; the rows themselves are pushed here). `mode` = the WardenAppMode label
+// (NONE / ISOLATE / UNTRACKED / BYPASS*), `metered` = the WardenNetClass label, `paused` = a live temp-allow.
+// A6 — the matrix became ACTIONABLE: `mode-ord` carries the wire ORDINAL beside the label (the row tap
+// reports it so the HOST computes the next mode in the cycle — the .slint never re-derives enum order),
+// and `armed` = a HELD engine row vs a flow-derived default (dimmed — it enforces nothing until tapped).
+export struct AppRow {
+    uid: int,
+    name: string,
+    mode: string,
+    mode-ord: int,
+    metered: string,
+    paused: bool,
+    armed: bool,
+}
+
+// One universal-toggle chip (A6 — TIER 2 write surface). `key` is the WIRE key the host round-trips to
+// `TortaPillarBridge.setWardenUniversalToggle` (new_apps / unknown / metered / lockdown / device_lock /
+// background / udp_ntp / http / dns_bypass); `label` is the human line; `armed` is the ENGINE's own bit
+// (read back through the canonical instance — never a local echo).
+export struct ToggleRow {
+    key: string,
+    label: string,
+    armed: bool,
+}
+
+// One LIVE-FLOW row (A5 slice-5) — the host fills these from the `ConnTracker` ring (torta_core
+// warden/tracker.rs, the slice-4 datapath feed), newest-first. `flag` is ALWAYS engine-derived
+// (`flag_emoji`; 🌐 = unknown cc) with `cc` riding beside it as the readable fallback; `app` is the
+// uid-resolved package label ("" until the Kotlin PackageManager seam answers — the row then shows
+// `ip`); `verdict` is the WardenVerdict label with `denied` driving the red tint. `carried` is the
+// DATAPATH disposition (#20 ROW HONESTY — two truths, two fields): the sync loop judges flows it
+// then drops (Stage-2-min carries nothing but DNS), and an allowed-but-uncarried flow renders
+// DROPPED amber — never a false green ALLOW. `domain` is the A4 attribution — the name the app
+// resolved to reach `ip` ("" = unattributed; best-effort by law, it INFORMS the row, never the
+// tint). Bytes are ABSENT this wave (per-flow byte attribution has not landed) — an honest
+// omission, never a fabricated 0.
+export struct FlowRow {
+    flag: string,
+    cc: string,
+    app: string,
+    ip: string,
+    port: int,
+    proto: string,
+    asn: string,
+    domain: string,
+    verdict: string,
+    denied: bool,
+    carried: bool,
+}
+
+// W-D (#79) — one APP-BROWSER row of the per-app INSPECTOR popup: the live flow ring folded BY SOURCE APP
+// (`ConnTracker::app_flow_summary`) UNIONED with the held matrix (so the row carries both ACTIVITY and BLOCK
+// POSTURE). `flows`/`allowed`/`denied` = the app's verdict split; `ips`/`countries` = distinct destinations;
+// `block-wifi`/`block-mobile` = the held meteredness decomposed (the two toggles that compose WardenNetClass);
+// `mode-ord` = the WardenAppMode ordinal (the tap-cycle discriminant, reserved). Bytes ride in the struct but
+// are ABSENT this wave (per-flow byte attribution has not landed — an honest 0, never rendered as data).
+export struct InspectorAppRow {
+    uid: int,
+    name: string,
+    flows: int,
+    allowed: int,
+    denied: int,
+    ips: int,
+    countries: int,
+    up: int,
+    down: int,
+    block-wifi: bool,
+    block-mobile: bool,
+    mode-ord: int,
+}
+
+// W-D (#79) — one ENDPOINT row of the per-app INSPECTOR: ONE app's flows folded by destination IP
+// (`ConnTracker::app_destinations`), the row the block-ladder acts on. `flag` is engine-derived torta_ui-side
+// from the ASCII `cc` (`flag_emoji`; 🌐 = unknown) so no supplementary-plane glyph crosses JNI; `asn` is the
+// "similar source" hint; `domain` is the A4 attribution ("" = unattributed). `denied` tints the row red;
+// `carried` distinguishes an allowed-but-dropped flow; `hits` is the endpoint's contact count. `selected` is
+// the multi-select bit the block-ladder SET rung reads (host-managed in the model — a tap flips it).
+export struct InspectorDestRow {
+    ip: string,
+    flag: string,
+    cc: string,
+    asn: string,
+    domain: string,
+    port: int,
+    proto: string,
+    denied: bool,
+    carried: bool,
+    hits: int,
+    selected: bool,
+}
+
+// A compact metric tile (local, non-exported). `tint` colors the value + the left rule so an over-blocking
+// tier reads red at a glance.
+component StatTile inherits Rectangle {
+    in property <string> label;
+    in property <string> value;
+    in property <color> tint: Monokuma.bone;
+    min-width: 70px;
+    min-height: 52px;
+    border-radius: 8px;
+    background: ThemeBook.warden.panel;
+    border-width: 1px;
+    border-color: Monokuma.iron;
+    VerticalLayout {
+        padding: 8px;
+        spacing: 2px;
+        Text {
+            text: root.value;
+            color: root.tint;
+            font-size: 19px;
+            font-weight: 800;
+        }
+        Text {
+            text: root.label;
+            color: Monokuma.ash;
+            font-size: 10px;
+        }
+    }
+}
+
+// An over-block alert banner (local). Only instantiated (via a guarding `if`) when its stranding is live, so
+// an inactive alert occupies ZERO layout space — the stack collapses to exactly the live strandings.
+component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: Monokuma.wound;
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: Monokuma.strike;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: Monokuma.strike;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A section title (local).
+component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: Monokuma.dim;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+// W-D — an app-level network-block toggle pill (WiFi / mobile data) for the inspector. `on` = the app's
+// current block posture on that axis; a tap fires [toggled] (the host composes the meteredness NetClass).
+component NetBlockPill inherits Rectangle {
+    in property <string> label;
+    in property <bool> on;
+    callback toggled();
+    height: 40px;
+    horizontal-stretch: 1;
+    border-radius: 10px;
+    background: root.on ? Monokuma.wound : Monokuma.slate;
+    border-width: 2px;
+    border-color: root.on ? Monokuma.risk : Monokuma.iron;
+    HorizontalLayout {
+        padding: 8px;
+        alignment: center;
+        Text {
+            text: (root.on ? "BLOCKED · " : "allow · ") + root.label;
+            color: root.on ? Monokuma.strike : Monokuma.bone;
+            font-size: 11px;
+            font-weight: root.on ? 800 : 500;
+            vertical-alignment: center;
+        }
+    }
+    TouchArea {
+        clicked => { root.toggled(); }
+    }
+}
+
+// W-D — one rung of the block-granularity ladder (IP /32 · CIDR /24 · CIDR /16 · whole country). A tap
+// fires [pressed]; the host acts on the selected endpoint set at that granularity.
+component LadderButton inherits Rectangle {
+    in property <string> label;
+    in property <string> sub;
+    in property <color> accent: Monokuma.iron;
+    callback pressed();
+    height: 46px;
+    horizontal-stretch: 1;
+    border-radius: 8px;
+    background: ThemeBook.warden.panel;
+    border-width: 1px;
+    border-color: root.accent;
+    VerticalLayout {
+        padding: 4px;
+        alignment: center;
+        Text {
+            text: root.label;
+            color: Monokuma.bone;
+            font-size: 12px;
+            font-weight: 800;
+            horizontal-alignment: center;
+        }
+        Text {
+            text: root.sub;
+            color: Monokuma.ash;
+            font-size: 8px;
+            horizontal-alignment: center;
+        }
+    }
+    TouchArea {
+        clicked => { root.pressed(); }
+    }
+}
+
+// THE EMBEDDABLE WARDEN SURFACE (SLINT substitution · 4-FIX round 3, 2-FEED-Warden) — inherits Rectangle
+// so it mounts as an IN-SHELL pane (the single-surface law: on-device the last-constructed Window owns the
+// one android surface, so pillar dashboards can never be shown as separate Windows — they embed as panes,
+// exactly like CentauriPane/MaskSolverPane/BeastPane/RotationPane). The host feeds this pane a live
+// `WardenSnapshot` field-for-field; the shell forwards its inputs as `<=>` aliases. The standalone
+// WardenDashboard Window below wraps THIS pane (one surface, two mounts — the proof test + the witness).
+export component WardenPane inherits Rectangle {
+    background: Monokuma.night;
+
+    // ===== #33 THEME-TOKEN SPINE — the MONOKUMA COURT wash: drifting motif glyphs behind the
+    // header strip (z-first child, clipped 88px band; ThemeBook.warden is the one authority). =====
+    MotifWash { theme: ThemeBook.warden; width: 100%; height: 100%; }
+
+    // ===== #36 "THE VERDICT" — the Monokuma courtroom lives: the gavel swings to the strike,
+    //       the scales tip and never settle, and ✕/◯ trade heartbeats (guilty ↔ not guilty).
+    //       Pure animation-tick; zero timers; scenery-only mono/red hand tones under the glass. =====
+    verdictamb := Rectangle {
+        width: 100%; height: 100%; clip: true;
+        property <float> tk: animation-tick() / 1ms;
+        property <bool> guilty: true;             // #36b — the on-tap ruling, flips every tap
+        property <float> fired-at: -100000.0;     // #36b — tk stamp of the last gavel tap
+
+        // THE GAVEL — swings down to the strike, again and again (court is always in session)
+        gavel := Rectangle {
+            x: parent.width * 0.80; y: 26px;
+            width: 84px; height: 84px;
+            background: transparent;
+            property <float> ph: Math.mod(verdictamb.tk / 2800.0, 1.0);
+            transform-rotation: -34deg + 44deg * Math.abs(sin(180deg * self.ph));
+            Rectangle {     // the handle — brushed steel (#33 CHROME directive)
+                x: parent.width * 0.30; y: parent.height * 0.34;
+                width: 56px; height: 7px; border-radius: 3.5px;
+                background: @linear-gradient(90deg, Monokuma.chrome-lo 0%, Monokuma.chrome 55%, Monokuma.chrome-hi 78%, Monokuma.chrome-lo 100%);
+            }
+            Rectangle {     // the head — polished mirror steel, specular glint down the face
+                x: parent.width * 0.16; y: parent.height * 0.18;
+                width: 22px; height: 34px; border-radius: 6px;
+                background: @linear-gradient(180deg, Monokuma.chrome-hi 0%, Monokuma.chrome 34%, Monokuma.chrome-lo 72%, Monokuma.chrome 100%);
+                border-width: 1px; border-color: Monokuma.chrome-hi.with-alpha(0.55);
+            }
+        }
+        Rectangle {         // the strike ring — blooms red at the bottom of every swing
+            property <float> ph: Math.mod(verdictamb.tk / 2800.0, 1.0);
+            x: gavel.x - 18px; y: gavel.y + 58px;
+            width: 30px; height: 30px; border-radius: 15px;
+            background: transparent;
+            border-width: 2px;
+            border-color: #e6323c.with-alpha(Math.max(0.0, 0.5 - 2.2 * Math.abs(self.ph - 0.5)));
+        }
+
+        // THE SCALES — the beam tips one way, then the other (never balanced)
+        scales := Rectangle {
+            x: parent.width * 0.06; y: 120px;
+            width: 120px; height: 70px; background: transparent;
+            transform-rotation: 7deg * sin(360deg * Math.mod(verdictamb.tk / 5300.0, 1.0));
+            Rectangle { x: 0; y: 0; width: 100%; height: 4px; border-radius: 2px; background: @linear-gradient(90deg, Monokuma.chrome-lo.with-alpha(0.40) 0%, Monokuma.chrome-hi.with-alpha(0.75) 50%, Monokuma.chrome-lo.with-alpha(0.40) 100%); }  // the beam — chrome bar (#33)
+            Rectangle { x: parent.width / 2 - 2px; y: 0; width: 4px; height: 34px; background: @linear-gradient(180deg, Monokuma.chrome-hi.with-alpha(0.60) 0%, Monokuma.chrome-lo.with-alpha(0.30) 100%); }                      // the post — brushed steel
+            Rectangle { x: 2px; y: 18px; width: 26px; height: 10px; border-radius: 5px; background: #f5f5f0.with-alpha(0.25); }                 // pan L — innocent white
+            Rectangle { x: parent.width - 28px; y: 18px; width: 26px; height: 10px; border-radius: 5px; background: #e6323c.with-alpha(0.35); } // pan R — guilty red
+        }
+
+        // THE VERDICT PAIR — ✕ and ◯ alternate heartbeats on the courtroom clock
+        Text {
+            x: parent.width * 0.30; y: 60px;
+            text: "✕"; font-size: 30px; font-weight: 900;
+            color: #e6323c;
+            opacity: 0.06 + 0.16 * Math.max(0.0, sin(360deg * Math.mod(verdictamb.tk / 4200.0, 1.0)));
+        }
+        Text {
+            x: parent.width * 0.56; y: 60px;
+            text: "◯"; font-size: 28px; font-weight: 900;
+            color: #f5f5f0;
+            opacity: 0.06 + 0.14 * Math.max(0.0, -sin(360deg * Math.mod(verdictamb.tk / 4200.0, 1.0)));
+        }
+
+        // the courtroom spotlight — a chrome-mirror sweep down the whole docket (#22 drench law + #33 CHROME)
+        Rectangle {
+            x: 0; width: parent.width;
+            y: parent.height * Math.mod(verdictamb.tk / 11000.0, 1.0);
+            height: 90px;
+            background: @linear-gradient(180deg, transparent 0%, Monokuma.chrome-hi.with-alpha(0.04) 35%, Monokuma.chrome.with-alpha(0.09) 50%, Monokuma.chrome-hi.with-alpha(0.04) 65%, transparent 100%);
+        }
+
+        // ===== #36b ON-TAP VERDICT — tap the court: the gavel CRASHES and the ruling flips,
+        //       ✕ (guilty, red) ↔ ◯ (not guilty, bone). One-shot flash decays on pure tick
+        //       math (900ms window); zero timers; content declared later still wins the tap. =====
+        verdict-tap := TouchArea {
+            width: 100%; height: 100%;
+            clicked => {
+                verdictamb.guilty = !verdictamb.guilty;
+                verdictamb.fired-at = verdictamb.tk;
+            }
+        }
+        verdict-flash := Rectangle {
+            width: 100%; height: 100%;
+            property <float> vp: Math.max(0.0, 1.0 - (verdictamb.tk - verdictamb.fired-at) / 900.0);
+            background: Monokuma.chrome-hi.with-alpha(0.10 * self.vp);   // the mirror flash
+            Text {          // the struck ruling — slams in huge, decays out with the flash
+                x: parent.width / 2 - self.width / 2; y: 46px;
+                text: verdictamb.guilty ? "✕" : "◯";
+                font-size: 64px; font-weight: 900;
+                color: verdictamb.guilty ? Monokuma.risk : Monokuma.bone;
+                opacity: 0.9 * verdict-flash.vp;
+            }
+            Rectangle {     // the chrome shockwave — one ring per tap, out from the strike
+                property <float> gr: 30.0 + 90.0 * (1.0 - verdict-flash.vp);
+                x: gavel.x + 24px - self.gr * 1px; y: gavel.y + 70px - self.gr * 1px;
+                width: 2px * self.gr; height: self.width;
+                border-radius: self.width / 2;
+                background: transparent;
+                border-width: 2px;
+                border-color: Monokuma.chrome-hi.with-alpha(0.6 * verdict-flash.vp);
+            }
+        }
+    }
+
+    // ===== Monokuma palette (slice 10): centralized in monokuma_palette.slint (the `Monokuma` global,
+    // imported above). The inline `mono-*` properties retired here — every reference re-points to `Monokuma.*`. =====
+
+    // ===== WardenSnapshot inputs (host sets each from `WardenObject::snapshot()`, object.rs:483) =====
+    in-out property <int> allow-count: 0;             // snapshot.allow
+    in-out property <int> deny-count: 0;              // snapshot.deny
+    in-out property <int> deny-by-toggle: 0;          // snapshot.deny_by_universal_toggle  (TIER 2)
+    in-out property <int> deny-by-app: 0;             // snapshot.deny_by_app                (TIER 3)
+    in-out property <int> deny-by-universal: 0;       // snapshot.deny_by_universal_rule     (TIER 4)
+    in-out property <int> deny-by-dns: 0;             // snapshot.deny_by_blocklist          (TIER 5 seam)
+    in-out property <int> domain-rules: 0;            // snapshot.domain_rules (trie + globs)
+    in-out property <int> cidr-rules: 0;              // snapshot.cidr_rules
+    in-out property <int> universal-rules: 0;         // snapshot.universal_rules
+    in-out property <int> app-rows: 0;                // snapshot.app_rows (the per-app matrix size)
+    in-out property <int> cache-entries: 0;           // snapshot.cache_entries (the RAM hot tier)
+    in-out property <bool> policy-loaded: false;      // snapshot.policy_loaded
+    in-out property <bool> fail-closed: false;        // snapshot.fail_closed
+
+    // ===== Trust crown inputs (host sets from a `GithubTrustEngine` `SourceSafety`, github.rs:195) =====
+    in-out property <string> trust-source-name: "(no source armed)";
+    in-out property <int> trust-score: 100;           // SourceSafety.trust_score (0..100, collateral-dominant)
+    in-out property <int> trust-cdn-overlap: 0;       // SourceSafety.cdn_overlap (CDN-host collisions)
+    in-out property <bool> trust-armed: false;        // SourceSafety.armed
+
+    // ===== universal-toggle over-block input (host sets from `WardenUniversalToggles.lockdown`) =====
+    in-out property <bool> lockdown-armed: false;
+
+    // ===== per-app matrix (A6 — host fills from the live matrix wire: HELD engine rows unioned with
+    // flow-seen apps; the EMPTY default is the honest no-rows state, never a sample row) =====
+    in-out property <[AppRow]> app-matrix: [];
+
+    // ===== A6 — the ARM switch + universal-toggle chips (the write surface) =====
+    // `warden-armed` is the LIVE datapath enforce bit (WardenDatapathGate.enforced() read back through
+    // the bridge — never the pref, never a local echo); the host re-pushes it after every arm-warden().
+    in-out property <bool> warden-armed: false;
+    // The nine TIER-2 chips, host-fed from the ENGINE's own toggle bits ([] = bridge silent — the
+    // chips section renders the honest unreadable state).
+    in-out property <[ToggleRow]> universal-toggles: [];
+
+    // ===== LIVE FLOWS (A5 slice-5 — host pushes the ConnTracker ring while the pane is shown; the
+    // EMPTY default is the honest DORMANT state, never a sample flow) =====
+    in-out property <[FlowRow]> live-flows: [];
+    // The ring's RETAINED flow count (0..=512 — the ring drops its oldest past cap; may exceed the
+    // rows shown, the panel caps its eyeful).
+    in-out property <int> flow-total: 0;
+    // Host-readable row count (the proof test asserts the pushed rows landed).
+    out property <int> flows-shown: root.live-flows.length;
+
+    // ===== W-D (#79) — THE PER-APP INSPECTOR popup (a separate overlay dashboard, single-surface law:
+    // it is an overlay Rectangle WITHIN this pane, never a second Window). `inspector-open` gates it;
+    // `inspector-apps` is the app browser (host-fed from liveWardenAppFlows every tick); the rest is the
+    // FOCUSED app's detail (host-fed on open): its uid/name, its WiFi/mobile block posture, its WHOLE
+    // endpoint list (`inspector-dests`, each with a GEO flag), and the armed country-block set. =====
+    in-out property <bool> inspector-open: false;
+    // View toggle DECOUPLED from the uid sign (#79 D7): false → the APP BROWSER, true → the FOCUSED
+    // detail. Pane-local (SLINT-driven, never host-fed) so the unattributed/system bucket (uid -1) is
+    // ALSO drillable — its endpoints ARE worth inspecting (rethink's "Unknown" bucket precedent), and a
+    // block armed from there rides the UNIVERSAL tier (uid 0) since it can't hold a per-app row.
+    in-out property <bool> inspector-detail-open: false;
+    in-out property <[InspectorAppRow]> inspector-apps: [];
+    in-out property <int> inspector-uid: -1;
+    in-out property <string> inspector-app-name: "";
+    in-out property <bool> inspector-block-wifi: false;
+    in-out property <bool> inspector-block-mobile: false;
+    in-out property <[InspectorDestRow]> inspector-dests: [];
+    in-out property <string> inspector-geo-blocks: "";
+    // Host-readable counts (the proof test asserts the pushed rows landed).
+    out property <int> inspector-apps-shown: root.inspector-apps.length;
+    out property <int> inspector-dests-shown: root.inspector-dests.length;
+    // The count currently multi-selected (the block-ladder SET rung's target size) — host-fed: the host
+    // owns the selection model (a select-dest tap re-feeds inspector-dests with the flipped bit), so it
+    // knows the count. Rendered as "(N)" on the ladder buttons so the user sees the SET size before blocking.
+    in-out property <int> inspector-selected-count: 0;
+
+    // ===== 🩸 THE OVER-BLOCK HUNT — derived, host-readable (the proof test asserts these fire) =====
+    out property <int> total-verdicts: root.allow-count + root.deny-count;
+    // The Trust band — a UI projection of the 0..100 score, mirroring github.rs SafetyBand thresholds.
+    out property <string> trust-band: root.trust-score >= 80 ? "SAFE"
+        : (root.trust-score >= 50 ? "CAUTION" : "RISKY");
+    // APEX: fail-closed with NO policy → every connection denies (the silent total stranding).
+    out property <bool> overblock-fail-closed: root.fail-closed && !root.policy-loaded;
+    // A stranding firewall: denies with zero allows.
+    out property <bool> overblock-all-denied: root.deny-count > 0 && root.allow-count == 0;
+    // TIER 5 (the resolver DNS-blocklist seam) is the MAJORITY of denies → DNS over-block (integer math).
+    out property <bool> overblock-dns-dominant: root.deny-by-dns > 0
+        && root.deny-by-dns * 2 > root.deny-count;
+    // An ARMED source with heavy CDN collateral → over-blocks the web (the Trust crown's whole reason).
+    out property <bool> overblock-trust-risky: root.trust-armed && root.trust-score < 50;
+    out property <bool> overblock-trust-caution: root.trust-armed
+        && root.trust-score >= 50 && root.trust-score < 80;
+    // RULE11 universal lockdown armed (block everything except the allow-list).
+    out property <bool> overblock-lockdown: root.lockdown-armed;
+    // Master: ANY stranding surfaced.
+    out property <bool> overblock-any: root.overblock-fail-closed || root.overblock-all-denied
+        || root.overblock-dns-dominant || root.overblock-trust-risky || root.overblock-lockdown;
+
+    // The band color for the Trust card.
+    property <color> trust-color: root.trust-band == "SAFE" ? Monokuma.safe
+        : (root.trust-band == "CAUTION" ? Monokuma.caution : Monokuma.risk);
+
+    callback close-dashboard();
+    // ── A6 write callbacks (the host JNI-calls TortaPillarBridge, then re-feeds LIVE readback) ──
+    // ARM/DISARM the datapath (→ setWardenArmed: pref persist + canonical-bit push + live readback).
+    callback arm-warden(bool);
+    // Flip one TIER-2 chip (wire key, desired state → setWardenUniversalToggle read-mutate-write).
+    callback set-universal-toggle(string, bool);
+    // A matrix row was tapped: (uid, CURRENT mode ordinal). The HOST owns the cycle order
+    // (NONE → ISOLATE → BYPASS-U → UNTRACKED → NONE) and calls setWardenAppMode with the next.
+    callback cycle-app-mode(int, int);
+
+    // ── W-D (#79) inspector callbacks (the per-app block-ladder popup) ──
+    // Open the inspector on ONE app (uid): the host pulls that app's endpoint list + block posture and
+    // raises the overlay. Close it back to the dashboard.
+    callback open-inspector(int);
+    callback close-inspector();
+    // Flip the FOCUSED app's WiFi / mobile-data block axis (uid, desired state) — the host composes the
+    // meteredness NetClass (read-modify-write) and re-feeds the live posture.
+    callback inspector-block-wifi-toggle(int, bool);
+    callback inspector-block-mobile-toggle(int, bool);
+    // Toggle ONE endpoint's multi-select bit (by ip) — the host flips it in the model + updates the count.
+    callback inspector-select-dest(string);
+    // BLOCK the selected endpoint set at a ladder granularity (uid, mode): 0 = each IP /32, 1 = each /24
+    // family, 2 = each /16 family (a broader source sweep), 3 = each endpoint's whole COUNTRY (GEO family).
+    // The host iterates the selected rows and arms the blocks, then re-feeds the live posture.
+    callback inspector-block-selected(int, int);
+
+    VerticalBox {
+        padding: 14px;
+        spacing: 12px;
+
+        // ---- Header ----
+        HorizontalBox {
+            spacing: 8px;
+            VerticalLayout {
+                Text {
+                    text: "WARDEN";
+                    color: Monokuma.bone;
+                    font-size: 24px;
+                    font-weight: 900;
+                }
+                Text {
+                    text: "the sovereign firewall";
+                    color: Monokuma.ash;
+                    font-size: 11px;
+                }
+            }
+            Rectangle { }  // spacer
+            // A6 — THE ARM SWITCH: the one tap that puts the canonical WardenObject ON the datapath
+            // (or takes it off — the tunnel falls back to the flat C-ABI globals, byte-identical).
+            // The pill renders the LIVE enforce bit the host read back — a failed push snaps it back.
+            arm-pill := Rectangle {
+                width: 108px;
+                height: 40px;
+                border-radius: 20px;
+                background: root.warden-armed ? Monokuma.safe.darker(60%) : Monokuma.slate;
+                border-width: 2px;
+                border-color: root.warden-armed ? Monokuma.safe : Monokuma.iron;
+                VerticalLayout {
+                    alignment: center;
+                    Text {
+                        text: root.warden-armed ? "ARMED" : "DISARMED";
+                        color: root.warden-armed ? Monokuma.safe : Monokuma.ash;
+                        font-size: 13px;
+                        font-weight: 900;
+                        horizontal-alignment: center;
+                    }
+                    Text {
+                        text: "datapath";
+                        color: root.warden-armed ? Monokuma.bone : Monokuma.dim;
+                        font-size: 9px;
+                        horizontal-alignment: center;
+                    }
+                }
+                TouchArea {
+                    clicked => { root.arm-warden(!root.warden-armed); }
+                }
+            }
+            VerticalLayout {
+                alignment: center;
+                Text {
+                    text: root.fail-closed ? "FAIL-CLOSED" : "FAIL-SAFE";
+                    color: root.fail-closed ? Monokuma.risk : Monokuma.safe;
+                    font-size: 12px;
+                    font-weight: 800;
+                    horizontal-alignment: right;
+                }
+                Text {
+                    text: root.policy-loaded ? "policy: loaded" : "policy: none";
+                    color: root.policy-loaded ? Monokuma.ash : Monokuma.caution;
+                    font-size: 10px;
+                    horizontal-alignment: right;
+                }
+            }
+        }
+
+        // ---- 🩸 The over-block alert stack (each banner exists ONLY while its stranding is live) ----
+        if root.overblock-fail-closed : AlertBanner {
+            accent: Monokuma.risk;
+            message: "FAIL-CLOSED + NO POLICY -> every connection is DENIED. The firewall is stranding all traffic.";
+        }
+        if root.overblock-all-denied && !root.overblock-fail-closed : AlertBanner {
+            accent: Monokuma.risk;
+            message: "ALL DENIED -> \{root.deny-count} denies and zero allows. Nothing is getting through.";
+        }
+        if root.overblock-trust-risky : AlertBanner {
+            accent: Monokuma.risk;
+            message: "RISKY blocklist armed (\{root.trust-cdn-overlap} CDN collisions) -> this list over-blocks the web.";
+        }
+        if root.overblock-lockdown : AlertBanner {
+            accent: Monokuma.caution;
+            message: "LOCKDOWN armed -> everything is blocked except the allow-list (RULE11).";
+        }
+        if root.overblock-dns-dominant : AlertBanner {
+            accent: Monokuma.caution;
+            message: "DNS-blocklist is the majority of denies (\{root.deny-by-dns}/\{root.deny-count}) -> the resolver may be over-blocking.";
+        }
+        if root.overblock-trust-caution && !root.overblock-trust-risky : AlertBanner {
+            accent: Monokuma.caution;
+            message: "CAUTION blocklist armed (\{root.trust-cdn-overlap} CDN collisions) -> review before trusting.";
+        }
+
+        // ---- Verdict tallies ----
+        SectionTitle { text: "VERDICTS"; }
+        HorizontalBox {
+            spacing: 8px;
+            StatTile { label: "ALLOWED"; value: "\{root.allow-count}"; tint: Monokuma.safe; }
+            StatTile {
+                label: "DENIED";
+                value: "\{root.deny-count}";
+                tint: root.overblock-all-denied ? Monokuma.risk : Monokuma.bone;
+            }
+            StatTile { label: "TOTAL"; value: "\{root.total-verdicts}"; tint: Monokuma.ash; }
+        }
+
+        // ---- Per-tier deny attribution (WHERE the denies come from — which tier is the wall) ----
+        SectionTitle { text: "DENY ATTRIBUTION"; }
+        // TWO per row, never four — the portrait content column with the ||| rail open is only
+        // ~268 logical px, and 4×70 + 3×8 = 304px overflows it. Slint honours `min-width` and
+        // pushes the surplus tiles off-screen, invisible and unreachable.
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile { label: "T2 toggle"; value: "\{root.deny-by-toggle}"; tint: Monokuma.ash; }
+                StatTile { label: "T3 app"; value: "\{root.deny-by-app}"; tint: Monokuma.ash; }
+            }
+            Row {
+                StatTile { label: "T4 univ"; value: "\{root.deny-by-universal}"; tint: Monokuma.ash; }
+                StatTile {
+                    label: "T5 dns";
+                    value: "\{root.deny-by-dns}";
+                    tint: root.overblock-dns-dominant ? Monokuma.caution : Monokuma.ash;
+                }
+            }
+        }
+
+        // ---- Armed rule-sets + cache ----
+        SectionTitle { text: "ARMED RULE-SETS"; }
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile { label: "domain"; value: "\{root.domain-rules}"; tint: Monokuma.bone; }
+                StatTile { label: "cidr"; value: "\{root.cidr-rules}"; tint: Monokuma.bone; }
+            }
+            Row {
+                StatTile { label: "universal"; value: "\{root.universal-rules}"; tint: Monokuma.bone; }
+                StatTile { label: "cache"; value: "\{root.cache-entries}"; tint: Monokuma.ash; }
+            }
+        }
+
+        // ---- A6 — THE UNIVERSAL TOGGLES (TIER 2, tappable). Each chip renders the ENGINE's own
+        // bit (host-fed round-trip through the canonical instance) and a tap asks the host to flip
+        // it — the chip moves only when the read-back agrees (never a local echo). ----
+        SectionTitle { text: "UNIVERSAL TOGGLES  (tap to flip)"; }
+        if root.universal-toggles.length == 0 : Text {
+            text: root.warden-armed
+                ? "toggles unreadable — the bridge is silent"
+                : "arm the datapath to read + flip the engine's toggle bits";
+            color: Monokuma.ash;
+            font-size: 11px;
+        }
+        VerticalLayout {
+            spacing: 4px;
+            for t in root.universal-toggles : Rectangle {
+                background: t.armed ? Monokuma.wound : Monokuma.pitch;
+                border-radius: 6px;
+                border-width: 1px;
+                border-color: t.armed ? Monokuma.risk : Monokuma.iron;
+                HorizontalLayout {
+                    padding: 6px;
+                    spacing: 8px;
+                    Text {
+                        text: t.label;
+                        color: t.armed ? Monokuma.strike : Monokuma.bone;
+                        font-size: 11px;
+                        font-weight: t.armed ? 800 : 400;
+                    }
+                    Rectangle { }  // spacer
+                    Text {
+                        text: t.armed ? "BLOCKING" : "off";
+                        color: t.armed ? Monokuma.risk : Monokuma.dim;
+                        font-size: 11px;
+                        font-weight: 800;
+                    }
+                }
+                TouchArea {
+                    clicked => { root.set-universal-toggle(t.key, !t.armed); }
+                }
+            }
+        }
+
+        // ---- The Trust crown card ----
+        SectionTitle { text: "BLOCKLIST TRUST"; }
+        Rectangle {
+            border-radius: 8px;
+            background: ThemeBook.warden.floor;
+            border-width: 1px;
+            border-color: root.trust-color;
+            VerticalLayout {
+                padding: 10px;
+                spacing: 4px;
+                HorizontalLayout {
+                    spacing: 8px;
+                    Text {
+                        text: root.trust-source-name;
+                        color: Monokuma.bone;
+                        font-size: 13px;
+                        font-weight: 700;
+                        overflow: elide;
+                    }
+                    Rectangle { }  // spacer
+                    Text {
+                        text: root.trust-armed ? root.trust-band : "(disarmed)";
+                        color: root.trust-armed ? root.trust-color : Monokuma.ash;
+                        font-size: 12px;
+                        font-weight: 800;
+                    }
+                }
+                HorizontalLayout {
+                    spacing: 12px;
+                    Text {
+                        text: "score \{root.trust-score}/100";
+                        color: root.trust-color;
+                        font-size: 11px;
+                    }
+                    Text {
+                        text: "CDN collisions \{root.trust-cdn-overlap}";
+                        color: root.trust-cdn-overlap > 0 ? Monokuma.caution : Monokuma.ash;
+                        font-size: 11px;
+                    }
+                }
+            }
+        }
+
+        // ---- The per-app matrix ----
+        SectionTitle { text: "PER-APP MATRIX  (\{root.app-rows} rows armed)"; }
+        // W-D — the ENTRY to the per-app INSPECTOR popup: browse every app, drill into its endpoints,
+        // ride the block-ladder. Opens with no focus (uid -1 → the app browser). Each matrix row below
+        // is ALSO a shortcut straight into that app's detail.
+        Rectangle {
+            height: 40px;
+            border-radius: 10px;
+            background: ThemeBook.warden.floor;
+            border-width: 1px;
+            border-color: Monokuma.caution;
+            HorizontalLayout {
+                padding-left: 12px;
+                padding-right: 12px;
+                spacing: 8px;
+                alignment: center;
+                Text {
+                    text: "OPEN PER-APP INSPECTOR";
+                    color: Monokuma.bone;
+                    font-size: 12px;
+                    font-weight: 800;
+                    vertical-alignment: center;
+                }
+                Rectangle { }  // spacer
+                Text {
+                    text: "endpoints · GEO · block-ladder  >";
+                    color: Monokuma.ash;
+                    font-size: 10px;
+                    vertical-alignment: center;
+                }
+            }
+            TouchArea {
+                clicked => { root.inspector-detail-open = false; root.open-inspector(-1); }
+            }
+        }
+        VerticalLayout {
+            spacing: 4px;
+            for app in root.app-matrix : Rectangle {
+                background: Monokuma.pitch.with-alpha(0.55);
+                border-radius: 6px;
+                HorizontalLayout {
+                    padding: 6px;
+                    spacing: 8px;
+                    Text {
+                        text: app.name;
+                        color: Monokuma.bone;
+                        font-size: 12px;
+                        width: 92px;
+                        overflow: elide;
+                    }
+                    Text {
+                        text: "uid \{app.uid}";
+                        color: Monokuma.ash;
+                        font-size: 11px;
+                        width: 78px;
+                    }
+                    Text {
+                        text: app.mode;
+                        color: app.mode == "ISOLATE" ? Monokuma.risk : Monokuma.ash;
+                        font-size: 11px;
+                    }
+                    Rectangle { }  // spacer
+                    Text {
+                        text: app.metered;
+                        color: Monokuma.ash;
+                        font-size: 11px;
+                    }
+                    if app.paused : Text {
+                        text: "[PAUSED]";
+                        color: Monokuma.caution;
+                        font-size: 11px;
+                    }
+                }
+            }
+        }
+
+        // ---- LIVE FLOWS (A5 slice-5 — THE COURTROOM DOCKET). Every row is a REAL judged flow off the
+        // `tunnel::warden::verdict` choke point (the slice-4 ring), newest first: flag + destination +
+        // port/proto + AS name + the sealed verdict. The flag glyph is the class-a witness — `cc` rides
+        // beside it so the row stays readable even where the backend cannot shape regional indicators. ----
+        SectionTitle { text: "LIVE FLOWS  (\{root.flow-total} retained)"; }
+        if root.live-flows.length == 0 : Text {
+            text: "no judged flows yet — the docket fills once the engine gates traffic";
+            color: Monokuma.ash;
+            font-size: 11px;
+        }
+        VerticalLayout {
+            spacing: 4px;
+            for f in root.live-flows : Rectangle {
+                background: Monokuma.pitch.with-alpha(0.55);
+                border-radius: 6px;
+                HorizontalLayout {
+                    padding: 6px;
+                    spacing: 8px;
+                    Text {
+                        text: "\{f.flag} \{f.cc}";
+                        color: Monokuma.bone;
+                        font-size: 12px;
+                        width: 44px;
+                    }
+                    VerticalLayout {
+                        width: 118px;
+                        Text {
+                            text: f.app == "" ? f.ip : f.app;
+                            color: Monokuma.bone;
+                            font-size: 11px;
+                            overflow: elide;
+                        }
+                        // A4 — the attributed domain rides UNDER the app line: WHAT the app
+                        // dialed ("www.iana.org"), not just where. Absent = unattributed row
+                        // keeps the one-line shape; best-effort by law, so it informs, never tints.
+                        if f.domain != "" && f.domain != f.app : Text {
+                            text: f.domain;
+                            color: Monokuma.ash;
+                            font-size: 9px;
+                            overflow: elide;
+                        }
+                    }
+                    Text {
+                        text: "\{f.port} · \{f.proto}";
+                        color: Monokuma.ash;
+                        font-size: 11px;
+                        width: 72px;
+                    }
+                    Text {
+                        text: f.asn;
+                        color: Monokuma.ash;
+                        font-size: 11px;
+                        overflow: elide;
+                    }
+                    Rectangle { }  // spacer
+                    Text {
+                        // The verdict cell speaks the DATAPATH truth (#20): denied → the verdict
+                        // label red; allowed-but-uncarried → DROPPED amber (the Warden said yes,
+                        // the sync loop still dropped it — never dress that as a green ALLOW);
+                        // carried allow → the honest green.
+                        text: !f.denied && !f.carried ? "DROPPED" : f.verdict;
+                        color: f.denied ? Monokuma.risk
+                             : !f.carried ? Monokuma.caution
+                             : Monokuma.safe;
+                        font-size: 11px;
+                        font-weight: 800;
+                    }
+                }
+            }
+        }
+
+        Rectangle { }  // tail spacer
+    }
+
+    // ==== W-D (#79) — THE PER-APP INSPECTOR OVERLAY (the separate block-ladder popup dashboard) ====
+    // A full-pane opaque overlay (single-surface law: an overlay Rectangle WITHIN this pane, never a
+    // second Window). It draws AFTER the main VerticalBox so it stacks ON TOP; a full-bleed TouchArea
+    // absorbs stray taps so nothing leaks to the dashboard beneath. Two states off `inspector-uid`:
+    // uid < 0 → the APP BROWSER (tap an app to drill in); uid >= 0 → that app's DETAIL (WiFi/mobile
+    // block posture + the WHOLE endpoint list with GEO flags + the block-granularity ladder).
+    if root.inspector-open : Rectangle {
+        background: Monokuma.night;
+        // Absorb every tap that misses an inner control — the dashboard beneath must never receive it.
+        TouchArea { }
+
+        VerticalBox {
+            padding: 12px;
+            spacing: 8px;
+
+            // ---- Header (title + focus line + CLOSE) ----
+            HorizontalBox {
+                spacing: 8px;
+                VerticalLayout {
+                    Text {
+                        text: "PER-APP INSPECTOR";
+                        color: Monokuma.bone;
+                        font-size: 20px;
+                        font-weight: 900;
+                    }
+                    Text {
+                        text: !root.inspector-detail-open
+                            ? "browse apps — tap one to drill into its endpoints"
+                            : (root.inspector-app-name == "" ? "uid \{root.inspector-uid}" : root.inspector-app-name) + "  ·  uid \{root.inspector-uid}";
+                        color: Monokuma.ash;
+                        font-size: 11px;
+                        overflow: elide;
+                    }
+                }
+                Rectangle { }  // spacer
+                // BACK-TO-BROWSER (only while an app is focused) — returns to the app list without closing.
+                if root.inspector-detail-open : Rectangle {
+                    width: 66px;
+                    height: 40px;
+                    border-radius: 10px;
+                    background: ThemeBook.warden.panel;
+                    border-width: 1px;
+                    border-color: Monokuma.iron;
+                    Text {
+                        text: "< apps";
+                        color: Monokuma.bone;
+                        font-size: 11px;
+                        font-weight: 800;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                    TouchArea {
+                        clicked => { root.inspector-detail-open = false; }
+                    }
+                }
+                Rectangle {
+                    width: 68px;
+                    height: 40px;
+                    border-radius: 10px;
+                    background: ThemeBook.warden.panel;
+                    border-width: 1px;
+                    border-color: Monokuma.iron;
+                    Text {
+                        text: "CLOSE";
+                        color: Monokuma.bone;
+                        font-size: 12px;
+                        font-weight: 800;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                    TouchArea {
+                        clicked => { root.inspector-detail-open = false; root.close-inspector(); }
+                    }
+                }
+            }
+
+            // ==== FOCUSED DETAIL (any app OR the unattributed bucket) ====
+            if root.inspector-detail-open : VerticalLayout {
+                spacing: 8px;
+                vertical-stretch: 1;
+
+                // -- App-level network block: per-app toggles compose the meteredness NetClass. Only a
+                //    real app (uid >= 0) can hold that per-app row; the unattributed/system bucket (uid < 0)
+                //    can't, so it gets a note instead — its endpoints block UNIVERSALLY via the ladder below.
+                if root.inspector-uid >= 0 : VerticalLayout {
+                    spacing: 8px;
+                    SectionTitle { text: "APP NETWORK BLOCK  (tap to toggle)"; }
+                    HorizontalBox {
+                        spacing: 8px;
+                        NetBlockPill {
+                            label: "WiFi";
+                            on: root.inspector-block-wifi;
+                            toggled => { root.inspector-block-wifi-toggle(root.inspector-uid, !root.inspector-block-wifi); }
+                        }
+                        NetBlockPill {
+                            label: "Mobile data";
+                            on: root.inspector-block-mobile;
+                            toggled => { root.inspector-block-mobile-toggle(root.inspector-uid, !root.inspector-block-mobile); }
+                        }
+                    }
+                }
+                if root.inspector-uid < 0 : Text {
+                    text: "unattributed · system/kernel flows — the ladder blocks these endpoints UNIVERSALLY (every app)";
+                    color: Monokuma.caution;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+
+                // -- Armed country blocks (the GEO-family posture, live) --
+                HorizontalLayout {
+                    spacing: 6px;
+                    Text {
+                        text: "countries blocked:";
+                        color: Monokuma.dim;
+                        font-size: 10px;
+                        vertical-alignment: center;
+                    }
+                    Text {
+                        text: root.inspector-geo-blocks == "" ? "none" : root.inspector-geo-blocks;
+                        color: root.inspector-geo-blocks == "" ? Monokuma.ash : Monokuma.risk;
+                        font-size: 11px;
+                        font-weight: 700;
+                    }
+                }
+
+                // -- The block-granularity ladder (acts on the SELECTED endpoint set) --
+                SectionTitle { text: "BLOCK LADDER  ·  \{root.inspector-selected-count} selected"; }
+                HorizontalBox {
+                    spacing: 6px;
+                    LadderButton {
+                        label: "IP";
+                        sub: "/32 host";
+                        pressed => { root.inspector-block-selected(root.inspector-uid, 0); }
+                    }
+                    LadderButton {
+                        label: "/24";
+                        sub: "neighbourhood";
+                        pressed => { root.inspector-block-selected(root.inspector-uid, 1); }
+                    }
+                    LadderButton {
+                        label: "/16";
+                        sub: "source family";
+                        pressed => { root.inspector-block-selected(root.inspector-uid, 2); }
+                    }
+                    LadderButton {
+                        label: "Country";
+                        sub: "GEO family";
+                        accent: Monokuma.risk;
+                        pressed => { root.inspector-block-selected(root.inspector-uid, 3); }
+                    }
+                }
+
+                // -- The WHOLE endpoint list (tap a row to select it for the ladder) --
+                SectionTitle { text: "ENDPOINTS (\{root.inspector-dests-shown})  ·  tap to select"; }
+                if root.inspector-dests.length == 0 : Text {
+                    text: "no endpoints recorded for this app yet";
+                    color: Monokuma.ash;
+                    font-size: 11px;
+                }
+                ScrollView {
+                    vertical-stretch: 1;
+                    VerticalLayout {
+                        spacing: 4px;
+                        for d in root.inspector-dests : Rectangle {
+                            background: d.selected ? Monokuma.wound
+                                : (d.denied ? Monokuma.coal : Monokuma.pitch);
+                            border-radius: 6px;
+                            border-width: d.selected ? 2px : 1px;
+                            border-color: d.selected ? Monokuma.strike
+                                : (d.denied ? Monokuma.risk : Monokuma.iron);
+                            HorizontalLayout {
+                                padding: 6px;
+                                spacing: 8px;
+                                Text {
+                                    text: "\{d.flag} \{d.cc}";
+                                    color: Monokuma.bone;
+                                    font-size: 12px;
+                                    width: 46px;
+                                }
+                                VerticalLayout {
+                                    width: 138px;
+                                    Text {
+                                        text: d.ip;
+                                        color: Monokuma.bone;
+                                        font-size: 11px;
+                                        overflow: elide;
+                                    }
+                                    if d.domain != "" : Text {
+                                        text: d.domain;
+                                        color: Monokuma.ash;
+                                        font-size: 9px;
+                                        overflow: elide;
+                                    }
+                                }
+                                Text {
+                                    text: "\{d.port} · \{d.proto}";
+                                    color: Monokuma.ash;
+                                    font-size: 10px;
+                                    width: 62px;
+                                }
+                                Text {
+                                    text: d.asn;
+                                    color: Monokuma.ash;
+                                    font-size: 10px;
+                                    overflow: elide;
+                                }
+                                Rectangle { }  // spacer
+                                Text {
+                                    text: "\{d.hits} hits";
+                                    color: Monokuma.dim;
+                                    font-size: 9px;
+                                }
+                                Text {
+                                    text: d.denied ? "BLOCKED" : (d.carried ? "allow" : "dropped");
+                                    color: d.denied ? Monokuma.risk
+                                        : (d.carried ? Monokuma.safe : Monokuma.caution);
+                                    font-size: 10px;
+                                    font-weight: 800;
+                                    width: 58px;
+                                    horizontal-alignment: right;
+                                }
+                            }
+                            TouchArea {
+                                clicked => { root.inspector-select-dest(d.ip); }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // ==== APP BROWSER (no app focused) ====
+            if !root.inspector-detail-open : VerticalLayout {
+                spacing: 8px;
+                vertical-stretch: 1;
+                SectionTitle { text: "APPS SEEN (\{root.inspector-apps-shown})  ·  tap to inspect"; }
+                if root.inspector-apps.length == 0 : Text {
+                    text: "no app activity yet — the browser fills once apps reach the network";
+                    color: Monokuma.ash;
+                    font-size: 11px;
+                }
+                ScrollView {
+                    vertical-stretch: 1;
+                    VerticalLayout {
+                        spacing: 4px;
+                        for a in root.inspector-apps : Rectangle {
+                            background: Monokuma.pitch.with-alpha(0.55);
+                            border-radius: 6px;
+                            border-width: 1px;
+                            border-color: (a.block-wifi || a.block-mobile) ? Monokuma.risk : Monokuma.iron;
+                            HorizontalLayout {
+                                padding: 6px;
+                                spacing: 8px;
+                                VerticalLayout {
+                                    width: 148px;
+                                    Text {
+                                        text: a.name == "" ? "uid \{a.uid}" : a.name;
+                                        color: Monokuma.bone;
+                                        font-size: 12px;
+                                        overflow: elide;
+                                    }
+                                    Text {
+                                        text: "\{a.ips} IPs · \{a.countries} countries";
+                                        color: Monokuma.ash;
+                                        font-size: 9px;
+                                    }
+                                }
+                                Rectangle { }  // spacer
+                                Text {
+                                    text: "allow \{a.allowed}";
+                                    color: Monokuma.safe;
+                                    font-size: 10px;
+                                }
+                                Text {
+                                    text: "deny \{a.denied}";
+                                    color: a.denied > 0 ? Monokuma.risk : Monokuma.dim;
+                                    font-size: 10px;
+                                }
+                                if a.block-wifi : Text {
+                                    text: "W";
+                                    color: Monokuma.risk;
+                                    font-size: 11px;
+                                    font-weight: 900;
+                                }
+                                if a.block-mobile : Text {
+                                    text: "M";
+                                    color: Monokuma.risk;
+                                    font-size: 11px;
+                                    font-weight: 900;
+                                }
+                            }
+                            TouchArea {
+                                clicked => { root.inspector-detail-open = true; root.open-inspector(a.uid); }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// The standalone WardenDashboard Window — a THIN WRAPPER over WardenPane (inherits Rectangle, the embeddable
+// primitive the shell mounts on-device). Every host-fed input + every derived out forwards through byte-equal
+// `<=>` aliases so the proof test + the `warden_witness` preview drive the SAME pane the shell embeds (one
+// surface, two mounts — the CentauriDashboard/CentauriPane law).
+export component WardenDashboard inherits Window {
+    title: "Yeah! Tortä — Warden";
+    preferred-width: 420px;
+    preferred-height: 920px;
+    background: Monokuma.night;
+
+    // ---- host-fed inputs (byte-equal forwarding to the pane) ----
+    in-out property <int> allow-count <=> pane.allow-count;
+    in-out property <int> deny-count <=> pane.deny-count;
+    in-out property <int> deny-by-toggle <=> pane.deny-by-toggle;
+    in-out property <int> deny-by-app <=> pane.deny-by-app;
+    in-out property <int> deny-by-universal <=> pane.deny-by-universal;
+    in-out property <int> deny-by-dns <=> pane.deny-by-dns;
+    in-out property <int> domain-rules <=> pane.domain-rules;
+    in-out property <int> cidr-rules <=> pane.cidr-rules;
+    in-out property <int> universal-rules <=> pane.universal-rules;
+    in-out property <int> app-rows <=> pane.app-rows;
+    in-out property <int> cache-entries <=> pane.cache-entries;
+    in-out property <bool> policy-loaded <=> pane.policy-loaded;
+    in-out property <bool> fail-closed <=> pane.fail-closed;
+    in-out property <string> trust-source-name <=> pane.trust-source-name;
+    in-out property <int> trust-score <=> pane.trust-score;
+    in-out property <int> trust-cdn-overlap <=> pane.trust-cdn-overlap;
+    in-out property <bool> trust-armed <=> pane.trust-armed;
+    in-out property <bool> lockdown-armed <=> pane.lockdown-armed;
+    in-out property <[AppRow]> app-matrix <=> pane.app-matrix;
+    in-out property <[FlowRow]> live-flows <=> pane.live-flows;
+    in-out property <int> flow-total <=> pane.flow-total;
+
+    // ---- W-D (#79) inspector forwarding (byte-equal to the pane) ----
+    in-out property <bool> inspector-open <=> pane.inspector-open;
+    in-out property <[InspectorAppRow]> inspector-apps <=> pane.inspector-apps;
+    in-out property <int> inspector-uid <=> pane.inspector-uid;
+    in-out property <string> inspector-app-name <=> pane.inspector-app-name;
+    in-out property <bool> inspector-block-wifi <=> pane.inspector-block-wifi;
+    in-out property <bool> inspector-block-mobile <=> pane.inspector-block-mobile;
+    in-out property <[InspectorDestRow]> inspector-dests <=> pane.inspector-dests;
+    in-out property <string> inspector-geo-blocks <=> pane.inspector-geo-blocks;
+    in-out property <int> inspector-selected-count <=> pane.inspector-selected-count;
+    out property <int> inspector-apps-shown <=> pane.inspector-apps-shown;
+    out property <int> inspector-dests-shown <=> pane.inspector-dests-shown;
+
+    // ---- derived outs (the over-block hunt — forwarded so the proof test asserts them) ----
+    out property <int> total-verdicts <=> pane.total-verdicts;
+    out property <string> trust-band <=> pane.trust-band;
+    out property <bool> overblock-fail-closed <=> pane.overblock-fail-closed;
+    out property <bool> overblock-all-denied <=> pane.overblock-all-denied;
+    out property <bool> overblock-dns-dominant <=> pane.overblock-dns-dominant;
+    out property <bool> overblock-trust-risky <=> pane.overblock-trust-risky;
+    out property <bool> overblock-trust-caution <=> pane.overblock-trust-caution;
+    out property <bool> overblock-lockdown <=> pane.overblock-lockdown;
+    out property <bool> overblock-any <=> pane.overblock-any;
+    out property <int> flows-shown <=> pane.flows-shown;
+
+    callback close-dashboard <=> pane.close-dashboard;
+    // ---- W-D (#79) inspector callbacks (byte-equal to the pane) ----
+    callback open-inspector <=> pane.open-inspector;
+    callback close-inspector <=> pane.close-inspector;
+    callback inspector-block-wifi-toggle <=> pane.inspector-block-wifi-toggle;
+    callback inspector-block-mobile-toggle <=> pane.inspector-block-mobile-toggle;
+    callback inspector-select-dest <=> pane.inspector-select-dest;
+    callback inspector-block-selected <=> pane.inspector-block-selected;
+
+    pane := WardenPane { }
+}

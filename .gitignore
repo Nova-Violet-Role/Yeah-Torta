@@ -1,0 +1,29 @@
+
+# ---------------------------------------------------------------------------
+# BUILD OUTPUT — never tracked.
+# Measured 2026-08-01, before the first public push: 1,816 tracked files and
+# 1.6 GB of compiler output (149 .rlib, 512 .o, 149 .rmeta, a 90 MB .pdb) had
+# been committed alongside the source, against 32.5 MB of actual project. That
+# is not a repository, it is a build directory with a repository inside it --
+# and GitHub rejects any push over 2 GB, so it could not have been published
+# at all.
+# ---------------------------------------------------------------------------
+rust/*/target-netstack/
+rust/*/target/
+build/
+.gradle/
+.avd-guard/
+
+# Backups taken before a risky edit (*.pre-<reason>.bak). Useful locally,
+# meaningless to anyone else, and they double the weight of every binary.
+*.bak
+
+# The Rust engine and UI shared objects are BUILD OUTPUT (64 MB each, over
+# GitHub's 50 MB warning threshold). Build them with the cargo-ndk command in
+# README.md -- shipping them in git would make every clone pay for a binary
+# that must be rebuilt from source anyway.
+libumdnscrypt/src/main/jniLibs/*/*.so
+
+# Local run artifacts
+hosts_probe.txt
+*.png.tmp

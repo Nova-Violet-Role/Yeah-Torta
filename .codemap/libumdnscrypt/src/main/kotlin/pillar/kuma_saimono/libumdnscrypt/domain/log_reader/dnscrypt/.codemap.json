@@ -1,0 +1,157 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\domain\\log_reader\\dnscrypt",
+  "files": {
+    "DNSCryptInteractor.kt": {
+      "hash": "d38daacebf8c",
+      "indexed_at": "2026-08-01T03:59:58.849528+00:00",
+      "language": "kotlin",
+      "lines": 82,
+      "mtime_ns": 1785556377146901700,
+      "size": 2602,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                33,
+                35
+              ],
+              "name": "addListener",
+              "signature": "(listener: T?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                43
+              ],
+              "name": "removeListener",
+              "signature": "(listener: T?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                45,
+                47
+              ],
+              "name": "hasAnyListener",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                55
+              ],
+              "name": "parseDNSCryptLog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                57,
+                61
+              ],
+              "name": "resetParserState",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                81
+              ],
+              "name": "parseLog",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            27,
+            82
+          ],
+          "name": "DNSCryptInteractor",
+          "type": "class"
+        }
+      ]
+    },
+    "DNSCryptLogParser.kt": {
+      "hash": "20850e7d3ba8",
+      "indexed_at": "2026-08-01T03:59:59.152524+00:00",
+      "language": "kotlin",
+      "lines": 136,
+      "mtime_ns": 1785556377159900800,
+      "size": 4827,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                50,
+                108
+              ],
+              "name": "parseLog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                110,
+                135
+              ],
+              "name": "parseServersPing",
+              "signature": "(line: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            32,
+            136
+          ],
+          "name": "DNSCryptLogParser",
+          "type": "class"
+        }
+      ]
+    },
+    "OnDNSCryptLogUpdatedListener.kt": {
+      "hash": "81f7bd5426ba",
+      "indexed_at": "2026-08-01T03:59:59.451118+00:00",
+      "language": "kotlin",
+      "lines": 24,
+      "mtime_ns": 1785556377172900100,
+      "size": 821,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "onDNSCryptLogUpdated",
+              "signature": "(dnsCryptLogData: LogDataModel)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "isActive",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            24
+          ],
+          "name": "OnDNSCryptLogUpdatedListener",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:59.452925+00:00",
+  "version": "1.0"
+}

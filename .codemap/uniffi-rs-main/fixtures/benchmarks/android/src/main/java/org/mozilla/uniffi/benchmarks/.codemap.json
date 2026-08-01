@@ -1,0 +1,271 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\benchmarks\\android\\src\\main\\java\\org\\mozilla\\uniffi\\benchmarks",
+  "files": {
+    "MainActivity.kt": {
+      "hash": "226818e44641",
+      "indexed_at": "2026-07-24T20:35:12.386093+00:00",
+      "language": "kotlin",
+      "lines": 362,
+      "mtime_ns": 1782136568000000000,
+      "size": 12591,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                29,
+                45
+              ],
+              "name": "onCreate",
+              "signature": "(savedInstanceState: Bundle?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                47,
+                49
+              ],
+              "name": "getIterationCount",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                51,
+                53
+              ],
+              "name": "isCallbackSelected",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                55,
+                71
+              ],
+              "name": "getSelectedTestCase",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                73,
+                89
+              ],
+              "name": "runBenchmark",
+              "signature": "(benchmark: () -> String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                101
+              ],
+              "name": "formatBenchmarkResult",
+              "signature": "(name: String, iterations: Int, timeNanos: ULong)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                135
+              ],
+              "name": "runSelectedBenchmark",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                137,
+                140
+              ],
+              "name": "runFunctionBenchmark",
+              "signature": "(testCase: TestCase, iterations: Int, name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                142,
+                147
+              ],
+              "name": "runCallbackBenchmark",
+              "signature": "(testCase: TestCase, iterations: Int, name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                149,
+                152
+              ],
+              "name": "appendResult",
+              "signature": "(result: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                154,
+                157
+              ],
+              "name": "clearResults",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                159,
+                165
+              ],
+              "name": "setButtonsEnabled",
+              "signature": "(enabled: Boolean)",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    168,
+                    169
+                  ],
+                  "name": "callOnly",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    171,
+                    173
+                  ],
+                  "name": "primitives",
+                  "signature": "(a: UByte, b: Int)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    175,
+                    177
+                  ],
+                  "name": "strings",
+                  "signature": "(a: String, b: String)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    179,
+                    181
+                  ],
+                  "name": "largeStrings",
+                  "signature": "(a: String, b: String)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    183,
+                    185
+                  ],
+                  "name": "records",
+                  "signature": "(a: TestRecord, b: TestRecord)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    187,
+                    197
+                  ],
+                  "name": "enums",
+                  "signature": "(a: TestEnum, b: TestEnum)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    199,
+                    201
+                  ],
+                  "name": "vecs",
+                  "signature": "(a: List<UInt>, b: List<UInt>)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    203,
+                    208
+                  ],
+                  "name": "hashMaps",
+                  "signature": "(\n            a: Map<UInt, UInt>,\n            b: Map<UInt, UInt>\n        )",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    210,
+                    217
+                  ],
+                  "name": "interfaces",
+                  "signature": "(a: TestInterface, b: TestInterface)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    219,
+                    229
+                  ],
+                  "name": "traitInterfaces",
+                  "signature": "(\n            a: TestTraitInterface,\n            b: TestTraitInterface\n        )",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    231,
+                    244
+                  ],
+                  "name": "nestedData",
+                  "signature": "(a: NestedData, b: NestedData)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    246,
+                    248
+                  ],
+                  "name": "errors",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    250,
+                    328
+                  ],
+                  "name": "runTest",
+                  "signature": "(testCase: TestCase, count: ULong)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                167,
+                329
+              ],
+              "name": "TestCallbackImpl",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            15,
+            330
+          ],
+          "name": "MainActivity",
+          "type": "class"
+        },
+        {
+          "docstring": "construct these objects.",
+          "lines": [
+            334,
+            362
+          ],
+          "name": "TestData",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.662610+00:00",
+  "version": "1.0"
+}

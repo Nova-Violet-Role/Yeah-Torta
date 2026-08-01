@@ -1,0 +1,2398 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_macros\\src",
+  "files": {
+    "custom.rs": {
+      "hash": "b5fa208e90b2",
+      "indexed_at": "2026-07-24T20:35:13.177849+00:00",
+      "language": "rust",
+      "lines": 330,
+      "mtime_ns": 1782136568000000000,
+      "size": 10371,
+      "symbols": [
+        {
+          "lines": [
+            19,
+            24
+          ],
+          "name": "CustomTypeArgs",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                27,
+                53
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            26,
+            54
+          ],
+          "name": "Parse",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            58,
+            62
+          ],
+          "name": "CustomTypeOptions",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                65,
+                67
+              ],
+              "name": "is_remote",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            64,
+            68
+          ],
+          "name": "CustomTypeOptions",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                71,
+                73
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            70,
+            74
+          ],
+          "name": "Parse",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                77,
+                101
+              ],
+              "name": "parse_one",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                109
+              ],
+              "name": "merge",
+              "signature": "(self, other: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            76,
+            110
+          ],
+          "name": "UniffiAttributeArgs",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            112,
+            116
+          ],
+          "name": "ConvertClosure",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                119,
+                124
+              ],
+              "name": "token_tuple",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            118,
+            125
+          ],
+          "name": "ConvertClosure",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                128,
+                150
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            127,
+            151
+          ],
+          "name": "Parse",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                154,
+                156
+              ],
+              "name": "to_tokens",
+              "signature": "(&self, tokens: &mut TokenStream)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            153,
+            157
+          ],
+          "name": "ToTokens",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            159,
+            265
+          ],
+          "name": "expand_custom_type",
+          "signature": "(args: CustomTypeArgs)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            267,
+            271
+          ],
+          "name": "CustomNewtypeArgs",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                274,
+                285
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            273,
+            286
+          ],
+          "name": "Parse",
+          "type": "impl"
+        },
+        {
+          "docstring": "Generate TypeConverter implementation for a newtype",
+          "lines": [
+            289,
+            309
+          ],
+          "name": "expand_custom_newtype",
+          "signature": "(args: CustomNewtypeArgs)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            311,
+            330
+          ],
+          "name": "custom_type_meta_static_var",
+          "signature": "(\n    name: &str,\n    builtin: &Type,\n    docstring: &str,\n)",
+          "type": "function"
+        }
+      ]
+    },
+    "default.rs": {
+      "hash": "a73b11358430",
+      "indexed_at": "2026-07-24T20:35:13.179044+00:00",
+      "language": "rust",
+      "lines": 149,
+      "mtime_ns": 1782136568000000000,
+      "size": 5322,
+      "symbols": [
+        {
+          "lines": [
+            17,
+            30
+          ],
+          "name": "DefaultValue",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                33,
+                41
+              ],
+              "name": "to_tokens",
+              "signature": "(&self, tokens: &mut TokenStream)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            32,
+            42
+          ],
+          "name": "ToTokens",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                67
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            44,
+            68
+          ],
+          "name": "Parse",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                71,
+                135
+              ],
+              "name": "metadata_calls",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            70,
+            136
+          ],
+          "name": "DefaultValue",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            138,
+            149
+          ],
+          "name": "default_value_metadata_calls",
+          "signature": "(default: &Option<DefaultValue>)",
+          "type": "function"
+        }
+      ]
+    },
+    "derive.rs": {
+      "hash": "70beb2fa7670",
+      "indexed_at": "2026-07-24T20:35:13.180062+00:00",
+      "language": "rust",
+      "lines": 135,
+      "mtime_ns": 1782136568000000000,
+      "size": 4176,
+      "symbols": [
+        {
+          "lines": [
+            15,
+            26
+          ],
+          "name": "expand_derive",
+          "signature": "(\n    kind: DeriveKind,\n    input: DeriveInput,\n    options: DeriveOptions,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            28,
+            33
+          ],
+          "name": "DeriveKind",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                36,
+                49
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            35,
+            50
+          ],
+          "name": "Parse",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            52,
+            57
+          ],
+          "name": "DeriveOptions",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                61,
+                66
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "default() is used to construct a DeriveOptions for a regular `derive` invocation",
+          "lines": [
+            60,
+            67
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Construct DeriveOptions for `udl_derive`",
+              "lines": [
+                71,
+                76
+              ],
+              "name": "udl_derive",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "DeriveOptions for `#[remote]`",
+              "lines": [
+                79,
+                84
+              ],
+              "name": "remote",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "DeriveOptions for `#[udl_remote]`",
+              "lines": [
+                87,
+                92
+              ],
+              "name": "udl_remote",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "responsible for providing the body if the impl block.",
+              "lines": [
+                98,
+                105
+              ],
+              "name": "ffi_impl_header",
+              "signature": "(&self, trait_name: &str, ident: &impl ToTokens)",
+              "type": "method"
+            },
+            {
+              "docstring": "Generate a call to `derive_ffi_traits!` that will derive all the FFI traits",
+              "lines": [
+                108,
+                114
+              ],
+              "name": "derive_all_ffi_traits",
+              "signature": "(&self, ty: &Ident)",
+              "type": "method"
+            },
+            {
+              "docstring": "Generate a call to `derive_ffi_traits!` that will derive some of the FFI traits",
+              "lines": [
+                117,
+                134
+              ],
+              "name": "derive_ffi_traits",
+              "signature": "(&self, ty: impl ToTokens, trait_names: &[&str])",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            69,
+            135
+          ],
+          "name": "DeriveOptions",
+          "type": "impl"
+        }
+      ]
+    },
+    "enum_.rs": {
+      "hash": "07617fa861f0",
+      "indexed_at": "2026-07-24T20:35:13.182743+00:00",
+      "language": "rust",
+      "lines": 486,
+      "mtime_ns": 1782136568000000000,
+      "size": 15979,
+      "symbols": [
+        {
+          "docstring": "Stores parsed data from the Derive Input for the enum.",
+          "lines": [
+            22,
+            29
+          ],
+          "name": "EnumItem",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                32,
+                50
+              ],
+              "name": "new",
+              "signature": "(input: DeriveInput)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                52,
+                74
+              ],
+              "name": "extract_repr",
+              "signature": "(attrs: &[Attribute])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                76,
+                78
+              ],
+              "name": "extract_non_exhaustive",
+              "signature": "(attrs: &[Attribute])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                80,
+                94
+              ],
+              "name": "check_attributes_valid_for_enum",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                96,
+                98
+              ],
+              "name": "ident",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                102
+              ],
+              "name": "enum_",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                104,
+                106
+              ],
+              "name": "is_non_exhaustive",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                110
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                114
+              ],
+              "name": "discr_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                116,
+                121
+              ],
+              "name": "foreign_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                123,
+                125
+              ],
+              "name": "orig_name_metadata",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                127,
+                129
+              ],
+              "name": "is_flat_error",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                131,
+                133
+              ],
+              "name": "generate_error_try_read",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            31,
+            134
+          ],
+          "name": "EnumItem",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            136,
+            149
+          ],
+          "name": "expand_enum",
+          "signature": "(input: DeriveInput, options: DeriveOptions)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            151,
+            157
+          ],
+          "name": "enum_ffi_converter_impl",
+          "signature": "(item: &EnumItem, options: &DeriveOptions)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            159,
+            168
+          ],
+          "name": "rich_error_ffi_converter_impl",
+          "signature": "(\n    item: &EnumItem,\n    options: &DeriveOptions,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            170,
+            272
+          ],
+          "name": "enum_or_error_ffi_converter_impl",
+          "signature": "(\n    item: &EnumItem,\n    options: &DeriveOptions,\n    metadata_type_code: TokenStream,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            274,
+            301
+          ],
+          "name": "enum_meta_static_var",
+          "signature": "(item: &EnumItem)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            303,
+            351
+          ],
+          "name": "variant_value",
+          "signature": "(v: &Variant)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            353,
+            412
+          ],
+          "name": "variant_metadata",
+          "signature": "(item: &EnumItem)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            416,
+            422
+          ],
+          "name": "EnumAttr",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                425,
+                451
+              ],
+              "name": "parse_one",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                453,
+                459
+              ],
+              "name": "merge",
+              "signature": "(self, other: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            424,
+            460
+          ],
+          "name": "UniffiAttributeArgs",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            464,
+            466
+          ],
+          "name": "VariantAttr",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                469,
+                479
+              ],
+              "name": "parse_one",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                481,
+                485
+              ],
+              "name": "merge",
+              "signature": "(self, other: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            468,
+            486
+          ],
+          "name": "UniffiAttributeArgs",
+          "type": "impl"
+        }
+      ]
+    },
+    "error.rs": {
+      "hash": "733a8896bb88",
+      "indexed_at": "2026-07-24T20:35:13.184275+00:00",
+      "language": "rust",
+      "lines": 218,
+      "mtime_ns": 1782136568000000000,
+      "size": 7893,
+      "symbols": [
+        {
+          "lines": [
+            16,
+            41
+          ],
+          "name": "expand_error",
+          "signature": "(input: DeriveInput, options: DeriveOptions)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            43,
+            49
+          ],
+          "name": "error_ffi_converter_impl",
+          "signature": "(item: &EnumItem, options: &DeriveOptions)",
+          "type": "function"
+        },
+        {
+          "docstring": "We lower the to_string() value unconditionally, whether the enum has associated data or not.",
+          "lines": [
+            55,
+            171
+          ],
+          "name": "flat_error_ffi_converter_impl",
+          "signature": "(item: &EnumItem, options: &DeriveOptions)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            173,
+            198
+          ],
+          "name": "error_meta_static_var",
+          "signature": "(item: &EnumItem)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            200,
+            218
+          ],
+          "name": "flat_error_variant_metadata",
+          "signature": "(item: &EnumItem)",
+          "type": "function"
+        }
+      ]
+    },
+    "export.rs": {
+      "hash": "04e3bcabba50",
+      "indexed_at": "2026-07-24T20:35:13.185587+00:00",
+      "language": "rust",
+      "lines": 222,
+      "mtime_ns": 1782136568000000000,
+      "size": 7693,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            9
+          ],
+          "name": "attributes",
+          "type": "module"
+        },
+        {
+          "lines": [
+            10,
+            10
+          ],
+          "name": "callback_interface",
+          "type": "module"
+        },
+        {
+          "lines": [
+            11,
+            11
+          ],
+          "name": "item",
+          "type": "module"
+        },
+        {
+          "lines": [
+            12,
+            12
+          ],
+          "name": "scaffolding",
+          "type": "module"
+        },
+        {
+          "lines": [
+            13,
+            13
+          ],
+          "name": "trait_interface",
+          "type": "module"
+        },
+        {
+          "lines": [
+            14,
+            14
+          ],
+          "name": "utrait",
+          "type": "module"
+        },
+        {
+          "docstring": "TODO(jplatte): Aggregate errors instead of short-circuiting, wherever possible",
+          "lines": [
+            30,
+            162
+          ],
+          "name": "expand_export",
+          "signature": "(\n    mut item: Item,\n    all_args: proc_macro::TokenStream,\n    udl_mode: bool,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "```",
+          "lines": [
+            191,
+            214
+          ],
+          "name": "rewrite_self_type",
+          "signature": "(item: &mut Item)",
+          "type": "function"
+        },
+        {
+          "docstring": "Alter the tokens wrapped with the `[uniffi::export]` if needed",
+          "lines": [
+            217,
+            222
+          ],
+          "name": "alter_input",
+          "signature": "(item: &Item)",
+          "type": "function"
+        }
+      ]
+    },
+    "ffiops.rs": {
+      "hash": "4ececc512e11",
+      "indexed_at": "2026-07-24T20:35:13.186542+00:00",
+      "language": "rust",
+      "lines": 115,
+      "mtime_ns": 1782136568000000000,
+      "size": 3229,
+      "symbols": [
+        {
+          "docstring": "Lower function",
+          "lines": [
+            15,
+            19
+          ],
+          "name": "lower",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        },
+        {
+          "docstring": "Lift type",
+          "lines": [
+            22,
+            26
+          ],
+          "name": "lift_type",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        },
+        {
+          "docstring": "Lift function",
+          "lines": [
+            29,
+            33
+          ],
+          "name": "try_lift",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        },
+        {
+          "docstring": "Write function",
+          "lines": [
+            36,
+            40
+          ],
+          "name": "write",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        },
+        {
+          "docstring": "Read function",
+          "lines": [
+            43,
+            47
+          ],
+          "name": "try_read",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        },
+        {
+          "docstring": "Lower return type",
+          "lines": [
+            50,
+            54
+          ],
+          "name": "lower_return_type",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        },
+        {
+          "docstring": "Lower return function",
+          "lines": [
+            57,
+            61
+          ],
+          "name": "lower_return",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        },
+        {
+          "docstring": "Lower error function",
+          "lines": [
+            64,
+            68
+          ],
+          "name": "lower_error",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        },
+        {
+          "docstring": "Lift return type",
+          "lines": [
+            71,
+            75
+          ],
+          "name": "lift_return_type",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        },
+        {
+          "docstring": "Lift foreign return function",
+          "lines": [
+            78,
+            82
+          ],
+          "name": "lift_foreign_return",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        },
+        {
+          "docstring": "Handle failed lift function",
+          "lines": [
+            85,
+            89
+          ],
+          "name": "lower_return_handle_failed_lift",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        },
+        {
+          "docstring": "LiftRef type",
+          "lines": [
+            92,
+            94
+          ],
+          "name": "lift_ref_type",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        },
+        {
+          "docstring": "Lower into rust buffer function",
+          "lines": [
+            97,
+            101
+          ],
+          "name": "lower_into_rust_buffer",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        },
+        {
+          "docstring": "Lift from rust buffer function",
+          "lines": [
+            104,
+            108
+          ],
+          "name": "try_lift_from_rust_buffer",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        },
+        {
+          "docstring": "Expression for the TYPE_ID_META value for a type",
+          "lines": [
+            111,
+            115
+          ],
+          "name": "type_id_meta",
+          "signature": "(ty: impl ToTokens)",
+          "type": "function"
+        }
+      ]
+    },
+    "fnsig.rs": {
+      "hash": "98a4c6e76e7f",
+      "indexed_at": "2026-07-24T20:35:13.189345+00:00",
+      "language": "rust",
+      "lines": 575,
+      "mtime_ns": 1782136568000000000,
+      "size": 19103,
+      "symbols": [
+        {
+          "docstring": "are vanishingly rare for byte slice arguments.",
+          "lines": [
+            22,
+            29
+          ],
+          "name": "is_u8_slice",
+          "signature": "(ty: &Type)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            31,
+            51
+          ],
+          "name": "FnSignature",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                54,
+                60
+              ],
+              "name": "new_function",
+              "signature": "(\n        sig: syn::Signature,\n        args: ExportFnArgs,\n        docstring: String,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                62,
+                78
+              ],
+              "name": "new_method",
+              "signature": "(\n        self_ident: Ident,\n        foreign_self_ident: Ident,\n        sig: syn::Signature,\n    ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                80,
+                96
+              ],
+              "name": "new_constructor",
+              "signature": "(\n        self_ident: Ident,\n        foreign_self_ident: Ident,\n        sig: syn::Signature,\n    ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                98,
+                111
+              ],
+              "name": "new_trait_method",
+              "signature": "(\n        self_ident: Ident,\n        sig: syn::Signature,\n        args: ExportFnArgs,\n        ind...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                185
+              ],
+              "name": "new",
+              "signature": "(\n        kind: FnKind,\n        sig: syn::Signature,\n        mut export_fn_args: ExportFnArgs,\n  ...",
+              "type": "method"
+            },
+            {
+              "docstring": "- The field name and error on failure (`Err(&'static str, anyhow::Error>`)",
+              "lines": [
+                192,
+                212
+              ],
+              "name": "lift_closure",
+              "signature": "(&self, self_lift: Option<TokenStream>)",
+              "type": "method"
+            },
+            {
+              "docstring": "a series of parameters to pass to the Rust function.",
+              "lines": [
+                218,
+                231
+              ],
+              "name": "rust_call_params",
+              "signature": "(&self, self_lift: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "Parameters expressions for each of our arguments",
+              "lines": [
+                234,
+                236
+              ],
+              "name": "params",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Name of the scaffolding function to generate for this function",
+              "lines": [
+                239,
+                260
+              ],
+              "name": "scaffolding_fn_ident",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Scaffolding parameters expressions for each of our arguments",
+              "lines": [
+                263,
+                268
+              ],
+              "name": "scaffolding_param_names",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                270,
+                272
+              ],
+              "name": "scaffolding_param_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Generate metadata items for this function",
+              "lines": [
+                275,
+                365
+              ],
+              "name": "metadata_expr",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                367,
+                411
+              ],
+              "name": "metadata_items",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                413,
+                435
+              ],
+              "name": "checksum_symbol_name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            53,
+            436
+          ],
+          "name": "FnSignature",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            438,
+            441
+          ],
+          "name": "Arg",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            444,
+            447
+          ],
+          "name": "ArgKind",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                450,
+                461
+              ],
+              "name": "new",
+              "signature": "(syn_arg: FnArg, defaults: &mut DefaultMap)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                463,
+                465
+              ],
+              "name": "is_receiver",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            449,
+            466
+          ],
+          "name": "Arg",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            468,
+            471
+          ],
+          "name": "ReceiverArg",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                474,
+                486
+              ],
+              "name": "from",
+              "signature": "(receiver: Receiver)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            473,
+            487
+          ],
+          "name": "ReceiverArg",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            489,
+            495
+          ],
+          "name": "NamedArg",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                498,
+                523
+              ],
+              "name": "new",
+              "signature": "(ident: Ident, ty: &Type, defaults: &mut DefaultMap)",
+              "type": "method"
+            },
+            {
+              "docstring": "Generate the parameter for this Arg",
+              "lines": [
+                526,
+                530
+              ],
+              "name": "param",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                532,
+                543
+              ],
+              "name": "arg_metadata",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            497,
+            544
+          ],
+          "name": "NamedArg",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            546,
+            558
+          ],
+          "name": "looks_like_result",
+          "signature": "(return_type: &ReturnType)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            561,
+            575
+          ],
+          "name": "FnKind",
+          "type": "enum"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "036d8fa2fcb1",
+      "indexed_at": "2026-07-24T20:35:13.191070+00:00",
+      "language": "rust",
+      "lines": 336,
+      "mtime_ns": 1782136568000000000,
+      "size": 12131,
+      "symbols": [
+        {
+          "lines": [
+            18,
+            18
+          ],
+          "name": "custom",
+          "type": "module"
+        },
+        {
+          "lines": [
+            19,
+            19
+          ],
+          "name": "default",
+          "type": "module"
+        },
+        {
+          "lines": [
+            20,
+            20
+          ],
+          "name": "derive",
+          "type": "module"
+        },
+        {
+          "lines": [
+            21,
+            21
+          ],
+          "name": "enum_",
+          "type": "module"
+        },
+        {
+          "lines": [
+            22,
+            22
+          ],
+          "name": "error",
+          "type": "module"
+        },
+        {
+          "lines": [
+            23,
+            23
+          ],
+          "name": "export",
+          "type": "module"
+        },
+        {
+          "lines": [
+            24,
+            24
+          ],
+          "name": "ffiops",
+          "type": "module"
+        },
+        {
+          "lines": [
+            25,
+            25
+          ],
+          "name": "fnsig",
+          "type": "module"
+        },
+        {
+          "lines": [
+            26,
+            26
+          ],
+          "name": "object",
+          "type": "module"
+        },
+        {
+          "lines": [
+            27,
+            27
+          ],
+          "name": "record",
+          "type": "module"
+        },
+        {
+          "lines": [
+            28,
+            28
+          ],
+          "name": "remote",
+          "type": "module"
+        },
+        {
+          "lines": [
+            29,
+            29
+          ],
+          "name": "setup_scaffolding",
+          "type": "module"
+        },
+        {
+          "lines": [
+            30,
+            30
+          ],
+          "name": "test",
+          "type": "module"
+        },
+        {
+          "lines": [
+            31,
+            31
+          ],
+          "name": "util",
+          "type": "module"
+        },
+        {
+          "lines": [
+            53,
+            55
+          ],
+          "name": "build_foreign_language_testcases",
+          "signature": "(tokens: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            62,
+            73
+          ],
+          "name": "setup_scaffolding",
+          "signature": "(tokens: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            76,
+            78
+          ],
+          "name": "export",
+          "signature": "(attr_args: TokenStream, input: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            80,
+            98
+          ],
+          "name": "do_export",
+          "signature": "(\n    attr_args: TokenStream,\n    input: TokenStream,\n    keep_input: bool,\n    udl_mode: bool,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            105,
+            107
+          ],
+          "name": "export_for_udl",
+          "signature": "(attrs: TokenStream, input: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            113,
+            115
+          ],
+          "name": "export_for_udl_derive",
+          "signature": "(attrs: TokenStream, input: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            118,
+            122
+          ],
+          "name": "derive_record",
+          "signature": "(input: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            125,
+            129
+          ],
+          "name": "derive_enum",
+          "signature": "(input: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            132,
+            136
+          ],
+          "name": "derive_object",
+          "signature": "(input: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            139,
+            143
+          ],
+          "name": "derive_error",
+          "signature": "(input: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            147,
+            151
+          ],
+          "name": "custom_type",
+          "signature": "(tokens: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            155,
+            159
+          ],
+          "name": "custom_newtype",
+          "signature": "(tokens: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            170,
+            178
+          ],
+          "name": "remote",
+          "signature": "(attrs: TokenStream, input: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            188,
+            196
+          ],
+          "name": "udl_remote",
+          "signature": "(attrs: TokenStream, input: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            208,
+            216
+          ],
+          "name": "udl_derive",
+          "signature": "(attrs: TokenStream, input: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            232,
+            264
+          ],
+          "name": "include_scaffolding",
+          "signature": "(udl_stem: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            270,
+            272
+          ],
+          "name": "use_remote_type",
+          "signature": "(tokens: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            286,
+            307
+          ],
+          "name": "generate_and_include_scaffolding",
+          "signature": "(udl_file: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            320,
+            322
+          ],
+          "name": "constructor",
+          "signature": "(_attrs: TokenStream, input: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            328,
+            330
+          ],
+          "name": "method",
+          "signature": "(_attrs: TokenStream, input: TokenStream)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            334,
+            336
+          ],
+          "name": "trait_interface",
+          "signature": "(_attr_args: TokenStream, input: TokenStream)",
+          "type": "function"
+        }
+      ]
+    },
+    "object.rs": {
+      "hash": "ddaaace20a51",
+      "indexed_at": "2026-07-24T20:35:13.193004+00:00",
+      "language": "rust",
+      "lines": 288,
+      "mtime_ns": 1782136568000000000,
+      "size": 11331,
+      "symbols": [
+        {
+          "lines": [
+            19,
+            21
+          ],
+          "name": "ObjectAttr",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                37
+              ],
+              "name": "parse_one",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                43
+              ],
+              "name": "merge",
+              "signature": "(self, other: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            44
+          ],
+          "name": "UniffiAttributeArgs",
+          "type": "impl"
+        },
+        {
+          "docstring": "Stores parsed data from the Derive Input for the struct/enum.",
+          "lines": [
+            47,
+            51
+          ],
+          "name": "ObjectItem",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                54,
+                61
+              ],
+              "name": "new",
+              "signature": "(input: DeriveInput)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                65
+              ],
+              "name": "ident",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                67,
+                69
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                71,
+                76
+              ],
+              "name": "foreign_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                78,
+                80
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            53,
+            81
+          ],
+          "name": "ObjectItem",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            83,
+            141
+          ],
+          "name": "expand_object",
+          "signature": "(input: DeriveInput, options: DeriveOptions)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            143,
+            254
+          ],
+          "name": "interface_impl",
+          "signature": "(object: &ObjectItem, options: &DeriveOptions)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            256,
+            288
+          ],
+          "name": "interface_meta_static_var",
+          "signature": "(\n    name: &str,\n    orig_name_metadata: TokenStream,\n    imp: ObjectImpl,\n    docstring: &str,\n)",
+          "type": "function"
+        }
+      ]
+    },
+    "record.rs": {
+      "hash": "da7857d4274c",
+      "indexed_at": "2026-07-24T20:35:13.194565+00:00",
+      "language": "rust",
+      "lines": 246,
+      "mtime_ns": 1782136568000000000,
+      "size": 7724,
+      "symbols": [
+        {
+          "lines": [
+            18,
+            20
+          ],
+          "name": "RecordAttr",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                23,
+                36
+              ],
+              "name": "parse_one",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                38,
+                42
+              ],
+              "name": "merge",
+              "signature": "(self, other: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            22,
+            43
+          ],
+          "name": "UniffiAttributeArgs",
+          "type": "impl"
+        },
+        {
+          "docstring": "Stores parsed data from the Derive Input for the struct.",
+          "lines": [
+            46,
+            51
+          ],
+          "name": "RecordItem",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                54,
+                71
+              ],
+              "name": "new",
+              "signature": "(input: DeriveInput)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                73,
+                75
+              ],
+              "name": "ident",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                82
+              ],
+              "name": "foreign_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                84,
+                86
+              ],
+              "name": "struct_",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                88,
+                90
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            53,
+            91
+          ],
+          "name": "RecordItem",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            93,
+            105
+          ],
+          "name": "expand_record",
+          "signature": "(input: DeriveInput, options: DeriveOptions)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            107,
+            138
+          ],
+          "name": "record_ffi_converter_impl",
+          "signature": "(\n    record: &RecordItem,\n    options: &DeriveOptions,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            140,
+            146
+          ],
+          "name": "write_field",
+          "signature": "(f: &Field)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            149,
+            152
+          ],
+          "name": "FieldAttributeArguments",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                155,
+                180
+              ],
+              "name": "parse_one",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                182,
+                187
+              ],
+              "name": "merge",
+              "signature": "(self, other: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            154,
+            188
+          ],
+          "name": "UniffiAttributeArgs",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            190,
+            246
+          ],
+          "name": "record_meta_static_var",
+          "signature": "(record: &RecordItem)",
+          "type": "function"
+        }
+      ]
+    },
+    "remote.rs": {
+      "hash": "ae1ed719070b",
+      "indexed_at": "2026-07-24T20:35:13.195339+00:00",
+      "language": "rust",
+      "lines": 62,
+      "mtime_ns": 1782136568000000000,
+      "size": 1882,
+      "symbols": [
+        {
+          "lines": [
+            12,
+            16
+          ],
+          "name": "RemoteTypeArgs",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                19,
+                25
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            18,
+            26
+          ],
+          "name": "Parse",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            28,
+            62
+          ],
+          "name": "expand_remote_type",
+          "signature": "(args: RemoteTypeArgs)",
+          "type": "function"
+        }
+      ]
+    },
+    "setup_scaffolding.rs": {
+      "hash": "8eeb1f1629b7",
+      "indexed_at": "2026-07-24T20:35:13.196854+00:00",
+      "language": "rust",
+      "lines": 209,
+      "mtime_ns": 1782136568000000000,
+      "size": 9062,
+      "symbols": [
+        {
+          "lines": [
+            12,
+            139
+          ],
+          "name": "setup_scaffolding",
+          "signature": "(namespace: String)",
+          "type": "function"
+        },
+        {
+          "docstring": "hopefully will result in a compile-time error.",
+          "lines": [
+            153,
+            209
+          ],
+          "name": "rust_future_scaffolding_fns",
+          "signature": "(module_path: &str)",
+          "type": "function"
+        }
+      ]
+    },
+    "test.rs": {
+      "hash": "6de5c5719f0e",
+      "indexed_at": "2026-07-24T20:35:13.197725+00:00",
+      "language": "rust",
+      "lines": 90,
+      "mtime_ns": 1782136568000000000,
+      "size": 3507,
+      "symbols": [
+        {
+          "lines": [
+            11,
+            67
+          ],
+          "name": "build_foreign_language_testcases",
+          "signature": "(tokens: TokenStream)",
+          "type": "function"
+        },
+        {
+          "docstring": "UNIFFI_TESTS_DISABLE_EXTENSIONS contains a comma-sep'd list of extensions (without leading `.`)",
+          "lines": [
+            70,
+            75
+          ],
+          "name": "should_skip_path",
+          "signature": "(path: &Utf8Path)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            77,
+            79
+          ],
+          "name": "BuildForeignLanguageTestCaseInput",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                82,
+                89
+              ],
+              "name": "parse",
+              "signature": "(input: syn::parse::ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            81,
+            90
+          ],
+          "name": "BuildForeignLanguageTestCaseInput",
+          "type": "impl"
+        }
+      ]
+    },
+    "util.rs": {
+      "hash": "4ec0ea18f6bf",
+      "indexed_at": "2026-07-24T20:35:13.199863+00:00",
+      "language": "rust",
+      "lines": 355,
+      "mtime_ns": 1782136568000000000,
+      "size": 10602,
+      "symbols": [
+        {
+          "lines": [
+            15,
+            20
+          ],
+          "name": "manifest_path",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            23,
+            65
+          ],
+          "name": "mod_path",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            68,
+            77
+          ],
+          "name": "mod_path",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            79,
+            91
+          ],
+          "name": "try_read_field",
+          "signature": "(f: &syn::Field)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            93,
+            95
+          ],
+          "name": "ident_to_string",
+          "signature": "(ident: &Ident)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            97,
+            99
+          ],
+          "name": "crate_name",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            101,
+            137
+          ],
+          "name": "create_metadata_items",
+          "signature": "(\n    kind: &str,\n    name: &str,\n    metadata_expr: TokenStream,\n    checksum_fn_name: Option<St...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            139,
+            151
+          ],
+          "name": "orig_name_metadata",
+          "signature": "(name_from_attrs: bool, ident: &Ident)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            153,
+            157
+          ],
+          "name": "try_metadata_value_from_usize",
+          "signature": "(value: usize, error_message: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            159,
+            164
+          ],
+          "name": "chain",
+          "signature": "(\n    a: impl IntoIterator<Item = T>,\n    b: impl IntoIterator<Item = T>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            166,
+            169
+          ],
+          "name": "UniffiAttributeArgs",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            171,
+            174
+          ],
+          "name": "parse_comma_separated",
+          "signature": "(input: ParseStream<'_>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            177,
+            177
+          ],
+          "name": "ArgumentNotAllowedHere",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                180,
+                185
+              ],
+              "name": "parse_one",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                187,
+                189
+              ],
+              "name": "merge",
+              "signature": "(self, _other: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            179,
+            190
+          ],
+          "name": "UniffiAttributeArgs",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                194,
+                197
+              ],
+              "name": "uniffi_attr_args_not_allowed_here",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            192,
+            198
+          ],
+          "name": "AttributeSliceExt",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                201,
+                208
+              ],
+              "name": "parse_uniffi_attr_args",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            200,
+            209
+          ],
+          "name": "AttributeSliceExt",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            211,
+            221
+          ],
+          "name": "either_attribute_arg",
+          "signature": "(a: Option<T>, b: Option<T>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            223,
+            234
+          ],
+          "name": "tagged_impl_header",
+          "signature": "(\n    trait_name: &str,\n    ident: &impl ToTokens,\n    remote: bool,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            236,
+            257
+          ],
+          "name": "derive_ffi_traits",
+          "signature": "(\n    ty: impl ToTokens,\n    remote: bool,\n    trait_names: &[&str],\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "Custom keywords",
+          "lines": [
+            260,
+            287
+          ],
+          "name": "kw",
+          "type": "module"
+        },
+        {
+          "docstring": "Specifies a type from a dependent crate",
+          "lines": [
+            290,
+            294
+          ],
+          "name": "ExternalTypeItem",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                297,
+                303
+              ],
+              "name": "parse",
+              "signature": "(input: ParseStream<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            296,
+            304
+          ],
+          "name": "Parse",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            306,
+            326
+          ],
+          "name": "extract_docstring",
+          "signature": "(attrs: &[Attribute])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            328,
+            339
+          ],
+          "name": "wasm_single_threaded_annotation",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            341,
+            355
+          ],
+          "name": "async_trait_annotation",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.794709+00:00",
+  "version": "1.0"
+}

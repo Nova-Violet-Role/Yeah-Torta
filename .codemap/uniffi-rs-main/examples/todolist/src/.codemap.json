@@ -1,0 +1,378 @@
+{
+  "directory": "uniffi-rs-main\\examples\\todolist\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "ccf6851beb2a",
+      "indexed_at": "2026-07-24T20:35:12.352370+00:00",
+      "language": "rust",
+      "lines": 150,
+      "mtime_ns": 1782136568000000000,
+      "size": 4368,
+      "symbols": [
+        {
+          "lines": [
+            10,
+            12
+          ],
+          "name": "TodoEntry",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            21,
+            32
+          ],
+          "name": "TodoError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            36,
+            38
+          ],
+          "name": "get_default_list",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            44,
+            46
+          ],
+          "name": "set_default_list",
+          "signature": "(list: Arc<TodoList>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            50,
+            58
+          ],
+          "name": "create_entry_with",
+          "signature": "(item: S)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            66,
+            68
+          ],
+          "name": "TodoList",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                71,
+                75
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                90
+              ],
+              "name": "add_item",
+              "signature": "(&self, item: S)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                92,
+                95
+              ],
+              "name": "get_last",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                97,
+                100
+              ],
+              "name": "get_first",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                105
+              ],
+              "name": "add_entries",
+              "signature": "(&self, entries: Vec<TodoEntry>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                107,
+                109
+              ],
+              "name": "add_entry",
+              "signature": "(&self, entry: TodoEntry)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                114
+              ],
+              "name": "add_items",
+              "signature": "(&self, items: Vec<S>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                116,
+                119
+              ],
+              "name": "get_items",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                127
+              ],
+              "name": "get_entries",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                129,
+                132
+              ],
+              "name": "get_last_entry",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                134,
+                143
+              ],
+              "name": "clear_item",
+              "signature": "(&self, item: S)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                145,
+                147
+              ],
+              "name": "make_default",
+              "signature": "(self: Arc<Self>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            70,
+            148
+          ],
+          "name": "TodoList",
+          "type": "impl"
+        }
+      ]
+    },
+    "todolist.udl": {
+      "hash": "1f8a24049c23",
+      "indexed_at": "2026-07-24T20:35:12.353010+00:00",
+      "language": "udl",
+      "lines": 38,
+      "mtime_ns": 1782136568000000000,
+      "size": 917,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                2,
+                2
+              ],
+              "name": "get_default_list",
+              "signature": "() : TodoList?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "set_default_list",
+              "signature": "(TodoList list) : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                6,
+                6
+              ],
+              "name": "create_entry_with",
+              "signature": "(string todo) : TodoEntry",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1,
+            7
+          ],
+          "name": "todolist",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                10,
+                10
+              ],
+              "name": "text",
+              "signature": "string",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            9,
+            11
+          ],
+          "name": "TodoEntry",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            14,
+            16
+          ],
+          "name": "TodoError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                19,
+                19
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "add_item",
+              "signature": "(string todo) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "add_entry",
+              "signature": "(TodoEntry entry) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "get_entries",
+              "signature": "() : sequence<TodoEntry>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "get_items",
+              "signature": "() : sequence<string>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "add_entries",
+              "signature": "(sequence<TodoEntry> entries) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "add_items",
+              "signature": "(sequence<string> items) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                29
+              ],
+              "name": "get_last_entry",
+              "signature": "() : TodoEntry",
+              "type": "method"
+            },
+            {
+              "lines": [
+                31,
+                31
+              ],
+              "name": "get_last",
+              "signature": "() : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                33,
+                33
+              ],
+              "name": "get_first",
+              "signature": "() : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                35,
+                35
+              ],
+              "name": "clear_item",
+              "signature": "(string todo) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                37
+              ],
+              "name": "make_default",
+              "signature": "() : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            18,
+            38
+          ],
+          "name": "TodoList",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.657765+00:00",
+  "version": "1.0"
+}

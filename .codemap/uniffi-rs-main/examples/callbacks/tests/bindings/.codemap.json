@@ -1,0 +1,389 @@
+{
+  "directory": "uniffi-rs-main\\examples\\callbacks\\tests\\bindings",
+  "files": {
+    "test_callbacks.kts": {
+      "hash": "48986a24ccb1",
+      "indexed_at": "2026-07-24T20:35:12.297866+00:00",
+      "language": "kotlin",
+      "lines": 51,
+      "mtime_ns": 1782136568000000000,
+      "size": 1438,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            7
+          ],
+          "name": "SomeOtherError",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                21
+              ],
+              "name": "answer",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "Pass in nothing, get unit back.",
+          "lines": [
+            12,
+            22
+          ],
+          "name": "CallAnswererImpl",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                31,
+                33
+              ],
+              "name": "name",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "Our own sim.",
+          "lines": [
+            30,
+            34
+          ],
+          "name": "Sim",
+          "type": "class"
+        }
+      ]
+    },
+    "test_callbacks.py": {
+      "hash": "2708127e1801",
+      "indexed_at": "2026-07-24T20:35:12.298796+00:00",
+      "language": "python",
+      "lines": 53,
+      "mtime_ns": 1782136568000000000,
+      "size": 1843,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                8
+              ],
+              "name": "__init__",
+              "signature": "(self, mode)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                10,
+                16
+              ],
+              "name": "answer",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            6,
+            16
+          ],
+          "name": "CallAnswererImpl",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                22,
+                23
+              ],
+              "name": "name",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            23
+          ],
+          "name": "DiscountSim",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                27,
+                30
+              ],
+              "name": "test_answer",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                32,
+                36
+              ],
+              "name": "test_busy",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                38,
+                42
+              ],
+              "name": "test_unexpected_error",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                44,
+                48
+              ],
+              "name": "test_sims",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            25,
+            48
+          ],
+          "name": "CallbacksTest",
+          "type": "class"
+        },
+        {
+          "lines": [
+            50,
+            51
+          ],
+          "name": "FancyCallbacksTest",
+          "type": "class"
+        }
+      ]
+    },
+    "test_callbacks.rb": {
+      "hash": "1c524d69e06d",
+      "indexed_at": "2026-07-24T20:35:12.299859+00:00",
+      "language": "ruby",
+      "lines": 96,
+      "mtime_ns": 1782136568000000000,
+      "size": 2073,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "initialize",
+              "signature": "(mode)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                25
+              ],
+              "name": "answer",
+              "type": "method"
+            }
+          ],
+          "docstring": "implementation of a callback, they only exist on the foreign side.",
+          "lines": [
+            12,
+            26
+          ],
+          "name": "CallAnswererImpl",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                32,
+                34
+              ],
+              "name": "name",
+              "type": "method"
+            }
+          ],
+          "docstring": "Arc<>-based object model.",
+          "lines": [
+            31,
+            35
+          ],
+          "name": "DiscountSim",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                40,
+                44
+              ],
+              "name": "test_answer",
+              "type": "method"
+            },
+            {
+              "lines": [
+                46,
+                52
+              ],
+              "name": "test_busy",
+              "type": "method"
+            },
+            {
+              "lines": [
+                54,
+                60
+              ],
+              "name": "test_unexpected_error",
+              "type": "method"
+            },
+            {
+              "lines": [
+                62,
+                67
+              ],
+              "name": "test_sims",
+              "type": "method"
+            },
+            {
+              "lines": [
+                69,
+                71
+              ],
+              "name": "sim",
+              "type": "method"
+            },
+            {
+              "lines": [
+                73,
+                75
+              ],
+              "name": "telephone",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            37,
+            76
+          ],
+          "name": "TestCallbacks",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                81,
+                83
+              ],
+              "name": "test_answer",
+              "type": "method"
+            },
+            {
+              "lines": [
+                85,
+                87
+              ],
+              "name": "test_busy",
+              "type": "method"
+            },
+            {
+              "lines": [
+                89,
+                91
+              ],
+              "name": "test_unexpected_error",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                95
+              ],
+              "name": "test_sims",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            78,
+            96
+          ],
+          "name": "FancyTestCallbacks",
+          "type": "class"
+        }
+      ]
+    },
+    "test_callbacks.swift": {
+      "hash": "74f175a84085",
+      "indexed_at": "2026-07-24T20:35:12.300888+00:00",
+      "language": "swift",
+      "lines": 60,
+      "mtime_ns": 1782136568000000000,
+      "size": 1562,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "SomeOtherError",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                31
+              ],
+              "name": "answer",
+              "type": "method"
+            }
+          ],
+          "docstring": "Pass in nothing, get unit back.",
+          "lines": [
+            13,
+            32
+          ],
+          "name": "OnCallAnsweredImpl",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                41,
+                43
+              ],
+              "name": "name",
+              "type": "method"
+            }
+          ],
+          "docstring": "We can implement our own sim cards.",
+          "lines": [
+            40,
+            44
+          ],
+          "name": "Sim",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.644236+00:00",
+  "version": "1.0"
+}

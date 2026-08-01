@@ -1,0 +1,388 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\installer",
+  "files": {
+    "AssetsExtractCommand.kt": {
+      "hash": "6b516e83c5d3",
+      "indexed_at": "2026-08-01T04:00:03.355454+00:00",
+      "language": "kotlin",
+      "lines": 24,
+      "mtime_ns": 1785556377251900400,
+      "size": 796,
+      "symbols": [
+        {
+          "lines": [
+            22,
+            24
+          ],
+          "name": "AssetsExtractCommand",
+          "type": "class"
+        }
+      ]
+    },
+    "ChmodCommand.kt": {
+      "hash": "efc98e20994a",
+      "indexed_at": "2026-08-01T04:00:03.666951+00:00",
+      "language": "kotlin",
+      "lines": 92,
+      "mtime_ns": 1785556377265900300,
+      "size": 2592,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                60
+              ],
+              "name": "dirChmod",
+              "signature": "(path: String, executableDir: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                62,
+                76
+              ],
+              "name": "executableFileChmod",
+              "signature": "(path: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                78,
+                91
+              ],
+              "name": "regularFileChmod",
+              "signature": "(path: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            22,
+            92
+          ],
+          "name": "ChmodCommand",
+          "type": "class"
+        }
+      ]
+    },
+    "Command.kt": {
+      "hash": "33a3977dfe22",
+      "indexed_at": "2026-08-01T04:00:03.980061+00:00",
+      "language": "kotlin",
+      "lines": 22,
+      "mtime_ns": 1785556377278902300,
+      "size": 670,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                21
+              ],
+              "name": "execute",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            22
+          ],
+          "name": "Command",
+          "type": "interface"
+        }
+      ]
+    },
+    "DNSCryptExtractCommand.kt": {
+      "hash": "e605c9deabd1",
+      "indexed_at": "2026-08-01T04:00:04.290639+00:00",
+      "language": "kotlin",
+      "lines": 32,
+      "mtime_ns": 1785556377291900000,
+      "size": 1029,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                27,
+                31
+              ],
+              "name": "execute",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            22,
+            32
+          ],
+          "name": "DNSCryptExtractCommand",
+          "type": "class"
+        }
+      ]
+    },
+    "Installer.kt": {
+      "hash": "82b440e786e3",
+      "indexed_at": "2026-08-01T04:00:04.575928+00:00",
+      "language": "kotlin",
+      "lines": 403,
+      "mtime_ns": 1785556377304900300,
+      "size": 14679,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                74,
+                118
+              ],
+              "name": "installModules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                120,
+                139
+              ],
+              "name": "extractDNSCrypt",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                141,
+                163
+              ],
+              "name": "changeDnsCryptFilesDateToForceUpdate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                165,
+                178
+              ],
+              "name": "savePreferencesModulesInstalled",
+              "signature": "(installed: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                180,
+                198
+              ],
+              "name": "waitUntilAllModulesStopped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                200,
+                232
+              ],
+              "name": "removeInstallationDirsIfExists",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                234,
+                239
+              ],
+              "name": "chmodExtractedDirs",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                241,
+                246
+              ],
+              "name": "correctAppDir",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                248,
+                272
+              ],
+              "name": "fixAppDirLinesList",
+              "signature": "(path: String, lines: MutableList<String>?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                274,
+                303
+              ],
+              "name": "stopAllRunningModulesWithRootCommand",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                305,
+                334
+              ],
+              "name": "stopAllRunningModulesWithNoRootCommand",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                336,
+                342
+              ],
+              "name": "sendModulesStopResult",
+              "signature": "(result: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                344,
+                355
+              ],
+              "name": "createLogsDir",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                357,
+                367
+              ],
+              "name": "refreshModulesStatus",
+              "signature": "(activity: Activity)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                369,
+                375
+              ],
+              "name": "registerReceiver",
+              "signature": "(activity: Activity)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                377,
+                383
+              ],
+              "name": "unRegisterReceiver",
+              "signature": "(activity: Activity)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            49,
+            403
+          ],
+          "name": "Installer",
+          "type": "class"
+        }
+      ]
+    },
+    "InstallerHelper.kt": {
+      "hash": "2dcab1744152",
+      "indexed_at": "2026-08-01T04:00:04.863413+00:00",
+      "language": "kotlin",
+      "lines": 79,
+      "mtime_ns": 1785556377316900100,
+      "size": 3157,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                33,
+                78
+              ],
+              "name": "prepareDNSCryptForGP",
+              "signature": "(lines: List<String>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            28,
+            79
+          ],
+          "name": "InstallerHelper",
+          "type": "class"
+        }
+      ]
+    },
+    "InstallerReceiver.kt": {
+      "hash": "85385560c2a9",
+      "indexed_at": "2026-08-01T04:00:05.167901+00:00",
+      "language": "kotlin",
+      "lines": 92,
+      "mtime_ns": 1785556377327898700,
+      "size": 2884,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                29,
+                49
+              ],
+              "name": "onReceive",
+              "signature": "(context: Context, intent: Intent?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                51,
+                61
+              ],
+              "name": "doAppropriateAction",
+              "signature": "(rootCommandsResult: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                69
+              ],
+              "name": "getResultString",
+              "signature": "(comResult: RootCommands)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                71,
+                73
+              ],
+              "name": "isRootCommandResultEmpty",
+              "signature": "(comResult: RootCommands)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                75,
+                91
+              ],
+              "name": "isBroadcastMatch",
+              "signature": "(intent: Intent?)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            27,
+            92
+          ],
+          "name": "InstallerReceiver",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:05.169341+00:00",
+  "version": "1.0"
+}

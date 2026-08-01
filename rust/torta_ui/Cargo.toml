@@ -1,0 +1,94 @@
+[package]
+name = "torta_ui"
+version = "0.1.0"
+edition = "2021"
+license = "EUPL-1.2 OR AGPL-3.0-or-later"
+description = "The Tortä SLINT UI — rust-native UI substrate (the 4-tab Home + the ||| Advanced burger). A separate crate so the engine .so (torta_core) stays lean; depends on torta_core (rlib) for the live pillar Objects/metrics."
+
+[lib]
+name = "torta_ui"
+crate-type = ["rlib", "cdylib"]
+
+# SLINT — the rust-native UI toolkit. The .slint files are compiled to Rust by slint-build (build.rs).
+# TARGET-GATED backends (#69 SLINT-on-Android spike):
+#  · host (preview + the test harness): backend-winit + renderer-femtovg — byte-identical to the pre-spike dep.
+#  · android: the OFFICIAL slint android bridge — `backend-android-activity-06` (measured from the resolved
+#    slint 1.17.0 Cargo.toml:64-68: it selects i-slint-backend-android-activity/native-activity + aa-06 +
+#    backend-selector/backend-android-activity). NativeActivity manages the surface; `slint::android::init`
+#    installs the platform (the SurfaceView-embedded composition is the Stage-D follow-up — custom Platform).
+[target.'cfg(not(target_os = "android"))'.dependencies]
+slint = { version = "1.6", default-features = false, features = ["std", "compat-1-2", "backend-winit", "renderer-femtovg"] }
+
+[target.'cfg(target_os = "android")'.dependencies]
+slint = { version = "1.6", default-features = false, features = ["std", "compat-1-2", "backend-android-activity-06"] }
+# 2-DRIVE-CORE: the Rust→Kotlin JNI seam behind the HOME master switch. `jni` (0.21 — the version
+# android-activity-0.6 already resolves) calls the Kotlin TortaSlintBridge statics; `ndk-context`
+# hands the live JavaVM + Activity jobject the android-activity glue publishes before `android_main`.
+jni = "0.21"
+ndk-context = "0.1"
+
+[dependencies]
+
+# The engine — the pillar Objects (Beast/Fortress/Centauri/Warden) + the DnscryptProxyConfig authority
+# (the same UV/serde substrate) + the metrics. torta_ui reads the live Rust truth directly.
+# `mirror` enables the Centauri offline-CDN surface (mirror_status / centauri_cdn_hosts / CentauriSnapshot) so the
+# Centauri dashboard (slice 8) reads a REAL engine surface, not a faked literal. F7-safe: torta_ui is a SEPARATE
+# host-preview crate with no workspace — the APK cdylib builds via cargo-ndk with its OWN features, no unification.
+# FEATURE-PARITY LAW: this static engine copy MUST carry the same feature set as the
+# shipped libtorta_core.so (mirror,pure_rust,netstack,odoh) — a mirror-only static copy
+# is the #74 split-brain: Beast TCP base-RTT/floor read the in-UI engine and go dead
+# while UDP (in-engine) still populates. Any torta_ui rebuild without this pin silently
+# re-loses the netstack fix.
+torta_core = { path = "../torta_core", features = ["mirror", "pure_rust", "netstack", "odoh"] }
+
+# 60C-2 · The Carbon Browser assimilation seam — carbon_bridge (task 59/60: the D2 Ko-Fi panel remap +
+# the D1c DONATE mirror + the 60B pillar row). torta_ui links the REAL bridge crate so the CARBON
+# pillar surfaces read engine truth from the assimilated layer — never a fabricated literal. The
+# unix-only lanes (tty/libc) inside carbon_bridge are cfg-gated and wait for the Android/NDK target.
+carbon_bridge = { path = "../carbon_bridge" }
+
+[features]
+# The default APK build (cargo-ndk `--features mirror`, docker/build-apk.ps1) does NOT enable this.
+# `rotation_witness` constructs the Rotation dashboard LAST so it owns the single android surface and
+# renders at launch (the proven single-surface method) — a local ON-DEVICE WITNESS that the live
+# `feed_from_live_rotation` produces real engine numbers, before the in-shell pane wave lands. Opt-in only.
+rotation_witness = []
+# `warden_witness` (SLINT substitution · 2-FEED-Warden) constructs the Warden dashboard LAST so it owns
+# the single android surface and renders at launch — the local ON-DEVICE WITNESS that the live
+# `feed_from_live_warden` produces real engine numbers (verdict tallies + armed rule-sets + the per-app
+# matrix), before the in-shell pane wave lands. Opt-in only; the default `--features mirror` APK keeps the shell.
+warden_witness = []
+# `beast_witness` (SLINT substitution · 2-FEED-Beast) opens the 4-tab shell DIRECTLY into the ||| → BEAST
+# dashboard overlay (advanced-open + section "beast-dash") so the EMBEDDED BeastPane renders at launch —
+# the local ON-DEVICE WITNESS that the live `feed_from_live_beast` produces real engine numbers (cwnd 1/16
+# SLOW-START · CANONICAL·COBALT · caps 4/8/16 · DORMANT, not the .slint sample). Opt-in only; the default
+# `--features mirror` APK keeps the committed shell path.
+beast_witness = []
+# `centauri_witness` (SLINT substitution · 2-FEED-Centauri) opens the 4-tab shell DIRECTLY into the
+# ||| → CENTAURI dashboard overlay (advanced-open + section "centauri-dash") so the EMBEDDED CentauriPane
+# renders at launch — the local ON-DEVICE WITNESS that the live `feed_from_live_centauri` produces real
+# engine numbers (capacity=1024 · the 8 cloaked CDN hosts · DORMANT/STOPPED · honest cold zeros, not the
+# .slint sample capacity:0 / 5 hosts / 3 serves). Opt-in only; the default `--features mirror` APK keeps
+# the committed shell path.
+centauri_witness = []
+# `inu_witness` (SLINT substitution · 2-FEED-Inu) constructs the Wire Cake Inu dashboard LAST so it owns
+# the single android surface and renders at launch — the local ON-DEVICE WITNESS that the live
+# `feed_from_live_inu` produces real engine numbers (crown ELEVATED · Self-ADB · held 3 / of 3 · drift 0 ·
+# the query-inu.log pair/elevate/grant tail, not the .slint sample 2/3 + write-secure-settings-off row).
+# WITNESSED on the x86_64 AVD (torta_host). Opt-in only; the default `--features mirror` APK keeps the shell.
+inu_witness = []
+# `masksolver_witness` (SLINT substitution · 2-FEED-MaskSolver) opens the 4-tab shell DIRECTLY into the
+# ||| → MASKSOLVER dashboard overlay (advanced-open + section "ms-dash") so the EMBEDDED MaskSolverPane
+# renders at launch — the local ON-DEVICE WITNESS that the live `feed_from_live_masksolver` produces real
+# engine numbers (2 UPSTREAM(S) · deadline 3000ms · STRICT-ORDER · the 2 real upstream health rows do53:
+# loopA/loopB, not the .slint sample quad9/cloudflare + HIT/SOLVE/STALE). Opt-in only; the default
+# `--features mirror` APK keeps the committed shell-is-app path (ms-dash reached via the DASHBOARD chip).
+masksolver_witness = []
+
+[build-dependencies]
+# Compiles ui/*.slint → Rust (slint::include_modules!() in lib.rs). The .slint build-pipeline.
+slint-build = "1.6"
+
+[profile.release]
+# Must match torta_core to ensure catch_unwind firewalls work correctly
+panic = "unwind"

@@ -1,0 +1,183 @@
+{
+  "directory": "uniffi-rs-main\\examples\\rondpoint\\tests\\bindings",
+  "files": {
+    "test_rondpoint.kts": {
+      "hash": "4aac83532788",
+      "indexed_at": "2026-07-24T20:35:12.334951+00:00",
+      "language": "kotlin",
+      "lines": 250,
+      "mtime_ns": 1782136568000000000,
+      "size": 9447,
+      "symbols": [
+        {
+          "lines": [
+            36,
+            40
+          ],
+          "name": "affirmAllerRetour",
+          "signature": "(fn: (T) -> T)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            96,
+            104
+          ],
+          "name": "affirmEnchaine",
+          "signature": "(\n    fn: (T) -> String,\n    equals: StringyEquals<T> = { obs, exp -> obs == exp.toString() }\n)",
+          "type": "function"
+        }
+      ]
+    },
+    "test_rondpoint.py": {
+      "hash": "af25a56c35da",
+      "indexed_at": "2026-07-24T20:35:12.337488+00:00",
+      "language": "python",
+      "lines": 146,
+      "mtime_ns": 1782136568000000000,
+      "size": 5195,
+      "symbols": [
+        {
+          "lines": [
+            33,
+            36
+          ],
+          "name": "affirmAllerRetour",
+          "signature": "(vals, identique)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            100,
+            103
+          ],
+          "name": "affirmEnchaine",
+          "signature": "(vals, toString, rustyStringify=...)",
+          "type": "function"
+        },
+        {
+          "docstring": "Stringify a float in the same way that rust seems to.",
+          "lines": [
+            130,
+            135
+          ],
+          "name": "rustyFloatToStr",
+          "signature": "(v)",
+          "type": "function"
+        }
+      ]
+    },
+    "test_rondpoint.rb": {
+      "hash": "e9afdb49744f",
+      "indexed_at": "2026-07-24T20:35:12.339062+00:00",
+      "language": "ruby",
+      "lines": 158,
+      "mtime_ns": 1782136568000000000,
+      "size": 5391,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                59
+              ],
+              "name": "test_enums",
+              "type": "method"
+            },
+            {
+              "docstring": "lowering from rust and lifting into ruby.",
+              "lines": [
+                65,
+                101
+              ],
+              "name": "test_roundtrip",
+              "type": "method"
+            },
+            {
+              "docstring": "together, we've shown the correctness of the return leg.",
+              "lines": [
+                116,
+                139
+              ],
+              "name": "test_string_transport",
+              "type": "method"
+            },
+            {
+              "docstring": "-- helpers --",
+              "lines": [
+                143,
+                149
+              ],
+              "name": "affirm_aller_retour",
+              "signature": "(vals, fn_name)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                151,
+                157
+              ],
+              "name": "affirm_enchaine",
+              "signature": "(vals, fn_name)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            6,
+            158
+          ],
+          "name": "TestRondpoint",
+          "type": "class"
+        }
+      ]
+    },
+    "test_rondpoint.swift": {
+      "hash": "fa806e7e09c2",
+      "indexed_at": "2026-07-24T20:35:12.341976+00:00",
+      "language": "swift",
+      "lines": 232,
+      "mtime_ns": 1782136568000000000,
+      "size": 7961,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                108,
+                111
+              ],
+              "name": "defaultEquals",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                118
+              ],
+              "name": "affirmEnchaine",
+              "type": "method"
+            },
+            {
+              "lines": [
+                120,
+                124
+              ],
+              "name": "affirmAllerRetour",
+              "type": "method"
+            }
+          ],
+          "docstring": "Some extension functions for testing the results of roundtripping and stringifying",
+          "lines": [
+            107,
+            125
+          ],
+          "name": "Array",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.655196+00:00",
+  "version": "1.0"
+}

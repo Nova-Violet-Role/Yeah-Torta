@@ -1,0 +1,2504 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// THE DESIGN FINALE — the Tortä 4-TAB SLINT HOME (OMEGA Stage-D · D3, charter step 8:
+// "① HOME (dnsmasq×rethink hybrid) · ② Tortä ENGINE · ③ DNS · ④ QUERY — the full UI-substrate
+// Genesis wave; the last Garmatin surface → a Rust original").
+//
+// ONE root Window (`TortaShell`) = the app Home the host constructs:
+//   · the TOP STRIP — the ||| door (fires `open-advanced()` → the host swaps to the D2
+//     AdvancedBurger, the step-7 navigation surface) + the identity + the live engine dot.
+//   · the CONTENT REGION — the four tabs as visibility-switched overlays (the D2 alias law: an
+//     embedded pane whose state the root forwards as `<=>` aliases cannot live inside an `if`;
+//     overlays keep the aliases + pane state stable across navigation). HOME / ENGINE / DNS scroll
+//     (the G5 no-clip law); QUERY hosts its own virtualized ListView, so it mounts bare.
+//   · the 4-TAB BAR — HOME · ENGINE · DNS · QUERY; the active tab wears the bone strike + THE EYE
+//     underline (the Monokuma judge language as the app-shell chrome, the B4-G9 direction D2 set).
+//
+// THE TABS:
+//   ① HOME   — home_tab.slint  (the dnsmasq×rethink hybrid: crown + master switch + the resolver
+//              ledger counters + the pillar health chips)
+//   ② ENGINE — engine_tab.slint (the Beast porthole: gear crown, RTT witnesses, tin basins, valves)
+//   ③ DNS    — dnscrypt_section.slint (THE SAME K5 typed surface the ||| burger embeds — one pane
+//              component, one typed authority, two mounts; the root forwards the IDENTICAL alias
+//              set the burger forwards, so ONE host feed drives either mount)
+//   ④ QUERY  — query_tab.slint (the unified per-pillar query-log feed)
+//
+// This replaces the `TortaRoot` proof-of-substrate stub — the Design Finale IS the substrate now.
+// The 12 pillar Windows stay host-routed via the ||| burger's private tabs (the D2 contract).
+
+import { ScrollView, LineEdit } from "std-widgets.slint";
+import { Monokuma } from "monokuma_palette.slint";
+// #33 THE THEME-TOKEN SPINE — the in-shell ||| ADVANCED overlay chrome binds `ThemeBook.burger`
+// (the Demon-Slayer duality: ◆ PILLARS = Hashira heroes, ⚙ GENERAL = Akuma Upper Moons).
+import { ThemeBook, MotifWash, CharcoalLump } from "theme_tokens.slint";
+import { HomeTab } from "home_tab.slint";
+import { EngineTab } from "engine_tab.slint";
+import { QueryTab, QueryRow } from "query_tab.slint";
+import { DnscryptSection, Candle, PickerRow } from "dnscrypt_section.slint";
+import { GeneralSection } from "general_section.slint";
+import { PillarTabRow, PillarTab, RailEntry, DescentWash } from "advanced_burger.slint";
+// 2-FEED-MaskSolver: the MaskSolver pillar dashboard mounts IN-SHELL as a ||| overlay section (the
+// per-pillar DASHBOARD chip route). The pane is fed field-for-field by the host from the live
+// MaskSolver Object; MaskRow/MaskTransportRow are the typed feed-row structs the aliases carry.
+import { MaskSolverPane, MaskRow, MaskTransportRow } from "masksolver.slint";
+import { MaskSolverSettingsPane } from "masksolver_settings.slint";
+// 2-FEED-Rotation (SETTINGS): the Rotation pillar SETTINGS mounts IN-SHELL as a ||| overlay section (the
+// "rotation-settings" section, reached via ||| → PILLARS → ROTATION settings chip). RotationSettingsPane
+// inherits Rectangle so it embeds on the single android surface (the MaskSolver/Warden/Centauri precedent).
+import { RotationSettingsPane } from "rotation_settings.slint";
+// 2-FEED-Beast (SETTINGS): the Beast pillar SETTINGS (THE FLOW-ENGINE TUNE — YeAH brain × CAKE queue ×
+// preset table) mounts IN-SHELL as a ||| overlay section (the "beast-settings" section, reached via ||| →
+// PILLARS → BEAST settings chip). BeastSettingsPane inherits Rectangle so it embeds on the single android
+// surface (the MaskSolver/Rotation/Warden/Centauri precedent).
+import { BeastSettingsPane } from "beast_settings.slint";
+// 2-FEED-Inu (SETTINGS): the Wire Cake Inu pillar SETTINGS (the ADB/Shizuku elevation surface — pair · protect
+// · keep) mounts IN-SHELL as a ||| overlay section (the "inu-settings" section, reached via ||| → PILLARS →
+// WIRE CAKE INU settings chip). InuSettingsPane inherits Rectangle so it embeds on the single android surface
+// (the Beast/MaskSolver/Rotation/Warden/Centauri precedent). PowerToggleRow is the typed per-power feed-row.
+import { InuSettingsPane, PowerToggleRow } from "inu_settings.slint";
+// #15 UNDERGROUND H — the pillar's OWN space (the standing directive: OUT of the ENGINE tab):
+// the licence-court dashboard + the tunable-law settings mount in-shell as the
+// "underground-dash" / "underground-settings" advanced sections.
+import { UndergroundDashboardPane, UgHostRow } from "underground_dashboard.slint";
+import { UndergroundSettingsPane } from "underground_settings.slint";
+// 2-FEED-Centauri: the Centauri pillar dashboard mounts IN-SHELL as a ||| overlay section (the
+// "centauri-dash" section, reached via the per-pillar DASHBOARD chip — the SAME embed pattern as
+// MaskSolver). The pane is fed field-for-field by the host from the live Centauri Object; ServeRow
+// is the typed recent-serve feed-row the aliases carry.
+import { CentauriPane, ServeRow } from "centauri.slint";
+// 2-FEED-Centauri (SETTINGS): the Centauri pillar SETTINGS mounts IN-SHELL as a ||| overlay section (the
+// "centauri-settings" section, reached via the per-pillar SETTINGS chip — the SAME embed pattern as the
+// dashboards). Unlike the dashboards (read-only witnesses), this pane WRITES the live armed engine: the
+// user's edits surface as typed callbacks the host wires to the armed Object setters (set_cache_mode /
+// warm_up), the flat resolver cloak fn, and the durable seed-policy pref (the CROWN's control plane).
+// CdnHostRow is the typed cloak-host feed-row the host fills from `centauri_cdn_hosts()`.
+import { CentauriSettingsPane, CdnHostRow } from "centauri_settings.slint";
+// 2-FEED-Beast: the Beast pillar dashboard mounts IN-SHELL as a ||| overlay section (the "beast-dash"
+// section, reached via the per-pillar DASHBOARD chip — the SAME embed pattern as MaskSolver/Centauri).
+// BeastPane is fed field-for-field by the host from the live Beast Object; BeastTickRow is the typed
+// query-beast.log recent-tick feed-row the aliases carry.
+import { BeastPane, BeastTickRow } from "beast.slint";
+// ★ #49 · the NETSTACK FORWARDER dashboard pane (the per-flow docket surface). Imported DIRECTLY —
+// a Rectangle-rooted pane must enter the compile graph here, not through the root re-export (the
+// measured slint rule main.slint documents on BeastPane).
+import { ForwarderPane, FwdFlowRow } from "forwarder_dashboard.slint";
+// 2-FEED-Rotation: the Rotation pillar dashboard mounts IN-SHELL as a ||| overlay section (the
+// "rotation-dash" section, reached via the per-pillar DASHBOARD chip — the SAME embed pattern as
+// MaskSolver/Centauri/Beast). RotationPane is fed field-for-field by the host from the live
+// `MaskSolver::rotation_snapshot()` Record; RotationFamilyRow (the wheel ring) / RotationHintRow (the
+// warm-RTT leaderboard) / RotationLogRow (the query-rotation.log feed) are the typed feed-row structs
+// the aliases carry.
+import { RotationPane, RotationFamilyRow, RotationHintRow, RotationLogRow } from "rotation.slint";
+// 4-FIX round 3 · 2-FEED-Warden: the Warden pillar dashboard mounts IN-SHELL as a ||| overlay section (the
+// "warden-dash" section, reached via the per-pillar DASHBOARD chip — the SAME embed pattern as the four
+// pillars above; closes the "WARDEN dashboard silent no-op" witness finding). WardenPane is fed
+// field-for-field by the host from the live `WardenObject::snapshot()`; AppRow is the per-app matrix row.
+import { WardenPane, AppRow, FlowRow, ToggleRow, InspectorAppRow, InspectorDestRow } from "warden.slint";
+// 2-FEED-Warden (SETTINGS): the Warden pillar |||  settings pane mounts IN-SHELL as the "warden-settings"
+// overlay section (reached via the per-pillar SETTINGS chip — the SAME embed pattern as CentauriSettings).
+// Unlike the read-only dashboard, this pane WRITES the live armed engine (the canonical WardenDatapathGate the
+// datapath consults): the user's edits surface as typed `warden-*` callbacks the host wires to the Object
+// setters. UniversalToggle / RuleEntry / AppToggleRow are the typed feed-row structs the
+// `ws-*` aliases carry (distinct from warden.slint's read-only AppRow — these are editable).
+import { WardenSettingsPane, UniversalToggle, RuleEntry, AppToggleRow } from "warden_settings.slint";
+
+// #60B-2 CARBON SETTINGS: the 13th pillar's ||| settings pane mounts IN-SHELL as the
+// "carbon-settings" section (Install Extension lane + capabilities law + 60G role skeleton).
+import { CarbonSettingsPane } from "carbon_settings.slint";
+// 4-FIX round 3 · 2-FEED-Inu: the Wire Cake Inu pillar dashboard mounts IN-SHELL as a ||| overlay section
+// (the "inu-dash" section — closes the "INU dashboard silent no-op" witness finding). InuPane is fed
+// field-for-field by the host from the live `InuStore` snapshot; PowerRow (the protected-power tiles) /
+// InuLogRow (the query-inu.log feed) are the typed feed-row structs the aliases carry.
+import { InuPane, PowerRow, InuLogRow } from "inu.slint";
+
+// (BUGS2 #64) The bottom-bar `TabSlot` component is RETIRED with the 4-tab bar itself — every
+// route (HOME / ENGINE ROOM / DNSCRYPT tab / QUERY) now lives in the ||| burger rail, the ONE
+// navigation authority. The `active-tab` router + all four content mounts remain unchanged.
+
+export component TortaShell inherits Window {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.home; width: 100%; height: 100%; }
+
+    // ===== #36 "MUGENJŌ" — the HOME ambient (the Infinity Castle reference): shoji-paper
+    //       lattice walls sliding past each other (the castle rearranges itself), the lantern
+    //       procession breathing warm light toward one cold-lit doorway, Nakime's biwa note
+    //       rippling the room every ninth second, and ember bokeh drifting the void.
+    //       Pure animation-tick; zero timers; under the glass. =====
+    mugenjo := Rectangle {
+        width: 100%; height: 100%;
+        clip: true;
+        background: transparent;
+        property <float> tk: animation-tick() / 1ms;
+
+        // THE SLIDING SHOJI — two lattice bands gliding at different speeds (never in lockstep);
+        // the cell pattern repeats each 56px, so the drift wrap is invisible — an endless wall.
+        for band in [{ top: 0.055, sp: 26000.0, al: 0.10 }, { top: 0.585, sp: 34000.0, al: 0.07 }]: Rectangle {
+            x: 0; y: parent.height * band.top;
+            width: 100%; height: 118px;
+            clip: true;
+            opacity: band.al;
+            Rectangle {
+                x: -56px * Math.mod(mugenjo.tk / band.sp, 1.0);
+                y: 0;
+                width: parent.width + 112px;
+                height: 100%;
+                background: #4a2318;            // the dark red-brown wood frame
+                for c in 12 : Rectangle {       // warm paper cells; the gaps read as mullions
+                    x: 4px + c * 56px;
+                    y: 4px;
+                    width: 48px; height: parent.height - 8px;
+                    border-radius: 2px;
+                    background: @linear-gradient(180deg, #e0b184 0%, #c4916a 100%);
+                    Rectangle { x: 0; y: parent.height * 0.31; width: 100%; height: 5px; background: #4a2318; }
+                    Rectangle { x: 0; y: parent.height * 0.64; width: 100%; height: 5px; background: #4a2318; }
+                }
+            }
+        }
+
+        // THE LANTERN PROCESSION — two rows converging on the doorway (perspective scale);
+        // every paper body breathes on its own phase, nothing pulses together.
+        for l in [
+            { cx: 0.05, cy: 0.53, s: 1.00, ph: 0.00 },
+            { cx: 0.19, cy: 0.565, s: 0.74, ph: 0.31 },
+            { cx: 0.30, cy: 0.585, s: 0.55, ph: 0.62 },
+            { cx: 0.85, cy: 0.53, s: 1.00, ph: 0.17 },
+            { cx: 0.73, cy: 0.565, s: 0.74, ph: 0.48 },
+            { cx: 0.63, cy: 0.585, s: 0.55, ph: 0.79 },
+        ]: Rectangle {
+            x: parent.width * l.cx; y: parent.height * l.cy;
+            width: 60px * l.s; height: 74px * l.s;
+            background: transparent;
+            Rectangle {                         // the warm halo — the breath
+                x: parent.width / 2 - self.width / 2;
+                y: parent.height * 0.34 - self.height / 2;
+                width: 84px * l.s; height: 84px * l.s;
+                border-radius: self.width / 2;
+                background: @radial-gradient(circle, #f0a848.with-alpha(0.20) 0%, transparent 70%);
+                opacity: 0.55 + 0.35 * sin(360deg * Math.mod(mugenjo.tk / 3400.0 + l.ph, 1.0));
+            }
+            Rectangle {                         // top cap
+                x: parent.width * 0.30; y: 0;
+                width: parent.width * 0.40; height: 6px * l.s;
+                border-radius: 2px; background: #241410;
+            }
+            Rectangle {                         // the paper body
+                x: parent.width * 0.14; y: 5px * l.s;
+                width: parent.width * 0.72; height: parent.height * 0.62;
+                border-radius: 4px;
+                background: @linear-gradient(180deg, #ffd98a 0%, #f0a848 62%, #c47830 100%);
+                opacity: 0.80 + 0.20 * sin(360deg * Math.mod(mugenjo.tk / 3400.0 + l.ph, 1.0));
+                Rectangle { x: parent.width * 0.47; y: 0; width: 2px; height: 100%; background: #8a4a20.with-alpha(0.45); }
+            }
+            Rectangle {                         // bottom cap + the stand stem
+                x: parent.width * 0.26; y: parent.height * 0.66;
+                width: parent.width * 0.48; height: 5px * l.s;
+                border-radius: 2px; background: #241410;
+            }
+            Rectangle {
+                x: parent.width / 2 - 1px; y: parent.height * 0.70;
+                width: 2px; height: parent.height * 0.30;
+                background: #241410;
+            }
+        }
+
+        // THE COLD DOORWAY — the one teal light in the warm dark; someone is waiting
+        doorway := Rectangle {
+            x: parent.width / 2 - 37px; y: parent.height * 0.495;
+            width: 74px; height: 112px;
+            border-width: 3px; border-color: #3a1c12;
+            background: @linear-gradient(180deg, #5a9aaa 0%, #2a4a5a 100%);
+            opacity: 0.11 + 0.04 * sin(360deg * Math.mod(mugenjo.tk / 7700.0, 1.0));
+            Rectangle { x: parent.width / 3 - 1px; y: 0; width: 2px; height: 100%; background: #10202a; }
+            Rectangle { x: parent.width * 2 / 3 - 1px; y: 0; width: 2px; height: 100%; background: #10202a; }
+            Rectangle { x: 0; y: parent.height / 3 - 1px; width: 100%; height: 2px; background: #10202a; }
+            Rectangle { x: 0; y: parent.height * 2 / 3 - 1px; width: 100%; height: 2px; background: #10202a; }
+            Rectangle {                         // the silhouette
+                x: parent.width / 2 - 9px; y: parent.height * 0.36;
+                width: 18px; height: parent.height * 0.60;
+                border-radius: 9px;
+                background: #10202a;
+            }
+        }
+
+        // NAKIME'S NOTE — one biwa pluck every 9.4s; the ring ripples out and the castle holds
+        Rectangle {
+            property <float> p: Math.mod(mugenjo.tk / 9400.0, 1.0);
+            property <float> g: Math.min(self.p, 0.22) / 0.22;
+            x: parent.width * 0.16 - self.width / 2;
+            y: parent.height * 0.12 - self.height / 2;
+            width: 8px + 112px * self.g; height: self.width;
+            border-radius: self.width / 2;
+            background: transparent;
+            border-width: 1.5px;
+            border-color: #f0a848.with-alpha(self.p < 0.22 ? 0.45 * (1 - self.g) : 0.0);
+        }
+
+        // THE EMBER BOKEH — five soft orbs rising the void, each on its own clock
+        for e in 5 : Rectangle {
+            property <float> p: Math.mod(mugenjo.tk / (11000.0 + e * 2300.0), 1.0);
+            x: parent.width * Math.mod(0.12 + e * 0.19 + 0.05 * sin(360deg * self.p), 1.0);
+            y: parent.height * (0.92 - 0.80 * self.p);
+            width: 10px + e * 2px; height: self.width;
+            border-radius: self.width / 2;
+            background: @radial-gradient(circle, #f0a848.with-alpha(0.30) 0%, transparent 70%);
+            opacity: 0.5 * Math.sin(180deg * self.p);
+        }
+
+        // THE ABYSS WINDOWS — the castle seen from above (the darker refs): fourteen far-off
+        // rooms scattered in the void, each candle on its own clock; one in four burns pale.
+        for w in 14 : Rectangle {
+            x: parent.width * Math.mod(0.04 + w * 0.171, 1.0);
+            y: parent.height * (0.02 + Math.mod(w * 0.093, 0.42));
+            width: 4px + Math.mod(w, 3) * 2px;
+            height: 6px + Math.mod(w, 3) * 2px;
+            border-radius: 1px;
+            background: Math.mod(w, 4) == 0 ? #e8e0c8 : #f0a848;
+            opacity: 0.06 + 0.10 * Math.abs(sin(360deg * Math.mod(mugenjo.tk / (4100.0 + w * 700.0), 1.0)));
+        }
+
+        // THE CRIMSON EDGES — the red verticals framing the tilt (ref #15), breathing slow
+        Rectangle {
+            x: 0; y: 0; width: 26px; height: 100%;
+            background: @linear-gradient(90deg, #8b1a2a.with-alpha(0.18) 0%, transparent 100%);
+            opacity: 0.55 + 0.30 * sin(360deg * Math.mod(mugenjo.tk / 8300.0, 1.0));
+        }
+        Rectangle {
+            x: parent.width - 26px; y: 0; width: 26px; height: 100%;
+            background: @linear-gradient(270deg, #8b1a2a.with-alpha(0.18) 0%, transparent 100%);
+            opacity: 0.55 + 0.30 * sin(360deg * Math.mod(mugenjo.tk / 8300.0 + 0.5, 1.0));
+        }
+
+        // ===== #34C THE CAKE-KINGDOM DRIFT — the dessert realm leaks into the castle: eight
+        // sprinkles (one per pillar accent, the SAME ring as the HOME crest) falling the void,
+        // each on its own clock with its own sway; nothing lands, nothing repeats in step. =====
+        for sp in [
+            { col: #28c8d8, cx: 0.09, sp: 13400.0, ph: 0.00, w: 3.5, h: 11.0 },
+            { col: #ffb454, cx: 0.21, sp: 16800.0, ph: 0.41, w: 4.0, h:  9.0 },
+            { col: #a78bfa, cx: 0.33, sp: 12100.0, ph: 0.73, w: 3.0, h: 12.0 },
+            { col: #e6323c, cx: 0.45, sp: 18300.0, ph: 0.22, w: 4.5, h:  8.0 },
+            { col: #5e8bff, cx: 0.57, sp: 14700.0, ph: 0.58, w: 3.5, h: 10.0 },
+            { col: #2ecc71, cx: 0.69, sp: 11300.0, ph: 0.90, w: 3.0, h: 11.5 },
+            { col: #f5c2e7, cx: 0.81, sp: 17500.0, ph: 0.12, w: 4.0, h:  8.5 },
+            { col: #f39c12, cx: 0.93, sp: 15600.0, ph: 0.66, w: 3.5, h: 10.5 },
+        ]: Rectangle {
+            property <float> p: Math.mod(mugenjo.tk / sp.sp + sp.ph, 1.0);
+            x: parent.width * Math.mod(sp.cx + 0.035 * sin(360deg * Math.mod(self.p * 2.0, 1.0)), 1.0);
+            y: parent.height * (self.p * 1.08 - 0.04);
+            width: sp.w * 1px; height: sp.h * 1px;
+            border-radius: self.width / 2;
+            background: sp.col;
+            opacity: 0.26 * Math.sin(180deg * self.p);
+        }
+
+        // THE FROSTING GLINTS — three sugar motes twinkling on staggered clocks; candy dust
+        // catching the lantern light for a breath, then gone.
+        for g in [
+            { cx: 0.26, cy: 0.24, sp: 5200.0, ph: 0.00 },
+            { cx: 0.52, cy: 0.71, sp: 6700.0, ph: 0.37 },
+            { cx: 0.78, cy: 0.38, sp: 5900.0, ph: 0.74 },
+        ]: Rectangle {
+            x: parent.width * g.cx; y: parent.height * g.cy;
+            width: 5px; height: 5px;
+            border-radius: 2.5px;
+            background: #fff4d8;
+            opacity: 0.30 * Math.max(0.0, sin(360deg * Math.mod(mugenjo.tk / g.sp + g.ph, 1.0)));
+        }
+    }
+    title: "Yeah! Tortä";
+    preferred-width: 440px;
+    preferred-height: 900px;
+    background: Monokuma.night;
+
+    // ── The routing truth (host-readable + host-drivable) ──
+    in-out property <string> active-tab: "home";  // "home" | "engine" | "dns" | "query"
+
+    // ── THE ||| ADVANCED OVERLAY routing truth (1B — IN-SHELL navigation) ──
+    // THE ANDROID SINGLE-SURFACE LAW (measured, lib.rs android_main): on-device, show()/hide()
+    // window-swaps never re-take the one android surface — the last-constructed component owns it
+    // (witnessed: the D2 swap hid the WHOLE app). So the ||| Advanced surface lives INSIDE the
+    // shell as a visibility-switched overlay, and every navigation flip is shell-local state.
+    in-out property <bool> advanced-open: false;
+    // "pillars" | "general" — the rail's DNSCRYPT entry routes to the ③ DNS tab instead: the
+    // shell's dc mount IS the one host-fed K5 pane (one typed authority, ONE fed mount on-device;
+    // a second unfed DnscryptSection here would render fake defaults — the felt-truth law).
+    in-out property <string> advanced-section: "pillars";
+    in-out property <bool> advanced-drawer-open: true;
+    // ── #60C-4 CARBON RENDERER SEAM — the host lifts carbon_bridge::surface frames
+    // (RGBA8 through the assimilated carbonyl gfx primitives) into this texture.
+    // FELT-TRUTH: carbon-frame-live stays false until a REAL frame has been fed;
+    // the carbon-dash pane hides the surface, never a placeholder. ──
+    in-out property <image> carbon-frame;
+    in-out property <bool> carbon-frame-live: false;
+    // ── #60B-3 CARBON LIVE ANALYTICS — host-fed off the SAME CarbonSurface the
+    // seam renders through (frames genuinely finished, pixels genuinely written
+    // by the assimilated primitives, real per-frame payload). FELT-TRUTH: the
+    // chips row rides carbon-frame-live — no renderer, no numbers, never sample
+    // defaults. ──
+    in-out property <int> carbon-frames: 0;
+    in-out property <int> carbon-px: 0;
+    in-out property <int> carbon-kib: 0;
+    // ── #60D ROUTING SEAM — host-fed status of the socket-layer probe: every
+    // decision taken in carbon_bridge::route off LIVE engine reads (Beast QoS
+    // phase, Underground reputation). FELT-TRUTH: empty until the host has
+    // genuinely probed; the pane then swaps the pending line for the live one. ──
+    in-out property <string> carbon-route: "";
+    // ── #60C TEXT-MODE LANE v0 — the REAL browse pass: the GO bar fires
+    // carbon-navigate(url) → the host fetches through the Kotlin bay (every
+    // socket inside the YeAH Tortä tunnel) → carbon_bridge::engine parses →
+    // the terminal page lands here. FELT-TRUTH: carbon-page-status stays ""
+    // and carbon-page-lines stays empty until a fetch GENUINELY lands; a
+    // failed fetch renders AS a failure (status −1 + the failure body). ──
+    in-out property <string> carbon-url: "https://example.com";
+    in-out property <string> carbon-page-status: "";
+    in-out property <[string]> carbon-page-lines: [];
+    callback carbon-navigate(string);
+    // ── #60E SANDBOX HARDENING — host-fed status of the fs jail + per-site
+    // permission map + the REAL process topology (isolation is a host-read
+    // fact, never a module claim). FELT-TRUTH: empty until the host has
+    // genuinely armed the jail and probed it. ──
+    in-out property <string> carbon-sandbox: "";
+    // ── #60F THE SPECIALS — host-fed truth of the userscript/extension engine:
+    // landed flips only because the engine is genuinely compiled into this
+    // build; the status line carries only REAL drop-in scan results. ──
+    in-out property <bool> carbon-extension-engine-landed: false;
+    in-out property <string> carbon-specials-status: "";
+    callback carbon-install-extension-tapped();
+    // ── #60G THE ROLE LANE — host-fed truth of the system default-browser role:
+    // granted reads the REAL RoleManager.isRoleHeld(ROLE_BROWSER) through the
+    // Kotlin layer; the status line carries only REAL request outcomes. ──
+    in-out property <bool> carbon-role-granted: false;
+    in-out property <string> carbon-role-status: "";
+    callback carbon-set-default-browser-tapped();
+
+    // ── Shell intents ──
+    callback open-advanced();
+    callback close-advanced();
+    // The overlay's per-pillar private chips (DASHBOARD · SETTINGS |||) — host-routed intents
+    // (the pillar surfaces embed as in-shell panes in the next wave; un-wired = silent no-op).
+    callback open-pillar-dashboard(string);
+    callback open-pillar-settings(string);
+    // 2-FEED-Centauri (SETTINGS): the in-shell Centauri SETTINGS pane's typed WRITE intents, forwarded from
+    // `censet` (CentauriSettings) up to the host. The host owns the drive to the armed engine (one-way to the
+    // single source): cloak → the flat resolver cloak fn; seed → the durable SeedPolicy pref; warm-up → the
+    // Object's bounded self-fill batch. Silent host-side no-op on a host/preview build (bridge unreachable).
+    // (No strict / install: the CROWN is always-on LeakOnMiss and the catalog auto-arms — removed end-to-end.)
+    callback centauri-cloak-toggled(bool);
+    callback centauri-seed-policy-cycled();
+    callback centauri-warm-up-now();
+    // 2-FEED-Warden (SETTINGS): the in-shell Warden SETTINGS pane's typed WRITE intents, forwarded from `wset`
+    // (WardenSettingsPane) up to the host. The host owns the drive to the canonical armed WardenObject (the SAME
+    // instance the datapath consults, via WardenDatapathGate): posture → set_fail_closed; toggle → the 9-bit
+    // universal toggles; add/remove-rule → install domain/CIDR rule-set; app mode/metered/pause → set_app_row.
+    // (No trust intent: the Warden layer has no trust concept by design law — that surface is the Underground
+    //  pillar's, not the firewall's.) Silent host-side no-op on a host/preview build (bridge unreachable).
+    // ARM: the DASHBOARD crown control (the enforce seam the witness found dead) — host drives it to
+    // `setWardenArmed` (pref persist -> VpnUtils.setWardenNativeEnabled -> WardenDatapathGate.setEnforced);
+    // the pane re-feeds `warden-armed` from the live `configured` bit next tick, so a failed push snaps back.
+    callback warden-arm(bool);
+    callback warden-posture-changed(bool);
+    callback warden-universal-toggled(string, bool);
+    callback warden-add-rule(string, string, bool);
+    callback warden-remove-rule(int);
+    callback warden-app-mode-cycled(int);
+    callback warden-app-metered-cycled(int);
+    callback warden-app-pause-toggled(int);
+    // ── W-D (#79) the per-app INSPECTOR popup intents (block-ladder). open(uid): uid<0 = browse, uid>=0
+    // = drill into that app (host pulls its endpoint list + posture). block-selected(uid, mode): mode
+    // 0=/32 · 1=/24 · 2=/16 · 3=country — the host rides the ladder over the selected endpoint set. ──
+    callback warden-open-inspector(int);
+    callback warden-close-inspector();
+    callback warden-inspector-block-wifi(int, bool);
+    callback warden-inspector-block-mobile(int, bool);
+    callback warden-inspector-select-dest(string);
+    callback warden-inspector-block-selected(int, int);
+
+    // ── ||| MASKSOLVER SETTINGS intents (2-FEED-MaskSolver SETTINGS — masksolver_settings.slint) ──
+    // The in-shell MaskSolver SETTINGS pane's controls ride these to the LIVE resolver process-globals via
+    // engine_bridge → resolver_set_* (the SAME atomics the resolve hot-path reads — one instance, one truth).
+    // The instant toggles (solve-ladder / all-servers / rebind / bogus-priv / proxy-dnssec / never-forward /
+    // cache-rr) each drive a REAL Object setter now; the config-carried knobs (cache-cap / timeout / serve-stale
+    // window / TTL clamps) STAGE onto the pane, then reapply-config lands them through resolver_configure.
+    // Silent host-side no-op on a host/preview build (bridge unreachable). Fed back each 1s while shown.
+    callback masksolver-solve-ladder-toggled(bool);
+    callback masksolver-all-servers-toggled(bool);
+    callback masksolver-rebind-protect-toggled(bool);
+    callback masksolver-bogus-priv-toggled(bool);
+    callback masksolver-proxy-dnssec-toggled(bool);
+    callback masksolver-never-forward-toggled(bool);
+    callback masksolver-cache-rr-toggled(bool);
+    callback masksolver-serve-stale-toggled(bool);
+    callback masksolver-cache-cap-stepped(int);
+    callback masksolver-timeout-stepped(int);
+    callback masksolver-serve-stale-secs-stepped(int);
+    callback masksolver-ttl-floor-stepped(int);
+    callback masksolver-ttl-ceiling-stepped(int);
+    callback masksolver-rotation-cadence-stepped(int);
+    callback masksolver-reapply-config();
+
+    // 2-FEED-Rotation (SETTINGS): the Rotation SETTINGS pane's 5 intents. The wheel is HOST/Kotlin-owned (the
+    // NO-FORK consensus — torta_core holds no live rotation cursor), so each rides a Kotlin destination, NOT a
+    // resolver_set_*: pin → RESOLVER_ROTATION_ENABLED (inverted), rotate-now → the ACTION_ROTATE_RESOLVERS_NOW
+    // intent, set/step-cadence → RESOLVER_ROTATION_CADENCE_MINUTES. Fed back each 1s while shown.
+    callback rotation-settings-pin-toggled(bool);
+    callback rotation-settings-rotate-now();
+    callback rotation-settings-set-cadence(int);
+    callback rotation-settings-cadence-stepped(int);
+
+    // 2-FEED-Beast (SETTINGS): the Beast SETTINGS pane's 9 intents. torta_core has NO live tunable setter
+    // (YeahController bakes max_window/free_thresh/compete_thresh at Beast::new/with_profile, yeah.rs:128),
+    // so the 2 profiles + preset + 4 tunables are STAGED: a pick/step stages the value + marks profile-dirty;
+    // reapply-profile COMMITS via a Beast rebuild (Beast::new(staged yeah, cake) + re-tune). Each staged value
+    // is mirrored to a BEAST_* pref (the #51 durability law — a rebuild after restart re-reads them). Fed back
+    // onto the bset-* aliases at startup + each 1s while the beast-settings section is shown.
+    callback beast-settings-yeah-profile-picked(int);
+    callback beast-settings-cake-profile-picked(int);
+    callback beast-settings-preset-picked(int);
+    callback beast-settings-cycle-ms-stepped(int);
+    callback beast-settings-max-window-stepped(int);
+    callback beast-settings-free-thresh-stepped(int);
+    callback beast-settings-compete-thresh-stepped(int);
+    callback beast-settings-expert-toggled(bool);
+    callback beast-settings-reapply-profile();
+
+    // 2-FEED-Inu (SETTINGS): the Wire Cake Inu SETTINGS pane's 9 intents. Unlike Beast (torta_core-owned), the
+    // elevation grant flow is KOTLIN-owned (the ElevationManager / per-power GrantEngine / BootReapplyPolicy) —
+    // each intent routes through the bridge to its real destination. pair-now/unpair drive the ADB pair+elevate
+    // / clear; power-toggled sets GrantEngine PowerState.desired; boot-reapply/always-on/provider-pref/expert are
+    // durable prefs (staged host-side + persisted by Kotlin, the #51 durability law); manual-pair carries the raw
+    // Expert host:port:code. Fed back onto the iset-* aliases at startup + each 1s while inu-settings is shown.
+    callback inu-settings-pair-now();
+    callback inu-settings-unpair();
+    callback inu-settings-power-toggled(string, bool);
+    callback inu-settings-boot-reapply-toggled(bool);
+    callback inu-settings-always-on-toggled(bool);
+    callback inu-settings-provider-pref-cycled();
+    callback inu-settings-manual-pair(string, string, string);
+    callback inu-settings-expert-toggled(bool);
+
+    // ── ① HOME forwarding (home_tab.slint) ──
+    in-out property <bool> home-host-live <=> home.host-live;
+    in-out property <bool> engine-running <=> home.engine-running;
+    in-out property <string> engine-state-line <=> home.engine-state-line;
+    in-out property <int> queries <=> home.queries;
+    in-out property <int> answered <=> home.answered;
+    in-out property <int> blocked <=> home.blocked;
+    in-out property <int> cache-hits <=> home.cache-hits;
+    in-out property <int> stale-served <=> home.stale-served;
+    in-out property <int> served-local <=> home.served-local;
+    in-out property <[PillarTabRow]> pillar-chips <=> home.pillar-chips;
+    out property <string> crown-line <=> home.crown-line;
+    out property <bool> warn-engine-off <=> home.warn-engine-off;
+    out property <bool> note-cold <=> home.note-cold;
+    out property <bool> home-note-preview <=> home.note-preview;
+    callback engine-toggled <=> home.engine-toggled;
+    // Re-emitted (not aliased) since 1B: a HOME pillar chip ALSO opens the in-shell ADVANCED
+    // overlay at its PILLARS section (the host still receives the id for awareness/refresh).
+    callback open-pillar(string);
+
+    // ── ② ENGINE forwarding (engine_tab.slint) ──
+    in-out property <bool> engine-live <=> eng.engine-live;
+    in-out property <string> engine-mode <=> eng.mode;
+    in-out property <bool> engine-slow-start <=> eng.slow-start;
+    in-out property <bool> engine-fast-mode <=> eng.fast-mode;
+    in-out property <int> engine-cwnd <=> eng.cwnd;
+    in-out property <int> engine-window-max <=> eng.window-max;
+    in-out property <float> engine-base-rtt-ms <=> eng.base-rtt-ms;
+    in-out property <float> engine-udp-rtt-ms <=> eng.udp-rtt-ms;
+    in-out property <float> engine-floor-rtt-ms <=> eng.floor-rtt-ms;
+    // #3-EXT — TCP display lane + LineRate per-family telemetry + Mochi memory (twin-RTT cure).
+    in-out property <float> engine-tcp-rtt-ms <=> eng.tcp-rtt-ms;
+    in-out property <float> engine-tcp-floor-ms <=> eng.tcp-floor-ms;
+    in-out property <float> engine-udp-floor-ms <=> eng.udp-floor-ms;
+    in-out property <float> engine-q-smooth <=> eng.q-smooth;
+    in-out property <int> engine-zeta-streak <=> eng.zeta-streak;
+    in-out property <int> engine-shed-streak <=> eng.shed-streak;
+    in-out property <int> engine-valve-streak <=> eng.valve-streak;
+    in-out property <int> engine-soft-memory <=> eng.soft-memory;
+    in-out property <int> engine-adaptive-timeout-ms <=> eng.adaptive-timeout-ms;
+    in-out property <float> engine-pacing-rate <=> eng.pacing-rate;
+    in-out property <float> engine-q-packets <=> eng.q-packets;
+    in-out property <int> engine-reno-count <=> eng.reno-count;
+    in-out property <int> engine-pipeline-depth <=> eng.pipeline-depth;
+    in-out property <int> engine-q-critical <=> eng.q-critical;
+    in-out property <int> engine-q-high <=> eng.q-high;
+    in-out property <int> engine-q-normal <=> eng.q-normal;
+    in-out property <float> engine-fill-critical <=> eng.fill-critical;
+    in-out property <float> engine-fill-high <=> eng.fill-high;
+    in-out property <float> engine-fill-normal <=> eng.fill-normal;
+    in-out property <float> engine-blue-critical <=> eng.blue-critical;
+    in-out property <float> engine-blue-high <=> eng.blue-high;
+    in-out property <float> engine-blue-normal <=> eng.blue-normal;
+    // #16 THE BEAST (AQM retention) — session high-water the CAKE tins overlay so a burst leaves a
+    // durable honest mark: session-peak per-tin depth + lifetime per-tin throughput ("N served").
+    in-out property <int> engine-peak-critical <=> eng.peak-critical;
+    in-out property <int> engine-peak-high <=> eng.peak-high;
+    in-out property <int> engine-peak-normal <=> eng.peak-normal;
+    in-out property <int> engine-served-critical <=> eng.served-critical;
+    in-out property <int> engine-served-high <=> eng.served-high;
+    in-out property <int> engine-served-normal <=> eng.served-normal;
+    in-out property <string> engine-yeah-profile <=> eng.yeah-profile-label;
+    in-out property <string> engine-cake-profile <=> eng.cake-profile-label;
+    in-out property <bool> engine-canonical-brain <=> eng.canonical-brain;
+    in-out property <bool> engine-cobalt-aqm <=> eng.cobalt-aqm;
+    out property <bool> engine-note-preview <=> eng.note-preview;
+    out property <bool> engine-note-legacy-brain <=> eng.note-legacy-brain;
+    out property <bool> engine-note-legacy-aqm <=> eng.note-legacy-aqm;
+    // N6c · the NETSTACK FORWARDER card (ForwarderSnapshot over the pillar bridge)
+    in-out property <bool> fwd-armed <=> eng.fwd-armed;
+    in-out property <bool> fwd-live <=> eng.fwd-live;
+    // N7 · the forwarder ARM SWITCH (pref truth + the next-start latch write)
+    in-out property <bool> fwd-pref-armed <=> eng.fwd-pref-armed;
+    callback forwarder-toggled <=> eng.forwarder-toggled;
+    in-out property <int> fwd-flows-tcp <=> eng.fwd-flows-tcp;
+    in-out property <int> fwd-flows-udp <=> eng.fwd-flows-udp;
+    in-out property <int> fwd-flows-other <=> eng.fwd-flows-other;
+    in-out property <int> fwd-active-flows <=> eng.fwd-active-flows;
+    in-out property <int> fwd-tin-critical <=> eng.fwd-tin-critical;
+    in-out property <int> fwd-tin-high <=> eng.fwd-tin-high;
+    in-out property <int> fwd-tin-normal <=> eng.fwd-tin-normal;
+    in-out property <int> fwd-dns-answered <=> eng.fwd-dns-answered;
+    in-out property <int> fwd-paced-flows <=> eng.fwd-paced-flows;
+    in-out property <float> fwd-bytes-up <=> eng.fwd-bytes-up;
+    in-out property <float> fwd-bytes-down <=> eng.fwd-bytes-down;
+    in-out property <int> fwd-rtt-samples <=> eng.fwd-rtt-samples;
+    in-out property <int> fwd-stalls <=> eng.fwd-stalls;
+    in-out property <int> fwd-warden-denied <=> eng.fwd-warden-denied;
+    in-out property <int> fwd-cwnd-last <=> eng.fwd-cwnd-last;
+    // ★ #66-A · the Centauri HTTPS seam counters (SNI-named / spliced to the real CDN / failed).
+    in-out property <int> fwd-centauri-sni-peeked <=> eng.fwd-centauri-sni-peeked;
+    in-out property <int> fwd-centauri-spliced <=> eng.fwd-centauri-spliced;
+    in-out property <int> fwd-centauri-splice-failed <=> eng.fwd-centauri-splice-failed;
+    in-out property <int> fwd-centauri-tls-served <=> eng.fwd-centauri-tls-served;
+    in-out property <int> fwd-centauri-tls-failed <=> eng.fwd-centauri-tls-failed;
+    in-out property <bool> fwd-centauri-tls-armed <=> eng.fwd-centauri-tls-armed;
+    // ★ N-dial — the upstream dial's two failure witnesses, forwarded to the ENGINE tab.
+    in-out property <int> fwd-dial-protect-failed <=> eng.fwd-dial-protect-failed;
+    in-out property <int> fwd-dial-connect-failed <=> eng.fwd-dial-connect-failed;
+    // ★ N-dial CLASSIFIED — the WHY behind the total above. Without these four forwardings the
+    // properties exist on the engine tab but never reach TortaShell, so the Rust feed cannot set
+    // them and the tiles would render a permanent 0 while the engine counted correctly. That is a
+    // silent-zero panel, which is worse than no tile at all.
+    in-out property <int> fwd-dial-refused <=> eng.fwd-dial-refused;
+    in-out property <int> fwd-dial-unreachable <=> eng.fwd-dial-unreachable;
+    in-out property <int> fwd-dial-v6-suppressed <=> eng.fwd-dial-v6-suppressed;
+    in-out property <int> fwd-dial-timed-out <=> eng.fwd-dial-timed-out;
+    in-out property <int> fwd-dial-other <=> eng.fwd-dial-other;
+    // ★ N-dial-UDP — forwarded for the same reason the four above are: a property that exists on the
+    // engine tab but is not bridged to TortaShell cannot be set by the Rust feed, so the tile renders a
+    // permanent 0 while the engine counts correctly. A silent-zero tile is worse than no tile, because
+    // it reads as "no UDP dial ever failed" — which is exactly the false reassurance being fixed here.
+    in-out property <int> fwd-udp-dial-protect-failed <=> eng.fwd-udp-dial-protect-failed;
+    in-out property <int> fwd-udp-dial-connect-failed <=> eng.fwd-udp-dial-connect-failed;
+    // CP-U · the UNDERGROUND LAYER card (UndergroundSnapshot over the pillar bridge)
+    in-out property <bool> ug-armed <=> eng.ug-armed;
+    in-out property <int> ug-total <=> eng.ug-total;
+    in-out property <int> ug-recorded <=> eng.ug-recorded;
+    in-out property <int> ug-recovered <=> eng.ug-recovered;
+    in-out property <int> ug-teeth <=> eng.ug-teeth;
+    in-out property <int> ug-sequestrated <=> eng.ug-sequestrated;
+    in-out property <int> ug-probation <=> eng.ug-probation;
+    in-out property <int> ug-content-lane <=> eng.ug-content-lane;
+    in-out property <int> ug-content-hot <=> eng.ug-content-hot;
+    in-out property <int> ug-r-analytics <=> eng.ug-r-analytics;
+    in-out property <int> ug-r-ads <=> eng.ug-r-ads;
+    in-out property <int> ug-r-tracker <=> eng.ug-r-tracker;
+    in-out property <int> ug-r-dnsleak <=> eng.ug-r-dnsleak;
+    in-out property <int> ug-r-ipleak <=> eng.ug-r-ipleak;
+    in-out property <int> ug-r-sonar <=> eng.ug-r-sonar;
+    in-out property <int> ug-r-mitm <=> eng.ug-r-mitm;
+    in-out property <int> ug-r-spoof <=> eng.ug-r-spoof;
+    in-out property <int> ug-r-malware <=> eng.ug-r-malware;
+    in-out property <int> ug-r-cdn <=> eng.ug-r-cdn;
+    in-out property <int> ug-s-blocklist <=> eng.ug-s-blocklist;
+    in-out property <int> ug-s-guard <=> eng.ug-s-guard;
+    in-out property <int> ug-s-rebind <=> eng.ug-s-rebind;
+    in-out property <int> ug-s-suffix <=> eng.ug-s-suffix;
+    in-out property <int> ug-s-centauri <=> eng.ug-s-centauri;
+    in-out property <float> ug-ledger-bytes <=> eng.ug-ledger-bytes;
+    in-out property <string> ug-top <=> eng.ug-top;
+    // CP-U · the re-homed Trust bands — the manual pin census + the control-row surface
+    in-out property <int> ug-trusted <=> eng.ug-trusted;
+    in-out property <int> ug-distrusted <=> eng.ug-distrusted;
+    in-out property <int> ug-trust-status <=> eng.ug-trust-status;
+    in-out property <string> ug-trust-input <=> eng.ug-trust-input;
+    // ── #15 UNDERGROUND H · the pillar's OWN panes (underground-dash / underground-settings).
+    //    The census scalars above hub straight into the dashboard pane (one truth, two rooms);
+    //    these are the pane-only additions the host feeds. ──
+    in-out property <float> ugd-mean-score <=> ugdash.mean-score;
+    in-out property <[UgHostRow]> ugd-docket <=> ugdash.docket;
+    in-out property <string> ugd-live-wire <=> ugdash.live-wire;
+    // #81 — the DURABLE review channel (query-underground.log tail), twin of the ephemeral wire above.
+    in-out property <string> ugd-review-log <=> ugdash.review-log;
+    in-out property <string> ugs-toml <=> ugsettings.toml-text;
+    in-out property <bool> ugs-dga-on <=> ugsettings.dga-on;
+    in-out property <bool> ugs-tunnel-on <=> ugsettings.tunnel-on;
+    in-out property <bool> ugs-beacon-on <=> ugsettings.beacon-on;
+    in-out property <string> ugs-quarantine-label <=> ugsettings.quarantine-label;
+    in-out property <int> ugs-save-status <=> ugsettings.save-status;
+    in-out property <int> ugs-reset-status <=> ugsettings.reset-status;
+    callback underground-save-toml(string);
+    callback underground-detection-toggled(string, bool);
+    callback underground-reset-reputation();
+    callback underground-reload-law();
+    callback underground-set-verdict <=> eng.underground-set-verdict;
+
+    // ── ③ DNS forwarding — the IDENTICAL alias set the D2 burger forwards (one host feed, two
+    //    mounts; the names MUST stay byte-equal so the shared Rust feed drives either surface) ──
+    in-out property <bool> require-dnssec <=> dc.require-dnssec;
+    in-out property <bool> require-nolog <=> dc.require-nolog;
+    in-out property <bool> require-nofilter <=> dc.require-nofilter;
+    // ★ #98 — the PQDNSCrypt gate needs a name in EVERY parent that mounts DnscryptSection, or the
+    //   Rust push has no setter to call on this component (the alias IS the seam).
+    in-out property <bool> pqdnscrypt <=> dc.pqdnscrypt;
+    in-out property <bool> dnscrypt-servers <=> dc.dnscrypt-servers;
+    in-out property <bool> doh-servers <=> dc.doh-servers;
+    in-out property <bool> odoh-servers <=> dc.odoh-servers;
+    in-out property <bool> ipv4-servers <=> dc.ipv4-servers;
+    in-out property <bool> ipv6-servers <=> dc.ipv6-servers;
+    in-out property <bool> force-tcp <=> dc.force-tcp;
+    in-out property <bool> http3 <=> dc.http3;
+    in-out property <bool> ignore-system-dns <=> dc.ignore-system-dns;
+    in-out property <bool> tunnel-only <=> dc.tunnel-only;              // #22 s5A-ext kill switch #2
+    in-out property <bool> proxy-enabled <=> dc.proxy-enabled;
+    in-out property <int> proxy-port <=> dc.proxy-port;
+    in-out property <int> listen-port <=> dc.listen-port;
+    in-out property <string> bootstrap-resolvers <=> dc.bootstrap-resolvers;
+    in-out property <bool> dns64-on <=> dc.dns64-on;
+    in-out property <string> dns64-prefix <=> dc.dns64-prefix;
+    in-out property <bool> block-ipv6 <=> dc.block-ipv6;
+    in-out property <bool> block-unqualified <=> dc.block-unqualified;
+    in-out property <bool> block-undelegated <=> dc.block-undelegated;
+    in-out property <bool> query-log-on <=> dc.query-log-on;
+    in-out property <bool> nx-log-on <=> dc.nx-log-on;
+    in-out property <bool> cache-on <=> dc.cache-on;
+    in-out property <int> cache-size <=> dc.cache-size;
+    in-out property <int> timeout-ms <=> dc.timeout-ms;
+    in-out property <int> server-names-count <=> dc.server-names-count;
+    in-out property <int> relay-routes <=> dc.relay-routes;
+    in-out property <int> relay-hops <=> dc.relay-hops;
+    in-out property <int> sources-refresh-hours <=> dc.sources-refresh-hours;
+    in-out property <int> relays-refresh-hours <=> dc.relays-refresh-hours;
+    out property <bool> warn-no-server-type <=> dc.warn-no-server-type;
+    out property <bool> warn-no-ip-family <=> dc.warn-no-ip-family;
+    out property <bool> warn-proxy-no-tcp <=> dc.warn-proxy-no-tcp;
+    out property <bool> warn-dns64-no-prefix <=> dc.warn-dns64-no-prefix;
+    out property <bool> note-strict-filters <=> dc.note-strict-filters;
+    out property <bool> warn-any <=> dc.warn-any;
+    out property <string> pool-summary <=> dc.pool-summary;
+    callback requirement-toggled <=> dc.requirement-toggled;
+    callback server-type-toggled <=> dc.server-type-toggled;
+    callback transport-toggled <=> dc.transport-toggled;
+    callback tunnel-only-toggled <=> dc.tunnel-only-toggled;            // #22 s5A-ext kill switch #2
+    callback listen-port-edited <=> dc.listen-port-edited;
+    callback proxy-port-edited <=> dc.proxy-port-edited;
+    callback bootstrap-edited <=> dc.bootstrap-edited;
+    callback dns64-prefix-edited <=> dc.dns64-prefix-edited;
+    callback sources-refresh-stepped <=> dc.sources-refresh-stepped;
+    callback relays-refresh-stepped <=> dc.relays-refresh-stepped;
+    callback open-servers-picker <=> dc.open-servers-picker;
+    callback open-relays-picker <=> dc.open-relays-picker;
+    callback reload-config <=> dc.reload-config;
+    callback apply-config <=> dc.apply-config;
+    // ── THE MANUAL PICKER forwarding (this DNS-tab mount is the ONE host-fed K5 surface) ──
+    in property <[PickerRow]> server-entries <=> dc.server-entries;
+    in property <[PickerRow]> relay-entries <=> dc.relay-entries;
+    in-out property <bool> show-server-picker <=> dc.show-server-picker;
+    in-out property <bool> show-relay-picker <=> dc.show-relay-picker;
+    callback pin-toggled <=> dc.pin-toggled;
+    // #22 s5B: per-resolver relay pairing forwarding (PAIR chip → panel → one-route edits)
+    in property <[PickerRow]> pairing-relay-entries <=> dc.pairing-relay-entries;
+    in-out property <string> pairing-server <=> dc.pairing-server;
+    callback pair-server-selected <=> dc.pair-server-selected;
+    callback route-relay-toggled <=> dc.route-relay-toggled;
+
+    // ── ③ DNS · 2-FEED-DNSCRYPT LIVE DASHBOARD forwarding (dnscrypt_section.slint) — the running
+    //    status + server + query feed the host pushes onto the ONE fed K5 mount (dc). `dc-live-state`
+    //    rides the SAME 500 ms JNI poll that drives HOME's crown; `dc-live-queries` tails the real
+    //    cache/query.log (bounded preview). These are the shell's mount only — the burger's embedded
+    //    DnscryptSection stays a config surface (DNSCRYPT routes here, never there). ──
+    in-out property <int> dc-live-state <=> dc.live-state;
+    in-out property <string> dc-live-server <=> dc.live-server;
+    in-out property <[QueryRow]> dc-live-queries <=> dc.live-queries;
+    in-out property <int> dc-live-query-count <=> dc.live-query-count;
+    // ★ #97 — the PQ witness rides the SAME mount and the SAME 500 ms poll as `dc-live-state`. Named
+    //   with the `dc-` prefix the host feeds by (the #66 law: a property is fed under the name its
+    //   PARENT gives it, not the name it declares).
+    in-out property <int> dc-pq-exchanges <=> dc.pq-exchanges;
+    in-out property <int> dc-pq-classic <=> dc.pq-classic;
+
+    // ── ||| GENERAL forwarding (general_section.slint — the overlay's GENERAL section; the alias
+    //    names stay byte-equal to the D2 burger's so ONE host push body drives either mount) ──
+    in-out property <int> preset-active <=> gen.preset-active;
+    in-out property <bool> rotation-on <=> gen.rotation-on;
+    in-out property <bool> solver-on <=> gen.solver-on;
+    in-out property <bool> warden-on <=> gen.warden-on;
+    in-out property <bool> rebind-protect-on <=> gen.rebind-protect-on;
+    in-out property <bool> boot-autostart-on <=> gen.boot-autostart-on;
+    in-out property <int> autostart-delay-secs <=> gen.autostart-delay-secs;
+    in-out property <bool> notification-on <=> gen.notification-on;
+    in-out property <bool> general-host-live <=> gen.host-live;
+    out property <bool> warn-all-pillars-off <=> gen.warn-all-pillars-off;
+    out property <bool> note-boot-off <=> gen.note-boot-off;
+    out property <string> preset-label <=> gen.preset-label;
+    callback preset-picked <=> gen.preset-picked;
+    callback pillar-toggled <=> gen.pillar-toggled;
+    callback boot-toggled <=> gen.boot-toggled;
+    callback autostart-delay-stepped <=> gen.autostart-delay-stepped;
+    callback notification-toggled <=> gen.notification-toggled;
+    callback open-battery-settings <=> gen.open-battery-settings;
+    callback open-query-log <=> gen.open-query-log;
+    callback open-nx-log <=> gen.open-nx-log;
+    callback open-expert <=> gen.open-expert;
+
+    // ── ④ QUERY forwarding (query_tab.slint) ──
+    in-out property <[QueryRow]> query-rows <=> q.rows;
+    in-out property <string> query-source <=> q.source;
+    in-out property <int> query-stale-secs <=> q.stale-secs;
+    in-out property <bool> query-log-present <=> q.log-present;
+    out property <bool> query-stale-banner <=> q.stale-banner;
+    callback query-source-picked <=> q.source-picked;
+    callback query-refresh <=> q.refresh-tapped;
+
+    // ── ||| MASKSOLVER DASHBOARD forwarding (2-FEED-MaskSolver — masksolver.slint MaskSolverPane) ──
+    // The in-shell mount of the MaskSolver pillar dashboard (the "ms-dash" advanced section). The host
+    // pushes each field from the live `MaskSolver::snapshot()`/`solve_state()` Records (the resolver's
+    // SAME live atomics — the single-source proof, no engine fork); `ms-` prefixed so the names never
+    // collide with HOME's `queries`/`answered`/… or the K5 `timeout-ms`. Fed on the DASHBOARD chip tap
+    // (open-pillar-dashboard) + re-fed each time the pane is re-shown.
+    in-out property <bool> ms-configured <=> msp.configured;
+    in-out property <int> ms-transports <=> msp.transports;
+    in-out property <int> ms-cache-entries <=> msp.cache-entries;
+    in-out property <float> ms-cache-hit-rate <=> msp.cache-hit-rate;
+    in-out property <float> ms-solve-success-rate <=> msp.solve-success-rate;
+    in-out property <int> ms-queries <=> msp.queries;
+    in-out property <int> ms-blocked <=> msp.blocked;
+    in-out property <int> ms-cache-hits <=> msp.cache-hits;
+    in-out property <int> ms-answered <=> msp.answered;
+    in-out property <int> ms-rejected <=> msp.rejected;
+    in-out property <int> ms-transport-miss <=> msp.transport-miss;
+    in-out property <int> ms-panics <=> msp.panics;
+    in-out property <int> ms-rebind-observed <=> msp.rebind-observed;
+    in-out property <int> ms-rebind-rejected <=> msp.rebind-rejected;
+    in-out property <int> ms-serve-stale-served <=> msp.serve-stale-served;
+    in-out property <int> ms-neg-cache <=> msp.neg-cache;
+    in-out property <int> ms-local-record-hits <=> msp.local-record-hits;
+    in-out property <int> ms-never-forward-stops <=> msp.never-forward-stops;
+    in-out property <int> ms-dns64-synth <=> msp.dns64-synth;
+    in-out property <int> ms-timeout-ms <=> msp.timeout-ms;
+    in-out property <int> ms-strategy <=> msp.strategy;
+    in-out property <int> ms-solve-retries <=> msp.solve-retries;
+    in-out property <int> ms-solve-soft-fails <=> msp.solve-soft-fails;
+    in-out property <int> ms-solve-hard-negatives <=> msp.solve-hard-negatives;
+    in-out property <int> ms-solve-ladder-exhausted <=> msp.solve-ladder-exhausted;
+    in-out property <int> ms-solve-upstream-promotions <=> msp.solve-upstream-promotions;
+    in-out property <string> ms-rotation-family <=> msp.rotation-family;
+    in-out property <int> ms-rotation-cadence-secs <=> msp.rotation-cadence-secs;
+    in-out property <int> ms-rotation-index <=> msp.rotation-index;
+    in-out property <int> ms-rotation-hint-count <=> msp.rotation-hint-count;
+    in-out property <[MaskTransportRow]> ms-transport-rows <=> msp.transport-rows;
+    in-out property <[MaskRow]> ms-recent-resolves <=> msp.recent-resolves;
+
+    // ── ||| MASKSOLVER SETTINGS forwarding (2-FEED-MaskSolver SETTINGS — masksolver_settings.slint Pane) ──
+    // The in-shell mount of the MaskSolver pillar SETTINGS (the "ms-settings" advanced section). The host pushes
+    // the CURRENT armed resolver posture onto these `in-out` inputs (the pane derives its 🎷 decision-point
+    // warnings from them); the user's intents flow back out as the `masksolver-*` callbacks above. `mss-`
+    // prefixed so the names never collide with the ms-dash `ms-*` aliases already at root. Fed on the SETTINGS
+    // chip tap + re-fed each 1s while shown (the SAME live resolver_stats() the dashboard reads — one truth).
+    in-out property <bool> mss-configured <=> msset.configured;
+    in-out property <int> mss-transports <=> msset.transports;
+    in-out property <bool> mss-solve-ladder-on <=> msset.solve-ladder-on;
+    in-out property <bool> mss-all-servers-on <=> msset.all-servers-on;
+    in-out property <int> mss-strategy <=> msset.strategy;
+    in-out property <int> mss-timeout-ms <=> msset.timeout-ms;
+    in-out property <int> mss-cache-cap <=> msset.cache-cap;
+    in-out property <int> mss-cache-entries <=> msset.cache-entries;
+    in-out property <bool> mss-serve-stale-on <=> msset.serve-stale-on;
+    in-out property <int> mss-serve-stale-secs <=> msset.serve-stale-secs;
+    in-out property <int> mss-serve-stale-served <=> msset.serve-stale-served;
+    in-out property <int> mss-ttl-floor-secs <=> msset.ttl-floor-secs;
+    in-out property <int> mss-ttl-ceiling-secs <=> msset.ttl-ceiling-secs;
+    in-out property <bool> mss-rebind-protect-on <=> msset.rebind-protect-on;
+    in-out property <int> mss-rebind-observed <=> msset.rebind-observed;
+    in-out property <int> mss-rebind-rejected <=> msset.rebind-rejected;
+    in-out property <int> mss-rotation-cadence-secs <=> msset.rotation-cadence-secs;
+    in-out property <string> mss-rotation-family <=> msset.rotation-family;
+    in-out property <bool> mss-expert-open <=> msset.expert-open;
+    in-out property <bool> mss-bogus-priv-on <=> msset.bogus-priv-on;
+    in-out property <bool> mss-proxy-dnssec-on <=> msset.proxy-dnssec-on;
+    in-out property <bool> mss-never-forward-on <=> msset.never-forward-on;
+    in-out property <bool> mss-cache-rr-on <=> msset.cache-rr-on;
+
+    // ── ||| CENTAURI DASHBOARD forwarding (2-FEED-Centauri — centauri.slint CentauriPane) ──
+    // The in-shell mount of the Centauri pillar dashboard (the "centauri-dash" advanced section). The
+    // host pushes each field from the live `Centauri::snapshot()` Record (the SAME spike-local Object
+    // that feeds HOME's "CDN local" counter — one instance, one truth). The names stay BYTE-EQUAL to
+    // the CentauriPane props so the ONE host push body (`push_centauri!`) drives either mount (the
+    // pane's own props never collide with HOME's `queries`/`blocked`/… or the K5 `cache-size`). Fed
+    // at startup + re-fed each second while the pane is shown (the visibility-gated refresh timer).
+    in-out property <int> libraries <=> cendash.libraries;
+    in-out property <int> cache-bytes <=> cendash.cache-bytes;
+    in-out property <bool> cache-full <=> cendash.cache-full;
+    in-out property <int> capacity <=> cendash.capacity;
+    // ★ #65 — CA trust, forwarded to the shell so the Rust tick can drive the install prompt.
+    in-out property <bool> ca-minted <=> cendash.ca-minted;
+    in-out property <bool> ca-trusted <=> cendash.ca-trusted;
+    callback install-ca <=> cendash.install-ca;
+    callback retrust-hosts <=> cendash.retrust-hosts;
+
+    in-out property <int> serve-port <=> cendash.serve-port;
+    in-out property <int> serve-state <=> cendash.serve-state;
+    in-out property <int> catalog-assets <=> cendash.catalog-assets;
+    in-out property <string> catalog-freshness <=> cendash.catalog-freshness; // ★ #22 slice 2 (TCAT v2 age)
+    in-out property <int> catalog-installs-attempted <=> cendash.catalog-installs-attempted;
+    in-out property <int> catalog-installs-verified <=> cendash.catalog-installs-verified;
+    in-out property <int> resolve-queries <=> cendash.resolve-queries;
+    in-out property <int> resolve-hits <=> cendash.resolve-hits;
+    in-out property <int> rehydrates-attempted <=> cendash.rehydrates-attempted;
+    in-out property <int> rehydrates-verified <=> cendash.rehydrates-verified;
+    in-out property <int> served-locally <=> cendash.served-locally;
+    in-out property <int> served-bytes <=> cendash.served-bytes;
+    in-out property <int> cdn-fetches <=> cendash.cdn-fetches;
+    in-out property <int> exact-serves <=> cendash.exact-serves;
+    in-out property <int> fallback-serves <=> cendash.fallback-serves;
+    in-out property <[string]> cdn-hosts <=> cendash.cdn-hosts;
+    in-out property <int> cdn-hosts-total <=> cendash.cdn-hosts-total;
+    in-out property <int> tls-distrust <=> cendash.tls-distrust;
+    in-out property <int> absorb-count <=> cendash.absorb-count;
+    in-out property <int> promoted-cloak-count <=> cendash.promoted-cloak-count;
+    // CP-Centauri-Discovery — the living-watch-list totals surface to the shell (set_discovered_*).
+    in-out property <int> discovered-total <=> cendash.discovered-total;
+    in-out property <int> discovered-observed <=> cendash.discovered-observed;
+    in-out property <[string]> discovered-hosts <=> cendash.discovered-hosts;
+    in-out property <[ServeRow]> recent-serves <=> cendash.recent-serves;
+
+    // ── ||| CENTAURI SETTINGS forwarding (2-FEED-Centauri SETTINGS — centauri_settings.slint CentauriSettings) ──
+    // The in-shell mount of the Centauri pillar SETTINGS (the "centauri-settings" advanced section). The host
+    // pushes the CURRENT armed state onto these `in-out` inputs (the pane derives its decision-point warnings
+    // from them); the user's intents flow back out as the `centauri-*` callbacks above. `cs-` prefixed so the
+    // names never collide with the centauri-dash aliases (libraries / catalog-assets / served-locally / …) that
+    // already live at root. Fed at startup + re-fed each 500ms by the live-engine overlay (the SAME
+    // `live_centauri_stats()` JSON the dashboard reads — one instance, one truth).
+    in-out property <bool> cs-cloak-armed <=> censet.cloak-armed;
+    in-out property <int> cs-seed-policy <=> censet.seed-policy;
+    in-out property <int> cs-catalog-assets <=> censet.catalog-assets;
+    in-out property <int> cs-libraries <=> censet.libraries;
+    in-out property <int> cs-served-locally <=> censet.served-locally;
+    in-out property <int> cs-served-bytes <=> censet.served-bytes;
+    in-out property <int> cs-cdn-fetches <=> censet.cdn-fetches;
+    in-out property <[CdnHostRow]> cs-cdn-hosts <=> censet.cdn-hosts;
+
+    // ── ||| WARDEN SETTINGS forwarding (2-FEED-Warden SETTINGS — warden_settings.slint WardenSettingsPane) ──
+    // The in-shell mount of the Warden pillar SETTINGS (the "warden-settings" advanced section). The host pushes
+    // the CURRENT armed state of the canonical live WardenObject onto these `in-out` inputs (the pane derives its
+    // decision-point warnings from them); the user's intents flow back out as the `warden-*` callbacks above.
+    // `ws-` prefixed so the names never collide with the warden-dash `wdash-*` aliases already at root. Fed on the
+    // SETTINGS chip tap + re-fed by a refresh Timer while the pane is shown (the SAME cross-.so bridge readers the
+    // dashboard uses — liveWardenStats / wardenUniversalToggles / liveWardenMatrix — one instance, one truth).
+    in-out property <bool> ws-fail-closed <=> wset.fail-closed;
+    in-out property <bool> ws-policy-loaded <=> wset.policy-loaded;
+    in-out property <[UniversalToggle]> ws-universal-toggles <=> wset.universal-toggles;
+    in-out property <[RuleEntry]> ws-rules <=> wset.rules;
+    in-out property <[AppToggleRow]> ws-app-matrix <=> wset.app-matrix;
+    in-out property <int> ws-armed-rule-count <=> wset.armed-rule-count;
+    in-out property <bool> ws-lockdown-on <=> wset.lockdown-on;
+
+    // ── ★ #49 · ||| NETSTACK FORWARDER DASHBOARD forwarding (forwarder_dashboard.slint ForwarderPane) ──
+    // The in-shell mount of the forwarder's per-flow docket surface (the "forwarder-dash" advanced
+    // section). `fwddash-` prefixed so the names never collide with the ② ENGINE tab's `fwd-*`
+    // porthole aliases — the two surfaces read the SAME parse of the SAME bridge record on the SAME
+    // tick (one authority, two views: the ENGINE card is the glance, this is the docket).
+    //
+    // Every field crosses `TortaPillarBridge.liveForwarderStats` / `.liveForwarderDocket` from the
+    // SERVICE .so, because the shell's statically-linked torta_core owns a separate, permanently
+    // empty registry (the two-.so law, task #74). Bridge-silent ⇒ the honest DORMANT baseline.
+    in-out property <bool> fwddash-armed <=> fwddash.armed;
+    in-out property <bool> fwddash-pref-armed <=> fwddash.pref-armed;
+    in-out property <bool> fwddash-live <=> fwddash.live;
+    in-out property <int> fwddash-flows-tcp <=> fwddash.flows-tcp;
+    in-out property <int> fwddash-flows-udp <=> fwddash.flows-udp;
+    in-out property <int> fwddash-flows-other <=> fwddash.flows-other;
+    // ★ #51 N9 — the ECHO lane's three counters.
+    in-out property <int> fwddash-icmp-echo <=> fwddash.icmp-echo;
+    in-out property <int> fwddash-icmp-replied <=> fwddash.icmp-replied;
+    in-out property <int> fwddash-icmp-failed <=> fwddash.icmp-failed;
+    in-out property <int> fwddash-active-flows <=> fwddash.active-flows;
+    in-out property <int> fwddash-tin-critical <=> fwddash.tin-critical;
+    in-out property <int> fwddash-tin-high <=> fwddash.tin-high;
+    in-out property <int> fwddash-tin-normal <=> fwddash.tin-normal;
+    in-out property <int> fwddash-dns-answered <=> fwddash.dns-answered;
+    in-out property <int> fwddash-paced-flows <=> fwddash.paced-flows;
+    in-out property <float> fwddash-bytes-up <=> fwddash.bytes-up;
+    in-out property <float> fwddash-bytes-down <=> fwddash.bytes-down;
+    in-out property <int> fwddash-rtt-samples <=> fwddash.rtt-samples;
+    in-out property <int> fwddash-stalls <=> fwddash.stalls;
+    in-out property <int> fwddash-warden-denied <=> fwddash.warden-denied;
+    in-out property <int> fwddash-cwnd-last <=> fwddash.cwnd-last;
+    in-out property <int> fwddash-dial-protect-failed <=> fwddash.dial-protect-failed;
+    in-out property <int> fwddash-dial-connect-failed <=> fwddash.dial-connect-failed;
+    in-out property <int> fwddash-dial-refused <=> fwddash.dial-refused;
+    in-out property <int> fwddash-dial-unreachable <=> fwddash.dial-unreachable;
+    in-out property <int> fwddash-dial-timed-out <=> fwddash.dial-timed-out;
+    in-out property <int> fwddash-dial-other <=> fwddash.dial-other;
+    // ★ the per-flow docket itself (#47's registry, #48's seam) + the TRUE live count behind it.
+    in-out property <[FwdFlowRow]> fwddash-docket <=> fwddash.docket;
+    in-out property <int> fwddash-docket-total <=> fwddash.docket-total;
+
+    // ── ||| BEAST DASHBOARD forwarding (2-FEED-Beast — beast.slint BeastPane) ──
+    // The in-shell mount of the Beast pillar dashboard (the "beast-dash" advanced section). The host
+    // pushes each field from the live `Beast::snapshot()` typed `BeastSnapshot` (the ONE build_snapshot
+    // reader — no push↔pull drift); `bdash-` prefixed so the names never collide with the ② ENGINE
+    // tab's `engine-*` porthole aliases. Fed on the DASHBOARD chip tap + re-fed by a refresh Timer
+    // while the pane is shown (android_main). Cold spike-local Beast ⇒ the honest DORMANT baseline
+    // (cwnd=1/16 SLOW-START, zero flows) — never fabricated traffic (Chroma F16).
+    in-out property <int> bdash-cwnd <=> bdash.cwnd;
+    in-out property <int> bdash-window-max <=> bdash.window-max;
+    in-out property <string> bdash-mode <=> bdash.mode;
+    in-out property <bool> bdash-slow-start-active <=> bdash.slow-start-active;
+    in-out property <float> bdash-base-rtt-ms <=> bdash.base-rtt-ms;
+    in-out property <float> bdash-rtt-base-floor-ms <=> bdash.rtt-base-floor-ms;
+    in-out property <float> bdash-q-packets <=> bdash.q-packets;
+    in-out property <int> bdash-reno-count <=> bdash.reno-count;
+    in-out property <bool> bdash-fast-mode <=> bdash.fast-mode;
+    in-out property <int> bdash-adaptive-timeout-ms <=> bdash.adaptive-timeout-ms;
+    in-out property <float> bdash-pacing-rate <=> bdash.pacing-rate;
+    in-out property <int> bdash-yeah-profile <=> bdash.yeah-profile;
+    in-out property <float> bdash-udp-base-rtt-ms <=> bdash.udp-base-rtt-ms;
+    // #3-EXT — TCP display lane + LineRate per-family telemetry + Mochi memory (twin-RTT cure).
+    in-out property <float> bdash-tcp-base-rtt-ms <=> bdash.tcp-base-rtt-ms;
+    in-out property <float> bdash-tcp-floor-ms <=> bdash.tcp-floor-ms;
+    // ★ #52 — the shaped plane's shell aliases (what `set_bdash_shaped_*` in lib.rs actually reaches).
+    in-out property <float> bdash-shaped-rtt-ms <=> bdash.shaped-rtt-ms;
+    in-out property <int> bdash-shaped-cwnd-last <=> bdash.shaped-cwnd-last;
+    in-out property <float> bdash-shaped-cwnd-mean <=> bdash.shaped-cwnd-mean;
+    in-out property <int> bdash-shaped-samples <=> bdash.shaped-samples;
+    in-out property <int> bdash-shaped-losses <=> bdash.shaped-losses;
+    in-out property <float> bdash-udp-floor-ms <=> bdash.udp-floor-ms;
+    in-out property <float> bdash-q-smooth <=> bdash.q-smooth;
+    in-out property <int> bdash-zeta-streak <=> bdash.zeta-streak;
+    in-out property <int> bdash-shed-streak <=> bdash.shed-streak;
+    in-out property <int> bdash-valve-streak <=> bdash.valve-streak;
+    in-out property <int> bdash-soft-memory <=> bdash.soft-memory;
+    in-out property <int> bdash-pipeline-depth <=> bdash.pipeline-depth;
+    in-out property <int> bdash-queue-critical <=> bdash.queue-critical;
+    in-out property <int> bdash-queue-high <=> bdash.queue-high;
+    in-out property <int> bdash-queue-normal <=> bdash.queue-normal;
+    in-out property <float> bdash-blue-prob <=> bdash.blue-prob;
+    in-out property <float> bdash-blue-critical <=> bdash.blue-critical;
+    in-out property <float> bdash-blue-high <=> bdash.blue-high;
+    in-out property <float> bdash-blue-normal <=> bdash.blue-normal;
+    in-out property <int> bdash-cobalt-dropped <=> bdash.cobalt-dropped;
+    in-out property <int> bdash-aqm-dropped <=> bdash.aqm-dropped;
+    in-out property <int> bdash-drr-sparse-served <=> bdash.drr-sparse-served;
+    in-out property <int> bdash-overload-sheds <=> bdash.overload-sheds;
+    in-out property <int> bdash-cake-profile <=> bdash.cake-profile;
+    in-out property <[BeastTickRow]> bdash-recent-ticks <=> bdash.recent-ticks;
+
+    // ── ||| ROTATION DASHBOARD forwarding (2-FEED-Rotation — rotation.slint RotationPane) ──
+    // The in-shell mount of the Rotation pillar dashboard (the "rotation-dash" advanced section). The host
+    // pushes each field from the live `MaskSolver::rotation_snapshot()` typed `RotationSnapshot` — a
+    // CONTROL-PLANE read of the LAST-PERSISTED durable record (NEVER the resolve hot path); `rdash-`
+    // prefixed so the names never collide with the MaskSolver pane's `ms-rotation-*` cursor aliases or
+    // HOME's own props. Fed on the DASHBOARD chip tap + re-fed by a refresh Timer while the pane is shown
+    // (android_main). A cold/unbound read ⇒ the honest DORMANT zeros — never a fabricated wheel.
+    in-out property <bool> rdash-configured <=> rdash.configured;
+    in-out property <string> rdash-rotation-family <=> rdash.rotation-family;
+    in-out property <int> rdash-cadence-secs <=> rdash.cadence-secs;
+    in-out property <int> rdash-rotation-index <=> rdash.rotation-index;
+    in-out property <int> rdash-next-flip-secs <=> rdash.next-flip-secs;
+    in-out property <bool> rdash-rehydrated-warm <=> rdash.rehydrated-warm;
+    in-out property <[RotationFamilyRow]> rdash-families <=> rdash.families;
+    in-out property <[RotationHintRow]> rdash-rtt-hints <=> rdash.rtt-hints;
+    in-out property <[RotationLogRow]> rdash-recent-rotations <=> rdash.recent-rotations;
+    in-out property <string> rdash-chain-relays <=> rdash.chain-relays;
+    in-out property <int> rdash-chain-depth <=> rdash.chain-depth;
+    // ── 2-DRIVE-PILLARS: the Rotation dashboard ACTION controls (host JNI ⇄ TortaPillarBridge, the real path) ──
+    in-out property <bool> rdash-rotation-enabled <=> rdash.rotation-enabled;
+    in-out property <int> rdash-cadence-minutes <=> rdash.cadence-minutes;
+    in-out property <bool> rdash-engine-running <=> rdash.engine-running;
+    in-out property <int> rdash-rotate-status <=> rdash.rotate-status;
+    callback rdash-rotate-now <=> rdash.rotate-now;
+    callback rdash-rotation-toggled <=> rdash.rotation-toggled;
+    callback rdash-cadence-picked <=> rdash.cadence-picked;
+    // ── #22 s5A: PICK FILTER (the ONE dnscrypt-toml authority) + POOL SHAPE (GEEK-clamped rotation prefs) ──
+    in-out property <bool> rdash-crit-nolog <=> rdash.crit-nolog;
+    in-out property <bool> rdash-crit-dnssec <=> rdash.crit-dnssec;
+    in-out property <bool> rdash-crit-nofilter <=> rdash.crit-nofilter;
+    in-out property <bool> rdash-crit-ipv4 <=> rdash.crit-ipv4;
+    in-out property <bool> rdash-crit-ipv6 <=> rdash.crit-ipv6;
+    in-out property <bool> rdash-crit-proto-dnscrypt <=> rdash.crit-proto-dnscrypt;
+    in-out property <bool> rdash-crit-proto-doh <=> rdash.crit-proto-doh;
+    in-out property <bool> rdash-crit-proto-odoh <=> rdash.crit-proto-odoh;
+    in-out property <bool> rdash-crit-sysdns <=> rdash.crit-sysdns;
+    in-out property <int> rdash-max-servers <=> rdash.max-servers;
+    in-out property <int> rdash-max-relays <=> rdash.max-relays;
+    callback rdash-criteria-toggled <=> rdash.criteria-toggled;
+    callback rdash-max-servers-stepped <=> rdash.max-servers-stepped;
+    callback rdash-max-relays-stepped <=> rdash.max-relays-stepped;
+
+    // ── ||| ROTATION SETTINGS forwarding (2-FEED-Rotation SETTINGS — rotation_settings.slint RotationSettingsPane) ──
+    // The in-shell mount of the Rotation pillar SETTINGS (the "rotation-settings" advanced section). The host
+    // pushes the CURRENT wheel posture (family/index over the JNI `live_rotation_state` cursor + the
+    // RESOLVER_ROTATION_* prefs) onto the `rset-` aliases; the user's edit intents flow back out as the
+    // `rotation-settings-*` callbacks (each host-wired to its Kotlin destination). `rset-` prefixed so the
+    // names never collide with the `rdash-` dashboard twin.
+    in-out property <bool> rset-configured <=> rsettings.configured;
+    in-out property <string> rset-rotation-family <=> rsettings.rotation-family;
+    in-out property <int> rset-rotation-index <=> rsettings.rotation-index;
+    in-out property <int> rset-cadence-secs <=> rsettings.cadence-secs;
+    in-out property <bool> rset-pinned <=> rsettings.pinned;
+    in-out property <bool> rset-expert-open <=> rsettings.expert-open;
+
+    // ── ||| BEAST SETTINGS forwarding (2-FEED-Beast SETTINGS — beast_settings.slint BeastSettingsPane) ──
+    // The in-shell mount of the Beast pillar SETTINGS (the "beast-settings" advanced section). The host pushes
+    // the LIVE flow-engine posture (the engine Beast handle's BeastSnapshot yeah_profile/cake_profile + the
+    // BEAST_* staged prefs for preset + the 4 tunables + the live cwnd/mode/base_rtt witnesses) onto the `bset-`
+    // aliases; the user's edit intents flow back out as the `beast-settings-*` callbacks. `bset-` prefixed so
+    // the names never collide with the `bdash-` Beast dashboard twin.
+    in-out property <int> bset-yeah-profile <=> bsettings.yeah-profile;
+    in-out property <int> bset-cake-profile <=> bsettings.cake-profile;
+    in-out property <int> bset-preset <=> bsettings.preset;
+    in-out property <int> bset-cycle-ms <=> bsettings.cycle-ms;
+    in-out property <int> bset-max-window <=> bsettings.max-window;
+    in-out property <int> bset-free-thresh-milli <=> bsettings.free-thresh-milli;
+    in-out property <int> bset-compete-thresh-milli <=> bsettings.compete-thresh-milli;
+    in-out property <bool> bset-tunable-clamped <=> bsettings.tunable-clamped;
+    in-out property <bool> bset-profile-dirty <=> bsettings.profile-dirty;
+    in-out property <bool> bset-expert-open <=> bsettings.expert-open;
+    in-out property <int> bset-cwnd <=> bsettings.cwnd;
+    in-out property <string> bset-mode <=> bsettings.mode;
+    in-out property <float> bset-base-rtt-ms <=> bsettings.base-rtt-ms;
+
+    // ── ||| WIRE CAKE INU SETTINGS forwarding (2-FEED-Inu SETTINGS — inu_settings.slint InuSettingsPane) ──
+    // The in-shell mount of the Inu pillar SETTINGS (the "inu-settings" advanced section — pair · protect · keep).
+    // The host pushes the LIVE elevation posture: from the InuStore snapshot (paired / active-provider /
+    // elevation-status / expert-open / the per-power protect map + the folded held/desired/drift counts) and the
+    // Kotlin-owned durability prefs (boot-reapply-armed / always-on / provider-pref, staged host-side). The user's
+    // edit intents flow back out as the `inu-settings-*` callbacks to the Kotlin ElevationManager/GrantEngine.
+    // `iset-` prefixed so the names never collide with the `idash-` Inu dashboard twin.
+    // The demo marker MUST be forwarded HERE, on the pane actually mounted at :2350. The #97
+    // dashboard fix computed its flag correctly and still rendered nothing on device for exactly
+    // this reason — the alias was missing on the real mount. A property the host sets but no mount
+    // forwards is set on an object nobody renders.
+    in-out property <bool> iset-demo-posture <=> isettings.demo-posture;
+    in-out property <bool> iset-configured <=> isettings.configured;
+    in-out property <bool> iset-paired <=> isettings.paired;
+    in-out property <string> iset-paired-label <=> isettings.paired-label;
+    in-out property <int> iset-active-provider <=> isettings.active-provider;
+    in-out property <int> iset-elevation-status <=> isettings.elevation-status;
+    in-out property <bool> iset-always-on <=> isettings.always-on;
+    in-out property <bool> iset-boot-reapply-armed <=> isettings.boot-reapply-armed;
+    in-out property <int> iset-provider-pref <=> isettings.provider-pref;
+    in-out property <bool> iset-expert-open <=> isettings.expert-open;
+    in-out property <int> iset-powers-held <=> isettings.powers-held;
+    in-out property <[PowerToggleRow]> iset-powers <=> isettings.powers;
+    in-out property <string> iset-draft-host <=> isettings.draft-host;
+    in-out property <string> iset-draft-port <=> isettings.draft-port;
+    in-out property <string> iset-draft-code <=> isettings.draft-code;
+    in-out property <int> iset-desired-count <=> isettings.desired-count;
+    in-out property <int> iset-drift-desired-count <=> isettings.drift-desired-count;
+
+    // ── ||| WARDEN DASHBOARD forwarding (4-FIX round 3 · 2-FEED-Warden — warden.slint WardenPane) ──
+    // The in-shell mount of the Warden pillar dashboard (the "warden-dash" advanced section). The host
+    // pushes each field from the live `WardenObject::snapshot()` typed `WardenSnapshot`; `wdash-` prefixed
+    // so the names never collide with HOME's own props. The pane derives its over-block hunt + trust band
+    // internally — the shell only feeds the inputs. Fed once at startup from the armed spike posture (the
+    // static spike does not change ⇒ no refresh Timer needed; an honest cold read ⇒ the honest baseline).
+    in-out property <int> wdash-allow-count <=> wdash.allow-count;
+    in-out property <int> wdash-deny-count <=> wdash.deny-count;
+    in-out property <int> wdash-deny-by-toggle <=> wdash.deny-by-toggle;
+    in-out property <int> wdash-deny-by-app <=> wdash.deny-by-app;
+    in-out property <int> wdash-deny-by-universal <=> wdash.deny-by-universal;
+    in-out property <int> wdash-deny-by-dns <=> wdash.deny-by-dns;
+    in-out property <int> wdash-domain-rules <=> wdash.domain-rules;
+    in-out property <int> wdash-cidr-rules <=> wdash.cidr-rules;
+    in-out property <int> wdash-universal-rules <=> wdash.universal-rules;
+    in-out property <int> wdash-app-rows <=> wdash.app-rows;
+    in-out property <int> wdash-cache-entries <=> wdash.cache-entries;
+    in-out property <bool> wdash-policy-loaded <=> wdash.policy-loaded;
+    in-out property <bool> wdash-fail-closed <=> wdash.fail-closed;
+    in-out property <string> wdash-trust-source-name <=> wdash.trust-source-name;
+    in-out property <int> wdash-trust-score <=> wdash.trust-score;
+    in-out property <int> wdash-trust-cdn-overlap <=> wdash.trust-cdn-overlap;
+    in-out property <bool> wdash-trust-armed <=> wdash.trust-armed;
+    in-out property <bool> wdash-lockdown-armed <=> wdash.lockdown-armed;
+    // A6 — the LIVE datapath enforce bit (host feeds it from `liveWardenStats.configured` =
+    // WardenDatapathGate.enforced()); the crown pill reads it, the arm-warden tap re-drives it.
+    in-out property <bool> wdash-warden-armed <=> wdash.warden-armed;
+    in-out property <[AppRow]> wdash-app-matrix <=> wdash.app-matrix;
+    // A6 seam close — the 9 TIER-2 chips READ feed (the write callback :1398 was wired while this
+    // read alias was missing, so the pane rendered "the bridge is silent" forever, even armed).
+    in-out property <[ToggleRow]> wdash-universal-toggles <=> wdash.universal-toggles;
+    // A5 slice-5 — the LIVE FLOWS docket (the ConnTracker ring): refreshed by a 1s host Timer WHILE
+    // the warden-dash section is shown (the Centauri/MaskSolver refresh law — the ring DOES change).
+    in-out property <[FlowRow]> wdash-live-flows <=> wdash.live-flows;
+    in-out property <int> wdash-flow-total <=> wdash.flow-total;
+    out property <int> wdash-flows-shown <=> wdash.flows-shown;
+    // ── W-D (#79) the per-app INSPECTOR forwarding (warden.slint WardenPane overlay). The host feeds the
+    // app browser every tick (`wdash-inspector-apps`) and, on open, the focused app's endpoint list +
+    // posture; the selection lives in the dest model (a select tap re-feeds it with the flipped bit). ──
+    in-out property <bool> wdash-inspector-open <=> wdash.inspector-open;
+    in-out property <[InspectorAppRow]> wdash-inspector-apps <=> wdash.inspector-apps;
+    in-out property <int> wdash-inspector-uid <=> wdash.inspector-uid;
+    in-out property <string> wdash-inspector-app-name <=> wdash.inspector-app-name;
+    in-out property <bool> wdash-inspector-block-wifi <=> wdash.inspector-block-wifi;
+    in-out property <bool> wdash-inspector-block-mobile <=> wdash.inspector-block-mobile;
+    in-out property <[InspectorDestRow]> wdash-inspector-dests <=> wdash.inspector-dests;
+    in-out property <string> wdash-inspector-geo-blocks <=> wdash.inspector-geo-blocks;
+    in-out property <int> wdash-inspector-selected-count <=> wdash.inspector-selected-count;
+    out property <int> wdash-inspector-apps-shown <=> wdash.inspector-apps-shown;
+    out property <int> wdash-inspector-dests-shown <=> wdash.inspector-dests-shown;
+
+    // ── ||| WIRE CAKE INU DASHBOARD forwarding (4-FIX round 3 · 2-FEED-Inu — inu.slint InuPane) ──
+    // The in-shell mount of the Inu pillar dashboard (the "inu-dash" advanced section). The host pushes each
+    // field from the live `InuStore` snapshot; `idash-` prefixed so the names never collide. The pane derives
+    // its elevation-fault hunt + collar crown internally — the shell only feeds inputs. The pane's Pair /
+    // Re-check / Advanced buttons stay un-wired here (a silent no-op — the felt-truth law; the elevation
+    // action path is a later wave), so the dashboard OPENS + shows the live spike posture, never a fake drive.
+    // #97 — the demo marking must be forwarded HERE, at the shell mount, or the shipped panel can
+    // never be told. The standalone `InuDashboard` window carries its own copy, but that window is
+    // the witness/proof mount; the ADVANCED section the user actually opens is this `InuPane`. I
+    // wired the window first and the banner did not appear on device — because this line was
+    // missing. Same law as the four `fwd-dial-*` forwardings: a property must be forwarded at EVERY
+    // mount, and a mount that is not forwarded is a panel that silently cannot be told.
+    in-out property <bool> idash-demo-posture <=> idash.demo-posture;
+    in-out property <bool> idash-configured <=> idash.configured;
+    in-out property <int> idash-elevation-status <=> idash.elevation-status;
+    in-out property <int> idash-active-provider <=> idash.active-provider;
+    in-out property <bool> idash-paired <=> idash.paired;
+    in-out property <string> idash-paired-label <=> idash.paired-label;
+    in-out property <string> idash-status-detail <=> idash.status-detail;
+    in-out property <int> idash-powers-held <=> idash.powers-held;
+    in-out property <int> idash-powers-total <=> idash.powers-total;
+    in-out property <int> idash-drift-prone-held <=> idash.drift-prone-held;
+    in-out property <bool> idash-boot-reapply-armed <=> idash.boot-reapply-armed;
+    in-out property <[PowerRow]> idash-powers <=> idash.powers;
+    in-out property <[InuLogRow]> idash-recent-events <=> idash.recent-events;
+
+    VerticalLayout {
+        // ---- THE TOP STRIP: the ||| door + the identity + the live engine dot ----
+        Rectangle {
+            height: 54px;
+            background: Monokuma.coal;
+            HorizontalLayout {
+                padding: 5px;
+                padding-left: 12px;
+                padding-right: 12px;
+                spacing: 10px;
+                Rectangle {
+                    width: 44px;
+                    border-radius: 8px;
+                    background: Monokuma.slate;
+                    Text {
+                        text: "|||";
+                        color: Monokuma.bone;
+                        font-size: 18px;
+                        font-weight: 900;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                    TouchArea {
+                        // 1B: the flip is SHELL-LOCAL (the single-surface law — no window-swap);
+                        // the callback still fires so the host refreshes the fed mounts.
+                        clicked => {
+                            root.advanced-open = true;
+                            root.open-advanced();
+                        }
+                    }
+                }
+                VerticalLayout {
+                    alignment: center;
+                    Text {
+                        text: "YEAH! TORTÄ";
+                        color: Monokuma.bone;
+                        font-size: 16px;
+                        font-weight: 900;
+                    }
+                    Text {
+                        text: root.active-tab == "engine" ? "the Tortä engine"
+                            : root.active-tab == "dns" ? "the DNSCrypt section"
+                            : root.active-tab == "query" ? "the query feed"
+                            : "the sovereign DNS home";
+                        color: Monokuma.ash;
+                        font-size: 10px;
+                    }
+                }
+                Rectangle { }
+                VerticalLayout {
+                    alignment: center;
+                    Rectangle {
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 6px;
+                        background: root.engine-running ? Monokuma.safe : Monokuma.iron;
+                        border-width: 1px;
+                        border-color: root.engine-running ? Monokuma.safe : Monokuma.dim;
+                    }
+                }
+            }
+        }
+
+        // ---- (BUGS2 #64) ← HOME RETURN STRIP — with the 4-tab bar retired, off-home tabs get
+        // a one-tap return reflex WITHOUT opening the ||| burger (the burger stays the ONE
+        // deep-nav authority; this strip only ever routes home). Visible only off-home. ----
+        if root.active-tab != "home": Rectangle {
+            height: 30px;
+            background: Monokuma.coal;
+            border-width: 1px;
+            border-color: Monokuma.iron;
+            TouchArea {
+                clicked => { root.active-tab = "home"; }
+            }
+            HorizontalLayout {
+                padding-left: 14px;
+                alignment: start;
+                VerticalLayout {
+                    alignment: center;
+                    Text {
+                        text: "← HOME";
+                        color: Monokuma.bone;
+                        font-size: 12px;
+                        font-weight: 800;
+                    }
+                }
+            }
+        }
+
+        // ---- THE CONTENT REGION — four visibility-switched overlays (the D2 alias law) ----
+        Rectangle {
+            vertical-stretch: 1;
+            background: Monokuma.night;
+
+            ScrollView {
+                width: 100%;
+                height: 100%;
+                visible: root.active-tab == "home";
+                viewport-width: self.visible-width;
+                VerticalLayout {
+                    home := HomeTab {
+                        // A pillar chip: open the in-shell ADVANCED overlay at PILLARS + tell the host.
+                        open-pillar(id) => {
+                            root.advanced-section = "pillars";
+                            root.advanced-open = true;
+                            root.open-pillar(id);
+                        }
+                    }
+                }
+            }
+
+            ScrollView {
+                width: 100%;
+                height: 100%;
+                visible: root.active-tab == "engine";
+                viewport-width: self.visible-width;
+                VerticalLayout {
+                    eng := EngineTab { }
+                }
+            }
+
+            ScrollView {
+                width: 100%;
+                height: 100%;
+                visible: root.active-tab == "dns";
+                viewport-width: self.visible-width;
+                VerticalLayout {
+                    dc := DnscryptSection { }
+                }
+            }
+
+            // QUERY manages its own virtualized ListView — mounted bare (no outer ScrollView).
+            Rectangle {
+                width: 100%;
+                height: 100%;
+                visible: root.active-tab == "query";
+                q := QueryTab {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+
+        // ---- (BUGS2 #64) THE 4-TAB BAR IS RETIRED — every route now lives in the ||| burger
+        // (HOME chip, DNSCRYPT chip, ENGINE ROOM chip, QUERY chip). The `active-tab` router and
+        // all four content mounts above are UNCHANGED: the ENGINE surface still uniquely hosts
+        // the FORWARDER (`fwd-*`) + UNDERGROUND (`ug-*`) cards, QUERY its virtualized feed. ----
+    }
+
+    // =============================================================================================
+    // THE ||| ADVANCED OVERLAY (1B) — the D2 burger surface REHOMED INSIDE the shell.
+    // The single-surface law makes the on-device window-swap impossible (witnessed: hide() hid the
+    // whole app), so the ||| door now lifts this full-screen overlay over the 4-tab Home: the
+    // per-pillar private tabs (the SAME PillarTab rows + the SAME pillar-chips model the HOME tab
+    // reads — one row source, two views, zero drift) + the GENERAL section pane; the rail's
+    // DNSCRYPT entry routes to the ③ DNS tab — the shell's one host-fed K5 mount.
+    // =============================================================================================
+    Rectangle {
+        width: 100%;
+        height: 100%;
+        visible: root.advanced-open;
+        background: ThemeBook.burger.ground;
+
+        // #36 THE DESCENT — the Hashira-dive ambient under the GLASS WIRE panels
+        // (the in-shell ||| PILLARS overlay mount — same wash as the D2 window).
+        DescentWash { width: 100%; height: 100%; }
+
+        VerticalLayout {
+            // ---- The overlay top strip: the ||| drawer toggle + the identity + the TRUE-✕ close
+            //      (#33: ThemeBook.burger chrome — the ADVANCED title wears the duality accent).
+            //      #GLOSS (the hand, 2026-07-22): glossy · chromatic · hypnotic — a pillar-spectrum
+            //      aurora breathing along the base, a glass sheen, a drifting specular streak.
+            //      Pure animation-tick sines; zero timers; nothing intercepts input. ----
+            Rectangle {
+                height: 54px;
+                background: ThemeBook.burger.floor;
+                // the glass sheen (top-lit gloss)
+                Rectangle {
+                    y: 0px;
+                    height: parent.height * 0.5;
+                    background: @linear-gradient(180deg, #ffffff.with-alpha(0.08) 0%, #ffffff.with-alpha(0.0) 100%);
+                }
+                // the drifting specular streak — slow, hypnotic
+                Rectangle {
+                    property <float> drift: Math.sin(360deg * (animation-tick() / 7.5s));
+                    x: parent.width * (0.5 + 0.42 * self.drift) - 30px;
+                    width: 60px;
+                    background: @linear-gradient(100deg, #ffffff.with-alpha(0.0) 0%, #ffffff.with-alpha(0.07) 50%, #ffffff.with-alpha(0.0) 100%);
+                }
+                // the pillar-spectrum AURORA line — inu teal · beast amber · masksolver violet ·
+                // rotation blue, phase-mixing forever (the chromatic-hypnotic signature)
+                Rectangle {
+                    property <float> ph: 0.5 + 0.5 * Math.sin(360deg * (animation-tick() / 5.2s));
+                    property <color> ca: #3fd4c2;
+                    property <color> cb: #ffb454;
+                    property <color> cc: #a78bfa;
+                    property <color> cd: #5e8bff;
+                    y: parent.height - 3px;
+                    height: 3px;
+                    background: @linear-gradient(90deg,
+                        self.ca.mix(self.cc, self.ph) 0%,
+                        self.cb.mix(self.ca, self.ph) 33%,
+                        self.cc.mix(self.cb, self.ph) 66%,
+                        self.cd.mix(self.cc, self.ph) 100%);
+                }
+                HorizontalLayout {
+                    padding: 5px;
+                    padding-left: 12px;
+                    padding-right: 12px;
+                    spacing: 10px;
+                    Rectangle {
+                        width: 44px;
+                        border-radius: 8px;
+                        background: root.advanced-drawer-open ? ThemeBook.burger.panel : transparent;
+                        Text {
+                            text: "|||";
+                            color: ThemeBook.burger.bright;
+                            font-size: 18px;
+                            font-weight: 900;
+                            horizontal-alignment: center;
+                            vertical-alignment: center;
+                        }
+                        TouchArea {
+                            clicked => { root.advanced-drawer-open = !root.advanced-drawer-open; }
+                        }
+                    }
+                    VerticalLayout {
+                        alignment: center;
+                        Text {
+                            text: "ADVANCED";
+                            color: ThemeBook.burger.accent;
+                            font-size: ThemeBook.burger.title-size;
+                            font-weight: ThemeBook.burger.title-weight;
+                        }
+                        Text {
+                            text: root.advanced-section == "general" ? "general settings"
+                                : root.advanced-section == "ms-dash" ? "the MaskSolver dashboard"
+                                : root.advanced-section == "ms-settings" ? "the MaskSolver settings"
+                                : root.advanced-section == "centauri-dash" ? "the Centauri dashboard"
+                                : root.advanced-section == "centauri-settings" ? "the Centauri settings"
+                                : root.advanced-section == "forwarder-dash" ? "the Netstack Forwarder docket"
+                                : root.advanced-section == "beast-dash" ? "the Beast dashboard"
+                                : root.advanced-section == "beast-settings" ? "the Beast settings"
+                                : root.advanced-section == "rotation-dash" ? "the Rotation dashboard"
+                                : root.advanced-section == "rotation-settings" ? "the Rotation settings"
+                                : root.advanced-section == "warden-dash" ? "the Warden dashboard"
+                                : root.advanced-section == "warden-settings" ? "the Warden settings"
+                                : root.advanced-section == "inu-dash" ? "the Wire Cake Inu dashboard"
+                                : root.advanced-section == "inu-settings" ? "the Wire Cake Inu settings"
+                                : root.advanced-section == "underground-dash" ? "the Underground Layer court"
+                                : root.advanced-section == "underground-settings" ? "the Underground Layer law"
+                                : root.advanced-section == "carbon-dash" ? "the Carbon Browser — the 13th pillar"
+                                : root.advanced-section == "carbon-settings" ? "the Carbon settings"
+                                : "the pillar private tabs";
+                            color: ThemeBook.burger.muted;
+                            font-size: 10px;
+                        }
+                    }
+                    Rectangle { }
+                    Rectangle {
+                        width: 44px;
+                        border-radius: 8px;
+                        background: shell-close-ta.pressed ? ThemeBook.burger.panel : transparent;
+                        animate background { duration: 160ms; }
+                        // #GLOSS: the TRUE ✕ — stroke-DRAWN, two crossed strokes: it can never read
+                        // as a checkmark, and it is bright (hot accent on press), never grey.
+                        Path {
+                            x: (parent.width - self.width) / 2;
+                            y: (parent.height - self.height) / 2;
+                            width: 14px;
+                            height: 14px;
+                            viewbox-width: 14;
+                            viewbox-height: 14;
+                            commands: "M 1 1 L 13 13 M 13 1 L 1 13";
+                            stroke: shell-close-ta.pressed ? ThemeBook.burger.accent : ThemeBook.burger.bright;
+                            stroke-width: 2.5px;
+                        }
+                        shell-close-ta := TouchArea {
+                            clicked => {
+                                root.advanced-open = false;
+                                root.close-advanced();
+                            }
+                        }
+                    }
+                }
+            }
+
+            // ---- The overlay body: the rail + the routed content ----
+            HorizontalLayout {
+                // THE RAIL (animated collapse — the burger drawer, in-shell). #33: navigating
+                // flips the Demon-Slayer duality — ⚙ GENERAL walks the Infinity Castle (Akuma
+                // chrome, the task-36 lean); ◆ PILLARS / ★ DNSCRYPT return to the Hashira side.
+                Rectangle {
+                    width: root.advanced-drawer-open ? 148px : 0px;
+                    clip: true;
+                    background: ThemeBook.burger.floor;
+                    animate width { duration: 160ms; easing: ease-out; }
+                    // ---- #33 THE RAIL'S OWN CHROMA — the aurora treatment (pure animation-tick
+                    //      sines; zero timers; luminosity rays drifting over the rail floor). ----
+                    Rectangle {
+                        property <float> ph: 0.5 + 0.5 * Math.sin(360deg * (animation-tick() / 6.4s));
+                        property <color> ca: #3fd4c2;
+                        property <color> cb: #ffb454;
+                        property <color> cc: #a78bfa;
+                        property <color> cd: #5e8bff;
+                        background: @linear-gradient(165deg,
+                            self.ca.mix(self.cc, self.ph).with-alpha(0.10) 0%,
+                            self.cb.mix(self.ca, self.ph).with-alpha(0.05) 45%,
+                            self.cd.mix(self.cb, self.ph).with-alpha(0.10) 100%);
+                    }
+                    // the drifting luminosity ray — the specular streak, walking the rail
+                    Rectangle {
+                        property <float> drift: Math.sin(360deg * (animation-tick() / 7.5s));
+                        y: parent.height * (0.5 + 0.42 * self.drift) - 30px;
+                        height: 60px;
+                        background: @linear-gradient(190deg, #ffffff.with-alpha(0.0) 0%, #ffffff.with-alpha(0.06) 50%, #ffffff.with-alpha(0.0) 100%);
+                    }
+                    // the rail's spectrum seam — the vertical AURORA line hugging the content edge
+                    Rectangle {
+                        property <float> ph: 0.5 + 0.5 * Math.sin(360deg * (animation-tick() / 5.2s));
+                        property <color> ca: #3fd4c2;
+                        property <color> cb: #ffb454;
+                        property <color> cc: #a78bfa;
+                        property <color> cd: #5e8bff;
+                        x: parent.width - 2px;
+                        width: 2px;
+                        background: @linear-gradient(180deg,
+                            self.ca.mix(self.cc, self.ph) 0%,
+                            self.cb.mix(self.ca, self.ph) 33%,
+                            self.cc.mix(self.cb, self.ph) 66%,
+                            self.cd.mix(self.cc, self.ph) 100%);
+                    }
+                    VerticalLayout {
+                        padding: 8px;
+                        spacing: 4px;
+                        RailEntry {
+                            label: "HOME";
+                            glyph: "⌂";
+                            selected: false;
+                            // Routing home closes the ||| overlay outright — the K5 single-mount
+                            // law again: home is a tab, never a second pane inside the burger.
+                            tapped => {
+                                root.advanced-open = false;
+                                root.active-tab = "home";
+                                ThemeBook.akuma = false;
+                            }
+                        }
+                        RailEntry {
+                            label: "PILLARS";
+                            glyph: "◆";
+                            selected: root.advanced-section == "pillars";
+                            tapped => { root.advanced-section = "pillars"; ThemeBook.akuma = false; }
+                        }
+                        RailEntry {
+                            label: "DNSCRYPT";
+                            glyph: "★";
+                            accent: Candle.candle;
+                            selected: false;
+                            // The K5 section lives on the ③ DNS tab — the ONE host-fed mount;
+                            // routing there keeps the truth single (never a second unfed pane).
+                            tapped => {
+                                root.advanced-open = false;
+                                root.active-tab = "dns";
+                                ThemeBook.akuma = false;
+                            }
+                        }
+                        // ── (BUGS2 #64) The retired bottom bar's two non-duplicated routes now
+                        // live HERE — the ||| burger is the ONE navigation authority. ENGINE ROOM
+                        // is the tab hosting the TORTA ENGINE + FORWARDER + UNDERGROUND cards;
+                        // QUERY is the virtualized live query feed. Same K5 single-mount idiom as
+                        // the DNSCRYPT chip above: route the tab, close the overlay. ──
+                        RailEntry {
+                            label: "ENGINE ROOM";
+                            glyph: "▲";
+                            selected: false;
+                            tapped => {
+                                root.advanced-open = false;
+                                root.active-tab = "engine";
+                                ThemeBook.akuma = false;
+                            }
+                        }
+                        RailEntry {
+                            label: "QUERY";
+                            glyph: "≡";
+                            selected: false;
+                            tapped => {
+                                root.advanced-open = false;
+                                root.active-tab = "query";
+                                ThemeBook.akuma = false;
+                            }
+                        }
+                        RailEntry {
+                            label: "GENERAL";
+                            glyph: "⚙";
+                            selected: root.advanced-section == "general";
+                            tapped => { root.advanced-section = "general"; ThemeBook.akuma = true; }
+                        }
+                        // ── #60B CARBON BROWSER — his OWN bar, apart from the pillars (Socio law:
+                        // "something this powerful can't stay with the other pillars"). Graphite
+                        // slab + carbon-ring cyan glint; routes to the carbon-dash section (honest
+                        // build-state pane until the 60C renderer assimilation lands). ──
+                        Rectangle {
+                            height: 44px;
+                            border-radius: 9px;
+                            background: @linear-gradient(135deg, #16181b 0%, #2a2f34 42%, #101214 100%);
+                            border-width: 1px;
+                            border-color: root.advanced-section == "carbon-dash"
+                                ? #8be9fd
+                                : #8be9fd.with-alpha(0.38);
+                            VerticalLayout {
+                                padding: 4px;
+                                HorizontalLayout {
+                                    alignment: center;
+                                    spacing: 5px;
+                                    // the charcoal lump — drawn, not a font glyph (the old
+                                    // "⌬" rendered as tofu-[X] on the device font)
+                                    CharcoalLump { lump-size: 15px; }
+                                    Text {
+                                        text: "CARBON";
+                                        color: #eaf6fb;
+                                        font-size: 10px; font-weight: 900;
+                                        vertical-alignment: center;
+                                    }
+                                }
+                                Text {
+                                    text: "BROWSER";
+                                    color: #8be9fd.with-alpha(0.75);
+                                    font-size: 7px; font-weight: 800;
+                                    horizontal-alignment: center;
+                                }
+                            }
+                            TouchArea {
+                                clicked => { root.advanced-section = "carbon-dash"; ThemeBook.akuma = false; }
+                            }
+                        }
+                        // ── #60B-2 CARBON ⚙ — his settings chip, seated WITH the bar (apart from
+                        // the pillar rows): the Install Extension lane + the capabilities law + the
+                        // 60G default-browser role, honest skeleton until 60F/60G land. ──
+                        Rectangle {
+                            height: 26px;
+                            border-radius: 7px;
+                            background: root.advanced-section == "carbon-settings" ? #2a2f34 : #16181b;
+                            border-width: 1px;
+                            border-color: root.advanced-section == "carbon-settings"
+                                ? #8be9fd
+                                : #8be9fd.with-alpha(0.25);
+                            HorizontalLayout {
+                                alignment: center;
+                                spacing: 4px;
+                                Text {
+                                    text: "⚙";
+                                    color: #8be9fd;
+                                    font-size: 9px; font-weight: 900;
+                                    vertical-alignment: center;
+                                }
+                                Text {
+                                    text: "CARBON SETTINGS";
+                                    color: #8be9fd.with-alpha(0.80);
+                                    font-size: 7px; font-weight: 800;
+                                    vertical-alignment: center;
+                                }
+                            }
+                            TouchArea {
+                                clicked => { root.advanced-section = "carbon-settings"; ThemeBook.akuma = false; }
+                            }
+                        }
+                        // ── #59 D1c DONATE mirror — seated directly BELOW the Carbon bar (Socio
+                        // seating law). D2 LANDED: this row lives ON carbon-dash, so pane re-entry
+                        // is a no-op.
+                        //
+                        // COMMENT CORRECTED (#60C-b): this used to claim the tap opens "the user's
+                        // default browser" via `TortaSlintBridge.openDonate`. That stopped being
+                        // true when #60C re-routed donate IN-APP through the text-mode lane — the
+                        // handler at lib.rs `on_carbon_donate_direct` has not called openDonate
+                        // since. A comment describing behaviour the code no longer has is worse
+                        // than none: it is the shape of overclaim that survives review because it
+                        // reads plausibly. The tap routes IN-APP; the ⧉ button beside it is the
+                        // explicit, user-initiated way out to the system browser. ──
+                        Rectangle {
+                            height: 26px;
+                            border-radius: 13px;
+                            background: @linear-gradient(90deg,
+                                #ff5a7a.with-alpha(0.16) 0%, #1a1416 55%, #ff5a7a.with-alpha(0.08) 100%);
+                            border-width: 1px;
+                            border-color: #ff5a7a.with-alpha(0.50);
+                            HorizontalLayout {
+                                alignment: center;
+                                spacing: 5px;
+                                Text {
+                                    text: "♥";
+                                    color: #ff5a7a;
+                                    font-size: 11px; font-weight: 900;
+                                    vertical-alignment: center;
+                                }
+                                Text {
+                                    text: "DONATE";
+                                    color: #ffdfe6;
+                                    font-size: 9px; font-weight: 800;
+                                    vertical-alignment: center;
+                                }
+                            }
+                            TouchArea { clicked => { root.carbon-donate-direct(); } }
+                        }
+                        // ⧉ — the explicit way out to the system browser. Separate control, so
+                        // leaving the app is always the USER's act and never the app's.
+                        Rectangle {
+                            width: 26px;
+                            height: 26px;
+                            border-radius: 13px;
+                            background: #1a1416;
+                            border-width: 1px;
+                            border-color: #ff5a7a.with-alpha(0.35);
+                            Text {
+                                text: "⧉";
+                                color: #ffdfe6;
+                                font-size: 11px; font-weight: 800;
+                                horizontal-alignment: center;
+                                vertical-alignment: center;
+                            }
+                            TouchArea { clicked => { root.carbon-donate-external(); } }
+                        }
+                        Rectangle { }
+                    }
+                }
+
+                // THE CONTENT REGION — visibility-switched overlays (the D2 alias law: gen's
+                // forwarding aliases forbid an `if`; overlays keep pane state stable).
+                Rectangle {
+                    horizontal-stretch: 1;
+                    background: ThemeBook.burger.ground;
+
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "pillars";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            padding: 12px;
+                            spacing: 8px;
+                            Text {
+                                text: "PER-PILLAR PRIVATE TABS";
+                                color: Monokuma.dim;
+                                font-size: 11px;
+                                font-weight: 800;
+                            }
+                            for t in root.pillar-chips : PillarTab {
+                                tab: t;
+                                // 2-FEED-MaskSolver: the MASKSOLVER chip opens its in-shell dashboard
+                                // pane (the "ms-dash" section); other pillars stay host-routed until
+                                // their panes embed (the next wave). The host still gets the id to
+                                // (re)feed the pane from the live MaskSolver Object.
+                                open-dashboard(id) => {
+                                    root.advanced-section = id == "masksolver" ? "ms-dash"
+                                        : id == "centauri" ? "centauri-dash"
+                                        : id == "beast" ? "beast-dash"
+                                        : id == "rotation" ? "rotation-dash"
+                                        : id == "warden" ? "warden-dash"
+                                        : id == "inu" ? "inu-dash"
+                                        : id == "underground" ? "underground-dash"
+                                        // ★ #49 — the FORWARDER is the engine plane's datapath, not
+                                        // a ninth pillar; it rides the same rail because the rail is
+                                        // where dashboards live.
+                                        : id == "forwarder" ? "forwarder-dash"
+                                        : root.advanced-section;
+                                    // The DNSCrypt pillar (the 7th, the namesake) routes to the ③ DNS
+                                    // tab — the ONE host-fed K5 DnscryptSection mount (its live
+                                    // dashboard AND its advanced settings ARE that single typed surface;
+                                    // the EXACT route the rail's DNSCRYPT entry takes, never a 2nd unfed
+                                    // pane — the felt-truth single-authority law).
+                                    if (id == "dnscrypt") {
+                                        root.active-tab = "dns";
+                                        root.advanced-open = false;
+                                    }
+                                    root.open-pillar-dashboard(id);
+                                }
+                                open-settings(id) => {
+                                    if (id == "dnscrypt") {
+                                        root.active-tab = "dns";
+                                        root.advanced-open = false;
+                                    }
+                                    // 2-FEED-Centauri (SETTINGS): the CENTAURI SETTINGS chip now opens its
+                                    // in-shell pane (the "centauri-settings" section) instead of the silent
+                                    // host no-op — the first per-pillar SETTINGS surface made reachable +
+                                    // fed + WRITE-wired on-device. Other pillars stay host-routed until
+                                    // their settings panes embed (the #23 cross-pillar wave).
+                                    if (id == "centauri") {
+                                        root.advanced-section = "centauri-settings";
+                                    }
+                                    // 2-FEED-Warden (SETTINGS): the WARDEN SETTINGS chip opens its in-shell pane
+                                    // (the "warden-settings" section) — the second per-pillar SETTINGS surface made
+                                    // reachable + fed + WRITE-wired on-device (the #23 cross-pillar wave, after Centauri).
+                                    if (id == "warden") {
+                                        root.advanced-section = "warden-settings";
+                                    }
+                                    // 2-FEED-MaskSolver (SETTINGS): the MASKSOLVER SETTINGS chip opens its in-shell
+                                    // pane (the "ms-settings" section) — the third per-pillar SETTINGS surface made
+                                    // reachable + fed + WRITE-wired on-device (the #23 cross-pillar wave; the resolver
+                                    // is the DNSCrypt fulcrum, so its 15 retry/cache/guard knobs matter most).
+                                    if (id == "masksolver") {
+                                        root.advanced-section = "ms-settings";
+                                    }
+                                    // 2-FEED-Rotation (SETTINGS): the ROTATION SETTINGS chip opens its in-shell
+                                    // pane (the "rotation-settings" section) — the fourth per-pillar SETTINGS
+                                    // surface (the #23 wave). The wheel's cadence/pin/rotate-now controls ride
+                                    // Kotlin destinations (the NO-FORK consensus), not resolver_set_*.
+                                    if (id == "rotation") {
+                                        root.advanced-section = "rotation-settings";
+                                    }
+                                    // 2-FEED-Beast (SETTINGS): the BEAST SETTINGS chip opens its in-shell pane
+                                    // (the "beast-settings" section) — the fifth per-pillar SETTINGS surface
+                                    // (the #23 wave). The YeAH brain / CAKE queue / preset table + 4 tunables are
+                                    // STAGED (no live torta_core setter); reapply-profile rebuilds the Beast.
+                                    if (id == "beast") {
+                                        root.advanced-section = "beast-settings";
+                                    }
+                                    // 2-FEED-Inu (SETTINGS): the WIRE CAKE INU SETTINGS chip opens its in-shell
+                                    // pane (the "inu-settings" section) — the sixth + final per-pillar SETTINGS
+                                    // surface (the #23 wave closer). The pair/protect/keep controls ride Kotlin
+                                    // destinations (the ElevationManager / GrantEngine grant flow), not torta_core.
+                                    if (id == "inu") {
+                                        root.advanced-section = "inu-settings";
+                                    }
+                                    // #15 UNDERGROUND H: the UNDERGROUND LAYER SETTINGS chip opens the
+                                    // tunable-law pane (the "underground-settings" section) — the pillar's
+                                    // OWN space (the standing directive: out of the ENGINE tab).
+                                    if (id == "underground") {
+                                        root.advanced-section = "underground-settings";
+                                    }
+                                    // THE NETSTACK FORWARDER row had NO route here at all. Every
+                                    // other row on this rail resolves to a section or a tab; this
+                                    // one fell through to `open-pillar-settings("forwarder")`, which
+                                    // no host handler claims -- so the button drew, took the tap,
+                                    // animated, and did nothing. Measured on the AVD.
+                                    //
+                                    // It gets the ENGINE tab rather than a new pane because the
+                                    // forwarder is NOT a ninth pillar (lib.rs:4687) -- it is the
+                                    // engine plane's datapath, and its only control, the arm switch,
+                                    // already lives there. The row's own OFF status literally reads
+                                    // "arm the netstack forwarder on the ENGINE tab", so this makes
+                                    // the button do what the row was already telling the user to do.
+                                    if (id == "forwarder") {
+                                        root.active-tab = "engine";
+                                        root.advanced-open = false;
+                                    }
+                                    root.open-pillar-settings(id);
+                                }
+                            }
+                            Rectangle { }
+                        }
+                    }
+
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "general";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            gen := GeneralSection { }
+                        }
+                    }
+
+                    // ── #60B CARBON BROWSER — the carbon-dash section pane. FELT-TRUTH LAW: until
+                    // the 60C renderer assimilation lands, this pane shows the REAL build state +
+                    // the routing law — truth about the codebase, never fabricated telemetry. The
+                    // analytics dashboard (traffic spared, RAM⊗NAND de-dup, QoS wins) arrives WITH
+                    // the live renderer, host-fed — never sample defaults. ──
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "carbon-dash";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            padding: 12px;
+                            spacing: 8px;
+                            HorizontalLayout {
+                                spacing: 6px;
+                                // drawn charcoal lump — no font glyph, no tofu-[X]
+                                CharcoalLump { lump-size: 18px; }
+                                Text {
+                                    text: "CARBON BROWSER";
+                                    color: #eaf6fb;
+                                    font-size: 12px; font-weight: 900;
+                                    vertical-alignment: center;
+                                }
+                            }
+                            Text {
+                                text: "the sandboxed browser — every socket rides YeAH Tortä";
+                                color: Monokuma.dim;
+                                font-size: 9px;
+                            }
+                            // ── THE ENGINE TRUTH CARD — the honest answer to "is that circle
+                            // loading?": NO. The 60C carbonyl engine is not assimilated yet, the
+                            // browser cannot open, and NOTHING on this pane loads. ──
+                            Rectangle {
+                                border-radius: 7px;
+                                background: #16181b;
+                                border-width: 1px;
+                                border-color: #ffb86c.with-alpha(0.45);
+                                VerticalLayout {
+                                    padding: 8px;
+                                    spacing: 3px;
+                                    Text {
+                                        text: "ENGINE: TEXT-MODE v0 LIVE — real fetches, carbonyl look";
+                                        color: #ffb86c;
+                                        font-size: 9px; font-weight: 900;
+                                    }
+                                    Text {
+                                        text: "the 60C text-mode lane is wired: the bar below fires a REAL fetch through the YeAH Tortä tunnel and renders the parsed page as terminal text. the full carbonyl pixel renderer stays the 60C roadmap — this pane never fakes it.";
+                                        color: ThemeBook.burger.muted;
+                                        font-size: 8px;
+                                        wrap: word-wrap;
+                                    }
+                                }
+                            }
+                            // ── #60C TEXT-MODE BROWSER v0 — the REAL browse bar. GO (or the
+                            // keyboard accept) fires carbon-navigate() → host fetch → engine
+                            // parse → the terminal page below. ──
+                            HorizontalLayout {
+                                spacing: 5px;
+                                urlbox := LineEdit {
+                                    text: root.carbon-url;
+                                    placeholder-text: "https://…";
+                                    font-size: 9px;
+                                    accepted(t) => {
+                                        root.carbon-url = t;
+                                        root.carbon-navigate(t);
+                                    }
+                                }
+                                Rectangle {
+                                    width: 34px;
+                                    border-radius: 5px;
+                                    background: #8be9fd.with-alpha(0.16);
+                                    border-width: 1px;
+                                    border-color: #8be9fd.with-alpha(0.5);
+                                    Text {
+                                        text: "GO";
+                                        color: #8be9fd;
+                                        font-size: 9px; font-weight: 900;
+                                    }
+                                    TouchArea {
+                                        clicked => {
+                                            root.carbon-url = urlbox.text;
+                                            root.carbon-navigate(urlbox.text);
+                                        }
+                                    }
+                                }
+                            }
+                            if root.carbon-page-status != "" : Text {
+                                text: root.carbon-page-status;
+                                color: #8be9fd;
+                                font-size: 8px;
+                                wrap: word-wrap;
+                            }
+                            if root.carbon-page-lines.length > 0 : Rectangle {
+                                height: 210px;
+                                background: #0a0c0f;
+                                border-width: 1px;
+                                border-color: #8be9fd.with-alpha(0.25);
+                                border-radius: 6px;
+                                ScrollView {
+                                    VerticalLayout {
+                                        padding: 7px;
+                                        spacing: 2px;
+                                        for line in root.carbon-page-lines : Text {
+                                            text: line;
+                                            color: #b8f5c0;
+                                            font-size: 9px;
+                                            wrap: word-wrap;
+                                        }
+                                    }
+                                }
+                            }
+                            Text {
+                                text: root.carbon-frame-live
+                                    ? "pixel-path probe LIVE — the bridge painted this frame through the assimilated gfx primitives (60C-4). a test pattern: NOT the browser, NOT a loader."
+                                    : "pixel-path probe — carbonyl assimilation lane (60C): pending";
+                                color: root.carbon-frame-live ? #8be9fd : ThemeBook.burger.muted;
+                                font-size: 9px;
+                                wrap: word-wrap;
+                            }
+                            // ── #60C-4 THE SEAM SURFACE — visible ONLY once the host has fed a real
+                            // frame (felt-truth law: no placeholder art). Graphite bezel + the
+                            // CHARCOAL LUMP probe frame rendered in carbon_bridge::surface — the
+                            // ember BREATHES on tick (the old orbiting glint read as a loader). ──
+                            if root.carbon-frame-live : Rectangle {
+                                height: 132px;
+                                background: #0d0f13;
+                                border-width: 1px;
+                                border-color: #8be9fd.with-alpha(0.35);
+                                border-radius: 6px;
+                                Image {
+                                    source: root.carbon-frame;
+                                    width: parent.width - 8px;
+                                    height: parent.height - 8px;
+                                    image-fit: contain;
+                                    image-rendering: pixelated;
+                                }
+                            }
+                            if root.carbon-frame-live : Text {
+                                text: "the ember breathes to prove the pixel path stays live — it never spins. a loader spins; an ember breathes.";
+                                color: ThemeBook.burger.muted;
+                                font-size: 8px;
+                                wrap: word-wrap;
+                            }
+                            // ── #60B-3 LIVE ANALYTICS — the chips arrive WITH the renderer
+                            // (felt-truth: same gate as the seam surface). Every number is read
+                            // off the live CarbonSurface each tick — frames finished, pixels the
+                            // last frame genuinely wrote, the real RGBA8 payload per frame. ──
+                            if root.carbon-frame-live : HorizontalLayout {
+                                spacing: 6px;
+                                Rectangle {
+                                    background: #0d0f13;
+                                    border-width: 1px;
+                                    border-color: #8be9fd.with-alpha(0.25);
+                                    border-radius: 5px;
+                                    VerticalLayout {
+                                        padding: 5px;
+                                        Text {
+                                            text: root.carbon-frames;
+                                            color: #8be9fd;
+                                            font-size: 11px; font-weight: 900;
+                                            horizontal-alignment: center;
+                                        }
+                                        Text {
+                                            text: "frames rendered";
+                                            color: ThemeBook.burger.muted;
+                                            font-size: 8px;
+                                            horizontal-alignment: center;
+                                        }
+                                    }
+                                }
+                                Rectangle {
+                                    background: #0d0f13;
+                                    border-width: 1px;
+                                    border-color: #8be9fd.with-alpha(0.25);
+                                    border-radius: 5px;
+                                    VerticalLayout {
+                                        padding: 5px;
+                                        Text {
+                                            text: root.carbon-px;
+                                            color: #8be9fd;
+                                            font-size: 11px; font-weight: 900;
+                                            horizontal-alignment: center;
+                                        }
+                                        Text {
+                                            text: "px written / frame";
+                                            color: ThemeBook.burger.muted;
+                                            font-size: 8px;
+                                            horizontal-alignment: center;
+                                        }
+                                    }
+                                }
+                                Rectangle {
+                                    background: #0d0f13;
+                                    border-width: 1px;
+                                    border-color: #8be9fd.with-alpha(0.25);
+                                    border-radius: 5px;
+                                    VerticalLayout {
+                                        padding: 5px;
+                                        Text {
+                                            text: root.carbon-kib + " KiB";
+                                            color: #8be9fd;
+                                            font-size: 11px; font-weight: 900;
+                                            horizontal-alignment: center;
+                                        }
+                                        Text {
+                                            text: "payload / frame";
+                                            color: ThemeBook.burger.muted;
+                                            font-size: 8px;
+                                            horizontal-alignment: center;
+                                        }
+                                    }
+                                }
+                            }
+                            Text {
+                                // #60D — pending line until the host has genuinely probed the seam
+                                text: root.carbon-route == ""
+                                    ? "routing law — Beast QoS + Centauri + Underground, wired at the socket layer (60D)"
+                                    : root.carbon-route;
+                                color: root.carbon-route == "" ? ThemeBook.burger.muted : #8be9fd;
+                                font-size: 9px;
+                                wrap: word-wrap;
+                            }
+                            Text {
+                                // #60E — pending line until the host has genuinely armed the jail
+                                text: root.carbon-sandbox == ""
+                                    ? "sandbox hardening — process isolation, fs jail, per-site permission map (60E)"
+                                    : root.carbon-sandbox;
+                                color: root.carbon-sandbox == "" ? ThemeBook.burger.muted : #50fa7b;
+                                font-size: 9px;
+                                wrap: word-wrap;
+                            }
+                            // (the 60E/60F/60G commentary rows lived here — user report:
+                            // "too many code notes". The capabilities story lives in CARBON
+                            // SETTINGS now; the dash keeps only live truth.)
+                            Text {
+                                text: "base: carbonyl v0.0.3 (BSD-3, © 2023 Fathy Boundjadj — notice retained) · integration © Saimonokuma";
+                                color: #8be9fd.with-alpha(0.55);
+                                font-size: 8px;
+                            }
+                        }
+                    }
+
+                    // ── #60B-2 CARBON SETTINGS — the carbon-settings section pane (carbon_settings.slint
+                    // CarbonSettingsPane): Install Extension lane + the capabilities law + the 60G role —
+                    // honest skeleton; the host wires the typed callbacks when 60F/60G land. ──
+                    CarbonSettingsPane {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "carbon-settings";
+                        extension-engine-landed: root.carbon-extension-engine-landed;
+                        specials-status: root.carbon-specials-status;
+                        install-extension-tapped => { root.carbon-install-extension-tapped(); }
+                    }
+
+                    // 2-FEED-MaskSolver: the MaskSolver pillar DASHBOARD mounted IN-SHELL (the ms-dash
+                    // section) — reached via the ||| → PILLARS → MASKSOLVER dashboard chip. The host
+                    // feeds `msp` field-for-field from the live MaskSolver Object on each open; the
+                    // PILLARS rail entry (or ✕) returns. This is the "next wave" the D3 note promised,
+                    // done for MaskSolver: a pillar dashboard reachable + fed on-device.
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "ms-dash";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            msp := MaskSolverPane { }
+                        }
+                    }
+
+                    // 2-FEED-MaskSolver (SETTINGS): the MaskSolver pillar SETTINGS mounted IN-SHELL (the
+                    // ms-settings section) — reached via ||| → PILLARS → MASKSOLVER settings chip. Unlike the
+                    // read-only dashboard, this pane WRITES the live resolver: the instant toggles each fire a
+                    // typed `masksolver-*` callback the host drives to a REAL resolver_set_* setter (one-way to
+                    // the single armed process-globals); the config-carried knobs STAGE onto the `mss-*` aliases
+                    // and land together on reapply-config. The host feeds the current resolver posture onto the
+                    // `mss-*` aliases at startup + each second while shown; close-settings (or the PILLARS rail)
+                    // returns. MaskSolverSettingsPane inherits Rectangle so it embeds on the single android
+                    // surface (the CentauriSettingsPane / WardenSettingsPane precedent).
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "ms-settings";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            msset := MaskSolverSettingsPane {
+                                solve-ladder-toggled(on) => { root.masksolver-solve-ladder-toggled(on); }
+                                all-servers-toggled(on) => { root.masksolver-all-servers-toggled(on); }
+                                rebind-protect-toggled(on) => { root.masksolver-rebind-protect-toggled(on); }
+                                bogus-priv-toggled(on) => { root.masksolver-bogus-priv-toggled(on); }
+                                proxy-dnssec-toggled(on) => { root.masksolver-proxy-dnssec-toggled(on); }
+                                never-forward-toggled(on) => { root.masksolver-never-forward-toggled(on); }
+                                cache-rr-toggled(on) => { root.masksolver-cache-rr-toggled(on); }
+                                serve-stale-toggled(on) => { root.masksolver-serve-stale-toggled(on); }
+                                cache-cap-stepped(v) => { root.masksolver-cache-cap-stepped(v); }
+                                timeout-stepped(v) => { root.masksolver-timeout-stepped(v); }
+                                serve-stale-secs-stepped(v) => { root.masksolver-serve-stale-secs-stepped(v); }
+                                ttl-floor-stepped(v) => { root.masksolver-ttl-floor-stepped(v); }
+                                ttl-ceiling-stepped(v) => { root.masksolver-ttl-ceiling-stepped(v); }
+                                rotation-cadence-stepped(v) => { root.masksolver-rotation-cadence-stepped(v); }
+                                // expert-toggled self-managed by the pane (it flips its own expert-open reveal).
+                                reapply-config() => { root.masksolver-reapply-config(); }
+                                close-settings() => { root.advanced-section = "pillars"; }
+                            }
+                        }
+                    }
+
+                    // 2-FEED-Centauri: the Centauri pillar DASHBOARD mounted IN-SHELL (the
+                    // centauri-dash section) — reached via ||| → PILLARS → CENTAURI dashboard chip.
+                    // The host feeds `cendash` field-for-field from the live Centauri Object at
+                    // startup + each second while shown (the visibility-gated refresh timer); the
+                    // PILLARS rail entry (or ✕) returns. The pane inherits Rectangle so it embeds on
+                    // the single android surface (the same law MaskSolver/DnscryptSection follow).
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "centauri-dash";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            cendash := CentauriPane { }
+                        }
+                    }
+
+                    // 2-FEED-Centauri (SETTINGS): the Centauri pillar SETTINGS mounted IN-SHELL (the
+                    // centauri-settings section) — reached via ||| → PILLARS → CENTAURI settings chip. Unlike
+                    // the read-only dashboards, this pane WRITES the live armed engine: each control fires a
+                    // typed callback the host drives to the armed Object setter / flat resolver fn / durable
+                    // pref (one-way to the single source). The host feeds the current armed state onto the
+                    // `cs-*` aliases; close-settings (or the PILLARS rail) returns. CentauriSettings inherits
+                    // Window but embeds fine as a child element on the single android surface (the shell owns
+                    // the surface; the child's window props are inert when mounted — the D1 Centauri precedent).
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "centauri-settings";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            censet := CentauriSettingsPane {
+                                cloak-toggled(on) => { root.centauri-cloak-toggled(on); }
+                                seed-policy-cycled() => { root.centauri-seed-policy-cycled(); }
+                                warm-up-now() => { root.centauri-warm-up-now(); }
+                                close-settings() => { root.advanced-section = "pillars"; }
+                            }
+                        }
+                    }
+
+                    // 2-FEED-Beast: the Beast pillar DASHBOARD (THE CAKE-FOUNTAIN) mounted IN-SHELL (the
+                    // beast-dash section) — reached via ||| → PILLARS → BEAST dashboard chip. The host
+                    // feeds `bdash` field-for-field from the live Beast Object at startup + each second
+                    // while shown (the visibility-gated refresh Timer, android_main); the PILLARS rail
+                    // entry (or ✕) returns. BeastPane inherits Rectangle so it embeds on the single
+                    // android surface (the same law MaskSolver/Centauri/DnscryptSection follow).
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "beast-dash";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            // #63/#64 (Socio) — feed the forwarder-armed truth (one-way, from the
+                            // ENGINE tab's shell alias) so an unarmed netstack renders the honest
+                            // "no TCP flow can ever feed these lanes" DORMANT banner, not the
+                            // symptom-only "no sample yet" wording.
+                            bdash := BeastPane { fwd-armed: root.fwd-armed; }
+                        }
+                    }
+
+                    // ★ #49: the NETSTACK FORWARDER DASHBOARD (THE CARBON RING) mounted IN-SHELL (the
+                    // forwarder-dash section) — reached via ||| → PILLARS → FORWARDER dashboard chip.
+                    // The host feeds `fwddash` from ONE parse of the pillar bridge at startup + each
+                    // second while shown (the visibility-gated refresh Timer, android_main); the
+                    // PILLARS rail entry (or ✕) returns. ForwarderPane inherits Rectangle so it embeds
+                    // on the single android surface (the same law every pane above follows).
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "forwarder-dash";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            fwddash := ForwarderPane { }
+                        }
+                    }
+
+                    // 2-FEED-Rotation: the Rotation pillar DASHBOARD (THE ORBITAL WHEEL) mounted IN-SHELL
+                    // (the rotation-dash section) — reached via ||| → PILLARS → ROTATION dashboard chip. The
+                    // host feeds `rdash` field-for-field from the live `MaskSolver::rotation_snapshot()` at
+                    // startup + each second while shown (the visibility-gated refresh Timer, android_main);
+                    // the PILLARS rail entry (or ✕) returns. RotationPane inherits Rectangle so it embeds on
+                    // the single android surface (the same law MaskSolver/Centauri/Beast/DnscryptSection follow).
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "rotation-dash";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            rdash := RotationPane { }
+                        }
+                    }
+
+                    // 2-FEED-Rotation (SETTINGS): the Rotation pillar SETTINGS (THE WHEEL'S CONTROLS) mounted
+                    // IN-SHELL (the rotation-settings section) — reached via ||| → PILLARS → ROTATION settings
+                    // chip. The 5 controls are HOST/Kotlin-owned (the NO-FORK consensus — torta_core holds no
+                    // live rotation cursor): pin → RESOLVER_ROTATION_ENABLED (inverted), rotate-now → the
+                    // ACTION_ROTATE_RESOLVERS_NOW intent, set/step-cadence → RESOLVER_ROTATION_CADENCE_MINUTES.
+                    // The host feeds the current posture onto the `rset-*` aliases at startup + each second while
+                    // shown; close-settings (or the PILLARS rail) returns. RotationSettingsPane inherits Rectangle
+                    // so it embeds on the single android surface (the MaskSolverSettingsPane precedent). Expert
+                    // reveal is self-managed by the pane (it flips its own expert-open).
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "rotation-settings";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            rsettings := RotationSettingsPane {
+                                pin-toggled(on) => { root.rotation-settings-pin-toggled(on); }
+                                rotate-now() => { root.rotation-settings-rotate-now(); }
+                                set-cadence(secs) => { root.rotation-settings-set-cadence(secs); }
+                                cadence-stepped(dir) => { root.rotation-settings-cadence-stepped(dir); }
+                                // expert-toggled self-managed by the pane (it flips its own expert-open reveal).
+                                close-settings() => { root.advanced-section = "pillars"; }
+                            }
+                        }
+                    }
+
+                    // 2-FEED-Beast (SETTINGS): the Beast pillar SETTINGS (THE FLOW-ENGINE TUNE) mounted IN-SHELL
+                    // (the beast-settings section) — reached via ||| → PILLARS → BEAST settings chip. The 2 profiles
+                    // + preset + 4 tunables are STAGED (torta_core has no live tunable setter — YeahController bakes
+                    // them at Beast::new/with_profile); reapply-profile COMMITS via a Beast rebuild. Each staged value
+                    // mirrors to a BEAST_* pref (the #51 durability law). The host feeds the live posture onto the
+                    // `bset-*` aliases at startup + each second while shown; close-settings (or the PILLARS rail)
+                    // returns. BeastSettingsPane inherits Rectangle so it embeds on the single android surface. The
+                    // expert reveal is self-managed by the pane (it flips its own expert-open).
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "beast-settings";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            bsettings := BeastSettingsPane {
+                                yeah-profile-picked(v) => { root.beast-settings-yeah-profile-picked(v); }
+                                cake-profile-picked(v) => { root.beast-settings-cake-profile-picked(v); }
+                                preset-picked(v) => { root.beast-settings-preset-picked(v); }
+                                cycle-ms-stepped(d) => { root.beast-settings-cycle-ms-stepped(d); }
+                                max-window-stepped(d) => { root.beast-settings-max-window-stepped(d); }
+                                free-thresh-stepped(d) => { root.beast-settings-free-thresh-stepped(d); }
+                                compete-thresh-stepped(d) => { root.beast-settings-compete-thresh-stepped(d); }
+                                expert-toggled(on) => { root.beast-settings-expert-toggled(on); }
+                                reapply-profile() => { root.beast-settings-reapply-profile(); }
+                                close-settings() => { root.advanced-section = "pillars"; }
+                            }
+                        }
+                    }
+
+                    // 4-FIX round 3 · 2-FEED-Warden: the Warden pillar DASHBOARD (THE FIREWALL COURTROOM)
+                    // mounted IN-SHELL (the warden-dash section) — reached via ||| → PILLARS → WARDEN
+                    // dashboard chip. Closes the witness finding that the WARDEN dashboard tap was a silent
+                    // no-op: WardenPane inherits Rectangle so it embeds on the single android surface (the
+                    // same law MaskSolver/Centauri/Beast/Rotation follow). Host-fed from the live WardenObject.
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "warden-dash";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            // The dashboard's write surface (the witness found this body EMPTY — the arm
+                            // chip, the tap-to-flip toggles + the matrix cycle were all silent no-ops). The
+                            // crown arm rides its own `warden-arm`; the universal-toggle + matrix taps REUSE
+                            // the SAME root callbacks the settings pane drives (one Kotlin path, no divergence
+                            // — the matrix ordinal is ignored: the host owns the cycle order).
+                            wdash := WardenPane {
+                                arm-warden(on) => { root.warden-arm(on); }
+                                set-universal-toggle(key, on) => { root.warden-universal-toggled(key, on); }
+                                cycle-app-mode(uid, ord) => { root.warden-app-mode-cycled(uid); }
+                                close-dashboard() => { root.advanced-section = "pillars"; }
+                                // W-D — the per-app inspector popup (block-ladder). The overlay lives inside
+                                // this pane (single-surface law); the taps ride out as root intents the host wires.
+                                open-inspector(uid) => { root.warden-open-inspector(uid); }
+                                close-inspector() => { root.warden-close-inspector(); }
+                                inspector-block-wifi-toggle(uid, on) => { root.warden-inspector-block-wifi(uid, on); }
+                                inspector-block-mobile-toggle(uid, on) => { root.warden-inspector-block-mobile(uid, on); }
+                                inspector-select-dest(ip) => { root.warden-inspector-select-dest(ip); }
+                                inspector-block-selected(uid, mode) => { root.warden-inspector-block-selected(uid, mode); }
+                            }
+                        }
+                    }
+
+                    // 2-FEED-Warden (SETTINGS): the Warden pillar SETTINGS (the sovereign rules editor) mounted
+                    // IN-SHELL (the warden-settings section) — reached via ||| → PILLARS → WARDEN settings chip.
+                    // Unlike the read-only dashboard, this pane WRITES the canonical live WardenObject (the SAME
+                    // instance the datapath consults, via WardenDatapathGate): each control fires a typed `warden-*`
+                    // callback the host drives to the armed Object setter (one-way to the single source). The host
+                    // feeds the current armed state onto the `ws-*` aliases at startup + each second while shown;
+                    // close-settings (or the PILLARS rail) returns. WardenSettingsPane inherits Rectangle so it
+                    // embeds on the single android surface (the CentauriSettingsPane precedent).
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "warden-settings";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            wset := WardenSettingsPane {
+                                posture-changed(v) => { root.warden-posture-changed(v); }
+                                universal-toggled(key, on) => { root.warden-universal-toggled(key, on); }
+                                add-rule(kind, text, wildcard) => { root.warden-add-rule(kind, text, wildcard); }
+                                remove-rule(idx) => { root.warden-remove-rule(idx); }
+                                app-mode-cycled(uid) => { root.warden-app-mode-cycled(uid); }
+                                app-metered-cycled(uid) => { root.warden-app-metered-cycled(uid); }
+                                app-pause-toggled(uid) => { root.warden-app-pause-toggled(uid); }
+                                close-settings() => { root.advanced-section = "pillars"; }
+                            }
+                        }
+                    }
+
+                    // 4-FIX round 3 · 2-FEED-Inu: the Wire Cake Inu pillar DASHBOARD (THE LOYAL HOUND)
+                    // mounted IN-SHELL (the inu-dash section) — reached via ||| → PILLARS → WIRE CAKE INU
+                    // dashboard chip. Closes the witness finding that the INU dashboard tap was a silent
+                    // no-op: InuPane inherits Rectangle so it embeds on the single android surface. Host-fed
+                    // from the live InuStore spike posture.
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "inu-dash";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            idash := InuPane { }
+                        }
+                    }
+
+                    // 2-FEED-Inu (SETTINGS): the Wire Cake Inu pillar SETTINGS (the elevation surface — pair ·
+                    // protect · keep) mounted IN-SHELL (the inu-settings section) — reached via ||| → PILLARS →
+                    // WIRE CAKE INU settings chip. The sixth + final per-pillar SETTINGS surface (the #23 closer).
+                    // Unlike Beast (torta_core-staged), the grant flow is KOTLIN-owned: each control fires a typed
+                    // `inu-settings-*` callback the host drives to the ElevationManager / per-power GrantEngine /
+                    // BootReapplyPolicy (one-way to the single source). The host feeds the live InuStore posture +
+                    // the durability prefs onto the `iset-*` aliases at startup + each second while shown;
+                    // close-settings (or the PILLARS rail) returns. InuSettingsPane inherits Rectangle so it embeds
+                    // on the single android surface (the BeastSettingsPane precedent).
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "inu-settings";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            isettings := InuSettingsPane {
+                                pair-now() => { root.inu-settings-pair-now(); }
+                                unpair() => { root.inu-settings-unpair(); }
+                                power-toggled(id, on) => { root.inu-settings-power-toggled(id, on); }
+                                boot-reapply-toggled(on) => { root.inu-settings-boot-reapply-toggled(on); }
+                                always-on-toggled(on) => { root.inu-settings-always-on-toggled(on); }
+                                provider-pref-cycled() => { root.inu-settings-provider-pref-cycled(); }
+                                manual-pair(h, p, c) => { root.inu-settings-manual-pair(h, p, c); }
+                                expert-toggled(on) => { root.inu-settings-expert-toggled(on); }
+                                close-settings() => { root.advanced-section = "pillars"; }
+                            }
+                        }
+                    }
+
+                    // #15 UNDERGROUND H — the licence court's OWN room (the "underground-dash"
+                    // section; the census scalars hub off the SAME ug-* truths the host feeds).
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "underground-dash";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            ugdash := UndergroundDashboardPane {
+                                armed <=> root.ug-armed;
+                                total <=> root.ug-total;
+                                recorded <=> root.ug-recorded;
+                                recovered <=> root.ug-recovered;
+                                teeth <=> root.ug-teeth;
+                                sequestrated <=> root.ug-sequestrated;
+                                probation <=> root.ug-probation;
+                                trusted <=> root.ug-trusted;
+                                distrusted <=> root.ug-distrusted;
+                                trust-status <=> root.ug-trust-status;
+                                trust-input <=> root.ug-trust-input;
+                                set-verdict(host, code) => { root.underground-set-verdict(host, code); }
+                            }
+                        }
+                    }
+
+                    // #15 UNDERGROUND H — the tunable law (the "underground-settings" section).
+                    ScrollView {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-section == "underground-settings";
+                        viewport-width: self.visible-width;
+                        VerticalLayout {
+                            ugsettings := UndergroundSettingsPane {
+                                armed <=> root.ug-armed;
+                                save-toml(text) => { root.underground-save-toml(text); }
+                                detection-toggled(name, on) => { root.underground-detection-toggled(name, on); }
+                                reset-reputation() => { root.underground-reset-reputation(); }
+                                reload() => { root.underground-reload-law(); }
+                            }
+                        }
+                    }
+
+                    // ---- THE DRAWER DISMISS SCRIM — tap ANYWHERE in the content to close the |||
+                    //      rail, instead of having to travel back and re-click the ||| button.
+                    //
+                    //      MEASURED COMPLAINT: "you have to re-click it instead of tapping on another
+                    //      area to close it". Every phone drawer in existence dismisses on an outside
+                    //      tap; ours did not, so the ||| button was the ONLY exit and it sits in the
+                    //      far corner — the worst place to reach one-handed on a 6" screen.
+                    //
+                    //      DECLARED TRADE-OFF, because this is not free: while the rail is open this
+                    //      scrim SWALLOWS the first tap on the content. That is the standard drawer
+                    //      contract (tap-to-dismiss consumes the tap, it does not fall through), and
+                    //      it is why the scrim is `visible` ONLY while the rail is open — with the
+                    //      rail closed it does not exist and cannot intercept anything. A tap that
+                    //      both dismisses AND activates the control underneath is not expressible
+                    //      here, and would be worse UX anyway: it fires a control the user could not
+                    //      see the moment they aimed at it.
+                    //
+                    //      It is the LAST child on purpose: Slint paints later siblings on top, so a
+                    //      scrim declared earlier would sit UNDER the panes (which are width/height
+                    //      100%) and never receive a tap at all — a dismissal that silently never
+                    //      fires, which is worse than the bug it replaces.
+                    TouchArea {
+                        width: 100%;
+                        height: 100%;
+                        visible: root.advanced-drawer-open;
+                        clicked => { root.advanced-drawer-open = false; }
+                    }
+                }
+            }
+        }
+    }
+
+    // =============================================================================================
+    // #35 THE NOTIFY-BAR — the always-on surveillance strip (LAST root child = z-topmost; it
+    // survives the ||| overlay — the one surface that never leaves the screen). Host-fed truth
+    // (felt-truth law): un-fed = honest "—" / "no live read yet"; the matrix reads the SAME
+    // pillar-chips model the HOME tab + ||| overlay read — one row source, three views, zero drift.
+    // =============================================================================================
+    in property <bool> notify-live: false;
+    in property <string> notify-dl: "—";
+    in property <string> notify-ul: "—";
+    in property <bool> notify-engine-running: false;
+    in-out property <bool> notify-expanded: false;
+    callback notify-toggle-engine();
+    // #59 DONATE — engine-truth link (torta_core::donate); host re-asserts every tick
+    in property <string> notify-donate-url: "ko-fi.com/saimonokuma";
+    callback notify-open-donate();
+    // #59 D2 — the D1c mirror's escalation: fires ONLY from carbon-dash (the pane is already
+    // on screen, re-entry is a no-op) → the host routes it to the REAL `ACTION_VIEW` intent
+    // through `TortaSlintBridge.openDonate` (user's default browser, engine-truth URL).
+    callback carbon-donate-direct();
+    // #60C-b THE ESCAPE HATCH, MADE REACHABLE. The DONATE tap above lands IN-APP through the
+    // text-mode lane and STAYS that way — the user directive forbids an AUTOMATIC external intent,
+    // and this does not change that. But the text lane renders text: a Ko-Fi payment page cannot be
+    // completed in it. So the system browser stays available as an EXPLICIT, user-initiated choice,
+    // which is a different thing from the app deciding to leave on its own.
+    //
+    // Before this, `open_donate_intent` was carrying `#[allow(dead_code)]` and was documented as an
+    // escape hatch that nothing could reach. An escape hatch nobody can open is not a hatch.
+    callback carbon-donate-external();
+
+    // BUGS2 #64 (1) — the in-app bottom NotifyBar mount is REMOVED: the Notify-Bar truth now
+    // lives on the REAL Android foreground notification (TortaSlintBridge.trafficSnapshot →
+    // ModulesServiceNotificationManager.updateNotification — same TrafficStats well, felt-truth
+    // law intact). The notify-* root properties/callbacks above stay: the host still feeds them
+    // (one row source, zero drift) and the ||| overlay + HOME tab keep reading the same model.
+}

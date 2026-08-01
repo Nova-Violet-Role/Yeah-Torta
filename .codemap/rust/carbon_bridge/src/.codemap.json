@@ -1,0 +1,1209 @@
+{
+  "directory": "rust\\carbon_bridge\\src",
+  "files": {
+    "engine.rs": {
+      "hash": "faa63b736f91",
+      "indexed_at": "2026-07-26T19:12:57.728060+00:00",
+      "language": "rust",
+      "lines": 245,
+      "mtime_ns": 1785030832019603700,
+      "size": 9488,
+      "symbols": [
+        {
+          "docstring": "A parsed text-mode page \u2014 what the Slint terminal pane renders.",
+          "lines": [
+            22,
+            29
+          ],
+          "name": "PageDoc",
+          "type": "struct"
+        },
+        {
+          "docstring": "Decode the entity references that actually matter for text-mode reading.",
+          "lines": [
+            37,
+            45
+          ],
+          "name": "decode_entities",
+          "signature": "(s: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "True when `tag` ends the current text block (a terminal line break).",
+          "lines": [
+            48,
+            56
+          ],
+          "name": "is_block_tag",
+          "signature": "(tag: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "everything. Pure function \u2014 trivially testable, no I/O.",
+          "lines": [
+            61,
+            191
+          ],
+          "name": "parse_document",
+          "signature": "(html: &str, url: &str)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                198,
+                206
+              ],
+              "name": "title_and_text_extracted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                209,
+                217
+              ],
+              "name": "scripts_and_styles_stripped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                220,
+                230
+              ],
+              "name": "links_are_numbered_and_ledgered",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                233,
+                244
+              ],
+              "name": "caps_hold_and_empty_is_honest",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            194,
+            245
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "gfx.rs": {
+      "hash": "879d386d4ab5",
+      "indexed_at": "2026-07-26T19:12:57.728511+00:00",
+      "language": "rust",
+      "lines": 17,
+      "mtime_ns": 1785030832081604400,
+      "size": 281,
+      "symbols": [
+        {
+          "docstring": "/*\n    This file is part of Yeah! Tort\u00e4.\n    SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2\n    Copyright 2026 Saimonokuma.\n*/",
+          "lines": [
+            7,
+            7
+          ],
+          "name": "color",
+          "type": "module"
+        },
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "point",
+          "type": "module"
+        },
+        {
+          "lines": [
+            9,
+            9
+          ],
+          "name": "rect",
+          "type": "module"
+        },
+        {
+          "lines": [
+            10,
+            10
+          ],
+          "name": "size",
+          "type": "module"
+        },
+        {
+          "lines": [
+            11,
+            11
+          ],
+          "name": "vector",
+          "type": "module"
+        }
+      ]
+    },
+    "input.rs": {
+      "hash": "98307c8ca550",
+      "indexed_at": "2026-07-26T19:12:57.728922+00:00",
+      "language": "rust",
+      "lines": 24,
+      "mtime_ns": 1785030832195604300,
+      "size": 584,
+      "symbols": [
+        {
+          "docstring": "/*\n    This file is part of Yeah! Tort\u00e4.\n    SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2\n    Copyright 2026 Saimonokuma.\n*/",
+          "lines": [
+            7,
+            7
+          ],
+          "name": "dcs",
+          "type": "module"
+        },
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "keyboard",
+          "type": "module"
+        },
+        {
+          "lines": [
+            9,
+            9
+          ],
+          "name": "listen",
+          "type": "module"
+        },
+        {
+          "lines": [
+            10,
+            10
+          ],
+          "name": "mouse",
+          "type": "module"
+        },
+        {
+          "lines": [
+            11,
+            11
+          ],
+          "name": "parser",
+          "type": "module"
+        },
+        {
+          "lines": [
+            16,
+            16
+          ],
+          "name": "tty",
+          "type": "module"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "6b960798d0bb",
+      "indexed_at": "2026-07-29T18:13:49.352929+00:00",
+      "language": "rust",
+      "lines": 40,
+      "mtime_ns": 1785348801993220200,
+      "size": 1745,
+      "symbols": [
+        {
+          "docstring": "!              manifest sniff; bay counters grow only on real decisions",
+          "lines": [
+            32,
+            32
+          ],
+          "name": "engine",
+          "type": "module"
+        },
+        {
+          "lines": [
+            33,
+            33
+          ],
+          "name": "gfx",
+          "type": "module"
+        },
+        {
+          "lines": [
+            34,
+            34
+          ],
+          "name": "input",
+          "type": "module"
+        },
+        {
+          "lines": [
+            35,
+            35
+          ],
+          "name": "route",
+          "type": "module"
+        },
+        {
+          "lines": [
+            36,
+            36
+          ],
+          "name": "sandbox",
+          "type": "module"
+        },
+        {
+          "lines": [
+            37,
+            37
+          ],
+          "name": "specials",
+          "type": "module"
+        },
+        {
+          "lines": [
+            38,
+            38
+          ],
+          "name": "surface",
+          "type": "module"
+        },
+        {
+          "lines": [
+            40,
+            40
+          ],
+          "name": "utils",
+          "type": "module"
+        }
+      ]
+    },
+    "route.rs": {
+      "hash": "9c25b273a242",
+      "indexed_at": "2026-07-26T19:12:57.730484+00:00",
+      "language": "rust",
+      "lines": 135,
+      "mtime_ns": 1785030832216603600,
+      "size": 4139,
+      "symbols": [
+        {
+          "lines": [
+            23,
+            28
+          ],
+          "name": "DenyReason",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            32,
+            37
+          ],
+          "name": "LaneDecision",
+          "type": "enum"
+        },
+        {
+          "docstring": "60D probe \u2014 the socket-layer seam gatekeeper with honest counters.",
+          "lines": [
+            40,
+            43
+          ],
+          "name": "SocketProbe",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                46,
+                48
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            45,
+            49
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                52,
+                57
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Decisions that genuinely landed on a Beast lane.",
+              "lines": [
+                60,
+                62
+              ],
+              "name": "routed",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Decisions genuinely vetoed by a routing layer.",
+              "lines": [
+                65,
+                67
+              ],
+              "name": "denied",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "socket NEVER carries a QoS class.",
+              "lines": [
+                72,
+                94
+              ],
+              "name": "decide",
+              "signature": "(\n        &mut self,\n        firewall_deny: bool,\n        reputation_deny: bool,\n        qos_clas...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            51,
+            95
+          ],
+          "name": "SocketProbe",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                102,
+                117
+              ],
+              "name": "firewall_outranks_reputation",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                120,
+                123
+              ],
+              "name": "clean_candidate_rides_the_qos_lane",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                126,
+                134
+              ],
+              "name": "counters_are_honest",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            98,
+            135
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "sandbox.rs": {
+      "hash": "3c923faa94c6",
+      "indexed_at": "2026-07-26T19:12:57.731937+00:00",
+      "language": "rust",
+      "lines": 201,
+      "mtime_ns": 1785030832227604900,
+      "size": 7101,
+      "symbols": [
+        {
+          "lines": [
+            32,
+            39
+          ],
+          "name": "Permission",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            43,
+            48
+          ],
+          "name": "JailRefusal",
+          "type": "enum"
+        },
+        {
+          "docstring": "60E fs jail - confines every candidate path to the jail root.",
+          "lines": [
+            51,
+            55
+          ],
+          "name": "FsJail",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "the module never invents one).",
+              "lines": [
+                60,
+                66
+              ],
+              "name": "new",
+              "signature": "(root: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                70
+              ],
+              "name": "root",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Paths genuinely admitted.",
+              "lines": [
+                73,
+                75
+              ],
+              "name": "allowed",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Paths genuinely refused.",
+              "lines": [
+                78,
+                80
+              ],
+              "name": "refused",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "tricks), an absolute candidate must sit under the root.",
+              "lines": [
+                85,
+                107
+              ],
+              "name": "admit",
+              "signature": "(&mut self, candidate: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            57,
+            108
+          ],
+          "name": "FsJail",
+          "type": "impl"
+        },
+        {
+          "docstring": "one canonical shape (Windows + POSIX candidates share the jail).",
+          "lines": [
+            112,
+            116
+          ],
+          "name": "normalize",
+          "signature": "(p: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            120,
+            122
+          ],
+          "name": "PermissionMap",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                125,
+                127
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Sites that genuinely hold at least one grant.",
+              "lines": [
+                130,
+                132
+              ],
+              "name": "sites",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                134,
+                136
+              ],
+              "name": "grant",
+              "signature": "(&mut self, site: &str, perm: Permission)",
+              "type": "method"
+            },
+            {
+              "docstring": "set and an absent site are the SAME fact (default-deny).",
+              "lines": [
+                140,
+                147
+              ],
+              "name": "revoke",
+              "signature": "(&mut self, site: &str, perm: Permission)",
+              "type": "method"
+            },
+            {
+              "docstring": "DEFAULT-DENY: an absent site answers false, never a fabricated allow.",
+              "lines": [
+                150,
+                152
+              ],
+              "name": "is_granted",
+              "signature": "(&self, site: &str, perm: Permission)",
+              "type": "method"
+            },
+            {
+              "docstring": "dash renders exactly what is genuinely held.",
+              "lines": [
+                156,
+                158
+              ],
+              "name": "rows",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            124,
+            159
+          ],
+          "name": "PermissionMap",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                166,
+                184
+              ],
+              "name": "jail_confines_and_counts_honestly",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                187,
+                200
+              ],
+              "name": "permission_map_is_default_deny",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            162,
+            201
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "specials.rs": {
+      "hash": "2fb3bc294c63",
+      "indexed_at": "2026-07-26T19:12:57.734852+00:00",
+      "language": "rust",
+      "lines": 454,
+      "mtime_ns": 1785030832238604500,
+      "size": 15435,
+      "symbols": [
+        {
+          "lines": [
+            34,
+            38
+          ],
+          "name": "RunAt",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            42,
+            48
+          ],
+          "name": "UserScript",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "no header block, no `@name`, or no `@match`/`@include` at all.",
+              "lines": [
+                53,
+                105
+              ],
+              "name": "parse",
+              "signature": "(src: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "patterns really matches `url`.",
+              "lines": [
+                109,
+                111
+              ],
+              "name": "matches_url",
+              "signature": "(&self, url: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            50,
+            112
+          ],
+          "name": "UserScript",
+          "type": "impl"
+        },
+        {
+          "docstring": "\u2014 a non-decision, never a grant.",
+          "lines": [
+            118,
+            153
+          ],
+          "name": "match_pattern",
+          "signature": "(pattern: &str, url: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "Plain `*` glob with iterative backtracking \u2014 no regex engine, no surprises.",
+          "lines": [
+            156,
+            183
+          ],
+          "name": "glob_match",
+          "signature": "(pat: &str, text: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            187,
+            190
+          ],
+          "name": "ManifestVersion",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            194,
+            200
+          ],
+          "name": "WebExtension",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "`version`, `permissions` \u2014 not a full JSON engine.",
+              "lines": [
+                206,
+                219
+              ],
+              "name": "parse",
+              "signature": "(manifest_json: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            202,
+            220
+          ],
+          "name": "WebExtension",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            222,
+            244
+          ],
+          "name": "json_str_field",
+          "signature": "(src: &str, key: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            246,
+            257
+          ],
+          "name": "json_num_field",
+          "signature": "(src: &str, key: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            259,
+            288
+          ],
+          "name": "json_str_array",
+          "signature": "(src: &str, key: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            292,
+            296
+          ],
+          "name": "InstallOutcome",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            302,
+            307
+          ],
+          "name": "SpecialsBay",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                310,
+                312
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Feed real userscript text through the parse law.",
+              "lines": [
+                315,
+                327
+              ],
+              "name": "install_userscript",
+              "signature": "(&mut self, src: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Feed real manifest bytes through the sniff law.",
+              "lines": [
+                330,
+                342
+              ],
+              "name": "install_extension",
+              "signature": "(&mut self, manifest_json: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                344,
+                346
+              ],
+              "name": "userscripts",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                348,
+                350
+              ],
+              "name": "extensions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                352,
+                354
+              ],
+              "name": "rejected",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                356,
+                358
+              ],
+              "name": "last_reject",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            309,
+            359
+          ],
+          "name": "SpecialsBay",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                376,
+                382
+              ],
+              "name": "userscript_parses_real_header",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                385,
+                390
+              ],
+              "name": "userscript_run_at_defaults_to_idle",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                393,
+                399
+              ],
+              "name": "userscript_rejections_carry_real_reasons",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                402,
+                411
+              ],
+              "name": "match_pattern_law_holds",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                414,
+                426
+              ],
+              "name": "manifest_sniff_mv2_and_mv3",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                429,
+                437
+              ],
+              "name": "manifest_sniff_rejects_honestly",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                440,
+                453
+              ],
+              "name": "bay_counters_grow_only_on_real_decisions",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            362,
+            454
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "surface.rs": {
+      "hash": "7475feb1ee4b",
+      "indexed_at": "2026-07-29T18:13:48.352658+00:00",
+      "language": "rust",
+      "lines": 381,
+      "mtime_ns": 1785348801624931200,
+      "size": 14817,
+      "symbols": [
+        {
+          "docstring": "An owned RGBA8 software surface rendered through the carbonyl gfx types.",
+          "lines": [
+            24,
+            35
+          ],
+          "name": "CarbonSurface",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                38,
+                57
+              ],
+              "name": "new",
+              "signature": "(width: u32, height: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                59,
+                61
+              ],
+              "name": "width",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                65
+              ],
+              "name": "height",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The finished frame, RGBA8 row-major \u2014 ready for the host's pixel buffer.",
+              "lines": [
+                68,
+                70
+              ],
+              "name": "as_rgba",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "60B-3 \u2014 frames genuinely finished since construction (never fabricated).",
+              "lines": [
+                73,
+                75
+              ],
+              "name": "frames_rendered",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "assimilated primitives (clear + lump facets + ember seam).",
+              "lines": [
+                79,
+                81
+              ],
+              "name": "last_frame_px",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "(`width * height * 4`, RGBA8 \u2014 derived from the live dims, not a constant).",
+              "lines": [
+                85,
+                87
+              ],
+              "name": "frame_bytes",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                90,
+                100
+              ],
+              "name": "put",
+              "signature": "(&mut self, x: i32, y: i32, c: Color)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                110
+              ],
+              "name": "clear",
+              "signature": "(&mut self, c: Color)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                118
+              ],
+              "name": "fill_rect",
+              "signature": "(&mut self, rect: Rect, c: Color)",
+              "type": "method"
+            },
+            {
+              "docstring": "this is a pixel-path proof). A loader spins \u2014 an ember breathes.",
+              "lines": [
+                126,
+                183
+              ],
+              "name": "render_probe_frame",
+              "signature": "(&mut self, tick: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "as black rather than panicking, so odd-sized surfaces are safe.",
+              "lines": [
+                187,
+                198
+              ],
+              "name": "luma_at",
+              "signature": "(&self, x: u32, y: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "16 inputs), `mask_is_injective` and `bit_order_is_x_high_w_low`.",
+              "lines": [
+                211,
+                238
+              ],
+              "name": "quadrant_glyph_at",
+              "signature": "(&self, cx: u32, cy: u32, threshold: u8)",
+              "type": "method"
+            },
+            {
+              "docstring": "frame rather than by a fixture.",
+              "lines": [
+                243,
+                256
+              ],
+              "name": "to_quadrant_preview",
+              "signature": "(&self, threshold: u8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            37,
+            257
+          ],
+          "name": "CarbonSurface",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                268,
+                282
+              ],
+              "name": "quadrant_bit_order_matches_the_proved_corner_mapping",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                288,
+                302
+              ],
+              "name": "every_one_of_the_sixteen_quadrant_masks_is_reachable_and_never_panics",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                307,
+                315
+              ],
+              "name": "quadrant_preview_renders_the_live_probe_frame",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                318,
+                323
+              ],
+              "name": "probe_frame_is_opaque_and_sized",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                326,
+                339
+              ],
+              "name": "telemetry_is_honest",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                342,
+                355
+              ],
+              "name": "probe_frame_draws_the_lump",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                358,
+                380
+              ],
+              "name": "ember_breathes_but_never_moves",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            260,
+            381
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "utils.rs": {
+      "hash": "f3dadc972639",
+      "indexed_at": "2026-07-26T19:12:57.736853+00:00",
+      "language": "rust",
+      "lines": 14,
+      "mtime_ns": 1785030832289605100,
+      "size": 223,
+      "symbols": [
+        {
+          "docstring": "/*\n    This file is part of Yeah! Tort\u00e4.\n    SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2\n    Copyright 2026 Saimonokuma.\n*/",
+          "lines": [
+            7,
+            7
+          ],
+          "name": "four_bits",
+          "type": "module"
+        },
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "try_block",
+          "type": "module"
+        },
+        {
+          "lines": [
+            10,
+            10
+          ],
+          "name": "log",
+          "type": "module"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-29T18:13:52.544140+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,358 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt",
+  "files": {
+    "ActivitiesLifecycleListener.kt": {
+      "hash": "de6961ccdb4d",
+      "indexed_at": "2026-08-01T03:59:09.081212+00:00",
+      "language": "kotlin",
+      "lines": 54,
+      "mtime_ns": 1785556375005900000,
+      "size": 1740,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                27,
+                37
+              ],
+              "name": "onActivityCreated",
+              "signature": "(\n        activity: Activity,\n        savedInstanceState: Bundle?\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                39
+              ],
+              "name": "onActivityStarted",
+              "signature": "(activity: Activity)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                41,
+                41
+              ],
+              "name": "onActivityResumed",
+              "signature": "(activity: Activity)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                43,
+                43
+              ],
+              "name": "onActivityPaused",
+              "signature": "(activity: Activity)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                45,
+                45
+              ],
+              "name": "onActivityStopped",
+              "signature": "(activity: Activity)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                47,
+                51
+              ],
+              "name": "onActivitySaveInstanceState",
+              "signature": "(\n        activity: Activity,\n        outState: Bundle\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                53,
+                53
+              ],
+              "name": "onActivityDestroyed",
+              "signature": "(activity: Activity)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            26,
+            54
+          ],
+          "name": "ActivitiesLifecycleListener",
+          "type": "class"
+        }
+      ]
+    },
+    "App.kt": {
+      "hash": "24f798bd6755",
+      "indexed_at": "2026-08-01T03:59:09.369829+00:00",
+      "language": "kotlin",
+      "lines": 231,
+      "mtime_ns": 1785556375016900300,
+      "size": 10455,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                90,
+                94
+              ],
+              "name": "onConfigurationChanged",
+              "signature": "(newConfig: Configuration)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                96,
+                165
+              ],
+              "name": "onCreate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                167,
+                183
+              ],
+              "name": "createAuxChannel",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                185,
+                199
+              ],
+              "name": "setExceptionHandler",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                201,
+                203
+              ],
+              "name": "initAppLifecycleListener",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                206,
+                229
+              ],
+              "name": "scheduleDnsCryptBinaryUpdateCheck",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            48,
+            231
+          ],
+          "name": "App",
+          "type": "class"
+        }
+      ]
+    },
+    "AppLifecycleListener.kt": {
+      "hash": "35fcf7678ea2",
+      "indexed_at": "2026-08-01T03:59:09.680346+00:00",
+      "language": "kotlin",
+      "lines": 45,
+      "mtime_ns": 1785556375028899900,
+      "size": 1374,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                27,
+                33
+              ],
+              "name": "onStart",
+              "signature": "(owner: LifecycleOwner)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                35,
+                44
+              ],
+              "name": "onStop",
+              "signature": "(owner: LifecycleOwner)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            25,
+            45
+          ],
+          "name": "AppLifecycleListener",
+          "type": "class"
+        }
+      ]
+    },
+    "BootCompleteReceiver.kt": {
+      "hash": "560a7cffcc9c",
+      "indexed_at": "2026-08-01T03:59:13.399142+00:00",
+      "language": "kotlin",
+      "lines": 100,
+      "mtime_ns": 1785556375039899200,
+      "size": 4536,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                36,
+                68
+              ],
+              "name": "onReceive",
+              "signature": "(context: Context, intent: Intent?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                78,
+                90
+              ],
+              "name": "maybeInuBootReapply",
+              "signature": "(context: Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            31,
+            100
+          ],
+          "name": "BootCompleteReceiver",
+          "type": "class"
+        }
+      ]
+    },
+    "RootState.kt": {
+      "hash": "851fa0f5af26",
+      "indexed_at": "2026-08-01T04:00:15.654966+00:00",
+      "language": "kotlin",
+      "lines": 29,
+      "mtime_ns": 1785556375052899200,
+      "size": 856,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                24
+              ],
+              "name": "RootAvailable",
+              "type": "class"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "RootNotAvailable",
+              "type": "class"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "Undefined",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            19,
+            29
+          ],
+          "name": "RootState",
+          "type": "class"
+        }
+      ]
+    },
+    "TopFragmentState.kt": {
+      "hash": "4510e33714d8",
+      "indexed_at": "2026-08-01T04:00:28.756847+00:00",
+      "language": "kotlin",
+      "lines": 39,
+      "mtime_ns": 1785556375063899500,
+      "size": 1438,
+      "symbols": [
+        {
+          "lines": [
+            26,
+            39
+          ],
+          "name": "TopFragmentState",
+          "type": "class"
+        }
+      ]
+    },
+    "TopFragmentViewModel.kt": {
+      "hash": "3706d5e3dcd9",
+      "indexed_at": "2026-08-01T04:00:29.069108+00:00",
+      "language": "kotlin",
+      "lines": 113,
+      "mtime_ns": 1785556375075899700,
+      "size": 3764,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                51,
+                67
+              ],
+              "name": "checkRootAvailable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                69,
+                73
+              ],
+              "name": "cancelRootChecking",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                75,
+                102
+              ],
+              "name": "checkRootParams",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                104,
+                112
+              ],
+              "name": "resetModuleSettings",
+              "signature": "(moduleName: ModuleName)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            37,
+            113
+          ],
+          "name": "TopFragmentViewModel",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:29.071064+00:00",
+  "version": "1.0"
+}

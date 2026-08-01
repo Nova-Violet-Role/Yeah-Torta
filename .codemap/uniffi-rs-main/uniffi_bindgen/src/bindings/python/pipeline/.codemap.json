@@ -1,0 +1,1222 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src\\bindings\\python\\pipeline",
+  "files": {
+    "callables.rs": {
+      "hash": "92e104d94a4e",
+      "indexed_at": "2026-07-24T20:35:12.833293+00:00",
+      "language": "rust",
+      "lines": 13,
+      "mtime_ns": 1782136568000000000,
+      "size": 415,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            13
+          ],
+          "name": "name",
+          "signature": "(callable: &general::Callable)",
+          "type": "function"
+        }
+      ]
+    },
+    "callback_interfaces.rs": {
+      "hash": "f3844dbefdcb",
+      "indexed_at": "2026-07-24T20:35:12.834002+00:00",
+      "language": "rust",
+      "lines": 20,
+      "mtime_ns": 1782136568000000000,
+      "size": 775,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            16
+          ],
+          "name": "protocol",
+          "signature": "(cbi: &general::CallbackInterface, context: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            18,
+            20
+          ],
+          "name": "callback_interface_name",
+          "signature": "(cbi: &general::CallbackInterface)",
+          "type": "function"
+        }
+      ]
+    },
+    "config.rs": {
+      "hash": "a91e3866b142",
+      "indexed_at": "2026-07-24T20:35:12.834830+00:00",
+      "language": "rust",
+      "lines": 52,
+      "mtime_ns": 1782136568000000000,
+      "size": 1621,
+      "symbols": [
+        {
+          "lines": [
+            15,
+            18
+          ],
+          "name": "Config",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            21,
+            24
+          ],
+          "name": "BindingsConfig",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            28,
+            34
+          ],
+          "name": "PythonConfig",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            38,
+            45
+          ],
+          "name": "CustomTypeConfig",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                48,
+                51
+              ],
+              "name": "from_uniffi_toml",
+              "signature": "(toml: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            47,
+            52
+          ],
+          "name": "PythonConfig",
+          "type": "impl"
+        }
+      ]
+    },
+    "context.rs": {
+      "hash": "50489feb24be",
+      "indexed_at": "2026-07-24T20:35:12.835927+00:00",
+      "language": "rust",
+      "lines": 98,
+      "mtime_ns": 1782136568000000000,
+      "size": 3297,
+      "symbols": [
+        {
+          "lines": [
+            10,
+            16
+          ],
+          "name": "Context",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                19,
+                23
+              ],
+              "name": "update_from_root",
+              "signature": "(&mut self, root: &general::Root)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                44
+              ],
+              "name": "update_from_namespace",
+              "signature": "(&mut self, namespace: &general::Namespace)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                46,
+                50
+              ],
+              "name": "builtin_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                52,
+                54
+              ],
+              "name": "is_recursive",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                60
+              ],
+              "name": "module_namespace",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                62,
+                66
+              ],
+              "name": "config",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                75
+              ],
+              "name": "cdylib",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                90
+              ],
+              "name": "external_package_name",
+              "signature": "(&self, namespace: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                92,
+                97
+              ],
+              "name": "custom_type_config",
+              "signature": "(\n        &self,\n        custom: &general::CustomType,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            18,
+            98
+          ],
+          "name": "Context",
+          "type": "impl"
+        }
+      ]
+    },
+    "default.rs": {
+      "hash": "eafaf58a0db9",
+      "indexed_at": "2026-07-24T20:35:12.837148+00:00",
+      "language": "rust",
+      "lines": 127,
+      "mtime_ns": 1782136568000000000,
+      "size": 5032,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            21
+          ],
+          "name": "can_use_literal",
+          "signature": "(literal: &general::Literal)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            23,
+            60
+          ],
+          "name": "render_default",
+          "signature": "(default: &general::DefaultValue, context: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            62,
+            98
+          ],
+          "name": "render_literal",
+          "signature": "(lit: &general::Literal, context: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            100,
+            127
+          ],
+          "name": "arg_literal",
+          "signature": "(default: &general::DefaultValue, context: &Context)",
+          "type": "function"
+        }
+      ]
+    },
+    "enums.rs": {
+      "hash": "ecdb0fb8f700",
+      "indexed_at": "2026-07-24T20:35:12.837904+00:00",
+      "language": "rust",
+      "lines": 40,
+      "mtime_ns": 1782136568000000000,
+      "size": 1215,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            28
+          ],
+          "name": "map_variants",
+          "signature": "(\n    variants: Vec<general::Variant>,\n    shape: EnumShape,\n    context: &Context,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            30,
+            40
+          ],
+          "name": "enum_variant_name",
+          "signature": "(name: &str, ty: &general::TypeNode)",
+          "type": "function"
+        }
+      ]
+    },
+    "error.rs": {
+      "hash": "231c64a43e6f",
+      "indexed_at": "2026-07-24T20:35:12.838732+00:00",
+      "language": "rust",
+      "lines": 21,
+      "mtime_ns": 1782136568000000000,
+      "size": 662,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            12
+          ],
+          "name": "is_from_interface",
+          "signature": "(throws_ty: &general::ThrowsType)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            14,
+            21
+          ],
+          "name": "is_from_interface_inner",
+          "signature": "(ty: &Type)",
+          "type": "function"
+        }
+      ]
+    },
+    "ffi_types.rs": {
+      "hash": "1abbf5c392ce",
+      "indexed_at": "2026-07-24T20:35:12.839700+00:00",
+      "language": "rust",
+      "lines": 60,
+      "mtime_ns": 1782136568000000000,
+      "size": 2862,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            35
+          ],
+          "name": "ffi_type_name",
+          "signature": "(ffi_type: &FfiType, context: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            37,
+            60
+          ],
+          "name": "ffi_default_value",
+          "signature": "(return_type: &general::ReturnType, context: &Context)",
+          "type": "function"
+        }
+      ]
+    },
+    "interfaces.rs": {
+      "hash": "ecb4d248126b",
+      "indexed_at": "2026-07-24T20:35:12.840768+00:00",
+      "language": "rust",
+      "lines": 107,
+      "mtime_ns": 1782136568000000000,
+      "size": 4296,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            36
+          ],
+          "name": "protocol",
+          "signature": "(int: &general::Interface, context: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            38,
+            46
+          ],
+          "name": "name",
+          "signature": "(int: &general::Interface)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            48,
+            91
+          ],
+          "name": "base_classes",
+          "signature": "(int: &general::Interface, context: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            93,
+            107
+          ],
+          "name": "map_constructors",
+          "signature": "(\n    interface_name: &str,\n    constructors: Vec<general::Constructor>,\n    context: &Context,\n)",
+          "type": "function"
+        }
+      ]
+    },
+    "mod.rs": {
+      "hash": "6d328ebaeafb",
+      "indexed_at": "2026-07-24T20:35:12.841537+00:00",
+      "language": "rust",
+      "lines": 35,
+      "mtime_ns": 1782136568000000000,
+      "size": 952,
+      "symbols": [
+        {
+          "lines": [
+            10,
+            10
+          ],
+          "name": "callables",
+          "type": "module"
+        },
+        {
+          "lines": [
+            11,
+            11
+          ],
+          "name": "callback_interfaces",
+          "type": "module"
+        },
+        {
+          "lines": [
+            12,
+            12
+          ],
+          "name": "config",
+          "type": "module"
+        },
+        {
+          "lines": [
+            13,
+            13
+          ],
+          "name": "context",
+          "type": "module"
+        },
+        {
+          "lines": [
+            14,
+            14
+          ],
+          "name": "default",
+          "type": "module"
+        },
+        {
+          "lines": [
+            15,
+            15
+          ],
+          "name": "enums",
+          "type": "module"
+        },
+        {
+          "lines": [
+            16,
+            16
+          ],
+          "name": "error",
+          "type": "module"
+        },
+        {
+          "lines": [
+            17,
+            17
+          ],
+          "name": "ffi_types",
+          "type": "module"
+        },
+        {
+          "lines": [
+            18,
+            18
+          ],
+          "name": "interfaces",
+          "type": "module"
+        },
+        {
+          "lines": [
+            19,
+            19
+          ],
+          "name": "modules",
+          "type": "module"
+        },
+        {
+          "lines": [
+            20,
+            20
+          ],
+          "name": "names",
+          "type": "module"
+        },
+        {
+          "lines": [
+            21,
+            21
+          ],
+          "name": "nodes",
+          "type": "module"
+        },
+        {
+          "lines": [
+            22,
+            22
+          ],
+          "name": "types",
+          "type": "module"
+        },
+        {
+          "lines": [
+            33,
+            35
+          ],
+          "name": "pipeline",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "modules.rs": {
+      "hash": "3cc4e6d82e66",
+      "indexed_at": "2026-07-24T20:35:12.842636+00:00",
+      "language": "rust",
+      "lines": 89,
+      "mtime_ns": 1782136568000000000,
+      "size": 4210,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            49
+          ],
+          "name": "map_namespace",
+          "signature": "(namespace: general::Namespace, context: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            51,
+            60
+          ],
+          "name": "has_async_callback_method",
+          "signature": "(namespace: &general::Namespace)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            62,
+            89
+          ],
+          "name": "module_imports",
+          "signature": "(namespace: &general::Namespace, config: &PythonConfig)",
+          "type": "function"
+        }
+      ]
+    },
+    "names.rs": {
+      "hash": "c960f786b373",
+      "indexed_at": "2026-07-24T20:35:12.843632+00:00",
+      "language": "rust",
+      "lines": 100,
+      "mtime_ns": 1782136568000000000,
+      "size": 2337,
+      "symbols": [
+        {
+          "docstring": "Fixup a name by ensuring it's not a keyword",
+          "lines": [
+            56,
+            62
+          ],
+          "name": "fixup_keyword",
+          "signature": "(name: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            64,
+            71
+          ],
+          "name": "map_ffi_function_type_name",
+          "signature": "(\n    ffi_function_type_name: FfiFunctionTypeName,\n    _: &Context,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            73,
+            75
+          ],
+          "name": "map_ffi_struct_name",
+          "signature": "(ffi_struct_name: FfiStructName, _: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            77,
+            79
+          ],
+          "name": "function_type_name",
+          "signature": "(name: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            81,
+            83
+          ],
+          "name": "struct_name",
+          "signature": "(name: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            85,
+            87
+          ],
+          "name": "type_name",
+          "signature": "(name: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            89,
+            91
+          ],
+          "name": "var_name",
+          "signature": "(name: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            93,
+            95
+          ],
+          "name": "function_name",
+          "signature": "(name: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            97,
+            100
+          ],
+          "name": "non_error_variant_name",
+          "signature": "(name: &str)",
+          "type": "function"
+        }
+      ]
+    },
+    "nodes.rs": {
+      "hash": "628dae775d17",
+      "indexed_at": "2026-07-24T20:35:12.847143+00:00",
+      "language": "rust",
+      "lines": 605,
+      "mtime_ns": 1782136568000000000,
+      "size": 18340,
+      "symbols": [
+        {
+          "lines": [
+            36,
+            42
+          ],
+          "name": "Root",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            46,
+            58
+          ],
+          "name": "BuiltinTypes",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            64,
+            87
+          ],
+          "name": "Module",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            94,
+            97
+          ],
+          "name": "Function",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            101,
+            117
+          ],
+          "name": "TypeDefinition",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            121,
+            124
+          ],
+          "name": "Constructor",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            128,
+            131
+          ],
+          "name": "Method",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            136,
+            146
+          ],
+          "name": "Callable",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            151,
+            166
+          ],
+          "name": "CallableKind",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            171,
+            174
+          ],
+          "name": "ReturnType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            178,
+            182
+          ],
+          "name": "ThrowsType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            186,
+            193
+          ],
+          "name": "Argument",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "argument's type.",
+              "lines": [
+                202,
+                208
+              ],
+              "name": "ffi_converter_name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            195,
+            209
+          ],
+          "name": "Argument",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            213,
+            216
+          ],
+          "name": "DefaultValue",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            220,
+            229
+          ],
+          "name": "DefaultValueNode",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                232,
+                234
+              ],
+              "name": "is_arg_literal",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            231,
+            235
+          ],
+          "name": "DefaultValueNode",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            239,
+            245
+          ],
+          "name": "LiteralNode",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            249,
+            273
+          ],
+          "name": "Literal",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            277,
+            289
+          ],
+          "name": "Record",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            293,
+            301
+          ],
+          "name": "Field",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            305,
+            321
+          ],
+          "name": "Enum",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            324,
+            330
+          ],
+          "name": "Variant",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            334,
+            352
+          ],
+          "name": "Interface",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                355,
+                357
+              ],
+              "name": "has_primary_constructor",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            354,
+            358
+          ],
+          "name": "Interface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            361,
+            366
+          ],
+          "name": "Protocol",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            370,
+            379
+          ],
+          "name": "CallbackInterface",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            383,
+            390
+          ],
+          "name": "VTable",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            395,
+            400
+          ],
+          "name": "VTableMethod",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            404,
+            407
+          ],
+          "name": "ObjectTraitImpl",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            411,
+            419
+          ],
+          "name": "CustomType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            423,
+            426
+          ],
+          "name": "BoxedType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            430,
+            433
+          ],
+          "name": "OptionalType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            437,
+            440
+          ],
+          "name": "SequenceType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            444,
+            448
+          ],
+          "name": "MapType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            452,
+            455
+          ],
+          "name": "SetType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            459,
+            463
+          ],
+          "name": "ExternalType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            468,
+            477
+          ],
+          "name": "TypeNode",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            484,
+            489
+          ],
+          "name": "FfiTypeNode",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            493,
+            500
+          ],
+          "name": "UniffiTraitMethods",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            504,
+            511
+          ],
+          "name": "FfiDefinition",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            515,
+            522
+          ],
+          "name": "FfiFunction",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            526,
+            531
+          ],
+          "name": "FfiFunctionType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            535,
+            537
+          ],
+          "name": "FfiReturnType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            541,
+            544
+          ],
+          "name": "FfiStruct",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            548,
+            551
+          ],
+          "name": "FfiField",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            555,
+            558
+          ],
+          "name": "FfiArgument",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                561,
+                563
+              ],
+              "name": "is_async",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                565,
+                567
+              ],
+              "name": "is_method",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                569,
+                575
+              ],
+              "name": "self_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                577,
+                579
+              ],
+              "name": "is_primary_constructor",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            560,
+            580
+          ],
+          "name": "Callable",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                583,
+                590
+              ],
+              "name": "lift",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                591,
+                598
+              ],
+              "name": "lower",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            582,
+            599
+          ],
+          "name": "CustomTypeConfig",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                602,
+                604
+              ],
+              "name": "has_unnamed_fields",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            601,
+            605
+          ],
+          "name": "Variant",
+          "type": "impl"
+        }
+      ]
+    },
+    "types.rs": {
+      "hash": "676bf0c3320f",
+      "indexed_at": "2026-07-24T20:35:12.848389+00:00",
+      "language": "rust",
+      "lines": 152,
+      "mtime_ns": 1782136568000000000,
+      "size": 4895,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            10
+          ],
+          "name": "map_type",
+          "signature": "(mut ty: Type, _: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            12,
+            35
+          ],
+          "name": "rename_type",
+          "signature": "(ty: &mut Type)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            37,
+            51
+          ],
+          "name": "map_return_type",
+          "signature": "(return_type: general::ReturnType, context: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            53,
+            109
+          ],
+          "name": "type_name",
+          "signature": "(ty: &Type, context: &Context)",
+          "type": "function"
+        },
+        {
+          "docstring": "body (needed for Python < 3.10 which evaluates annotations eagerly).",
+          "lines": [
+            114,
+            141
+          ],
+          "name": "type_annotation",
+          "signature": "(ty: &Type, context: &Context)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            143,
+            152
+          ],
+          "name": "ffi_converter_name",
+          "signature": "(ty: &general::TypeNode, context: &Context)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.762409+00:00",
+  "version": "1.0"
+}

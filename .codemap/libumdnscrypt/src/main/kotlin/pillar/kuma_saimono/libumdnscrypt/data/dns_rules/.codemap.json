@@ -1,0 +1,1453 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\data\\dns_rules",
+  "files": {
+    "DnsRulesDataSource.kt": {
+      "hash": "2c4b40facca4",
+      "indexed_at": "2026-08-01T03:59:17.112340+00:00",
+      "language": "kotlin",
+      "lines": 81,
+      "mtime_ns": 1785556375390899500,
+      "size": 3424,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "getBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "getSingleBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "saveSingleBlacklistRules",
+              "signature": "(rules: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "getRemoteBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "getRemoteBlacklistRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "getRemoteBlacklistRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "clearRemoteBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                29
+              ],
+              "name": "getLocalBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                30,
+                30
+              ],
+              "name": "clearLocalBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                31,
+                31
+              ],
+              "name": "getLocalBlacklistRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                32,
+                32
+              ],
+              "name": "getLocalBlacklistRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                34,
+                34
+              ],
+              "name": "getWhitelistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                35,
+                35
+              ],
+              "name": "getSingleWhitelistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                36,
+                36
+              ],
+              "name": "saveSingleWhitelistRules",
+              "signature": "(rules: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                37
+              ],
+              "name": "getRemoteWhitelistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                38,
+                38
+              ],
+              "name": "getRemoteWhitelistRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                39
+              ],
+              "name": "getRemoteWhitelistRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                40,
+                40
+              ],
+              "name": "clearRemoteWhitelistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                41,
+                41
+              ],
+              "name": "getLocalWhitelistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                42,
+                42
+              ],
+              "name": "getLocaleWhitelistRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                43,
+                43
+              ],
+              "name": "getLocalWhitelistRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                44,
+                44
+              ],
+              "name": "clearLocalWhitelistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                46,
+                46
+              ],
+              "name": "getIpBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                47,
+                47
+              ],
+              "name": "getSingleIpBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                48,
+                48
+              ],
+              "name": "saveSingleIpBlacklistRules",
+              "signature": "(rules: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                49
+              ],
+              "name": "getRemoteIpBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                50
+              ],
+              "name": "getRemoteIpBlacklistRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                51,
+                51
+              ],
+              "name": "getRemoteIpBlacklistRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                52,
+                52
+              ],
+              "name": "clearRemoteIpBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                53,
+                53
+              ],
+              "name": "getLocalIpBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                54,
+                54
+              ],
+              "name": "getLocalIpBlacklistRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                55,
+                55
+              ],
+              "name": "getLocalIpBlacklistRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                56
+              ],
+              "name": "clearLocalIpBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                58,
+                58
+              ],
+              "name": "getForwardingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                59,
+                59
+              ],
+              "name": "getSingleForwardingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                60,
+                60
+              ],
+              "name": "saveSingleForwardingRules",
+              "signature": "(rules: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                61,
+                61
+              ],
+              "name": "getRemoteForwardingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                62,
+                62
+              ],
+              "name": "getRemoteForwardingRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                63
+              ],
+              "name": "getRemoteForwardingRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                64,
+                64
+              ],
+              "name": "clearRemoteForwardingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                65,
+                65
+              ],
+              "name": "getLocalForwardingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                66,
+                66
+              ],
+              "name": "getLocalForwardingRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                67,
+                67
+              ],
+              "name": "getLocalForwardingRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                68
+              ],
+              "name": "clearLocalForwardingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                70,
+                70
+              ],
+              "name": "getCloakingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                71,
+                71
+              ],
+              "name": "getSingleCloakingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                72,
+                72
+              ],
+              "name": "saveSingleCloakingRules",
+              "signature": "(rules: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                73,
+                73
+              ],
+              "name": "getRemoteCloakingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                74,
+                74
+              ],
+              "name": "getRemoteCloakingRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                75,
+                75
+              ],
+              "name": "getRemoteCloakingRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                76,
+                76
+              ],
+              "name": "clearRemoteCloakingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                77
+              ],
+              "name": "getLocalCloakingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                78,
+                78
+              ],
+              "name": "getLocalCloakingRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                79
+              ],
+              "name": "getLocalCloakingRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                80,
+                80
+              ],
+              "name": "clearLocalCloakingRules",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            81
+          ],
+          "name": "DnsRulesDataSource",
+          "type": "interface"
+        }
+      ]
+    },
+    "DnsRulesDataSourceImpl.kt": {
+      "hash": "95761481b479",
+      "indexed_at": "2026-08-01T03:59:17.413049+00:00",
+      "language": "kotlin",
+      "lines": 318,
+      "mtime_ns": 1785556375402899900,
+      "size": 11709,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                47,
+                56
+              ],
+              "name": "singleRulesStream",
+              "signature": "(path: String, record: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                58,
+                60
+              ],
+              "name": "getBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                62,
+                64
+              ],
+              "name": "getSingleBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                66,
+                69
+              ],
+              "name": "saveSingleBlacklistRules",
+              "signature": "(rules: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                71,
+                73
+              ],
+              "name": "getRemoteBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                75,
+                77
+              ],
+              "name": "getRemoteBlacklistRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                81
+              ],
+              "name": "getRemoteBlacklistRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                83,
+                87
+              ],
+              "name": "clearRemoteBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                89,
+                91
+              ],
+              "name": "getLocalBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                97
+              ],
+              "name": "clearLocalBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                99,
+                101
+              ],
+              "name": "getLocalBlacklistRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                105
+              ],
+              "name": "getLocalBlacklistRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                107,
+                109
+              ],
+              "name": "getWhitelistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                113
+              ],
+              "name": "getSingleWhitelistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                115,
+                118
+              ],
+              "name": "saveSingleWhitelistRules",
+              "signature": "(rules: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                120,
+                122
+              ],
+              "name": "getRemoteWhitelistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                124,
+                126
+              ],
+              "name": "getRemoteWhitelistRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                128,
+                130
+              ],
+              "name": "getRemoteWhitelistRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                132,
+                136
+              ],
+              "name": "clearRemoteWhitelistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                138,
+                140
+              ],
+              "name": "getLocalWhitelistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                142,
+                144
+              ],
+              "name": "getLocaleWhitelistRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                146,
+                148
+              ],
+              "name": "getLocalWhitelistRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                150,
+                154
+              ],
+              "name": "clearLocalWhitelistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                156,
+                158
+              ],
+              "name": "getIpBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                160,
+                162
+              ],
+              "name": "getSingleIpBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                164,
+                167
+              ],
+              "name": "saveSingleIpBlacklistRules",
+              "signature": "(rules: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                169,
+                171
+              ],
+              "name": "getRemoteIpBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                173,
+                175
+              ],
+              "name": "getRemoteIpBlacklistRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                177,
+                179
+              ],
+              "name": "getRemoteIpBlacklistRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                181,
+                185
+              ],
+              "name": "clearRemoteIpBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                187,
+                189
+              ],
+              "name": "getLocalIpBlacklistRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                191,
+                193
+              ],
+              "name": "getLocalIpBlacklistRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                195,
+                197
+              ],
+              "name": "getLocalIpBlacklistRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                199,
+                203
+              ],
+              "name": "clearLocalIpBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                205,
+                207
+              ],
+              "name": "getForwardingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                209,
+                211
+              ],
+              "name": "getSingleForwardingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                213,
+                220
+              ],
+              "name": "saveSingleForwardingRules",
+              "signature": "(rules: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                222,
+                224
+              ],
+              "name": "getRemoteForwardingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                226,
+                228
+              ],
+              "name": "getRemoteForwardingRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                230,
+                232
+              ],
+              "name": "getRemoteForwardingRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                234,
+                238
+              ],
+              "name": "clearRemoteForwardingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                240,
+                242
+              ],
+              "name": "getLocalForwardingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                244,
+                246
+              ],
+              "name": "getLocalForwardingRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                248,
+                250
+              ],
+              "name": "getLocalForwardingRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                252,
+                256
+              ],
+              "name": "clearLocalForwardingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                258,
+                260
+              ],
+              "name": "getCloakingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                262,
+                264
+              ],
+              "name": "getSingleCloakingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                266,
+                273
+              ],
+              "name": "saveSingleCloakingRules",
+              "signature": "(rules: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                275,
+                277
+              ],
+              "name": "getRemoteCloakingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                279,
+                281
+              ],
+              "name": "getRemoteCloakingRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                283,
+                285
+              ],
+              "name": "getRemoteCloakingRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                287,
+                291
+              ],
+              "name": "clearRemoteCloakingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                293,
+                295
+              ],
+              "name": "getLocalCloakingRulesStream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                297,
+                299
+              ],
+              "name": "getLocalCloakingRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                301,
+                303
+              ],
+              "name": "getLocalCloakingRulesFileDate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                305,
+                309
+              ],
+              "name": "clearLocalCloakingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                311,
+                317
+              ],
+              "name": "getInputStreamFromFile",
+              "signature": "(path: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            28,
+            318
+          ],
+          "name": "DnsRulesDataSourceImpl",
+          "type": "class"
+        }
+      ]
+    },
+    "DnsRulesRepositoryImpl.kt": {
+      "hash": "7b02a30b7915",
+      "indexed_at": "2026-08-01T03:59:17.727049+00:00",
+      "language": "kotlin",
+      "lines": 428,
+      "mtime_ns": 1785556375414898700,
+      "size": 18056,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                44,
+                47
+              ],
+              "name": "getMixedBlacklistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                66
+              ],
+              "name": "getSingleBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                70
+              ],
+              "name": "saveSingleBlacklistRules",
+              "signature": "(rules: List<DnsRuleRecycleItem.DnsSingleRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                72,
+                82
+              ],
+              "name": "getRemoteBlacklistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                84,
+                86
+              ],
+              "name": "clearRemoteBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                88,
+                90
+              ],
+              "name": "clearLocalBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                92,
+                99
+              ],
+              "name": "getLocalBlacklistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                101,
+                104
+              ],
+              "name": "getMixedWhitelistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                106,
+                123
+              ],
+              "name": "getSingleWhitelistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                125,
+                127
+              ],
+              "name": "saveSingleWhitelistRules",
+              "signature": "(rules: List<DnsRuleRecycleItem.DnsSingleRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                129,
+                139
+              ],
+              "name": "getRemoteWhitelistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                141,
+                143
+              ],
+              "name": "clearRemoteWhitelistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                145,
+                147
+              ],
+              "name": "clearLocalWhitelistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                149,
+                156
+              ],
+              "name": "getLocalWhitelistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                158,
+                161
+              ],
+              "name": "getMixedIpBlacklistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                163,
+                180
+              ],
+              "name": "getSingleIpBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                182,
+                184
+              ],
+              "name": "saveSingleIpBlacklistRules",
+              "signature": "(rules: List<DnsRuleRecycleItem.DnsSingleRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                186,
+                196
+              ],
+              "name": "getRemoteIpBlacklistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                198,
+                200
+              ],
+              "name": "clearRemoteIpBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                202,
+                204
+              ],
+              "name": "clearLocalIpBlacklistRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                206,
+                213
+              ],
+              "name": "getLocalIpBlacklistRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                215,
+                218
+              ],
+              "name": "getMixedForwardingRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                220,
+                243
+              ],
+              "name": "getSingleForwardingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                245,
+                247
+              ],
+              "name": "saveSingleForwardingRules",
+              "signature": "(rules: List<DnsRuleRecycleItem.DnsSingleRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                249,
+                259
+              ],
+              "name": "getRemoteForwardingRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                261,
+                263
+              ],
+              "name": "clearRemoteForwardingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                265,
+                267
+              ],
+              "name": "clearLocalForwardingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                269,
+                276
+              ],
+              "name": "getLocalForwardingRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                278,
+                281
+              ],
+              "name": "getMixedCloakingRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                283,
+                306
+              ],
+              "name": "getSingleCloakingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                308,
+                310
+              ],
+              "name": "saveSingleCloakingRules",
+              "signature": "(rules: List<DnsRuleRecycleItem.DnsSingleRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                312,
+                322
+              ],
+              "name": "getRemoteCloakingRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                324,
+                326
+              ],
+              "name": "clearRemoteCloakingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                328,
+                330
+              ],
+              "name": "clearLocalCloakingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                332,
+                339
+              ],
+              "name": "getLocalCloakingRulesMetadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                341,
+                355
+              ],
+              "name": "mapLineToSingleRule",
+              "signature": "(line: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                357,
+                373
+              ],
+              "name": "mapSingleRulesToLines",
+              "signature": "(rules: List<DnsRuleRecycleItem.DnsSingleRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                375,
+                394
+              ],
+              "name": "getHeaderFromFile",
+              "signature": "(inputReader: InputStreamReader)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                396,
+                408
+              ],
+              "name": "getRulesCountFromFile",
+              "signature": "(inputReader: InputStreamReader)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                410,
+                427
+              ],
+              "name": "getSingleRulesFromFile",
+              "signature": "(\n        inputReader: InputStreamReader\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            34,
+            428
+          ],
+          "name": "DnsRulesRepositoryImpl",
+          "type": "class"
+        }
+      ]
+    },
+    "DnsSingleRuleRecords.kt": {
+      "hash": "6f037324a148",
+      "indexed_at": "2026-08-01T03:59:18.020179+00:00",
+      "language": "kotlin",
+      "lines": 35,
+      "mtime_ns": 1785556375425902900,
+      "size": 1664,
+      "symbols": [
+        {
+          "lines": [
+            29,
+            35
+          ],
+          "name": "DnsSingleRuleRecords",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:18.021648+00:00",
+  "version": "1.0"
+}

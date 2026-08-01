@@ -1,0 +1,93 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\utils\\executors",
+  "files": {
+    "CachedExecutor.kt": {
+      "hash": "03ac7b5e14dd",
+      "indexed_at": "2026-08-01T04:00:40.024304+00:00",
+      "language": "kotlin",
+      "lines": 54,
+      "mtime_ns": 1785556378719899500,
+      "size": 1686,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                34,
+                40
+              ],
+              "name": "submit",
+              "signature": "(block: Runnable)",
+              "type": "method"
+            },
+            {
+              "docstring": "For testing purposes",
+              "lines": [
+                43,
+                53
+              ],
+              "name": "checkTimeout",
+              "signature": "(future: Future<*>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            29,
+            54
+          ],
+          "name": "CachedExecutor",
+          "type": "class"
+        }
+      ]
+    },
+    "CoroutineExecutor.kt": {
+      "hash": "409bdc76e40d",
+      "indexed_at": "2026-08-01T04:00:40.341381+00:00",
+      "language": "kotlin",
+      "lines": 97,
+      "mtime_ns": 1785556378731900500,
+      "size": 3047,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                29,
+                39
+              ],
+              "name": "submit",
+              "signature": "(\n        name: String,\n        crossinline block: () -> Unit\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                41,
+                61
+              ],
+              "name": "execute",
+              "signature": "(\n        maxExecutingTimeMinutes: Int = EXECUTE_TIMEOUT_MINUTES,\n        name: String,\n        c...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                91
+              ],
+              "name": "repeat",
+              "signature": "(\n        times: Int,\n        delaySec: Int,\n        maxExecutingTimeMinutes: Int = EXECUTE_TIMEO...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            24,
+            97
+          ],
+          "name": "CoroutineExecutor",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:40.343471+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,286 @@
+{
+  "directory": "rust\\torta_ui",
+  "files": {
+    "Cargo.toml": {
+      "hash": "6245deb4a5ac",
+      "indexed_at": "2026-07-28T06:31:43.238971+00:00",
+      "language": "toml",
+      "lines": 94,
+      "mtime_ns": 1785220106204442200,
+      "size": 6794,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                2,
+                2
+              ],
+              "name": "name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "version",
+              "type": "key"
+            },
+            {
+              "lines": [
+                4,
+                4
+              ],
+              "name": "edition",
+              "type": "key"
+            },
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "license",
+              "type": "key"
+            },
+            {
+              "lines": [
+                6,
+                6
+              ],
+              "name": "description",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            1,
+            7
+          ],
+          "name": "package",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                10,
+                10
+              ],
+              "name": "crate-type",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            8,
+            18
+          ],
+          "name": "lib",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "slint",
+              "type": "key"
+            }
+          ],
+          "docstring": "SLINT \u2014 the rust-native UI toolkit. The .slint files are compiled to Rust by slint-build (build.rs). TARGET-GATED backends (#69 SLINT-on-Android spike",
+          "lines": [
+            19,
+            21
+          ],
+          "name": "target.'cfg(not(target_os = \"android\"))'.dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "slint",
+              "type": "key"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "jni",
+              "type": "key"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "ndk-context",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            22,
+            29
+          ],
+          "name": "target.'cfg(target_os = \"android\")'.dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                42,
+                42
+              ],
+              "name": "torta_core",
+              "type": "key"
+            },
+            {
+              "lines": [
+                48,
+                48
+              ],
+              "name": "carbon_bridge",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            30,
+            49
+          ],
+          "name": "dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                55,
+                55
+              ],
+              "name": "rotation_witness",
+              "type": "key"
+            },
+            {
+              "lines": [
+                60,
+                60
+              ],
+              "name": "warden_witness",
+              "type": "key"
+            },
+            {
+              "lines": [
+                66,
+                66
+              ],
+              "name": "beast_witness",
+              "type": "key"
+            },
+            {
+              "lines": [
+                73,
+                73
+              ],
+              "name": "centauri_witness",
+              "type": "key"
+            },
+            {
+              "lines": [
+                79,
+                79
+              ],
+              "name": "inu_witness",
+              "type": "key"
+            },
+            {
+              "lines": [
+                86,
+                86
+              ],
+              "name": "masksolver_witness",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            50,
+            87
+          ],
+          "name": "features",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                90,
+                90
+              ],
+              "name": "slint-build",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            88,
+            91
+          ],
+          "name": "build-dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                94,
+                94
+              ],
+              "name": "panic",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            92,
+            95
+          ],
+          "name": "profile.release",
+          "type": "table"
+        }
+      ]
+    },
+    "build.rs": {
+      "hash": "9c890cb4c6cf",
+      "indexed_at": "2026-07-26T19:12:58.215371+00:00",
+      "language": "rust",
+      "lines": 22,
+      "mtime_ns": 1785030833466606300,
+      "size": 1385,
+      "symbols": [
+        {
+          "docstring": "source of truth for the UI, compiled at build time, type-checked, no runtime parsing.",
+          "lines": [
+            10,
+            22
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-28T06:31:43.240820+00:00",
+  "version": "1.0"
+}

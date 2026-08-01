@@ -1,0 +1,1502 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT DNSCRYPT section — the OVERHAULED DNSCrypt config surface of the ||| Advanced
+// hamburger (OMEGA Stage-D · D2, charter §2.2 step 7).
+//
+// This is the rust-native (SLINT, NO XML / NO Java / NO Compose) twin of the K5 pillar: the typed
+// authority is the Rust `DnscryptProxyConfig` uniffi::Record (torta_core resolver/dnscrypt_config.rs:63),
+// and THIS section renders + edits exactly the field set the live Kotlin surface
+// (`settings/pillars/DnscryptSettingsFragment.kt`) owns today — so the two surfaces can never claim
+// different knobs. The TOML stays a COMPATIBILITY serialization (import/export), never the authority,
+// and there is NO raw TOML editor here (the Genesis law forbids it — the orphaned ConfigEditorFragment
+// .java that once offered one is DELETED this wave).
+//
+// DATA FLOW (the house law, centauri_settings.slint precedent): the host pushes the CURRENT typed
+// config onto the `in-out` inputs; the user's intents flow back out as typed CALLBACKS; the host owns
+// the truth. Callback → typed-Record destinations (all real, measured):
+//   requirement-toggled(key,on)  -> cfg.require_dnssec / require_nolog / require_nofilter
+//   server-type-toggled(key,on)  -> cfg.dnscrypt_servers / doh_servers / odoh_servers / ipv4_servers / ipv6_servers
+//   transport-toggled(key,on)    -> cfg.force_tcp / http3 / ignore_system_dns / block_ipv6 /
+//                                   block_unqualified / block_undelegated / cache / query_log.file /
+//                                   nx_log.file / proxy(+force_tcp link) / dns64.prefix seed-or-clear
+//   listen-port-edited(text)     -> cfg.listen_addresses (host validates; the block_ipv6 [::1] link)
+//   proxy-port-edited(text)      -> cfg.proxy = "socks5://127.0.0.1:<port>"
+//   bootstrap-edited(text)       -> cfg.bootstrap_resolvers (+ netprobe_address re-derive)
+//   dns64-prefix-edited(text)    -> cfg.dns64.prefix
+//   sources/relays-refresh-stepped -> cfg.sources["public-resolvers"/"relays"…].refresh_delay
+//   reload-config()              -> dnscrypt_config_import_or_default(on-disk TOML)  (lib.rs:1223)
+//   apply-config()               -> dnscrypt_config_set + dnscrypt_config_to_toml → write + module
+//                                   restart (VALUE-only, datapath-safe — ModulesStateLoop stays the
+//                                   sole datapath-promotion authority, the D09 law)
+//   open-servers-picker()/open-relays-picker() -> the dedicated server-name / 0x81 relay-routing screens
+//
+// 🎷 THE DECISION-POINT GUARD (house style): the pool-killing choices warn AT the moment they are
+// made — no server TYPE left, no IP family left, SOCKS-without-TCP, DNS64 armed with no prefix —
+// mirroring the Kotlin surface's last-of-pair refusals as visible banners instead of silent rejects.
+//
+// NOTE: slint uses `:` for property bindings; `\{expr}` interpolates; `out` properties are derived +
+// host-readable (the lib.rs proof test asserts the guards fire).
+
+import { VerticalBox, HorizontalBox, Button, LineEdit, ScrollView } from "std-widgets.slint";
+// 2-FEED-DNSCRYPT: the LIVE dashboard's query-feed rows reuse the ONE typed feed-row struct the ④
+// QUERY tab classifies (query_tab.slint QueryRow), so the DNS dashboard preview and the full query
+// feed can never disagree on shape (the host's `classify_query_line` builds both).
+import { QueryRow } from "query_tab.slint";
+
+// ── THE MANUAL PICKER ROW — one entry in the server / relay picker (the host feeds these from the
+//    pure-Rust `resolverListPickerEntries` scan of the signed public-resolvers.md / relays.md).
+//    `pinned` reflects membership in the live config (server_names / anonymized_dns.routes); tapping
+//    a row fires `pin-toggled` and the host edits the config + writes the toml. ──
+export struct PickerRow {
+    name: string,
+    proto: string,   // "dnscrypt" | "doh" | "relay" | "odoh-relay" | "other"
+    stamp: string,
+    pinned: bool,
+    // #22 s5B: the overload note ("rides N resolvers") — Socio's 404-overload guard: "using same
+    // Relays with the same Resolver more times can lead to 404 error, because u overload them".
+    // Empty ⇒ no note (server rows + un-shared relays leave it "").
+    hint: string,
+}
+
+// ── THE CANDLE — hoisted to dnscrypt_palette.slint (#24 wave) so BOTH the ThemeBook spine
+//    (theme_tokens.slint) and this section consume the ONE global cycle-free. Re-exported
+//    here so the existing importers (advanced_burger / home_shell) keep their edge intact. ──
+import { Candle } from "dnscrypt_palette.slint";
+export { Candle }
+// #24: the ThemeBook spine — identity name/motif + typography tokens (cycle-free now that
+// the Candle palette lives in dnscrypt_palette.slint).
+import { ThemeBook, MotifWash } from "theme_tokens.slint";
+
+// ── Local controls (the proven TouchArea-built vocabulary; the shared-library hoist is B4-G8,
+//    owned by the Design-Finale pane refactor — these stay file-local like every sibling). ──
+
+// ── #32(3) TAP-BURST — the on-touch spark/star bloom. Deterministic: `fired` jumps, `p` chases
+//    it (620ms ease-out), so k = fired − p is a 1→0 energy envelope; every particle rides k
+//    outward while fading. Pure property animation — no timers; at rest k = 0 ⇒ opacity 0. ──
+component SparkBurst inherits Rectangle {
+    in-out property <int> fired: 0;
+    in property <length> reach: 24px;
+    property <float> p: root.fired;
+    animate p { duration: 620ms; easing: ease-out; }
+    property <float> k: root.fired - root.p;
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    // 4 cardinal sparks — accent2 embers on the long ring
+    for d in [{ dx: 1.0, dy: 0.0 }, { dx: -1.0, dy: 0.0 }, { dx: 0.0, dy: 1.0 }, { dx: 0.0, dy: -1.0 }]: Rectangle {
+        width: 3px;
+        height: 3px;
+        border-radius: 1.5px;
+        background: ThemeBook.dnscrypt.accent2;
+        opacity: root.k * 0.9;
+        x: d.dx * root.reach * (1 - root.k) - self.width / 2;
+        y: d.dy * root.reach * (1 - root.k) - self.height / 2;
+    }
+    // 4 diagonal stars — bright 4-point crosses on the shorter ring
+    for d in [{ dx: 0.707, dy: 0.707 }, { dx: -0.707, dy: 0.707 }, { dx: 0.707, dy: -0.707 }, { dx: -0.707, dy: -0.707 }]: Rectangle {
+        width: 7px;
+        height: 7px;
+        background: transparent;
+        opacity: root.k;
+        x: d.dx * root.reach * 0.8 * (1 - root.k) - self.width / 2;
+        y: d.dy * root.reach * 0.8 * (1 - root.k) - self.height / 2;
+        Rectangle { width: 7px; height: 1px; y: 3px; background: ThemeBook.dnscrypt.bright; }
+        Rectangle { width: 1px; height: 7px; x: 3px; background: ThemeBook.dnscrypt.bright; }
+    }
+}
+
+// ── #32(5) GEAR SIGNATURE — the settings-pane law [[slint-17-general-settings-infinity-castle]]:
+//    every settings surface wears the gear. Ring + hub + 8 teeth orbiting via Math.cos/sin off
+//    the shared clock (one turn / 24s) — no parent rotation, so the childless rule never bites. ──
+component GearMark inherits Rectangle {
+    in property <length> size: 34px;
+    width: root.size;
+    height: root.size;
+    background: transparent;
+    // the ring
+    Rectangle {
+        width: parent.width * 0.58;
+        height: self.width;
+        border-radius: self.width / 2;
+        x: (parent.width - self.width) / 2;
+        y: (parent.height - self.height) / 2;
+        background: transparent;
+        border-width: 2px;
+        border-color: ThemeBook.dnscrypt.accent2;
+    }
+    // the hub
+    Rectangle {
+        width: parent.width * 0.14;
+        height: self.width;
+        border-radius: self.width / 2;
+        x: (parent.width - self.width) / 2;
+        y: (parent.height - self.height) / 2;
+        background: ThemeBook.dnscrypt.accent2;
+    }
+    // 8 teeth on the orbit (square studs; transform-rotation keeps each tooth radial — the
+    //    file's own precedent, dnscrypt calligraphy wash)
+    for i in 8: Rectangle {
+        width: parent.width * 0.14;
+        height: self.width;
+        border-radius: 1px;
+        background: ThemeBook.dnscrypt.accent2;
+        x: (parent.width - self.width) / 2 + parent.width * 0.36 * Math.cos(i * 45deg + 360deg * (animation-tick() / 24s));
+        y: (parent.height - self.height) / 2 + parent.height * 0.36 * Math.sin(i * 45deg + 360deg * (animation-tick() / 24s));
+        transform-rotation: i * 45deg + 360deg * (animation-tick() / 24s);
+    }
+}
+
+component ToggleSwitch inherits Rectangle {
+    in property <bool> on: false;
+    in property <color> on-color: ThemeBook.dnscrypt.accent;
+    callback toggled(bool);
+    width: 42px;
+    height: 24px;
+    border-radius: 12px;
+    background: ta.pressed
+        ? (root.on ? root.on-color.brighter(0.25) : ThemeBook.dnscrypt.track.brighter(0.45))
+        : (root.on ? root.on-color : ThemeBook.dnscrypt.track);
+    animate background { duration: 120ms; }
+    Rectangle {
+        width: 18px;
+        height: 18px;
+        border-radius: 9px;
+        background: white;
+        x: root.on ? parent.width - self.width - 3px : 3px;
+        y: (parent.height - self.height) / 2;
+        animate x { duration: 120ms; }
+    }
+    ta := TouchArea {
+        // G12 hit-slop: the touch surface covers ≥48px around the 42×24 visual (invisible slop).
+        width: max(parent.width, 48px);
+        height: 48px;
+        x: (parent.width - self.width) / 2;
+        y: (parent.height - self.height) / 2;
+        clicked => { burst.fired += 1; root.toggled(!root.on); }
+    }
+    burst := SparkBurst { x: parent.width / 2; y: parent.height / 2; reach: 22px; }
+}
+
+component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: ThemeBook.dnscrypt.faint;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+component RowCard inherits Rectangle {
+    background: ThemeBook.dnscrypt.floor;
+    border-radius: 6px;
+}
+
+component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: ThemeBook.dnscrypt.wound;
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: ThemeBook.dnscrypt.strike;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: ThemeBook.dnscrypt.strike;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A labelled toggle row (label + plain-words hint + switch) — the section's workhorse.
+component ToggleRow inherits RowCard {
+    in property <string> label;
+    in property <string> hint;
+    in property <bool> on;
+    in property <color> on-color: ThemeBook.dnscrypt.accent;
+    callback toggled(bool);
+    HorizontalLayout {
+        padding: 10px;
+        spacing: 10px;
+        VerticalLayout {
+            horizontal-stretch: 1;
+            Text {
+                text: root.label;
+                color: ThemeBook.dnscrypt.bright;
+                font-size: 13px;
+                font-weight: 700;
+            }
+            Text {
+                text: root.hint;
+                color: ThemeBook.dnscrypt.muted;
+                font-size: 10px;
+                wrap: word-wrap;
+            }
+        }
+        ToggleSwitch {
+            on: root.on;
+            on-color: root.on-color;
+            toggled(v) => { root.toggled(v); }
+        }
+    }
+}
+
+// A ± stepper chip pair (the refresh-cadence dials).
+component StepPill inherits Rectangle {
+    in property <string> glyph;
+    callback stepped();
+    width: 28px;
+    height: 24px;
+    border-radius: 6px;
+    background: ta.pressed ? ThemeBook.dnscrypt.accent2.with-alpha(0.22) : ThemeBook.dnscrypt.panel;
+    border-width: 1px;
+    border-color: ta.pressed ? ThemeBook.dnscrypt.accent2 : ThemeBook.dnscrypt.edge;
+    animate background, border-color { duration: 90ms; }
+    Text {
+        text: root.glyph;
+        color: ThemeBook.dnscrypt.accent2;
+        font-size: 13px;
+        font-weight: 900;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+    ta := TouchArea {
+        width: max(parent.width, 48px);
+        height: 48px;
+        x: (parent.width - self.width) / 2;
+        y: (parent.height - self.height) / 2;
+        clicked => { burst.fired += 1; root.stepped(); }
+    }
+    burst := SparkBurst { x: parent.width / 2; y: parent.height / 2; reach: 20px; }
+}
+
+// =================================================================================================
+// THE OVERHAULED DNSCRYPT SECTION — an EMBEDDABLE pane (inherits Rectangle, the B4-G2 pane idiom
+// applied from birth) hosted by the ||| Advanced burger's content region. Scrolls via the burger's
+// ScrollView (the G5 law honored by the host surface).
+// =================================================================================================
+export component DnscryptSection inherits Rectangle {
+    background: ThemeBook.dnscrypt.ground;
+
+    // ===== #33 THEME-TOKEN SPINE — THE CANDLE drench: the FULL scrollable surface wears the
+    // section theme (z-first child; panels above are ThemeBook glass, so the wash breathes through). =====
+    MotifWash { theme: ThemeBook.dnscrypt; width: 100%; height: 100%; }
+
+    // ===== #32(5) The gear signature — the machine-room cog at the masthead's right shoulder,
+    //       under the ThemeBook glass (one turn / 24s off the shared clock). =====
+    GearMark { x: parent.width - self.width - 12px; y: 8px; opacity: 0.4; }
+
+    // ===== #36 EYES ONLY — the surveillance ambient (Dark Angel × ctOS): the great candle-lit
+    //       eye with a living flame glint AND the barcode reflected in the pupil, the ctOS
+    //       CITY skyline burning behind it, and THE ANGEL — the woman with the barcode on
+    //       her neck — standing in the foreground (the pig-mask was the wrong myth here:
+    //       this pillar CLAIMS identity, it does not refuse it). Broadcast scanline sweeps
+    //       the whole surface. Pure animation-tick; zero timers; under the glass panels. =====
+    eyesonly := Rectangle {
+        width: 100%; height: 100%;
+        clip: true;
+        background: transparent;
+        property <float> tk: animation-tick() / 1ms;
+
+        // THE GREAT EYE — almond sclera, amber iris, flame in the pupil
+        greateye := Rectangle {
+            x: parent.width * 0.05; y: 130px;
+            width: 190px; height: 112px;
+            border-radius: 56px;
+            background: #241206;            // candle-shadow skin
+            border-width: 2px; border-color: #5a2410;
+            Rectangle {                     // the iris — banded amber rings
+                x: parent.width / 2 - 46px; y: parent.height / 2 - 46px;
+                width: 92px; height: 92px;
+                border-radius: 46px;
+                background: @radial-gradient(circle, #f5a623 0%, #b4622d 42%, #5a2410 76%, #1a0c04 100%);
+                Rectangle {                 // the pupil
+                    x: parent.width / 2 - 17px; y: parent.height / 2 - 17px;
+                    width: 34px; height: 34px;
+                    border-radius: 17px;
+                    background: #0d0603;
+                    Rectangle {             // the flame glint — flickers off the shared clock
+                        x: parent.width / 2 - 5px;
+                        y: parent.height / 2 - self.height * 0.55;
+                        width: 10px;
+                        height: 20px + 8px * Math.abs(sin(360deg * Math.mod(eyesonly.tk / 900.0, 1.0)));
+                        border-radius: 5px;
+                        background: @linear-gradient(180deg, #ffe9b8 0%, #f5a623 55%, #b4622d 100%);
+                    }
+                    // the BARCODE reflected in the pupil — what the eye is looking
+                    // at (the Dark Angel title shot)
+                    Rectangle {
+                        x: parent.width / 2 - 8px; y: parent.height / 2 - 2px;
+                        width: 16px; height: 11px;
+                        background: #e8dcc8.with-alpha(0.16);
+                        for rb in [0, 1, 2, 3] : Rectangle {
+                            x: 2px + rb * 3px; y: 1px;
+                            width: 1.2px; height: parent.height - 2px;
+                            background: #0d0603.with-alpha(0.85);
+                        }
+                    }
+                }
+            }
+            Rectangle {                     // the blink lid — drops on the 5.2s beat
+                x: 0; y: 0; width: 100%;
+                height: Math.mod(eyesonly.tk / 5200.0, 1.0) > 0.94 ? parent.height : 0px;
+                border-radius: 56px;
+                background: #241206;
+            }
+        }
+
+        // THE CITY — the ctOS skyline burning behind the eye (Watch Dogs
+        // reference): two depth layers of towers, amber windows flickering on
+        // the shared clock, one red antenna beacon.
+        city := Rectangle {
+            x: 0; y: greateye.y - 108px;
+            width: parent.width; height: 108px;
+            background: transparent;
+            // back-layer towers — deep shadow
+            for b in [0, 1, 2, 3, 4, 5] : Rectangle {
+                x: parent.width * (0.02 + 0.165 * b);
+                y: parent.height - self.height;
+                width: parent.width * 0.11;
+                height: 34px + 46px * Math.abs(sin((b + 1) * 47deg));
+                background: #170d06.with-alpha(0.85);
+                border-width: 1px; border-color: #5a2410.with-alpha(0.5);
+            }
+            // front-layer towers — lit windows flicker off tk
+            for f in [0, 1, 2, 3] : Rectangle {
+                x: parent.width * (0.08 + 0.24 * f);
+                y: parent.height - self.height;
+                width: parent.width * 0.14;
+                height: 52px + 34px * Math.abs(sin((f + 2) * 71deg));
+                background: #1f1208;
+                border-width: 1px; border-color: #5a2410;
+                for w in [0, 1, 2, 3, 4, 5] : Rectangle {
+                    x: 3px + Math.mod(w, 2) * (parent.width / 2);
+                    y: 6px + Math.floor(w / 2) * 12px;
+                    width: 4px; height: 5px;
+                    background: #f5a623.with-alpha(
+                        Math.mod(eyesonly.tk / 1700.0 + w * 0.31 + f * 0.17, 1.0) > 0.5 ? 0.75 : 0.18);
+                }
+            }
+            // the antenna beacon — slow red blink over the skyline
+            Rectangle {
+                x: parent.width * 0.55; y: 0;
+                width: 2px; height: 26px;
+                background: #5a2410;
+                Rectangle {
+                    x: -2px; y: -3px; width: 6px; height: 6px; border-radius: 3px;
+                    background: #ff5555.with-alpha(Math.mod(eyesonly.tk / 1400.0, 1.0) > 0.5 ? 0.9 : 0.15);
+                }
+            }
+        }
+
+        // THE ANGEL — the woman with the BARCODE on her neck (the Dark Angel
+        // reference), standing where the pig-mask used to drift. Head turned
+        // away — we see the nape, the brand, the jacket. Identity CLAIMED.
+        angel := Rectangle {
+            x: greateye.x + greateye.width * 0.66;
+            y: greateye.y - 44px + 4px * sin(360deg * Math.mod(eyesonly.tk / 5200.0, 1.0));
+            width: 118px; height: 214px;
+            background: transparent;
+            // the hair — dark crop with a candle-warm rim
+            Rectangle {
+                x: parent.width / 2 - 30px; y: 0;
+                width: 60px; height: 64px;
+                border-radius: 26px;
+                background: #14090a;
+                border-width: 1px; border-color: #b4622d.with-alpha(0.55);
+            }
+            // the face sliver — turned away (we get the nape, not the face)
+            Rectangle {
+                x: parent.width / 2 + 8px; y: 16px;
+                width: 18px; height: 32px;
+                border-radius: 9px;
+                background: #3a2114;
+            }
+            // the neck
+            Rectangle {
+                x: parent.width / 2 - 11px; y: 60px;
+                width: 22px; height: 32px;
+                background: #4a2a18;
+                // THE BARCODE — the brand on the nape
+                Rectangle {
+                    x: 2px; y: 9px; width: 18px; height: 13px;
+                    background: #e8dcc8;
+                    for s in [0, 1, 2, 3, 4, 5, 6] : Rectangle {
+                        x: 1px + s * 2.4px; y: 1px;
+                        width: Math.mod(s, 3) == 0 ? 1.6px : 0.8px;
+                        height: parent.height - 2px;
+                        background: #14090a;
+                    }
+                }
+            }
+            // shoulders — the jacket, seam catching the candle light
+            Rectangle {
+                x: 0; y: 90px;
+                width: parent.width; height: 124px;
+                border-radius: 26px;
+                background: #1a0e08;
+                border-width: 1px; border-color: #5a2410;
+                Rectangle {
+                    x: parent.width / 2 - 1px; y: 8px;
+                    width: 2px; height: parent.height - 16px;
+                    background: #b4622d.with-alpha(0.35);
+                }
+            }
+        }
+
+        // the watchers — small eyes banded down the WHOLE scroll (#22 drench law)
+        property <int> eye-bands: Math.max(2, Math.floor(self.height / 1px / 640));
+        for e in eyesonly.eye-bands : Rectangle {
+            x: parent.width * (Math.mod(e, 2) == 0 ? 0.78 : 0.08);
+            y: 560px + e * 640px;
+            width: 74px; height: 44px;
+            border-radius: 22px;
+            background: #241206;
+            border-width: 1px; border-color: #5a2410;
+            Rectangle {
+                x: parent.width / 2 - 15px; y: parent.height / 2 - 15px;
+                width: 30px; height: 30px; border-radius: 15px;
+                background: @radial-gradient(circle, #f5a623 0%, #b4622d 55%, #1a0c04 100%);
+                Rectangle {                 // pupil tracks left-right — the watcher watches
+                    x: parent.width / 2 - 5px + 7px * sin(360deg * Math.mod(eyesonly.tk / 6200.0 + e * 0.29, 1.0));
+                    y: parent.height / 2 - 5px;
+                    width: 10px; height: 10px; border-radius: 5px;
+                    background: #0d0603;
+                }
+            }
+        }
+
+        // the broadcast scanline — one candle-bright pass, forever
+        Rectangle {
+            x: 0; width: parent.width;
+            y: parent.height * Math.mod(eyesonly.tk / 7000.0, 1.0);
+            height: 2px;
+            background: #f5a623.with-alpha(0.30);
+        }
+    }
+
+    // ===== The typed posture (host pushes from the K5 Record; defaults = the upstream Default the
+    //       hand-written `DnscryptProxyConfig::default()` lands on — dnscrypt_config.rs:311). =====
+    in-out property <bool> require-dnssec: false;
+    in-out property <bool> require-nolog: true;
+    in-out property <bool> require-nofilter: true;
+    // ★ #98 — the PQDNSCrypt gate (`pqdnscrypt`, default ON, mirroring upstream v2.1.17). It decides
+    //   whether the cert selector may negotiate an es-0x0003 X-Wing cert at all: OFF makes the engine
+    //   skip PQ certs entirely and compete the classic certs on their own. Its effect is what the #97
+    //   POST-QUANTUM tile above measures, so the reading and the control now live on one surface.
+    in-out property <bool> pqdnscrypt: true;
+    in-out property <bool> dnscrypt-servers: true;
+    in-out property <bool> doh-servers: true;
+    in-out property <bool> odoh-servers: false;
+    in-out property <bool> ipv4-servers: true;
+    in-out property <bool> ipv6-servers: false;
+    in-out property <bool> force-tcp: false;
+    in-out property <bool> http3: false;
+    in-out property <bool> ignore-system-dns: true;
+    // #22 s5A-ext (Socio): the tunnel-only kill switch — app-wide swKillSwitch PREF (host JNI), not a toml bit.
+    in-out property <bool> tunnel-only: false;
+    in-out property <bool> proxy-enabled: false;
+    in-out property <int> proxy-port: 9050;
+    in-out property <int> listen-port: 5354;
+    in-out property <string> bootstrap-resolvers: "9.9.9.11, 8.8.8.8";
+    in-out property <bool> dns64-on: false;
+    in-out property <string> dns64-prefix: "";
+    in-out property <bool> block-ipv6: false;
+    in-out property <bool> block-unqualified: true;
+    in-out property <bool> block-undelegated: true;
+    in-out property <bool> query-log-on: false;
+    in-out property <bool> nx-log-on: false;
+    in-out property <bool> cache-on: true;
+    in-out property <int> cache-size: 4096;
+    in-out property <int> timeout-ms: 5000;
+    in-out property <int> server-names-count: 0;   // cfg.server_names.len() — 0 ⇒ auto-pick from sources
+    in-out property <int> relay-routes: 0;          // cfg.anonymized_dns.routes.len() — the 0x81 multi-hop
+    in-out property <int> relay-hops: 0;            // Σ route.via.len() — total relay HOPS (10/server in a full rotation)
+    in-out property <int> sources-refresh-hours: 72;
+    in-out property <int> relays-refresh-hours: 72;
+    // ── THE MANUAL PICKER — the host fills these from the pure-Rust source-list scan when the
+    //    Choose…/Routes… button fires open-servers-picker()/open-relays-picker(); the section shows
+    //    the matching expandable list, and a row's ToggleSwitch fires pin-toggled → the host edits
+    //    server_names / anonymized_dns.routes and writes the toml. ──
+    in property <[PickerRow]> server-entries: [];
+    in property <[PickerRow]> relay-entries: [];
+    // #22 s5B (Socio): "choose manually from the list, which Relay based on his filters to ad-hoc to
+    // which Resolver" — the PER-RESOLVER pairing lane. `pairing-server` names the resolver being
+    // paired ("" ⇒ panel hidden); the host fills `pairing-relay-entries` (filter-aware relays.md scan,
+    // pinned = rides THIS server's route) on pair-server-selected and after every route-relay-toggled.
+    in property <[PickerRow]> pairing-relay-entries: [];
+    in-out property <string> pairing-server: "";
+    in-out property <bool> show-server-picker: false;
+    in-out property <bool> show-relay-picker: false;
+
+    // ===== 2-FEED-DNSCRYPT — THE LIVE DASHBOARD (host pushes; the running-status + server + query-feed
+    //       twin of the other 6 pillars). Unlike the config posture above (the K5 typed authority),
+    //       these read the RUNNING resolver: `live-state` is the JNI `dnscrypt_state_code()` the shell's
+    //       500 ms poll pushes (0 stopped · 1 starting · 2 running · 3 stopping · 5 fault); `live-server`
+    //       is the K5 server-name/relay line; `live-queries` tails the REAL cache/query.log (bounded
+    //       preview — the full feed lives on ④ QUERY). Cold ⇒ honest empty, never a fabricated row. =====
+    in-out property <int> live-state: 0;
+    in-out property <string> live-server: "auto-pick from the signed source lists";
+    in-out property <[QueryRow]> live-queries: [];
+    in-out property <int> live-query-count: 0;
+
+    // ★ #97 — THE PQ WITNESS. The X-Wing es-0x0003 post-quantum engine has shaped every eligible
+    //   exchange since the v2.1.17 absorb, and until now NO surface said so: a user could not tell
+    //   whether their DNS was post-quantum protected. These two counters are the engine's own census,
+    //   bumped at the ONE dispatch fork in dnscrypt.rs `encrypted_exchange`, carried across the .so
+    //   seam by resolver `stats()` as `pq_exchanges` / `classic_exchanges`.
+    //   Counters, not a boast: `pq-exchanges` counts exchanges that NEGOTIATED the X-Wing KEM, and a
+    //   resolver publishing no es-0x0003 cert honestly leaves it at 0 while the gate is still armed.
+    //   Both 0 ⇒ nothing has been measured yet ⇒ the tile renders the house's "—", never "protected".
+    in-out property <int> pq-exchanges: 0;
+    in-out property <int> pq-classic: 0;
+    // True once the engine has actually reported an encrypted exchange of EITHER kind — the guard that
+    // separates "no post-quantum traffic" from "no traffic at all" (the empty-state law, #68).
+    property <bool> pq-measured: root.pq-exchanges + root.pq-classic > 0;
+
+    // The running-state → label + accent (the felt-truth pill; STOPPED reads dim, RUNNING safe-green).
+    out property <string> live-label: root.live-state == 2 ? "RUNNING"
+        : root.live-state == 1 ? "STARTING"
+        : root.live-state == 3 ? "STOPPING"
+        : root.live-state == 5 ? "FAULT"
+        : "STOPPED";
+    out property <color> live-accent: root.live-state == 2 ? ThemeBook.dnscrypt.good
+        : (root.live-state == 1 || root.live-state == 3) ? ThemeBook.dnscrypt.warn
+        : root.live-state == 5 ? ThemeBook.dnscrypt.bad
+        : ThemeBook.dnscrypt.faint;
+
+    // ===== 🎷 THE DECISION-POINT GUARD — derived, host-readable (the proof test asserts these) =====
+    // The pool goes DARK: every server TYPE is off — no upstream can ever be selected (the Kotlin
+    // surface refuses the last pair member; here the danger reads as a banner at the same moment).
+    out property <bool> warn-no-server-type: !root.dnscrypt-servers && !root.doh-servers && !root.odoh-servers;
+    // The pool goes DARK the other way: no IP family left.
+    out property <bool> warn-no-ip-family: !root.ipv4-servers && !root.ipv6-servers;
+    // An outbound SOCKS proxy without TCP transport silently breaks DNSCrypt exchanges (the legacy
+    // proxy↔force_tcp link the Kotlin applyProxyEnabled enforces).
+    out property <bool> warn-proxy-no-tcp: root.proxy-enabled && !root.force-tcp;
+    // DNS64 armed with no prefix is inert — the resolver reads dns64.prefix (empty ⇒ OFF).
+    out property <bool> warn-dns64-no-prefix: root.dns64-on && root.dns64-prefix == "";
+    // All three requirement filters together can empty a small pool — informational, not a block.
+    out property <bool> note-strict-filters: root.require-dnssec && root.require-nolog && root.require-nofilter;
+    out property <bool> warn-any: root.warn-no-server-type || root.warn-no-ip-family || root.warn-proxy-no-tcp || root.warn-dns64-no-prefix;
+
+    // Plain-words pool summary (the noob line) — servers AND relays named DISTINCTLY so the operator
+    // always knows how many of EACH they hold (Socio: the count must never collapse to one number).
+    out property <string> pool-summary: (root.server-names-count == 0 && root.relay-hops == 0)
+        ? "auto-pick from the signed source lists"
+        : "\{root.server-names-count} servers · \{root.relay-hops} relays hand-picked";
+
+    // ===== The edit intents (each maps to the typed Record — the doc table in the file head) =====
+    callback requirement-toggled(string /* dnssec|nolog|nofilter */, bool);
+    callback server-type-toggled(string /* dnscrypt|doh|odoh|ipv4|ipv6 */, bool);
+    callback transport-toggled(string /* force_tcp|http3|ignore_system_dns|block_ipv6|block_unqualified|block_undelegated|cache|query_log|nx_log|proxy|dns64 */, bool);
+    callback tunnel-only-toggled(bool);  // #22 s5A-ext — swKillSwitch pref over JNI
+    callback listen-port-edited(string);
+    callback proxy-port-edited(string);
+    callback bootstrap-edited(string);
+    callback dns64-prefix-edited(string);
+    callback sources-refresh-stepped(int /* ±hours */);
+    callback relays-refresh-stepped(int /* ±hours */);
+    callback open-servers-picker();
+    callback open-relays-picker();
+    // The manual picker's row tap: kind is "server" (pin/unpin a server_name) or "relay" (arm/disarm
+    // a 0x81 relay route). The host edits the typed config + writes the toml, then re-pushes the pane.
+    callback pin-toggled(string /* name */, string /* "server" | "relay" */, bool /* pinned */);
+    // #22 s5B: the pairing seam — a pinned server row's PAIR chip opens the panel (host fills the
+    // relay model); a pairing row's toggle edits exactly ONE anonymized_dns route, never the pool.
+    callback pair-server-selected(string /* server name */);
+    callback route-relay-toggled(string /* server */, string /* relay */, bool /* on */);
+    callback reload-config();
+    callback apply-config();
+
+    VerticalBox {
+        padding: 14px;
+        spacing: 12px;
+
+        // ---- Header — THE CANDLE identity crown (#24: ThemeBook-driven identity grammar;
+        //      the Watch-Dogs / Anonymous / Dark-Angel nods ride the motif tokens, the flying
+        //      JESDICT calligraphy is the faint angled glyph wash behind the title — pure
+        //      decor, zero layout weight, clipped to the crown band) ----
+        Rectangle {
+            height: 58px;
+            clip: true;
+            // the FLYING JESDICT calligraphy wash — motif glyphs drifting on animation-tick
+            // (#24: "flies like animated calligraphy" — a slow figure-eight glide, pure decor)
+            Text {
+                text: "THX to JESDICT";
+                color: Candle.ember;
+                opacity: 0.13 + 0.05 * Math.sin(360deg * (animation-tick() / 7s));
+                font-size: 21px;
+                font-weight: 900;
+                font-italic: true;
+                x: parent.width - 210px + 22px * Math.sin(360deg * (animation-tick() / 11s));
+                y: -2px + 7px * Math.sin(360deg * (animation-tick() / 5.5s));
+                transform-rotation: -12deg + 4deg * Math.sin(360deg * (animation-tick() / 9s));
+            }
+            Text {
+                text: ThemeBook.dnscrypt.motif;
+                color: ThemeBook.dnscrypt.accent;
+                opacity: 0.10;
+                font-size: 40px;
+                font-weight: 900;
+                x: parent.width - 150px - 14px * Math.sin(360deg * (animation-tick() / 13s));
+                y: 12px;
+                transform-rotation: -12deg;
+            }
+            Text {
+                text: "〜 ★ 〜";
+                color: Candle.glare;
+                opacity: 0.08 + 0.04 * Math.sin(360deg * (animation-tick() / 6s));
+                font-size: 26px;
+                font-weight: 900;
+                x: parent.width * 42% + 30px * Math.sin(360deg * (animation-tick() / 17s));
+                y: 26px;
+                transform-rotation: -8deg;
+            }
+            // ── THE IMAGE-7 RECON — the Dark-Angel telefilm eye, whole frame, as the
+            //    faint wash behind the crown: the lid-fold ridges above and below, the
+            //    open aperture, the amber iris, the near-black pupil with the BURNING
+            //    ANGEL-FIGURE reflected in it, the pale window specular on the cornea,
+            //    the cool sclera sliver low-left. Stroke-only wire look — pure decor. ──
+            Path {
+                width: 110px;
+                height: 110px;
+                x: parent.width * 22%;
+                y: -20px;
+                viewbox-width: 100;
+                viewbox-height: 100;
+                stroke: Candle.iris;
+                stroke-width: 2px;
+                fill: transparent;
+                opacity: 0.07;
+                commands: "M 2 20 Q 50 4 98 20 M 0 30 Q 50 14 100 30 M 4 86 Q 50 98 96 86 M 8 52 Q 50 22 92 52 Q 50 84 8 52 M 50 28 A 24 24 0 1 0 50 76 A 24 24 0 1 0 50 28 M 50 39 A 13 13 0 1 0 50 65 A 13 13 0 1 0 50 39 M 50 61 Q 47 56 49 51 Q 45 47 50 41 Q 55 47 51 51 Q 53 56 50 61 M 36 36 Q 44 30 52 32 M 38 41 Q 44 37 50 38 M 14 58 Q 22 66 32 68";
+            }
+            // the burning figure — the ember glint riding the pupil, breathing on the
+            // animation clock like a held flame (Image #7: the reflection flickers)
+            Path {
+                width: 110px;
+                height: 110px;
+                x: parent.width * 22%;
+                y: -20px;
+                viewbox-width: 100;
+                viewbox-height: 100;
+                stroke: Candle.ember;
+                stroke-width: 2px;
+                fill: transparent;
+                opacity: 0.05 + 0.04 * Math.sin(360deg * (animation-tick() / 4.5s));
+                commands: "M 50 61 Q 47 56 49 51 Q 45 47 50 41 Q 55 47 51 51 Q 53 56 50 61";
+            }
+            // the cornea rule under the crown band — the warm light sweep of Image #7
+            // (umber lid → amber iris → ember reflection → out), replacing the neon rule
+            Rectangle {
+                y: 55px;
+                height: 2px;
+                background: @linear-gradient(90deg, transparent 0%, Candle.lid 22%, Candle.iris 48%, Candle.ember 74%, transparent 100%);
+                opacity: 0.35;
+            }
+            HorizontalBox {
+                spacing: 8px;
+                padding: 0;
+                // the Image-7 signature glyph — the eye with the burning angel-figure
+                // in the pupil (Dark-Angel telefilm), stroke-only, ember on warm black
+                Path {
+                    width: 30px;
+                    height: 30px;
+                    viewbox-width: 100;
+                    viewbox-height: 100;
+                    stroke: Candle.ember;
+                    stroke-width: 3px;
+                    fill: transparent;
+                    commands: "M 6 50 Q 50 18 94 50 Q 50 82 6 50 M 50 30 A 20 20 0 1 0 50 70 A 20 20 0 1 0 50 30 M 50 60 Q 46 54 48 48 Q 44 43 50 36 Q 56 43 52 48 Q 54 54 50 60 M 34 34 Q 42 27 52 29";
+                }
+                VerticalLayout {
+                    Text {
+                        text: "DNSCRYPT  ·  \{ThemeBook.dnscrypt.name}";
+                        color: ThemeBook.dnscrypt.accent;
+                        font-size: ThemeBook.dnscrypt.title-size;
+                        font-weight: ThemeBook.dnscrypt.title-weight;
+                    }
+                    Text {
+                        text: "the Rust-native config authority — the TOML is only an export";
+                        color: ThemeBook.dnscrypt.muted;
+                        font-size: 11px;
+                    }
+                }
+                Rectangle { }
+                VerticalLayout {
+                    alignment: center;
+                    Text {
+                        text: root.pool-summary;
+                        color: ThemeBook.dnscrypt.accent2;
+                        font-size: 10px;
+                        horizontal-alignment: right;
+                    }
+                    Text {
+                        text: "\{root.relay-routes} anonymized routes";
+                        color: ThemeBook.dnscrypt.faint;
+                        font-size: 10px;
+                        horizontal-alignment: right;
+                    }
+                }
+            }
+        }
+
+        // ---- 2-FEED-DNSCRYPT · THE LIVE DASHBOARD (running status + server + query feed) ----
+        //      The namesake pillar's live surface, the twin of the other 6 dashboards: host-pushed
+        //      RUNNING state (the JNI poll), the K5 server line, and the real cache/query.log feed.
+        SectionTitle { text: "LIVE  ·  THE RUNNING RESOLVER"; }
+        RowCard {
+            VerticalLayout {
+                padding: 12px;
+                spacing: 10px;
+
+                // running-state pill + the active server line
+                HorizontalLayout {
+                    spacing: 12px;
+                    Rectangle {
+                        background: root.live-accent;
+                        border-radius: 6px;
+                        vertical-stretch: 0;
+                        HorizontalLayout {
+                            padding-left: 12px;
+                            padding-right: 12px;
+                            padding-top: 6px;
+                            padding-bottom: 6px;
+                            Text {
+                                text: root.live-label;
+                                color: ThemeBook.dnscrypt.ground;
+                                font-size: 12px;
+                                font-weight: 900;
+                                vertical-alignment: center;
+                            }
+                        }
+                    }
+                    VerticalLayout {
+                        horizontal-stretch: 1;
+                        alignment: center;
+                        Text {
+                            text: "SERVER";
+                            color: ThemeBook.dnscrypt.faint;
+                            font-size: 9px;
+                            font-weight: 800;
+                        }
+                        Text {
+                            text: root.live-server;
+                            color: ThemeBook.dnscrypt.bright;
+                            font-size: 12px;
+                            font-weight: 700;
+                            wrap: word-wrap;
+                        }
+                    }
+                }
+
+                // ★ #97 — THE POST-QUANTUM WITNESS. Yeah Tortä speaks X-Wing (es-0x0003) DNSCrypt, and
+                // until this tile existed the user had no way to know it: the engine negotiated the
+                // hybrid ML-KEM-768 × X25519 KEM silently. This row states the measured truth in the
+                // engine's own numbers — how many exchanges rode the post-quantum KEM versus classic
+                // X25519 — so the claim is PROVEN on the device rather than asserted in a README.
+                //
+                // Three honest states, never a flattering one:
+                //   · nothing measured yet  ⇒ "—" + the muted faint colour (the #68 empty-state law)
+                //   · PQ exchanges > 0      ⇒ SHIELDED, with the live count
+                //   · only classic seen     ⇒ CLASSIC, stating the resolver published no PQ cert
+                HorizontalLayout {
+                    spacing: 10px;
+                    padding-top: 8px;
+                    VerticalLayout {
+                        horizontal-stretch: 1;
+                        Text {
+                            text: "POST-QUANTUM  ·  X-WING es-0x0003";
+                            color: ThemeBook.dnscrypt.faint;
+                            font-size: 9px;
+                            font-weight: 800;
+                        }
+                        Text {
+                            // ★ #98 — FOUR states, because "PQ 0" has TWO different causes and reporting
+                            //   the wrong one is a lie the user cannot detect. Measured on device: with
+                            //   the gate ON this pool renders SHIELDED (PQ 5), with the gate OFF the SAME
+                            //   pool renders PQ 0 — so "this resolver publishes no es-0x0003 cert" would
+                            //   blame the resolver for the user's own switch. The gate is checked BEFORE
+                            //   the no-cert branch, and AFTER the SHIELDED branch so exchanges already
+                            //   negotiated this session are still reported honestly if the user flips it
+                            //   off mid-run.
+                            text: !root.pq-measured
+                                ? "—"
+                                : (root.pq-exchanges > 0
+                                    ? "SHIELDED  ·  \{root.pq-exchanges} exchange(s) rode the X-Wing KEM"
+                                    : (!root.pqdnscrypt
+                                        ? "DISABLED  ·  post-quantum negotiation is switched off"
+                                        : "CLASSIC  ·  this resolver publishes no es-0x0003 cert"));
+                            color: !root.pq-measured
+                                ? ThemeBook.dnscrypt.faint
+                                : (root.pq-exchanges > 0
+                                    ? ThemeBook.dnscrypt.bright
+                                    : ThemeBook.dnscrypt.muted);
+                            font-size: 12px;
+                            font-weight: 700;
+                            wrap: word-wrap;
+                        }
+                        // The full census — the denominator that makes the headline verifiable. Hidden
+                        // entirely until the engine has measured something, so a cold panel stays quiet
+                        // instead of publishing a meaningless "0 / 0".
+                        if root.pq-measured: Text {
+                            text: "hybrid ML-KEM-768 × X25519   ·   PQ \{root.pq-exchanges}   ·   classic \{root.pq-classic}";
+                            color: ThemeBook.dnscrypt.faint;
+                            font-size: 10px;
+                            font-weight: 600;
+                            wrap: word-wrap;
+                        }
+                    }
+                }
+
+                // the recent-query feed (bounded preview — the full feed lives on ④ QUERY)
+                HorizontalLayout {
+                    spacing: 8px;
+                    SectionTitle {
+                        text: "RECENT QUERIES  ·  cache/query.log";
+                        horizontal-stretch: 1;
+                        vertical-alignment: center;
+                    }
+                    Text {
+                        text: "\{root.live-query-count} shown";
+                        color: ThemeBook.dnscrypt.accent2;
+                        font-size: 10px;
+                        font-weight: 800;
+                        vertical-alignment: center;
+                    }
+                }
+                if root.live-query-count == 0 : Text {
+                    text: root.live-state == 2
+                        ? "no queries logged yet — turn on the Query log below, or wait for DNS traffic"
+                        : "resolver stopped — flip the switch on HOME to start it, then the live feed fills";
+                    color: ThemeBook.dnscrypt.muted;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+                for r in root.live-queries : Rectangle {
+                    background: ThemeBook.dnscrypt.panel;
+                    border-radius: 6px;
+                    HorizontalLayout {
+                        padding: 8px;
+                        spacing: 8px;
+                        Text {
+                            text: r.verdict;
+                            color: r.accent;
+                            font-size: 9px;
+                            font-weight: 900;
+                            vertical-alignment: center;
+                        }
+                        Text {
+                            text: r.line;
+                            color: ThemeBook.dnscrypt.bright;
+                            font-size: 10px;
+                            horizontal-stretch: 1;
+                            wrap: word-wrap;
+                        }
+                        Text {
+                            text: r.time;
+                            color: ThemeBook.dnscrypt.faint;
+                            font-size: 9px;
+                            vertical-alignment: center;
+                        }
+                    }
+                }
+            }
+        }
+
+        // ---- 🎷 decision-point banners (exist ONLY while the danger is live) ----
+        if root.warn-no-server-type : AlertBanner {
+            accent: ThemeBook.dnscrypt.bad;
+            message: "POOL DARK -> every server type is OFF. No upstream can be selected — DNS dies at the next apply. Re-enable DNSCrypt or DoH.";
+        }
+        if root.warn-no-ip-family : AlertBanner {
+            accent: ThemeBook.dnscrypt.bad;
+            message: "POOL DARK -> both IPv4 and IPv6 servers are OFF. No IP version remains — re-enable at least one.";
+        }
+        if root.warn-proxy-no-tcp : AlertBanner {
+            accent: ThemeBook.dnscrypt.warn;
+            message: "SOCKS proxy without TCP -> DNSCrypt over a SOCKS proxy needs force-TCP; UDP exchanges will silently fail.";
+        }
+        if root.warn-dns64-no-prefix : AlertBanner {
+            accent: ThemeBook.dnscrypt.warn;
+            message: "DNS64 armed with NO prefix -> the resolver reads dns64.prefix (empty = off). Set a prefix (64:ff9b::/96) or disarm.";
+        }
+        if root.note-strict-filters : AlertBanner {
+            accent: ThemeBook.dnscrypt.warn;
+            message: "All three server filters armed (DNSSEC + no-log + no-filter) -> a small source list can filter down to zero survivors.";
+        }
+
+        // ---- REQUIREMENTS (the noob simple tier) ----
+        SectionTitle { text: "SERVER REQUIREMENTS"; }
+        ToggleRow {
+            label: "Require DNSSEC";
+            hint: "Only servers that validate signatures (require_dnssec).";
+            on: root.require-dnssec;
+            on-color: ThemeBook.dnscrypt.good;
+            toggled(v) => { root.require-dnssec = v; root.requirement-toggled("dnssec", v); }
+        }
+        ToggleRow {
+            label: "Require no-log";
+            hint: "Only servers that don't log your queries (require_nolog).";
+            on: root.require-nolog;
+            on-color: ThemeBook.dnscrypt.good;
+            toggled(v) => { root.require-nolog = v; root.requirement-toggled("nolog", v); }
+        }
+        ToggleRow {
+            label: "Require no-filter";
+            hint: "Only servers that don't impose their own blocklist (require_nofilter).";
+            on: root.require-nofilter;
+            on-color: ThemeBook.dnscrypt.good;
+            toggled(v) => { root.require-nofilter = v; root.requirement-toggled("nofilter", v); }
+        }
+
+        // ---- SERVERS & RELAYS (the dedicated pickers keep their own screens) ----
+        SectionTitle { text: "SERVERS & ANONYMIZED RELAYS"; }
+        RowCard {
+            VerticalLayout {
+                padding: 10px;
+                spacing: 8px;
+                HorizontalLayout {
+                    spacing: 8px;
+                    VerticalLayout {
+                        horizontal-stretch: 1;
+                        Text {
+                            text: "Server picker";
+                            color: ThemeBook.dnscrypt.bright;
+                            font-size: 13px;
+                            font-weight: 700;
+                        }
+                        Text {
+                            text: root.pool-summary;
+                            color: ThemeBook.dnscrypt.muted;
+                            font-size: 10px;
+                        }
+                    }
+                    Button {
+                        text: root.show-server-picker ? "Done" : "Choose…";
+                        clicked => {
+                            if (!root.show-server-picker) {
+                                root.open-servers-picker();
+                            }
+                            root.show-server-picker = !root.show-server-picker;
+                        }
+                    }
+                }
+                // The expandable server picker — the host fills `server-entries` from the pure-Rust
+                // source-list scan on open; a row's toggle pins/unpins its server_name (pin-toggled).
+                if root.show-server-picker : Rectangle {
+                    height: 240px;
+                    background: ThemeBook.dnscrypt.floor;
+                    border-radius: 6px;
+                    border-width: 1px;
+                    border-color: ThemeBook.dnscrypt.track;
+                    ScrollView {
+                        VerticalLayout {
+                            padding: 6px;
+                            spacing: 3px;
+                            for e in root.server-entries : Rectangle {
+                                height: 32px;
+                                HorizontalLayout {
+                                    spacing: 8px;
+                                    padding-left: 4px;
+                                    padding-right: 4px;
+                                    Text {
+                                        text: e.name;
+                                        color: e.pinned ? ThemeBook.dnscrypt.accent : ThemeBook.dnscrypt.bright;
+                                        font-size: 11px;
+                                        vertical-alignment: center;
+                                        horizontal-stretch: 1;
+                                        overflow: elide;
+                                    }
+                                    Text {
+                                        text: e.proto;
+                                        color: ThemeBook.dnscrypt.faint;
+                                        font-size: 9px;
+                                        vertical-alignment: center;
+                                    }
+                                    // #22 s5B: the PAIR chip — only a PINNED server can be paired
+                                    // (an unpinned name never reaches server_names, so a route for
+                                    // it would be dead TOML). Opens the per-resolver pairing panel.
+                                    if e.pinned : Rectangle {
+                                        width: 40px;
+                                        height: 22px;
+                                        border-radius: 4px;
+                                        background: pair-ta.pressed
+                                            ? ThemeBook.dnscrypt.accent2
+                                            : (root.pairing-server == e.name ? ThemeBook.dnscrypt.accent : ThemeBook.dnscrypt.track);
+                                        animate background { duration: 90ms; }
+                                        Text {
+                                            text: "PAIR";
+                                            color: pair-ta.pressed || root.pairing-server == e.name ? ThemeBook.dnscrypt.ground : ThemeBook.dnscrypt.bright;
+                                            font-size: 9px;
+                                            font-weight: 700;
+                                        }
+                                        pair-burst := SparkBurst { x: parent.width / 2; y: parent.height / 2; reach: 18px; }
+                                        pair-ta := TouchArea {
+                                            clicked => {
+                                                pair-burst.fired += 1;
+                                                root.pairing-server = e.name;
+                                                root.pair-server-selected(e.name);
+                                            }
+                                        }
+                                    }
+                                    ToggleSwitch {
+                                        on: e.pinned;
+                                        toggled(v) => { root.pin-toggled(e.name, "server", v); }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                HorizontalLayout {
+                    spacing: 8px;
+                    VerticalLayout {
+                        horizontal-stretch: 1;
+                        Text {
+                            text: "Anonymized DNS routing (0x81)";
+                            color: ThemeBook.dnscrypt.bright;
+                            font-size: 13px;
+                            font-weight: 700;
+                        }
+                        Text {
+                            text: root.relay-routes > 0 ? "\{root.relay-routes} relay routes armed" : "no relay routes — queries go direct";
+                            color: root.relay-routes > 0 ? ThemeBook.dnscrypt.good : ThemeBook.dnscrypt.muted;
+                            font-size: 10px;
+                        }
+                    }
+                    Button {
+                        text: root.show-relay-picker ? "Done" : "Routes…";
+                        clicked => {
+                            if (!root.show-relay-picker) {
+                                root.open-relays-picker();
+                            }
+                            root.show-relay-picker = !root.show-relay-picker;
+                        }
+                    }
+                }
+                // The expandable relay picker — the host fills `relay-entries` from the pure-Rust
+                // relays.md scan on open; a row's toggle arms/disarms the 0x81 route (pin-toggled).
+                if root.show-relay-picker : Rectangle {
+                    height: 240px;
+                    background: ThemeBook.dnscrypt.floor;
+                    border-radius: 6px;
+                    border-width: 1px;
+                    border-color: ThemeBook.dnscrypt.track;
+                    ScrollView {
+                        VerticalLayout {
+                            padding: 6px;
+                            spacing: 3px;
+                            for e in root.relay-entries : Rectangle {
+                                height: 32px;
+                                HorizontalLayout {
+                                    spacing: 8px;
+                                    padding-left: 4px;
+                                    padding-right: 4px;
+                                    Text {
+                                        text: e.name;
+                                        color: e.pinned ? ThemeBook.dnscrypt.accent : ThemeBook.dnscrypt.bright;
+                                        font-size: 11px;
+                                        vertical-alignment: center;
+                                        horizontal-stretch: 1;
+                                        overflow: elide;
+                                    }
+                                    // #22 s5B: overload note — a relay riding many resolvers is the
+                                    // 404-overload Socio warned about; say so instead of hiding it.
+                                    if e.hint != "" : Text {
+                                        text: e.hint;
+                                        color: Candle.copper;
+                                        font-size: 9px;
+                                        vertical-alignment: center;
+                                    }
+                                    ToggleSwitch {
+                                        on: e.pinned;
+                                        toggled(v) => { root.pin-toggled(e.name, "relay", v); }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                // #22 s5B (Socio): "user must be capable to choose manually from the list, which Relay
+                // based on his filters to ad-hoc to which Resolver! ... a separate way to choose which
+                // relay to combine with which Resolver inside Dnscrypt" — the PER-RESOLVER pairing
+                // panel. Opens from a pinned server row's PAIR chip; each toggle edits exactly ONE
+                // anonymized_dns route (route-relay-toggled), never the whole pool. The amber hint is
+                // the overload guard — it encourages SPREADING relays instead of stacking one.
+                if root.pairing-server != "" : Rectangle {
+                    height: 280px;
+                    background: ThemeBook.dnscrypt.floor;
+                    border-radius: 6px;
+                    border-width: 1px;
+                    border-color: ThemeBook.dnscrypt.accent;
+                    VerticalLayout {
+                        padding: 6px;
+                        spacing: 3px;
+                        HorizontalLayout {
+                            spacing: 8px;
+                            Text {
+                                text: "RELAY PAIRING — \{root.pairing-server}";
+                                color: ThemeBook.dnscrypt.accent;
+                                font-size: 11px;
+                                font-weight: 700;
+                                vertical-alignment: center;
+                                horizontal-stretch: 1;
+                                overflow: elide;
+                            }
+                            Button {
+                                text: "Done";
+                                clicked => { root.pairing-server = ""; }
+                            }
+                        }
+                        ScrollView {
+                            vertical-stretch: 1;
+                            VerticalLayout {
+                                spacing: 3px;
+                                for e in root.pairing-relay-entries : Rectangle {
+                                    height: 32px;
+                                    HorizontalLayout {
+                                        spacing: 8px;
+                                        padding-left: 4px;
+                                        padding-right: 4px;
+                                        Text {
+                                            text: e.name;
+                                            color: e.pinned ? ThemeBook.dnscrypt.accent : ThemeBook.dnscrypt.bright;
+                                            font-size: 11px;
+                                            vertical-alignment: center;
+                                            horizontal-stretch: 1;
+                                            overflow: elide;
+                                        }
+                                        if e.hint != "" : Text {
+                                            text: e.hint;
+                                            color: Candle.copper;
+                                            font-size: 9px;
+                                            vertical-alignment: center;
+                                        }
+                                        ToggleSwitch {
+                                            on: e.pinned;
+                                            toggled(v) => { root.route-relay-toggled(root.pairing-server, e.name, v); }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // ---- SERVER TYPES ----
+        SectionTitle { text: "SERVER TYPES"; }
+        // ★ #98 — the control for the engine the #97 tile measures. Placed FIRST in SERVER TYPES because
+        //   it gates a cipher generation, not a transport: with it ON the selector may negotiate an
+        //   es-0x0003 X-Wing cert (and es-major ordering means a valid one always wins); with it OFF the
+        //   engine skips PQ certs entirely and the classic certs compete on their own.
+        ToggleRow {
+            label: "Post-quantum DNSCrypt (X-Wing)";
+            hint: "Negotiate es-0x0003 hybrid ML-KEM-768 × X25519 when a resolver offers it (pqdnscrypt).";
+            on: root.pqdnscrypt;
+            toggled(v) => { root.pqdnscrypt = v; root.requirement-toggled("pqdnscrypt", v); }
+        }
+        ToggleRow {
+            label: "DNSCrypt servers";
+            hint: "The native encrypted protocol (dnscrypt_servers).";
+            on: root.dnscrypt-servers;
+            toggled(v) => { root.dnscrypt-servers = v; root.server-type-toggled("dnscrypt", v); }
+        }
+        ToggleRow {
+            label: "DoH servers";
+            hint: "DNS-over-HTTPS (doh_servers).";
+            on: root.doh-servers;
+            toggled(v) => { root.doh-servers = v; root.server-type-toggled("doh", v); }
+        }
+        ToggleRow {
+            label: "Oblivious DoH";
+            hint: "Relay-blinded DoH (odoh_servers) — needs the oDoH source lists.";
+            on: root.odoh-servers;
+            toggled(v) => { root.odoh-servers = v; root.server-type-toggled("odoh", v); }
+        }
+        ToggleRow {
+            label: "IPv4 servers";
+            hint: "Use upstreams reachable over IPv4 (ipv4_servers).";
+            on: root.ipv4-servers;
+            toggled(v) => { root.ipv4-servers = v; root.server-type-toggled("ipv4", v); }
+        }
+        ToggleRow {
+            label: "IPv6 servers";
+            hint: "Use upstreams reachable over IPv6 (ipv6_servers).";
+            on: root.ipv6-servers;
+            toggled(v) => { root.ipv6-servers = v; root.server-type-toggled("ipv6", v); }
+        }
+
+        // ---- TRANSPORT ----
+        SectionTitle { text: "TRANSPORT"; }
+        ToggleRow {
+            label: "Force TCP";
+            hint: "Always exchange over TCP (force_tcp) — required behind a SOCKS proxy.";
+            on: root.force-tcp;
+            toggled(v) => { root.force-tcp = v; root.transport-toggled("force_tcp", v); }
+        }
+        ToggleRow {
+            label: "HTTP/3 (QUIC)";
+            hint: "Try DoH over HTTP/3 (http3).";
+            on: root.http3;
+            toggled(v) => { root.http3 = v; root.transport-toggled("http3", v); }
+        }
+        ToggleRow {
+            // Socio (#22 s5A-ext): promoted to an explicit KILL SWITCH — the user must be 100% sure
+            // this blocks ISP/router DNS intromission (it was invisible as a generic transport row;
+            // the engine default is already ON — dnscrypt_config.rs def_true()).
+            label: "KILL SWITCH — ignore system DNS";
+            hint: "Blocks ANY ISP / router DNS intromission — never fall back to the operator's resolver (ignore_system_dns). ON by default.";
+            on: root.ignore-system-dns;
+            on-color: ThemeBook.dnscrypt.good;
+            toggled(v) => { root.ignore-system-dns = v; root.transport-toggled("ignore_system_dns", v); }
+        }
+        ToggleRow {
+            // Socio (#22 s5A-ext): kill switch #2 — "allow Connection only inside The Tunnel …
+            // Enforces the Ignore-system-DNS even more, by not allowing any Internet Connection until
+            // the VPN is truly Working and Resolver / Relays are already connected". App-wide
+            // swKillSwitch pref (a PREF, not a toml key — host wires it over JNI, not transport-toggled).
+            label: "KILL SWITCH — tunnel-only connections";
+            hint: "No Internet outside the tunnel: ROOT mode cuts radios/iptables until the VPN + resolvers are truly up; in no-root VPN mode also enable Android's 'Block connections without VPN' for OS-level lockdown.";
+            on: root.tunnel-only;
+            on-color: ThemeBook.dnscrypt.good;
+            toggled(v) => { root.tunnel-only = v; root.tunnel-only-toggled(v); }
+        }
+        ToggleRow {
+            label: "Outbound SOCKS proxy";
+            hint: "Route exchanges through socks5://127.0.0.1:\{root.proxy-port} (proxy) — arming links force-TCP.";
+            on: root.proxy-enabled;
+            toggled(v) => { root.proxy-enabled = v; root.transport-toggled("proxy", v); }
+        }
+        if root.proxy-enabled : RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                Text {
+                    text: "Proxy port";
+                    color: ThemeBook.dnscrypt.bright;
+                    font-size: 12px;
+                    font-weight: 700;
+                    vertical-alignment: center;
+                    horizontal-stretch: 1;
+                }
+                LineEdit {
+                    width: 90px;
+                    text: "\{root.proxy-port}";
+                    input-type: number;
+                    accepted(t) => { root.proxy-port-edited(t); }
+                }
+            }
+        }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    Text {
+                        text: "Listen port";
+                        color: ThemeBook.dnscrypt.bright;
+                        font-size: 12px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "The loopback listener (listen_addresses) — [::1] rides unless IPv6 is blocked.";
+                        color: ThemeBook.dnscrypt.muted;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+                LineEdit {
+                    width: 90px;
+                    text: "\{root.listen-port}";
+                    input-type: number;
+                    accepted(t) => { root.listen-port-edited(t); }
+                }
+            }
+        }
+        RowCard {
+            VerticalLayout {
+                padding: 10px;
+                spacing: 6px;
+                Text {
+                    text: "Bootstrap resolvers";
+                    color: ThemeBook.dnscrypt.bright;
+                    font-size: 12px;
+                    font-weight: 700;
+                }
+                Text {
+                    text: "Plain resolvers used ONLY to look up server hostnames (bootstrap_resolvers).";
+                    color: ThemeBook.dnscrypt.muted;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+                LineEdit {
+                    text: root.bootstrap-resolvers;
+                    accepted(t) => { root.bootstrap-edited(t); }
+                }
+            }
+        }
+
+        // ---- ANSWER SHAPING ----
+        SectionTitle { text: "ANSWER SHAPING"; }
+        ToggleRow {
+            label: "DNS64 synthesis";
+            hint: "Synthesize AAAA over NAT64 (dns64.prefix — empty means off).";
+            on: root.dns64-on;
+            toggled(v) => { root.dns64-on = v; root.transport-toggled("dns64", v); }
+        }
+        if root.dns64-on : RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                Text {
+                    text: "NAT64 prefix";
+                    color: ThemeBook.dnscrypt.bright;
+                    font-size: 12px;
+                    font-weight: 700;
+                    vertical-alignment: center;
+                    horizontal-stretch: 1;
+                }
+                LineEdit {
+                    width: 160px;
+                    text: root.dns64-prefix;
+                    placeholder-text: "64:ff9b::/96";
+                    accepted(t) => { root.dns64-prefix-edited(t); }
+                }
+            }
+        }
+        ToggleRow {
+            label: "Block IPv6 answers";
+            hint: "Answer AAAA queries empty immediately (block_ipv6) — also drops [::1] from the listener.";
+            on: root.block-ipv6;
+            toggled(v) => { root.block-ipv6 = v; root.transport-toggled("block_ipv6", v); }
+        }
+        ToggleRow {
+            label: "Block unqualified names";
+            hint: "Answer hostnames without a dot locally (block_unqualified).";
+            on: root.block-unqualified;
+            toggled(v) => { root.block-unqualified = v; root.transport-toggled("block_unqualified", v); }
+        }
+        ToggleRow {
+            label: "Block undelegated zones";
+            hint: "Answer .local/.lan-style zones locally (block_undelegated).";
+            on: root.block-undelegated;
+            toggled(v) => { root.block-undelegated = v; root.transport-toggled("block_undelegated", v); }
+        }
+        ToggleRow {
+            label: "Answer cache";
+            hint: "The in-memory DNS cache (cache, \{root.cache-size} entries, \{root.timeout-ms} ms query deadline).";
+            on: root.cache-on;
+            on-color: ThemeBook.dnscrypt.good;
+            toggled(v) => { root.cache-on = v; root.transport-toggled("cache", v); }
+        }
+
+        // ---- LOGS ----
+        SectionTitle { text: "QUERY LOGS"; }
+        ToggleRow {
+            label: "Query log";
+            hint: "Write answered queries to cache/query.log (query_log.file).";
+            on: root.query-log-on;
+            toggled(v) => { root.query-log-on = v; root.transport-toggled("query_log", v); }
+        }
+        ToggleRow {
+            label: "Suspicious log";
+            hint: "Write NXDOMAIN/SERVFAIL to cache/nx.log (nx_log.file).";
+            on: root.nx-log-on;
+            toggled(v) => { root.nx-log-on = v; root.transport-toggled("nx_log", v); }
+        }
+
+        // ---- SOURCE LISTS ----
+        SectionTitle { text: "SOURCE LISTS  (signed, minisign-verified)"; }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 8px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    Text {
+                        text: "Resolver lists refresh";
+                        color: ThemeBook.dnscrypt.bright;
+                        font-size: 12px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "public-resolvers / odoh-servers (sources.refresh_delay).";
+                        color: ThemeBook.dnscrypt.muted;
+                        font-size: 10px;
+                    }
+                }
+                StepPill { glyph: "−"; stepped => { root.sources-refresh-stepped(-24); } }
+                Text {
+                    text: "\{root.sources-refresh-hours} h";
+                    color: ThemeBook.dnscrypt.accent2;
+                    font-size: 12px;
+                    font-weight: 800;
+                    vertical-alignment: center;
+                }
+                StepPill { glyph: "+"; stepped => { root.sources-refresh-stepped(24); } }
+            }
+        }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 8px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    Text {
+                        text: "Relay lists refresh";
+                        color: ThemeBook.dnscrypt.bright;
+                        font-size: 12px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "relays / odoh-relays (sources.refresh_delay).";
+                        color: ThemeBook.dnscrypt.muted;
+                        font-size: 10px;
+                    }
+                }
+                StepPill { glyph: "−"; stepped => { root.relays-refresh-stepped(-24); } }
+                Text {
+                    text: "\{root.relays-refresh-hours} h";
+                    color: ThemeBook.dnscrypt.accent2;
+                    font-size: 12px;
+                    font-weight: 800;
+                    vertical-alignment: center;
+                }
+                StepPill { glyph: "+"; stepped => { root.relays-refresh-stepped(24); } }
+            }
+        }
+
+        // ---- APPLY (value-only; the module restart re-reads — datapath-safe) ----
+        HorizontalBox {
+            alignment: end;
+            spacing: 8px;
+            Button {
+                text: "Reload";
+                clicked => { root.reload-config(); }
+            }
+            Button {
+                text: "Apply & export TOML";
+                primary: true;
+                clicked => { root.apply-config(); }
+            }
+        }
+
+        Rectangle { }  // tail spacer
+    }
+}

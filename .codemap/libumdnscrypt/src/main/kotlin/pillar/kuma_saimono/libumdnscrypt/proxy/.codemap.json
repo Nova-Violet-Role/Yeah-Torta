@@ -1,0 +1,63 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\proxy",
+  "files": {
+    "ProxyConstants.kt": {
+      "hash": "357905745816",
+      "indexed_at": "2026-08-01T04:00:15.016356+00:00",
+      "language": "kotlin",
+      "lines": 27,
+      "mtime_ns": 1785556377727900800,
+      "size": 1088,
+      "symbols": []
+    },
+    "ProxyHelper.kt": {
+      "hash": "6a46b132f130",
+      "indexed_at": "2026-08-01T04:00:15.318178+00:00",
+      "language": "kotlin",
+      "lines": 175,
+      "mtime_ns": 1785556377739899400,
+      "size": 7588,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                53,
+                93
+              ],
+              "name": "manageProxy",
+              "signature": "(\n        server: String,\n        port: String,\n        serverOrPortChanged: Boolean,\n        ena...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                95,
+                127
+              ],
+              "name": "checkProxyConnectivity",
+              "signature": "(\n        proxyHost: String,\n        proxyPort: Int,\n        proxyUser: String,\n        proxyPass...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                141,
+                170
+              ],
+              "name": "manageDNSCryptProxy",
+              "signature": "(dnsCryptConfPath: String?, address: String, enable: Boolean)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            46,
+            175
+          ],
+          "name": "ProxyHelper",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:15.319476+00:00",
+  "version": "1.0"
+}

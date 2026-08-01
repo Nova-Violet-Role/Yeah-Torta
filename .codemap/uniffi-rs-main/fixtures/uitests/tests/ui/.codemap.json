@@ -1,0 +1,703 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\uitests\\tests\\ui",
+  "files": {
+    "enum_discriminants.rs": {
+      "hash": "9e976fe72565",
+      "indexed_at": "2026-07-24T20:35:12.716205+00:00",
+      "language": "rust",
+      "lines": 9,
+      "mtime_ns": 1782136568000000000,
+      "size": 166,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            5,
+            7
+          ],
+          "name": "EnumExpr",
+          "type": "enum"
+        }
+      ]
+    },
+    "export_attrs.rs": {
+      "hash": "addcde34bcab",
+      "indexed_at": "2026-07-24T20:35:12.717103+00:00",
+      "language": "rust",
+      "lines": 80,
+      "mtime_ns": 1782136568000000000,
+      "size": 1524,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            6,
+            6
+          ],
+          "name": "S",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            9,
+            9
+          ],
+          "name": "S2",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            12,
+            12
+          ],
+          "name": "Object",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            15,
+            15
+          ],
+          "name": "Object",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            18,
+            18
+          ],
+          "name": "foreign",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            23,
+            23
+          ],
+          "name": "One",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            26,
+            29
+          ],
+          "name": "Two",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            32,
+            36
+          ],
+          "name": "Error",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            40,
+            40
+          ],
+          "name": "OtherAttrs",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                45
+              ],
+              "name": "one",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            43,
+            46
+          ],
+          "name": "OtherAttrs",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                51,
+                51
+              ],
+              "name": "two",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            49,
+            52
+          ],
+          "name": "OtherAttrs",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            56,
+            58
+          ],
+          "name": "func_with_default",
+          "signature": "(foo: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            61,
+            61
+          ],
+          "name": "ObjWithDefault",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                66,
+                68
+              ],
+              "name": "new",
+              "signature": "(foo: u32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            64,
+            69
+          ],
+          "name": "ObjWithDefault",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                74,
+                76
+              ],
+              "name": "foo_matches",
+              "signature": "(&self, foo: u32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            72,
+            77
+          ],
+          "name": "ObjWithDefault",
+          "type": "impl"
+        }
+      ]
+    },
+    "fieldless_errors_used_in_callbacks_cant_have_fields.rs": {
+      "hash": "6a56d08e1e80",
+      "indexed_at": "2026-07-24T20:35:12.717790+00:00",
+      "language": "rust",
+      "lines": 27,
+      "mtime_ns": 1782136568000000000,
+      "size": 957,
+      "symbols": [
+        {
+          "lines": [
+            4,
+            4
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            7,
+            17
+          ],
+          "name": "ArithmeticError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                22
+              ],
+              "name": "from",
+              "signature": "(e: uniffi::UnexpectedUniFFICallbackError)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            23
+          ],
+          "name": "ArithmeticError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            25,
+            27
+          ],
+          "name": "Calculator",
+          "type": "trait"
+        }
+      ]
+    },
+    "interface_cannot_use_mut_self.rs": {
+      "hash": "954e4b477994",
+      "indexed_at": "2026-07-24T20:35:12.718445+00:00",
+      "language": "rust",
+      "lines": 22,
+      "mtime_ns": 1782136568000000000,
+      "size": 507,
+      "symbols": [
+        {
+          "lines": [
+            5,
+            5
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            7,
+            9
+          ],
+          "name": "Counter",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "This will fail to compile due to `&mut self` receiver.",
+              "lines": [
+                17,
+                20
+              ],
+              "name": "increment",
+              "signature": "(&mut self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            11,
+            21
+          ],
+          "name": "Counter",
+          "type": "impl"
+        }
+      ]
+    },
+    "interface_not_sync_and_send.rs": {
+      "hash": "3f9b87c5703f",
+      "indexed_at": "2026-07-24T20:35:12.719188+00:00",
+      "language": "rust",
+      "lines": 44,
+      "mtime_ns": 1782136568000000000,
+      "size": 1053,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            7
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            9,
+            12
+          ],
+          "name": "Counter",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                15,
+                17
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                23
+              ],
+              "name": "increment",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            14,
+            24
+          ],
+          "name": "Counter",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            27,
+            30
+          ],
+          "name": "ProcMacroCounter",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                35,
+                37
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                43
+              ],
+              "name": "increment",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            33,
+            44
+          ],
+          "name": "ProcMacroCounter",
+          "type": "impl"
+        }
+      ]
+    },
+    "interface_trait_not_sync_and_send.rs": {
+      "hash": "a4371d4ae5fc",
+      "indexed_at": "2026-07-24T20:35:12.719793+00:00",
+      "language": "rust",
+      "lines": 14,
+      "mtime_ns": 1782136568000000000,
+      "size": 464,
+      "symbols": [
+        {
+          "lines": [
+            4,
+            4
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            8,
+            9
+          ],
+          "name": "Trait",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            13,
+            14
+          ],
+          "name": "ProcMacroTrait",
+          "type": "trait"
+        }
+      ]
+    },
+    "invalid_types_in_signatures.rs": {
+      "hash": "c3a4b47ee934",
+      "indexed_at": "2026-07-24T20:35:12.720458+00:00",
+      "language": "rust",
+      "lines": 25,
+      "mtime_ns": 1782136568000000000,
+      "size": 501,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            4,
+            7
+          ],
+          "name": "ErrorType",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            10,
+            10
+          ],
+          "name": "input_error",
+          "signature": "(_e: ErrorType)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            13,
+            15
+          ],
+          "name": "output_error",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            18,
+            18
+          ],
+          "name": "input_result",
+          "signature": "(_r: Result<(), ErrorType>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            21,
+            23
+          ],
+          "name": "return_option_result",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "non_hashable_record_key.rs": {
+      "hash": "4cee9ddebd4a",
+      "indexed_at": "2026-07-24T20:35:12.721017+00:00",
+      "language": "rust",
+      "lines": 4,
+      "mtime_ns": 1782136568000000000,
+      "size": 222,
+      "symbols": [
+        {
+          "lines": [
+            4,
+            4
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "trait_default_methods.rs": {
+      "hash": "75fb6129dd91",
+      "indexed_at": "2026-07-24T20:35:12.721600+00:00",
+      "language": "rust",
+      "lines": 9,
+      "mtime_ns": 1782136568000000000,
+      "size": 232,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "a method with a default impl causes problems (#2597 etc)",
+              "lines": [
+                4,
+                6
+              ],
+              "name": "default",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            7
+          ],
+          "name": "Trait",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            9,
+            9
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "trait_methods_no_trait.rs": {
+      "hash": "d9253ea5ab1a",
+      "indexed_at": "2026-07-24T20:35:12.722279+00:00",
+      "language": "rust",
+      "lines": 26,
+      "mtime_ns": 1782136568000000000,
+      "size": 711,
+      "symbols": [
+        {
+          "lines": [
+            4,
+            4
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "TraitMethods",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                11,
+                13
+              ],
+              "name": "new",
+              "signature": "(_name: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            14
+          ],
+          "name": "TraitMethods",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            17,
+            20
+          ],
+          "name": "UdlEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            23,
+            26
+          ],
+          "name": "UdlRecord",
+          "type": "struct"
+        }
+      ]
+    },
+    "trait_methods_unknown_trait.rs": {
+      "hash": "000d469df2ef",
+      "indexed_at": "2026-07-24T20:35:12.722910+00:00",
+      "language": "rust",
+      "lines": 14,
+      "mtime_ns": 1782136568000000000,
+      "size": 532,
+      "symbols": [
+        {
+          "lines": [
+            4,
+            4
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "TraitMethods",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                11,
+                13
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut std::fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            14
+          ],
+          "name": "TraitMethods",
+          "type": "impl"
+        }
+      ]
+    },
+    "typedef_extern.rs": {
+      "hash": "525e53e80b9e",
+      "indexed_at": "2026-07-24T20:35:12.723464+00:00",
+      "language": "rust",
+      "lines": 4,
+      "mtime_ns": 1782136568000000000,
+      "size": 229,
+      "symbols": [
+        {
+          "lines": [
+            4,
+            4
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.743416+00:00",
+  "version": "1.0"
+}

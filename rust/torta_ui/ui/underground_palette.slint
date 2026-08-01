@@ -1,0 +1,30 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT UNDERGROUND PALETTE — #29 the Matrix-green-on-black family, his own file.
+//
+// The palette law: every pillar carries its ink in a dedicated *_palette.slint (beast,
+// centauri, monokuma, dnscrypt…) — the Underground was the last inline holdout. UgInk moved
+// here verbatim from underground_dashboard.slint, which re-exports it so the existing
+// `import { UgInk } from "underground_dashboard.slint"` in underground_settings.slint
+// stays byte-stable (no import churn anywhere).
+//
+// SOCIO DIRECTIVE (2026-07-22): more brilliant, LESS opaque, more CHROMA — the console
+// family below carries the glass + chrome tokens for the full-layout ANIMATED CONSOLE
+// theme (#29 Socio 2). Depth comes from color, never a grey slab.
+
+export global UgInk {
+    out property <color> rain: #2fe26a;      // the pillar accent (matrix green)
+    out property <color> dim-rain: #1a7a3c;  // muted green (armed-but-idle)
+    out property <color> alarm: #ff5252;     // distrusted / sequestrated / active-destroy
+    out property <color> vouch: #4dd0e1;     // trusted band
+    out property <color> bone: #cfd8dc;      // neutral text
+
+    // ── the console family (#29 Socio 2 — the REAL ANIMATED CONSOLE) ──
+    out property <color> boot: #9ff5c0;      // the typed boot banner (bright mint)
+    out property <color> head: #eaffef;      // white-hot glyph heads + the cursor block
+    out property <color> deep: #17662f;      // the deepest rain shade (solid, no alpha)
+    out property <color> glass: #04140a;     // the console glass ground (worn with alpha)
+    out property <color> chrome: #baffd4;    // the specular sweep (chrome-mirror streak)
+}

@@ -1,0 +1,882 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\dns_engine\\wire_cake_inu",
+  "files": {
+    "AdbConnectionManager.kt": {
+      "hash": "e1f590cb9f29",
+      "indexed_at": "2026-08-01T03:59:43.623582+00:00",
+      "language": "kotlin",
+      "lines": 154,
+      "mtime_ns": 1785556376478900200,
+      "size": 6390,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                95,
+                132
+              ],
+              "name": "generateKeyAndCertificate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                134,
+                134
+              ],
+              "name": "getPrivateKey",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                136,
+                136
+              ],
+              "name": "getCertificate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                138,
+                138
+              ],
+              "name": "getDeviceName",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            55,
+            154
+          ],
+          "name": "AdbConnectionManager",
+          "type": "class"
+        }
+      ]
+    },
+    "AdbElevation.kt": {
+      "hash": "7a89f6220426",
+      "indexed_at": "2026-08-01T03:59:43.930219+00:00",
+      "language": "kotlin",
+      "lines": 56,
+      "mtime_ns": 1785556376490900100,
+      "size": 2570,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                37,
+                37
+              ],
+              "name": "pair",
+              "signature": "(host: String, port: Int, code: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                40,
+                40
+              ],
+              "name": "connect",
+              "signature": "(host: String, port: Int)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            31,
+            41
+          ],
+          "name": "AdbElevation",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                54,
+                54
+              ],
+              "name": "exec",
+              "signature": "(command: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                55,
+                55
+              ],
+              "name": "close",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            44,
+            56
+          ],
+          "name": "AdbShell",
+          "type": "interface"
+        }
+      ]
+    },
+    "LibAdbElevation.kt": {
+      "hash": "7273a1a65a0c",
+      "indexed_at": "2026-08-01T03:59:47.906670+00:00",
+      "language": "kotlin",
+      "lines": 127,
+      "mtime_ns": 1785556376502899000,
+      "size": 5889,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                38,
+                44
+              ],
+              "name": "pair",
+              "signature": "(host: String, port: Int, code: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                46,
+                54
+              ],
+              "name": "connect",
+              "signature": "(host: String, port: Int)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            32,
+            59
+          ],
+          "name": "LibAdbElevation",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                72,
+                107
+              ],
+              "name": "exec",
+              "signature": "(command: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                109,
+                120
+              ],
+              "name": "close",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            70,
+            127
+          ],
+          "name": "LibAdbShell",
+          "type": "class"
+        }
+      ]
+    },
+    "StubAdbElevation.kt": {
+      "hash": "0266ef4f8157",
+      "indexed_at": "2026-08-01T03:59:48.214445+00:00",
+      "language": "kotlin",
+      "lines": 40,
+      "mtime_ns": 1785556376514900900,
+      "size": 1505,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                29,
+                30
+              ],
+              "name": "pair",
+              "signature": "(host: String, port: Int, code: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                32,
+                33
+              ],
+              "name": "connect",
+              "signature": "(host: String, port: Int)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            25,
+            40
+          ],
+          "name": "StubAdbElevation",
+          "type": "class"
+        }
+      ]
+    },
+    "TortaSliceActivity.kt": {
+      "hash": "bd6336a6d1a9",
+      "indexed_at": "2026-08-01T03:59:48.520809+00:00",
+      "language": "kotlin",
+      "lines": 61,
+      "mtime_ns": 1785556376535902100,
+      "size": 2213,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                37,
+                60
+              ],
+              "name": "onCreate",
+              "signature": "(savedInstanceState: Bundle?)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            35,
+            61
+          ],
+          "name": "TortaSliceActivity",
+          "type": "class"
+        }
+      ]
+    },
+    "WireCakeInuComponent.kt": {
+      "hash": "8727c508167f",
+      "indexed_at": "2026-08-01T03:59:48.822276+00:00",
+      "language": "kotlin",
+      "lines": 129,
+      "mtime_ns": 1785556376546899300,
+      "size": 5927,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                81,
+                81
+              ],
+              "name": "provideAdbElevation",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                88,
+                91
+              ],
+              "name": "provideElevationProviders",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                98,
+                100
+              ],
+              "name": "provideInuStore",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                105
+              ],
+              "name": "providePowerStateStore",
+              "signature": "(store: InuStore)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                115
+              ],
+              "name": "provideElevationManager",
+              "signature": "(providers: ElevationProviders)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                123
+              ],
+              "name": "provideWireCakeInuManager",
+              "signature": "(adb: AdbElevation, store: InuStore)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            58,
+            129
+          ],
+          "name": "WireCakeInuComponent",
+          "type": "class"
+        }
+      ]
+    },
+    "WireCakeInuManager.kt": {
+      "hash": "74dff0664eca",
+      "indexed_at": "2026-08-01T03:59:49.158700+00:00",
+      "language": "kotlin",
+      "lines": 524,
+      "mtime_ns": 1785556376558898500,
+      "size": 25514,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                78,
+                79
+              ],
+              "name": "isProtected",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                82,
+                83
+              ],
+              "name": "protectedSince",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                95,
+                102
+              ],
+              "name": "pairAndElevate",
+              "signature": "(code: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                124
+              ],
+              "name": "pairWithDiscovered",
+              "signature": "(code: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                127,
+                130
+              ],
+              "name": "retryGrant",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                132,
+                150
+              ],
+              "name": "startDiscovery",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                152,
+                160
+              ],
+              "name": "stopDiscovery",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                162,
+                165
+              ],
+              "name": "dispose",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                167,
+                185
+              ],
+              "name": "buildDiscoveryListener",
+              "signature": "(nsd: NsdManager)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                187,
+                216
+              ],
+              "name": "resolve",
+              "signature": "(nsd: NsdManager, serviceInfo: NsdServiceInfo)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                224,
+                241
+              ],
+              "name": "isOwnDeviceAddress",
+              "signature": "(host: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                243,
+                253
+              ],
+              "name": "onPairingEndpoint",
+              "signature": "(host: String, port: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                255,
+                265
+              ],
+              "name": "doPair",
+              "signature": "(host: String, port: Int, code: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                267,
+                344
+              ],
+              "name": "elevate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                354,
+                358
+              ],
+              "name": "buildGrantBatch",
+              "signature": "(ops: List<PowerOp>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                361,
+                364
+              ],
+              "name": "parseVpnKeystone",
+              "signature": "(output: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                367,
+                377
+              ],
+              "name": "buildPowerFlags",
+              "signature": "(ops: List<PowerOp>, held: Set<PowerId>, now: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                391,
+                456
+              ],
+              "name": "reapplyOnBoot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                465,
+                499
+              ],
+              "name": "notifyProtected",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            62,
+            524
+          ],
+          "name": "WireCakeInuManager",
+          "type": "class"
+        }
+      ]
+    },
+    "WireCakeInuService.kt": {
+      "hash": "8de1cdab7acf",
+      "indexed_at": "2026-08-01T03:59:49.510498+00:00",
+      "language": "kotlin",
+      "lines": 484,
+      "mtime_ns": 1785556376571900500,
+      "size": 20439,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                78,
+                82
+              ],
+              "name": "onCreate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                84,
+                99
+              ],
+              "name": "onStartCommand",
+              "signature": "(intent: Intent?, flags: Int, startId: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                101,
+                111
+              ],
+              "name": "onStart",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                129
+              ],
+              "name": "onReply",
+              "signature": "(intent: Intent)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                138,
+                149
+              ],
+              "name": "onBootReapply",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                151,
+                180
+              ],
+              "name": "render",
+              "signature": "(s: WireCakeInuUiState)",
+              "type": "method"
+            },
+            {
+              "docstring": "---- notification builders ---------------------------------------------------------------------",
+              "lines": [
+                184,
+                189
+              ],
+              "name": "baseBuilder",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                191,
+                201
+              ],
+              "name": "searchingNotification",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                203,
+                210
+              ],
+              "name": "inputNotification",
+              "signature": "(port: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                212,
+                222
+              ],
+              "name": "workingNotification",
+              "signature": "(step: String? = null)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                227,
+                234
+              ],
+              "name": "reapplyingNotification",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                236,
+                243
+              ],
+              "name": "errorNotification",
+              "signature": "(message: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                249,
+                272
+              ],
+              "name": "replyAction",
+              "signature": "(port: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                274,
+                286
+              ],
+              "name": "stopAction",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                288,
+                300
+              ],
+              "name": "retryAction",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                302,
+                306
+              ],
+              "name": "openActivityIntent",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                319,
+                333
+              ],
+              "name": "promoteForeground",
+              "signature": "(n: Notification)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                341,
+                346
+              ],
+              "name": "updateNotification",
+              "signature": "(n: Notification)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                348,
+                362
+              ],
+              "name": "finishWith",
+              "signature": "(n: Notification)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                364,
+                372
+              ],
+              "name": "stopEverything",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                374,
+                389
+              ],
+              "name": "createChannel",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                391,
+                395
+              ],
+              "name": "safeColor",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                397,
+                401
+              ],
+              "name": "mutableFlags",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                403,
+                407
+              ],
+              "name": "immutableFlags",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                409,
+                418
+              ],
+              "name": "onDestroy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                420,
+                420
+              ],
+              "name": "onBind",
+              "signature": "(intent: Intent?)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            56,
+            484
+          ],
+          "name": "WireCakeInuService",
+          "type": "class"
+        }
+      ]
+    },
+    "WireCakeInuUiState.kt": {
+      "hash": "a971322fd8df",
+      "indexed_at": "2026-08-01T03:59:49.943989+00:00",
+      "language": "kotlin",
+      "lines": 55,
+      "mtime_ns": 1785556376582899600,
+      "size": 2259,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "Unsupported",
+              "type": "class"
+            },
+            {
+              "lines": [
+                30,
+                30
+              ],
+              "name": "Idle",
+              "type": "class"
+            },
+            {
+              "lines": [
+                33,
+                33
+              ],
+              "name": "Discovering",
+              "type": "class"
+            },
+            {
+              "lines": [
+                36,
+                36
+              ],
+              "name": "Found",
+              "type": "class"
+            },
+            {
+              "lines": [
+                39,
+                39
+              ],
+              "name": "Pairing",
+              "type": "class"
+            },
+            {
+              "lines": [
+                42,
+                42
+              ],
+              "name": "Connecting",
+              "type": "class"
+            },
+            {
+              "lines": [
+                45,
+                45
+              ],
+              "name": "Connected",
+              "type": "class"
+            },
+            {
+              "lines": [
+                48,
+                48
+              ],
+              "name": "Granting",
+              "type": "class"
+            },
+            {
+              "lines": [
+                51,
+                51
+              ],
+              "name": "Done",
+              "type": "class"
+            },
+            {
+              "lines": [
+                54,
+                54
+              ],
+              "name": "Error",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            25,
+            55
+          ],
+          "name": "WireCakeInuUiState",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:49.945642+00:00",
+  "version": "1.0"
+}

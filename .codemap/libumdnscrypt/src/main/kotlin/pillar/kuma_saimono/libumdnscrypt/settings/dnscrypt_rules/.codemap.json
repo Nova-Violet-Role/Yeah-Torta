@@ -1,0 +1,183 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\settings\\dnscrypt_rules",
+  "files": {
+    "AddRemoteRulesUrlDialog.kt": {
+      "hash": "8a373ce46b48",
+      "indexed_at": "2026-08-01T04:00:17.782659+00:00",
+      "language": "kotlin",
+      "lines": 84,
+      "mtime_ns": 1785556377862900100,
+      "size": 3279,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                36,
+                79
+              ],
+              "name": "createDialog",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    82,
+                    82
+                  ],
+                  "name": "onRemoteRulesUrlAdded",
+                  "signature": "(url: String, name: String)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                81,
+                83
+              ],
+              "name": "OnAddRemoteRulesUrl",
+              "type": "interface"
+            }
+          ],
+          "lines": [
+            32,
+            84
+          ],
+          "name": "AddRemoteRulesUrlDialog",
+          "type": "class"
+        }
+      ]
+    },
+    "DnsRulesViewModel.kt": {
+      "hash": "da8f628fe1e0",
+      "indexed_at": "2026-08-01T04:00:18.090527+00:00",
+      "language": "kotlin",
+      "lines": 253,
+      "mtime_ns": 1785556377873899000,
+      "size": 10583,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                63,
+                72
+              ],
+              "name": "requestRules",
+              "signature": "(rulesType: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                74,
+                137
+              ],
+              "name": "tryRequestRules",
+              "signature": "(rulesType: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                139,
+                153
+              ],
+              "name": "updateRemoteRules",
+              "signature": "(\n        ruleType: DnsRuleType,\n        currentRules: List<DnsRuleRecycleItem>,\n        name: St...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                155,
+                168
+              ],
+              "name": "deleteRemoteRules",
+              "signature": "(ruleType: DnsRuleType, currentRules: List<DnsRuleRecycleItem>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                170,
+                184
+              ],
+              "name": "importLocalRules",
+              "signature": "(\n        ruleType: DnsRuleType,\n        currentRules: List<DnsRuleRecycleItem>,\n        files: A...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                186,
+                199
+              ],
+              "name": "deleteLocalRules",
+              "signature": "(ruleType: DnsRuleType, currentRules: List<DnsRuleRecycleItem>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                201,
+                202
+              ],
+              "name": "getSingleRules",
+              "signature": "(rules: List<DnsRuleRecycleItem>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                204,
+                209
+              ],
+              "name": "saveTemporarily",
+              "signature": "(rules: List<DnsRuleRecycleItem>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                211,
+                222
+              ],
+              "name": "saveRules",
+              "signature": "(ruleType: DnsRuleType, rules: List<DnsRuleRecycleItem>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                224,
+                237
+              ],
+              "name": "saveRemoteRulesUrl",
+              "signature": "(ruleType: DnsRuleType, url: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                239,
+                249
+              ],
+              "name": "saveSingleRules",
+              "signature": "(\n        ruleType: DnsRuleType,\n        rules: List<DnsRuleRecycleItem.DnsSingleRule>,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                251,
+                252
+              ],
+              "name": "isExternalStorageAllowsDirectAccess",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            46,
+            253
+          ],
+          "name": "DnsRulesViewModel",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:18.092138+00:00",
+  "version": "1.0"
+}

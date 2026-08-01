@@ -1,0 +1,236 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\uitests\\src",
+  "files": {
+    "counter.udl": {
+      "hash": "44e8d05e7cdb",
+      "indexed_at": "2026-07-24T20:35:12.712086+00:00",
+      "language": "udl",
+      "lines": 6,
+      "mtime_ns": 1782136568000000000,
+      "size": 82,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "uitests",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                4,
+                4
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "increment",
+              "signature": "() : u32",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            3,
+            6
+          ],
+          "name": "Counter",
+          "type": "interface"
+        }
+      ]
+    },
+    "errors.udl": {
+      "hash": "edee87009347",
+      "indexed_at": "2026-07-24T20:35:12.712608+00:00",
+      "language": "udl",
+      "lines": 14,
+      "mtime_ns": 1782136568000000000,
+      "size": 207,
+      "symbols": [
+        {
+          "lines": [
+            2,
+            6
+          ],
+          "name": "ArithmeticError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                10,
+                10
+              ],
+              "name": "add",
+              "signature": "(u64 a, u64 b) : u64",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            8,
+            11
+          ],
+          "name": "Calculator",
+          "type": "callback_interface"
+        },
+        {
+          "lines": [
+            13,
+            14
+          ],
+          "name": "errors",
+          "type": "namespace"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "0b487f48bb6e",
+      "indexed_at": "2026-07-24T20:35:12.713140+00:00",
+      "language": "rust",
+      "lines": 14,
+      "mtime_ns": 1782136568000000000,
+      "size": 407,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                10,
+                13
+              ],
+              "name": "trybuild_ui_tests",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            8,
+            14
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "records.udl": {
+      "hash": "298d89a89f36",
+      "indexed_at": "2026-07-24T20:35:12.713629+00:00",
+      "language": "udl",
+      "lines": 4,
+      "mtime_ns": 1782136568000000000,
+      "size": 91,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "f32 is not allowed as a key",
+              "lines": [
+                3,
+                3
+              ],
+              "name": "get_dict",
+              "signature": "() : record<f32, u64>",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1,
+            4
+          ],
+          "name": "uitests",
+          "type": "namespace"
+        }
+      ]
+    },
+    "trait.udl": {
+      "hash": "d43e25ae9ceb",
+      "indexed_at": "2026-07-24T20:35:12.714112+00:00",
+      "language": "udl",
+      "lines": 5,
+      "mtime_ns": 1782136568000000000,
+      "size": 52,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "uitests",
+          "type": "namespace"
+        },
+        {
+          "lines": [
+            4,
+            5
+          ],
+          "name": "Trait",
+          "type": "interface"
+        }
+      ]
+    },
+    "trait_methods_unknown_trait.udl": {
+      "hash": "b8ff053760f5",
+      "indexed_at": "2026-07-24T20:35:12.714628+00:00",
+      "language": "udl",
+      "lines": 6,
+      "mtime_ns": 1782136568000000000,
+      "size": 210,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "trait_methods",
+          "type": "namespace"
+        },
+        {
+          "lines": [
+            5,
+            6
+          ],
+          "name": "TraitMethods",
+          "type": "interface"
+        }
+      ]
+    },
+    "typedef_extern.udl": {
+      "hash": "0e4633425422",
+      "indexed_at": "2026-07-24T20:35:12.715106+00:00",
+      "language": "udl",
+      "lines": 3,
+      "mtime_ns": 1782136568000000000,
+      "size": 43,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "uitests",
+          "type": "namespace"
+        },
+        {
+          "lines": [
+            3,
+            3
+          ],
+          "name": "Foo",
+          "signature": "extern",
+          "type": "typedef"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.742847+00:00",
+  "version": "1.0"
+}

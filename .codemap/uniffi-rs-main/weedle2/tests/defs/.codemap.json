@@ -1,0 +1,2797 @@
+{
+  "directory": "uniffi-rs-main\\weedle2\\tests\\defs",
+  "files": {
+    "dom.webidl": {
+      "hash": "4096a89c0612",
+      "indexed_at": "2026-07-24T20:35:13.279782+00:00",
+      "language": "udl",
+      "lines": 549,
+      "mtime_ns": 1782136568000000000,
+      "size": 19002,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                8
+              ],
+              "name": "composedPath",
+              "signature": "() : sequence<EventTarget>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "stopPropagation",
+              "signature": "() : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                18,
+                18
+              ],
+              "name": "stopImmediatePropagation",
+              "signature": "() : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "preventDefault",
+              "signature": "() : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                30,
+                30
+              ],
+              "name": "initEvent",
+              "signature": "(DOMString type, optional boolean bubbles = false, optional boolean cancelable = false) : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            3,
+            31
+          ],
+          "name": "Event",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            33,
+            37
+          ],
+          "name": "EventInit",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                56,
+                56
+              ],
+              "name": "dispatchEvent",
+              "signature": "(Event event) : boolean",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            53,
+            57
+          ],
+          "name": "EventTarget",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                60,
+                60
+              ],
+              "name": "handleEvent",
+              "signature": "(Event event) : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            59,
+            61
+          ],
+          "name": "EventListener",
+          "type": "callback_interface"
+        },
+        {
+          "lines": [
+            63,
+            65
+          ],
+          "name": "EventListenerOptions",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                77,
+                77
+              ],
+              "name": "abort",
+              "signature": "() : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            74,
+            78
+          ],
+          "name": "AbortController",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            138,
+            142
+          ],
+          "name": "NodeList",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            145,
+            149
+          ],
+          "name": "HTMLCollection",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                154,
+                154
+              ],
+              "name": "observe",
+              "signature": "(Node target, optional MutationObserverInit options) : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                155,
+                155
+              ],
+              "name": "disconnect",
+              "signature": "() : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                156,
+                156
+              ],
+              "name": "takeRecords",
+              "signature": "() : sequence<MutationRecord>",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            153,
+            157
+          ],
+          "name": "MutationObserver",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                163,
+                163
+              ],
+              "name": "attributes",
+              "signature": "boolean",
+              "type": "field"
+            },
+            {
+              "lines": [
+                164,
+                164
+              ],
+              "name": "characterData",
+              "signature": "boolean",
+              "type": "field"
+            },
+            {
+              "lines": [
+                166,
+                166
+              ],
+              "name": "attributeOldValue",
+              "signature": "boolean",
+              "type": "field"
+            },
+            {
+              "lines": [
+                167,
+                167
+              ],
+              "name": "characterDataOldValue",
+              "signature": "boolean",
+              "type": "field"
+            },
+            {
+              "lines": [
+                168,
+                168
+              ],
+              "name": "attributeFilter",
+              "signature": "sequence<DOMString>",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            161,
+            169
+          ],
+          "name": "MutationObserverInit",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            172,
+            182
+          ],
+          "name": "MutationRecord",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            242,
+            244
+          ],
+          "name": "GetRootNodeOptions",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                292,
+                292
+              ],
+              "name": "is",
+              "signature": "DOMString",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            291,
+            293
+          ],
+          "name": "ElementCreationOptions",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                301,
+                301
+              ],
+              "name": "hasFeature",
+              "signature": "() : boolean",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            296,
+            302
+          ],
+          "name": "DOMImplementation",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            322,
+            322
+          ],
+          "name": "ShadowRootMode",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            369,
+            371
+          ],
+          "name": "ShadowRootInit",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                379,
+                379
+              ],
+              "name": "getNamedItemNS",
+              "signature": "(DOMString? namespace, DOMString localName) : Attr?",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            375,
+            384
+          ],
+          "name": "NamedNodeMap",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            432,
+            438
+          ],
+          "name": "AbstractRange",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                490,
+                490
+              ],
+              "name": "nextNode",
+              "signature": "() : Node?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                491,
+                491
+              ],
+              "name": "previousNode",
+              "signature": "() : Node?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                493,
+                493
+              ],
+              "name": "detach",
+              "signature": "() : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            483,
+            494
+          ],
+          "name": "NodeIterator",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                503,
+                503
+              ],
+              "name": "parentNode",
+              "signature": "() : Node?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                504,
+                504
+              ],
+              "name": "firstChild",
+              "signature": "() : Node?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                505,
+                505
+              ],
+              "name": "lastChild",
+              "signature": "() : Node?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                506,
+                506
+              ],
+              "name": "previousSibling",
+              "signature": "() : Node?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                507,
+                507
+              ],
+              "name": "nextSibling",
+              "signature": "() : Node?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                508,
+                508
+              ],
+              "name": "previousNode",
+              "signature": "() : Node?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                509,
+                509
+              ],
+              "name": "nextNode",
+              "signature": "() : Node?",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            497,
+            510
+          ],
+          "name": "TreeWalker",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            513,
+            535
+          ],
+          "name": "NodeFilter",
+          "type": "callback_interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                541,
+                541
+              ],
+              "name": "contains",
+              "signature": "(DOMString token) : boolean",
+              "type": "method"
+            },
+            {
+              "lines": [
+                546,
+                546
+              ],
+              "name": "supports",
+              "signature": "(DOMString token) : boolean",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            538,
+            549
+          ],
+          "name": "DOMTokenList",
+          "type": "interface"
+        }
+      ]
+    },
+    "html.webidl": {
+      "hash": "f62460466d48",
+      "indexed_at": "2026-07-24T20:35:13.284189+00:00",
+      "language": "udl",
+      "lines": 2410,
+      "mtime_ns": 1782136568000000000,
+      "size": 80071,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "Element",
+              "signature": "(unsigned long index) : getter",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            3,
+            10
+          ],
+          "name": "HTMLAllCollection",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                37,
+                37
+              ],
+              "name": "contains",
+              "signature": "(DOMString string) : boolean",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            34,
+            38
+          ],
+          "name": "DOMStringList",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            40,
+            40
+          ],
+          "name": "DocumentReadyState",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            41,
+            41
+          ],
+          "name": "HTMLOrSVGScriptElement",
+          "signature": "(HTMLScriptElement or SVGScriptElement)",
+          "type": "typedef"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                136,
+                136
+              ],
+              "name": "DOMString",
+              "signature": "(DOMString name) : getter",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            135,
+            139
+          ],
+          "name": "DOMStringMap",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            440,
+            440
+          ],
+          "name": "CanPlayTypeResult",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            441,
+            441
+          ],
+          "name": "MediaProvider",
+          "signature": "(MediaStream or MediaSource or Blob)",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            503,
+            511
+          ],
+          "name": "MediaError",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            525,
+            531
+          ],
+          "name": "AudioTrack",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            546,
+            552
+          ],
+          "name": "VideoTrack",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            565,
+            565
+          ],
+          "name": "TextTrackMode",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            566,
+            566
+          ],
+          "name": "TextTrackKind",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                591,
+                591
+              ],
+              "name": "TextTrackCue",
+              "signature": "(unsigned long index) : getter",
+              "type": "method"
+            },
+            {
+              "lines": [
+                592,
+                592
+              ],
+              "name": "getCueById",
+              "signature": "(DOMString id) : TextTrackCue?",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            589,
+            593
+          ],
+          "name": "TextTrackCueList",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                611,
+                611
+              ],
+              "name": "start",
+              "signature": "(unsigned long index) : double",
+              "type": "method"
+            },
+            {
+              "lines": [
+                612,
+                612
+              ],
+              "name": "end",
+              "signature": "(unsigned long index) : double",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            609,
+            613
+          ],
+          "name": "TimeRanges",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            1004,
+            1009
+          ],
+          "name": "SelectionMode",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            1012,
+            1024
+          ],
+          "name": "ValidityState",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            1070,
+            1072
+          ],
+          "name": "AssignedNodesOptions",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            1074,
+            1074
+          ],
+          "name": "RenderingContext",
+          "signature": "(CanvasRenderingContext2D or ImageBitmapRenderingContext or WebGLRenderingContext)",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            1100,
+            1100
+          ],
+          "name": "CanvasFillRule",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            1102,
+            1104
+          ],
+          "name": "CanvasRenderingContext2DSettings",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            1106,
+            1106
+          ],
+          "name": "ImageSmoothingQuality",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            1109,
+            1112
+          ],
+          "name": "CanvasRenderingContext2D",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            1239,
+            1239
+          ],
+          "name": "CanvasLineCap",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            1240,
+            1240
+          ],
+          "name": "CanvasLineJoin",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            1241,
+            1241
+          ],
+          "name": "CanvasTextAlign",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            1242,
+            1242
+          ],
+          "name": "CanvasTextBaseline",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            1243,
+            1243
+          ],
+          "name": "CanvasDirection",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "opaque object",
+              "lines": [
+                1282,
+                1282
+              ],
+              "name": "addColorStop",
+              "signature": "(double offset, DOMString color) : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1280,
+            1283
+          ],
+          "name": "CanvasGradient",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "docstring": "opaque object",
+              "lines": [
+                1288,
+                1288
+              ],
+              "name": "setTransform",
+              "signature": "(optional DOMMatrix2DInit transform = {}) : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1286,
+            1289
+          ],
+          "name": "CanvasPattern",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            1292,
+            1308
+          ],
+          "name": "TextMetrics",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            1314,
+            1318
+          ],
+          "name": "ImageData",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1323,
+                1323
+              ],
+              "name": "addPath",
+              "signature": "(Path2D path, optional DOMMatrix2DInit transform = {}) : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1322,
+            1324
+          ],
+          "name": "Path2D",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1330,
+                1330
+              ],
+              "name": "transferFromImageBitmap",
+              "signature": "(ImageBitmap? bitmap) : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1328,
+            1331
+          ],
+          "name": "ImageBitmapRenderingContext",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            1333,
+            1335
+          ],
+          "name": "ImageBitmapRenderingContextSettings",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            1340,
+            1343
+          ],
+          "name": "ImageEncodeOptions",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            1345,
+            1345
+          ],
+          "name": "OffscreenRenderingContextId",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1359,
+                1359
+              ],
+              "name": "commit",
+              "signature": "() : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1358,
+            1361
+          ],
+          "name": "OffscreenCanvasRenderingContext2D",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1380,
+                1380
+              ],
+              "name": "get",
+              "signature": "(DOMString name) : any",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1378,
+            1383
+          ],
+          "name": "CustomElementRegistry",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1386,
+                1386
+              ],
+              "name": "extends",
+              "signature": "DOMString",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            1385,
+            1387
+          ],
+          "name": "ElementDefinitionOptions",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            1389,
+            1391
+          ],
+          "name": "FocusOptions",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1407,
+                1407
+              ],
+              "name": "setDragImage",
+              "signature": "(Element image, long x, long y) : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1411,
+                1411
+              ],
+              "name": "getData",
+              "signature": "(DOMString format) : DOMString",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1412,
+                1412
+              ],
+              "name": "setData",
+              "signature": "(DOMString format, DOMString data) : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1413,
+                1413
+              ],
+              "name": "clearData",
+              "signature": "(optional DOMString format) : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1401,
+            1415
+          ],
+          "name": "DataTransfer",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1420,
+                1420
+              ],
+              "name": "DataTransferItem",
+              "signature": "(unsigned long index) : getter",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1421,
+                1421
+              ],
+              "name": "add",
+              "signature": "(DOMString data, DOMString type) : DataTransferItem?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1422,
+                1422
+              ],
+              "name": "add",
+              "signature": "(File data) : DataTransferItem?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1423,
+                1423
+              ],
+              "name": "remove",
+              "signature": "(unsigned long index) : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1424,
+                1424
+              ],
+              "name": "clear",
+              "signature": "() : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1418,
+            1425
+          ],
+          "name": "DataTransferItemList",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1431,
+                1431
+              ],
+              "name": "getAsString",
+              "signature": "(FunctionStringCallback? _callback) : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1432,
+                1432
+              ],
+              "name": "getAsFile",
+              "signature": "() : File?",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1428,
+            1433
+          ],
+          "name": "DataTransferItem",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            1507,
+            1509
+          ],
+          "name": "BarProp",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            1511,
+            1511
+          ],
+          "name": "ScrollRestoration",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1518,
+                1518
+              ],
+              "name": "go",
+              "signature": "(optional long delta = 0) : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1519,
+                1519
+              ],
+              "name": "back",
+              "signature": "() : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1520,
+                1520
+              ],
+              "name": "forward",
+              "signature": "() : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1521,
+                1521
+              ],
+              "name": "pushState",
+              "signature": "(any data, DOMString title, optional USVString? url = null) : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1522,
+                1522
+              ],
+              "name": "replaceState",
+              "signature": "(any data, DOMString title, optional USVString? url = null) : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1514,
+            1523
+          ],
+          "name": "History",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            1526,
+            1542
+          ],
+          "name": "Location",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            1643,
+            1643
+          ],
+          "name": "EventHandler",
+          "signature": "EventHandlerNonNull?",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            1647,
+            1647
+          ],
+          "name": "OnErrorEventHandler",
+          "signature": "OnErrorEventHandlerNonNull?",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            1651,
+            1651
+          ],
+          "name": "OnBeforeUnloadEventHandler",
+          "signature": "OnBeforeUnloadEventHandlerNonNull?",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            1743,
+            1743
+          ],
+          "name": "TimerHandler",
+          "signature": "(DOMString or Function)",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            1766,
+            1768
+          ],
+          "name": "Navigator",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1817,
+                1817
+              ],
+              "name": "refresh",
+              "signature": "(optional boolean reload = false) : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1816,
+            1821
+          ],
+          "name": "PluginArray",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            1825,
+            1829
+          ],
+          "name": "MimeTypeArray",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            1833,
+            1840
+          ],
+          "name": "Plugin",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            1843,
+            1848
+          ],
+          "name": "MimeType",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1854,
+                1854
+              ],
+              "name": "close",
+              "signature": "() : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1851,
+            1855
+          ],
+          "name": "ImageBitmap",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            1861,
+            1861
+          ],
+          "name": "ImageOrientation",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            1862,
+            1862
+          ],
+          "name": "PremultiplyAlpha",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            1863,
+            1863
+          ],
+          "name": "ColorSpaceConversion",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            1864,
+            1864
+          ],
+          "name": "ResizeQuality",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            1866,
+            1873
+          ],
+          "name": "ImageBitmapOptions",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            1894,
+            1894
+          ],
+          "name": "MessageEventSource",
+          "signature": "(WindowProxy or MessagePort or ServiceWorker)",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            1914,
+            1916
+          ],
+          "name": "EventSourceInit",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            1918,
+            1918
+          ],
+          "name": "BinaryType",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            1962,
+            1965
+          ],
+          "name": "MessageChannel",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            2036,
+            2040
+          ],
+          "name": "WorkerOptions",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            2042,
+            2042
+          ],
+          "name": "WorkerType",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            2058,
+            2058
+          ],
+          "name": "WorkerNavigator",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            2065,
+            2075
+          ],
+          "name": "WorkerLocation",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                2080,
+                2080
+              ],
+              "name": "key",
+              "signature": "(unsigned long index) : DOMString?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2084,
+                2084
+              ],
+              "name": "clear",
+              "signature": "() : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2078,
+            2085
+          ],
+          "name": "Storage",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                2406,
+                2406
+              ],
+              "name": "AddSearchProvider",
+              "signature": "() : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2407,
+                2407
+              ],
+              "name": "IsSearchProviderInstalled",
+              "signature": "() : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2405,
+            2408
+          ],
+          "name": "External",
+          "type": "interface"
+        }
+      ]
+    },
+    "interface-constructor.webidl": {
+      "hash": "8b31240c8386",
+      "indexed_at": "2026-07-24T20:35:13.284738+00:00",
+      "language": "udl",
+      "lines": 4,
+      "mtime_ns": 1782136568000000000,
+      "size": 74,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "constructor",
+              "signature": "(long a)",
+              "type": "constructor"
+            }
+          ],
+          "lines": [
+            1,
+            4
+          ],
+          "name": "InterfaceWithConstructor",
+          "type": "interface"
+        }
+      ]
+    },
+    "mediacapture-streams.webidl": {
+      "hash": "144a8a4a6293",
+      "indexed_at": "2026-07-24T20:35:13.286239+00:00",
+      "language": "udl",
+      "lines": 246,
+      "mtime_ns": 1782136568000000000,
+      "size": 7406,
+      "symbols": [
+        {
+          "lines": [
+            38,
+            41
+          ],
+          "name": "MediaStreamTrackState",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            43,
+            60
+          ],
+          "name": "MediaTrackSupportedConstraints",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                63,
+                63
+              ],
+              "name": "width",
+              "signature": "ULongRange",
+              "type": "field"
+            },
+            {
+              "lines": [
+                64,
+                64
+              ],
+              "name": "height",
+              "signature": "ULongRange",
+              "type": "field"
+            },
+            {
+              "lines": [
+                65,
+                65
+              ],
+              "name": "aspectRatio",
+              "signature": "DoubleRange",
+              "type": "field"
+            },
+            {
+              "lines": [
+                66,
+                66
+              ],
+              "name": "frameRate",
+              "signature": "DoubleRange",
+              "type": "field"
+            },
+            {
+              "lines": [
+                67,
+                67
+              ],
+              "name": "facingMode",
+              "signature": "sequence<DOMString>",
+              "type": "field"
+            },
+            {
+              "lines": [
+                68,
+                68
+              ],
+              "name": "resizeMode",
+              "signature": "sequence<DOMString>",
+              "type": "field"
+            },
+            {
+              "lines": [
+                69,
+                69
+              ],
+              "name": "volume",
+              "signature": "DoubleRange",
+              "type": "field"
+            },
+            {
+              "lines": [
+                70,
+                70
+              ],
+              "name": "sampleRate",
+              "signature": "ULongRange",
+              "type": "field"
+            },
+            {
+              "lines": [
+                71,
+                71
+              ],
+              "name": "sampleSize",
+              "signature": "ULongRange",
+              "type": "field"
+            },
+            {
+              "lines": [
+                72,
+                72
+              ],
+              "name": "echoCancellation",
+              "signature": "sequence<boolean>",
+              "type": "field"
+            },
+            {
+              "lines": [
+                73,
+                73
+              ],
+              "name": "autoGainControl",
+              "signature": "sequence<boolean>",
+              "type": "field"
+            },
+            {
+              "lines": [
+                74,
+                74
+              ],
+              "name": "noiseSuppression",
+              "signature": "sequence<boolean>",
+              "type": "field"
+            },
+            {
+              "lines": [
+                75,
+                75
+              ],
+              "name": "latency",
+              "signature": "DoubleRange",
+              "type": "field"
+            },
+            {
+              "lines": [
+                76,
+                76
+              ],
+              "name": "channelCount",
+              "signature": "ULongRange",
+              "type": "field"
+            },
+            {
+              "lines": [
+                77,
+                77
+              ],
+              "name": "deviceId",
+              "signature": "DOMString",
+              "type": "field"
+            },
+            {
+              "lines": [
+                78,
+                78
+              ],
+              "name": "groupId",
+              "signature": "DOMString",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            62,
+            79
+          ],
+          "name": "MediaTrackCapabilities",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                86,
+                86
+              ],
+              "name": "width",
+              "signature": "ConstrainULong",
+              "type": "field"
+            },
+            {
+              "lines": [
+                87,
+                87
+              ],
+              "name": "height",
+              "signature": "ConstrainULong",
+              "type": "field"
+            },
+            {
+              "lines": [
+                88,
+                88
+              ],
+              "name": "aspectRatio",
+              "signature": "ConstrainDouble",
+              "type": "field"
+            },
+            {
+              "lines": [
+                89,
+                89
+              ],
+              "name": "frameRate",
+              "signature": "ConstrainDouble",
+              "type": "field"
+            },
+            {
+              "lines": [
+                90,
+                90
+              ],
+              "name": "facingMode",
+              "signature": "ConstrainDOMString",
+              "type": "field"
+            },
+            {
+              "lines": [
+                91,
+                91
+              ],
+              "name": "resizeMode",
+              "signature": "ConstrainDOMString",
+              "type": "field"
+            },
+            {
+              "lines": [
+                92,
+                92
+              ],
+              "name": "volume",
+              "signature": "ConstrainDouble",
+              "type": "field"
+            },
+            {
+              "lines": [
+                93,
+                93
+              ],
+              "name": "sampleRate",
+              "signature": "ConstrainULong",
+              "type": "field"
+            },
+            {
+              "lines": [
+                94,
+                94
+              ],
+              "name": "sampleSize",
+              "signature": "ConstrainULong",
+              "type": "field"
+            },
+            {
+              "lines": [
+                95,
+                95
+              ],
+              "name": "echoCancellation",
+              "signature": "ConstrainBoolean",
+              "type": "field"
+            },
+            {
+              "lines": [
+                96,
+                96
+              ],
+              "name": "autoGainControl",
+              "signature": "ConstrainBoolean",
+              "type": "field"
+            },
+            {
+              "lines": [
+                97,
+                97
+              ],
+              "name": "noiseSuppression",
+              "signature": "ConstrainBoolean",
+              "type": "field"
+            },
+            {
+              "lines": [
+                98,
+                98
+              ],
+              "name": "latency",
+              "signature": "ConstrainDouble",
+              "type": "field"
+            },
+            {
+              "lines": [
+                99,
+                99
+              ],
+              "name": "channelCount",
+              "signature": "ConstrainULong",
+              "type": "field"
+            },
+            {
+              "lines": [
+                100,
+                100
+              ],
+              "name": "deviceId",
+              "signature": "ConstrainDOMString",
+              "type": "field"
+            },
+            {
+              "lines": [
+                101,
+                101
+              ],
+              "name": "groupId",
+              "signature": "ConstrainDOMString",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            85,
+            102
+          ],
+          "name": "MediaTrackConstraintSet",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                105,
+                105
+              ],
+              "name": "width",
+              "signature": "long",
+              "type": "field"
+            },
+            {
+              "lines": [
+                106,
+                106
+              ],
+              "name": "height",
+              "signature": "long",
+              "type": "field"
+            },
+            {
+              "lines": [
+                107,
+                107
+              ],
+              "name": "aspectRatio",
+              "signature": "double",
+              "type": "field"
+            },
+            {
+              "lines": [
+                108,
+                108
+              ],
+              "name": "frameRate",
+              "signature": "double",
+              "type": "field"
+            },
+            {
+              "lines": [
+                109,
+                109
+              ],
+              "name": "facingMode",
+              "signature": "DOMString",
+              "type": "field"
+            },
+            {
+              "lines": [
+                110,
+                110
+              ],
+              "name": "resizeMode",
+              "signature": "DOMString",
+              "type": "field"
+            },
+            {
+              "lines": [
+                111,
+                111
+              ],
+              "name": "volume",
+              "signature": "double",
+              "type": "field"
+            },
+            {
+              "lines": [
+                112,
+                112
+              ],
+              "name": "sampleRate",
+              "signature": "long",
+              "type": "field"
+            },
+            {
+              "lines": [
+                113,
+                113
+              ],
+              "name": "sampleSize",
+              "signature": "long",
+              "type": "field"
+            },
+            {
+              "lines": [
+                114,
+                114
+              ],
+              "name": "echoCancellation",
+              "signature": "boolean",
+              "type": "field"
+            },
+            {
+              "lines": [
+                115,
+                115
+              ],
+              "name": "autoGainControl",
+              "signature": "boolean",
+              "type": "field"
+            },
+            {
+              "lines": [
+                116,
+                116
+              ],
+              "name": "noiseSuppression",
+              "signature": "boolean",
+              "type": "field"
+            },
+            {
+              "lines": [
+                117,
+                117
+              ],
+              "name": "latency",
+              "signature": "double",
+              "type": "field"
+            },
+            {
+              "lines": [
+                118,
+                118
+              ],
+              "name": "channelCount",
+              "signature": "long",
+              "type": "field"
+            },
+            {
+              "lines": [
+                119,
+                119
+              ],
+              "name": "deviceId",
+              "signature": "DOMString",
+              "type": "field"
+            },
+            {
+              "lines": [
+                120,
+                120
+              ],
+              "name": "groupId",
+              "signature": "DOMString",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            104,
+            121
+          ],
+          "name": "MediaTrackSettings",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            123,
+            128
+          ],
+          "name": "VideoFacingModeEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            130,
+            133
+          ],
+          "name": "VideoResizeModeEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            158,
+            164
+          ],
+          "name": "MediaDeviceInfo",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            166,
+            170
+          ],
+          "name": "MediaDeviceKind",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            186,
+            189
+          ],
+          "name": "MediaStreamConstraints",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            195,
+            195
+          ],
+          "name": "MediaStreamError",
+          "signature": "object",
+          "type": "typedef"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                198,
+                198
+              ],
+              "name": "max",
+              "signature": "double",
+              "type": "field"
+            },
+            {
+              "lines": [
+                199,
+                199
+              ],
+              "name": "min",
+              "signature": "double",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            197,
+            200
+          ],
+          "name": "DoubleRange",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            207,
+            210
+          ],
+          "name": "ULongRange",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                218,
+                218
+              ],
+              "name": "exact",
+              "signature": "boolean",
+              "type": "field"
+            },
+            {
+              "lines": [
+                219,
+                219
+              ],
+              "name": "ideal",
+              "signature": "boolean",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            217,
+            220
+          ],
+          "name": "ConstrainBooleanParameters",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            222,
+            225
+          ],
+          "name": "ConstrainDOMStringParameters",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            227,
+            227
+          ],
+          "name": "ConstrainULong",
+          "signature": "([Clamp] unsigned long or ConstrainULongRange)",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            229,
+            229
+          ],
+          "name": "ConstrainDouble",
+          "signature": "(double or ConstrainDoubleRange)",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            231,
+            231
+          ],
+          "name": "ConstrainBoolean",
+          "signature": "(boolean or ConstrainBooleanParameters)",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            233,
+            233
+          ],
+          "name": "ConstrainDOMString",
+          "signature": "(DOMString or sequence<DOMString> or ConstrainDOMStringParameters)",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            235,
+            236
+          ],
+          "name": "Capabilities",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            238,
+            239
+          ],
+          "name": "Settings",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            241,
+            242
+          ],
+          "name": "ConstraintSet",
+          "type": "dictionary"
+        }
+      ]
+    },
+    "streams.webidl": {
+      "hash": "54824efa8ddf",
+      "indexed_at": "2026-07-24T20:35:13.287614+00:00",
+      "language": "udl",
+      "lines": 204,
+      "mtime_ns": 1782136568000000000,
+      "size": 6304,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "constructor",
+              "signature": "(optional object underlyingSource, optional QueuingStrategy strategy = {})",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                8,
+                8
+              ],
+              "name": "getReader",
+              "signature": "(optional ReadableStreamGetReaderOptions options = {}) : ReadableStreamReader",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "pipeThrough",
+              "signature": "(ReadableWritablePair transform, optional StreamPipeOptions options = {}) : ReadableStream",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11,
+                11
+              ],
+              "name": "tee",
+              "signature": "() : sequence<ReadableStream>",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            14
+          ],
+          "name": "ReadableStream",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            16,
+            16
+          ],
+          "name": "ReadableStreamReader",
+          "signature": "(ReadableStreamDefaultReader or ReadableStreamBYOBReader)",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            18,
+            18
+          ],
+          "name": "ReadableStreamReaderMode",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "mode",
+              "signature": "ReadableStreamReaderMode",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            20,
+            22
+          ],
+          "name": "ReadableStreamGetReaderOptions",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            24,
+            26
+          ],
+          "name": "ReadableStreamIteratorOptions",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            28,
+            31
+          ],
+          "name": "ReadableWritablePair",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                37,
+                37
+              ],
+              "name": "signal",
+              "signature": "AbortSignal",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            33,
+            38
+          ],
+          "name": "StreamPipeOptions",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                41,
+                41
+              ],
+              "name": "start",
+              "signature": "UnderlyingSourceStartCallback",
+              "type": "field"
+            },
+            {
+              "lines": [
+                42,
+                42
+              ],
+              "name": "pull",
+              "signature": "UnderlyingSourcePullCallback",
+              "type": "field"
+            },
+            {
+              "lines": [
+                43,
+                43
+              ],
+              "name": "cancel",
+              "signature": "UnderlyingSourceCancelCallback",
+              "type": "field"
+            },
+            {
+              "lines": [
+                44,
+                44
+              ],
+              "name": "type",
+              "signature": "ReadableStreamType",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            40,
+            46
+          ],
+          "name": "UnderlyingSource",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            48,
+            48
+          ],
+          "name": "ReadableStreamController",
+          "signature": "(ReadableStreamDefaultController or ReadableByteStreamController)",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            54,
+            54
+          ],
+          "name": "ReadableStreamType",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                58,
+                58
+              ],
+              "name": "constructor",
+              "signature": "(ReadableStream stream)",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                64,
+                64
+              ],
+              "name": "releaseLock",
+              "signature": "() : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            57,
+            65
+          ],
+          "name": "ReadableStreamDefaultReader",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                69,
+                69
+              ],
+              "name": "constructor",
+              "signature": "(ReadableStream stream)",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                75,
+                75
+              ],
+              "name": "releaseLock",
+              "signature": "() : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            68,
+            76
+          ],
+          "name": "ReadableStreamBYOBReader",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                82,
+                82
+              ],
+              "name": "close",
+              "signature": "() : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                83,
+                83
+              ],
+              "name": "enqueue",
+              "signature": "(optional any chunk) : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                84,
+                84
+              ],
+              "name": "error",
+              "signature": "(optional any e) : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            79,
+            85
+          ],
+          "name": "ReadableStreamDefaultController",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                92,
+                92
+              ],
+              "name": "close",
+              "signature": "() : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                93
+              ],
+              "name": "enqueue",
+              "signature": "(ArrayBufferView chunk) : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                94,
+                94
+              ],
+              "name": "error",
+              "signature": "(optional any e) : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            88,
+            95
+          ],
+          "name": "ReadableByteStreamController",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                101,
+                101
+              ],
+              "name": "respond",
+              "signature": "([EnforceRange] unsigned long long bytesWritten) : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                102
+              ],
+              "name": "respondWithNewView",
+              "signature": "(ArrayBufferView view) : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            98,
+            103
+          ],
+          "name": "ReadableStreamBYOBRequest",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                107,
+                107
+              ],
+              "name": "constructor",
+              "signature": "(optional object underlyingSink, optional QueuingStrategy strategy = {})",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                113,
+                113
+              ],
+              "name": "getWriter",
+              "signature": "() : WritableStreamDefaultWriter",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            106,
+            114
+          ],
+          "name": "WritableStream",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                117,
+                117
+              ],
+              "name": "start",
+              "signature": "UnderlyingSinkStartCallback",
+              "type": "field"
+            },
+            {
+              "lines": [
+                118,
+                118
+              ],
+              "name": "write",
+              "signature": "UnderlyingSinkWriteCallback",
+              "type": "field"
+            },
+            {
+              "lines": [
+                119,
+                119
+              ],
+              "name": "close",
+              "signature": "UnderlyingSinkCloseCallback",
+              "type": "field"
+            },
+            {
+              "lines": [
+                120,
+                120
+              ],
+              "name": "abort",
+              "signature": "UnderlyingSinkAbortCallback",
+              "type": "field"
+            },
+            {
+              "lines": [
+                121,
+                121
+              ],
+              "name": "type",
+              "signature": "any",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            116,
+            122
+          ],
+          "name": "UnderlyingSink",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                131,
+                131
+              ],
+              "name": "constructor",
+              "signature": "(WritableStream stream)",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                139,
+                139
+              ],
+              "name": "releaseLock",
+              "signature": "() : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            130,
+            141
+          ],
+          "name": "WritableStreamDefaultWriter",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                145,
+                145
+              ],
+              "name": "error",
+              "signature": "(optional any e) : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            144,
+            146
+          ],
+          "name": "WritableStreamDefaultController",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            149,
+            156
+          ],
+          "name": "TransformStream",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                159,
+                159
+              ],
+              "name": "start",
+              "signature": "TransformerStartCallback",
+              "type": "field"
+            },
+            {
+              "lines": [
+                160,
+                160
+              ],
+              "name": "transform",
+              "signature": "TransformerTransformCallback",
+              "type": "field"
+            },
+            {
+              "lines": [
+                161,
+                161
+              ],
+              "name": "flush",
+              "signature": "TransformerFlushCallback",
+              "type": "field"
+            },
+            {
+              "lines": [
+                162,
+                162
+              ],
+              "name": "readableType",
+              "signature": "any",
+              "type": "field"
+            },
+            {
+              "lines": [
+                163,
+                163
+              ],
+              "name": "writableType",
+              "signature": "any",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            158,
+            164
+          ],
+          "name": "Transformer",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                174,
+                174
+              ],
+              "name": "enqueue",
+              "signature": "(optional any chunk) : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                175,
+                175
+              ],
+              "name": "error",
+              "signature": "(optional any reason) : undefined",
+              "type": "method"
+            },
+            {
+              "lines": [
+                176,
+                176
+              ],
+              "name": "terminate",
+              "signature": "() : undefined",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            171,
+            177
+          ],
+          "name": "TransformStreamDefaultController",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                181,
+                181
+              ],
+              "name": "size",
+              "signature": "QueuingStrategySize",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            179,
+            182
+          ],
+          "name": "QueuingStrategy",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            186,
+            188
+          ],
+          "name": "QueuingStrategyInit",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                192,
+                192
+              ],
+              "name": "constructor",
+              "signature": "(QueuingStrategyInit init)",
+              "type": "constructor"
+            }
+          ],
+          "lines": [
+            191,
+            196
+          ],
+          "name": "ByteLengthQueuingStrategy",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                200,
+                200
+              ],
+              "name": "constructor",
+              "signature": "(QueuingStrategyInit init)",
+              "type": "constructor"
+            }
+          ],
+          "lines": [
+            199,
+            204
+          ],
+          "name": "CountQueuingStrategy",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.810583+00:00",
+  "version": "1.0"
+}

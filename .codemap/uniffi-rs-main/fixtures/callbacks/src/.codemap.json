@@ -1,0 +1,467 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\callbacks\\src",
+  "files": {
+    "callbacks.udl": {
+      "hash": "0b0fe10959e8",
+      "indexed_at": "2026-07-24T20:35:12.408768+00:00",
+      "language": "udl",
+      "lines": 71,
+      "mtime_ns": 1782136568000000000,
+      "size": 2470,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "fixture_callbacks",
+          "type": "namespace"
+        },
+        {
+          "lines": [
+            4,
+            7
+          ],
+          "name": "SimpleError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                11,
+                11
+              ],
+              "name": "ReallyBadArgument",
+              "signature": "(i32 code)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                12,
+                12
+              ],
+              "name": "UnexpectedErrorWithReason",
+              "signature": "(string reason)",
+              "type": "variant"
+            }
+          ],
+          "lines": [
+            10,
+            13
+          ],
+          "name": "ComplexError",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "get_bool",
+              "signature": "(boolean v, boolean argument_two) : boolean",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "get_string",
+              "signature": "(string v, boolean arg2) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "get_option",
+              "signature": "(string? v, boolean arg2) : string?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "get_list",
+              "signature": "(sequence<i32> v, boolean arg2) : sequence<i32>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                30,
+                30
+              ],
+              "name": "get_nothing",
+              "signature": "(string v) : void",
+              "type": "method"
+            }
+          ],
+          "docstring": "/ These objects are implemented by the foreign language and passed / to Rust. Rust then calls methods on it when it needs to. / / Some methods throw S",
+          "lines": [
+            20,
+            31
+          ],
+          "name": "ForeignGetters",
+          "type": "callback_interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                36,
+                36
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                38,
+                38
+              ],
+              "name": "get_bool",
+              "signature": "(ForeignGetters callback, boolean v, boolean argument_two) : boolean",
+              "type": "method"
+            },
+            {
+              "lines": [
+                40,
+                40
+              ],
+              "name": "get_string",
+              "signature": "(ForeignGetters callback, string v, boolean arg2) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                42,
+                42
+              ],
+              "name": "get_option",
+              "signature": "(ForeignGetters callback, string? v, boolean arg2) : string?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                44,
+                44
+              ],
+              "name": "get_list",
+              "signature": "(ForeignGetters callback, sequence<i32> v, boolean arg2) : sequence<i32>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                46,
+                46
+              ],
+              "name": "get_string_optional_callback",
+              "signature": "(ForeignGetters? callback, string v, boolean arg2) : string?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                48,
+                48
+              ],
+              "name": "get_nothing",
+              "signature": "(ForeignGetters callback, string v) : void",
+              "type": "method"
+            }
+          ],
+          "docstring": "/ These objects are implemented in Rust, and call out to `ForeignGetters` / to get the value.",
+          "lines": [
+            35,
+            49
+          ],
+          "name": "RustGetters",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                60,
+                60
+              ],
+              "name": "from_simple_type",
+              "signature": "(i32 value) : string",
+              "type": "method"
+            },
+            {
+              "docstring": "Test if types are collected from callback interfaces. kotlinc compile time error if not.",
+              "lines": [
+                63,
+                63
+              ],
+              "name": "from_complex_type",
+              "signature": "(sequence<f64?>? values) : string",
+              "type": "method"
+            }
+          ],
+          "docstring": "/ These objects are implemented by the foreign language and passed / to Rust. Rust then calls methods on it when it needs to. / Rust developers need t",
+          "lines": [
+            59,
+            64
+          ],
+          "name": "StoredForeignStringifier",
+          "type": "callback_interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                69,
+                69
+              ],
+              "name": "constructor",
+              "signature": "(StoredForeignStringifier callback)",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                70,
+                70
+              ],
+              "name": "from_simple_type",
+              "signature": "(i32 value) : string",
+              "type": "method"
+            }
+          ],
+          "docstring": "/ Rust object that uses the StoredForeignStringifier to produce string representations / of passed arguments.",
+          "lines": [
+            68,
+            71
+          ],
+          "name": "RustStringifier",
+          "type": "interface"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "a487c24cedbd",
+      "indexed_at": "2026-07-24T20:35:12.409811+00:00",
+      "language": "rust",
+      "lines": 126,
+      "mtime_ns": 1782136568000000000,
+      "size": 3636,
+      "symbols": [
+        {
+          "docstring": "/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file,",
+          "lines": [
+            5,
+            11
+          ],
+          "name": "ForeignGetters",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            14,
+            19
+          ],
+          "name": "SimpleError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            22,
+            27
+          ],
+          "name": "ComplexError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                30,
+                32
+              ],
+              "name": "from",
+              "signature": "(_: uniffi::UnexpectedUniFFICallbackError)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            29,
+            33
+          ],
+          "name": "SimpleError",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                36,
+                38
+              ],
+              "name": "from",
+              "signature": "(e: uniffi::UnexpectedUniFFICallbackError)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            35,
+            39
+          ],
+          "name": "ComplexError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            42,
+            42
+          ],
+          "name": "RustGetters",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                47
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                48,
+                55
+              ],
+              "name": "get_bool",
+              "signature": "(\n        &self,\n        callback: Box<dyn ForeignGetters>,\n        v: bool,\n        argument_two...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                63
+              ],
+              "name": "get_string",
+              "signature": "(\n        &self,\n        callback: Box<dyn ForeignGetters>,\n        v: String,\n        arg2: bool...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                64,
+                71
+              ],
+              "name": "get_option",
+              "signature": "(\n        &self,\n        callback: Box<dyn ForeignGetters>,\n        v: Option<String>,\n        ar...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                72,
+                79
+              ],
+              "name": "get_list",
+              "signature": "(\n        &self,\n        callback: Box<dyn ForeignGetters>,\n        v: Vec<i32>,\n        arg2: bo...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                81,
+                88
+              ],
+              "name": "get_string_optional_callback",
+              "signature": "(\n        &self,\n        callback: Option<Box<dyn ForeignGetters>>,\n        v: String,\n        ar...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                90,
+                92
+              ],
+              "name": "get_nothing",
+              "signature": "(&self, callback: Box<dyn ForeignGetters>, v: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            44,
+            93
+          ],
+          "name": "RustGetters",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                96,
+                98
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            95,
+            99
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            104,
+            108
+          ],
+          "name": "StoredForeignStringifier",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            111,
+            113
+          ],
+          "name": "RustStringifier",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                116,
+                118
+              ],
+              "name": "new",
+              "signature": "(callback: Box<dyn StoredForeignStringifier>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                123
+              ],
+              "name": "from_simple_type",
+              "signature": "(&self, value: i32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            115,
+            124
+          ],
+          "name": "RustStringifier",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.667434+00:00",
+  "version": "1.0"
+}

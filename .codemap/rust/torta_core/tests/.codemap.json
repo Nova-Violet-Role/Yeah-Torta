@@ -1,0 +1,116 @@
+{
+  "directory": "rust\\torta_core\\tests",
+  "files": {
+    "c3_centauri_crossverify.rs": {
+      "hash": "9f3e4891e870",
+      "indexed_at": "2026-07-26T19:12:58.205921+00:00",
+      "language": "rust",
+      "lines": 74,
+      "mtime_ns": 1785030833395604600,
+      "size": 3228,
+      "symbols": [
+        {
+          "lines": [
+            21,
+            21
+          ],
+          "name": "signature",
+          "type": "module"
+        },
+        {
+          "lines": [
+            23,
+            28
+          ],
+          "name": "hex",
+          "signature": "(s: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            37,
+            47
+          ],
+          "name": "centauri_signature_verifies_on_device",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            50,
+            61
+          ],
+          "name": "tampered_centauri_artifact_is_rejected",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            64,
+            74
+          ],
+          "name": "swapped_pin_key_id_rejects_centauri_signature",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "c3_minisign_verify.rs": {
+      "hash": "dafe8dd302cd",
+      "indexed_at": "2026-07-26T19:12:58.206784+00:00",
+      "language": "rust",
+      "lines": 135,
+      "mtime_ns": 1785030833405612400,
+      "size": 5580,
+      "symbols": [
+        {
+          "lines": [
+            25,
+            25
+          ],
+          "name": "signature",
+          "type": "module"
+        },
+        {
+          "docstring": "few lines and only ever runs in `cargo test`.",
+          "lines": [
+            37,
+            64
+          ],
+          "name": "b64_decode",
+          "signature": "(s: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            67,
+            95
+          ],
+          "name": "rust_verifier_accepts_the_real_haskell_minisign_signature",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            98,
+            115
+          ],
+          "name": "verifies_then_tamper_breaks_it",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            118,
+            135
+          ],
+          "name": "downgraded_hash_algo_id_byte_is_inside_the_signed_region",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-26T19:12:58.662775+00:00",
+  "version": "1.0"
+}

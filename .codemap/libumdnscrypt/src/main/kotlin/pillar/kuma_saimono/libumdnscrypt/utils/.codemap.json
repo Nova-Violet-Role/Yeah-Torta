@@ -1,0 +1,421 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\utils",
+  "files": {
+    "AppExtensions.kt": {
+      "hash": "59f72ba9809f",
+      "indexed_at": "2026-08-01T04:00:31.041950+00:00",
+      "language": "kotlin",
+      "lines": 24,
+      "mtime_ns": 1785556378310902100,
+      "size": 754,
+      "symbols": []
+    },
+    "Constants.kt": {
+      "hash": "b96cec21a984",
+      "indexed_at": "2026-08-01T04:00:33.904109+00:00",
+      "language": "kotlin",
+      "lines": 123,
+      "mtime_ns": 1785556378323900000,
+      "size": 8328,
+      "symbols": [
+        {
+          "lines": [
+            21,
+            123
+          ],
+          "name": "Constants",
+          "type": "class"
+        }
+      ]
+    },
+    "EdgeToEdgeUtils.kt": {
+      "hash": "370b3de24625",
+      "indexed_at": "2026-08-01T04:00:37.493101+00:00",
+      "language": "kotlin",
+      "lines": 158,
+      "mtime_ns": 1785556378336899900,
+      "size": 5605,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                37,
+                75
+              ],
+              "name": "applyEdgeToEdgeInsets",
+              "signature": "(statusBarColor: Int, navigationBarColor: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                99
+              ],
+              "name": "applyStatusBarColor",
+              "signature": "(\n        window: Window,\n        statusBarColor: Int,\n        isDecor: Boolean,\n        height: ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                101,
+                109
+              ],
+              "name": "createStatusBarView",
+              "signature": "(context: Context, statusBarColor: Int, height: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                134
+              ],
+              "name": "applyNavigationBarColor",
+              "signature": "(\n        window: Window,\n        navigationBarColor: Int,\n        isDecor: Boolean,\n        heig...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                136,
+                157
+              ],
+              "name": "createNavigationBarView",
+              "signature": "(\n        context: Context,\n        navigationBarColor: Int,\n        height: Int\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            32,
+            158
+          ],
+          "name": "EdgeToEdgeUtils",
+          "type": "class"
+        }
+      ]
+    },
+    "PaletteUtils.kt": {
+      "hash": "fcf1d5659e3f",
+      "indexed_at": "2026-08-01T04:00:44.717645+00:00",
+      "language": "kotlin",
+      "lines": 124,
+      "mtime_ns": 1785556378348899000,
+      "size": 6247,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                65,
+                90
+              ],
+              "name": "applyPalette",
+              "signature": "(activity: Activity)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                92,
+                95
+              ],
+              "name": "applyOverlay",
+              "signature": "(activity: Activity, styleRes: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                114,
+                123
+              ],
+              "name": "paletteAccentColorRes",
+              "signature": "(prefValue: String?)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            49,
+            124
+          ],
+          "name": "PaletteUtils",
+          "type": "class"
+        }
+      ]
+    },
+    "ThemeUtils.kt": {
+      "hash": "b2fdab96bb62",
+      "indexed_at": "2026-08-01T04:00:50.136532+00:00",
+      "language": "kotlin",
+      "lines": 59,
+      "mtime_ns": 1785556378359900600,
+      "size": 2365,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                31,
+                51
+              ],
+              "name": "setDayNightTheme",
+              "signature": "(context: Context, pathVars: PathVars)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                53,
+                58
+              ],
+              "name": "isNightMode",
+              "signature": "(context: Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            29,
+            59
+          ],
+          "name": "ThemeUtils",
+          "type": "class"
+        }
+      ]
+    },
+    "Utils.kt": {
+      "hash": "c713c4524051",
+      "indexed_at": "2026-08-01T04:00:50.477198+00:00",
+      "language": "kotlin",
+      "lines": 376,
+      "mtime_ns": 1785556395013257800,
+      "size": 13527,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                71,
+                84
+              ],
+              "name": "getScreenOrientationOld",
+              "signature": "(activity: Activity)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                86,
+                93
+              ],
+              "name": "getScreenOrientation",
+              "signature": "(activity: Activity)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                96,
+                98
+              ],
+              "name": "dips2pixels",
+              "signature": "(dips: Int, context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                105
+              ],
+              "name": "dp2pixels",
+              "signature": "(dp: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                126
+              ],
+              "name": "getDeviceIP",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                128,
+                152
+              ],
+              "name": "isLANInterfaceExist",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "For backwards compatibility, it will still return the caller's own services.",
+              "lines": [
+                155,
+                171
+              ],
+              "name": "isServiceRunning",
+              "signature": "(context: Context, serviceClass: Class<ModulesService>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                173,
+                176
+              ],
+              "name": "isShowNotification",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                178,
+                214
+              ],
+              "name": "isLogsDirAccessible",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                216,
+                227
+              ],
+              "name": "isInterfaceLocked",
+              "signature": "(preferenceRepository: PreferenceRepository)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                229,
+                239
+              ],
+              "name": "startAppExitDetectService",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                241,
+                254
+              ],
+              "name": "getUidForName",
+              "signature": "(name: String, defaultValue: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                256,
+                266
+              ],
+              "name": "getCriticalSystemUids",
+              "signature": "(ownUid: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                268,
+                269
+              ],
+              "name": "getDnsTetherUid",
+              "signature": "(ownUid: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                271,
+                286
+              ],
+              "name": "allowInteractAcrossUsersPermissionIfRequired",
+              "signature": "(\n        context: Context,\n        pathVars: PathVars\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                288,
+                293
+              ],
+              "name": "isInteractAcrossUsersPermissionGranted",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                295,
+                301
+              ],
+              "name": "areNotificationsAllowed",
+              "signature": "(notificationManager: NotificationManager)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                303,
+                305
+              ],
+              "name": "areNotificationsNotAllowed",
+              "signature": "(notificationManager: NotificationManager)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                307,
+                312
+              ],
+              "name": "verifyHostsSet",
+              "signature": "(hosts: Set<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                314,
+                330
+              ],
+              "name": "prepareFakeSniHosts",
+              "signature": "(hosts: Set<String>, defaultHosts: List<String>?, remainLength: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                332,
+                341
+              ],
+              "name": "hideKeyboard",
+              "signature": "(activity: Activity)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                343,
+                358
+              ],
+              "name": "unescapeHTML",
+              "signature": "(line: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                360,
+                369
+              ],
+              "name": "formatFileSizeToReadableUnits",
+              "signature": "(length: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                371,
+                374
+              ],
+              "name": "getDomainNameFromUrl",
+              "signature": "(url: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            67,
+            376
+          ],
+          "name": "Utils",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:50.479016+00:00",
+  "version": "1.0"
+}

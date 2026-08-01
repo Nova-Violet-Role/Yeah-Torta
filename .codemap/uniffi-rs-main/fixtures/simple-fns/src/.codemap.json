@@ -1,0 +1,124 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\simple-fns\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "828e6ddedfa7",
+      "indexed_at": "2026-07-24T20:35:12.667150+00:00",
+      "language": "rust",
+      "lines": 55,
+      "mtime_ns": 1782136568000000000,
+      "size": 1259,
+      "symbols": [
+        {
+          "lines": [
+            11,
+            13
+          ],
+          "name": "get_string",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            16,
+            18
+          ],
+          "name": "get_int",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            21,
+            23
+          ],
+          "name": "string_identity",
+          "signature": "(s: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            26,
+            28
+          ],
+          "name": "hash_map_identity",
+          "signature": "(h: HashMap<String, String>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            31,
+            33
+          ],
+          "name": "byte_to_u32",
+          "signature": "(byte: u8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            36,
+            38
+          ],
+          "name": "new_set",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            41,
+            43
+          ],
+          "name": "add_to_set",
+          "signature": "(set: Arc<MyHashSet>, value: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            46,
+            48
+          ],
+          "name": "set_contains",
+          "signature": "(set: Arc<MyHashSet>, value: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            53,
+            53
+          ],
+          "name": "dummy",
+          "signature": "(_arg: Option<i8>)",
+          "type": "function"
+        }
+      ]
+    },
+    "simple-fns.udl": {
+      "hash": "cba0fa6da2c5",
+      "indexed_at": "2026-07-24T20:35:12.667652+00:00",
+      "language": "udl",
+      "lines": 4,
+      "mtime_ns": 1782136568000000000,
+      "size": 66,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "uniffi_simple_fns",
+          "type": "namespace"
+        },
+        {
+          "lines": [
+            4,
+            4
+          ],
+          "name": "MyHashSet",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.732287+00:00",
+  "version": "1.0"
+}

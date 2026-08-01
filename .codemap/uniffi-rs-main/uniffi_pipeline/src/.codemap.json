@@ -1,0 +1,803 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_pipeline\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "9f0d5caaec3c",
+      "indexed_at": "2026-07-24T20:35:13.225087+00:00",
+      "language": "rust",
+      "lines": 13,
+      "mtime_ns": 1782136568000000000,
+      "size": 464,
+      "symbols": [
+        {
+          "docstring": "/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file,",
+          "lines": [
+            5,
+            5
+          ],
+          "name": "map_node",
+          "type": "module"
+        },
+        {
+          "lines": [
+            6,
+            6
+          ],
+          "name": "node",
+          "type": "module"
+        },
+        {
+          "lines": [
+            7,
+            7
+          ],
+          "name": "pipeline",
+          "type": "module"
+        }
+      ]
+    },
+    "map_node.rs": {
+      "hash": "57c4e9a9bf40",
+      "indexed_at": "2026-07-24T20:35:13.226007+00:00",
+      "language": "rust",
+      "lines": 110,
+      "mtime_ns": 1782136568000000000,
+      "size": 3355,
+      "symbols": [
+        {
+          "docstring": "pass down data for child nodes to use.  For example the namespace name or current `self_type`.",
+          "lines": [
+            19,
+            23
+          ],
+          "name": "MapNode",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                43,
+                45
+              ],
+              "name": "map_node",
+              "signature": "(self, context: &Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            39,
+            46
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                52,
+                55
+              ],
+              "name": "map_node",
+              "signature": "(self, context: &Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            48,
+            56
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                62,
+                66
+              ],
+              "name": "map_node",
+              "signature": "(self, context: &Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            58,
+            67
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                74,
+                78
+              ],
+              "name": "map_node",
+              "signature": "(self, context: &Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            69,
+            79
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                86,
+                90
+              ],
+              "name": "map_node",
+              "signature": "(self, context: &Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            81,
+            91
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                100,
+                109
+              ],
+              "name": "map_node",
+              "signature": "(self, context: &Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            93,
+            110
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        }
+      ]
+    },
+    "node.rs": {
+      "hash": "ca4785475cc6",
+      "indexed_at": "2026-07-24T20:35:13.227735+00:00",
+      "language": "rust",
+      "lines": 299,
+      "mtime_ns": 1782136568000000000,
+      "size": 8162,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "struct/enum name",
+              "lines": [
+                17,
+                19
+              ],
+              "name": "type_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Call a visitor function for each descendant",
+              "lines": [
+                29,
+                47
+              ],
+              "name": "try_visit_descendants",
+              "signature": "(\n        &'a self,\n        visitor: &mut dyn FnMut(&'a dyn Node) -> Result<()>,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "`visit` panics if no descendant type matches `T`.",
+              "lines": [
+                57,
+                69
+              ],
+              "name": "visit",
+              "signature": "(&'a self, mut visitor: impl FnMut(&'a T))",
+              "type": "method"
+            },
+            {
+              "docstring": "Like `visit`, but with a fallible function.",
+              "lines": [
+                72,
+                83
+              ],
+              "name": "try_visit",
+              "signature": "(&'a self, mut visitor: impl FnMut(&'a T) -> Result<()>)",
+              "type": "method"
+            },
+            {
+              "docstring": "`has_descendant` panics if no descendant type matches `T`.",
+              "lines": [
+                88,
+                104
+              ],
+              "name": "has_descendant",
+              "signature": "(&self, mut visitor: impl FnMut(&T) -> bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "Generate a string representation for this node",
+              "lines": [
+                107,
+                109
+              ],
+              "name": "repr",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "docstring": "walking the IR tree.",
+          "lines": [
+            15,
+            110
+          ],
+          "name": "Node",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            112,
+            120
+          ],
+          "name": "typecheck_visit",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                147,
+                149
+              ],
+              "name": "as_any",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                151,
+                153
+              ],
+              "name": "to_box_any",
+              "signature": "(self: Box<Self>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                155,
+                157
+              ],
+              "name": "visit_children",
+              "signature": "(&'a self, visitor: &mut dyn FnMut(&'a dyn Node))",
+              "type": "method"
+            },
+            {
+              "lines": [
+                159,
+                167
+              ],
+              "name": "has_descendant_type",
+              "signature": "(visited: &mut HashSet<TypeId>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            146,
+            168
+          ],
+          "name": "Node",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                171,
+                173
+              ],
+              "name": "as_any",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                175,
+                177
+              ],
+              "name": "to_box_any",
+              "signature": "(self: Box<Self>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                179,
+                183
+              ],
+              "name": "visit_children",
+              "signature": "(&'a self, visitor: &mut dyn FnMut(&'a dyn Node))",
+              "type": "method"
+            },
+            {
+              "lines": [
+                185,
+                193
+              ],
+              "name": "has_descendant_type",
+              "signature": "(visited: &mut HashSet<TypeId>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            170,
+            194
+          ],
+          "name": "Node",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                197,
+                199
+              ],
+              "name": "as_any",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                201,
+                203
+              ],
+              "name": "to_box_any",
+              "signature": "(self: Box<Self>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                205,
+                209
+              ],
+              "name": "visit_children",
+              "signature": "(&'a self, visitor: &mut dyn FnMut(&'a dyn Node))",
+              "type": "method"
+            },
+            {
+              "lines": [
+                211,
+                219
+              ],
+              "name": "has_descendant_type",
+              "signature": "(visited: &mut HashSet<TypeId>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            196,
+            220
+          ],
+          "name": "Node",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                223,
+                225
+              ],
+              "name": "as_any",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                227,
+                229
+              ],
+              "name": "to_box_any",
+              "signature": "(self: Box<Self>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                231,
+                235
+              ],
+              "name": "visit_children",
+              "signature": "(&'a self, visitor: &mut dyn FnMut(&'a dyn Node))",
+              "type": "method"
+            },
+            {
+              "lines": [
+                237,
+                245
+              ],
+              "name": "has_descendant_type",
+              "signature": "(visited: &mut HashSet<TypeId>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            222,
+            246
+          ],
+          "name": "Node",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                249,
+                251
+              ],
+              "name": "as_any",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                253,
+                255
+              ],
+              "name": "to_box_any",
+              "signature": "(self: Box<Self>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                257,
+                261
+              ],
+              "name": "visit_children",
+              "signature": "(&'a self, visitor: &mut dyn FnMut(&'a dyn Node))",
+              "type": "method"
+            },
+            {
+              "lines": [
+                263,
+                271
+              ],
+              "name": "has_descendant_type",
+              "signature": "(visited: &mut HashSet<TypeId>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            248,
+            272
+          ],
+          "name": "Node",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                275,
+                277
+              ],
+              "name": "as_any",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                279,
+                281
+              ],
+              "name": "to_box_any",
+              "signature": "(self: Box<Self>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                283,
+                288
+              ],
+              "name": "visit_children",
+              "signature": "(&'a self, visitor: &mut dyn FnMut(&'a dyn Node))",
+              "type": "method"
+            },
+            {
+              "lines": [
+                290,
+                298
+              ],
+              "name": "has_descendant_type",
+              "signature": "(visited: &mut HashSet<TypeId>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            274,
+            299
+          ],
+          "name": "Node",
+          "type": "impl"
+        }
+      ]
+    },
+    "pipeline.rs": {
+      "hash": "1a19fa72a374",
+      "indexed_at": "2026-07-24T20:35:13.229473+00:00",
+      "language": "rust",
+      "lines": 285,
+      "mtime_ns": 1782136568000000000,
+      "size": 9394,
+      "symbols": [
+        {
+          "docstring": "how this works.",
+          "lines": [
+            24,
+            28
+          ],
+          "name": "Pipeline",
+          "type": "struct"
+        },
+        {
+          "docstring": "A pipeline pass is a function that converts the root node of an IR into another root node",
+          "lines": [
+            31,
+            34
+          ],
+          "name": "Pass",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            38,
+            44
+          ],
+          "name": "new_pipeline",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "docstring": "the provided closure to mutate them.",
+              "lines": [
+                55,
+                77
+              ],
+              "name": "pass",
+              "signature": "(self, context: Context)",
+              "type": "method"
+            },
+            {
+              "docstring": "Execute the pipeline",
+              "lines": [
+                80,
+                82
+              ],
+              "name": "execute",
+              "signature": "(&mut self, root: Input)",
+              "type": "method"
+            },
+            {
+              "docstring": "This is used to implement the `pipeline` CLI subcommand",
+              "lines": [
+                87,
+                136
+              ],
+              "name": "print_passes",
+              "signature": "(&mut self, root: Input, opts: PrintOptions)",
+              "type": "method"
+            },
+            {
+              "docstring": "after the pass.",
+              "lines": [
+                142,
+                158
+              ],
+              "name": "execute_all_passes",
+              "signature": "(\n        &mut self,\n        root: Input,\n        recorder: &mut dyn PipelineRecorder,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            46,
+            159
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "docstring": "Records passes taken in a IR pipeline",
+          "lines": [
+            162,
+            165
+          ],
+          "name": "PipelineRecorder",
+          "type": "trait"
+        },
+        {
+          "docstring": "generate bindings, not print out the passes for the pipeline CLI",
+          "lines": [
+            169,
+            169
+          ],
+          "name": "NullPipelineRecorder",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                172,
+                172
+              ],
+              "name": "record_pass",
+              "signature": "(&mut self, _name: &str, _node: &dyn Node)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            171,
+            173
+          ],
+          "name": "PipelineRecorder",
+          "type": "impl"
+        },
+        {
+          "docstring": "Implements PipelineRecorder for the pipeline CLI",
+          "lines": [
+            176,
+            179
+          ],
+          "name": "PipelineCliRecorder",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                182,
+                187
+              ],
+              "name": "new",
+              "signature": "(opts: PrintOptions)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            181,
+            188
+          ],
+          "name": "PipelineCliRecorder",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                191,
+                194
+              ],
+              "name": "record_pass",
+              "signature": "(&mut self, name: &str, node: &dyn Node)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            190,
+            195
+          ],
+          "name": "PipelineRecorder",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            198,
+            203
+          ],
+          "name": "PrintOptions",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                206,
+                212
+              ],
+              "name": "matches_pass",
+              "signature": "(&self, title: &str, last: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                214,
+                216
+              ],
+              "name": "has_filter",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                218,
+                239
+              ],
+              "name": "matches_node",
+              "signature": "(&self, node: &dyn Node, child: &dyn Node)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            205,
+            240
+          ],
+          "name": "PrintOptions",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            242,
+            256
+          ],
+          "name": "pass_content",
+          "signature": "(node: &dyn Node, opts: &PrintOptions)",
+          "type": "function"
+        },
+        {
+          "docstring": "Implements the depth-first-search to handle `pass_content` with a filter",
+          "lines": [
+            259,
+            262
+          ],
+          "name": "NodeFilterSearch",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                265,
+                270
+              ],
+              "name": "new",
+              "signature": "(opts: &'a PrintOptions)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                272,
+                284
+              ],
+              "name": "search",
+              "signature": "(&mut self, node: &dyn Node)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            264,
+            285
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.802373+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,241 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT Carbon ||| SETTINGS section — #60B-2 the 13th pillar's settings surface,
+// OVERHAULED (the "what is this circle" wave): sectioned cards, the drawn CharcoalLump
+// identity (no font glyphs — the old "⌬" rendered as tofu-[X] on device), and the ENGINE
+// TRUTH CARD up top so nobody mistakes build-state for a loader ever again.
+//
+// FELT-TRUTH LAW: every control states its REAL build state; nothing pretends to work.
+// The host wires the typed callbacks when the engine lanes land (60F specials / 60G role);
+// until then a tap re-asserts engine truth only.
+//
+// API — FROZEN (the shell embed + host bindings depend on it):
+//   callback install-extension-tapped();
+//   callback set-default-browser-tapped();
+//   in extension-engine-landed / role-granted / role-status / specials-status
+import { ScrollView } from "std-widgets.slint";
+import { ThemeBook, CharcoalLump } from "theme_tokens.slint";
+
+export component CarbonSettingsPane inherits Rectangle {
+    // the 60F/60G intents — typed callbacks the host wires to the real destinations
+    callback install-extension-tapped();
+    callback set-default-browser-tapped();
+
+    in property <bool> extension-engine-landed: false;   // flips with 60F
+    in property <bool> role-granted: false;              // 60G — REAL RoleManager.isRoleHeld truth
+    in property <string> role-status: "";                // 60G request truth — "" until a REAL tap
+    in property <string> specials-status: "";            // 60F scan truth — "" until a REAL scan ran
+
+    background: transparent;
+
+    ScrollView {
+        width: 100%;
+        height: 100%;
+        viewport-width: self.visible-width;
+        VerticalLayout {
+            padding: 12px;
+            spacing: 10px;
+
+            // ── HEADER — the charcoal identity, drawn ──
+            HorizontalLayout {
+                spacing: 7px;
+                CharcoalLump { lump-size: 20px; }
+                VerticalLayout {
+                    Text {
+                        text: "CARBON SETTINGS";
+                        color: #eaf6fb;
+                        font-size: 12px; font-weight: 900;
+                    }
+                    Text {
+                        text: "the 13th pillar — the sandboxed browser";
+                        color: ThemeBook.burger.muted;
+                        font-size: 8px;
+                    }
+                }
+            }
+
+            // ── THE ENGINE TRUTH CARD — first thing on the pane: is anything
+            // loading? NO. Honest state, loud, before any control. ──
+            Rectangle {
+                border-radius: 7px;
+                background: #16181b;
+                border-width: 1px;
+                border-color: root.extension-engine-landed
+                    ? #50fa7b.with-alpha(0.55)
+                    : #ffb86c.with-alpha(0.45);
+                VerticalLayout {
+                    padding: 8px;
+                    spacing: 3px;
+                    Text {
+                        text: root.extension-engine-landed
+                            ? "ENGINE: LIVE — the carbonyl renderer is assimilated"
+                            : "ENGINE: NOT LANDED — the browser cannot open yet";
+                        color: root.extension-engine-landed ? #50fa7b : #ffb86c;
+                        font-size: 9px; font-weight: 900;
+                        wrap: word-wrap;
+                    }
+                    Text {
+                        text: root.extension-engine-landed
+                            ? "engine truth: 60C seam live — extensions can install."
+                            : "nothing on the Carbon panes is loading. every control below states its real build state.";
+                        color: ThemeBook.burger.muted;
+                        font-size: 8px;
+                        wrap: word-wrap;
+                    }
+                }
+            }
+
+            // ── INSTALL EXTENSION (60F) — the Manager lane ──
+            Rectangle {
+                border-radius: 7px;
+                background: #101214;
+                border-width: 1px;
+                border-color: #8be9fd.with-alpha(0.30);
+                VerticalLayout {
+                    padding: 9px;
+                    spacing: 5px;
+                    Text {
+                        text: "INSTALL EXTENSION  (60F)";
+                        color: #8be9fd;
+                        font-size: 9px; font-weight: 900;
+                    }
+                    Text {
+                        text: "arrives: Tampermonkey-class userscripts (GM_* @match / @run-at) + Chrome-compatible WebExtension (MV2/MV3)";
+                        color: ThemeBook.burger.muted;
+                        font-size: 8px;
+                        wrap: word-wrap;
+                    }
+                    // the scan action — engine-gated, honest label either way
+                    Rectangle {
+                        height: 26px;
+                        border-radius: 7px;
+                        background: root.extension-engine-landed ? #16323a : #16181b;
+                        border-width: 1px;
+                        border-color: root.extension-engine-landed
+                            ? #8be9fd
+                            : #8be9fd.with-alpha(0.25);
+                        Text {
+                            text: root.extension-engine-landed
+                                ? "SCAN THE DROP-IN FOLDER"
+                                : "SCAN THE DROP-IN FOLDER — waiting on the 60F lane";
+                            color: root.extension-engine-landed
+                                ? #8be9fd
+                                : ThemeBook.burger.muted;
+                            font-size: 8px; font-weight: 800;
+                            horizontal-alignment: center;
+                            vertical-alignment: center;
+                        }
+                        TouchArea {
+                            clicked => { root.install-extension-tapped(); }
+                        }
+                    }
+                    // 60F scan truth — appears ONLY after a genuinely real scan
+                    if root.specials-status != "" : Text {
+                        text: root.specials-status;
+                        color: #8be9fd;
+                        font-size: 8px;
+                        wrap: word-wrap;
+                    }
+                }
+            }
+
+            // ── THE CAPABILITIES LAW — each line names the slice that makes it real ──
+            Rectangle {
+                border-radius: 7px;
+                background: #101214;
+                border-width: 1px;
+                border-color: #8be9fd.with-alpha(0.30);
+                VerticalLayout {
+                    padding: 9px;
+                    spacing: 4px;
+                    Text {
+                        text: "THE CAPABILITIES LAW";
+                        color: #8be9fd;
+                        font-size: 9px; font-weight: 900;
+                    }
+                    Text {
+                        text: "· every socket rides YeAH Tortä — Beast QoS + Centauri + Underground, wired at the socket layer (60D)";
+                        color: ThemeBook.burger.muted;
+                        font-size: 8px; wrap: word-wrap;
+                    }
+                    Text {
+                        text: "· the sandbox IS the engine — process jail + fs jail + per-site permission map (60E)";
+                        color: ThemeBook.burger.muted;
+                        font-size: 8px; wrap: word-wrap;
+                    }
+                    Text {
+                        text: "· bytes de-duplicated via RAM⊗NAND — traffic spared before it exists (dash, live-fed)";
+                        color: ThemeBook.burger.muted;
+                        font-size: 8px; wrap: word-wrap;
+                    }
+                    Text {
+                        text: "· userscripts + extensions over the assimilated renderer (60F) — no stock browser offers this";
+                        color: ThemeBook.burger.muted;
+                        font-size: 8px; wrap: word-wrap;
+                    }
+                }
+            }
+
+            // ── SYSTEM DEFAULT BROWSER (60G) — the REAL RoleManager truth ──
+            Rectangle {
+                border-radius: 7px;
+                background: #101214;
+                border-width: 1px;
+                border-color: root.role-granted
+                    ? #50fa7b.with-alpha(0.45)
+                    : #8be9fd.with-alpha(0.30);
+                VerticalLayout {
+                    padding: 9px;
+                    spacing: 5px;
+                    Text {
+                        text: "SYSTEM DEFAULT BROWSER  (60G)";
+                        color: root.role-granted ? #50fa7b : #8be9fd;
+                        font-size: 9px; font-weight: 900;
+                    }
+                    Text {
+                        text: root.role-granted
+                            ? "Carbon holds the ROLE_BROWSER role — links route here."
+                            : "role not held — the tap fires the REAL RoleManager request through the Kotlin layer.";
+                        color: ThemeBook.burger.muted;
+                        font-size: 8px;
+                        wrap: word-wrap;
+                    }
+                    Rectangle {
+                        height: 26px;
+                        border-radius: 7px;
+                        background: root.role-granted ? #14291b : #16323a;
+                        border-width: 1px;
+                        border-color: root.role-granted ? #50fa7b : #8be9fd;
+                        Text {
+                            text: root.role-granted ? "ROLE HELD" : "SET AS DEFAULT BROWSER";
+                            color: root.role-granted ? #50fa7b : #8be9fd;
+                            font-size: 8px; font-weight: 800;
+                            horizontal-alignment: center;
+                            vertical-alignment: center;
+                        }
+                        TouchArea {
+                            clicked => { root.set-default-browser-tapped(); }
+                        }
+                    }
+                    // 60G request truth — "" until a REAL tap ran
+                    if root.role-status != "" : Text {
+                        text: root.role-status;
+                        color: #8be9fd;
+                        font-size: 8px;
+                        wrap: word-wrap;
+                    }
+                }
+            }
+
+            // ── the license footer — notice retained ──
+            Text {
+                text: "base: carbonyl v0.0.3 (BSD-3, © 2023 Fathy Boundjadj – notice retained) – integration ≋ Saimonokuma";
+                color: ThemeBook.burger.faint;
+                font-size: 7px;
+                wrap: word-wrap;
+            }
+        }
+    }
+}

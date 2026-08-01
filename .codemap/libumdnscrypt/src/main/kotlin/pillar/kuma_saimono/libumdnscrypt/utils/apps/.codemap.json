@@ -1,0 +1,248 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\utils\\apps",
+  "files": {
+    "InstalledAppNamesStorage.kt": {
+      "hash": "12c4b14ffdef",
+      "indexed_at": "2026-08-01T04:00:31.696423+00:00",
+      "language": "kotlin",
+      "lines": 85,
+      "mtime_ns": 1785556378418901300,
+      "size": 2710,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                50,
+                55
+              ],
+              "name": "getAppNameByUid",
+              "signature": "(uid: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                57,
+                61
+              ],
+              "name": "updateAppUidToNames",
+              "signature": "(apps: List<ApplicationData>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                65
+              ],
+              "name": "clearAppUidToNames",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                67,
+                83
+              ],
+              "name": "updateAppUidToNames",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            31,
+            85
+          ],
+          "name": "InstalledAppNamesStorage",
+          "type": "class"
+        }
+      ]
+    },
+    "InstalledApplicationsManager.kt": {
+      "hash": "668fd2735d42",
+      "indexed_at": "2026-08-01T04:00:31.387520+00:00",
+      "language": "kotlin",
+      "lines": 700,
+      "mtime_ns": 1785556378431899800,
+      "size": 25635,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                84,
+                336
+              ],
+              "name": "getInstalledApps",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                338,
+                372
+              ],
+              "name": "isAppUseInternet",
+              "signature": "(\n        packageManager: PackageManager,\n        applicationInfo: ApplicationInfo\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                374,
+                375
+              ],
+              "name": "isAppSystem",
+              "signature": "(applicationInfo: ApplicationInfo)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                377,
+                378
+              ],
+              "name": "isAppInstalled",
+              "signature": "(applicationInfo: ApplicationInfo)",
+              "type": "method"
+            },
+            {
+              "docstring": "For archived apps",
+              "lines": [
+                381,
+                382
+              ],
+              "name": "isAppStopped",
+              "signature": "(applicationInfo: ApplicationInfo)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                384,
+                385
+              ],
+              "name": "isAppContainsResourcesOnly",
+              "signature": "(applicationInfo: ApplicationInfo)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                387,
+                421
+              ],
+              "name": "checkPartOfMultiUser",
+              "signature": "(\n        applicationInfo: ApplicationInfo,\n        name: String,\n        icon: Drawable?,\n      ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                423,
+                458
+              ],
+              "name": "tryCheckApp",
+              "signature": "(\n        appInfo: ApplicationInfo,\n        name: String,\n        icon: Drawable?,\n        userUi...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                460,
+                638
+              ],
+              "name": "getKnownApplications",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    641,
+                    641
+                  ],
+                  "name": "onAppAdded",
+                  "signature": "(application: ApplicationData)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                640,
+                642
+              ],
+              "name": "OnAppAddListener",
+              "type": "interface"
+            },
+            {
+              "lines": [
+                644,
+                650
+              ],
+              "name": "updateDisplayedList",
+              "signature": "(applicationData: ApplicationData)",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    659,
+                    662
+                  ],
+                  "name": "setOnAppAddListener",
+                  "signature": "(onAppAddListener: OnAppAddListener)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    664,
+                    667
+                  ],
+                  "name": "activeApps",
+                  "signature": "(activeApps: Set<String>)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    669,
+                    672
+                  ],
+                  "name": "showSpecialApps",
+                  "signature": "(show: Boolean)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    674,
+                    677
+                  ],
+                  "name": "setIconRequired",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    679,
+                    685
+                  ],
+                  "name": "build",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                652,
+                686
+              ],
+              "name": "Builder",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            53,
+            700
+          ],
+          "name": "InstalledApplicationsManager",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:31.698064+00:00",
+  "version": "1.0"
+}

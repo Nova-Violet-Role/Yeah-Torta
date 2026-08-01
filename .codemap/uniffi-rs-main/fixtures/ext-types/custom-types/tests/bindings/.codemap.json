@@ -1,0 +1,182 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\ext-types\\custom-types\\tests\\bindings",
+  "files": {
+    "test_custom_types.py": {
+      "hash": "08dbc3126d98",
+      "indexed_at": "2026-07-24T20:35:12.492202+00:00",
+      "language": "python",
+      "lines": 70,
+      "mtime_ns": 1782136568000000000,
+      "size": 2742,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                9,
+                11
+              ],
+              "name": "run",
+              "signature": "(self, guid)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            8,
+            11
+          ],
+          "name": "TestCallback",
+          "type": "class"
+        },
+        {
+          "lines": [
+            13,
+            18
+          ],
+          "name": "get_value_arg_issue",
+          "signature": "(value)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                21,
+                24
+              ],
+              "name": "test_get_guid",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                30
+              ],
+              "name": "test_guid_helper",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                32,
+                43
+              ],
+              "name": "test_get_guid_errors",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                45,
+                55
+              ],
+              "name": "test_try_get_guid_errors",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                57,
+                63
+              ],
+              "name": "test_guid_callback",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                65,
+                67
+              ],
+              "name": "test_custom",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            20,
+            67
+          ],
+          "name": "TestCustomTypes",
+          "type": "class"
+        }
+      ]
+    },
+    "test_custom_types.rb": {
+      "hash": "377d919367cb",
+      "indexed_at": "2026-07-24T20:35:12.493198+00:00",
+      "language": "ruby",
+      "lines": 72,
+      "mtime_ns": 1782136568000000000,
+      "size": 2494,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                18
+              ],
+              "name": "test_get_guid",
+              "type": "method"
+            },
+            {
+              "docstring": "-- Custom types inside a Record and a Sequence --",
+              "lines": [
+                22,
+                33
+              ],
+              "name": "test_guid_helper",
+              "type": "method"
+            },
+            {
+              "docstring": "-- Error when lifting fails (no Result return type -> InternalError panic) --",
+              "lines": [
+                37,
+                41
+              ],
+              "name": "test_get_guid_errors",
+              "type": "method"
+            },
+            {
+              "docstring": "-- Error when lifting fails and function returns Result --",
+              "lines": [
+                45,
+                54
+              ],
+              "name": "test_try_get_guid_errors",
+              "type": "method"
+            },
+            {
+              "docstring": "-- Nested custom types (ANestedGuid wraps Guid wraps String) --",
+              "lines": [
+                58,
+                64
+              ],
+              "name": "test_nested_custom_type",
+              "type": "method"
+            },
+            {
+              "docstring": "-- HandleU8 (custom_newtype over u8 = Integer --",
+              "lines": [
+                68,
+                71
+              ],
+              "name": "test_handle_u8",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            72
+          ],
+          "name": "TestCustomTypes",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.685725+00:00",
+  "version": "1.0"
+}

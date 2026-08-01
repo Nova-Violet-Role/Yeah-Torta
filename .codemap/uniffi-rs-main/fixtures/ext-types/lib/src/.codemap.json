@@ -1,0 +1,867 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\ext-types\\lib\\src",
+  "files": {
+    "ext-types-lib.udl": {
+      "hash": "377c0e6f8ebd",
+      "indexed_at": "2026-07-24T20:35:12.504238+00:00",
+      "language": "udl",
+      "lines": 97,
+      "mtime_ns": 1782136568000000000,
+      "size": 2803,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                2,
+                2
+              ],
+              "name": "get_combined_type",
+              "signature": "(optional CombinedType? value) : CombinedType",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4,
+                4
+              ],
+              "name": "get_url",
+              "signature": "(Url url) : Url",
+              "type": "method"
+            },
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "get_urls",
+              "signature": "(sequence<Url> urls) : sequence<Url>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                6,
+                6
+              ],
+              "name": "get_maybe_url",
+              "signature": "(Url? url) : Url?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                7,
+                7
+              ],
+              "name": "get_maybe_urls",
+              "signature": "(sequence<Url?> urls) : sequence<Url?>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "get_uniffi_one_type",
+              "signature": "(UniffiOneType t) : UniffiOneType",
+              "type": "method"
+            },
+            {
+              "lines": [
+                10,
+                10
+              ],
+              "name": "get_uniffi_one_types",
+              "signature": "(sequence<UniffiOneType> ts) : sequence<UniffiOneType>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11,
+                11
+              ],
+              "name": "get_maybe_uniffi_one_type",
+              "signature": "(UniffiOneType? t) : UniffiOneType?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                12
+              ],
+              "name": "get_maybe_uniffi_one_types",
+              "signature": "(sequence<UniffiOneType?> ts) : sequence<UniffiOneType?>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                14,
+                14
+              ],
+              "name": "get_uniffi_one_enum",
+              "signature": "(UniffiOneEnum e) : UniffiOneEnum",
+              "type": "method"
+            },
+            {
+              "lines": [
+                15,
+                15
+              ],
+              "name": "get_uniffi_one_enums",
+              "signature": "(sequence<UniffiOneEnum> es) : sequence<UniffiOneEnum>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "get_maybe_uniffi_one_enum",
+              "signature": "(UniffiOneEnum? e) : UniffiOneEnum?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "get_maybe_uniffi_one_enums",
+              "signature": "(sequence<UniffiOneEnum?> es) : sequence<UniffiOneEnum?>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                19
+              ],
+              "name": "get_uniffi_one_interface",
+              "signature": "() : UniffiOneInterface",
+              "type": "method"
+            },
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "get_external_crate_interface",
+              "signature": "(string val) : ExternalCrateInterface",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "get_uniffi_one_proc_macro_type",
+              "signature": "(UniffiOneProcMacroType t) : UniffiOneProcMacroType",
+              "type": "method"
+            },
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "get_uniffi_one_udl_trait",
+              "signature": "(UniffiOneUDLTrait? t) : UniffiOneUDLTrait?",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1,
+            23
+          ],
+          "name": "imported_types_lib",
+          "type": "namespace"
+        },
+        {
+          "lines": [
+            28,
+            28
+          ],
+          "name": "UniffiOneType",
+          "signature": "dictionary",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            32,
+            32
+          ],
+          "name": "UniffiOneEnum",
+          "signature": "enum",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            36,
+            36
+          ],
+          "name": "UniffiOneInterface",
+          "signature": "interface",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            40,
+            40
+          ],
+          "name": "UniffiOneUDLTrait",
+          "signature": "trait",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            44,
+            44
+          ],
+          "name": "UniffiOneProcMacroType",
+          "signature": "dictionary",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            48,
+            48
+          ],
+          "name": "Guid",
+          "signature": "string",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            52,
+            52
+          ],
+          "name": "Url",
+          "signature": "string",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            55,
+            55
+          ],
+          "name": "Handle",
+          "signature": "i64",
+          "type": "typedef"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                62,
+                62
+              ],
+              "name": "sval",
+              "signature": "string",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            61,
+            63
+          ],
+          "name": "ExternalCrateDictionary",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                67,
+                67
+              ],
+              "name": "value",
+              "signature": "() : string",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            66,
+            68
+          ],
+          "name": "ExternalCrateInterface",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            71,
+            74
+          ],
+          "name": "ExternalCrateNonExhaustiveEnum",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                78,
+                78
+              ],
+              "name": "uoe",
+              "signature": "UniffiOneEnum",
+              "type": "field"
+            },
+            {
+              "lines": [
+                79,
+                79
+              ],
+              "name": "uot",
+              "signature": "UniffiOneType",
+              "type": "field"
+            },
+            {
+              "lines": [
+                80,
+                80
+              ],
+              "name": "uots",
+              "signature": "sequence<UniffiOneType>",
+              "type": "field"
+            },
+            {
+              "lines": [
+                81,
+                81
+              ],
+              "name": "maybe_uot",
+              "signature": "UniffiOneType?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                83,
+                83
+              ],
+              "name": "guid",
+              "signature": "Guid",
+              "type": "field"
+            },
+            {
+              "lines": [
+                84,
+                84
+              ],
+              "name": "guids",
+              "signature": "sequence<Guid>",
+              "type": "field"
+            },
+            {
+              "lines": [
+                85,
+                85
+              ],
+              "name": "maybe_guid",
+              "signature": "Guid?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                87,
+                87
+              ],
+              "name": "url",
+              "signature": "Url",
+              "type": "field"
+            },
+            {
+              "lines": [
+                88,
+                88
+              ],
+              "name": "urls",
+              "signature": "sequence<Url>",
+              "type": "field"
+            },
+            {
+              "lines": [
+                89,
+                89
+              ],
+              "name": "maybe_url",
+              "signature": "Url?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                91,
+                91
+              ],
+              "name": "handle",
+              "signature": "Handle",
+              "type": "field"
+            },
+            {
+              "lines": [
+                92,
+                92
+              ],
+              "name": "handles",
+              "signature": "sequence<Handle>",
+              "type": "field"
+            },
+            {
+              "lines": [
+                93,
+                93
+              ],
+              "name": "maybe_handle",
+              "signature": "Handle?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                95,
+                95
+              ],
+              "name": "ecd",
+              "signature": "ExternalCrateDictionary",
+              "type": "field"
+            },
+            {
+              "lines": [
+                96,
+                96
+              ],
+              "name": "ecnee",
+              "signature": "ExternalCrateNonExhaustiveEnum",
+              "type": "field"
+            }
+          ],
+          "docstring": "And a new type here to tie them all together.",
+          "lines": [
+            77,
+            97
+          ],
+          "name": "CombinedType",
+          "type": "dictionary"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "ac9639802d7b",
+      "indexed_at": "2026-07-24T20:35:12.505912+00:00",
+      "language": "rust",
+      "lines": 282,
+      "mtime_ns": 1782136568000000000,
+      "size": 7301,
+      "symbols": [
+        {
+          "lines": [
+            17,
+            37
+          ],
+          "name": "CombinedType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            39,
+            70
+          ],
+          "name": "get_combined_type",
+          "signature": "(existing: Option<CombinedType>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            75,
+            79
+          ],
+          "name": "ObjectsType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            82,
+            84
+          ],
+          "name": "get_objects_type",
+          "signature": "(value: Option<ObjectsType>)",
+          "type": "function"
+        },
+        {
+          "docstring": "A Custom type",
+          "lines": [
+            87,
+            89
+          ],
+          "name": "get_url",
+          "signature": "(url: Url)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            91,
+            93
+          ],
+          "name": "get_urls",
+          "signature": "(urls: Vec<Url>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            95,
+            97
+          ],
+          "name": "get_maybe_url",
+          "signature": "(url: Option<Url>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            99,
+            101
+          ],
+          "name": "get_maybe_urls",
+          "signature": "(urls: Vec<Option<Url>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            104,
+            106
+          ],
+          "name": "get_imported_guid",
+          "signature": "(guid: Guid)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            109,
+            111
+          ],
+          "name": "get_imported_ouid",
+          "signature": "(ouid: Ouid)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            114,
+            116
+          ],
+          "name": "get_imported_handle_u8",
+          "signature": "(h: Option<HandleU8>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            120,
+            122
+          ],
+          "name": "get_imported_nested_guid",
+          "signature": "(guid: Option<ANestedGuid>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            125,
+            127
+          ],
+          "name": "get_imported_nested_ouid",
+          "signature": "(guid: Option<ANestedGuid>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            129,
+            129
+          ],
+          "name": "NestedExternalGuid",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            132,
+            134
+          ],
+          "name": "get_nested_external_guid",
+          "signature": "(nguid: Option<NestedExternalGuid>)",
+          "type": "function"
+        },
+        {
+          "docstring": "A local custom type wrapping an external imported procmacro type",
+          "lines": [
+            138,
+            138
+          ],
+          "name": "NestedExternalOuid",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            142,
+            144
+          ],
+          "name": "get_nested_external_ouid",
+          "signature": "(ouid: Option<NestedExternalOuid>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            147,
+            149
+          ],
+          "name": "get_nested_external_ouid_async",
+          "signature": "(ouid: Option<NestedExternalOuid>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            151,
+            153
+          ],
+          "name": "LocalExternalGuid",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                156,
+                158
+              ],
+              "name": "from",
+              "signature": "(value: Guid)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            155,
+            159
+          ],
+          "name": "LocalExternalGuid",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                162,
+                164
+              ],
+              "name": "from",
+              "signature": "(value: LocalExternalGuid)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            161,
+            165
+          ],
+          "name": "Guid",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            170,
+            174
+          ],
+          "name": "get_local_external_guid_async",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "A struct",
+          "lines": [
+            177,
+            179
+          ],
+          "name": "get_uniffi_one_type",
+          "signature": "(t: UniffiOneType)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            181,
+            183
+          ],
+          "name": "get_uniffi_one_types",
+          "signature": "(ts: Vec<UniffiOneType>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            185,
+            187
+          ],
+          "name": "get_maybe_uniffi_one_type",
+          "signature": "(t: Option<UniffiOneType>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            189,
+            191
+          ],
+          "name": "get_maybe_uniffi_one_types",
+          "signature": "(ts: Vec<Option<UniffiOneType>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            194,
+            196
+          ],
+          "name": "get_uniffi_one_tla",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "An enum",
+          "lines": [
+            199,
+            201
+          ],
+          "name": "get_uniffi_one_enum",
+          "signature": "(e: UniffiOneEnum)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            203,
+            205
+          ],
+          "name": "get_uniffi_one_enums",
+          "signature": "(es: Vec<UniffiOneEnum>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            207,
+            209
+          ],
+          "name": "get_maybe_uniffi_one_enum",
+          "signature": "(e: Option<UniffiOneEnum>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            211,
+            213
+          ],
+          "name": "get_maybe_uniffi_one_enums",
+          "signature": "(es: Vec<Option<UniffiOneEnum>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            215,
+            217
+          ],
+          "name": "get_uniffi_one_interface",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            220,
+            222
+          ],
+          "name": "get_uniffi_one_trait",
+          "signature": "(t: Option<Arc<dyn UniffiOneTrait>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            225,
+            227
+          ],
+          "name": "invoke_uniffi_one_trait",
+          "signature": "(t: Arc<dyn UniffiOneTrait>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            229,
+            231
+          ],
+          "name": "get_uniffi_one_proc_macro_type",
+          "signature": "(t: UniffiOneProcMacroType)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            234,
+            236
+          ],
+          "name": "throw_uniffi_one_error",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            239,
+            241
+          ],
+          "name": "throw_uniffi_one_error_async",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            245,
+            249
+          ],
+          "name": "throw_uniffi_one_error_interface",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            251,
+            253
+          ],
+          "name": "get_external_crate_interface",
+          "signature": "(val: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            255,
+            259
+          ],
+          "name": "get_uniffi_one_udl_trait",
+          "signature": "(\n    t: Option<Arc<dyn UniffiOneUDLTrait>>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            262,
+            264
+          ],
+          "name": "ContainsExternalError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            267,
+            269
+          ],
+          "name": "ContainsExternalError2",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            272,
+            272
+          ],
+          "name": "takes_external_error",
+          "signature": "(_error: NotToThrowError)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            276,
+            280
+          ],
+          "name": "get_binding_renamed_type",
+          "signature": "(value: Option<String>)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.689664+00:00",
+  "version": "1.0"
+}

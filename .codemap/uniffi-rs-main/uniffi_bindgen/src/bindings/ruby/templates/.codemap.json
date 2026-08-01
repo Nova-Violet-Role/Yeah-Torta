@@ -1,0 +1,426 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src\\bindings\\ruby\\templates",
+  "files": {
+    "Async.rb": {
+      "hash": "13f080a21a2a",
+      "indexed_at": "2026-07-24T20:35:12.891406+00:00",
+      "language": "ruby",
+      "lines": 184,
+      "mtime_ns": 1782136568000000000,
+      "size": 8030,
+      "symbols": []
+    },
+    "CallbackInterfaceImpl.rb": {
+      "hash": "3211697cb5b7",
+      "indexed_at": "2026-07-24T20:35:12.893059+00:00",
+      "language": "ruby",
+      "lines": 59,
+      "mtime_ns": 1782136568000000000,
+      "size": 2858,
+      "symbols": [
+        {
+          "docstring": "Callback interface vtable implementation for {{ cbi_name }}.",
+          "lines": [
+            14,
+            14
+          ],
+          "name": "<anonymous>",
+          "type": "module"
+        }
+      ]
+    },
+    "CallbackInterfaceRuntime.rb": {
+      "hash": "da0f1b56fec6",
+      "indexed_at": "2026-07-24T20:35:12.893746+00:00",
+      "language": "ruby",
+      "lines": 20,
+      "mtime_ns": 1782136568000000000,
+      "size": 417,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                9
+              ],
+              "name": "initialize",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11,
+                13
+              ],
+              "name": "lift",
+              "signature": "(handle)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                15,
+                17
+              ],
+              "name": "lower",
+              "signature": "(cb)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Stores Ruby callback objects in a handle map, and converts to/from integer handles.",
+          "lines": [
+            4,
+            18
+          ],
+          "name": "CallbackInterfaceFfiConverter",
+          "type": "class"
+        }
+      ]
+    },
+    "CallbackInterfaceTemplate.rb": {
+      "hash": "4edf86d419b4",
+      "indexed_at": "2026-07-24T20:35:12.894527+00:00",
+      "language": "ruby",
+      "lines": 16,
+      "mtime_ns": 1782136568000000000,
+      "size": 541,
+      "symbols": []
+    },
+    "CustomTypeTemplate.rb": {
+      "hash": "6aa136848319",
+      "indexed_at": "2026-07-24T20:35:12.895641+00:00",
+      "language": "ruby",
+      "lines": 19,
+      "mtime_ns": 1782136568000000000,
+      "size": 686,
+      "symbols": []
+    },
+    "EnumTemplate.rb": {
+      "hash": "f90f7e9acf65",
+      "indexed_at": "2026-07-24T20:35:12.896301+00:00",
+      "language": "ruby",
+      "lines": 90,
+      "mtime_ns": 1782136568000000000,
+      "size": 3006,
+      "symbols": []
+    },
+    "ErrorTemplate.rb": {
+      "hash": "1dace13cca11",
+      "indexed_at": "2026-07-24T20:35:12.897724+00:00",
+      "language": "ruby",
+      "lines": 154,
+      "mtime_ns": 1782136568000000000,
+      "size": 4675,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                7
+              ],
+              "name": "code",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                11
+              ],
+              "name": "error_buf",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "to_s",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1,
+            16
+          ],
+          "name": "RustCallStatus",
+          "type": "class"
+        },
+        {
+          "lines": [
+            32,
+            32
+          ],
+          "name": "<anonymous>",
+          "type": "class"
+        }
+      ]
+    },
+    "HandleMap.rb": {
+      "hash": "18b6227a6b0d",
+      "indexed_at": "2026-07-24T20:35:12.898635+00:00",
+      "language": "ruby",
+      "lines": 61,
+      "mtime_ns": 1782136568000000000,
+      "size": 1549,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                17
+              ],
+              "name": "initialize",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                26
+              ],
+              "name": "insert",
+              "signature": "(obj)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                34
+              ],
+              "name": "get",
+              "signature": "(handle)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                36,
+                45
+              ],
+              "name": "clone_handle",
+              "signature": "(handle)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                47,
+                53
+              ],
+              "name": "remove",
+              "signature": "(handle)",
+              "type": "method"
+            },
+            {
+              "docstring": "Used for testing/debugging purposes",
+              "lines": [
+                56,
+                58
+              ],
+              "name": "size",
+              "type": "method"
+            }
+          ],
+          "docstring": "the source in lift/lower without extra metadata.",
+          "lines": [
+            12,
+            59
+          ],
+          "name": "UniffiHandleMap",
+          "type": "class"
+        }
+      ]
+    },
+    "Helpers.rb": {
+      "hash": "4147425921c6",
+      "indexed_at": "2026-07-24T20:35:12.899755+00:00",
+      "language": "ruby",
+      "lines": 62,
+      "mtime_ns": 1782136568000000000,
+      "size": 2286,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            6
+          ],
+          "name": "uniffi_in_range",
+          "signature": "(i, type_name, min, max)",
+          "type": "singleton_method"
+        },
+        {
+          "lines": [
+            8,
+            13
+          ],
+          "name": "uniffi_utf8",
+          "signature": "(v)",
+          "type": "singleton_method"
+        },
+        {
+          "lines": [
+            15,
+            18
+          ],
+          "name": "uniffi_bytes",
+          "signature": "(v)",
+          "type": "singleton_method"
+        },
+        {
+          "docstring": "all other errors are reported as UNIFFI_CALLBACK_UNEXPECTED_ERROR.",
+          "lines": [
+            29,
+            46
+          ],
+          "name": "uniffi_trait_interface_call",
+          "signature": "(call_status, make_call, write_return_value, error_type = nil, lower_error = nil)",
+          "type": "singleton_method"
+        },
+        {
+          "docstring": "with variant classes as constant within them.",
+          "lines": [
+            51,
+            62
+          ],
+          "name": "uniffi_is_error_type?",
+          "signature": "(e, error_type)",
+          "type": "singleton_method"
+        }
+      ]
+    },
+    "MethodImpls.rb": {
+      "hash": "a47e7a69d207",
+      "indexed_at": "2026-07-24T20:35:12.902171+00:00",
+      "language": "ruby",
+      "lines": 25,
+      "mtime_ns": 1782136568000000000,
+      "size": 984,
+      "symbols": []
+    },
+    "NamespaceLibraryTemplate.rb": {
+      "hash": "8bc20d46817d",
+      "indexed_at": "2026-07-24T20:35:12.902829+00:00",
+      "language": "ruby",
+      "lines": 37,
+      "mtime_ns": 1782136568000000000,
+      "size": 1371,
+      "symbols": []
+    },
+    "ObjectTemplate.rb": {
+      "hash": "a55faa7adc97",
+      "indexed_at": "2026-07-24T20:35:12.903681+00:00",
+      "language": "ruby",
+      "lines": 166,
+      "mtime_ns": 1782136568000000000,
+      "size": 6184,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "<anonymous>",
+          "type": "class"
+        }
+      ]
+    },
+    "RecordTemplate.rb": {
+      "hash": "3af0cb5e138b",
+      "indexed_at": "2026-07-24T20:35:12.904384+00:00",
+      "language": "ruby",
+      "lines": 32,
+      "mtime_ns": 1782136568000000000,
+      "size": 1035,
+      "symbols": []
+    },
+    "RustBufferBuilder.rb": {
+      "hash": "bb4c007e1828",
+      "indexed_at": "2026-07-24T20:35:12.905216+00:00",
+      "language": "ruby",
+      "lines": 334,
+      "mtime_ns": 1782136568000000000,
+      "size": 9306,
+      "symbols": []
+    },
+    "RustBufferStream.rb": {
+      "hash": "e43ba75eb140",
+      "indexed_at": "2026-07-24T20:35:12.906046+00:00",
+      "language": "ruby",
+      "lines": 364,
+      "mtime_ns": 1782136568000000000,
+      "size": 9925,
+      "symbols": []
+    },
+    "RustBufferTemplate.rb": {
+      "hash": "7a623e20dc65",
+      "indexed_at": "2026-07-24T20:35:12.908329+00:00",
+      "language": "ruby",
+      "lines": 316,
+      "mtime_ns": 1782136568000000000,
+      "size": 8280,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "<anonymous>",
+          "type": "class"
+        },
+        {
+          "lines": [
+            18,
+            49
+          ],
+          "name": "allocWithBuilder",
+          "type": "singleton_method"
+        }
+      ]
+    },
+    "TopLevelFunctionTemplate.rb": {
+      "hash": "cd9b6b81bc97",
+      "indexed_at": "2026-07-24T20:35:12.909064+00:00",
+      "language": "ruby",
+      "lines": 25,
+      "mtime_ns": 1782136568000000000,
+      "size": 791,
+      "symbols": []
+    },
+    "TraitInterfaceVtable.rb": {
+      "hash": "655c67028008",
+      "indexed_at": "2026-07-24T20:35:12.910912+00:00",
+      "language": "ruby",
+      "lines": 60,
+      "mtime_ns": 1782136568000000000,
+      "size": 2751,
+      "symbols": []
+    },
+    "UniffiTraitImpls.rb": {
+      "hash": "258a350f73fa",
+      "indexed_at": "2026-07-24T20:35:12.912843+00:00",
+      "language": "ruby",
+      "lines": 72,
+      "mtime_ns": 1782136568000000000,
+      "size": 2214,
+      "symbols": []
+    },
+    "macros.rb": {
+      "hash": "fc1315182d52",
+      "indexed_at": "2026-07-24T20:35:12.901526+00:00",
+      "language": "ruby",
+      "lines": 342,
+      "mtime_ns": 1782136568000000000,
+      "size": 12091,
+      "symbols": []
+    },
+    "wrapper.rb": {
+      "hash": "bf09d6a13708",
+      "indexed_at": "2026-07-24T20:35:12.913596+00:00",
+      "language": "ruby",
+      "lines": 98,
+      "mtime_ns": 1782136568000000000,
+      "size": 2889,
+      "symbols": []
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.767177+00:00",
+  "version": "1.0"
+}

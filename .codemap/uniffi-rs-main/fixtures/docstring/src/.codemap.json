@@ -1,0 +1,322 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\docstring\\src",
+  "files": {
+    "docstring.udl": {
+      "hash": "f56a72c052f7",
+      "indexed_at": "2026-07-24T20:35:12.451559+00:00",
+      "language": "udl",
+      "lines": 71,
+      "mtime_ns": 1782136568000000000,
+      "size": 1422,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "<docstring-multiline-function> <second-line>",
+              "lines": [
+                8,
+                8
+              ],
+              "name": "test_multiline",
+              "signature": "() : void",
+              "type": "method"
+            }
+          ],
+          "docstring": "/ <docstring-namespace>",
+          "lines": [
+            2,
+            11
+          ],
+          "name": "uniffi_docstring",
+          "type": "namespace"
+        },
+        {
+          "docstring": "/ <docstring-enum>",
+          "lines": [
+            14,
+            19
+          ],
+          "name": "EnumTest",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "Test",
+              "signature": "(i16 code)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "Test2",
+              "signature": "(i16 code)",
+              "type": "variant"
+            }
+          ],
+          "lines": [
+            23,
+            28
+          ],
+          "name": "AssociatedEnumTest",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            32,
+            37
+          ],
+          "name": "ErrorTest",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                43,
+                43
+              ],
+              "name": "Test",
+              "signature": "(i16 code)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                45,
+                45
+              ],
+              "name": "Test2",
+              "signature": "(i16 code)",
+              "type": "variant"
+            }
+          ],
+          "lines": [
+            41,
+            46
+          ],
+          "name": "AssociatedErrorTest",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                51,
+                51
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                55,
+                55
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "docstring": "<docstring-method>",
+              "lines": [
+                58,
+                58
+              ],
+              "name": "test",
+              "signature": "() : void",
+              "type": "method"
+            }
+          ],
+          "docstring": "/ <docstring-object>",
+          "lines": [
+            49,
+            59
+          ],
+          "name": "ObjectTest",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                64,
+                64
+              ],
+              "name": "test",
+              "signature": "i32",
+              "type": "field"
+            }
+          ],
+          "docstring": "/ <docstring-record>",
+          "lines": [
+            62,
+            65
+          ],
+          "name": "RecordTest",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "docstring": "<docstring-callback-method>",
+              "lines": [
+                70,
+                70
+              ],
+              "name": "test",
+              "signature": "() : void",
+              "type": "method"
+            }
+          ],
+          "docstring": "/ <docstring-callback>",
+          "lines": [
+            68,
+            71
+          ],
+          "name": "CallbackTest",
+          "type": "callback_interface"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "b8e9a2b07f90",
+      "indexed_at": "2026-07-24T20:35:12.452299+00:00",
+      "language": "rust",
+      "lines": 65,
+      "mtime_ns": 1782136568000000000,
+      "size": 1146,
+      "symbols": [
+        {
+          "docstring": "/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file,",
+          "lines": [
+            5,
+            8
+          ],
+          "name": "EnumTest",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            10,
+            13
+          ],
+          "name": "AssociatedEnumTest",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            16,
+            21
+          ],
+          "name": "ErrorTest",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            24,
+            29
+          ],
+          "name": "AssociatedErrorTest",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            31,
+            31
+          ],
+          "name": "ObjectTest",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                34,
+                36
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                38,
+                40
+              ],
+              "name": "new_alternate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                42,
+                42
+              ],
+              "name": "test",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            33,
+            43
+          ],
+          "name": "ObjectTest",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            45,
+            47
+          ],
+          "name": "RecordTest",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            49,
+            53
+          ],
+          "name": "test",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            55,
+            55
+          ],
+          "name": "test_multiline",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            57,
+            59
+          ],
+          "name": "test_without_docstring",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            61,
+            63
+          ],
+          "name": "CallbackTest",
+          "type": "trait"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.677678+00:00",
+  "version": "1.0"
+}

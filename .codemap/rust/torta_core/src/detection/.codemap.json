@@ -1,0 +1,625 @@
+{
+  "directory": "rust\\torta_core\\src\\detection",
+  "files": {
+    "beacon.rs": {
+      "hash": "1b0e39f86b39",
+      "indexed_at": "2026-07-28T21:45:16.672065+00:00",
+      "language": "rust",
+      "lines": 280,
+      "mtime_ns": 1785275004124510000,
+      "size": 11921,
+      "symbols": [
+        {
+          "lines": [
+            38,
+            43
+          ],
+          "name": "HostRhythm",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            47,
+            49
+          ],
+          "name": "rhythms",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "the last [`MIN_TICKS`] inter-arrival gaps hold one fixed period \u2265 [`MIN_PERIOD_SECS`].",
+          "lines": [
+            53,
+            70
+          ],
+          "name": "beacon_signal_at",
+          "signature": "(host: &str, now: u64)",
+          "type": "function"
+        },
+        {
+          "docstring": "can never drift into disagreeing about the same arrivals (the REUSE law).",
+          "lines": [
+            75,
+            92
+          ],
+          "name": "cadence_verdict",
+          "signature": "(tail: &[u64])",
+          "type": "function"
+        },
+        {
+          "docstring": "Fail-open: a poisoned lock, or a host with no recorded arrivals, sees nothing.",
+          "lines": [
+            103,
+            114
+          ],
+          "name": "beacon_peek",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "crosses [`NX_BURST`] (tunnel candidate \u2014 the caller files `Signal::Tunnel`).",
+          "lines": [
+            135,
+            169
+          ],
+          "name": "nx_burst",
+          "signature": "(host: &str, qtype: u16, rcode: u8, now: u64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            180,
+            184
+          ],
+          "name": "scrub_rhythms",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                191,
+                199
+              ],
+              "name": "fixed_sixty_second_cadence_fires_at_six_ticks",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                202,
+                214
+              ],
+              "name": "jittered_cadence_within_tolerance_still_fires",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                217,
+                229
+              ],
+              "name": "fp_control_high_qps_cdn_stream_never_fires",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                239,
+                263
+              ],
+              "name": "speculative_qtype_negatives_never_convict_a_healthy_host",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                266,
+                279
+              ],
+              "name": "nx_burst_calls_the_tunnel_candidate_and_window_forgets",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            187,
+            280
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "dga.rs": {
+      "hash": "11650038ce95",
+      "indexed_at": "2026-08-01T00:09:09.528508+00:00",
+      "language": "rust",
+      "lines": 255,
+      "mtime_ns": 1785542916856418800,
+      "size": 11577,
+      "symbols": [
+        {
+          "docstring": "too broadly; this is the same lesson applied in the opposite direction.",
+          "lines": [
+            60,
+            70
+          ],
+          "name": "label_is_distribution_id",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "stays a flat bitmap.",
+          "lines": [
+            80,
+            92
+          ],
+          "name": "build_common_bigrams",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "True iff the alpha pair `(a, b)` sits in the bundled frequent-bigram table.",
+          "lines": [
+            95,
+            98
+          ],
+          "name": "common_bigram",
+          "signature": "(a: u8, b: u8)",
+          "type": "function"
+        },
+        {
+          "docstring": "non [a-z0-9-] bytes are ignored (an IDN xn-- punycode label scores on its ASCII shape).",
+          "lines": [
+            102,
+            171
+          ],
+          "name": "dga_score",
+          "signature": "(label: &str)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                185,
+                206
+              ],
+              "name": "min_label_len_is_the_evidence_floor_for_a_dga_accusation",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                211,
+                228
+              ],
+              "name": "a_distribution_id_is_exempt_but_only_under_a_real_distribution_domain",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                231,
+                239
+              ],
+              "name": "alphabet_soup_fires_and_words_do_not",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                242,
+                246
+              ],
+              "name": "short_labels_are_never_accused",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                249,
+                254
+              ],
+              "name": "fp_control_legit_cdn_hosts_stay_quiet",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            174,
+            255
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "homoglyph.rs": {
+      "hash": "56c2f8df4a8f",
+      "indexed_at": "2026-07-26T19:12:57.890760+00:00",
+      "language": "rust",
+      "lines": 213,
+      "mtime_ns": 1785030832549604300,
+      "size": 7785,
+      "symbols": [
+        {
+          "docstring": "checked arithmetic, not process death.",
+          "lines": [
+            30,
+            95
+          ],
+          "name": "punycode_decode",
+          "signature": "(input: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "genuinely foreign word never collides with an ASCII brand skeleton.",
+          "lines": [
+            101,
+            157
+          ],
+          "name": "fold",
+          "signature": "(text: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "fail-open); everything else folds as-is. Pure \u2014 no state, no clock.",
+          "lines": [
+            163,
+            171
+          ],
+          "name": "homoglyph_hit",
+          "signature": "(label: &str)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                178,
+                182
+              ],
+              "name": "real_brand_labels_never_fire_on_themselves",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                185,
+                191
+              ],
+              "name": "ascii_confusable_forgeries_fire",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                194,
+                197
+              ],
+              "name": "punycode_homograph_fires",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                200,
+                203
+              ],
+              "name": "rfc3492_canonical_decode_round_trip",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                206,
+                212
+              ],
+              "name": "undecodable_and_bystander_labels_stay_quiet",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            174,
+            213
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "mod.rs": {
+      "hash": "bc1c869fa8cb",
+      "indexed_at": "2026-07-26T19:12:57.891292+00:00",
+      "language": "rust",
+      "lines": 39,
+      "mtime_ns": 1785030832559604300,
+      "size": 2057,
+      "symbols": [
+        {
+          "docstring": "! lock means \"saw nothing\", never a panic on the datapath.",
+          "lines": [
+            29,
+            29
+          ],
+          "name": "beacon",
+          "type": "module"
+        },
+        {
+          "lines": [
+            30,
+            30
+          ],
+          "name": "dga",
+          "type": "module"
+        },
+        {
+          "lines": [
+            31,
+            31
+          ],
+          "name": "homoglyph",
+          "type": "module"
+        },
+        {
+          "lines": [
+            32,
+            32
+          ],
+          "name": "newborn",
+          "type": "module"
+        },
+        {
+          "lines": [
+            33,
+            33
+          ],
+          "name": "tunnel",
+          "type": "module"
+        }
+      ]
+    },
+    "newborn.rs": {
+      "hash": "ab0cec1eb09d",
+      "indexed_at": "2026-07-28T21:45:16.950458+00:00",
+      "language": "rust",
+      "lines": 136,
+      "mtime_ns": 1785275028428104400,
+      "size": 5691,
+      "symbols": [
+        {
+          "lines": [
+            27,
+            30
+          ],
+          "name": "Registry",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            34,
+            36
+          ],
+          "name": "registry",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "poisoned lock saw nothing.",
+          "lines": [
+            42,
+            57
+          ],
+          "name": "newborn_at",
+          "signature": "(host: &str, now: u64)",
+          "type": "function"
+        },
+        {
+          "docstring": "Fail-open: a poisoned lock saw nothing.",
+          "lines": [
+            77,
+            85
+          ],
+          "name": "newborn_peek_at",
+          "signature": "(host: &str, now: u64)",
+          "type": "function"
+        },
+        {
+          "docstring": "probe uses, so opening a panel can never perturb what the engine has learned.",
+          "lines": [
+            89,
+            95
+          ],
+          "name": "newborn_peek",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            99,
+            104
+          ],
+          "name": "scrub_registry",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                111,
+                119
+              ],
+              "name": "first_sight_probation_then_maturity",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                122,
+                135
+              ],
+              "name": "cap_evicts_oldest_registration_only",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            107,
+            136
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "tunnel.rs": {
+      "hash": "bf90ce69a0fa",
+      "indexed_at": "2026-08-01T00:09:09.801126+00:00",
+      "language": "rust",
+      "lines": 206,
+      "mtime_ns": 1785542907712424200,
+      "size": 8366,
+      "symbols": [
+        {
+          "lines": [
+            27,
+            29
+          ],
+          "name": "TunnelRing",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Push one event at `now`, prune the window + the cap.",
+              "lines": [
+                33,
+                45
+              ],
+              "name": "push",
+              "signature": "(&mut self, now: u64, answer_len: u32, qtype: u16)",
+              "type": "method"
+            },
+            {
+              "docstring": "Oversized-TXT events currently inside the window.",
+              "lines": [
+                48,
+                53
+              ],
+              "name": "oversized_txt",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            31,
+            54
+          ],
+          "name": "TunnelRing",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            58,
+            60
+          ],
+          "name": "rings",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "Fail-open: a poisoned lock saw nothing.",
+          "lines": [
+            66,
+            75
+          ],
+          "name": "tunnel_signal_at",
+          "signature": "(host: &str, qtype: u16, answer_len: u32, now: u64)",
+          "type": "function"
+        },
+        {
+          "docstring": "burst bar by one, exactly as on the witnessing path.",
+          "lines": [
+            88,
+            96
+          ],
+          "name": "exfil_verdict",
+          "signature": "(host: &str, oversized: usize)",
+          "type": "function"
+        },
+        {
+          "docstring": "Fail-open: a poisoned lock, or a host with no ring, sees nothing.",
+          "lines": [
+            106,
+            114
+          ],
+          "name": "tunnel_peek",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            118,
+            122
+          ],
+          "name": "scrub_rings",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                136,
+                163
+              ],
+              "name": "txt_oversize_threshold_fires_at_the_bound_and_not_below",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                168,
+                178
+              ],
+              "name": "oversized_txt_burst_fires_within_window",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                181,
+                193
+              ],
+              "name": "window_prunes_and_a_slow_drip_never_fires",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                196,
+                205
+              ],
+              "name": "fp_control_normal_txt_and_fat_a_answers_stay_quiet",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            125,
+            206
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T00:09:09.802703+00:00",
+  "version": "1.0"
+}

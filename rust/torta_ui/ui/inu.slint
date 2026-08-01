@@ -1,0 +1,720 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT Wire Cake Inu dashboard — slice 8 of the Inu pillar (the 🎷 Violet facet).
+//
+// This is the rust-native (SLINT, NO XML / NO Java / NO Compose) one-glance Inu surface — THE LOYAL HOUND
+// AT THE GATE. It REPLACES the legacy `activity_wireless_debug.xml` (+ its `ActivityWirelessDebugBinding` +
+// the `WdStep*` styles + `ic_wireless_debug.xml`). It renders an `InuState` (torta_core
+// `inu_state::InuState`, the DurableTier-backed RAM⊗NAND Record that succeeds the 4 SharedPreferences keys)
+// the HOST sets: the elevation STATUS, the active PROVIDER (Shizuku / Self-ADB / demo stub), the ADB-pair
+// state, the per-power grant flags, and the boot-reapply durability. It is friendly for a non-geek: one
+// clear "ELEVATED / RESTING" medallion, a one-tap Pair, and the raw ADB knobs kept behind the ||| Expert
+// toggle (inu_settings.slint) — the feedback-simple-ux law.
+//
+// ★ GENESIS — the pillar is our OWN in-app no-root ADB self-elevation, STUDIED from the Shizuku architecture
+// (the binder middle-man, the root-OR-ADB starter handshake) and STRENGTHENED, never copied: Shizuku needs a
+// 2nd companion app the user installs; ours forks the same privileged reach through the loopback self-ADB
+// channel we already own — in-app, no companion. Zero Shizuku bytes; this UI is an original.
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android cross-compile spike #69.
+// SLINT can't read a Rust struct directly; the host (Kotlin SurfaceView bridge / the slint-viewer preview /
+// the lib.rs proof test) constructs `InuDashboard`, pulls the live `InuState` via the UniFFI Record + the
+// live Kotlin elevation status, and pushes each field onto the `in-out` inputs. The recent-events feed is the
+// tail of the per-pillar `query-inu.log` (log_tier, the #133 RAM⊗NAND pattern). Every value is a REAL read.
+//
+// 🩸 THE ELEVATION-FAULT HUNT (the load-bearing job): elevation's worst failures are SILENT — the app THINKS
+// it is protecting the device while nothing is enforced. The dashboard derives + surfaces them (the
+// `out property` flags below) as alert banners + a one-glance crown verdict:
+//   (1) GHOST GRANT — powers marked held in state, but the provider is NOT elevated right now: orphaned state,
+//       nothing is actually enforced (the Chroma F10 orphaned-enforcement killer).
+//   (2) PAIR LOST — the pair flag is set but the active provider dropped to none: the privileged channel died
+//       (the Shizuku `linkToDeath` honesty — a dead session must flip, never lie that it is alive).
+//   (3) NO PROVIDER — armed (pairing / error) but the active provider is none: the ElevationManager is inert
+//       (its provider set is empty until the two providers are wired — landmine 2 / Chroma F17).
+//   (4) DRIFT UNGUARDED — drift-prone powers are held but boot-reapply is NOT armed: on the next reboot they
+//       silently vanish (the Shizuku always-availability gap — BootReapplyPolicy has no live boot branch yet).
+//   plus the informational STUB note (the demo stub is honest `isImplemented=false` — nothing truly elevates).
+//
+// NOTE: slint uses `:` for property bindings (not `=`); `\{expr}` is string interpolation; `out property`
+// values are derived + host-readable (the proof test asserts the elevation-fault + crown derivations fire).
+
+import { VerticalBox, HorizontalBox, Button } from "std-widgets.slint";
+// The loyal-hound / collar-tag palette (slice 10) — the single source of truth for the Inu colors. NO XML.
+import { Inu } from "inu_palette.slint";
+import { ThemeBook, MotifWash } from "theme_tokens.slint";
+
+// One protected-power row — the host fills this from the live per-power grant map (the `PowerState` set the
+// SharedPreferences store carried, now the InuState Record — `PowerCatalogue` `PowerId` × the granted flag ×
+// the `driftProne` durability tag). `id` = the stable power key; `label` = the friendly name; `tier` = the
+// PowerTier label ("basic" / "standard" / "deep"); `held` = granted+verified live; `drift-prone` = it drifts
+// off across reboot unless boot-reapply re-arms it. Labels + flags only, never a raw shell command (T20).
+export struct PowerRow {
+    id: string,
+    label: string,
+    tier: string,
+    held: bool,
+    drift-prone: bool,
+}
+
+// One recent-event feed row — the host fills this from the tail of the per-pillar `query-inu.log`
+// (log_tier::log_tail_recent, the #133 RAM⊗NAND pattern). `event` = the kind ("pair" / "grant" / "verify" /
+// "revert" / "boot"); `detail` = the friendly one-liner; `ok` = it succeeded. Labels + counts only (T20).
+export struct InuLogRow {
+    event: string,
+    detail: string,
+    ok: bool,
+}
+
+// A compact metric tile (local, non-exported). `tint` colors the value + lifts a number at a glance.
+component StatTile inherits Rectangle {
+    in property <string> label;
+    in property <string> value;
+    in property <color> tint: Inu.cream;
+    min-width: 70px;
+    min-height: 52px;
+    border-radius: 8px;
+    background: @linear-gradient(0deg, Inu.straw.with-alpha(0.72) 0%, Inu.kennel.with-alpha(0.46) 100%);
+    border-width: 1px;
+    border-color: clasp.pressed ? Inu.collar : Inu.leash;
+    animate border-color { duration: 180ms; }
+    VerticalLayout {
+        padding: 8px;
+        spacing: 2px;
+        Text {
+            text: root.value;
+            color: root.tint;
+            font-size: 19px;
+            font-weight: 800;
+        }
+        Text {
+            text: root.label;
+            color: Inu.fur;
+            font-size: 10px;
+        }
+    }
+    // ── THE COLLAR-CLASP — the pillar's signature on-touch: press a tile and a teal collar
+    //    (with its gold TAG buckle) clasps shut around it; release and it slips back off.
+    //    Purely declarative (pressed-driven animate) — no timers, GPU-cheap. ──
+    Rectangle {
+        x: (root.width - self.width) / 2;
+        y: (root.height - self.height) / 2;
+        width: clasp.pressed ? root.width + 2px : root.width + 26px;
+        height: clasp.pressed ? root.height + 2px : root.height + 26px;
+        border-radius: root.border-radius + 4px;
+        border-width: 3px;
+        border-color: clasp.pressed ? Inu.collar : Inu.gleam;
+        background: transparent;
+        opacity: clasp.pressed ? 1.0 : 0.0;
+        animate width, height { duration: 240ms; easing: ease-out; }
+        animate opacity { duration: 200ms; easing: ease-out; }
+        // the gold TAG buckle riding the clasp
+        Rectangle {
+            x: parent.width / 2 - 5px;
+            y: parent.height - 5px;
+            width: 10px; height: 10px; border-radius: 5px;
+            background: Inu.tag;
+        }
+    }
+    clasp := TouchArea { }
+}
+
+// ── THE HOUND MASCOT — the loyal shiba, primitive-built (Rectangles + ear Paths), idle-alive:
+//    breathing (body swell), tail-wag (rotation sine) + a blink — all animation-tick driven, zero
+//    timers. The collar band + gold tag mirror the pillar brand; the crown gleam obeys the
+//    BRILLIANCE LAW (brilliant, never murky). ──
+component InuMascot inherits Rectangle {
+    width: 118px;
+    height: 112px;
+    property <float> breathe: 1.0 + 0.022 * Math.sin(360deg * (animation-tick() / 3.2s));
+    property <float> wag: Math.sin(360deg * (animation-tick() / 0.9s));
+    property <bool> blink: Math.sin(360deg * (animation-tick() / 4.1s)) > 0.982;
+    // the wagging tail — a warm stub behind the haunch. (This Slint pin allows rotation on Image
+    // ONLY, so the wag is a y/length bob — same life, zero rotation.)
+    Rectangle {
+        x: 8px - 3px * root.wag;
+        y: 54px - 6px * root.wag;
+        width: 36px + 4px * root.wag;
+        height: 12px;
+        border-radius: 6px;
+        background: @linear-gradient(90deg, Inu.tag 0%, Inu.caution 100%);
+    }
+    // the body (breathes)
+    Rectangle {
+        x: 24px - (70px * (root.breathe - 1.0)) / 2;
+        y: 42px;
+        width: 70px * root.breathe;
+        height: 64px;
+        border-radius: 30px;
+        background: @linear-gradient(180deg, Inu.cream 0%, Inu.tag.with-alpha(0.82) 100%);
+    }
+    // the head
+    Rectangle {
+        x: 46px; y: 10px;
+        width: 52px; height: 46px;
+        border-radius: 22px;
+        background: @linear-gradient(165deg, Inu.cream 0%, Inu.tag.with-alpha(0.88) 100%);
+    }
+    // the ears — two pricked Path triangles
+    Path {
+        commands: "M 0 18 L 8 0 L 16 18 Z";
+        fill: Inu.caution;
+        x: 48px; y: 2px; width: 16px; height: 18px;
+        viewbox-width: 16; viewbox-height: 18;
+    }
+    Path {
+        commands: "M 0 18 L 8 0 L 16 18 Z";
+        fill: Inu.caution;
+        x: 80px; y: 2px; width: 16px; height: 18px;
+        viewbox-width: 16; viewbox-height: 18;
+    }
+    // the eyes (blink)
+    Rectangle { x: 60px; y: 26px; width: 6px; height: root.blink ? 2px : 6px; border-radius: 3px; background: #2a2118; }
+    Rectangle { x: 78px; y: 26px; width: 6px; height: root.blink ? 2px : 6px; border-radius: 3px; background: #2a2118; }
+    // the snout + nose
+    Rectangle { x: 66px; y: 38px; width: 14px; height: 10px; border-radius: 5px; background: Inu.cream; }
+    Rectangle { x: 70px; y: 36px; width: 7px; height: 6px; border-radius: 3px; background: #2a2118; }
+    // THE COLLAR — the brand-teal band + the gold tag riding it
+    Rectangle {
+        x: 48px; y: 54px; width: 48px; height: 8px; border-radius: 4px;
+        background: Inu.collar;
+        Rectangle { x: 20px; y: 6px; width: 9px; height: 9px; border-radius: 4.5px; background: Inu.tag; }
+    }
+    // the specular gleam on the crown of the head (brilliance law)
+    Rectangle {
+        x: 52px; y: 14px; width: 16px; height: 8px; border-radius: 4px;
+        background: Inu.gleam.with-alpha(0.55);
+    }
+}
+
+// An elevation-fault alert banner (local). Only instantiated (via a guarding `if`) when its fault is live, so
+// an inactive alert occupies ZERO layout space — the stack collapses to exactly the live faults.
+component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: Inu.wound;
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: Inu.strike;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: Inu.strike;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A section title (local).
+component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: Inu.dim;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+// THE EMBEDDABLE INU SURFACE (SLINT substitution · 4-FIX round 3, 2-FEED-Inu) — inherits Rectangle so it
+// mounts as an IN-SHELL pane (the single-surface law: on-device the last-constructed Window owns the one
+// android surface, so pillar dashboards can never be shown as separate Windows — they embed as panes,
+// exactly like CentauriPane/MaskSolverPane/BeastPane/RotationPane). The host feeds this pane a live
+// `InuState` field-for-field; the shell forwards its inputs as `<=>` aliases. The standalone InuDashboard
+// Window below wraps THIS pane (one surface, two mounts — the proof test + the `inu_witness` preview).
+export component InuPane inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.inu; width: 100%; height: 100%; }
+    // ===== "THE DEN" scenery — the burrow horizon: two warm mounds breathing on offset
+    // periods + the gold tag-glint seam at the floor (the Inu grammar: warm earth, lantern calm). =====
+    Rectangle {
+        width: 100%; height: 100%; clip: true;
+        Rectangle {
+            x: -parent.width * 0.08; y: parent.height * 0.86;
+            width: parent.width * 0.55; height: parent.height * 0.30;
+            border-radius: parent.width * 0.20;
+            background: Inu.burrow.with-alpha(0.35 + 0.08 * Math.sin(360deg * (animation-tick() / 5.3s)));
+        }
+        Rectangle {
+            x: parent.width * 0.58; y: parent.height * 0.90;
+            width: parent.width * 0.52; height: parent.height * 0.26;
+            border-radius: parent.width * 0.18;
+            background: Inu.straw.with-alpha(0.30 + 0.08 * Math.sin(360deg * (animation-tick() / 6.7s)));
+        }
+        Rectangle {
+            y: parent.height - 2px; height: 2px; width: 100%;
+            background: @linear-gradient(90deg, transparent 0%, Inu.tag.with-alpha(0.35 + 0.20 * Math.sin(360deg * (animation-tick() / 4.1s))) 50%, transparent 100%);
+        }
+    }
+    background: Inu.den.with-alpha(0.42);
+
+    // ===== InuState inputs (host sets each from `InuState` + the live Kotlin elevation status) =====
+    // #97 — TRUE when this pane is rendering the SEEDED SPIKE posture rather than the user's own
+    // record. `lib.rs` opens the real store first and falls back to `wire-cake-inu-spike` (seeded by
+    // `seed_inu_spike_posture`) only when NO record has ever been written, so the rail demonstrates
+    // the pipeline instead of rendering blank. That fallback is deliberate and correct.
+    //
+    // What was missing is the LABEL. The seeded posture is `Elevated` + `paired: true` +
+    // `granted_at = now - 3 days` + three powers HELD — so the pane rendered "COLLAR ELEVATED ·
+    // paired 3d ago · 3 of 3 held" with nothing to say it was synthetic. That is indistinguishable
+    // from a live reading, and "paired 3d ago" in particular is computed from a hardcoded constant.
+    //
+    // The house already owns this vocabulary: `general_section.slint:451` gates a PREVIEW
+    // AlertBanner on `host-live`. The two panes failed in OPPOSITE directions — GENERAL showed the
+    // banner over LIVE data (a false warning, fixed in 550d166a), INU showed synthetic data with NO
+    // banner (a false reassurance). A false reassurance is the worse of the two here: the honest
+    // reaction to it is to believe the phone is elevated when nothing has been granted.
+    in-out property <bool> demo-posture: false;
+    in-out property <bool> configured: false;        // the pillar is armed (the Inu / wireless-debug is enabled)
+    in-out property <int> elevation-status: 0;       // 0 RESTING · 1 FETCHING (pairing) · 2 ELEVATED · 3 ERROR
+    in-out property <int> active-provider: 0;        // 0 NONE · 1 SHIZUKU · 2 SELF-ADB (libadb) · 3 STUB (demo)
+    in-out property <bool> paired: false;            // the ADB pair handshake completed (key/cert persisted)
+    in-out property <string> paired-label: "not paired yet";  // host pre-formatted ("paired 3d ago"; slint holds no clock)
+    in-out property <string> status-detail: "";      // host pre-formatted extra line (an error message / hint)
+    in-out property <int> powers-held: 0;            // count of powers granted + verified live
+    in-out property <int> powers-total: 0;           // the catalogue size (how many powers exist)
+    in-out property <int> drift-prone-held: 0;       // held powers that drift off across a reboot
+    in-out property <bool> boot-reapply-armed: false;// the live BootComplete re-establish branch is wired (the #1 gap)
+
+    // ===== the protected-power feed (host fills from the InuState grant map; sample defaults for preview) =====
+    in-out property <[PowerRow]> powers: [
+        { id: "battery-unrestricted", label: "Ignore battery limits", tier: "basic", held: true, drift-prone: false },
+        { id: "usage-stats", label: "See app usage", tier: "standard", held: true, drift-prone: false },
+        { id: "write-secure-settings", label: "Tune secure settings", tier: "deep", held: false, drift-prone: true },
+    ];
+
+    // ===== the recent-events feed (host fills from the query-inu.log tail; sample defaults for preview) =====
+    in-out property <[InuLogRow]> recent-events: [
+        { event: "pair", detail: "paired over loopback self-ADB", ok: true },
+        { event: "grant", detail: "battery-unrestricted -> held", ok: true },
+        { event: "verify", detail: "read-back confirmed 2 powers", ok: true },
+    ];
+
+    // ===== 🩸 THE ELEVATION-FAULT HUNT — derived, host-readable (the proof test asserts these fire) =====
+    // The friendly primary states.
+    out property <bool> elevated: root.elevation-status == 2;
+    out property <bool> fetching: root.elevation-status == 1;   // pairing in flight
+    out property <bool> errored: root.elevation-status == 3;
+    out property <bool> stub-active: root.active-provider == 3;
+    // (1) GHOST GRANT — powers marked held but NOT elevated now: orphaned state, nothing is enforced (F10).
+    out property <bool> ghost-grant: root.powers-held > 0 && !root.elevated;
+    // (2) PAIR LOST — the pair flag is set but the live provider dropped to none (the channel died; linkToDeath).
+    out property <bool> pair-lost: root.paired && root.active-provider == 0;
+    // (3) NO PROVIDER — armed (fetching / error) but no provider is active: the ElevationManager is inert (F17).
+    out property <bool> no-provider: (root.fetching || root.errored) && root.active-provider == 0;
+    // (4) DRIFT UNGUARDED — drift-prone powers held but boot-reapply is OFF: they vanish on the next reboot.
+    out property <bool> drift-unguarded: root.drift-prone-held > 0 && !root.boot-reapply-armed;
+    // STUB (informational) — the demo stub is honest isImplemented=false; nothing truly elevates through it.
+    out property <bool> stub-inert: root.stub-active;
+    // Master: ANY actionable elevation fault (the STUB note is informational, excluded).
+    out property <bool> hidden-fault-any: root.ghost-grant || root.pair-lost || root.no-provider || root.drift-unguarded;
+
+    // THE CROWN headline — the hound's one-glance verdict (state machine, a breach beats the healthy states).
+    out property <string> crown-headline: root.ghost-grant ? "GHOST GRANT"
+        : (root.pair-lost ? "PAIR LOST"
+        : (root.errored ? "ERROR"
+        : (!root.configured ? "OFF"
+        : (root.stub-active ? "DEMO STUB"
+        : (root.elevated ? "ELEVATED"
+        : (root.fetching ? "FETCHING" : "RESTING"))))));
+    out property <color> crown-color: (root.ghost-grant || root.pair-lost || root.errored) ? Inu.growl
+        : (!root.configured ? Inu.dim
+        : (root.stub-active ? Inu.caution
+        : (root.elevated ? Inu.goodboy
+        : (root.fetching ? Inu.collar : Inu.fur))));
+    // The playful sub-badge under the medallion (friendly, never intimidating — feedback-simple-ux).
+    out property <string> crown-mood: root.elevated ? "good dog — the gate is open"
+        : (root.fetching ? "fetching your access..."
+        : (root.errored ? "the hound hit a snag"
+        : (root.ghost-grant ? "guarding a gate that is not open"
+        : (!root.configured ? "the hound is asleep" : "resting — tap Pair to wake the hound"))));
+
+    // The active-provider plain-words decode (never the raw enum name — the feedback-simple-ux law).
+    out property <string> provider-label: root.active-provider == 1 ? "Shizuku"
+        : (root.active-provider == 2 ? "Self-ADB"
+        : (root.active-provider == 3 ? "demo stub" : "none"));
+    out property <string> provider-how: root.active-provider == 1 ? "via the Shizuku binder path (deepened, in-app)"
+        : (root.active-provider == 2 ? "our own no-root ADB over loopback (no companion app)"
+        : (root.active-provider == 3 ? "a demo placeholder — nothing is really elevated"
+        : "no privileged path is active yet"));
+
+    // The elevation-status plain-words decode.
+    out property <string> status-label: root.elevation-status == 2 ? "elevated"
+        : (root.elevation-status == 1 ? "fetching"
+        : (root.elevation-status == 3 ? "error" : "resting"));
+
+    callback pair-tapped();       // the friendly one-tap Pair (host -> start the ADB pair / elevate flow)
+    callback recheck-tapped();    // re-verify the live elevation status (host -> ReadBackVerifier re-run)
+    callback open-settings();     // open the ||| Inu settings (the raw ADB knobs behind Expert)
+    callback close-dashboard();
+
+    VerticalBox {
+        padding: 14px;
+        spacing: 12px;
+
+        // ---- Header ----
+        HorizontalBox {
+            spacing: 8px;
+            VerticalLayout {
+                Text {
+                    text: "WIRE CAKE INU";
+                    color: Inu.collar;
+                    font-size: 22px;
+                    font-weight: 900;
+                }
+                Text {
+                    text: "the loyal hound at the gate — no-root elevation";
+                    color: Inu.fur;
+                    font-size: 11px;
+                }
+            }
+            Rectangle { }  // spacer
+            VerticalLayout {
+                alignment: center;
+                Text {
+                    text: root.elevated ? "ELEVATED" : (root.fetching ? "FETCHING" : (root.configured ? "RESTING" : "OFF"));
+                    color: root.elevated ? Inu.goodboy : (root.fetching ? Inu.collar : Inu.fur);
+                    font-size: 12px;
+                    font-weight: 800;
+                    horizontal-alignment: right;
+                }
+                Text {
+                    text: "via \{root.provider-label}";
+                    color: root.stub-active ? Inu.caution : Inu.dim;
+                    font-size: 10px;
+                    horizontal-alignment: right;
+                }
+            }
+        }
+
+        // ---- THE HOUND + THE COLLAR MEDALLION — the mascot idles (breath / wag / blink) beside
+        //      the one-glance verdict (a round dog-tag; friendly, never intimidating). Press the
+        //      medallion and the collar-clasp tightens: the ring swells into the gleam. ----
+        HorizontalLayout {
+            alignment: center;
+            spacing: 12px;
+            InuMascot { }
+            Rectangle {
+                width: 156px;
+                height: 156px;
+                border-radius: 78px;
+                background: @linear-gradient(165deg, Inu.kennel.with-alpha(0.78) 0%, Inu.burrow.with-alpha(0.55) 100%);
+                border-width: mclasp.pressed ? 7px : 4px;
+                border-color: mclasp.pressed ? Inu.gleam : root.crown-color;
+                animate border-width { duration: 220ms; easing: ease-out; }
+                animate border-color { duration: 220ms; }
+                VerticalLayout {
+                    alignment: center;
+                    spacing: 2px;
+                    Text {
+                        text: "COLLAR";
+                        color: Inu.dim;
+                        font-size: 10px;
+                        font-weight: 700;
+                        horizontal-alignment: center;
+                    }
+                    Text {
+                        text: root.crown-headline;
+                        color: root.crown-color;
+                        font-size: 26px;
+                        font-weight: 900;
+                        horizontal-alignment: center;
+                    }
+                    Text {
+                        text: root.paired ? root.paired-label : "not paired";
+                        color: root.paired ? Inu.tag : Inu.dim;
+                        font-size: 10px;
+                        font-weight: 700;
+                        horizontal-alignment: center;
+                        overflow: elide;
+                    }
+                }
+                mclasp := TouchArea { }
+            }
+        }
+        // The playful mood line under the medallion.
+        Text {
+            text: root.crown-mood;
+            color: Inu.fur;
+            font-size: 11px;
+            horizontal-alignment: center;
+            wrap: word-wrap;
+        }
+
+        // ---- THE ONE-TAP PAIR — the friendly primary action (the raw knobs live behind ||| Expert) ----
+        HorizontalBox {
+            spacing: 8px;
+            Button {
+                text: root.elevated ? "Protected" : (root.fetching ? "Fetching..." : "Pair now");
+                enabled: !root.elevated && !root.fetching;
+                clicked => {
+                    root.pair-tapped();
+                }
+            }
+            Button {
+                text: "Re-check";
+                clicked => {
+                    root.recheck-tapped();
+                }
+            }
+            Rectangle { }  // spacer
+            Button {
+                text: "|||  Advanced";
+                clicked => {
+                    root.open-settings();
+                }
+            }
+        }
+
+        // ---- 🩸 The elevation-fault alert stack (each banner exists ONLY while its fault is live) ----
+        // #97 — FIRST in the stack on purpose. Every banner below reports a fault in the posture;
+        // this one says the posture is not yours at all, which changes how to read all of them.
+        if root.demo-posture : AlertBanner {
+            accent: Inu.caution;
+            message: "DEMO POSTURE -> no elevation record exists on this device yet, so this pane is showing a SEEDED example of the rail, not your phone. The collar, the pair age and the held powers below are illustrative. Pair to replace them with your own.";
+        }
+        if root.ghost-grant : AlertBanner {
+            accent: Inu.wound;
+            message: "GHOST GRANT -> \{root.powers-held} power(s) are marked held, but the hound is NOT elevated right now. The state claims protection that is not actually enforced. Re-check, then Pair to make it real.";
+        }
+        if root.pair-lost : AlertBanner {
+            accent: Inu.wound;
+            message: "PAIR LOST -> you were paired, but the privileged channel dropped (no provider is live). The session died; Pair again to reopen the gate.";
+        }
+        if root.no-provider && !root.pair-lost : AlertBanner {
+            accent: Inu.caution;
+            message: "NO PROVIDER -> the hound is armed but no elevation path (Shizuku / Self-ADB) is active yet. Pair, or pick a provider in ||| Advanced.";
+        }
+        if root.drift-unguarded : AlertBanner {
+            accent: Inu.caution;
+            message: "WON'T SURVIVE REBOOT -> \{root.drift-prone-held} held power(s) drift off on restart, and boot re-apply is OFF. Turn on 'Keep after reboot' in ||| Advanced so the hound re-fetches them at boot.";
+        }
+        if root.stub-inert : AlertBanner {
+            accent: Inu.leash;
+            message: "DEMO STUB -> the active provider is a placeholder; nothing is really elevated. Pick Shizuku or Self-ADB in ||| Advanced. (honest, not a fault.)";
+        }
+
+        // ---- ACTIVE PROVIDER — who is fetching, in plain words ----
+        SectionTitle { text: "ELEVATION PATH"; }
+        Rectangle {
+            border-radius: 10px;
+            background: @linear-gradient(165deg, Inu.kennel.with-alpha(0.66) 0%, Inu.burrow.with-alpha(0.42) 100%);
+            border-width: 1px;
+            border-color: root.stub-active ? Inu.caution : (root.elevated ? Inu.goodboy : Inu.leash);
+            VerticalLayout {
+                padding: 12px;
+                spacing: 4px;
+                HorizontalLayout {
+                    spacing: 8px;
+                    Text {
+                        text: root.provider-label;
+                        color: Inu.cream;
+                        font-size: 15px;
+                        font-weight: 800;
+                    }
+                    Rectangle { }  // spacer
+                    Text {
+                        text: root.status-label;
+                        color: root.crown-color;
+                        font-size: 12px;
+                        font-weight: 800;
+                        vertical-alignment: center;
+                    }
+                }
+                Text {
+                    text: root.provider-how;
+                    color: Inu.fur;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+                if root.status-detail != "" : Text {
+                    text: root.status-detail;
+                    color: root.errored ? Inu.growl : Inu.dim;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+            }
+        }
+
+        // ---- PROTECTED POWERS — one-glance tiles (what the hound is guarding) ----
+        SectionTitle { text: "PROTECTED POWERS"; }
+        // TWO per row, never four — the portrait content column with the ||| rail open is only
+        // ~268 logical px, and 4×70 + 3×8 = 304px overflows it. Slint honours `min-width` and
+        // pushes the surplus tiles off-screen, invisible and unreachable.
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile {
+                    label: "held";
+                    value: "\{root.powers-held}";
+                    tint: root.powers-held > 0 ? (root.elevated ? Inu.goodboy : Inu.growl) : Inu.fur;
+                }
+                StatTile {
+                    label: "of total";
+                    value: "\{root.powers-total}";
+                    tint: Inu.cream;
+                }
+            }
+            Row {
+                StatTile {
+                    label: "drift";
+                    value: "\{root.drift-prone-held}";
+                    tint: root.drift-unguarded ? Inu.caution : Inu.fur;
+                }
+                StatTile {
+                    label: "reboot-safe";
+                    value: root.boot-reapply-armed ? "yes" : "no";
+                    tint: root.boot-reapply-armed ? Inu.goodboy : Inu.caution;
+                }
+            }
+        }
+
+        // ---- THE POWER LIST — each power + whether it is held + its reboot durability ----
+        VerticalLayout {
+            spacing: 4px;
+            for p in root.powers : Rectangle {
+                background: @linear-gradient(90deg, Inu.burrow.with-alpha(0.58) 0%, Inu.den.with-alpha(0.32) 100%);
+                border-radius: 6px;
+                HorizontalLayout {
+                    padding: 8px;
+                    spacing: 8px;
+                    // the held pip — green when held, dim when off.
+                    Rectangle {
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 5px;
+                        y: (parent.height - self.height) / 2;
+                        background: p.held ? Inu.goodboy : Inu.leash;
+                    }
+                    VerticalLayout {
+                        horizontal-stretch: 1;
+                        Text {
+                            text: p.label;
+                            color: Inu.cream;
+                            font-size: 12px;
+                            font-weight: 700;
+                            overflow: elide;
+                        }
+                        Text {
+                            text: p.tier + (p.drift-prone ? "  ·  drifts on reboot" : "  ·  durable");
+                            color: p.drift-prone ? Inu.caution : Inu.dim;
+                            font-size: 10px;
+                        }
+                    }
+                    Text {
+                        text: p.held ? "HELD" : "off";
+                        color: p.held ? Inu.goodboy : Inu.fur;
+                        font-size: 11px;
+                        font-weight: 800;
+                        vertical-alignment: center;
+                    }
+                }
+            }
+        }
+
+        // ---- RECENT EVENTS — the per-pillar query-inu.log tail (pair / grant / verify / revert / boot) ----
+        SectionTitle { text: "RECENT EVENTS  (query-inu.log)"; }
+        VerticalLayout {
+            spacing: 4px;
+            for e in root.recent-events : Rectangle {
+                background: @linear-gradient(90deg, Inu.burrow.with-alpha(0.58) 0%, Inu.den.with-alpha(0.32) 100%);
+                border-radius: 6px;
+                HorizontalLayout {
+                    padding: 6px;
+                    spacing: 8px;
+                    Text {
+                        text: e.event;
+                        color: e.event == "grant" ? Inu.goodboy
+                            : (e.event == "pair" ? Inu.collar
+                            : (e.event == "boot" ? Inu.tag : Inu.fur));
+                        font-size: 11px;
+                        font-weight: 800;
+                        width: 58px;
+                    }
+                    Text {
+                        text: e.detail;
+                        color: Inu.cream;
+                        font-size: 11px;
+                        overflow: elide;
+                        horizontal-stretch: 1;
+                    }
+                    Text {
+                        text: e.ok ? "ok" : "fail";
+                        color: e.ok ? Inu.goodboy : Inu.growl;
+                        font-size: 10px;
+                        font-weight: 800;
+                    }
+                }
+            }
+        }
+
+        Rectangle { }  // tail spacer
+    }
+}
+
+// The standalone InuDashboard Window — a THIN WRAPPER over InuPane (inherits Rectangle, the embeddable
+// primitive the shell mounts on-device). Every host-fed input + every derived out + every action callback
+// forwards through byte-equal `<=>` aliases so the proof test + the `inu_witness` preview drive the SAME
+// pane the shell embeds (one surface, two mounts — the CentauriDashboard/CentauriPane law).
+export component InuDashboard inherits Window {
+    title: "Yeah! Tortä — Wire Cake Inu";
+    preferred-width: 420px;
+    preferred-height: 1000px;
+    background: Inu.den.with-alpha(0.42);
+
+    // ---- host-fed inputs (byte-equal forwarding to the pane) ----
+    // #97 — MANDATORY forwarding. Without this line the Rust `set_demo_posture` does not exist on
+    // `InuDashboard` at all (the property would live only on the inner pane), and the demo banner
+    // could never be raised from the host. Same law as the four `fwd-dial-*` forwardings in
+    // `home_shell.slint`: a property that is not forwarded is a panel that silently cannot be told.
+    in-out property <bool> demo-posture <=> pane.demo-posture;
+    in-out property <bool> configured <=> pane.configured;
+    in-out property <int> elevation-status <=> pane.elevation-status;
+    in-out property <int> active-provider <=> pane.active-provider;
+    in-out property <bool> paired <=> pane.paired;
+    in-out property <string> paired-label <=> pane.paired-label;
+    in-out property <string> status-detail <=> pane.status-detail;
+    in-out property <int> powers-held <=> pane.powers-held;
+    in-out property <int> powers-total <=> pane.powers-total;
+    in-out property <int> drift-prone-held <=> pane.drift-prone-held;
+    in-out property <bool> boot-reapply-armed <=> pane.boot-reapply-armed;
+    in-out property <[PowerRow]> powers <=> pane.powers;
+    in-out property <[InuLogRow]> recent-events <=> pane.recent-events;
+
+    // ---- derived outs (the elevation-fault hunt + crown — forwarded so the proof test asserts them) ----
+    out property <bool> elevated <=> pane.elevated;
+    out property <bool> fetching <=> pane.fetching;
+    out property <bool> errored <=> pane.errored;
+    out property <bool> stub-active <=> pane.stub-active;
+    out property <bool> ghost-grant <=> pane.ghost-grant;
+    out property <bool> pair-lost <=> pane.pair-lost;
+    out property <bool> no-provider <=> pane.no-provider;
+    out property <bool> drift-unguarded <=> pane.drift-unguarded;
+    out property <bool> stub-inert <=> pane.stub-inert;
+    out property <bool> hidden-fault-any <=> pane.hidden-fault-any;
+    out property <string> crown-headline <=> pane.crown-headline;
+    out property <color> crown-color <=> pane.crown-color;
+    out property <string> crown-mood <=> pane.crown-mood;
+    out property <string> provider-label <=> pane.provider-label;
+    out property <string> provider-how <=> pane.provider-how;
+    out property <string> status-label <=> pane.status-label;
+
+    // ---- action callbacks ----
+    callback pair-tapped <=> pane.pair-tapped;
+    callback recheck-tapped <=> pane.recheck-tapped;
+    callback open-settings <=> pane.open-settings;
+    callback close-dashboard <=> pane.close-dashboard;
+
+    pane := InuPane { }
+}

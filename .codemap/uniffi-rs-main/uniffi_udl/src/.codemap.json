@@ -1,0 +1,2012 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_udl\\src",
+  "files": {
+    "attributes.rs": {
+      "hash": "9841b40b20b5",
+      "indexed_at": "2026-07-24T20:35:13.239408+00:00",
+      "language": "rust",
+      "lines": 1024,
+      "mtime_ns": 1782136568000000000,
+      "size": 38395,
+      "symbols": [
+        {
+          "lines": [
+            26,
+            45
+          ],
+          "name": "Attribute",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                48,
+                50
+              ],
+              "name": "is_error",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                51,
+                53
+              ],
+              "name": "is_enum",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            47,
+            54
+          ],
+          "name": "Attribute",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                60,
+                114
+              ],
+              "name": "try_from",
+              "signature": "(\n        weedle_attribute: &weedle::attribute::ExtendedAttribute<'_>,\n    )",
+              "type": "method"
+            }
+          ],
+          "docstring": "or error out if the attribute is not supported.",
+          "lines": [
+            58,
+            115
+          ],
+          "name": "Attribute",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            117,
+            122
+          ],
+          "name": "name_from_id_or_string",
+          "signature": "(nm: &weedle::attribute::IdentifierOrString<'_>)",
+          "type": "function"
+        },
+        {
+          "docstring": "erroring out on duplicates.",
+          "lines": [
+            126,
+            152
+          ],
+          "name": "parse_attributes",
+          "signature": "(\n    weedle_attributes: &weedle::attribute::ExtendedAttributeList<'_>,\n    validator: F,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            156,
+            156
+          ],
+          "name": "DictionaryAttributes",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                159,
+                161
+              ],
+              "name": "contains_remote",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                163,
+                171
+              ],
+              "name": "get_uniffi_traits",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            158,
+            172
+          ],
+          "name": "DictionaryAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                176,
+                185
+              ],
+              "name": "try_from",
+              "signature": "(\n        weedle_attributes: &weedle::attribute::ExtendedAttributeList<'_>,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            174,
+            186
+          ],
+          "name": "DictionaryAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                192,
+                197
+              ],
+              "name": "try_from",
+              "signature": "(value: Option<T>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            188,
+            198
+          ],
+          "name": "DictionaryAttributes",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            202,
+            202
+          ],
+          "name": "EnumAttributes",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                205,
+                207
+              ],
+              "name": "contains_error_attr",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                209,
+                213
+              ],
+              "name": "contains_non_exhaustive_attr",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                215,
+                217
+              ],
+              "name": "contains_remote",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                219,
+                227
+              ],
+              "name": "get_uniffi_traits",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            204,
+            228
+          ],
+          "name": "EnumAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                232,
+                246
+              ],
+              "name": "try_from",
+              "signature": "(\n        weedle_attributes: &weedle::attribute::ExtendedAttributeList<'_>,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            230,
+            247
+          ],
+          "name": "EnumAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                251,
+                256
+              ],
+              "name": "try_from",
+              "signature": "(value: Option<T>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            249,
+            257
+          ],
+          "name": "EnumAttributes",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            265,
+            265
+          ],
+          "name": "FunctionAttributes",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                268,
+                275
+              ],
+              "name": "get_throws_err",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                277,
+                279
+              ],
+              "name": "is_async",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            267,
+            280
+          ],
+          "name": "FunctionAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                283,
+                285
+              ],
+              "name": "from_iter",
+              "signature": "(iter: T)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            282,
+            286
+          ],
+          "name": "FunctionAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                290,
+                298
+              ],
+              "name": "try_from",
+              "signature": "(\n        weedle_attributes: &weedle::attribute::ExtendedAttributeList<'_>,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            288,
+            299
+          ],
+          "name": "FunctionAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                305,
+                310
+              ],
+              "name": "try_from",
+              "signature": "(value: Option<T>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            301,
+            311
+          ],
+          "name": "FunctionAttributes",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            318,
+            318
+          ],
+          "name": "ArgumentAttributes",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                321,
+                323
+              ],
+              "name": "by_ref",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            320,
+            324
+          ],
+          "name": "ArgumentAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                328,
+                336
+              ],
+              "name": "try_from",
+              "signature": "(\n        weedle_attributes: &weedle::attribute::ExtendedAttributeList<'_>,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            326,
+            337
+          ],
+          "name": "ArgumentAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                343,
+                348
+              ],
+              "name": "try_from",
+              "signature": "(value: Option<T>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            339,
+            349
+          ],
+          "name": "ArgumentAttributes",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            353,
+            353
+          ],
+          "name": "InterfaceAttributes",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                356,
+                358
+              ],
+              "name": "contains_enum_attr",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                360,
+                362
+              ],
+              "name": "contains_error_attr",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                364,
+                366
+              ],
+              "name": "contains_trait",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                368,
+                370
+              ],
+              "name": "contains_remote",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                372,
+                376
+              ],
+              "name": "contains_with_foreign",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                378,
+                387
+              ],
+              "name": "object_impl",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                388,
+                396
+              ],
+              "name": "get_traits",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            355,
+            397
+          ],
+          "name": "InterfaceAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                401,
+                420
+              ],
+              "name": "try_from",
+              "signature": "(\n        weedle_attributes: &weedle::attribute::ExtendedAttributeList<'_>,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            399,
+            421
+          ],
+          "name": "InterfaceAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                427,
+                432
+              ],
+              "name": "try_from",
+              "signature": "(value: Option<T>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            423,
+            433
+          ],
+          "name": "InterfaceAttributes",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            440,
+            440
+          ],
+          "name": "ConstructorAttributes",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                443,
+                445
+              ],
+              "name": "from_iter",
+              "signature": "(iter: T)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            442,
+            446
+          ],
+          "name": "ConstructorAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                449,
+                456
+              ],
+              "name": "get_throws_err",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                458,
+                463
+              ],
+              "name": "get_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                465,
+                467
+              ],
+              "name": "is_async",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            448,
+            468
+          ],
+          "name": "ConstructorAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                472,
+                482
+              ],
+              "name": "try_from",
+              "signature": "(\n        weedle_attributes: &weedle::attribute::ExtendedAttributeList<'_>,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            470,
+            483
+          ],
+          "name": "ConstructorAttributes",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            490,
+            490
+          ],
+          "name": "MethodAttributes",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                493,
+                500
+              ],
+              "name": "get_throws_err",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                502,
+                504
+              ],
+              "name": "is_async",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                506,
+                510
+              ],
+              "name": "get_self_by_arc",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            492,
+            511
+          ],
+          "name": "MethodAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                514,
+                516
+              ],
+              "name": "from_iter",
+              "signature": "(iter: T)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            513,
+            517
+          ],
+          "name": "MethodAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                521,
+                529
+              ],
+              "name": "try_from",
+              "signature": "(\n        weedle_attributes: &weedle::attribute::ExtendedAttributeList<'_>,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            519,
+            530
+          ],
+          "name": "MethodAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                534,
+                539
+              ],
+              "name": "try_from",
+              "signature": "(value: Option<T>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            532,
+            540
+          ],
+          "name": "MethodAttributes",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            548,
+            550
+          ],
+          "name": "SelfType",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                554,
+                564
+              ],
+              "name": "try_from",
+              "signature": "(nm: &weedle::attribute::IdentifierOrString<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            552,
+            565
+          ],
+          "name": "SelfType",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            571,
+            571
+          ],
+          "name": "TypedefAttributes",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                574,
+                583
+              ],
+              "name": "get_crate_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                585,
+                589
+              ],
+              "name": "is_custom",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            573,
+            590
+          ],
+          "name": "TypedefAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                594,
+                605
+              ],
+              "name": "try_from",
+              "signature": "(\n        weedle_attributes: &weedle::attribute::ExtendedAttributeList<'_>,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            592,
+            606
+          ],
+          "name": "TypedefAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                612,
+                617
+              ],
+              "name": "try_from",
+              "signature": "(value: Option<T>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            608,
+            618
+          ],
+          "name": "TypedefAttributes",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                626,
+                631
+              ],
+              "name": "test_byref",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                634,
+                640
+              ],
+              "name": "test_enum",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                643,
+                649
+              ],
+              "name": "test_error",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                652,
+                665
+              ],
+              "name": "test_name",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                668,
+                676
+              ],
+              "name": "test_selftype",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                679,
+                684
+              ],
+              "name": "test_trait",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                687,
+                700
+              ],
+              "name": "test_throws",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                703,
+                719
+              ],
+              "name": "test_unsupported",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                722,
+                726
+              ],
+              "name": "test_other_attributes_not_supported_for_enums",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                729,
+                745
+              ],
+              "name": "test_function_attributes",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                748,
+                761
+              ],
+              "name": "test_other_attributes_not_supported_for_functions",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                764,
+                797
+              ],
+              "name": "test_method_attributes",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                800,
+                823
+              ],
+              "name": "test_constructor_attributes",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                826,
+                839
+              ],
+              "name": "test_other_attributes_not_supported_for_constructors",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                842,
+                850
+              ],
+              "name": "test_byref_attribute",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                853,
+                861
+              ],
+              "name": "test_other_attributes_not_supported_for_arguments",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                864,
+                887
+              ],
+              "name": "test_trait_attribute",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                890,
+                902
+              ],
+              "name": "test_dictionary_attributes",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                905,
+                928
+              ],
+              "name": "test_enum_attribute_on_interface",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                932,
+                948
+              ],
+              "name": "test_enum_attributes",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                952,
+                967
+              ],
+              "name": "test_enum_attributes_from_interface",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                970,
+                981
+              ],
+              "name": "test_interface_attributes",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                984,
+                1001
+              ],
+              "name": "test_typedef_attribute",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1004,
+                1016
+              ],
+              "name": "test_typedef_attributes_malformed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1019,
+                1023
+              ],
+              "name": "test_other_attributes_not_supported_for_typedef",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            621,
+            1024
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "collectors.rs": {
+      "hash": "f1b5e8cfceb0",
+      "indexed_at": "2026-07-24T20:35:13.241136+00:00",
+      "language": "rust",
+      "lines": 288,
+      "mtime_ns": 1782136568000000000,
+      "size": 11642,
+      "symbols": [
+        {
+          "lines": [
+            20,
+            25
+          ],
+          "name": "InterfaceCollector",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Parse an `InterfaceCollector` from a string containing a WebIDL definition.",
+              "lines": [
+                29,
+                74
+              ],
+              "name": "from_webidl",
+              "signature": "(idl: &str, crate_name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                76,
+                83
+              ],
+              "name": "find_namespace",
+              "signature": "(&mut self, defns: &Vec<weedle::Definition<'_>>)",
+              "type": "method"
+            },
+            {
+              "docstring": "The module path which should be used by all items in this namespace.",
+              "lines": [
+                86,
+                88
+              ],
+              "name": "module_path",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get a specific type",
+              "lines": [
+                91,
+                93
+              ],
+              "name": "get_type",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "trait.",
+              "lines": [
+                101,
+                103
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&mut self, expr: T)",
+              "type": "method"
+            },
+            {
+              "docstring": "It can return `None` to represent a non-existent return value.",
+              "lines": [
+                109,
+                126
+              ],
+              "name": "resolve_return_type_expression",
+              "signature": "(\n        &mut self,\n        expr: &weedle::types::ReturnType<'_>,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "Called by `APIBuilder` impls to add a newly-parsed definition to the `InterfaceCollector`.",
+              "lines": [
+                129,
+                132
+              ],
+              "name": "add_definition",
+              "signature": "(&mut self, defn: uniffi_meta::Metadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            27,
+            133
+          ],
+          "name": "InterfaceCollector",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                137,
+                146
+              ],
+              "name": "from",
+              "signature": "(value: InterfaceCollector)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Turn our internal object into an outgoing public `MetadataGroup`.",
+          "lines": [
+            136,
+            147
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "docstring": "`InterfaceCollector`.",
+          "lines": [
+            154,
+            156
+          ],
+          "name": "APIBuilder",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                161,
+                166
+              ],
+              "name": "process",
+              "signature": "(&self, ci: &mut InterfaceCollector)",
+              "type": "method"
+            }
+          ],
+          "docstring": "by processing each in turn.",
+          "lines": [
+            160,
+            167
+          ],
+          "name": "APIBuilder",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                173,
+                203
+              ],
+              "name": "process",
+              "signature": "(&self, ci: &mut InterfaceCollector)",
+              "type": "method"
+            }
+          ],
+          "docstring": "for the various specific WebIDL types that we support.",
+          "lines": [
+            172,
+            204
+          ],
+          "name": "APIBuilder",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                207,
+                219
+              ],
+              "name": "process",
+              "signature": "(&self, ci: &mut InterfaceCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            206,
+            220
+          ],
+          "name": "APIBuilder",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            223,
+            232
+          ],
+          "name": "TypeCollector",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "The module path which should be used by all items in this namespace.",
+              "lines": [
+                236,
+                238
+              ],
+              "name": "module_path",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "This will fail if you try to add a name for which an existing type definition exists.",
+              "lines": [
+                243,
+                245
+              ],
+              "name": "add_type_definitions_from",
+              "signature": "(&mut self, defn: T)",
+              "type": "method"
+            },
+            {
+              "docstring": "This will fail if you try to add a name for which an existing type definition exists.",
+              "lines": [
+                250,
+                274
+              ],
+              "name": "add_type_definition",
+              "signature": "(&mut self, name: &str, type_: Type)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the [Type] corresponding to a given name, if any.",
+              "lines": [
+                277,
+                279
+              ],
+              "name": "get_type_definition",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "it to the set of all types seen in the component interface.",
+              "lines": [
+                285,
+                287
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&mut self, expr: T)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            234,
+            288
+          ],
+          "name": "TypeCollector",
+          "type": "impl"
+        }
+      ]
+    },
+    "finder.rs": {
+      "hash": "1f79c7922fa1",
+      "indexed_at": "2026-07-24T20:35:13.243180+00:00",
+      "language": "rust",
+      "lines": 375,
+      "mtime_ns": 1782136568000000000,
+      "size": 14177,
+      "symbols": [
+        {
+          "docstring": "them in the given `TypeCollector`.",
+          "lines": [
+            59,
+            61
+          ],
+          "name": "TypeFinder",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                64,
+                69
+              ],
+              "name": "add_type_definitions_to",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            63,
+            70
+          ],
+          "name": "TypeFinder",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                73,
+                82
+              ],
+              "name": "add_type_definitions_to",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            72,
+            83
+          ],
+          "name": "TypeFinder",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                86,
+                108
+              ],
+              "name": "add_type_definitions_to",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            85,
+            109
+          ],
+          "name": "TypeFinder",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                112,
+                121
+              ],
+              "name": "add_type_definitions_to",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            111,
+            122
+          ],
+          "name": "TypeFinder",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                125,
+                135
+              ],
+              "name": "add_type_definitions_to",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            124,
+            136
+          ],
+          "name": "TypeFinder",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                139,
+                197
+              ],
+              "name": "add_type_definitions_to",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            138,
+            198
+          ],
+          "name": "TypeFinder",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                201,
+                213
+              ],
+              "name": "add_type_definitions_to",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            200,
+            214
+          ],
+          "name": "TypeFinder",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "A helper to take valid UDL and a closure to check what's in it.",
+              "lines": [
+                222,
+                230
+              ],
+              "name": "test_a_finding",
+              "signature": "(udl: &str, tester: F)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                233,
+                316
+              ],
+              "name": "test_type_finding",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                319,
+                359
+              ],
+              "name": "test_extern_local_types",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                361,
+                368
+              ],
+              "name": "get_err",
+              "signature": "(udl: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                371,
+                374
+              ],
+              "name": "test_local_type_unknown_typedef",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            217,
+            375
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "56c50ce61ba5",
+      "indexed_at": "2026-07-24T20:35:13.243847+00:00",
+      "language": "rust",
+      "lines": 47,
+      "mtime_ns": 1782136568000000000,
+      "size": 1551,
+      "symbols": [
+        {
+          "docstring": "! The output of this module is consumed by uniffi_bindgen to generate stuff.",
+          "lines": [
+            13,
+            13
+          ],
+          "name": "attributes",
+          "type": "module"
+        },
+        {
+          "lines": [
+            14,
+            14
+          ],
+          "name": "collectors",
+          "type": "module"
+        },
+        {
+          "lines": [
+            15,
+            15
+          ],
+          "name": "converters",
+          "type": "module"
+        },
+        {
+          "lines": [
+            16,
+            16
+          ],
+          "name": "finder",
+          "type": "module"
+        },
+        {
+          "lines": [
+            17,
+            17
+          ],
+          "name": "literal",
+          "type": "module"
+        },
+        {
+          "lines": [
+            18,
+            18
+          ],
+          "name": "resolver",
+          "type": "module"
+        },
+        {
+          "docstring": "The single entry-point to this module.",
+          "lines": [
+            25,
+            27
+          ],
+          "name": "parse_udl",
+          "signature": "(udl: &str, crate_name: &str)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                34,
+                46
+              ],
+              "name": "test_group",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            30,
+            47
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "literal.rs": {
+      "hash": "b747fd99d438",
+      "indexed_at": "2026-07-24T20:35:13.245199+00:00",
+      "language": "rust",
+      "lines": 180,
+      "mtime_ns": 1782136568000000000,
+      "size": 7092,
+      "symbols": [
+        {
+          "docstring": "Convert weedle/udl syntax.",
+          "lines": [
+            12,
+            102
+          ],
+          "name": "convert_default_value",
+          "signature": "(\n    default_value: &weedle::literal::DefaultValue<'_>,\n    type_: &Type,\n)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                109,
+                112
+              ],
+              "name": "parse_and_convert",
+              "signature": "(expr: &str, t: Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                115,
+                166
+              ],
+              "name": "test_default_value_conversion",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                168,
+                179
+              ],
+              "name": "test_error_on_type_mismatch",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            105,
+            180
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "resolver.rs": {
+      "hash": "c4ff362055dc",
+      "indexed_at": "2026-07-24T20:35:13.246984+00:00",
+      "language": "rust",
+      "lines": 283,
+      "mtime_ns": 1782136568000000000,
+      "size": 10427,
+      "symbols": [
+        {
+          "lines": [
+            33,
+            35
+          ],
+          "name": "TypeResolver",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                38,
+                40
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            37,
+            41
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                44,
+                52
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            43,
+            53
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                56,
+                66
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            55,
+            67
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                70,
+                75
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            69,
+            76
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                79,
+                84
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            78,
+            85
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                88,
+                99
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            87,
+            100
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                103,
+                108
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, _types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            102,
+            109
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                112,
+                117
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            111,
+            118
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                121,
+                127
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            120,
+            128
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                131,
+                141
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            130,
+            142
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                145,
+                153
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            144,
+            154
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                157,
+                165
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            156,
+            166
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                169,
+                171
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, _types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            168,
+            172
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                175,
+                180
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, _types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            174,
+            181
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                184,
+                189
+              ],
+              "name": "resolve_type_expression",
+              "signature": "(&self, _types: &mut TypeCollector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            183,
+            190
+          ],
+          "name": "TypeResolver",
+          "type": "impl"
+        },
+        {
+          "docstring": "built-in primitive types or `None` if it names something else.",
+          "lines": [
+            196,
+            214
+          ],
+          "name": "resolve_builtin_type",
+          "signature": "(name: &str)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                222,
+                249
+              ],
+              "name": "test_named_type_resolution",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                252,
+                266
+              ],
+              "name": "test_error_on_unknown_type",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                269,
+                282
+              ],
+              "name": "test_error_on_union_type",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            217,
+            283
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.805132+00:00",
+  "version": "1.0"
+}

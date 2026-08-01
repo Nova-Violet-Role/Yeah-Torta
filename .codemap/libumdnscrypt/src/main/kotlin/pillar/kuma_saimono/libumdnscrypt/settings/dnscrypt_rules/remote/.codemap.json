@@ -1,0 +1,282 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\settings\\dnscrypt_rules\\remote",
+  "files": {
+    "DnsRulesDownloadProgress.kt": {
+      "hash": "4e4567d54a86",
+      "indexed_at": "2026-08-01T04:00:20.816668+00:00",
+      "language": "kotlin",
+      "lines": 43,
+      "mtime_ns": 1785556377987900800,
+      "size": 1207,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                30
+              ],
+              "name": "DownloadProgress",
+              "type": "class"
+            },
+            {
+              "lines": [
+                32,
+                36
+              ],
+              "name": "DownloadFinished",
+              "type": "class"
+            },
+            {
+              "lines": [
+                38,
+                42
+              ],
+              "name": "DownloadFailure",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            22,
+            43
+          ],
+          "name": "DnsRulesDownloadProgress",
+          "type": "class"
+        }
+      ]
+    },
+    "DownloadRemoteRulesManager.kt": {
+      "hash": "553bb12094e4",
+      "indexed_at": "2026-08-01T04:00:21.134492+00:00",
+      "language": "kotlin",
+      "lines": 201,
+      "mtime_ns": 1785556377999899000,
+      "size": 7788,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                57,
+                98
+              ],
+              "name": "downloadRules",
+              "signature": "(ruleName: String, url: String, fileName: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                150
+              ],
+              "name": "tryDownload",
+              "signature": "(ruleName: String, url: String, filePath: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                152,
+                165
+              ],
+              "name": "sendUpdateProgressBroadcast",
+              "signature": "(\n        name: String,\n        url: String,\n        size: Long,\n        progress: Int\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                167,
+                179
+              ],
+              "name": "sendDownloadFinishedBroadcast",
+              "signature": "(\n        name: String,\n        url: String,\n        size: Long\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                181,
+                193
+              ],
+              "name": "sendDownloadFailedBroadcast",
+              "signature": "(\n        name: String,\n        url: String,\n        error: String\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            45,
+            201
+          ],
+          "name": "DownloadRemoteRulesManager",
+          "type": "class"
+        }
+      ]
+    },
+    "UpdateRemoteDnsRulesWorker.kt": {
+      "hash": "9469a2c07901",
+      "indexed_at": "2026-08-01T04:00:21.437249+00:00",
+      "language": "kotlin",
+      "lines": 144,
+      "mtime_ns": 1785556378032900800,
+      "size": 6844,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                63,
+                97
+              ],
+              "name": "doWork",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                99,
+                113
+              ],
+              "name": "importRulesFromFile",
+              "signature": "(\n        file: File,\n        ruleType: DnsRuleType,\n        url: String,\n        ruleName: Strin...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                115,
+                118
+              ],
+              "name": "isLocalDnsRulesImportingInProgress",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                128
+              ],
+              "name": "getLocalWorkName",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                130,
+                133
+              ],
+              "name": "isMixDnsRulesInProgress",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                135,
+                142
+              ],
+              "name": "getMixWorkName",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            49,
+            144
+          ],
+          "name": "UpdateRemoteDnsRulesWorker",
+          "type": "class"
+        }
+      ]
+    },
+    "UpdateRemoteRulesWorkManager.kt": {
+      "hash": "ef1acdde2105",
+      "indexed_at": "2026-08-01T04:00:21.755976+00:00",
+      "language": "kotlin",
+      "lines": 189,
+      "mtime_ns": 1785556378044899900,
+      "size": 7845,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                56,
+                85
+              ],
+              "name": "startRefreshDnsRules",
+              "signature": "(ruleName: String, ruleType: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                87,
+                101
+              ],
+              "name": "updateRefreshDnsRulesInterval",
+              "signature": "(interval: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                127
+              ],
+              "name": "updateExistingWorkInterval",
+              "signature": "(\n        ruleType: DnsRuleType,\n        workInfo: WorkInfo,\n        interval: Long\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                129,
+                137
+              ],
+              "name": "stopRefreshDnsRules",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                139,
+                148
+              ],
+              "name": "getInterval",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                150,
+                153
+              ],
+              "name": "getConstraints",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                155,
+                162
+              ],
+              "name": "getWorkName",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                164,
+                171
+              ],
+              "name": "getRuleUrl",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            47,
+            189
+          ],
+          "name": "UpdateRemoteRulesWorkManager",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:21.757510+00:00",
+  "version": "1.0"
+}

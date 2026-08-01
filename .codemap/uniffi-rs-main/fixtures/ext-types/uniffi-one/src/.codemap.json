@@ -1,0 +1,290 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\ext-types\\uniffi-one\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "e45c528ff353",
+      "indexed_at": "2026-07-24T20:35:12.526122+00:00",
+      "language": "rust",
+      "lines": 103,
+      "mtime_ns": 1782136568000000000,
+      "size": 2238,
+      "symbols": [
+        {
+          "lines": [
+            6,
+            8
+          ],
+          "name": "UniffiOneType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            10,
+            13
+          ],
+          "name": "UniffiOneEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            16,
+            18
+          ],
+          "name": "UniffiOneProcMacroType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            21,
+            23
+          ],
+          "name": "BindingRenamedType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            26,
+            28
+          ],
+          "name": "UniffiOneInterface",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                31,
+                33
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                35,
+                37
+              ],
+              "name": "increment",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            30,
+            38
+          ],
+          "name": "UniffiOneInterface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            42,
+            42
+          ],
+          "name": "UniffiOneTLA",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            45,
+            47
+          ],
+          "name": "get_my_proc_macro_type",
+          "signature": "(t: UniffiOneProcMacroType)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            50,
+            52
+          ],
+          "name": "get_uniffi_one_async",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            55,
+            57
+          ],
+          "name": "UniffiOneTrait",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            61,
+            64
+          ],
+          "name": "UniffiOneError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            68,
+            70
+          ],
+          "name": "UniffiOneErrorInterface",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                74,
+                76
+              ],
+              "name": "message",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            73,
+            77
+          ],
+          "name": "UniffiOneErrorInterface",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                80,
+                82
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut std::fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            79,
+            83
+          ],
+          "name": "UniffiOneErrorInterface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            87,
+            89
+          ],
+          "name": "_just_to_get_error_support",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            93,
+            95
+          ],
+          "name": "UniffiOneUDLTrait",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            98,
+            101
+          ],
+          "name": "UniffiOneRecordContainingInterface",
+          "type": "struct"
+        }
+      ]
+    },
+    "uniffi-one.udl": {
+      "hash": "84ae9b807ce6",
+      "indexed_at": "2026-07-24T20:35:12.526776+00:00",
+      "language": "udl",
+      "lines": 21,
+      "mtime_ns": 1782136568000000000,
+      "size": 274,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "uniffi_one_ns",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                4,
+                4
+              ],
+              "name": "sval",
+              "signature": "string",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            3,
+            5
+          ],
+          "name": "UniffiOneType",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            7,
+            10
+          ],
+          "name": "UniffiOneEnum",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                13
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                15,
+                15
+              ],
+              "name": "increment",
+              "signature": "() : i32",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            12,
+            16
+          ],
+          "name": "UniffiOneInterface",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "hello",
+              "signature": "() : string",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            21
+          ],
+          "name": "UniffiOneUDLTrait",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.695408+00:00",
+  "version": "1.0"
+}

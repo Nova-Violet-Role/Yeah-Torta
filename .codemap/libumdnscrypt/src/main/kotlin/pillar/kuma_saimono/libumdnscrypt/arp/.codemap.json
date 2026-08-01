@@ -1,0 +1,585 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\arp",
+  "files": {
+    "ArpRelatedUiUpdater.kt": {
+      "hash": "fc213ba2784c",
+      "indexed_at": "2026-08-01T03:59:09.965018+00:00",
+      "language": "kotlin",
+      "lines": 45,
+      "mtime_ns": 1785556375099900200,
+      "size": 1373,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                32,
+                36
+              ],
+              "name": "updateMainActivityIcons",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                38,
+                40
+              ],
+              "name": "makeToast",
+              "signature": "(message: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                42,
+                44
+              ],
+              "name": "stopUpdates",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            27,
+            45
+          ],
+          "name": "ArpRelatedUiUpdater",
+          "type": "class"
+        }
+      ]
+    },
+    "ArpScanner.kt": {
+      "hash": "299777f116de",
+      "indexed_at": "2026-08-01T03:59:10.246883+00:00",
+      "language": "kotlin",
+      "lines": 179,
+      "mtime_ns": 1785556375112900700,
+      "size": 5582,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                44,
+                89
+              ],
+              "name": "start",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                126
+              ],
+              "name": "reset",
+              "signature": "(connectionAvailable: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                128,
+                153
+              ],
+              "name": "stop",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            33,
+            179
+          ],
+          "name": "ArpScanner",
+          "type": "class"
+        }
+      ]
+    },
+    "ArpScannerHelper.kt": {
+      "hash": "a4f747d0ad67",
+      "indexed_at": "2026-08-01T03:59:10.546883+00:00",
+      "language": "kotlin",
+      "lines": 121,
+      "mtime_ns": 1785556375124901800,
+      "size": 4355,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                53,
+                76
+              ],
+              "name": "makePause",
+              "signature": "(makePause: Boolean, resetInternalValues: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                78,
+                90
+              ],
+              "name": "resetArpScannerState",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                92,
+                99
+              ],
+              "name": "reloadIptablesWithRootMode",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                101,
+                105
+              ],
+              "name": "isArpDetectionDisabled",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                107,
+                111
+              ],
+              "name": "isArpAttackConnectionBlockingDisabled",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                113
+              ],
+              "name": "isRootAvailable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                115,
+                116
+              ],
+              "name": "getArpSpoofingDetectionSupported",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                118,
+                120
+              ],
+              "name": "saveArpSpoofingDetectionNotSupported",
+              "signature": "(supported: Boolean)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            36,
+            121
+          ],
+          "name": "ArpScannerHelper",
+          "type": "class"
+        }
+      ]
+    },
+    "ArpScannerLoop.kt": {
+      "hash": "e575e838dd11",
+      "indexed_at": "2026-08-01T03:59:10.836021+00:00",
+      "language": "kotlin",
+      "lines": 173,
+      "mtime_ns": 1785556375137901600,
+      "size": 6672,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                54
+              ],
+              "name": "checkArpAttack",
+              "signature": "(scheduledExecutorService: ScheduledExecutorService?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                172
+              ],
+              "name": "tryCheckArpAttack",
+              "signature": "(scheduledExecutorService: ScheduledExecutorService?)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            30,
+            173
+          ],
+          "name": "ArpScannerLoop",
+          "type": "class"
+        }
+      ]
+    },
+    "ArpTableManager.kt": {
+      "hash": "666f53c7a4e6",
+      "indexed_at": "2026-08-01T03:59:11.119120+00:00",
+      "language": "kotlin",
+      "lines": 174,
+      "mtime_ns": 1785556375150903400,
+      "size": 5649,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                52,
+                58
+              ],
+              "name": "isArpTableAccessible",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                61,
+                72
+              ],
+              "name": "updateGatewayMac",
+              "signature": "(defaultGateway: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                74,
+                80
+              ],
+              "name": "updateGatewayMacUsingFile",
+              "signature": "(defaultGateway: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                82,
+                106
+              ],
+              "name": "tryUpdateGatewayMacUsingFile",
+              "signature": "(defaultGateway: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                114
+              ],
+              "name": "updateGatewayMacUsingShell",
+              "signature": "(defaultGateway: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                116,
+                158
+              ],
+              "name": "tryUpdateGatewayMacUsingShell",
+              "signature": "(defaultGateway: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                160,
+                168
+              ],
+              "name": "getMacFromLine",
+              "signature": "(line: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                170,
+                173
+              ],
+              "name": "clearGatewayMac",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            35,
+            174
+          ],
+          "name": "ArpTableManager",
+          "type": "class"
+        }
+      ]
+    },
+    "ArpWarningNotification.kt": {
+      "hash": "eb3a8ca19c52",
+      "indexed_at": "2026-08-01T03:59:11.401465+00:00",
+      "language": "kotlin",
+      "lines": 156,
+      "mtime_ns": 1785556375163900700,
+      "size": 5731,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                46,
+                87
+              ],
+              "name": "send",
+              "signature": "(\n        title: String,\n        text: String,\n        NOTIFICATION_ID: Int\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                89,
+                111
+              ],
+              "name": "getContentIntent",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                140
+              ],
+              "name": "getIconResource",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                147,
+                154
+              ],
+              "name": "getBrandColor",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            39,
+            156
+          ],
+          "name": "ArpWarningNotification",
+          "type": "class"
+        }
+      ]
+    },
+    "CommandExecutor.kt": {
+      "hash": "553982b0e788",
+      "indexed_at": "2026-08-01T03:59:11.689770+00:00",
+      "language": "kotlin",
+      "lines": 100,
+      "mtime_ns": 1785556375176899800,
+      "size": 2879,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                32,
+                58
+              ],
+              "name": "execNormal",
+              "signature": "(command: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                61,
+                80
+              ],
+              "name": "execRoot",
+              "signature": "(command: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                82,
+                89
+              ],
+              "name": "openCommandShell",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                99
+              ],
+              "name": "closeRootCommandShell",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            27,
+            100
+          ],
+          "name": "CommandExecutor",
+          "type": "class"
+        }
+      ]
+    },
+    "ConnectionManager.kt": {
+      "hash": "f51c7cd6d91e",
+      "indexed_at": "2026-08-01T03:59:11.971383+00:00",
+      "language": "kotlin",
+      "lines": 50,
+      "mtime_ns": 1785556375189901200,
+      "size": 1500,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                37,
+                41
+              ],
+              "name": "updateActiveNetworks",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                43,
+                47
+              ],
+              "name": "clearActiveNetworks",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                49
+              ],
+              "name": "isConnected",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            24,
+            50
+          ],
+          "name": "ConnectionManager",
+          "type": "class"
+        }
+      ]
+    },
+    "DNSRebindProtection.kt": {
+      "hash": "3924e64fc70e",
+      "indexed_at": "2026-08-01T03:59:12.545494+00:00",
+      "language": "kotlin",
+      "lines": 104,
+      "mtime_ns": 1785556375204900400,
+      "size": 4036,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                37,
+                103
+              ],
+              "name": "sendNotification",
+              "signature": "(context: Context, site: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            35,
+            104
+          ],
+          "name": "DNSRebindProtection",
+          "type": "class"
+        }
+      ]
+    },
+    "DefaultGatewayManager.kt": {
+      "hash": "133c206c5624",
+      "indexed_at": "2026-08-01T03:59:12.253983+00:00",
+      "language": "kotlin",
+      "lines": 184,
+      "mtime_ns": 1785556375218900900,
+      "size": 5916,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                56,
+                88
+              ],
+              "name": "updateDefaultWiFiGateway",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                90,
+                101
+              ],
+              "name": "requestRuleTable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                132
+              ],
+              "name": "requestDefaultEthernetGateway",
+              "signature": "(lines: MutableList<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                134,
+                149
+              ],
+              "name": "requestDefaultEthernetGateway",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                151,
+                177
+              ],
+              "name": "setDefaultEthernetGateway",
+              "signature": "(lines: MutableList<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                179,
+                183
+              ],
+              "name": "clearDefaultGateway",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            36,
+            184
+          ],
+          "name": "DefaultGatewayManager",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:12.546872+00:00",
+  "version": "1.0"
+}

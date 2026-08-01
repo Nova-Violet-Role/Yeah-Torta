@@ -1,0 +1,290 @@
+{
+  "directory": "android-filepicker",
+  "files": {
+    "CONTRIBUTING.md": {
+      "hash": "3b7df487c2a8",
+      "indexed_at": "2026-07-24T20:35:09.731543+00:00",
+      "language": "markdown",
+      "lines": 34,
+      "mtime_ns": 1782501335906030900,
+      "size": 1565,
+      "symbols": [
+        {
+          "docstring": "We'd love to accept your sample apps and patches! Before we can take them, we have to jump a couple of legal hurdles.",
+          "lines": [
+            3,
+            20
+          ],
+          "name": "Contributor License Agreements",
+          "type": "section"
+        },
+        {
+          "docstring": "1. Submit an issue describing your proposed change to the repo in question. 2. The repo owner will respond to your issue promptly. 3. If your proposed",
+          "lines": [
+            21,
+            34
+          ],
+          "name": "Contributing A Patch",
+          "type": "section"
+        }
+      ]
+    },
+    "Readme.md": {
+      "hash": "2a3b20c3661a",
+      "indexed_at": "2026-07-24T20:35:09.732079+00:00",
+      "language": "markdown",
+      "lines": 201,
+      "mtime_ns": 1782501335906030900,
+      "size": 8553,
+      "symbols": [
+        {
+          "docstring": "[Angad Singh](https://www.github.com/angads25) ([@angads25](https://www.twitter.com/angads25))",
+          "lines": [
+            4,
+            6
+          ],
+          "name": "Developed by",
+          "type": "subsection"
+        },
+        {
+          "docstring": "[![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=9) <a href=\"http://www.methodscount.c",
+          "lines": [
+            7,
+            9
+          ],
+          "name": "Benchmark:",
+          "type": "subsection"
+        },
+        {
+          "docstring": "[ ![Download](https://api.bintray.com/packages/angads25/maven/filepicker/images/download.svg) ](https://bintray.com/angads25/maven/filepicker/_latestV",
+          "lines": [
+            10,
+            12
+          ],
+          "name": "Where to Find:",
+          "type": "subsection"
+        },
+        {
+          "lines": [
+            13,
+            14
+          ],
+          "name": "Read all about internal classes and functions in the [wiki](https://github.com/Angads25/android-filepicker/wiki).",
+          "type": "subsection"
+        },
+        {
+          "docstring": "* Easy to Implement. * No permissions required. * Files, Directory Selection. * Single or Multiple File selection.",
+          "lines": [
+            15,
+            21
+          ],
+          "name": "Features",
+          "type": "subsection"
+        },
+        {
+          "docstring": "* Library is also Available in MavenCentral, So just put this in your app dependencies to use it:",
+          "lines": [
+            22,
+            28
+          ],
+          "name": "Installation",
+          "type": "subsection"
+        },
+        {
+          "lines": [
+            29,
+            29
+          ],
+          "name": "Usage",
+          "type": "subsection"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Marshmallow and above requests for the permission on runtime. You should override `onRequestPermissionsResult` in Activity/AppCompatActivity class and",
+              "lines": [
+                70,
+                95
+              ],
+              "name": "NOTE:",
+              "type": "subsection"
+            },
+            {
+              "docstring": "1. Start by declaring [FilePickerPreference](https://github.com/angads25/android-filepicker/wiki/filepicker-preference) in your settings xml file as:",
+              "lines": [
+                96,
+                142
+              ],
+              "name": "FilePickerPreference",
+              "type": "subsection"
+            },
+            {
+              "docstring": "* `defaultValue`, `error_dir`, `root_dir`, `offset_dir` must have valid directory/file paths. * `defaultValue` paths should end with ':'. * `defaultVa",
+              "lines": [
+                143,
+                150
+              ],
+              "name": "Important:",
+              "type": "subsection"
+            },
+            {
+              "docstring": "[FilePickerPreference](https://github.com/angads25/android-filepicker/wiki/filepicker-preference) stores selected directories/files as a `String`. It",
+              "lines": [
+                151,
+                153
+              ],
+              "name": "Note:",
+              "type": "subsection"
+            }
+          ],
+          "docstring": "1. Start by creating an instance of `DialogProperties`.",
+          "lines": [
+            30,
+            153
+          ],
+          "name": "FilePickerDialog",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "docstring": "![Screenshot 1](https://raw.githubusercontent.com/Angads25/android-filepicker/release/screenshots/theme_black.png)",
+                  "lines": [
+                    158,
+                    161
+                  ],
+                  "name": "Theme.Black",
+                  "type": "subsubsection"
+                },
+                {
+                  "docstring": "![Screenshot 2](https://raw.githubusercontent.com/Angads25/android-filepicker/release/screenshots/theme_holo.png)",
+                  "lines": [
+                    162,
+                    165
+                  ],
+                  "name": "Theme.Holo",
+                  "type": "subsubsection"
+                },
+                {
+                  "docstring": "![Screenshot 3](https://raw.githubusercontent.com/Angads25/android-filepicker/release/screenshots/theme_holo_light.png)",
+                  "lines": [
+                    166,
+                    169
+                  ],
+                  "name": "Theme.Holo.Light",
+                  "type": "subsubsection"
+                },
+                {
+                  "docstring": "![Screenshot 4](https://raw.githubusercontent.com/Angads25/android-filepicker/release/screenshots/theme_material.png)",
+                  "lines": [
+                    170,
+                    173
+                  ],
+                  "name": "Theme.Material",
+                  "type": "subsubsection"
+                },
+                {
+                  "docstring": "![Screenshot 5](https://raw.githubusercontent.com/Angads25/android-filepicker/release/screenshots/theme_device_default.png)",
+                  "lines": [
+                    174,
+                    177
+                  ],
+                  "name": "Theme.DeviceDefault",
+                  "type": "subsubsection"
+                }
+              ],
+              "lines": [
+                156,
+                177
+              ],
+              "name": "Screenshot",
+              "type": "subsection"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "![Performance 1](https://raw.githubusercontent.com/Angads25/android-filepicker/release/screenshots/performance_overdraw.png)",
+                  "lines": [
+                    180,
+                    183
+                  ],
+                  "name": "GPU Overdraw",
+                  "type": "subsubsection"
+                },
+                {
+                  "docstring": "![Performance 2](https://raw.githubusercontent.com/Angads25/android-filepicker/release/screenshots/profile_gpu_rendering.png)",
+                  "lines": [
+                    184,
+                    187
+                  ],
+                  "name": "GPU Rendering",
+                  "type": "subsubsection"
+                }
+              ],
+              "lines": [
+                178,
+                187
+              ],
+              "name": "Performance",
+              "type": "subsection"
+            },
+            {
+              "docstring": "Copyright (C) 2016 Angad Singh",
+              "lines": [
+                188,
+                202
+              ],
+              "name": "License",
+              "type": "subsection"
+            }
+          ],
+          "lines": [
+            154,
+            202
+          ],
+          "name": "Read more on implementation [here](https://github.com/Angads25/android-filepicker/wiki/Implementation).",
+          "type": "section"
+        }
+      ]
+    },
+    "build.gradle": {
+      "hash": "4bb999f45c68",
+      "indexed_at": "2026-07-24T20:35:09.731202+00:00",
+      "language": "gradle",
+      "lines": 16,
+      "mtime_ns": 1782501335886034300,
+      "size": 447,
+      "symbols": [
+        {
+          "lines": [
+            3,
+            12
+          ],
+          "name": "buildscript",
+          "type": "block"
+        },
+        {
+          "lines": [
+            14,
+            16
+          ],
+          "name": "clean",
+          "type": "task"
+        }
+      ]
+    },
+    "settings.gradle": {
+      "hash": "9177bcab4a44",
+      "indexed_at": "2026-07-24T20:35:09.732425+00:00",
+      "language": "gradle",
+      "lines": 1,
+      "mtime_ns": 1782501335886034300,
+      "size": 30,
+      "symbols": []
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.303333+00:00",
+  "version": "1.0"
+}

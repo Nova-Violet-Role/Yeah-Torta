@@ -1,0 +1,503 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\dns_engine\\solver",
+  "files": {
+    "BindingCache.kt": {
+      "hash": "0cebdc85546b",
+      "indexed_at": "2026-08-01T03:59:41.135669+00:00",
+      "language": "kotlin",
+      "lines": 219,
+      "mtime_ns": 1785556376418899700,
+      "size": 12581,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                78,
+                81
+              ],
+              "name": "lookup",
+              "signature": "(fp: NetworkFingerprint, nowMs: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                89,
+                91
+              ],
+              "name": "commit",
+              "signature": "(fp: NetworkFingerprint, binding: LockedBinding)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                98,
+                103
+              ],
+              "name": "touchHealthy",
+              "signature": "(fp: NetworkFingerprint, nowMs: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                109,
+                109
+              ],
+              "name": "invalidate",
+              "signature": "(fp: NetworkFingerprint)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                112
+              ],
+              "name": "size",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                115,
+                115
+              ],
+              "name": "peek",
+              "signature": "(fp: NetworkFingerprint)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                118,
+                118
+              ],
+              "name": "clear",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                129,
+                129
+              ],
+              "name": "snapshotEntries",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                139,
+                148
+              ],
+              "name": "rehydrateFrom",
+              "signature": "(entries: List<Pair<String, LockedBinding>>, nowMs: Long)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            46,
+            157
+          ],
+          "name": "BindingCache",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                165,
+                165
+              ],
+              "name": "Hit",
+              "type": "class"
+            },
+            {
+              "lines": [
+                167,
+                167
+              ],
+              "name": "Miss",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            163,
+            168
+          ],
+          "name": "CacheResult",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            192,
+            201
+          ],
+          "name": "LockedBinding",
+          "type": "class"
+        },
+        {
+          "lines": [
+            214,
+            219
+          ],
+          "name": "TransportKind",
+          "type": "class"
+        }
+      ]
+    },
+    "Hysteresis.kt": {
+      "hash": "8ad131af7b20",
+      "indexed_at": "2026-08-01T03:59:41.436561+00:00",
+      "language": "kotlin",
+      "lines": 329,
+      "mtime_ns": 1785556376430899800,
+      "size": 20144,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                82,
+                102
+              ],
+              "name": "HysteresisConfig",
+              "type": "class"
+            },
+            {
+              "lines": [
+                116,
+                122
+              ],
+              "name": "HysteresisState",
+              "type": "class"
+            },
+            {
+              "lines": [
+                125,
+                130
+              ],
+              "name": "Decision",
+              "type": "class"
+            },
+            {
+              "lines": [
+                154,
+                187
+              ],
+              "name": "observe",
+              "signature": "(\n        state: HysteresisState,\n        signal: Double,\n        nowMs: Long,\n        config: Hy...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                195,
+                200
+              ],
+              "name": "SwitchOutcome",
+              "type": "class"
+            },
+            {
+              "lines": [
+                216,
+                227
+              ],
+              "name": "decideSwitch",
+              "signature": "(\n        candidateScore: Double,\n        incumbentScore: Double?,\n        incumbentDead: Boolean...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                242,
+                252
+              ],
+              "name": "applySolve",
+              "signature": "(\n        state: HysteresisState,\n        nowMs: Long,\n        config: HysteresisConfig = Hystere...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            63,
+            268
+          ],
+          "name": "Hysteresis",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                305,
+                319
+              ],
+              "name": "of",
+              "signature": "(\n        sojournRatio: Double,\n        blueProb: Double,\n        scoreCollapse: Double = 0.0,\n  ...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            288,
+            329
+          ],
+          "name": "ObstructionScore",
+          "type": "class"
+        }
+      ]
+    },
+    "NetworkFingerprint.kt": {
+      "hash": "6e5ee2583843",
+      "indexed_at": "2026-08-01T03:59:41.758055+00:00",
+      "language": "kotlin",
+      "lines": 168,
+      "mtime_ns": 1785556376442903100,
+      "size": 9637,
+      "symbols": [
+        {
+          "lines": [
+            45,
+            161
+          ],
+          "name": "NetworkFingerprint",
+          "type": "class"
+        },
+        {
+          "lines": [
+            168,
+            168
+          ],
+          "name": "hasChanged",
+          "signature": "(previous: NetworkFingerprint?)",
+          "type": "function"
+        }
+      ]
+    },
+    "Solver.kt": {
+      "hash": "9fa91181e23f",
+      "indexed_at": "2026-08-01T03:59:42.081762+00:00",
+      "language": "kotlin",
+      "lines": 422,
+      "mtime_ns": 1785556376455899300,
+      "size": 25625,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                101,
+                142
+              ],
+              "name": "detectObstruction",
+              "signature": "(\n        input: SolverInput,\n        thresholds: SolverThresholds = SolverThresholds(),\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                145,
+                148
+              ],
+              "name": "ratioNorm",
+              "signature": "(value: Double, target: Double)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                156,
+                162
+              ],
+              "name": "scoreCollapseNorm",
+              "signature": "(bestScore: Double?, t: SolverThresholds)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                183,
+                212
+              ],
+              "name": "shouldTrigger",
+              "signature": "(\n        verdict: ObstructionVerdict,\n        state: TriggerState,\n        thresholds: SolverThr...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                223,
+                223
+              ],
+              "name": "isRelayCapable",
+              "signature": "(transport: TransportKind)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                239,
+                257
+              ],
+              "name": "enumerateRace",
+              "signature": "(\n        resolvers: List<RaceResolver>,\n        relays: List<RaceRelay?>,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                267,
+                277
+              ],
+              "name": "pickRaceWinner",
+              "signature": "(\n        measured: List<RaceMeasurement>,\n        thresholds: SolverThresholds = SolverThreshold...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                291,
+                299
+              ],
+              "name": "raceScore",
+              "signature": "(m: RaceMeasurement, t: SolverThresholds = SolverThresholds())",
+              "type": "method"
+            },
+            {
+              "lines": [
+                333,
+                345
+              ],
+              "name": "solveBinding",
+              "signature": "(\n        resolvers: List<RaceResolver>,\n        relays: List<RaceRelay?>,\n        thresholds: So...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                368,
+                392
+              ],
+              "name": "tuneBinding",
+              "signature": "(\n        winner: RaceMeasurement,\n        thresholds: SolverThresholds = SolverThresholds(),\n   ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                401,
+                410
+              ],
+              "name": "toLockedBinding",
+              "signature": "(binding: SolverBinding, nowMs: Long)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            73,
+            422
+          ],
+          "name": "Solver",
+          "type": "class"
+        }
+      ]
+    },
+    "SolverTypes.kt": {
+      "hash": "c10b30b4fc59",
+      "indexed_at": "2026-08-01T03:59:42.413863+00:00",
+      "language": "kotlin",
+      "lines": 251,
+      "mtime_ns": 1785556376466898900,
+      "size": 12571,
+      "symbols": [
+        {
+          "lines": [
+            44,
+            62
+          ],
+          "name": "ObstructionSignal",
+          "type": "class"
+        },
+        {
+          "lines": [
+            82,
+            90
+          ],
+          "name": "SolverInput",
+          "type": "class"
+        },
+        {
+          "lines": [
+            97,
+            100
+          ],
+          "name": "ObstructionVerdict",
+          "type": "class"
+        },
+        {
+          "lines": [
+            110,
+            113
+          ],
+          "name": "TriggerState",
+          "type": "class"
+        },
+        {
+          "lines": [
+            116,
+            119
+          ],
+          "name": "TriggerDecision",
+          "type": "class"
+        },
+        {
+          "lines": [
+            131,
+            136
+          ],
+          "name": "RaceResolver",
+          "type": "class"
+        },
+        {
+          "lines": [
+            139,
+            141
+          ],
+          "name": "RaceRelay",
+          "type": "class"
+        },
+        {
+          "lines": [
+            148,
+            155
+          ],
+          "name": "RaceCandidate",
+          "type": "class"
+        },
+        {
+          "lines": [
+            163,
+            169
+          ],
+          "name": "RaceMeasurement",
+          "type": "class"
+        },
+        {
+          "lines": [
+            181,
+            191
+          ],
+          "name": "SolverBinding",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                244,
+                245
+              ],
+              "name": "transportBonus",
+              "signature": "(t: TransportKind)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            222,
+            251
+          ],
+          "name": "SolverThresholds",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:42.415341+00:00",
+  "version": "1.0"
+}

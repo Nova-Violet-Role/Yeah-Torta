@@ -1,0 +1,716 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\futures\\tests\\bindings",
+  "files": {
+    "test_futures.kts": {
+      "hash": "e5e6cb89d20e",
+      "indexed_at": "2026-07-24T20:35:12.542918+00:00",
+      "language": "kotlin",
+      "lines": 366,
+      "mtime_ns": 1782136568000000000,
+      "size": 9855,
+      "symbols": [
+        {
+          "lines": [
+            14,
+            18
+          ],
+          "name": "assertReturnsImmediately",
+          "signature": "(actualTime: Long, testName:  String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            20,
+            24
+          ],
+          "name": "assertApproximateTime",
+          "signature": "(actualTime: Long, expectedTime: Int, testName:  String)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                167,
+                170
+              ],
+              "name": "asString",
+              "signature": "(delayMs: Int, value: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                172,
+                182
+              ],
+              "name": "tryFromString",
+              "signature": "(delayMs: Int, value: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                184,
+                187
+              ],
+              "name": "delay",
+              "signature": "(delayMs: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                189,
+                197
+              ],
+              "name": "tryDelay",
+              "signature": "(delayMs: String)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Test foreign implemented async trait methods",
+          "lines": [
+            164,
+            198
+          ],
+          "name": "KotlinAsyncParser",
+          "type": "class"
+        }
+      ]
+    },
+    "test_futures.py": {
+      "hash": "d52e688b1a77",
+      "indexed_at": "2026-07-24T20:35:12.545006+00:00",
+      "language": "python",
+      "lines": 295,
+      "mtime_ns": 1782136568000000000,
+      "size": 10412,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            8
+          ],
+          "name": "now",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                11,
+                15
+              ],
+              "name": "test_always_ready",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                21
+              ],
+              "name": "test_void",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                32
+              ],
+              "name": "test_sleep",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                34,
+                46
+              ],
+              "name": "test_sequential_futures",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                48,
+                63
+              ],
+              "name": "test_concurrent_tasks",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                65,
+                76
+              ],
+              "name": "test_async_methods",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                78,
+                88
+              ],
+              "name": "test_async_constructors",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                90,
+                103
+              ],
+              "name": "test_async_trait_interface_methods",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                105,
+                118
+              ],
+              "name": "test_udl_async_trait_interface_methods",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                120,
+                133
+              ],
+              "name": "test_tokio_async_trait_interface_methods",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                135,
+                188
+              ],
+              "name": "test_foreign_async_trait_interface_methods",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                190,
+                201
+              ],
+              "name": "test_async_object_param",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                203,
+                213
+              ],
+              "name": "test_with_tokio_runtime",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                215,
+                237
+              ],
+              "name": "test_fallible",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                239,
+                250
+              ],
+              "name": "test_fallible_struct",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                252,
+                259
+              ],
+              "name": "test_record",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                261,
+                275
+              ],
+              "name": "test_cancel",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                278,
+                286
+              ],
+              "name": "test_shared_resource_cancellation",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                288,
+                292
+              ],
+              "name": "test_shared_resource_no_cancellation",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            292
+          ],
+          "name": "TestFutures",
+          "type": "class"
+        }
+      ]
+    },
+    "test_futures.rb": {
+      "hash": "1a617a9bad57",
+      "indexed_at": "2026-07-24T20:35:12.547948+00:00",
+      "language": "ruby",
+      "lines": 443,
+      "mtime_ns": 1782136568000000000,
+      "size": 12241,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                9
+              ],
+              "name": "test_always_ready",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11,
+                13
+              ],
+              "name": "test_void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                15,
+                20
+              ],
+              "name": "test_sleep",
+              "type": "method"
+            },
+            {
+              "lines": [
+                22,
+                30
+              ],
+              "name": "test_sequential_futures",
+              "type": "method"
+            },
+            {
+              "lines": [
+                32,
+                46
+              ],
+              "name": "test_concurrent_tasks",
+              "type": "method"
+            },
+            {
+              "lines": [
+                48,
+                55
+              ],
+              "name": "test_async_methods",
+              "type": "method"
+            },
+            {
+              "lines": [
+                57,
+                65
+              ],
+              "name": "test_async_constructors",
+              "type": "method"
+            },
+            {
+              "lines": [
+                67,
+                76
+              ],
+              "name": "test_async_trait_interface_methods",
+              "type": "method"
+            },
+            {
+              "lines": [
+                78,
+                89
+              ],
+              "name": "test_udl_async_trait_interface_methods",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                102
+              ],
+              "name": "test_tokio_async_trait_interface_methods",
+              "type": "method"
+            },
+            {
+              "lines": [
+                104,
+                134
+              ],
+              "name": "test_foreign_async_trait_interface_methods",
+              "type": "method"
+            },
+            {
+              "lines": [
+                136,
+                143
+              ],
+              "name": "test_async_object_param",
+              "type": "method"
+            },
+            {
+              "lines": [
+                145,
+                151
+              ],
+              "name": "test_with_tokio_runtime",
+              "type": "method"
+            },
+            {
+              "lines": [
+                153,
+                161
+              ],
+              "name": "test_fallible",
+              "type": "method"
+            },
+            {
+              "lines": [
+                163,
+                166
+              ],
+              "name": "test_fallible_struct",
+              "type": "method"
+            },
+            {
+              "lines": [
+                168,
+                174
+              ],
+              "name": "test_record",
+              "type": "method"
+            },
+            {
+              "lines": [
+                176,
+                178
+              ],
+              "name": "test_greet",
+              "type": "method"
+            },
+            {
+              "lines": [
+                180,
+                187
+              ],
+              "name": "test_shared_resource_no_cancellation",
+              "type": "method"
+            },
+            {
+              "docstring": "Test a future that uses a lock and that is cancelled.",
+              "lines": [
+                190,
+                206
+              ],
+              "name": "test_shared_resource_cancellation",
+              "type": "method"
+            },
+            {
+              "lines": [
+                208,
+                239
+              ],
+              "name": "test_deadlock_stress",
+              "type": "method"
+            },
+            {
+              "lines": [
+                241,
+                253
+              ],
+              "name": "test_cancel",
+              "type": "method"
+            },
+            {
+              "docstring": "yielding the fiber on IO wait and resuming when the Rust future completes.",
+              "lines": [
+                258,
+                276
+              ],
+              "name": "test_fiber_concurrent_tasks",
+              "type": "method"
+            },
+            {
+              "lines": [
+                278,
+                286
+              ],
+              "name": "test_fiber_async_methods",
+              "type": "method"
+            },
+            {
+              "lines": [
+                288,
+                296
+              ],
+              "name": "test_fiber_async_constructors",
+              "type": "method"
+            },
+            {
+              "lines": [
+                298,
+                313
+              ],
+              "name": "test_fiber_fallible",
+              "type": "method"
+            },
+            {
+              "lines": [
+                315,
+                317
+              ],
+              "name": "now",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    323,
+                    327
+                  ],
+                  "name": "initialize",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    329,
+                    333
+                  ],
+                  "name": "io_wait",
+                  "signature": "(io, events, _timeout = nil)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    335,
+                    340
+                  ],
+                  "name": "kernel_sleep",
+                  "signature": "(duration = nil)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    342,
+                    342
+                  ],
+                  "name": "block",
+                  "signature": "(blocker, timeout = nil)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    343,
+                    343
+                  ],
+                  "name": "unblock",
+                  "signature": "(blocker, fiber)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    345,
+                    349
+                  ],
+                  "name": "fiber",
+                  "signature": "(&block)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    351,
+                    358
+                  ],
+                  "name": "fiber_interrupt",
+                  "signature": "(fiber, exception)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    360,
+                    390
+                  ],
+                  "name": "close",
+                  "type": "method"
+                }
+              ],
+              "docstring": "which is used by uniffi_rust_call_async",
+              "lines": [
+                322,
+                391
+              ],
+              "name": "MinimalScheduler",
+              "type": "class"
+            },
+            {
+              "docstring": "Run block with a minimal Fiber::Scheduler, then cleanup.",
+              "lines": [
+                394,
+                401
+              ],
+              "name": "run_with_scheduler",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    406,
+                    408
+                  ],
+                  "name": "initialize",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    410,
+                    413
+                  ],
+                  "name": "as_string",
+                  "signature": "(delay_ms, value)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    415,
+                    425
+                  ],
+                  "name": "try_from_string",
+                  "signature": "(delay_ms, value)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    427,
+                    430
+                  ],
+                  "name": "delay",
+                  "signature": "(delay_ms)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    432,
+                    441
+                  ],
+                  "name": "try_delay",
+                  "signature": "(delay_ms)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                403,
+                442
+              ],
+              "name": "RbAsyncParser",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            6,
+            443
+          ],
+          "name": "TestFutures",
+          "type": "class"
+        }
+      ]
+    },
+    "test_futures.swift": {
+      "hash": "063bde802075",
+      "indexed_at": "2026-07-24T20:35:12.552021+00:00",
+      "language": "swift",
+      "lines": 448,
+      "mtime_ns": 1782136568000000000,
+      "size": 10488,
+      "symbols": [
+        {
+          "lines": [
+            189,
+            189
+          ],
+          "name": "UnexpectedError",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                194,
+                197
+              ],
+              "name": "asString",
+              "type": "method"
+            },
+            {
+              "lines": [
+                199,
+                209
+              ],
+              "name": "tryFromString",
+              "type": "method"
+            },
+            {
+              "lines": [
+                211,
+                220
+              ],
+              "name": "delay",
+              "type": "method"
+            },
+            {
+              "lines": [
+                222,
+                234
+              ],
+              "name": "tryDelay",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            191,
+            235
+          ],
+          "name": "SwiftAsyncParser",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.700017+00:00",
+  "version": "1.0"
+}

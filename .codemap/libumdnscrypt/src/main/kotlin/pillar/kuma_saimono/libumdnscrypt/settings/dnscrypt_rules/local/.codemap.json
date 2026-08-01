@@ -1,0 +1,397 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\settings\\dnscrypt_rules\\local",
+  "files": {
+    "DnsRulesUpdateProgress.kt": {
+      "hash": "ccde40280130",
+      "indexed_at": "2026-08-01T04:00:18.977947+00:00",
+      "language": "kotlin",
+      "lines": 44,
+      "mtime_ns": 1785556377909900200,
+      "size": 1237,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                30
+              ],
+              "name": "UpdateProgress",
+              "type": "class"
+            },
+            {
+              "lines": [
+                32,
+                37
+              ],
+              "name": "UpdateFinished",
+              "type": "class"
+            },
+            {
+              "lines": [
+                39,
+                43
+              ],
+              "name": "UpdateFailure",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            22,
+            44
+          ],
+          "name": "DnsRulesUpdateProgress",
+          "type": "class"
+        }
+      ]
+    },
+    "ImportRulesManager.kt": {
+      "hash": "1425bc1d92a7",
+      "indexed_at": "2026-08-01T04:00:19.277920+00:00",
+      "language": "kotlin",
+      "lines": 743,
+      "mtime_ns": 1785556377922899200,
+      "size": 26283,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                113,
+                158
+              ],
+              "name": "run",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                160,
+                245
+              ],
+              "name": "doTheJob",
+              "signature": "(\n        filesToImport: Array<*>\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                247,
+                287
+              ],
+              "name": "mixFiles",
+              "signature": "(\n        printWriter: PrintWriter,\n        filesToImport: MutableList<Any?>,\n        countAsImpo...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                289,
+                330
+              ],
+              "name": "mixFilesWithPass",
+              "signature": "(\n        index: Int,\n        file: String,\n        filesCount: Int,\n        rulesRegex: Regex,\n ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                332,
+                368
+              ],
+              "name": "mixFilesWithUri",
+              "signature": "(\n        index: Int,\n        uri: Uri,\n        filesCount: Int,\n        rulesRegex: Regex,\n     ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                370,
+                426
+              ],
+              "name": "mixFilesCommonPart",
+              "signature": "(\n        printWriter: PrintWriter,\n        reader: BufferedReader,\n        rulesRegex: Regex,\n  ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                428,
+                445
+              ],
+              "name": "cleanRule",
+              "signature": "(line: String, regExp: Regex)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                447,
+                469
+              ],
+              "name": "hostToBlackList",
+              "signature": "(line: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                471,
+                493
+              ],
+              "name": "addDefaultLinesIfRequired",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                495,
+                504
+              ],
+              "name": "isInputFileFormatCorrect",
+              "signature": "(file: File, regExp: Regex)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                506,
+                517
+              ],
+              "name": "isInputFileFormatCorrect",
+              "signature": "(uri: Uri, regExp: Regex)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                519,
+                545
+              ],
+              "name": "isInputFileFormatCorrect",
+              "signature": "(reader: BufferedReader, regExp: Regex)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                547,
+                551
+              ],
+              "name": "restartDNSCryptIfRequired",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                553,
+                564
+              ],
+              "name": "getFileNameFromUri",
+              "signature": "(uri: Uri)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                566,
+                567
+              ],
+              "name": "getFileNameFromPath",
+              "signature": "(path: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                569,
+                576
+              ],
+              "name": "getRulesFileSize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                578,
+                589
+              ],
+              "name": "addFileHeader",
+              "signature": "(\n        printWriter: PrintWriter,\n        names: List<String>\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                591,
+                627
+              ],
+              "name": "sendImportProgressBroadcast",
+              "signature": "(\n        size: Long,\n        count: Int\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                629,
+                665
+              ],
+              "name": "sendImportFinishedBroadcast",
+              "signature": "(\n        size: Long,\n        count: Int\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                667,
+                700
+              ],
+              "name": "sendImportFailedBroadcast",
+              "signature": "(\n        error: String\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                702,
+                711
+              ],
+              "name": "sendTotalRulesBroadcast",
+              "signature": "(count: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                713,
+                717
+              ],
+              "name": "ImportType",
+              "type": "class"
+            },
+            {
+              "lines": [
+                719,
+                729
+              ],
+              "name": "DnsRulesRegex",
+              "type": "interface"
+            }
+          ],
+          "lines": [
+            49,
+            743
+          ],
+          "name": "ImportRulesManager",
+          "type": "class"
+        }
+      ]
+    },
+    "UpdateLocalDnsRulesWorker.kt": {
+      "hash": "f5bfaa60813d",
+      "indexed_at": "2026-08-01T04:00:19.577791+00:00",
+      "language": "kotlin",
+      "lines": 125,
+      "mtime_ns": 1785556377936900600,
+      "size": 5980,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                59,
+                82
+              ],
+              "name": "doWork",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                84,
+                94
+              ],
+              "name": "importRulesFromFiles",
+              "signature": "(\n        files: Array<*>,\n        ruleType: DnsRuleType,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                96,
+                99
+              ],
+              "name": "isRemoteDnsRulesImportingInProgress",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                109
+              ],
+              "name": "getRemoteWorkName",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                114
+              ],
+              "name": "isMixDnsRulesInProgress",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                116,
+                123
+              ],
+              "name": "getMixWorkName",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            48,
+            125
+          ],
+          "name": "UpdateLocalDnsRulesWorker",
+          "type": "class"
+        }
+      ]
+    },
+    "UpdateLocalRulesWorkManager.kt": {
+      "hash": "7eb00ff8430c",
+      "indexed_at": "2026-08-01T04:00:19.879179+00:00",
+      "language": "kotlin",
+      "lines": 102,
+      "mtime_ns": 1785556377949899700,
+      "size": 3927,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                35,
+                70
+              ],
+              "name": "startImportDnsRules",
+              "signature": "(ruleType: DnsRuleType, filesToImport: Array<*>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                72,
+                75
+              ],
+              "name": "stopImportDnsRules",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                84
+              ],
+              "name": "getWorkName",
+              "signature": "(type: DnsRuleType)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            31,
+            102
+          ],
+          "name": "UpdateLocalRulesWorkManager",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:19.880648+00:00",
+  "version": "1.0"
+}

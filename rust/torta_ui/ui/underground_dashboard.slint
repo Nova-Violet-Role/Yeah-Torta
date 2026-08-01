@@ -1,0 +1,553 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT UNDERGROUND LAYER ||| DASHBOARD — #15 UNDERGROUND H (the pillar's OWN space).
+//
+// The DNSCrypt-native antivirus finally gets his own room: the licence court MOVES OUT of the
+// ENGINE tab (The Beast's space — the standing directive) into this pillar pane, reached via
+// ||| → PILLARS → UNDERGROUND LAYER dashboard chip AND the HOME pillars row under DNSCRYPT.
+//
+// What it shows (all LIVE, no fabrication — the Chroma F6 honesty law):
+//   · the licence census tiles (held / accidents / heals / teeth / sequestrated / probation /
+//     trusted / distrusted) + the E brain's store-wide MEAN THREAT SCORE;
+//   · THE COURT DOCKET — the score-ordered per-host table (the E ranking: a heavy lane with few
+//     hits outranks a light lane with many). Each row: host · verdict pill (colored band) ·
+//     score gauge · the lane badge (a coined `dga`/`tunnel`/`beacon` lane IS the detector's
+//     signature) · quarantine-TTL countdown (the G clock; `—` = no clock) · hits/points ·
+//     the PER-ROW verdict actions (TRUST / BLOCK / FORGET — hoisted from the ENGINE tab);
+//   · THE LIVE WIRE — the G-rung VerdictEvent ticker (accidents, corrections, retests) the host
+//     streams from the RAM ring (seq-deduped, newest last);
+//   · the TRUST BANDS pin row (type any host, pre-allow/pre-block ahead of the first witness) —
+//     RELOCATED here from the ENGINE tab, same `set-verdict` wire.
+//
+// EMBEDDED IN-SHELL: `UndergroundDashboardPane inherits Rectangle` mounts as the shell's
+// "underground-dash" advanced section; the `UndergroundDashboard inherits Window` below is the
+// thin `<=>` forwarder that keeps the host-preview proof test + the main.slint export alive
+// (the Centauri/Warden pane precedent: a non-Window pane generates NO standalone Rust struct).
+//
+// NOTE: slint uses `:` for property bindings; `\{expr}` is string interpolation.
+
+import { Button, LineEdit, ScrollView } from "std-widgets.slint";
+import { Monokuma } from "monokuma_palette.slint";
+import { SectionTitle, RowCard, AlertBanner, StatTile } from "widgets.slint";
+import { ThemeBook, MotifWash } from "theme_tokens.slint";
+import { UgInk } from "underground_palette.slint";
+export { UgInk }
+
+// The Underground's brand accents — the Matrix-green family, now homed in his OWN palette
+// file (#29 closes the palette GAP: underground_palette.slint). Imported + re-exported up
+// top so `import { UgInk } from "underground_dashboard.slint"` in the settings pane stays
+// byte-stable (no import churn anywhere).
+
+// One docket row — the host parses the 9-field snapshot row (`top_by_score`, underground.rs
+// `format_row`: host·risk·source·hits·points·seq·verdict·score·ttl) into this typed struct.
+// `ttl-label` arrives pre-formatted ("3h12m" / "—") so the pane never does clock math.
+export struct UgHostRow {
+    host: string,
+    risk: string,     // lane slug — a coined "dga"/"tunnel"/"beacon" lane IS the detector badge
+    source: string,   // witness slug (blocklist/guard/rebind/suffix/centauri)
+    hits: int,
+    points: int,      // licence points remaining (0 = sequestrated)
+    seq: bool,        // sequestrated now
+    verdict: string,  // "neutral" | "trusted" | "distrusted"
+    score: int,       // the E brain's live score (lane penalty + reputation shift)
+    ttl-label: string, // the G quarantine countdown, host-formatted; "—" = no clock
+}
+
+// The verdict pill — the colored band chip every docket row carries.
+component VerdictPill inherits Rectangle {
+    in property <string> verdict;
+    width: 64px;
+    height: 16px;
+    border-radius: 8px;
+    background: root.verdict == "trusted" ? UgInk.vouch.with-alpha(0.18)
+        : root.verdict == "distrusted" ? UgInk.alarm.with-alpha(0.18)
+        : Monokuma.coal;
+    border-width: 1px;
+    border-color: root.verdict == "trusted" ? UgInk.vouch
+        : root.verdict == "distrusted" ? UgInk.alarm
+        : Monokuma.ash;
+    Text {
+        text: root.verdict;
+        color: root.verdict == "trusted" ? UgInk.vouch
+            : root.verdict == "distrusted" ? UgInk.alarm
+            : UgInk.bone;
+        font-size: 8px;
+        font-weight: 800;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+}
+
+// The score gauge — a licence-scaled bar (score 0..20+ against the 20-point licence law).
+component ScoreGauge inherits Rectangle {
+    in property <int> score;
+    width: 56px;
+    height: 14px;
+    border-radius: 3px;
+    background: Monokuma.pitch;
+    border-width: 1px;
+    border-color: Monokuma.ash;
+    Rectangle {
+        x: 1px;
+        y: 1px;
+        height: parent.height - 2px;
+        width: (parent.width - 2px) * Math.min(root.score, 20) / 20;
+        border-radius: 2px;
+        background: root.score >= 10 ? UgInk.alarm : root.score >= 5 ? #ffb454 : UgInk.rain;
+    }
+    Text {
+        text: "\{root.score}";
+        color: UgInk.bone;
+        font-size: 8px;
+        font-weight: 800;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+}
+
+// The pillar dashboard pane — mounts in-shell as the "underground-dash" advanced section.
+export component UndergroundDashboardPane inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.underground; width: 100%; height: 100%; }
+    background: Monokuma.pitch;
+
+    // ===== #29 THE FULL RAIN — the Matrix digital-rain drench (the reference: dense green glyph
+    //       columns on pitch black). Advanced resolution: 13px column pitch, four 40-glyph
+    //       stacks, per-column speed + phase, dim→bright SOLID green shades (the no-transparency
+    //       law: depth comes from color, never alpha) and white-hot head glyphs riding every
+    //       stream. Pure animation-tick; zero timers; clipped; the glass panels stay above. =====
+    rain := Rectangle {
+        clip: true;
+        width: 100%;
+        height: 100%;
+        property <int> cols: Math.max(16, Math.floor(self.width / 13px));
+        property <string> s0: "7\nﾊ\n0\nﾐ\n9\nｹ\n1\n$\nﾒ\n3\n+\nﾋ\n8\n5\nﾑ\n2\n¥\nｦ\n4\nﾈ\n6\n=\nｸ\n1\n0\n7\nﾘ\n9\n<\nｱ\n3\n8\nﾎ\n5\n2\nﾃ\n1\n>\n0\n9";
+        property <string> s1: "ﾂ\n3\nﾜ\n8\n1\nｿ\n5\n*\nﾕ\n0\n7\nﾁ\n2\n¥\nｵ\n9\n4\nﾉ\n6\n$\nｻ\n1\n8\nﾖ\n3\n0\nﾗ\n7\n+\nｷ\n5\n2\nﾍ\n9\n1\n=\nﾀ\n6\n4\n0";
+        property <string> s2: "5\nｺ\n2\n>\nﾙ\n8\n0\nﾏ\n6\n1\nｽ\n9\n$\nﾅ\n3\n7\nｲ\n4\n*\nﾓ\n0\n2\nｾ\n8\n5\n<\nﾔ\n1\n9\nﾆ\n6\n3\n¥\nｳ\n7\n0\nﾚ\n4\n2\n8";
+        property <string> s3: "1\nﾐ\n6\n+\nｴ\n0\n9\nﾌ\n3\n5\nﾝ\n2\n=\nｼ\n7\n8\nﾛ\n1\n4\n$\nﾋ\n0\n6\nｦ\n9\n2\n*\nﾃ\n5\n3\nﾈ\n8\n1\nｹ\n0\n7\n>\nﾑ\n4\n6";
+
+        // ── #35 THE CORRIDOR — the hallway reference: a lit doorway at the vanishing point,
+        //    three glowing figures walking it, and a receding plank floor. Drawn BEFORE the
+        //    streams so the rain falls over the whole hall. ──
+        Rectangle {     // the doorway glow
+            x: parent.width * 0.34; y: parent.height * 0.26;
+            width: parent.width * 0.32; height: parent.height * 0.42;
+            background: @linear-gradient(90deg,
+                transparent 0%,
+                #1f9e4c.with-alpha(0.55) 22%,
+                #eaffef.with-alpha(0.85) 50%,
+                #1f9e4c.with-alpha(0.55) 78%,
+                transparent 100%);
+        }
+        for f in 3 : Rectangle {    // the walkers — bright capsules on a staggered stride bob
+            x: parent.width * (0.40 + f * 0.085);
+            y: parent.height * 0.475 - parent.height * 0.012
+                * sin(360deg * Math.mod((animation-tick() / 1ms) / 1800.0 + f * 0.33, 1.0));
+            width: parent.width * 0.032;
+            height: parent.height * 0.185;
+            border-radius: self.width / 2;
+            background: @linear-gradient(180deg, #eaffef 0%, #9ff5c0 55%, #2fe26a 100%);
+        }
+        for r in 6 : Rectangle {    // the receding floor planks — pitch widens toward the eye
+            x: 0; width: parent.width;
+            y: parent.height * (0.68 + 0.018 * r + 0.0075 * r * r);
+            height: 1px + r * 0.5px;
+            background: r == 0 ? #2fe26a : #17662f;
+        }
+
+        for i in rain.cols : Text {
+            property <float> ph: Math.mod((animation-tick() / 1ms) / (2600.0 + 520.0 * Math.mod(i, 5)) + i * 0.161, 1.0);
+            x: i * 13px + 2px;
+            y: -520px + (parent.height + 520px) * self.ph;
+            text: Math.mod(i, 4) == 0 ? rain.s0 : Math.mod(i, 4) == 1 ? rain.s1 : Math.mod(i, 4) == 2 ? rain.s2 : rain.s3;
+            color: Math.mod(i, 3) == 0 ? #2fe26a : Math.mod(i, 3) == 1 ? #1f9e4c : #17662f;
+            font-size: 10px;
+            font-weight: 700;
+        }
+        // the white-hot heads — the leading glyph of every stream
+        for i in rain.cols : Text {
+            property <float> ph: Math.mod((animation-tick() / 1ms) / (2600.0 + 520.0 * Math.mod(i, 5)) + i * 0.161, 1.0);
+            x: i * 13px + 2px;
+            y: (parent.height + 520px) * self.ph - 8px;
+            text: Math.mod(i, 5) == 0 ? "ﾊ" : Math.mod(i, 5) == 1 ? "0" : Math.mod(i, 5) == 2 ? "$" : Math.mod(i, 5) == 3 ? "9" : "ｸ";
+            color: #eaffef;
+            font-size: 11px;
+            font-weight: 900;
+        }
+    }
+
+    // ── Host-pushed state (the SAME `ug-*` truths the shell already carries for the census;
+    //    the docket + ticker are the H additions) ──
+    in-out property <bool> armed: false;
+    in-out property <int> total: 0;
+    in-out property <int> recorded: 0;
+    in-out property <int> recovered: 0;
+    in-out property <int> teeth: 0;
+    in-out property <int> sequestrated: 0;
+    in-out property <int> probation: 0;
+    in-out property <int> trusted: 0;
+    in-out property <int> distrusted: 0;
+    in-out property <float> mean-score: 0.0;
+    in-out property <[UgHostRow]> docket: [];        // score-ordered (the E ranking)
+    in-out property <string> live-wire: "";          // the VerdictEvent ticker, newest last (EPHEMERAL)
+    in-out property <string> review-log: "";         // #81 — the query-underground.log tail (DURABLE)
+    in-out property <int> trust-status: 0;           // 0 idle · 1 landed · 2 fail-open
+    in-out property <string> trust-input: "";
+
+    // ── Intents (the host wires them to the LIVE licence store — setUndergroundVerdict) ──
+    callback set-verdict(string, int);               // host + code (0 clear · 1 trust · 2 block)
+
+    ScrollView {
+        // The width law: the inner viewport rides the visible width (never the content's
+        // min-width) — otherwise the pane scrolls sideways off the shell (the AVD-caught bug).
+        viewport-width: self.visible-width;
+        VerticalLayout {
+            padding: 12px;
+            spacing: 10px;
+
+            SectionTitle { text: "UNDERGROUND LAYER · the licence court, his own room"; wrap: word-wrap; }
+            if !root.armed : AlertBanner {
+                accent: Monokuma.caution;
+                message: "UNDERGROUND DORMANT — the licence store arms with the resolver boot (start DNSCrypt on HOME).";
+            }
+
+            // ===== #29 THE CONSOLE — Socio directive 2: the REAL ANIMATED CONSOLE, full-layout.
+            //       The boot banner types itself out behind a growing clip (a block cursor
+            //       blinks at the edge), then the script stream rolls — lines land one after
+            //       another, the newest burning rain-bright, elders cooling to dim-rain, then
+            //       the buffer clears and the run begins again (a live console redraw, never
+            //       a static slab). Glass ground + CRT scan band + chrome specular sweep —
+            //       brilliant, LESS opaque, more CHROMA (the directive). Pure animation-tick;
+            //       zero timers; clipped. =====
+            con := Rectangle {
+                height: 178px;
+                border-radius: 10px;
+                clip: true;
+                background: UgInk.glass.with-alpha(0.82);
+                border-width: 1px;
+                border-color: UgInk.rain.with-alpha(0.35);
+                property <float> t: animation-tick() / 1ms;
+                property <float> boot-t0: 0.0;        // tap re-types the banner ("make ur input")
+                property <float> burst-t0: -100000.0; // tap arms the glyph waterfall
+                property <float> boot-ph: Math.min(1.0, Math.mod(self.t - self.boot-t0, 16000.0) / 3600.0);
+                property <float> row-ph: Math.mod(self.t / 1300.0, 10.0);
+                property <[string]> feed: [
+                    "$ ug --arm ▸ licence court online ∙ store mounted",
+                    "trace lane[dga] ▸ entropy sweep… caught 0x2fe26a",
+                    "licence[udp53] points=7 ttl=3h12m ∙ probation",
+                    "teeth --bite hostile.seed ▸ 2 bites, 1 heal",
+                    "score ▸ dga:4 tunnel:2 beacon:0 ∙ mean holding",
+                    "catch ▸ the one that deserve it: sequestrate…",
+                    "verdict ⇄ trusted ∙ fail-open guard standing",
+                    "seq 0x1f9e4c drained ▸ reputation reloaded",
+                ];
+
+                VerticalLayout {
+                    padding: 12px;
+                    spacing: 4px;
+                    // the boot banner — typed out behind the growing clip
+                    HorizontalLayout {
+                        Rectangle {
+                            clip: true;
+                            height: 15px;
+                            width: boot.preferred-width * con.boot-ph;
+                            boot := Text {
+                                x: 0; y: 0;
+                                width: self.preferred-width;
+                                text: "> Welcome to the underground, make ur input, catch the one that deserve it";
+                                color: UgInk.boot;
+                                font-size: 11px;
+                                font-weight: 800;
+                            }
+                        }
+                        Rectangle {   // the block cursor — riding the typed edge, blinking
+                            width: 7px; height: 13px;
+                            background: UgInk.head;
+                            opacity: Math.mod(con.t, 900.0) < 450.0 ? 0.9 : 0.15;
+                        }
+                        Rectangle { horizontal-stretch: 1; }
+                    }
+                    // the script stream — MANY random scripts rolling in, newest bright
+                    for l[i] in con.feed : Text {
+                        text: l;
+                        font-size: 10px;
+                        font-weight: 700;
+                        color: con.row-ph >= i + 1.0 && con.row-ph < i + 2.0
+                            ? UgInk.rain : UgInk.dim-rain;
+                        opacity: con.row-ph >= i + 1.0 ? 1.0 : 0.0;
+                    }
+                    Rectangle { }
+                }
+
+                // the CRT scan band — a slow luminous sweep down the glass
+                Rectangle {
+                    x: 0; width: parent.width;
+                    height: 26px;
+                    y: -26px + (parent.height + 26px) * Math.mod(con.t / 5200.0, 1.0);
+                    background: @linear-gradient(180deg,
+                        transparent 0%,
+                        UgInk.rain.with-alpha(0.10) 50%,
+                        transparent 100%);
+                }
+                // the chrome specular — the mirror streak crossing the glass (the CHROMA law)
+                Rectangle {
+                    width: 46px; height: parent.height;
+                    x: -160px + (parent.width + 320px) * Math.mod(con.t / 7400.0, 1.0);
+                    y: 0;
+                    background: @linear-gradient(90deg,
+                        transparent 0%,
+                        UgInk.chrome.with-alpha(0.14) 50%,
+                        transparent 100%);
+                }
+
+                // #29 the on-touch Matrix idiom — the cascading glyph waterfall. Tapping the
+                // console IS the input the banner asks for: the boot line re-types and twelve
+                // staggered glyph columns crash down the glass (the SAME rain strings s0-s3,
+                // so the idiom never forks), fading as they land. Hidden until armed
+                // (burst-t0 sits at -100000 so the resting phase clamps to opacity 0).
+                for i in 12 : Text {
+                    property <float> ph: Math.min(1.0, Math.max(0.0,
+                        (con.t - con.burst-t0) / 1100.0 - i * 0.035));
+                    x: i * (parent.width / 12) + 3px;
+                    y: -260px + (parent.height + 260px) * self.ph;
+                    text: Math.mod(i, 4) == 0 ? rain.s0 : Math.mod(i, 4) == 1 ? rain.s1
+                        : Math.mod(i, 4) == 2 ? rain.s2 : rain.s3;
+                    color: Math.mod(i, 3) == 0 ? UgInk.rain : Math.mod(i, 3) == 1 ? UgInk.boot : UgInk.deep;
+                    font-size: 9px;
+                    font-weight: 800;
+                    opacity: self.ph > 0.0 && self.ph < 1.0 ? 1.0 - self.ph * 0.6 : 0.0;
+                }
+                TouchArea {
+                    clicked => {
+                        con.burst-t0 = con.t;
+                        con.boot-t0 = con.t;
+                    }
+                }
+            }
+
+            // ---- The census crown (3×3 — the tiles must never push past the pane width) ----
+            HorizontalLayout {
+                spacing: 8px;
+                StatTile { label: "licences held"; value: "\{root.total}"; tint: UgInk.rain; muted: !root.armed; horizontal-stretch: 1; }
+                StatTile { label: "accidents"; value: "\{root.recorded}"; tint: UgInk.bone; muted: !root.armed; horizontal-stretch: 1; }
+                StatTile { label: "heals"; value: "\{root.recovered}"; tint: UgInk.rain; muted: !root.armed; horizontal-stretch: 1; }
+            }
+            HorizontalLayout {
+                spacing: 8px;
+                StatTile { label: "teeth bites"; value: "\{root.teeth}"; tint: UgInk.alarm; muted: !root.armed; horizontal-stretch: 1; }
+                StatTile { label: "sequestrated"; value: "\{root.sequestrated}"; tint: UgInk.alarm; muted: !root.armed; horizontal-stretch: 1; }
+                StatTile { label: "on probation"; value: "\{root.probation}"; tint: #ffb454; muted: !root.armed; horizontal-stretch: 1; }
+            }
+            HorizontalLayout {
+                spacing: 8px;
+                StatTile { label: "trusted"; value: "\{root.trusted}"; tint: UgInk.vouch; muted: !root.armed; horizontal-stretch: 1; }
+                StatTile { label: "distrusted"; value: "\{root.distrusted}"; tint: UgInk.alarm; muted: !root.armed; horizontal-stretch: 1; }
+                StatTile { label: "mean score"; value: "\{Math.round(root.mean-score * 10) / 10}"; tint: UgInk.rain; muted: !root.armed; horizontal-stretch: 1; }
+            }
+
+            // ---- THE COURT DOCKET — score-ordered, per-row verdict actions ----
+            SectionTitle { text: "THE COURT DOCKET · worst first, by live score"; wrap: word-wrap; }
+            if root.armed && root.docket.length == 0 : Text {
+                text: "the court is empty — no host has earned a docket line yet.";
+                color: Monokuma.dim;
+                font-size: 10px;
+                wrap: word-wrap;
+            }
+            for r[i] in root.docket : RowCard {
+                VerticalLayout {
+                    padding: 8px;
+                    spacing: 4px;
+                    HorizontalLayout {
+                        spacing: 8px;
+                        Text {
+                            text: r.host;
+                            color: r.seq ? UgInk.alarm : UgInk.bone;
+                            font-size: 11px;
+                            font-weight: 800;
+                            horizontal-stretch: 1;
+                            overflow: elide;
+                        }
+                        VerdictPill { verdict: r.verdict; }
+                        ScoreGauge { score: r.score; }
+                    }
+                    HorizontalLayout {
+                        spacing: 8px;
+                        Text {
+                            // The lane badge: a coined dga/tunnel/beacon lane IS the detector's
+                            // signature (F rung); the classic lanes name their witness instead.
+                            text: "\{r.risk} · via \{r.source}";
+                            color: (r.risk == "dga" || r.risk == "tunnel" || r.risk == "beacon")
+                                ? UgInk.rain : Monokuma.ash;
+                            font-size: 9px;
+                            font-weight: 800;
+                        }
+                        Text {
+                            text: "hits \{r.hits} · points \{r.points}";
+                            color: Monokuma.ash;
+                            font-size: 9px;
+                        }
+                        Text {
+                            // The G quarantine clock — "—" means no clock (active-destroy stays
+                            // terminal; a pinned host runs no TTL).
+                            text: "TTL \{r.ttl-label}";
+                            color: r.ttl-label == "—" ? Monokuma.dim : UgInk.rain;
+                            font-size: 9px;
+                            font-weight: 800;
+                            horizontal-stretch: 1;
+                        }
+                    }
+                    // The per-row verdict bench — its OWN row (three std Buttons never share a
+                    // line with the lane texts; the pane width is the law).
+                    HorizontalLayout {
+                        spacing: 6px;
+                        Button {
+                            text: "TRUST";
+                            horizontal-stretch: 1;
+                            clicked => { root.set-verdict(r.host, 1); }
+                        }
+                        Button {
+                            text: "BLOCK";
+                            horizontal-stretch: 1;
+                            clicked => { root.set-verdict(r.host, 2); }
+                        }
+                        Button {
+                            text: "FORGET";
+                            horizontal-stretch: 1;
+                            clicked => { root.set-verdict(r.host, 0); }
+                        }
+                    }
+                }
+            }
+
+            // ---- THE LIVE WIRE — the G-rung verdict stream (RAM ring, seq-deduped) ----
+            SectionTitle { text: "THE LIVE WIRE · every verdict as it lands"; wrap: word-wrap; }
+            if root.armed && root.live-wire == "" : Text {
+                text: "quiet — the wire ticks the moment a verdict lands.";
+                color: Monokuma.dim;
+                font-size: 10px;
+            }
+            if root.live-wire != "" : RowCard {
+                VerticalLayout {
+                    padding: 8px;
+                    Text {
+                        text: root.live-wire;
+                        color: UgInk.rain;
+                        font-size: 9px;
+                        wrap: word-wrap;
+                    }
+                }
+            }
+
+            // ---- #81 REVIEW CHANNEL — the judgements the layer actually handed down ----
+            // The live-wire above is EPHEMERAL (VerdictEvents, gone with the process). This is the
+            // durable half: the tail of `query-underground.log`, which survives process death and is
+            // the record that ROOT CAUSE #26 needed and did not have. The `lane` column is the payload —
+            // a browsing or streaming host filed under `tunnel` is the #26 signature, visible at a
+            // glance instead of reconstructed backwards from the ledger.
+            Text {
+                text: "REVIEW CHANNEL — query-underground.log";
+                color: UgInk.rain;
+                font-size: 10px;
+            }
+            if root.armed && root.review-log == "" : Text {
+                text: "no judgements yet — every DEDUCT, SEQUESTRATE and AMNESTY lands here.";
+                color: Monokuma.dim;
+                font-size: 10px;
+            }
+            if root.review-log != "" : RowCard {
+                VerticalLayout {
+                    padding: 8px;
+                    Text {
+                        text: root.review-log;
+                        color: UgInk.rain;
+                        font-size: 9px;
+                        wrap: word-wrap;
+                    }
+                }
+            }
+
+            // ---- TRUST BANDS — the manual pin row (relocated from the ENGINE tab) ----
+            SectionTitle { text: "TRUST BANDS · your manual verdict"; wrap: word-wrap; }
+            if !root.armed : Text {
+                text: "the store arms with the resolver boot — start DNSCrypt on HOME to pin hosts.";
+                color: Monokuma.dim;
+                font-size: 10px;
+                wrap: word-wrap;
+            }
+            if root.armed : RowCard {
+                VerticalLayout {
+                    padding: 8px;
+                    spacing: 6px;
+                    LineEdit {
+                        placeholder-text: "host to pin — e.g. ads.example.com";
+                        text <=> root.trust-input;
+                    }
+                    HorizontalLayout {
+                        spacing: 6px;
+                        Button {
+                            text: "TRUST";
+                            enabled: root.trust-input != "";
+                            horizontal-stretch: 1;
+                            clicked => { root.set-verdict(root.trust-input, 1); }
+                        }
+                        Button {
+                            text: "BLOCK";
+                            enabled: root.trust-input != "";
+                            horizontal-stretch: 1;
+                            clicked => { root.set-verdict(root.trust-input, 2); }
+                        }
+                        Button {
+                            text: "FORGET";
+                            enabled: root.trust-input != "";
+                            horizontal-stretch: 1;
+                            clicked => { root.set-verdict(root.trust-input, 0); }
+                        }
+                    }
+                    if root.trust-status == 1 : Text {
+                        text: "pinned — the licence store took your verdict.";
+                        color: UgInk.rain;
+                        font-size: 9px;
+                    }
+                    if root.trust-status == 2 : Text {
+                        text: "the pin did not land (engine not booted, or a blank host).";
+                        color: UgInk.alarm;
+                        font-size: 9px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// The thin Window forwarder — keeps the host-preview proof test + the main.slint export alive
+// (a non-Window pane generates no standalone Rust struct; the Centauri/Warden precedent).
+export component UndergroundDashboard inherits Window {
+    title: "Tortä · Underground Layer";
+    background: Monokuma.pitch;
+    preferred-width: 420px;
+    preferred-height: 760px;
+
+    in-out property <bool> armed <=> pane.armed;
+    in-out property <int> total <=> pane.total;
+    in-out property <int> recorded <=> pane.recorded;
+    in-out property <int> recovered <=> pane.recovered;
+    in-out property <int> teeth <=> pane.teeth;
+    in-out property <int> sequestrated <=> pane.sequestrated;
+    in-out property <int> probation <=> pane.probation;
+    in-out property <int> trusted <=> pane.trusted;
+    in-out property <int> distrusted <=> pane.distrusted;
+    in-out property <float> mean-score <=> pane.mean-score;
+    in-out property <[UgHostRow]> docket <=> pane.docket;
+    in-out property <string> live-wire <=> pane.live-wire;
+    in-out property <string> review-log <=> pane.review-log;
+    in-out property <int> trust-status <=> pane.trust-status;
+    in-out property <string> trust-input <=> pane.trust-input;
+    callback set-verdict <=> pane.set-verdict;
+
+    pane := UndergroundDashboardPane {
+        width: 100%;
+        height: 100%;
+    }
+}

@@ -1,0 +1,2078 @@
+{
+  "directory": "libumdnscrypt\\src\\test\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\dns_engine",
+  "files": {
+    "CentauriArtifactManagerGovernanceTest.kt": {
+      "hash": "4e0f2d26873c",
+      "indexed_at": "2026-08-01T04:00:58.765661+00:00",
+      "language": "kotlin",
+      "lines": 127,
+      "mtime_ns": 1785556379377899900,
+      "size": 6155,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                39,
+                46
+              ],
+              "name": "`default install never fetches a remote artifact`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                58
+              ],
+              "name": "`explicit opt-in enables the remote channel`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                65,
+                75
+              ],
+              "name": "`master engine switch off keeps the channel inert even when opted in`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                81,
+                90
+              ],
+              "name": "`explicit opt-out matches the default - no fetch`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    100,
+                    102
+                  ],
+                  "name": "setBoolean",
+                  "signature": "(key: String, value: Boolean)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    104,
+                    105
+                  ],
+                  "name": "getBoolean",
+                  "signature": "(key: String?, defValue: Boolean)",
+                  "type": "method"
+                },
+                {
+                  "docstring": "--- Unused surface: fail loudly if the gate ever grows a dependency on these. ---",
+                  "lines": [
+                    108,
+                    108
+                  ],
+                  "name": "getAll",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    109,
+                    109
+                  ],
+                  "name": "getString",
+                  "signature": "(key: String?, defValue: String?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    110,
+                    111
+                  ],
+                  "name": "getStringSet",
+                  "signature": "(key: String?, defValues: MutableSet<String>?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    112,
+                    112
+                  ],
+                  "name": "getInt",
+                  "signature": "(key: String?, defValue: Int)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    113,
+                    113
+                  ],
+                  "name": "getLong",
+                  "signature": "(key: String?, defValue: Long)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    114,
+                    114
+                  ],
+                  "name": "getFloat",
+                  "signature": "(key: String?, defValue: Float)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    115,
+                    115
+                  ],
+                  "name": "contains",
+                  "signature": "(key: String?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    116,
+                    116
+                  ],
+                  "name": "edit",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    117,
+                    119
+                  ],
+                  "name": "registerOnSharedPreferenceChangeListener",
+                  "signature": "(\n            listener: SharedPreferences.OnSharedPreferenceChangeListener?\n        )",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    120,
+                    122
+                  ],
+                  "name": "unregisterOnSharedPreferenceChangeListener",
+                  "signature": "(\n            listener: SharedPreferences.OnSharedPreferenceChangeListener?\n        )",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    124,
+                    125
+                  ],
+                  "name": "notImplemented",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                97,
+                126
+              ],
+              "name": "FakePrefs",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            31,
+            127
+          ],
+          "name": "CentauriArtifactManagerGovernanceTest",
+          "type": "class"
+        }
+      ]
+    },
+    "DnsEngineGovernPrefsTest.kt": {
+      "hash": "7eaeb0c6416c",
+      "indexed_at": "2026-08-01T04:00:59.774963+00:00",
+      "language": "kotlin",
+      "lines": 175,
+      "mtime_ns": 1785556379389899200,
+      "size": 9392,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "\u2500\u2500 simple-UX default discipline (the exact getBoolean(KEY, default) a consumer reads). \u2500\u2500",
+              "lines": [
+                35,
+                41
+              ],
+              "name": "`GOVERN is default OFF on an untouched install (no governor map = today)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                43,
+                47
+              ],
+              "name": "`explicit GOVERN opt-in is honoured`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                57
+              ],
+              "name": "`the Solver auto-heal switch is default ON (safe self-healer)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                59,
+                63
+              ],
+              "name": "`the Solver can be turned off explicitly`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                65,
+                72
+              ],
+              "name": "`the noob default pair is GOVERN-off SOLVER-on (the shadow self-heal posture)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                74,
+                81
+              ],
+              "name": "`QMAX_FRAC and RHO fall back to their documented expert defaults when unset`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                83,
+                93
+              ],
+              "name": "`solver anti-thrash expert knobs fall back to their documented defaults when unset`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2500\u2500 key-string stability: the literal pref keys are the on-disk contract (a rename loses saved state). \u2500\u2500",
+              "lines": [
+                97,
+                110
+              ],
+              "name": "`pref key strings are stable (a silent rename would lose a user's saved value)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                137
+              ],
+              "name": "`the new keys are distinct from each other and from the existing engine keys`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    151,
+                    151
+                  ],
+                  "name": "setBoolean",
+                  "signature": "(key: String, value: Boolean)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    153,
+                    153
+                  ],
+                  "name": "getBoolean",
+                  "signature": "(key: String?, defValue: Boolean)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    154,
+                    154
+                  ],
+                  "name": "getInt",
+                  "signature": "(key: String?, defValue: Int)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    155,
+                    155
+                  ],
+                  "name": "getLong",
+                  "signature": "(key: String?, defValue: Long)",
+                  "type": "method"
+                },
+                {
+                  "docstring": "--- Unused surface: fail loudly if the contract ever grows a dependency on these. ---",
+                  "lines": [
+                    158,
+                    158
+                  ],
+                  "name": "getAll",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    159,
+                    159
+                  ],
+                  "name": "getString",
+                  "signature": "(key: String?, defValue: String?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    160,
+                    161
+                  ],
+                  "name": "getStringSet",
+                  "signature": "(key: String?, defValues: MutableSet<String>?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    162,
+                    162
+                  ],
+                  "name": "getFloat",
+                  "signature": "(key: String?, defValue: Float)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    163,
+                    163
+                  ],
+                  "name": "contains",
+                  "signature": "(key: String?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    164,
+                    164
+                  ],
+                  "name": "edit",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    165,
+                    167
+                  ],
+                  "name": "registerOnSharedPreferenceChangeListener",
+                  "signature": "(\n            listener: SharedPreferences.OnSharedPreferenceChangeListener?\n        )",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    168,
+                    170
+                  ],
+                  "name": "unregisterOnSharedPreferenceChangeListener",
+                  "signature": "(\n            listener: SharedPreferences.OnSharedPreferenceChangeListener?\n        )",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    172,
+                    173
+                  ],
+                  "name": "notImplemented",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                146,
+                174
+              ],
+              "name": "FakePrefs",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            31,
+            175
+          ],
+          "name": "DnsEngineGovernPrefsTest",
+          "type": "class"
+        }
+      ]
+    },
+    "ResolverRuntimeShadowTest.kt": {
+      "hash": "9594cf0546c3",
+      "indexed_at": "2026-08-01T04:01:00.446279+00:00",
+      "language": "kotlin",
+      "lines": 420,
+      "mtime_ns": 1785556379402899900,
+      "size": 21968,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                59,
+                59
+              ],
+              "name": "ShadowAnswer",
+              "type": "class"
+            },
+            {
+              "lines": [
+                68,
+                91
+              ],
+              "name": "buildWireQuery",
+              "signature": "(qname: String, qtype: Int, id: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                94,
+                97
+              ],
+              "name": "u16",
+              "signature": "(b: ByteArray, off: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                114
+              ],
+              "name": "skipName",
+              "signature": "(b: ByteArray, start: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                117,
+                152
+              ],
+              "name": "parseAnswer",
+              "signature": "(resp: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                155,
+                160
+              ],
+              "name": "ipFamilyOf",
+              "signature": "(resource: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                163,
+                166
+              ],
+              "name": "isPositiveReturnCode",
+              "signature": "(rcode: String?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                173,
+                194
+              ],
+              "name": "recordsAgree",
+              "signature": "(\n        shadow: ShadowAnswer,\n        qtype: Int,\n        realFamily: Int,\n        realResource...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                199,
+                227
+              ],
+              "name": "buildResponse",
+              "signature": "(qname: String, qtype: Int, rcode: Int, vararg ips: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "=================================================================================================",
+              "lines": [
+                233,
+                247
+              ],
+              "name": "`buildWireQuery emits a well-formed A query header and question`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                249,
+                255
+              ],
+              "name": "`buildWireQuery sets QTYPE to 28 for AAAA`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                257,
+                261
+              ],
+              "name": "`buildWireQuery splits the id into high and low bytes`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                263,
+                269
+              ],
+              "name": "`buildWireQuery skips empty labels so a trailing-dot FQDN frames identically`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                271,
+                278
+              ],
+              "name": "`buildWireQuery aborts (returns null) on an over-long label \u2014 the Kotlin-side divergence`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                280,
+                287
+              ],
+              "name": "`parseAnswer round-trips a buildWireQuery-shaped question and extracts A records`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                289,
+                297
+              ],
+              "name": "`parseAnswer extracts AAAA records and normalises the literal`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                299,
+                302
+              ],
+              "name": "`parseAnswer rejects a truncated header`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                304,
+                309
+              ],
+              "name": "`parseAnswer rejects an answer whose RDLENGTH runs past the buffer`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                311,
+                318
+              ],
+              "name": "`skipName follows labels and stops at the root and at a compression pointer`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "=================================================================================================",
+              "lines": [
+                324,
+                329
+              ],
+              "name": "`agree when both sides resolve the same family (existence parity, NOT IP-exact)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                331,
+                336
+              ],
+              "name": "`disagree when the shadow resolves a name the real path DENIED`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                338,
+                342
+              ],
+              "name": "`agree when both sides DENY (NXDOMAIN parity)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                344,
+                348
+              ],
+              "name": "`disagree when the real path had a positive literal but the shadow produced nothing`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                350,
+                358
+              ],
+              "name": "`neutral-agree when the real record carries no family literal (CNAME-only event)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                360,
+                368
+              ],
+              "name": "`family gating - an AAAA-shadow is scored against the v6 set, never the v4 set`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "=================================================================================================",
+              "lines": [
+                374,
+                386
+              ],
+              "name": "`ipFamilyOf classifies v4, v6, and non-IP literals by string shape`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                388,
+                396
+              ],
+              "name": "`isPositiveReturnCode maps query-log RETURNCODE classes to the lenient split`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            42,
+            397
+          ],
+          "name": "ResolverRuntimeShadowTest",
+          "type": "class"
+        }
+      ]
+    },
+    "RotationManagerGateTest.kt": {
+      "hash": "e8dae7e71316",
+      "indexed_at": "2026-08-01T04:01:00.776043+00:00",
+      "language": "kotlin",
+      "lines": 412,
+      "mtime_ns": 1785556379414899600,
+      "size": 19736,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "---- The static decision gate: noob default ON (#133 always-on) + master-gate (no Android runtime). ----",
+              "lines": [
+                37,
+                43
+              ],
+              "name": "`untouched install rotates (noob switch default ON - the always-on privacy default)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                45,
+                52
+              ],
+              "name": "`explicit opt-in is redundant with the default - rotation stays enabled`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                54,
+                64
+              ],
+              "name": "`master engine switch off keeps rotation inert even when opted in`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                66,
+                73
+              ],
+              "name": "`explicit opt-out disables rotation (the noob opt-OUT path)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- The fail-safe COMMIT condition: only ready=N>0 swaps; everything else keeps the current set. ----",
+              "lines": [
+                77,
+                81
+              ],
+              "name": "`a real ready greater than zero summary commits a rotation`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                83,
+                89
+              ],
+              "name": "`null summary is no-swap (native unavailable or no usable upstream)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                97
+              ],
+              "name": "`ready zero is no-swap (a fully-bad candidate set must not commit)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                99,
+                106
+              ],
+              "name": "`garbage or shapeless summary is no-swap`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- FAIL-SAFE layer 2 (availability): never swap onto an all-unreachable pool (cadence-long SERVFAIL). ----",
+              "lines": [
+                110,
+                116
+              ],
+              "name": "`an all-unreachable pick keeps the current set (0 reachable of N targets)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                118,
+                125
+              ],
+              "name": "`a partially-reachable pick commits (even one live resolver resolves)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                127,
+                133
+              ],
+              "name": "`an empty target set is NOT a keep (nothing to probe - the ready gate still guards)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "criteria layer 3 decides on.",
+              "lines": [
+                144,
+                150
+              ],
+              "name": "`a null response is not proof of a live transport`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                152,
+                159
+              ],
+              "name": "`a response shorter than a DNS header is not proof`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                161,
+                169
+              ],
+              "name": "`a header-sized response IS proof - NXDOMAIN counts as a live transport`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                171,
+                183
+              ],
+              "name": "`every verification qname is unique - the cache can never answer for the pool`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                185,
+                202
+              ],
+              "name": "`a verification qname is a labelled name under the reserved zone`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- The TOML server_names writer: block-aware, single-line AND multi-line (AVD-caught corruption). ----",
+              "lines": [
+                206,
+                216
+              ],
+              "name": "`single-line server_names is replaced in place, surroundings untouched`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                218,
+                237
+              ],
+              "name": "`multi-line server_names array collapses to one line with NO orphaned body`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                239,
+                243
+              ],
+              "name": "`absent server_names returns null so the caller aborts (never a pool-less TOML)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                245,
+                254
+              ],
+              "name": "`a commented server_names is ignored - only the live uncommented value is rewritten`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "holds ONE global schedule, so every test starts + ends CLEARED (no cross-test bleed). ----",
+              "lines": [
+                260,
+                267
+              ],
+              "name": "`next-flip clock - unarmed reads null (the durable-0 fallback signal)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                269,
+                280
+              ],
+              "name": "`next-flip clock - counts down the armed window in whole seconds`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                282,
+                295
+              ],
+              "name": "`next-flip clock - overdue reads NEGATIVE - the slint STALLED contract, never clamped`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                297,
+                312
+              ],
+              "name": "`next-flip clock - a re-stamp moves the deadline forward (the pre-pass false-overdue guard)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                314,
+                322
+              ],
+              "name": "`next-flip clock - clear returns the dial to the unarmed null`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- #22 capstone slice 4: the direct warm-seed hint mapping (probe sample \u2192 typed RttHint). ----",
+              "lines": [
+                326,
+                338
+              ],
+              "name": "`seed hints - probe samples map to typed hints with the same spec-id label`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                340,
+                350
+              ],
+              "name": "`seed hints - a negative (unreachable) sample is dropped, never a poisoned seed`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                352,
+                355
+              ],
+              "name": "`seed hints - an empty probe maps to an empty seed (the silent non-event)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\"remove any Limit to the Number of Resolver / Relays Selectable by the User\"). ----",
+              "lines": [
+                360,
+                366
+              ],
+              "name": "`clamp - servers floors at 1 and is free upward (no ceiling, per the Socio no-limits law)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                368,
+                376
+              ],
+              "name": "`clamp - relays allows the legal direct 0 and is free upward (no ceiling)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    388,
+                    388
+                  ],
+                  "name": "setBoolean",
+                  "signature": "(key: String, value: Boolean)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    390,
+                    390
+                  ],
+                  "name": "getBoolean",
+                  "signature": "(key: String?, defValue: Boolean)",
+                  "type": "method"
+                },
+                {
+                  "docstring": "--- Unused surface: fail loudly if the gate ever grows a dependency on these. ---",
+                  "lines": [
+                    393,
+                    393
+                  ],
+                  "name": "getAll",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    394,
+                    394
+                  ],
+                  "name": "getString",
+                  "signature": "(key: String?, defValue: String?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    395,
+                    396
+                  ],
+                  "name": "getStringSet",
+                  "signature": "(key: String?, defValues: MutableSet<String>?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    397,
+                    397
+                  ],
+                  "name": "getInt",
+                  "signature": "(key: String?, defValue: Int)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    398,
+                    398
+                  ],
+                  "name": "getLong",
+                  "signature": "(key: String?, defValue: Long)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    399,
+                    399
+                  ],
+                  "name": "getFloat",
+                  "signature": "(key: String?, defValue: Float)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    400,
+                    400
+                  ],
+                  "name": "contains",
+                  "signature": "(key: String?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    401,
+                    401
+                  ],
+                  "name": "edit",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    402,
+                    404
+                  ],
+                  "name": "registerOnSharedPreferenceChangeListener",
+                  "signature": "(\n            listener: SharedPreferences.OnSharedPreferenceChangeListener?\n        )",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    405,
+                    407
+                  ],
+                  "name": "unregisterOnSharedPreferenceChangeListener",
+                  "signature": "(\n            listener: SharedPreferences.OnSharedPreferenceChangeListener?\n        )",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    409,
+                    410
+                  ],
+                  "name": "notImplemented",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                385,
+                411
+              ],
+              "name": "FakePrefs",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            33,
+            412
+          ],
+          "name": "RotationManagerGateTest",
+          "type": "class"
+        }
+      ]
+    },
+    "RotationPingTest.kt": {
+      "hash": "866050b36056",
+      "indexed_at": "2026-08-01T04:01:01.093691+00:00",
+      "language": "kotlin",
+      "lines": 141,
+      "mtime_ns": 1785556379426899700,
+      "size": 5876,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                31,
+                31
+              ],
+              "name": "cand",
+              "signature": "(id: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                33,
+                33
+              ],
+              "name": "sample",
+              "signature": "(id: String, rtt: Int)",
+              "type": "method"
+            },
+            {
+              "docstring": "--- reachable flag (NO_CONNECTION == -1 boundary) -------------------------------------------",
+              "lines": [
+                37,
+                41
+              ],
+              "name": "reachable_true_for_zero_and_positive_rtt",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                43,
+                47
+              ],
+              "name": "reachable_false_for_no_connection",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "--- rankByRtt: order, exclusion, tie-break --------------------------------------------------",
+              "lines": [
+                51,
+                57
+              ],
+              "name": "rankByRtt_orders_fastest_first",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                59,
+                65
+              ],
+              "name": "rankByRtt_excludes_unreachable_candidates",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                67,
+                74
+              ],
+              "name": "rankByRtt_breaks_ties_deterministically_by_id",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                76,
+                84
+              ],
+              "name": "rankByRtt_all_dead_yields_empty_failsafe",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                86,
+                89
+              ],
+              "name": "rankByRtt_empty_input_yields_empty",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "--- fastest convenience ---------------------------------------------------------------------",
+              "lines": [
+                93,
+                100
+              ],
+              "name": "fastest_returns_lowest_reachable_rtt",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                106
+              ],
+              "name": "fastest_is_null_when_no_candidate_reachable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                113
+              ],
+              "name": "fastest_skips_unreachable_even_when_it_sorts_first_by_id",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "--- #22 s5B chooseRoutableRelays: the relay FAIL-OPEN decision ------------------------------",
+              "lines": [
+                117,
+                124
+              ],
+              "name": "chooseRoutableRelays_keeps_blind_full_list_when_zero_reachable_failopen",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                126,
+                134
+              ],
+              "name": "chooseRoutableRelays_returns_reachable_survivors_fastest_first",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                136,
+                140
+              ],
+              "name": "chooseRoutableRelays_empty_input_stays_empty",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            29,
+            141
+          ],
+          "name": "RotationPingTest",
+          "type": "class"
+        }
+      ]
+    },
+    "RotationPoolSourceTest.kt": {
+      "hash": "d1088eff21c5",
+      "indexed_at": "2026-08-01T04:01:01.459883+00:00",
+      "language": "kotlin",
+      "lines": 277,
+      "mtime_ns": 1785556379438899300,
+      "size": 12736,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "---- the `## name` + `sdns://` scan ----",
+              "lines": [
+                28,
+                47
+              ],
+              "name": "`scan pairs a name with its following stamp and keeps the first of several`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                61
+              ],
+              "name": "`scan skips a nameless stamp and a dirty token`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                66,
+                77
+              ],
+              "name": "dnscryptStamp",
+              "signature": "(props: Long, addr: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                92
+              ],
+              "name": "`decode reads the props bits the address and the dnscrypt proto`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                94,
+                102
+              ],
+              "name": "`decode defaults a portless address to 443 and handles ipv6 brackets`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                104,
+                113
+              ],
+              "name": "`decode marks a non-dnscrypt proto and never fabricates an address for it`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                115,
+                122
+              ],
+              "name": "`decode is fail-safe on malformed input`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- the address-FAMILY decode (the Kotlin port of torta_core::stamp_addr_family) ----",
+              "lines": [
+                126,
+                135
+              ],
+              "name": "`familyOfAddr classifies v4 v6 bracketed hostname and empty`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                137,
+                144
+              ],
+              "name": "`decode flags an ipv4 literal as ipv4-only family`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                146,
+                153
+              ],
+              "name": "`decode flags an ipv6 bracketed literal as ipv6-only family`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                155,
+                166
+              ],
+              "name": "`decode flags a hostname target as unknown family \u2014 never family-hidden (fail-open)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                168,
+                180
+              ],
+              "name": "`policyFromConfig carries the ipv4 ipv6 family gate, defaulting both open`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- the ONE shared policy read ----",
+              "lines": [
+                184,
+                201
+              ],
+              "name": "`policy mirrors the user require prefs and stays dnscrypt-only on the legacy path`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- #22 s5A-ext: the PROTOCOL gate rides the typed-config server-type bits ----",
+              "lines": [
+                205,
+                234
+              ],
+              "name": "`policyFromConfig maps the dnscrypt-doh server-type bits onto the protocol gate`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                236,
+                247
+              ],
+              "name": "`the shared policy plus filterTrusted drops what the user excluded`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    254,
+                    254
+                  ],
+                  "name": "setBoolean",
+                  "signature": "(key: String, value: Boolean)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    256,
+                    256
+                  ],
+                  "name": "getBoolean",
+                  "signature": "(key: String?, defValue: Boolean)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    258,
+                    258
+                  ],
+                  "name": "getAll",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    259,
+                    259
+                  ],
+                  "name": "getString",
+                  "signature": "(key: String?, defValue: String?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    260,
+                    261
+                  ],
+                  "name": "getStringSet",
+                  "signature": "(key: String?, defValues: MutableSet<String>?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    262,
+                    262
+                  ],
+                  "name": "getInt",
+                  "signature": "(key: String?, defValue: Int)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    263,
+                    263
+                  ],
+                  "name": "getLong",
+                  "signature": "(key: String?, defValue: Long)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    264,
+                    264
+                  ],
+                  "name": "getFloat",
+                  "signature": "(key: String?, defValue: Float)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    265,
+                    265
+                  ],
+                  "name": "contains",
+                  "signature": "(key: String?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    266,
+                    266
+                  ],
+                  "name": "edit",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    267,
+                    269
+                  ],
+                  "name": "registerOnSharedPreferenceChangeListener",
+                  "signature": "(\n            listener: SharedPreferences.OnSharedPreferenceChangeListener?\n        )",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    270,
+                    272
+                  ],
+                  "name": "unregisterOnSharedPreferenceChangeListener",
+                  "signature": "(\n            listener: SharedPreferences.OnSharedPreferenceChangeListener?\n        )",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    274,
+                    275
+                  ],
+                  "name": "notImplemented",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "docstring": "---- Fake (the RotationManagerGateTest pattern: only the touched surface is real). ----",
+              "lines": [
+                251,
+                276
+              ],
+              "name": "FakePrefs",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            24,
+            277
+          ],
+          "name": "RotationPoolSourceTest",
+          "type": "class"
+        }
+      ]
+    },
+    "RotationSelectorTest.kt": {
+      "hash": "6a8f4e191050",
+      "indexed_at": "2026-08-01T04:01:01.816221+00:00",
+      "language": "kotlin",
+      "lines": 361,
+      "mtime_ns": 1785556379450900600,
+      "size": 16102,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "stamp; a test perturbs them to (true,false)=v4-literal or (false,true)=v6-literal for the family gate.",
+              "lines": [
+                32,
+                52
+              ],
+              "name": "good",
+              "signature": "(\n        id: String = \"alpha\",\n        family: String = \"alpha-op\",\n        rtt: Int = 20,\n     ...",
+              "type": "method"
+            },
+            {
+              "docstring": "---- TRUST-FILTER drops bad (resolver stamp props, not blocklist trust) ----",
+              "lines": [
+                56,
+                62
+              ],
+              "name": "`trust-filter drops a logging resolver when no-log required`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                64,
+                69
+              ],
+              "name": "`trust-filter keeps a logging resolver when no-log NOT required`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                71,
+                76
+              ],
+              "name": "`trust-filter drops a non-DNSSEC resolver when DNSSEC required`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                78,
+                83
+              ],
+              "name": "`trust-filter drops a non-DNSCrypt resolver by default (only buildable transport)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- #22 s5A-ext: the PROTOCOL gate (Socio: dnscrypt/doh selectable on the Rotation engine) ----",
+              "lines": [
+                87,
+                101
+              ],
+              "name": "`protocol-gate keeps doh when allowed and can run doh-only`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                111
+              ],
+              "name": "`protocol-gate empties the pool when neither protocol is allowed (keep-current fail-safe)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                119
+              ],
+              "name": "`trust-filter drops an unreachable candidate (rtt -1 = NO_CONNECTION)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                126
+              ],
+              "name": "`trust-filter drops a blank-id candidate`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- FAMILY GATE (mirror the manual picker's `family_ok = (allowIpv4 && v4) || (allowIpv6 && v6)`) ----",
+              "lines": [
+                130,
+                139
+              ],
+              "name": "`family-filter keeps ipv4 and unknown, drops ipv6, when only ipv4 allowed`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                141,
+                150
+              ],
+              "name": "`family-filter keeps ipv6 and unknown, drops ipv4, when only ipv6 allowed`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                152,
+                162
+              ],
+              "name": "`family-filter keeps every family when both allowed (the default policy)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                164,
+                173
+              ],
+              "name": "`family-filter empties the pool when neither family is allowed (even Unknown falls out)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                175,
+                186
+              ],
+              "name": "`select returns null when the family gate empties the pool (fail-safe keep-current)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- DIVERSITY holds (per-operator, not per-IP; case-insensitive) ----",
+              "lines": [
+                190,
+                199
+              ],
+              "name": "`diversity excludes the last operator family`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                201,
+                206
+              ],
+              "name": "`diversity exclusion is case-insensitive and trimmed`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                208,
+                213
+              ],
+              "name": "`null or blank last family excludes nothing (first pick)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                215,
+                227
+              ],
+              "name": "`select never returns the last operator family across a rotation window`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- RTT weights the pick ----",
+              "lines": [
+                231,
+                240
+              ],
+              "name": "`select picks the lowest-RTT survivor among equal-props candidates`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                242,
+                249
+              ],
+              "name": "`RTT dominates score \u2014 props bonus cannot leapfrog a much faster resolver`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                251,
+                263
+              ],
+              "name": "`props bonus breaks a near-tie between equal-RTT resolvers (DNSSEC preferred)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                265,
+                272
+              ],
+              "name": "`score decreases monotonically as RTT grows`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                274,
+                282
+              ],
+              "name": "`exact ties break deterministically on stable id key`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- FAIL-SAFE: empty / fully-bad pool \u21d2 null (keep current set, never tear down) ----",
+              "lines": [
+                286,
+                289
+              ],
+              "name": "`select returns null on an empty pool (fail-safe keep-current)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                291,
+                299
+              ],
+              "name": "`select returns null when every candidate fails the trust-filter`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                301,
+                310
+              ],
+              "name": "`select returns null when diversity exclusion empties the pool (only the same operator left)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                312,
+                321
+              ],
+              "name": "`disabling diversity allows the same family when it is the only option`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- LOCKED-SPEC default pick count = 10 servers (Slice C) ----",
+              "lines": [
+                325,
+                336
+              ],
+              "name": "`the rotation default draws exactly 10 servers from a larger filtered pool`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                338,
+                350
+              ],
+              "name": "`the geek-safe ceiling of 20 still caps a larger pool, above the default of 10`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                352,
+                360
+              ],
+              "name": "`a pool smaller than the default takes all survivors, never pads`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            27,
+            361
+          ],
+          "name": "RotationSelectorTest",
+          "type": "class"
+        }
+      ]
+    },
+    "SourceListUpdateManagerTest.kt": {
+      "hash": "4aa8ffe0bef8",
+      "indexed_at": "2026-08-01T04:01:02.796403+00:00",
+      "language": "kotlin",
+      "lines": 193,
+      "mtime_ns": 1785556379463900500,
+      "size": 9351,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                38,
+                44
+              ],
+              "name": "`default install auto-updates the source lists`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                47,
+                54
+              ],
+              "name": "`kill-switch OFF disables auto-update`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                62,
+                71
+              ],
+              "name": "`parseTrustedTimestamp reads the real minisign trusted comment`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                74,
+                78
+              ],
+              "name": "`parseTrustedTimestamp returns null on a malformed comment`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                88,
+                105
+              ],
+              "name": "`parseDnsAddresses extracts the A record from a real response wire`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                116
+              ],
+              "name": "`parseDnsAddresses returns empty on a non-NOERROR rcode`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                137
+              ],
+              "name": "`LISTS covers the four v3 lists with canonical mirrors`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- Atomic write (no torn list ever reaches the rotation pool) ----",
+              "lines": [
+                141,
+                155
+              ],
+              "name": "`atomicWrite writes bytes the target reads back identical`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                157,
+                169
+              ],
+              "name": "`atomicWrite replaces an existing file`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    175,
+                    177
+                  ],
+                  "name": "setBoolean",
+                  "signature": "(key: String, value: Boolean)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    179,
+                    180
+                  ],
+                  "name": "getBoolean",
+                  "signature": "(key: String?, defValue: Boolean)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    182,
+                    182
+                  ],
+                  "name": "contains",
+                  "signature": "(key: String?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    183,
+                    183
+                  ],
+                  "name": "getAll",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    184,
+                    184
+                  ],
+                  "name": "getString",
+                  "signature": "(key: String?, defValue: String?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    185,
+                    185
+                  ],
+                  "name": "getStringSet",
+                  "signature": "(key: String?, defValues: MutableSet<String>?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    186,
+                    186
+                  ],
+                  "name": "getInt",
+                  "signature": "(key: String?, defValue: Int)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    187,
+                    187
+                  ],
+                  "name": "getLong",
+                  "signature": "(key: String?, defValue: Long)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    188,
+                    188
+                  ],
+                  "name": "getFloat",
+                  "signature": "(key: String?, defValue: Float)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    189,
+                    189
+                  ],
+                  "name": "edit",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    190,
+                    190
+                  ],
+                  "name": "registerOnSharedPreferenceChangeListener",
+                  "signature": "(l: SharedPreferences.OnSharedPreferenceChangeListener?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    191,
+                    191
+                  ],
+                  "name": "unregisterOnSharedPreferenceChangeListener",
+                  "signature": "(l: SharedPreferences.OnSharedPreferenceChangeListener?)",
+                  "type": "method"
+                }
+              ],
+              "docstring": "---- Minimal in-memory SharedPreferences (only the surface the gate touches) ----",
+              "lines": [
+                173,
+                192
+              ],
+              "name": "FakePrefs",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            28,
+            193
+          ],
+          "name": "SourceListUpdateManagerTest",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:01:02.797967+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+    SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+    Yeah! Tortä — Copyright 2026 Saimonokuma
+    An app-OWNED Centauri seed page: served entirely from the on-device
+    living CDN-encyclopedia, with ZERO network egress.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yeah! Tortä — Centauri offline</title>
+  <link rel="stylesheet" href="/torta-offline/style.css">
+</head>
+<body>
+  <main class="wrap">
+    <h1>Yeah! Tortä</h1>
+    <p class="lead">This page came from the <strong>Centauri</strong> mirror on your own
+      device &mdash; a living encyclopedia of CDNs that SEES online assets, TRANSPLANTS
+      them offline, and SERVES them forever with no network in the loop.</p>
+
+    <section class="card">
+      <h2>Served with zero egress</h2>
+      <p id="egress">Loading&hellip;</p>
+    </section>
+
+    <section class="card">
+      <h2>The transplant</h2>
+      <p>The script tag below asks for jQuery from its canonical CDN URL
+        (<code>ajax.googleapis.com</code>). Centauri cloaks that host and answers from
+        the transplanted bytes cached on this device &mdash; the CDN is never contacted.</p>
+      <p id="jq">jQuery: not yet detected.</p>
+    </section>
+  </main>
+
+  <!-- The canonical online CDN URL. Offline, Centauri cloaks the host and serves the
+       transplanted, content-addressed bytes from the device cache (RAM backed by NAND). -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script>
+    (function () {
+      var egress = document.getElementById("egress");
+      egress.textContent = "This document, its stylesheet, and its jQuery all resolved "
+        + "from the loopback mirror. No online CDN was reached.";
+      if (window.jQuery) {
+        jQuery("#jq").text("jQuery " + jQuery.fn.jquery
+          + " loaded from the on-device transplant — the encyclopedia grows.");
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\di\\logreader",
+  "files": {
+    "LogReaderInteractorsModule.kt": {
+      "hash": "0cfd056ab718",
+      "indexed_at": "2026-08-01T03:59:25.905107+00:00",
+      "language": "kotlin",
+      "lines": 36,
+      "mtime_ns": 1785556375810900500,
+      "size": 1271,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                27,
+                30
+              ],
+              "name": "provideDnsCryptInteractor",
+              "signature": "(\n        logReaderInteractors: LogReaderInteractors\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                32,
+                35
+              ],
+              "name": "provideConnectionRecordsInteractor",
+              "signature": "(\n        logReaderInteractors: LogReaderInteractors\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            25,
+            36
+          ],
+          "name": "LogReaderInteractorsModule",
+          "type": "class"
+        }
+      ]
+    },
+    "LogReaderRepositoryModule.kt": {
+      "hash": "415af30c797b",
+      "indexed_at": "2026-08-01T03:59:26.205215+00:00",
+      "language": "kotlin",
+      "lines": 37,
+      "mtime_ns": 1785556375822899700,
+      "size": 1334,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                28,
+                31
+              ],
+              "name": "provideModulesLogRepository",
+              "signature": "(\n        repository: ModulesLogRepositoryImpl\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                33,
+                36
+              ],
+              "name": "provideConnectionRecordsRepository",
+              "signature": "(\n        repository: ConnectionRecordsRepositoryImpl\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            26,
+            37
+          ],
+          "name": "LogReaderRepositoryModule",
+          "type": "class"
+        }
+      ]
+    },
+    "LogReaderScope.kt": {
+      "hash": "4e93515fecbe",
+      "indexed_at": "2026-08-01T03:59:26.502360+00:00",
+      "language": "kotlin",
+      "lines": 23,
+      "mtime_ns": 1785556375833899500,
+      "size": 717,
+      "symbols": []
+    },
+    "LogReaderSubcomponent.kt": {
+      "hash": "3542b8f05ebe",
+      "indexed_at": "2026-08-01T03:59:26.807706+00:00",
+      "language": "kotlin",
+      "lines": 39,
+      "mtime_ns": 1785556375845901000,
+      "size": 1228,
+      "symbols": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "lines": [
+                    31,
+                    31
+                  ],
+                  "name": "create",
+                  "signature": "(@BindsInstance @Named(LOG_READER_CONTEXT) context: Context)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                29,
+                32
+              ],
+              "name": "Factory",
+              "type": "interface"
+            },
+            {
+              "lines": [
+                34,
+                34
+              ],
+              "name": "inject",
+              "signature": "(modulesStateLoop: ModulesStateLoop)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            25,
+            39
+          ],
+          "name": "LogReaderSubcomponent",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:26.809095+00:00",
+  "version": "1.0"
+}

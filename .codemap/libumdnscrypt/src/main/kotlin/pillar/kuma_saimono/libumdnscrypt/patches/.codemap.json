@@ -1,0 +1,245 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\patches",
+  "files": {
+    "AlterConfig.kt": {
+      "hash": "7cf1b7661271",
+      "indexed_at": "2026-08-01T04:00:14.123958+00:00",
+      "language": "kotlin",
+      "lines": 31,
+      "mtime_ns": 1785556377691900900,
+      "size": 906,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                24
+              ],
+              "name": "ReplaceLine",
+              "type": "class"
+            },
+            {
+              "lines": [
+                26,
+                30
+              ],
+              "name": "AddLine",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            19,
+            31
+          ],
+          "name": "AlterConfig",
+          "type": "class"
+        }
+      ]
+    },
+    "ConfigUtil.kt": {
+      "hash": "d56c0dda8d96",
+      "indexed_at": "2026-08-01T04:00:14.420663+00:00",
+      "language": "kotlin",
+      "lines": 176,
+      "mtime_ns": 1785556377703898600,
+      "size": 6019,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                27,
+                35
+              ],
+              "name": "patchDNSCryptConfig",
+              "signature": "(dnsCryptConfigPatches: List<AlterConfig>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                46
+              ],
+              "name": "readFromFile",
+              "signature": "(filePath: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                48,
+                68
+              ],
+              "name": "writeToFile",
+              "signature": "(filePath: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                70,
+                104
+              ],
+              "name": "addLinesToFile",
+              "signature": "(addLines: List<AlterConfig.AddLine>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                106,
+                130
+              ],
+              "name": "replaceLinesInFile",
+              "signature": "(replacementLines: List<AlterConfig.ReplaceLine>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                132,
+                158
+              ],
+              "name": "addOdohDNSCryptSection",
+              "signature": "(lines: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                160,
+                174
+              ],
+              "name": "getOdohSection",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            24,
+            176
+          ],
+          "name": "ConfigUtil",
+          "type": "class"
+        }
+      ]
+    },
+    "Patch.kt": {
+      "hash": "fe2a56e45f69",
+      "indexed_at": "2026-08-01T04:00:14.723027+00:00",
+      "language": "kotlin",
+      "lines": 269,
+      "mtime_ns": 1785556377715899900,
+      "size": 9872,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                55
+              ],
+              "name": "checkPatches",
+              "signature": "(forceCheck: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                57,
+                86
+              ],
+              "name": "tryCheckPatches",
+              "signature": "(forceCheck: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                88,
+                98
+              ],
+              "name": "removeQuad9FromBrokenImplementation",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                117
+              ],
+              "name": "changeV2DNSCryptUpdateSourcesToV3",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                119,
+                158
+              ],
+              "name": "replaceBlackNames",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                160,
+                199
+              ],
+              "name": "fallbackResolverToBootstrapResolvers",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                201,
+                215
+              ],
+              "name": "extractResolverIp",
+              "signature": "(\n        sharedPreferences: SharedPreferences,\n        preferenceKey: String,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                217,
+                224
+              ],
+              "name": "removeDNSCryptDaemonize",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                226,
+                242
+              ],
+              "name": "enableDNSCryptRequireNoFilterByDefault",
+              "signature": "(savedVersion: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                244,
+                252
+              ],
+              "name": "addDNSCryptOdohServers",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                254,
+                267
+              ],
+              "name": "setPreventDnsLeaks",
+              "signature": "(savedVersion: Int)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            35,
+            269
+          ],
+          "name": "Patch",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:14.724434+00:00",
+  "version": "1.0"
+}

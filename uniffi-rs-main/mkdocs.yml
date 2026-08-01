@@ -1,0 +1,124 @@
+# mkdocs:
+# Prepare: pip install mkdocs; mkdocs-material
+# Testing: python -m mkdocs serve
+# Build into ./target/rendered-docs: python -m mkdocs build
+# In CI, `cargo doc` output will have been copied to some deep 'api/' directory, you may see warnings for that.
+# We should see if we can move that process into here via an extension?
+
+site_name: The UniFFI user guide
+docs_dir: docs/manual/src
+site_dir:  'target/rendered-docs'
+repo_url: 'https://github.com/mozilla/uniffi-rs'
+use_directory_urls: false
+exclude_docs: "README.md"
+
+theme:
+  name: 'material'
+  language: 'en'
+
+# This also enables code highlighting
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight
+
+extra:
+  version:
+    provider: mike
+
+plugins:
+  # otherwise a no-op docs build ends with a diff to sitemap.xml.gz
+  - no-sitemap
+  - search
+
+# This lists all the files that become part of the documentation
+nav:
+- ./index.md
+- ./Motivation.md
+- 'Tutorial':
+  - ./Getting_started.md
+  - ./tutorial/Prerequisites.md
+  - ./tutorial/udl_file.md
+  - ./tutorial/Rust_scaffolding.md
+  - ./tutorial/foreign_language_bindings.md
+- 'UniFFI type model':
+  - ./types/namespace.md
+  - ./types/builtin_types.md
+  - ./types/enumerations.md
+  - ./types/records.md
+  - ./types/bytes.md
+  - 'Functions':
+    - ./types/functions.md
+    - ./types/errors.md
+  - ./types/interfaces.md
+  - ./types/callback_interfaces.md
+  - ./types/remote_ext_types.md
+  - ./types/custom_types.md
+  - ./types/defaults.md
+  - ./types/uniffi_traits.md
+- Describing the interface:
+  - ./describing.md
+  - 'UDL Files':
+    - ./udl/index.md
+    - ./udl/enumerations.md
+    - ./udl/errors.md
+    - ./udl/functions.md
+    - ./udl/interfaces.md
+    - ./udl/records.md
+    - ./udl/external_types.md
+    - ./udl/docstrings.md
+  - 'Proc macros':
+    - ./proc_macro/index.md
+    - ./proc_macro/enumerations.md
+    - ./proc_macro/errors.md
+    - ./proc_macro/functions.md
+    - ./proc_macro/interfaces.md
+    - ./proc_macro/records.md
+    - ./proc_macro/traits.md
+    - ./proc_macro/renaming.md
+    - ./proc_macro/docstrings.md
+  - ./renaming.md
+- ./futures.md
+
+- 'Bindings':
+  - ./bindings.md
+  - ./configuration.md
+  - ./foreign_traits.md
+
+  - 'Kotlin':
+    - ./kotlin/configuration.md
+    - ./kotlin/gradle.md
+    - ./kotlin/lifetimes.md
+
+  - 'Swift':
+    - ./swift/overview.md
+    - ./swift/uniffi-bindgen-swift.md
+    - ./swift/configuration.md
+    - ./swift/module.md
+    - ./swift/xcode.md
+
+  - 'Python': ./python/configuration.md
+  - 'Ruby': ./ruby/configuration.md
+
+  - 'WASM':
+    - ./wasm/configuration.md
+
+- Internals:
+  - ./internals/design_principles.md
+  - ./internals/crates.md
+  - ./glossary.md
+  - ./internals/lifting_and_lowering.md
+  - ./internals/ffi_converter_traits.md
+  - ./internals/rust_calls.md
+  - ./internals/foreign_calls.md
+  - ./internals/object_references.md
+  - ./internals/async-overview.md
+  - ./internals/async-ffi.md
+  - ./internals/rendering_foreign_bindings.md
+  - ./internals/bindings_ir.md
+  - ./internals/bindings_ir_pipeline.md
+
+- ./Upgrading.md

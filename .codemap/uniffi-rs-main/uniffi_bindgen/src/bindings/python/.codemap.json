@@ -1,0 +1,118 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src\\bindings\\python",
+  "files": {
+    "filters.rs": {
+      "hash": "a336e50499c4",
+      "indexed_at": "2026-07-24T20:35:12.830802+00:00",
+      "language": "rust",
+      "lines": 51,
+      "mtime_ns": 1782136568000000000,
+      "size": 2060,
+      "symbols": [
+        {
+          "lines": [
+            23,
+            37
+          ],
+          "name": "docstring",
+          "signature": "(\n    docstring: &Option<String>,\n    _: &dyn askama::Values,\n    indent: usize,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            41,
+            51
+          ],
+          "name": "import_statement",
+          "signature": "(module: &str, _: &dyn askama::Values)",
+          "type": "function"
+        }
+      ]
+    },
+    "mod.rs": {
+      "hash": "3dfc12914c23",
+      "indexed_at": "2026-07-24T20:35:12.831618+00:00",
+      "language": "rust",
+      "lines": 55,
+      "mtime_ns": 1782136568000000000,
+      "size": 1703,
+      "symbols": [
+        {
+          "lines": [
+            12,
+            12
+          ],
+          "name": "filters",
+          "type": "module"
+        },
+        {
+          "lines": [
+            13,
+            13
+          ],
+          "name": "pipeline",
+          "type": "module"
+        },
+        {
+          "lines": [
+            17,
+            17
+          ],
+          "name": "test",
+          "type": "module"
+        },
+        {
+          "docstring": "Generate Python bindings",
+          "lines": [
+            20,
+            31
+          ],
+          "name": "generate",
+          "signature": "(loader: &BindgenLoader, options: GenerateOptions)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            33,
+            55
+          ],
+          "name": "run_pipeline",
+          "signature": "(\n    initial_root: pipeline::initial::Root,\n    out_dir: &Utf8Path,\n    crate_filter: Option<&st...",
+          "type": "function"
+        }
+      ]
+    },
+    "test.rs": {
+      "hash": "d4f92a447bae",
+      "indexed_at": "2026-07-24T20:35:12.832473+00:00",
+      "language": "rust",
+      "lines": 70,
+      "mtime_ns": 1782136568000000000,
+      "size": 2407,
+      "symbols": [
+        {
+          "docstring": "Run Python tests for a UniFFI test fixture",
+          "lines": [
+            18,
+            26
+          ],
+          "name": "run_test",
+          "signature": "(tmp_dir: &str, fixture_name: &str, script_file: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "This function will set things up so that the script can import the UniFFI bindings for a crate",
+          "lines": [
+            31,
+            70
+          ],
+          "name": "run_script",
+          "signature": "(\n    tmp_dir: &str,\n    crate_name: &str,\n    script_file: &str,\n    args: Vec<String>,\n    _opt...",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.761867+00:00",
+  "version": "1.0"
+}

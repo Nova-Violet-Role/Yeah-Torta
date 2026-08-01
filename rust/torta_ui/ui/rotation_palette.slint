@@ -1,0 +1,70 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// ============================================================================
+//  rotation_palette.slint — THE ORBITAL-WHEEL PALETTE  (Rotation pillar, slice 10)
+//  ⬜ Soleil facet · SLINT/Rust color set — NO XML (the no-XML law).
+// ============================================================================
+//
+// The Rotation pillar's colors, centralized as ONE SLINT global — density without
+// loss: every token is consumed by rotation.slint (slice 8, the dashboard) OR
+// reserved for the ||| Rotation settings (slice 9 — `track` the toggle OFF rail,
+// `caution` the decision-point warning, also reused here for the DIAL-FAULT amber);
+// none is dead, and after this file there is ZERO magic hex anywhere in the
+// Rotation UI surface.
+//
+// The motif is THE ORBITAL WHEEL: Rotation cycles the DNSCrypt operator family
+// like a turning wheel — a compass of upstreams that STEPS every cadence window
+// (default 30 min, expert-clamped 5 min–7 days) and, the #98 crown, RESUMES WARM
+// across a reboot instead of restarting cold at family 0. That orbit IS the
+// pillar's verdict language:
+//
+//   • the ORBIT scale  → the deep-space night: the dark a card/hub lifts off of
+//   • STARLIGHT scale  → the bright values + the muted speech struck on the dark
+//   • the SPOKE azure  → the wheel itself: headings + the hub ring + the brand accent
+//   • TURN green        → the wheel is TURNING: rotating healthy / the fastest upstream / warm resume
+//   • WARM gold         → the warm-RTT carry-across-reboot glow + the "resumed warm" crown badge
+//   • caution amber     → DIAL FAULT (a countdown bug) + the SETTINGS decision-point review
+//   • STALL red         → the silent killer: the flip is OVERDUE, the wheel is frozen
+//
+// This is the SLINT/Rust replacement for a would-be `colors_rotation.xml` (the
+// no-XML law) — a distinct identity from the Warden's Monokuma courtroom (black/
+// white/red), Centauri's stellar constellation (deep-space cyan), the MaskSolver's
+// midnight masquerade (violet), and the Beast's molten fountain (orange). THE
+// single source of truth, imported by rotation.slint (slice 8, the dashboard) AND
+// (reserved) the ||| Rotation controls (slice 9).
+//
+// USAGE — a SLINT global is a shared singleton of read-only constants:
+//   import { Wheel } from "rotation_palette.slint";
+//   background: Wheel.orbit-void;   color: Wheel.starlight;   accent: Wheel.turn;
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android
+// cross-compile spike #69; the palette is host-side constants, no device claim.
+// Compiled via build.rs (main.slint → rotation.slint → here, the import graph).
+// ============================================================================
+
+export global Wheel {
+    // ── THE ORBIT — the deep-space night ground scale (deepest → faintest), so a
+    //    card lifts off the window and a tile lifts off the card by GROUND alone. ──
+    out property <color> orbit-void: #0a0c14;  // deepest — the dashboard Window ground
+    out property <color> abyss:      #10131f;  // one step up — the ring pips / feed rows
+    out property <color> panel:      #161a29;  // the CROWN / wheel-hub / dial card panel
+    out property <color> tile:       #1b2030;  // the metric (StatTile) panels
+    out property <color> hairline:   #2c3242;  // hairline borders / rules on the dark
+    out property <color> track:      #3a3a3a;  // inactive control track — the toggle OFF rail (settings reuse)
+
+    // ── STARLIGHT — the bright strike + the muted speech (brightest → faintest). ──
+    out property <color> starlight: #eef1f8;  // primary text — the bright values
+    out property <color> haze:      #98a0b5;  // secondary text — labels, the muted voice
+    out property <color> dim:       #646c82;  // tertiary text — section titles, the faintest read
+
+    // ── THE SPOKE & the verdict accents — the wheel's ruling. ────────────────────
+    out property <color> spoke:   #5e8bff;  // THE WHEEL — headings / the hub ring / the pillar brand accent (azure)
+    out property <color> turn:    #4ade80;  // green — TURNING / warm resume / the fastest upstream (the wheel is alive)
+    out property <color> warm:    #f5b445;  // gold — the warm-RTT carry-across-reboot glow + the "resumed warm" badge
+    out property <color> caution: #f0a830;  // amber — DIAL FAULT + the SETTINGS decision-point review (slice 9)
+    out property <color> stall:   #ef4d57;  // red — STALLED / the flip is OVERDUE (the frozen wheel)
+    out property <color> wound:   #a5283a;  // the deeper blood-red — alert-banner FILL (≠ the stroke)
+    out property <color> strike:  white;    // the bright text struck on a filled alert banner
+}

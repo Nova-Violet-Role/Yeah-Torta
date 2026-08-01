@@ -1,0 +1,145 @@
+{
+  "directory": "uniffi-rs-main\\examples\\geometry\\src",
+  "files": {
+    "geometry.udl": {
+      "hash": "7da7a6ec080c",
+      "indexed_at": "2026-07-24T20:35:12.316594+00:00",
+      "language": "udl",
+      "lines": 15,
+      "mtime_ns": 1782136568000000000,
+      "size": 205,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "gradient",
+              "signature": "(Line ln) : double",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4,
+                4
+              ],
+              "name": "intersection",
+              "signature": "(Line ln1, Line ln2) : Point?",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            5
+          ],
+          "name": "geometry",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                8
+              ],
+              "name": "coord_x",
+              "signature": "double",
+              "type": "field"
+            },
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "coord_y",
+              "signature": "double",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            7,
+            10
+          ],
+          "name": "Point",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                13
+              ],
+              "name": "start",
+              "signature": "Point",
+              "type": "field"
+            },
+            {
+              "lines": [
+                14,
+                14
+              ],
+              "name": "end",
+              "signature": "Point",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            12,
+            15
+          ],
+          "name": "Line",
+          "type": "dictionary"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "f9d004c97efb",
+      "indexed_at": "2026-07-24T20:35:12.317283+00:00",
+      "language": "rust",
+      "lines": 47,
+      "mtime_ns": 1782136568000000000,
+      "size": 1370,
+      "symbols": [
+        {
+          "lines": [
+            10,
+            13
+          ],
+          "name": "Point",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            16,
+            19
+          ],
+          "name": "Line",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            21,
+            25
+          ],
+          "name": "gradient",
+          "signature": "(ln: Line)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            27,
+            45
+          ],
+          "name": "intersection",
+          "signature": "(ln1: Line, ln2: Line)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.650110+00:00",
+  "version": "1.0"
+}

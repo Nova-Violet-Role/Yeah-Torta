@@ -1,0 +1,580 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT Centauri ||| SETTINGS section — slice 9 of the Centauri offline-CDN overhaul (🩸 Carnage).
+//
+// This is the rust-native (SLINT, NO XML / NO Java / NO Compose) Centauri settings surface reached from the
+// |||  triple-burger. It REPLACES the legacy `CentauriPillarFragment` + `res/xml/preferences_pillar_centauri.xml`
+// (zero Garmatin/XML survives). It reads + writes the live `Centauri` Object (torta_core `mirror::object`)
+// through the host: SLINT can't mutate a Rust struct directly, so the user's edits surface as typed CALLBACKS
+// the host (the Kotlin SurfaceView bridge / the slint-viewer preview / the lib.rs proof test) wires to the
+// Object setters + the flat resolver fns:
+//   - `cloak-toggled`    -> resolver_set_centauri_cloak(on)  (lib.rs:1064)        (the DNS-plane arm, default-OFF)
+//   - `seed-policy-cycled` -> SeedPolicy (CatalogOnly | WarmUpBatch)  (packaging.rs:81) (the 73MB scope call)
+//   - `warm-up-now`      -> mirror::packaging::warm_up(...)  (packaging.rs:184)   (self-fill a curated batch, ≤1/asset)
+// NO `strict-toggled` / `install-catalog`: the CROWN is ALWAYS-ON LeakOnMiss (BlockMissing would freeze the
+// growing encyclopedia) and the signed catalog AUTO-ARMS on every engine start — both were removed end-to-end
+// (slint + Rust host + JNI + Kotlin), so privacy is not opt-in and the catalog is never a user chore.
+// GROUND-TRUTH honesty (the felt-truth law, refs measured from the tree): `warm_up` is NOT a `Centauri`
+// method — it is the MODULE-LEVEL generic `async fn warm_up<F,Fut>`
+// (packaging.rs:184) the host drives with the production `serve::fetch_leg` closure (packaging.rs:176); the
+// callback signals the intent, the host owns the drive. `resolver_set_centauri_cloak` is a flat free fn.
+// The host pushes the CURRENT armed state onto the `in-out` scalar inputs; the user's intents flow back out as
+// callbacks; the host owns the truth (one-way data flow, the live engine is the single source).
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android cross-compile spike #69.
+//
+// 🩸 THE DECISION-POINT GUARD (the facet's load-bearing job): the dashboard (slice 8) surfaces the BLACKHOLE
+// AFTER it strands the user off the real CDN. The SETTINGS surface warns AT THE DECISION POINT — the moment
+// the user arms STRICT (serve-or-nothing) or the DNS-plane CLOAK while the signed catalog is EMPTY is the
+// moment to surface the cost: every cloaked host will 404 — stranded off the CDN AND served nothing. The
+// `warn-*` derivations below (mirroring the dashboard's hidden-fault hunt) raise an inline banner where the
+// dangerous choice is made, not after. Simple for non-geeks; the raw knobs read as plain rows, the danger
+// reads as a colored banner (the feedback-simple-ux law).
+//
+// NOTE: slint uses `:` for property bindings (not `=`); `\{expr}` is string interpolation; `out property`
+// values are derived + host-readable (the proof test asserts the guard derivations fire); interactive
+// controls are built on the core `TouchArea` (zero std-widget-style dependency) + the proven `Button`.
+
+import { VerticalBox, HorizontalBox, Button } from "std-widgets.slint";
+// The Centauri stellar palette (slice 10) — the single source of truth, shared with centauri.slint (slice 8).
+import { Centauri } from "centauri_palette.slint";
+import { ThemeBook, MotifWash, UpperMoonChip } from "theme_tokens.slint";
+
+// ===========================================================================================
+// Exported row struct — the host fills this from `centauri_cdn_hosts()` (lib.rs:1568). Read-only here
+// (the watch-list is the static build-time set; only served CONTENT is signed + content-addressed).
+// ===========================================================================================
+export struct CdnHostRow {
+    host: string,
+    mapped: bool,
+}
+
+// ===========================================================================================
+// Local controls (TouchArea-built — zero std-widget-style dependency; the host build proves them green).
+// ===========================================================================================
+
+// A pill toggle. Visual reads the host-owned `on`; a tap fires `toggled(!on)` so the host updates state +
+// calls the Object setter (one-way to the engine, the single source of truth).
+component ToggleSwitch inherits Rectangle {
+    in property <bool> on: false;
+    in property <color> on-color: Centauri.crown;
+    callback toggled(bool);
+    width: 42px;
+    height: 24px;
+    border-radius: 12px;
+    background: root.on ? root.on-color : Centauri.track;
+    animate background { duration: 120ms; }
+    Rectangle {
+        width: 18px;
+        height: 18px;
+        border-radius: 9px;
+        background: white;
+        x: root.on ? parent.width - self.width - 3px : 3px;
+        y: (parent.height - self.height) / 2;
+        animate x { duration: 120ms; }
+    }
+    TouchArea {
+        clicked => {
+            root.toggled(!root.on);
+        }
+    }
+}
+
+// A section title.
+component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: Centauri.dim;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+// A row card shell.
+component RowCard inherits Rectangle {
+    background: Centauri.abyss.with-alpha(0.48);
+    border-radius: 6px;
+}
+
+// A decision-point alert banner (local) — instantiated via a guarding `if`, so an inactive warning occupies
+// ZERO layout space. The danger reads colored, at the moment the choice is made.
+component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: Centauri.wound;
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: Centauri.strike;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: Centauri.strike;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A small "chip" — a tap cycles the value (the host advances the choice). Simpler for non-geeks than a combo.
+component CycleChip inherits Rectangle {
+    in property <string> text;
+    in property <color> tint: Centauri.starlight;
+    callback cycled();
+    min-width: 96px;
+    height: 24px;
+    border-radius: 6px;
+    background: @linear-gradient(180deg, Centauri.panel.with-alpha(0.64) 0%, Centauri.abyss.with-alpha(0.40) 100%);
+    border-width: 1px;
+    border-color: Centauri.hairline;
+    HorizontalLayout {
+        alignment: center;
+        Text {
+            text: root.text;
+            color: root.tint;
+            font-size: 11px;
+            font-weight: 700;
+            vertical-alignment: center;
+        }
+    }
+    TouchArea {
+        clicked => {
+            root.cycled();
+        }
+    }
+}
+
+// The EMBEDDABLE pane (inherits Rectangle — the shell mounts it in-shell as the "centauri-settings"
+// advanced section). A non-Window pane generates NO standalone Rust struct (measured, the MaskSolverPane /
+// MaskSolverDashboard precedent), so the standalone `CentauriSettings` Window below FORWARDS this pane's full
+// API for the host-preview proof test (`CentauriSettings::new()`). The shell drives the pane's props through
+// its own `cs-*` aliases + wires the callbacks to the armed engine.
+export component CentauriSettingsPane inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.centauri; width: 100%; height: 100%; }
+    // ── settings signature: ONE steady navigation star — the calm chart-room, not the open sky. ──
+    Rectangle { x: parent.width * 0.88; y: parent.height * 0.04; width: 3px; height: 3px; border-radius: 1.5px; background: Centauri.stellar; opacity: 0.4; }
+    background: Centauri.void.with-alpha(0.40);
+
+    // ===== POSTURE (host pushes from Centauri::snapshot; the knobs write the setters) =====
+    // NO strict-on: the CROWN is always-on LeakOnMiss (baked), never surfaced as a toggle. Removed end-to-end
+    // (slint + host + JNI + Kotlin) — BlockMissing would freeze the growing encyclopedia.
+    in-out property <bool> cloak-armed: false;   // the DNS-plane cloak (resolver_set_centauri_cloak), default-OFF
+
+    // ===== SEED POLICY (the 73MB scope call: CatalogOnly ships 0 bytes / WarmUpBatch self-fills a curated set) =====
+    in-out property <int> seed-policy: 0;        // 0 = CatalogOnly (default, 0 bytes) · 1 = WarmUpBatch (opt-in)
+
+    // ===== Host-pushed summary scalars (the host folds the live Object state; the dashboard's scalar pattern) =====
+    in-out property <int> catalog-assets: 0;     // snapshot.catalog_assets (0 ⇒ arming the cloak BLACKHOLES)
+    in-out property <int> libraries: 0;          // snapshot.libraries (cached assets served locally forever)
+    in-out property <int> served-locally: 0;     // snapshot.served_locally (the running CROWN witness)
+    in-out property <int> served-bytes: 0;       // snapshot.served_bytes (bytes that never left the device — the LENS)
+    in-out property <int> cdn-fetches: 0;        // snapshot.cdn_fetches (the running ≤1 witness)
+
+    // ===== The cloaked CDN-host watch-list (host fills from centauri_cdn_hosts(); read-only display) =====
+    in-out property <[CdnHostRow]> cdn-hosts: [
+        { host: "cdnjs.cloudflare.com", mapped: true },
+        { host: "ajax.googleapis.com", mapped: true },
+        { host: "code.jquery.com", mapped: true },
+        { host: "stackpath.bootstrapcdn.com", mapped: true },
+    ];
+
+    // ===== 🩸 THE DECISION-POINT GUARD — derived, host-readable (the proof test asserts these fire) =====
+    // THE BLACKHOLE at the arming tap: the cloak armed while the signed catalog is EMPTY → every cloaked host
+    // 404s. The catalog auto-arms on every engine start, so this is a transient/defensive guard, not a chore.
+    out property <bool> warn-blackhole-arm: root.cloak-armed && root.catalog-assets == 0;
+    // The cloak changes DNS (cloaked hosts answer 127.0.0.1) — an informational caution at the flip.
+    out property <bool> warn-cloak-changes-dns: root.cloak-armed && !root.warn-blackhole-arm;
+    // Master: ANY decision-point danger surfaced.
+    out property <bool> warn-any: root.warn-blackhole-arm;
+
+    // The seed-policy label (decode the choice).
+    out property <string> seed-policy-label: root.seed-policy == 1 ? "WARM-UP BATCH (self-fill on device)" : "CATALOG-ONLY (0 bytes shipped)";
+
+    // ===== The user's edit intents — the host wires each to the Centauri setter / resolver fn =====
+    // (No strict-toggled / install-catalog: the CROWN is always-on LeakOnMiss and the catalog auto-arms —
+    //  both were removed end-to-end, slint + host + JNI + Kotlin.)
+    callback cloak-toggled(bool);     // on     -> resolver_set_centauri_cloak(on)
+    callback seed-policy-cycled();    //        -> advance SeedPolicy (CatalogOnly | WarmUpBatch)
+    callback warm-up-now();           //        -> mirror::packaging::warm_up (module fn, host-driven; ≤1/asset)
+    callback close-settings();
+
+    VerticalBox {
+        padding: 14px;
+        spacing: 12px;
+
+        // ---- Header ----
+        HorizontalBox {
+            spacing: 8px;
+            VerticalLayout {
+                Text {
+                    text: "CENTAURI  |||";
+                    color: Centauri.starlight;
+                    font-size: 22px;
+                    font-weight: 900;
+                }
+                Text {
+                    text: "the offline-CDN — serve from your own star";
+                    color: Centauri.haze;
+                    font-size: 11px;
+                }
+            }
+            Rectangle { }  // spacer
+            Text {
+                text: "\{root.served-locally} local · CDN saw \{root.cdn-fetches}";
+                color: Centauri.dim;
+                font-size: 10px;
+                vertical-alignment: center;
+                horizontal-alignment: right;
+            }
+        }
+
+        // ---- 🩸 The decision-point guard banners (each exists ONLY while its danger is live) ----
+        if root.warn-blackhole-arm : AlertBanner {
+            accent: Centauri.breach;
+            message: "BLACKHOLE -> the cloak is armed but the signed catalog is still EMPTY (arming). Every cloaked CDN host would 404 — stranded off the real CDN AND served nothing. This clears itself the moment the catalog arms; disarm the cloak if it persists.";
+        }
+        if root.warn-cloak-changes-dns : AlertBanner {
+            accent: Centauri.caution;
+            message: "CLOAK armed -> the watched CDN hosts now answer 127.0.0.1 (served from this device). This changes DNS for those hosts.";
+        }
+
+        // ---- POSTURE: the local CDN is ALWAYS ON (LeakOnMiss baked — the growth+privacy engine) + the cloak ----
+        // NO strict toggle: BlockMissing (serve-or-nothing) FREEZES the encyclopedia — the warm-up + the
+        // transplant-on-first-sight both need LeakOnMiss to fill (packaging.rs:172). Privacy is not opt-in here;
+        // it is Centauri's whole identity. The Object stays at its LeakOnMiss default; nothing arms BlockMissing.
+        SectionTitle { text: "THE CROWN  (always-on local CDN)"; }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    Text {
+                        text: "Serves from your device — always";
+                        color: Centauri.starlight;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "Every watched asset is served from THIS device the moment it is cached — private and instant. A new asset is fetched at most ONCE, ever (the CDN sees ≤1 request), then served locally forever. This is what Centauri IS — there is no switch to turn it off.";
+                        color: Centauri.haze;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+            }
+        }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    Text {
+                        text: "Local CDN binding (cloak)";
+                        color: Centauri.starlight;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "Answer the watched CDN hosts as 127.0.0.1 so the loopback serves the content-addressed cache. Default OFF — byte-identical DNS until you arm it.";
+                        color: Centauri.haze;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                    // THIS SESSION ONLY, and that is deliberate — say it rather than let the user
+                    // discover it. `CentauriMirrorManager.setCloak` (CentauriMirrorManager.kt:491)
+                    // writes the live resolver atomic and an in-memory `cloakArmed`; it touches no
+                    // durable tier, so an app restart returns this switch to OFF.
+                    //
+                    // It must NOT be made durable. The arm chain OWNS this bit under the F9
+                    // no-blackhole law (CentauriMirrorManager.kt:198 — "An EMPTY catalog NEVER
+                    // cloaks"), arming it at step 6 only when the mirror is serving AND a verified
+                    // catalog authorises assets. Persisting a manual ON would re-arm the cloak on
+                    // the next start with an empty catalog: every watched host 404s, which is the
+                    // exact blackhole the red banner above warns about, restored without a tap.
+                    //
+                    // Measured on device: armed the switch, the BLACKHOLE banner fired correctly,
+                    // force-stopped, relaunched — switch OFF, banner gone, and nothing written under
+                    // app_data/runtime_tier. The BEHAVIOUR was right; only this line was missing.
+                    Text {
+                        text: "Session only — the engine re-decides on every start, and arms this itself once a verified catalog is serving.";
+                        color: Centauri.haze;
+                        font-size: 10px;
+                        font-italic: true;
+                        wrap: word-wrap;
+                    }
+                }
+                Rectangle { }  // spacer
+                ToggleSwitch {
+                    on: root.cloak-armed;
+                    on-color: Centauri.stellar;
+                    toggled(v) => {
+                        root.cloak-armed = v;
+                        root.cloak-toggled(v);
+                    }
+                }
+            }
+        }
+
+        // ---- CATALOG: the blackhole cure + the seed policy (the 73MB scope call) ----
+        SectionTitle { text: "CATALOG & SEED"; }
+        RowCard {
+            VerticalLayout {
+                padding: 10px;
+                spacing: 8px;
+                // The catalog is ALWAYS ON — it auto-arms on every engine start (installStaged, else the
+                // on-device device-arming fallback mints a device-signed catalog). No manual Install: a pure
+                // live-status line. EMPTY is a transient arming state, never a user chore.
+                VerticalLayout {
+                    Text {
+                        text: "Signed catalog";
+                        color: Centauri.starlight;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: root.catalog-assets > 0 ? "\{root.catalog-assets} assets authorized · always on" : "arming — the signed catalog installs itself when the engine starts";
+                        color: root.catalog-assets > 0 ? Centauri.crown : Centauri.haze;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+                HorizontalLayout {
+                    spacing: 8px;
+                    VerticalLayout {
+                        horizontal-stretch: 1;
+                        Text {
+                            text: "Seed policy";
+                            color: Centauri.starlight;
+                            font-size: 12px;
+                            font-weight: 700;
+                        }
+                        Text {
+                            text: root.seed-policy-label;
+                            color: Centauri.haze;
+                            font-size: 10px;
+                            wrap: word-wrap;
+                        }
+                    }
+                    CycleChip {
+                        text: root.seed-policy == 1 ? "WARM-UP" : "CATALOG";
+                        tint: Centauri.stellar;
+                        cycled => {
+                            root.seed-policy-cycled();
+                        }
+                    }
+                }
+                if root.seed-policy == 1 : HorizontalLayout {
+                    Rectangle { }  // spacer
+                    Button {
+                        text: "Warm up now (≤1 fetch/asset)";
+                        clicked => {
+                            root.warm-up-now();
+                        }
+                    }
+                }
+            }
+        }
+
+        // ---- ON-DEVICE CACHE: what is stored here (a number the non-geek can SEE) ----
+        // The host pushes `libraries` (the cached-asset count) + the running CROWN witnesses; surfacing them
+        // turns "your device is the CDN" into something concrete, and states in plain words what the always-on
+        // leak-on-miss CROWN does with that cache (the feedback-simple-ux law — no mode to explain).
+        SectionTitle { text: "ON-DEVICE CACHE"; }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    Text {
+                        text: root.libraries > 0 ? "\{root.libraries} libraries cached" : "Nothing cached yet";
+                        color: root.libraries > 0 ? Centauri.starlight : Centauri.caution;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "Tops up from the CDN at most once, then serves it from here forever — the cache only grows.";
+                        color: Centauri.haze;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+                Rectangle { }  // spacer
+                VerticalLayout {
+                    alignment: center;
+                    Text {
+                        text: "\{root.served-locally}";
+                        color: root.served-locally > 0 ? Centauri.crown : Centauri.dim;
+                        font-size: 18px;
+                        font-weight: 900;
+                        horizontal-alignment: right;
+                    }
+                    Text {
+                        text: "served local";
+                        color: Centauri.haze;
+                        font-size: 9px;
+                        horizontal-alignment: right;
+                    }
+                }
+            }
+        }
+
+        // ---- THE LENS (the .tcat inspector, #25): three honest answers, no jargon — where the mirrored CDNs
+        // come from (provenance), what the cloak prevented from ever reaching the CDN (privacy), and what the
+        // signed catalog ports to your device (assets). Built entirely from live-fed witnesses, never claims. ----
+        SectionTitle { text: "THE LENS  (what Centauri is doing for you)"; }
+        // (1) WHERE IT COMES FROM — provenance: the CDN roster is Centauri's own clean-room map, not learned by
+        //    watching you (the detailed roster follows below in CLOAKED CDN HOSTS).
+        RowCard {
+            VerticalLayout {
+                padding: 10px;
+                spacing: 2px;
+                Text {
+                    text: "Where it comes from";
+                    color: Centauri.stellar;
+                    font-size: 11px;
+                    font-weight: 800;
+                }
+                Text {
+                    text: "\{root.cdn-hosts.length} CDN hosts mirrored — known from Centauri's built-in map, learned without a single tracking request.";
+                    color: Centauri.haze;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+            }
+        }
+        // (2) WHAT IT PREVENTED — privacy: served-locally + bytes that never left + the <=1 witness.
+        RowCard {
+            VerticalLayout {
+                padding: 10px;
+                spacing: 2px;
+                Text {
+                    text: "What it prevented";
+                    color: root.served-locally > 0 ? Centauri.crown : Centauri.stellar;
+                    font-size: 11px;
+                    font-weight: 800;
+                }
+                Text {
+                    text: "\{root.served-locally} requests served from THIS device — the CDN saw 0. \{root.served-bytes} bytes never left your phone.";
+                    color: Centauri.haze;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+                Text {
+                    text: "Every asset is fetched at most once, ever (\{root.cdn-fetches} so far), then served locally forever.";
+                    color: Centauri.haze;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+            }
+        }
+        // (3) WHAT IT PORTS — assets: the signed catalog's libraries + the authorized-asset count.
+        RowCard {
+            VerticalLayout {
+                padding: 10px;
+                spacing: 2px;
+                Text {
+                    text: "What it ports";
+                    color: Centauri.stellar;
+                    font-size: 11px;
+                    font-weight: 800;
+                }
+                Text {
+                    text: root.libraries > 0
+                        ? "\{root.libraries} libraries cached (JS · CSS · fonts) · \{root.catalog-assets} assets authorized by the signed catalog."
+                        : "Arming — the signed catalog authorizes \{root.catalog-assets} assets; libraries fill as pages are served.";
+                    color: Centauri.haze;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+            }
+        }
+
+        // ---- CLOAKED HOSTS: the watch-list the DNS plane sinkholes (read-only) ----
+        SectionTitle { text: "CLOAKED CDN HOSTS  (\{root.cdn-hosts.length} watched)"; }
+        VerticalLayout {
+            spacing: 3px;
+            for src in root.cdn-hosts : RowCard {
+                HorizontalLayout {
+                    padding: 7px;
+                    spacing: 8px;
+                    Text {
+                        text: "★";
+                        color: root.cloak-armed ? Centauri.stellar : Centauri.dim;
+                        font-size: 12px;
+                        vertical-alignment: center;
+                    }
+                    Text {
+                        text: src.host;
+                        color: Centauri.starlight;
+                        font-size: 11px;
+                        horizontal-stretch: 1;
+                        overflow: elide;
+                    }
+                    Text {
+                        text: root.cloak-armed ? "-> 127.0.0.1" : "(real CDN)";
+                        color: root.cloak-armed ? Centauri.crown : Centauri.haze;
+                        font-size: 10px;
+                        vertical-alignment: center;
+                    }
+                }
+            }
+        }
+
+        Rectangle { }  // tail spacer
+    }
+
+    // ===== #36 THE UPPER MOON SEAL — the dash is the Hashira; the settings pane bears the
+    //       matching demon's rank (the clone bodies mirror the constellation). Declared LAST. =====
+    UpperMoonChip {
+        x: parent.width - self.width - 10px;
+        y: 8px;
+        kanji: "上弦・肆";
+        moon-name: "UPPER FOUR — HANTENGU";
+        tint: #c8a03a;
+    }
+}
+
+// The STANDALONE Window (host-preview + the lib.rs proof test `CentauriSettings::new()`): FORWARDS the
+// embeddable pane's full API through `<=>` aliases so the proof drives the Window and the values reach the
+// pane (the MaskSolverDashboard → MaskSolverPane precedent). The shell never mounts THIS — it mounts the
+// `CentauriSettingsPane` directly (a Window-in-Window is invalid; only the shell owns the android surface).
+export component CentauriSettings inherits Window {
+    title: "Yeah! Tortä — Centauri  |||";
+    preferred-width: 440px;
+    preferred-height: 900px;
+
+    // ── the host-pushed posture + scalar inputs ──
+    in-out property <bool> cloak-armed <=> pane.cloak-armed;
+    in-out property <int> seed-policy <=> pane.seed-policy;
+    in-out property <int> catalog-assets <=> pane.catalog-assets;
+    in-out property <int> libraries <=> pane.libraries;
+    in-out property <int> served-locally <=> pane.served-locally;
+    in-out property <int> served-bytes <=> pane.served-bytes;
+    in-out property <int> cdn-fetches <=> pane.cdn-fetches;
+    in-out property <[CdnHostRow]> cdn-hosts <=> pane.cdn-hosts;
+    // ── the 🩸 decision-point guard derivations (host-readable — the proof test asserts these fire) ──
+    out property <bool> warn-blackhole-arm <=> pane.warn-blackhole-arm;
+    out property <bool> warn-cloak-changes-dns <=> pane.warn-cloak-changes-dns;
+    out property <bool> warn-any <=> pane.warn-any;
+    out property <string> seed-policy-label <=> pane.seed-policy-label;
+    // ── the user's edit intents (strict-toggled + install-catalog removed end-to-end) ──
+    callback cloak-toggled <=> pane.cloak-toggled;
+    callback seed-policy-cycled <=> pane.seed-policy-cycled;
+    callback warm-up-now <=> pane.warm-up-now;
+    callback close-settings <=> pane.close-settings;
+
+    pane := CentauriSettingsPane { }
+}

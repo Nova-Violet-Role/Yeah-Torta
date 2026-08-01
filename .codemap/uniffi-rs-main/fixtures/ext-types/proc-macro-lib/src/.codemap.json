@@ -1,0 +1,312 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\ext-types\\proc-macro-lib\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "d099c1c53894",
+      "indexed_at": "2026-07-24T20:35:12.515248+00:00",
+      "language": "rust",
+      "lines": 244,
+      "mtime_ns": 1782136568000000000,
+      "size": 6003,
+      "symbols": [
+        {
+          "lines": [
+            13,
+            30
+          ],
+          "name": "CombinedType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            33,
+            61
+          ],
+          "name": "get_combined_type",
+          "signature": "(value: Option<CombinedType>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            64,
+            67
+          ],
+          "name": "ObjectsType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            70,
+            75
+          ],
+          "name": "get_objects_type",
+          "signature": "(value: Option<ObjectsType>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            79,
+            81
+          ],
+          "name": "get_url",
+          "signature": "(url: Url)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            84,
+            86
+          ],
+          "name": "get_urls",
+          "signature": "(urls: Vec<Url>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            89,
+            91
+          ],
+          "name": "get_maybe_url",
+          "signature": "(url: Option<Url>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            94,
+            96
+          ],
+          "name": "get_maybe_urls",
+          "signature": "(urls: Vec<Option<Url>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            100,
+            102
+          ],
+          "name": "get_uniffi_one_type",
+          "signature": "(t: UniffiOneType)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            105,
+            107
+          ],
+          "name": "get_uniffi_one_type_async",
+          "signature": "(t: UniffiOneType)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            111,
+            113
+          ],
+          "name": "get_uniffi_one_proc_macro_type",
+          "signature": "(t: UniffiOneProcMacroType)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            116,
+            118
+          ],
+          "name": "get_uniffi_one_types",
+          "signature": "(ts: Vec<UniffiOneType>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            121,
+            123
+          ],
+          "name": "get_maybe_uniffi_one_type",
+          "signature": "(t: Option<UniffiOneType>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            126,
+            128
+          ],
+          "name": "get_maybe_uniffi_one_types",
+          "signature": "(ts: Vec<Option<UniffiOneType>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            132,
+            134
+          ],
+          "name": "get_uniffi_one_enum",
+          "signature": "(e: UniffiOneEnum)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            137,
+            139
+          ],
+          "name": "get_uniffi_one_enums",
+          "signature": "(es: Vec<UniffiOneEnum>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            142,
+            144
+          ],
+          "name": "get_maybe_uniffi_one_enum",
+          "signature": "(e: Option<UniffiOneEnum>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            147,
+            149
+          ],
+          "name": "get_maybe_uniffi_one_enums",
+          "signature": "(es: Vec<Option<UniffiOneEnum>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            152,
+            154
+          ],
+          "name": "get_uniffi_one_interface",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            157,
+            161
+          ],
+          "name": "get_uniffi_one_trait",
+          "signature": "(\n    t: Option<Arc<dyn uniffi_one::UniffiOneTrait>>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            165,
+            165
+          ],
+          "name": "UniffiOneTraitObject",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                169,
+                171
+              ],
+              "name": "hello",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            168,
+            172
+          ],
+          "name": "UniffiOneTraitObject",
+          "type": "impl"
+        },
+        {
+          "docstring": "Another guid - here we use a regular struct.",
+          "lines": [
+            176,
+            178
+          ],
+          "name": "Uuid",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Uniffi can generate the UniffiCustomTypeConverter for us.",
+              "lines": [
+                189,
+                189
+              ],
+              "name": "NewtypeHandle",
+              "type": "struct"
+            }
+          ],
+          "lines": [
+            186,
+            193
+          ],
+          "name": "submodule",
+          "type": "module"
+        },
+        {
+          "lines": [
+            197,
+            201
+          ],
+          "name": "get_uuid",
+          "signature": "(u: Option<Uuid>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            204,
+            206
+          ],
+          "name": "get_uuid_value",
+          "signature": "(u: Uuid)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            209,
+            211
+          ],
+          "name": "get_newtype_handle",
+          "signature": "(u: Option<NewtypeHandle>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            214,
+            216
+          ],
+          "name": "get_newtype_handle_value",
+          "signature": "(u: NewtypeHandle)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            219,
+            221
+          ],
+          "name": "get_guid_procmacro",
+          "signature": "(g: Option<Guid>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            224,
+            226
+          ],
+          "name": "get_ouid2",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            231,
+            234
+          ],
+          "name": "RecordContainingInterface",
+          "type": "struct"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.692364+00:00",
+  "version": "1.0"
+}

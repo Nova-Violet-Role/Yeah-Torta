@@ -1,0 +1,260 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\enum-types\\src",
+  "files": {
+    "enum_types.udl": {
+      "hash": "56ffca44b242",
+      "indexed_at": "2026-07-24T20:35:12.466510+00:00",
+      "language": "udl",
+      "lines": 7,
+      "mtime_ns": 1782136568000000000,
+      "size": 61,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "enum_types",
+          "type": "namespace"
+        },
+        {
+          "lines": [
+            4,
+            7
+          ],
+          "name": "Animal",
+          "type": "enum"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "6474f861c3ff",
+      "indexed_at": "2026-07-24T20:35:12.467585+00:00",
+      "language": "rust",
+      "lines": 157,
+      "mtime_ns": 1782136568000000000,
+      "size": 3231,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            10
+          ],
+          "name": "Animal",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            15,
+            18
+          ],
+          "name": "AnimalNoReprInt",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            22,
+            25
+          ],
+          "name": "AnimalUInt",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            29,
+            32
+          ],
+          "name": "AnimalLargeUInt",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            36,
+            42
+          ],
+          "name": "AnimalSignedInt",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            45,
+            47
+          ],
+          "name": "AnimalRecord",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                50,
+                54
+              ],
+              "name": "new",
+              "signature": "(name: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            49,
+            55
+          ],
+          "name": "AnimalRecord",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            59,
+            61
+          ],
+          "name": "AnimalObject",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                64,
+                68
+              ],
+              "name": "new",
+              "signature": "(name: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            63,
+            69
+          ],
+          "name": "AnimalObject",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                73,
+                75
+              ],
+              "name": "get_record",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            72,
+            76
+          ],
+          "name": "AnimalObject",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            80,
+            84
+          ],
+          "name": "AnimalEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            87,
+            92
+          ],
+          "name": "get_animal_enum",
+          "signature": "(animal: Animal)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            95,
+            99
+          ],
+          "name": "AnimalNamedEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            102,
+            104
+          ],
+          "name": "get_animal",
+          "signature": "(a: Option<Animal>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            107,
+            114
+          ],
+          "name": "NamedEnumWithDefaults",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            117,
+            119
+          ],
+          "name": "BoxedContent",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            122,
+            125
+          ],
+          "name": "EnumWithBoxedVariant",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            128,
+            133
+          ],
+          "name": "get_boxed_enum_value",
+          "signature": "(e: EnumWithBoxedVariant)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            136,
+            138
+          ],
+          "name": "create_boxed_enum",
+          "signature": "(value: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            141,
+            143
+          ],
+          "name": "roundtrip_boxed_record",
+          "signature": "(boxed: Box<BoxedContent>)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                152,
+                156
+              ],
+              "name": "check_signed",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            148,
+            157
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.679844+00:00",
+  "version": "1.0"
+}

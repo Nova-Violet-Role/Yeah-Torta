@@ -1,0 +1,32 @@
+# JUDGE-FROMARTIFACT fresh corpus — adversarial parity probe
+# comments and adblock-bang lines must be dropped
+! adblock comment dropped
+# subsumed: CHILD arrives BEFORE parent (pruning must drop the child)
+ads.doubleclick.net
+deep.sub.doubleclick.net
+doubleclick.net
+# host-file sink lines
+0.0.0.0 ads.example.com
+127.0.0.1 tracker.io # inline comment
+::1 v6sink.com
+# adblock wrapper + wildcard zone (subsumes whole zone)
+||*.ads.banner.io^
+*.zone.test
+# Unicode case-fold: must lowercase É -> é and Cyrillic
+CAFÉ.com
+БАНК.example
+Аproduced.example
+# trailing / leading / double dots — same canonical set
+Trailing.Dot.NET.
+.leading.dot.org
+double..dot.org
+# bare IPs / loose IP / IPv6 / leading-zero IP must be REJECTED (not domains)
+192.168.1.1
+01.02.03.04
+999.999.999.999
+1.2
+2001:db8::1
+# a path-bearing token must be rejected (contains '/')
+example.com/path
+# plain domain kept
+plain.example.net

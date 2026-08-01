@@ -1,0 +1,552 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\callbacks\\tests\\bindings",
+  "files": {
+    "test_callbacks.kts": {
+      "hash": "9f22d313223e",
+      "indexed_at": "2026-07-24T20:35:12.412397+00:00",
+      "language": "kotlin",
+      "lines": 151,
+      "mtime_ns": 1782136568000000000,
+      "size": 5719,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                14
+              ],
+              "name": "getBool",
+              "signature": "(v: Boolean, argumentTwo: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                15,
+                23
+              ],
+              "name": "getString",
+              "signature": "(v: String, arg2: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                32
+              ],
+              "name": "getOption",
+              "signature": "(v: String?, arg2: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                33,
+                33
+              ],
+              "name": "getList",
+              "signature": "(v: List<Int>, arg2: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                34,
+                41
+              ],
+              "name": "getNothing",
+              "signature": "(v: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            13,
+            42
+          ],
+          "name": "KotlinGetters",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                129,
+                129
+              ],
+              "name": "fromSimpleType",
+              "signature": "(value: Int)",
+              "type": "method"
+            },
+            {
+              "docstring": "If this doesn't compile, then look at TypeResolver.",
+              "lines": [
+                133,
+                133
+              ],
+              "name": "fromComplexType",
+              "signature": "(values: List<Double?>?)",
+              "type": "method"
+            }
+          ],
+          "docstring": "then use it without passing callbacks all the time.",
+          "lines": [
+            128,
+            134
+          ],
+          "name": "StoredKotlinStringifier",
+          "type": "class"
+        }
+      ]
+    },
+    "test_callbacks.py": {
+      "hash": "51b8f433da0e",
+      "indexed_at": "2026-07-24T20:35:12.413817+00:00",
+      "language": "python",
+      "lines": 143,
+      "mtime_ns": 1782136568000000000,
+      "size": 5856,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                16,
+                17
+              ],
+              "name": "get_bool",
+              "signature": "(self, v, argumentTwo)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                27
+              ],
+              "name": "get_string",
+              "signature": "(self, v, arg2)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                40
+              ],
+              "name": "get_option",
+              "signature": "(self, v, arg2)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                42,
+                46
+              ],
+              "name": "get_list",
+              "signature": "(self, v, arg2)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                48,
+                52
+              ],
+              "name": "get_nothing",
+              "signature": "(self, v)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            15,
+            52
+          ],
+          "name": "PythonGetters",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                55,
+                61
+              ],
+              "name": "test_get_bool",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                69
+              ],
+              "name": "test_get_list",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                71,
+                77
+              ],
+              "name": "test_get_string",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                85
+              ],
+              "name": "test_get_optional",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                87,
+                89
+              ],
+              "name": "test_get_string_optional_callback",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                92
+              ],
+              "name": "test_get_nothing",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            54,
+            92
+          ],
+          "name": "ForeignGettersTest",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                99,
+                100
+              ],
+              "name": "from_simple_type",
+              "signature": "(self, value)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            98,
+            100
+          ],
+          "name": "StoredPythonStringifier",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                103,
+                109
+              ],
+              "name": "test_stored_stringifier",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            102,
+            109
+          ],
+          "name": "StoredStringifierTest",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                112,
+                122
+              ],
+              "name": "test_simple_errors",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                124,
+                131
+              ],
+              "name": "test_complex_errors",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            111,
+            131
+          ],
+          "name": "TestCallbackErrors",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                134,
+                141
+              ],
+              "name": "test_callback_reference_does_not_invalidate_other_references",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            133,
+            141
+          ],
+          "name": "TestCallbackLifetime",
+          "type": "class"
+        }
+      ]
+    },
+    "test_callbacks.rb": {
+      "hash": "b4efb657b6bb",
+      "indexed_at": "2026-07-24T20:35:12.415256+00:00",
+      "language": "ruby",
+      "lines": 141,
+      "mtime_ns": 1782136568000000000,
+      "size": 4255,
+      "symbols": [
+        {
+          "lines": [
+            10,
+            11
+          ],
+          "name": "SomeOtherError",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                16
+              ],
+              "name": "get_bool",
+              "signature": "(v, argument_two)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                18,
+                23
+              ],
+              "name": "get_string",
+              "signature": "(v, arg2)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                30
+              ],
+              "name": "get_option",
+              "signature": "(v, arg2)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                32,
+                34
+              ],
+              "name": "get_list",
+              "signature": "(v, arg2)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                36,
+                39
+              ],
+              "name": "get_nothing",
+              "signature": "(v)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            13,
+            40
+          ],
+          "name": "RubyGetters",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                43,
+                45
+              ],
+              "name": "from_simple_type",
+              "signature": "(value)",
+              "type": "method"
+            },
+            {
+              "docstring": "Included to ensure callback argument type collection handles nested optional sequence types.",
+              "lines": [
+                48,
+                50
+              ],
+              "name": "from_complex_type",
+              "signature": "(values)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            42,
+            51
+          ],
+          "name": "StoredRubyStringifier",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                54,
+                57
+              ],
+              "name": "setup",
+              "type": "method"
+            },
+            {
+              "lines": [
+                59,
+                79
+              ],
+              "name": "test_roundtrip_callback_values",
+              "type": "method"
+            },
+            {
+              "lines": [
+                81,
+                84
+              ],
+              "name": "test_optional_callback_argument",
+              "type": "method"
+            },
+            {
+              "lines": [
+                86,
+                90
+              ],
+              "name": "test_void_callback_method",
+              "type": "method"
+            },
+            {
+              "lines": [
+                92,
+                119
+              ],
+              "name": "test_callback_error_mapping",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                128
+              ],
+              "name": "test_stored_callback_roundtrip",
+              "type": "method"
+            },
+            {
+              "lines": [
+                130,
+                140
+              ],
+              "name": "test_stored_callback_lifetime_with_multiple_references",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            53,
+            141
+          ],
+          "name": "TestCallbacks",
+          "type": "class"
+        }
+      ]
+    },
+    "test_callbacks.swift": {
+      "hash": "83a1618c89f3",
+      "indexed_at": "2026-07-24T20:35:12.417449+00:00",
+      "language": "swift",
+      "lines": 162,
+      "mtime_ns": 1782136568000000000,
+      "size": 6648,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "SomeOtherError",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "getBool",
+              "type": "method"
+            },
+            {
+              "lines": [
+                18,
+                26
+              ],
+              "name": "getString",
+              "type": "method"
+            },
+            {
+              "lines": [
+                27,
+                35
+              ],
+              "name": "getOption",
+              "type": "method"
+            },
+            {
+              "lines": [
+                36,
+                36
+              ],
+              "name": "getList",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                44
+              ],
+              "name": "getNothing",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            16,
+            45
+          ],
+          "name": "SwiftGetters",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.668626+00:00",
+  "version": "1.0"
+}

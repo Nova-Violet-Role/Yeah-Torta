@@ -1,0 +1,222 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT UNDERGROUND LAYER ||| SETTINGS — #15 UNDERGROUND H (the tunable engine law).
+//
+// The user-facing surface for the RUNTIME-CONFIGURABLE engine (the E rung made every penalty a
+// scoring.toml knob; G added the quarantine TTL; H adds the detection kill switches). Reached via
+// ||| → PILLARS → UNDERGROUND LAYER settings chip. Four organs:
+//   · THE DETECTION SWITCHES — DGA / TUNNEL / BEACON per-faculty toggles (`[detection]` in
+//     scoring.toml, hot-reloaded by the SAME mtime watcher as the penalties — flipping one is a
+//     toml PATCH the host writes, never a fork of the law);
+//   · THE LAW EDITOR — the raw scoring.toml text (penalty weights · licence thresholds ·
+//     quarantine TTL · per-host overrides). SAVE writes atomically (tmp+rename, the Kotlin
+//     bridge); the Rust watcher hot-reloads ≤5 s. BLANK + SAVE deletes — the compile-time
+//     defaults return (fail-open: a garbled edit keeps the sitting law, never a zeroed economy);
+//   · THE AMNESTY — the reputation-baseline RESET (forgets every learned reputation row + the
+//     correction audit log, RAM + NAND; the licence ledger is untouched);
+//   · the honest DORMANT banner (the store arms on the resolver boot edge).
+//
+// EMBEDDED IN-SHELL: `UndergroundSettingsPane inherits Rectangle` mounts as the shell's
+// "underground-settings" advanced section; the `UndergroundSettings inherits Window` below is
+// the thin `<=>` forwarder for the proof test + the main.slint export (the pane precedent).
+
+import { Button, ScrollView, TextEdit } from "std-widgets.slint";
+import { Monokuma } from "monokuma_palette.slint";
+import { SectionTitle, RowCard, AlertBanner, ToggleSwitch } from "widgets.slint";
+import { UgInk } from "underground_dashboard.slint";
+import { ThemeBook, MotifWash } from "theme_tokens.slint";
+
+export component UndergroundSettingsPane inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.underground; width: 100%; height: 100%; }
+    background: Monokuma.pitch;
+
+    // ── Host-pushed state ──
+    in-out property <bool> armed: false;
+    in-out property <string> toml-text: "";          // the current law (""=defaults sit)
+    in-out property <bool> dga-on: true;             // [detection] parsed by the host
+    in-out property <bool> tunnel-on: true;
+    in-out property <bool> beacon-on: true;
+    in-out property <string> quarantine-label: "24h"; // host-formatted [quarantine] ttl_secs
+    in-out property <int> save-status: 0;            // 0 idle · 1 landed · 2 failed
+    in-out property <int> reset-status: 0;           // 0 idle · 1 forgot · 2 nothing/failed
+
+    // ── Intents (the host wires them to the bridge statics) ──
+    callback save-toml(string);                      // atomic write; blank deletes (defaults)
+    callback detection-toggled(string, bool);        // "dga"|"tunnel"|"beacon" → toml patch
+    callback reset-reputation();                     // the amnesty
+    callback reload();                               // re-pull the law from NAND
+
+    ScrollView {
+        // The width law: the inner viewport rides the visible width (never the content's
+        // min-width) — otherwise the pane scrolls sideways off the shell (the AVD-caught bug).
+        viewport-width: self.visible-width;
+        VerticalLayout {
+            padding: 12px;
+            spacing: 10px;
+
+            SectionTitle { text: "UNDERGROUND LAYER · the tunable law"; wrap: word-wrap; }
+            if !root.armed : AlertBanner {
+                accent: Monokuma.caution;
+                message: "UNDERGROUND DORMANT — the law still edits, but the engine reads it on the resolver boot.";
+            }
+
+            // ---- THE DETECTION SWITCHES — per-faculty kill switches ----
+            SectionTitle { text: "DETECTION FACULTIES · hot-reloaded kill switches"; wrap: word-wrap; }
+            RowCard {
+                VerticalLayout {
+                    padding: 8px;
+                    spacing: 8px;
+                    HorizontalLayout {
+                        spacing: 8px;
+                        VerticalLayout {
+                            horizontal-stretch: 1;
+                            // All six Texts in these three rows must wrap: unwrapped, they set a
+                            // minimum width on the stretched column and clip the kill switch beside
+                            // them. Measured on the AVD — the DGA and TUNNEL switches were cut at
+                            // the right edge while BEACON's (shorter strings) survived. A kill
+                            // switch you cannot see the state of is not a control.
+                            Text { text: "DGA — machine-name entropy"; color: UgInk.bone; font-size: 10px; font-weight: 800; wrap: word-wrap; }
+                            Text { text: "trigram + entropy soup on the leftmost label"; color: Monokuma.ash; font-size: 9px; wrap: word-wrap; }
+                        }
+                        ToggleSwitch {
+                            on: root.dga-on;
+                            on-color: UgInk.rain;
+                            toggled(v) => { root.detection-toggled("dga", v); }
+                        }
+                    }
+                    HorizontalLayout {
+                        spacing: 8px;
+                        VerticalLayout {
+                            horizontal-stretch: 1;
+                            Text { text: "TUNNEL — DNS exfiltration"; color: UgInk.bone; font-size: 10px; font-weight: 800; wrap: word-wrap; }
+                            Text { text: "TXT/NULL bursts, oversize answers, NX storms"; color: Monokuma.ash; font-size: 9px; wrap: word-wrap; }
+                        }
+                        ToggleSwitch {
+                            on: root.tunnel-on;
+                            on-color: UgInk.rain;
+                            toggled(v) => { root.detection-toggled("tunnel", v); }
+                        }
+                    }
+                    HorizontalLayout {
+                        spacing: 8px;
+                        VerticalLayout {
+                            horizontal-stretch: 1;
+                            Text { text: "BEACON — C2 heartbeat cadence"; color: UgInk.bone; font-size: 10px; font-weight: 800; wrap: word-wrap; }
+                            Text { text: "fixed-interval re-resolves with low jitter"; color: Monokuma.ash; font-size: 9px; wrap: word-wrap; }
+                        }
+                        ToggleSwitch {
+                            on: root.beacon-on;
+                            on-color: UgInk.rain;
+                            toggled(v) => { root.detection-toggled("beacon", v); }
+                        }
+                    }
+                }
+            }
+
+            // ---- THE LAW EDITOR — raw scoring.toml ----
+            SectionTitle { text: "THE LAW EDITOR · scoring.toml (quarantine TTL \{root.quarantine-label})"; wrap: word-wrap; }
+            Text {
+                text: "penalties per lane · licence thresholds (global + per-host) · [quarantine] ttl_secs · [detection] switches. SAVE hot-reloads ≤5 s; a garbled edit keeps the sitting law; BLANK + SAVE returns the compile-time defaults.";
+                color: Monokuma.ash;
+                font-size: 9px;
+                wrap: word-wrap;
+            }
+            RowCard {
+                VerticalLayout {
+                    padding: 8px;
+                    spacing: 6px;
+                    law := TextEdit {
+                        height: 220px;
+                        text <=> root.toml-text;
+                        font-size: 10px;
+                    }
+                    // STACKED, not side by side. The two buttons' natural widths together exceed the
+                    // content column when the burger rail is open: measured on the AVD, RELOAD
+                    // rendered as "RELOAI" with its right half past the edge. Stacking is the only
+                    // arrangement that stays correct at ANY column width, and this pane already
+                    // scrolls, so the extra row costs nothing. RELOAD is the button that recovers
+                    // the sitting law after a bad edit — the one you least want half-drawn.
+                    VerticalLayout {
+                        spacing: 6px;
+                        Button {
+                            text: "SAVE THE LAW";
+                            clicked => { root.save-toml(root.toml-text); }
+                        }
+                        Button {
+                            text: "RELOAD";
+                            clicked => { root.reload(); }
+                        }
+                    }
+                    if root.save-status == 1 : Text {
+                        text: "saved — the watcher hot-reloads it within 5 s.";
+                        color: UgInk.rain;
+                        font-size: 9px;
+                    }
+                    if root.save-status == 2 : Text {
+                        text: "the write did not land (NAND refused) — the sitting law holds.";
+                        color: UgInk.alarm;
+                        font-size: 9px;
+                    }
+                }
+            }
+
+            // ---- THE AMNESTY — reputation reset ----
+            SectionTitle { text: "THE AMNESTY · forget the learned reputation"; wrap: word-wrap; }
+            RowCard {
+                VerticalLayout {
+                    padding: 8px;
+                    spacing: 6px;
+                    Text {
+                        text: "wipes every learned reputation baseline + the correction audit log (RAM + NAND). The licence ledger — hits, licences, your pins — is untouched. The engine returns to the compile-time law and re-learns from your next correction.";
+                        color: Monokuma.ash;
+                        font-size: 9px;
+                        wrap: word-wrap;
+                    }
+                    Button {
+                        text: "RESET REPUTATION";
+                        clicked => { root.reset-reputation(); }
+                    }
+                    if root.reset-status == 1 : Text {
+                        text: "forgotten — the learned law is gone, the ledger stands.";
+                        color: UgInk.rain;
+                        font-size: 9px;
+                    }
+                    if root.reset-status == 2 : Text {
+                        text: "nothing to forget (or the store is not armed).";
+                        color: Monokuma.dim;
+                        font-size: 9px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// The thin Window forwarder — proof test + main.slint export (the pane precedent).
+export component UndergroundSettings inherits Window {
+    title: "Tortä · Underground Layer settings";
+    background: Monokuma.pitch;
+    preferred-width: 420px;
+    preferred-height: 760px;
+
+    in-out property <bool> armed <=> pane.armed;
+    in-out property <string> toml-text <=> pane.toml-text;
+    in-out property <bool> dga-on <=> pane.dga-on;
+    in-out property <bool> tunnel-on <=> pane.tunnel-on;
+    in-out property <bool> beacon-on <=> pane.beacon-on;
+    in-out property <string> quarantine-label <=> pane.quarantine-label;
+    in-out property <int> save-status <=> pane.save-status;
+    in-out property <int> reset-status <=> pane.reset-status;
+    callback save-toml <=> pane.save-toml;
+    callback detection-toggled <=> pane.detection-toggled;
+    callback reset-reputation <=> pane.reset-reputation;
+    callback reload <=> pane.reload;
+
+    pane := UndergroundSettingsPane {
+        width: 100%;
+        height: 100%;
+    }
+}

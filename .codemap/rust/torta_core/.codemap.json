@@ -1,0 +1,764 @@
+{
+  "directory": "rust\\torta_core",
+  "files": {
+    "Cargo.toml": {
+      "hash": "8b1ed585f71b",
+      "indexed_at": "2026-07-29T00:46:20.023043+00:00",
+      "language": "toml",
+      "lines": 303,
+      "mtime_ns": 1785285625593354800,
+      "size": 22561,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                4,
+                4
+              ],
+              "name": "name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "version",
+              "type": "key"
+            },
+            {
+              "lines": [
+                6,
+                6
+              ],
+              "name": "edition",
+              "type": "key"
+            },
+            {
+              "lines": [
+                7,
+                7
+              ],
+              "name": "description",
+              "type": "key"
+            },
+            {
+              "lines": [
+                8,
+                8
+              ],
+              "name": "license",
+              "type": "key"
+            }
+          ],
+          "docstring": "Yeah! Tort\u00e4 native horsepower core \u2014 the Rust .so that P7 (speed) and P9 (Fortress) build on. Cross-compiled to Android via cargo-ndk inside the build",
+          "lines": [
+            3,
+            9
+          ],
+          "name": "package",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                11,
+                11
+              ],
+              "name": "name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                13,
+                13
+              ],
+              "name": "crate-type",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            10,
+            18
+          ],
+          "name": "lib",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "required-features",
+              "type": "key"
+            }
+          ],
+          "docstring": "catalog_verify_oracle uses `torta_core::mirror`, which is `#[cfg(feature = \"mirror\")]`. Gate the bin behind the same feature so a default `cargo build",
+          "lines": [
+            19,
+            25
+          ],
+          "name": "bin",
+          "type": "array_table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "required-features",
+              "type": "key"
+            }
+          ],
+          "docstring": "The version-matched UniFFI bindgen (UniFFI 0.31 ships NO standalone CLI). Gated behind `uniffi-cli` so it compiles ONLY when explicitly requested (`--",
+          "lines": [
+            26,
+            29
+          ],
+          "name": "bin",
+          "type": "array_table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                31,
+                31
+              ],
+              "name": "jni",
+              "type": "key"
+            },
+            {
+              "lines": [
+                41,
+                41
+              ],
+              "name": "uniffi",
+              "type": "key"
+            },
+            {
+              "lines": [
+                49,
+                49
+              ],
+              "name": "thiserror",
+              "type": "key"
+            },
+            {
+              "lines": [
+                59,
+                59
+              ],
+              "name": "serde",
+              "type": "key"
+            },
+            {
+              "lines": [
+                60,
+                60
+              ],
+              "name": "toml",
+              "type": "key"
+            },
+            {
+              "lines": [
+                64,
+                64
+              ],
+              "name": "tokio",
+              "type": "key"
+            },
+            {
+              "lines": [
+                65,
+                65
+              ],
+              "name": "log",
+              "type": "key"
+            },
+            {
+              "lines": [
+                73,
+                73
+              ],
+              "name": "ipstack",
+              "type": "key"
+            },
+            {
+              "lines": [
+                74,
+                74
+              ],
+              "name": "socket2",
+              "type": "key"
+            },
+            {
+              "lines": [
+                75,
+                75
+              ],
+              "name": "bytes",
+              "type": "key"
+            },
+            {
+              "lines": [
+                77,
+                77
+              ],
+              "name": "rustls",
+              "type": "key"
+            },
+            {
+              "lines": [
+                78,
+                78
+              ],
+              "name": "ring",
+              "type": "key"
+            },
+            {
+              "lines": [
+                80,
+                80
+              ],
+              "name": "rustls-platform-verifier",
+              "type": "key"
+            },
+            {
+              "lines": [
+                83,
+                83
+              ],
+              "name": "webpki-roots",
+              "type": "key"
+            },
+            {
+              "lines": [
+                85,
+                85
+              ],
+              "name": "hyper",
+              "type": "key"
+            },
+            {
+              "lines": [
+                86,
+                86
+              ],
+              "name": "hyper-util",
+              "type": "key"
+            },
+            {
+              "lines": [
+                87,
+                87
+              ],
+              "name": "hyper-rustls",
+              "type": "key"
+            },
+            {
+              "lines": [
+                88,
+                88
+              ],
+              "name": "http",
+              "type": "key"
+            },
+            {
+              "lines": [
+                89,
+                89
+              ],
+              "name": "http-body-util",
+              "type": "key"
+            },
+            {
+              "lines": [
+                90,
+                90
+              ],
+              "name": "getrandom",
+              "type": "key"
+            },
+            {
+              "lines": [
+                105,
+                105
+              ],
+              "name": "odoh-rs",
+              "type": "key"
+            },
+            {
+              "lines": [
+                110,
+                110
+              ],
+              "name": "rand_core_09",
+              "type": "key"
+            },
+            {
+              "lines": [
+                117,
+                117
+              ],
+              "name": "x25519-dalek",
+              "type": "key"
+            },
+            {
+              "lines": [
+                127,
+                127
+              ],
+              "name": "crypto_secretbox",
+              "type": "key"
+            },
+            {
+              "lines": [
+                131,
+                131
+              ],
+              "name": "chacha20poly1305",
+              "type": "key"
+            },
+            {
+              "lines": [
+                135,
+                135
+              ],
+              "name": "xsalsa20poly1305",
+              "type": "key"
+            },
+            {
+              "lines": [
+                137,
+                137
+              ],
+              "name": "ed25519-dalek",
+              "type": "key"
+            },
+            {
+              "lines": [
+                140,
+                140
+              ],
+              "name": "rand_core",
+              "type": "key"
+            },
+            {
+              "lines": [
+                142,
+                142
+              ],
+              "name": "byteorder",
+              "type": "key"
+            },
+            {
+              "lines": [
+                148,
+                148
+              ],
+              "name": "dnsstamps",
+              "type": "key"
+            },
+            {
+              "lines": [
+                155,
+                155
+              ],
+              "name": "sha2",
+              "type": "key"
+            },
+            {
+              "lines": [
+                171,
+                171
+              ],
+              "name": "blake2",
+              "type": "key"
+            },
+            {
+              "lines": [
+                188,
+                188
+              ],
+              "name": "rcgen",
+              "type": "key"
+            },
+            {
+              "lines": [
+                191,
+                191
+              ],
+              "name": "time",
+              "type": "key"
+            },
+            {
+              "lines": [
+                194,
+                194
+              ],
+              "name": "tokio-rustls",
+              "type": "key"
+            },
+            {
+              "lines": [
+                204,
+                204
+              ],
+              "name": "x-wing",
+              "type": "key"
+            },
+            {
+              "lines": [
+                209,
+                209
+              ],
+              "name": "hkdf",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            30,
+            222
+          ],
+          "name": "dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                224,
+                224
+              ],
+              "name": "libc",
+              "type": "key"
+            }
+          ],
+          "docstring": "---- \u2605 E-FIX r5 (R5-Q1) \u2014 the query.log feed's LOCAL-time timestamp ---- `libc::localtime_r` (bionic/glibc, honours the device TZ + DST) renders the f",
+          "lines": [
+            223,
+            225
+          ],
+          "name": "target.'cfg(unix)'.dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                230,
+                230
+              ],
+              "name": "uniffi-cli",
+              "type": "key"
+            },
+            {
+              "lines": [
+                239,
+                239
+              ],
+              "name": "netstack",
+              "type": "key"
+            },
+            {
+              "lines": [
+                247,
+                247
+              ],
+              "name": "pure_rust",
+              "type": "key"
+            },
+            {
+              "lines": [
+                254,
+                254
+              ],
+              "name": "odoh",
+              "type": "key"
+            },
+            {
+              "lines": [
+                278,
+                278
+              ],
+              "name": "mirror",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            226,
+            279
+          ],
+          "name": "features",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                286,
+                286
+              ],
+              "name": "tokio",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            280,
+            287
+          ],
+          "name": "dev-dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                293,
+                293
+              ],
+              "name": "unexpected_cfgs",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            288,
+            294
+          ],
+          "name": "lints.rust",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                296,
+                296
+              ],
+              "name": "opt-level",
+              "type": "key"
+            },
+            {
+              "lines": [
+                297,
+                297
+              ],
+              "name": "lto",
+              "type": "key"
+            },
+            {
+              "lines": [
+                298,
+                298
+              ],
+              "name": "codegen-units",
+              "type": "key"
+            },
+            {
+              "lines": [
+                299,
+                299
+              ],
+              "name": "strip",
+              "type": "key"
+            },
+            {
+              "lines": [
+                303,
+                303
+              ],
+              "name": "panic",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            295,
+            304
+          ],
+          "name": "profile.release",
+          "type": "table"
+        }
+      ]
+    },
+    "P12_DNSMASQ_EVOKE.md": {
+      "hash": "1e88e1b8521a",
+      "indexed_at": "2026-07-24T20:35:10.244892+00:00",
+      "language": "markdown",
+      "lines": 129,
+      "mtime_ns": 1782500611206968000,
+      "size": 16348,
+      "symbols": [
+        {
+          "docstring": "Dnsmasq is a **caching/routing DNS *front-end*** \u2014 a local resolver that short-circuits, caches, and routes queries before they hit an upstream. It is",
+          "lines": [
+            5,
+            37
+          ],
+          "name": "Mandate",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "| Feature | What we evoke | Target subsystem / file | Effort | Dovetails with | |---|---|---|---|---| | **TTL-aware expiry** | Store `{wire, inserted_",
+              "lines": [
+                42,
+                54
+              ],
+              "name": "MUST",
+              "type": "subsection"
+            },
+            {
+              "docstring": "| Feature | What we evoke | Target subsystem / file | Effort | Dovetails with | |---|---|---|---|---| | **`min-cache-ttl` floor** | One clamp `ttl.max",
+              "lines": [
+                55,
+                69
+              ],
+              "name": "SHOULD",
+              "type": "subsection"
+            },
+            {
+              "docstring": "| Feature | What we evoke | Target subsystem / file | Effort | Dovetails with | |---|---|---|---|---| | **`--strict-order`** | Already today's behavio",
+              "lines": [
+                70,
+                84
+              ],
+              "name": "COULD",
+              "type": "subsection"
+            }
+          ],
+          "docstring": "`must` \u2192 ship it \u00b7 `should` \u2192 high value, schedule it \u00b7 `could` \u2192 real but niche, defer.",
+          "lines": [
+            38,
+            84
+          ],
+          "name": "Ranked Harvest",
+          "type": "section"
+        },
+        {
+          "docstring": "| Item | One-line reason | |---|---| | **DHCP / DHCPv6 / TFTP / PXE/BOOTP / Router-Advertisement** | Router/LAN-infrastructure daemon; needs privilege",
+          "lines": [
+            85,
+            104
+          ],
+          "name": "SKIP",
+          "type": "section"
+        },
+        {
+          "docstring": "P12 runs **after P7\u2192P11**, then folds in \u2014 it does not greenfield around existing work:",
+          "lines": [
+            105,
+            130
+          ],
+          "name": "Sequencing",
+          "type": "section"
+        }
+      ]
+    },
+    "WAVE2_RESOLVER_PLAN.md": {
+      "hash": "22aaf94ba534",
+      "indexed_at": "2026-07-24T20:35:10.246566+00:00",
+      "language": "markdown",
+      "lines": 110,
+      "mtime_ns": 1782500611206968000,
+      "size": 14058,
+      "symbols": [
+        {
+          "docstring": "- **Async:** ONE long-lived `tokio` **current-thread** runtime owned by a resolver singleton (battery: parks when idle, no thread-pool on a phone). -",
+          "lines": [
+            6,
+            11
+          ],
+          "name": "Verdict (conflicts resolved)",
+          "type": "section"
+        },
+        {
+          "docstring": "The resolver ships **shadow**: resolves in parallel with the Go `dnscrypt-proxy`, comparing answers, governing nothing, until it earns primacy by agre",
+          "lines": [
+            12,
+            21
+          ],
+          "name": "Staged sub-wave sequence (shadow-first)",
+          "type": "section"
+        },
+        {
+          "lines": [
+            22,
+            54
+          ],
+          "name": "Crate list (June 2026, confirmed) \u2014 add to `rust/torta_core/Cargo.toml`",
+          "type": "section"
+        },
+        {
+          "lines": [
+            55,
+            71
+          ],
+          "name": "Module layout \u2014 `torta_core/src/`",
+          "type": "section"
+        },
+        {
+          "docstring": "4 firewalled exports (each `catch_unwind(AssertUnwindSafe)` like `nativeBlocklist*`): - `nativeResolverConfigure(specsJson, timeoutMs, cacheCap) -> js",
+          "lines": [
+            72,
+            88
+          ],
+          "name": "JNI + Kotlin + datapath seam",
+          "type": "section"
+        },
+        {
+          "docstring": "**Response integrity:** T1 TXID mismatch (per-request, ID=0 ok for HTTP) \u00b7 T2 question mismatch (Kaminsky \u2014 byte-equal qname+qtype+qclass; highest-val",
+          "lines": [
+            89,
+            96
+          ],
+          "name": "Threat list (the Perfect-Review core) \u2014 `validate_response` is the anti-poisoning keystone",
+          "type": "section"
+        },
+        {
+          "docstring": "- **2b DoH (START):** Http2Doh + rustls/ring + platform-verifier `android::init_with_env` + `dns::validate_response` + answer parser + per-task catch_",
+          "lines": [
+            97,
+            102
+          ],
+          "name": "Per-sub-wave build + emulator checks",
+          "type": "section"
+        },
+        {
+          "docstring": "1. DNSCrypt cert rotation + anonymized relays break in the field (clock skew, es-version/AEAD mismatch, relay-operator overlap). **Don't delete the Go",
+          "lines": [
+            103,
+            111
+          ],
+          "name": "Risks to flag before implementation",
+          "type": "section"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T02:52:28.852298+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,2461 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\dns_engine",
+  "files": {
+    "BlocklistSearcher.kt": {
+      "hash": "1972435c4ac3",
+      "indexed_at": "2026-08-01T03:59:32.626944+00:00",
+      "language": "kotlin",
+      "lines": 579,
+      "mtime_ns": 1785556375988899200,
+      "size": 30910,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                80,
+                84
+              ],
+              "name": "AddResult",
+              "type": "class"
+            },
+            {
+              "lines": [
+                95,
+                100
+              ],
+              "name": "RepoHit",
+              "type": "class"
+            },
+            {
+              "lines": [
+                118,
+                128
+              ],
+              "name": "previewFromText",
+              "signature": "(text: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                140,
+                180
+              ],
+              "name": "applyFromText",
+              "signature": "(text: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                191,
+                213
+              ],
+              "name": "persistToLocalBlacklist",
+              "signature": "(text: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                231,
+                266
+              ],
+              "name": "searchGitHub",
+              "signature": "(query: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                281,
+                318
+              ],
+              "name": "fetchListText",
+              "signature": "(rawUrl: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                333,
+                343
+              ],
+              "name": "countDomains",
+              "signature": "(text: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                346,
+                347
+              ],
+              "name": "hasCompilableDomain",
+              "signature": "(text: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                350,
+                373
+              ],
+              "name": "parseLine",
+              "signature": "(line: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                376,
+                384
+              ],
+              "name": "isHostSink",
+              "signature": "(addr: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                391,
+                396
+              ],
+              "name": "overBlockWarningFor",
+              "signature": "(domain: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                405,
+                410
+              ],
+              "name": "localUnsignedScore",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                415,
+                443
+              ],
+              "name": "parseGitHubSearch",
+              "signature": "(body: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                446,
+                447
+              ],
+              "name": "rawCandidate",
+              "signature": "(fullName: String, branch: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                450,
+                475
+              ],
+              "name": "readFreshCache",
+              "signature": "(query: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                478,
+                498
+              ],
+              "name": "writeCache",
+              "signature": "(query: String, hits: List<RepoHit>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                505,
+                516
+              ],
+              "name": "withReducedTimeouts",
+              "signature": "(block: () -> T)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            64,
+            579
+          ],
+          "name": "BlocklistSearcher",
+          "type": "class"
+        }
+      ]
+    },
+    "CentauriArtifactManager.kt": {
+      "hash": "d8fa01c2d2ac",
+      "indexed_at": "2026-08-01T03:59:32.936551+00:00",
+      "language": "kotlin",
+      "lines": 269,
+      "mtime_ns": 1785556376000900800,
+      "size": 14388,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                105,
+                117
+              ],
+              "name": "start",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                124,
+                131
+              ],
+              "name": "stop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                134,
+                134
+              ],
+              "name": "onDnsCryptStarted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                141,
+                147
+              ],
+              "name": "onDnsCryptStopped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                150,
+                150
+              ],
+              "name": "isRunning",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                157,
+                225
+              ],
+              "name": "fetchVerifyAndInstall",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            71,
+            269
+          ],
+          "name": "CentauriArtifactManager",
+          "type": "class"
+        }
+      ]
+    },
+    "CentauriCaTrust.kt": {
+      "hash": "d23b6f16bf85",
+      "indexed_at": "2026-08-01T03:59:33.236957+00:00",
+      "language": "kotlin",
+      "lines": 421,
+      "mtime_ns": 1785556376013900100,
+      "size": 22715,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                73,
+                74
+              ],
+              "name": "caCertFile",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                77
+              ],
+              "name": "isMinted",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                87,
+                107
+              ],
+              "name": "isTrusted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                140,
+                168
+              ],
+              "name": "ourCaDer",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                186,
+                210
+              ],
+              "name": "armTrustWatch",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                224,
+                300
+              ],
+              "name": "noteTrust",
+              "signature": "(trusted: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                310,
+                324
+              ],
+              "name": "installIntent",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                327,
+                330
+              ],
+              "name": "readCert",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                343,
+                373
+              ],
+              "name": "stage",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                387,
+                411
+              ],
+              "name": "requestInstall",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                414,
+                420
+              ],
+              "name": "launch",
+              "signature": "(context: Context, intent: Intent)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            51,
+            421
+          ],
+          "name": "CentauriCaTrust",
+          "type": "class"
+        }
+      ]
+    },
+    "CentauriMirrorManager.kt": {
+      "hash": "aeff82db5a48",
+      "indexed_at": "2026-08-01T03:59:33.532245+00:00",
+      "language": "kotlin",
+      "lines": 785,
+      "mtime_ns": 1785556376025899500,
+      "size": 44380,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                125,
+                138
+              ],
+              "name": "start",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                147,
+                156
+              ],
+              "name": "stop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                159,
+                159
+              ],
+              "name": "onDnsCryptStarted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                165,
+                171
+              ],
+              "name": "onDnsCryptStopped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                174,
+                174
+              ],
+              "name": "isRunning",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                177,
+                177
+              ],
+              "name": "port",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                207,
+                231
+              ],
+              "name": "startMirror",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                234,
+                243
+              ],
+              "name": "startMirrorFlat",
+              "signature": "(cacheDir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                246,
+                346
+              ],
+              "name": "startMirrorObject",
+              "signature": "(\n        handle: TortaCore.CentauriHandle,\n        appDataDir: String,\n        cacheDir: String,...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                385,
+                422
+              ],
+              "name": "armTlsLeg",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                425,
+                432
+              ],
+              "name": "disarmCloak",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            78,
+            631
+          ],
+          "name": "CentauriMirrorManager",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                671,
+                687
+              ],
+              "name": "stageSeedFromAssets",
+              "signature": "(appDataDir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                693,
+                718
+              ],
+              "name": "installStaged",
+              "signature": "(handle: TortaCore.CentauriHandle, appDataDir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                728,
+                747
+              ],
+              "name": "stageContentFromAssets",
+              "signature": "(appDataDir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                754,
+                769
+              ],
+              "name": "readSeedPairFromAssets",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                772,
+                777
+              ],
+              "name": "readAssetOrNull",
+              "signature": "(assets: android.content.res.AssetManager, name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                780,
+                784
+              ],
+              "name": "decodePinnedPubkey",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "consts on the @ExperimentalCoroutinesApi-marked siblings",
+          "lines": [
+            644,
+            785
+          ],
+          "name": "CentauriCatalogChannel",
+          "type": "class"
+        }
+      ]
+    },
+    "EngineConfig.kt": {
+      "hash": "05a105f49aab",
+      "indexed_at": "2026-08-01T03:59:35.054673+00:00",
+      "language": "kotlin",
+      "lines": 204,
+      "mtime_ns": 1785556376037899000,
+      "size": 10775,
+      "symbols": [
+        {
+          "lines": [
+            30,
+            46
+          ],
+          "name": "BeastTunables",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "docstring": "so two default configs (or two read from the same prefs) compare equal as callers expect.",
+              "lines": [
+                119,
+                135
+              ],
+              "name": "equals",
+              "signature": "(other: Any?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                137,
+                152
+              ],
+              "name": "hashCode",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            82,
+            153
+          ],
+          "name": "EngineConfig",
+          "type": "class"
+        },
+        {
+          "lines": [
+            160,
+            160
+          ],
+          "name": "PacingMode",
+          "type": "class"
+        },
+        {
+          "lines": [
+            175,
+            204
+          ],
+          "name": "EnginePreset",
+          "type": "class"
+        }
+      ]
+    },
+    "MONSTER_ENHANCEMENT_PLAN.md": {
+      "hash": "0d955dd3066b",
+      "indexed_at": "2026-08-01T03:59:36.536815+00:00",
+      "language": "markdown",
+      "lines": 108,
+      "mtime_ns": 1782500611976650600,
+      "size": 11085,
+      "symbols": [
+        {
+          "docstring": "The engine today is a **faithful, well-tested YeAH relay-selector with a CAKE-flavored fa\u00e7ade**. `runCycle()` (every `cycleMs`=5000) selectBestEndpoin",
+          "lines": [
+            6,
+            15
+          ],
+          "name": "1 \u00b7 The honest truth (verified, file-by-file)",
+          "type": "section"
+        },
+        {
+          "docstring": "**CAKE = which queries go now/wait/shed (AQM + fairness). YeAH = how many per upstream (window/rate, Little's law inflight=rate\u00d7RTT). Today conflated",
+          "lines": [
+            16,
+            22
+          ],
+          "name": "2 \u00b7 Core reframe (the spine)",
+          "type": "section"
+        },
+        {
+          "docstring": "- **3.1 Real COBALT** per tin (add `enqueuedAtMs` to DnsProbeRequest): CoDel on `sojourn=now\u2212enqueuedAtMs` (queue wait, not RTT): `target=5ms`, `inter",
+          "lines": [
+            23,
+            37
+          ],
+          "name": "3 \u00b7 Enhanced CAKE/AQM (Kotlin, no native)",
+          "type": "section"
+        },
+        {
+          "docstring": "**HARD constraint: keep `YeahController()` no-arg byte-identical** (8 pinned YeahControllerTest transitions + adaptiveTimeoutMs stay green). Real-YeAH",
+          "lines": [
+            38,
+            54
+          ],
+          "name": "4 \u00b7 Enhanced YeAH (per-upstream)",
+          "type": "section"
+        },
+        {
+          "docstring": "`nativeResolverConfigure(json)` = {upstream\u2192cwnd cap} + adaptiveTimeoutMs + pacing budget \u2192 resolver enforces `inflight[upstream] \u2264 cwnd[upstream]` vi",
+          "lines": [
+            55,
+            64
+          ],
+          "name": "5 \u00b7 Integration / Wave 2 Rust seam (2 JNI calls/cycle, NEVER per-query)",
+          "type": "section"
+        },
+        {
+          "docstring": "`upstreams: List<UpstreamMetric{name,protocol,cwnd,inflight,baseRttMs,jitterMs,mode,sent,ok,fail,timeout,qps}}` + globals `realQps`, `inflightTotal/cw",
+          "lines": [
+            65,
+            70
+          ],
+          "name": "6 \u00b7 Dashboard (every claim verifiable) \u2014 additive to DnsEngineMetrics",
+          "type": "section"
+        },
+        {
+          "docstring": "- **Stage A \u2014 internals behind profiles (no traffic change):** land \u00a73 in CakeScheduler + \u00a74 in YeahController behind CANONICAL/LINERATE; engine runs",
+          "lines": [
+            71,
+            89
+          ],
+          "name": "7 \u00b7 Staged rollout (flag `DNS_ENGINE_GOVERN` default false; every stage = emulator proof + tests green)",
+          "type": "section"
+        },
+        {
+          "docstring": "Pinned-test regression \u2192 LEGACY default + separate rttBaseFloor. Real query dropped \u2192 shed not discard + CRITICAL floor + <95% safety valve. Stale flo",
+          "lines": [
+            90,
+            96
+          ],
+          "name": "8 \u00b7 Risks \u2192 mitigations",
+          "type": "section"
+        },
+        {
+          "docstring": "dns_engine/core/{CakeScheduler.kt(\u00a73), DnsProbeRequest.kt(enqueuedAtMs + endpointIdx key), YeahController.kt(\u00a74 profile/Q/rttBaseFloor/onLossOrTimeout",
+          "lines": [
+            97,
+            109
+          ],
+          "name": "Files that matter",
+          "type": "section"
+        }
+      ]
+    },
+    "MonokumaDnsEngine.kt": {
+      "hash": "13713cc7ea3c",
+      "indexed_at": "2026-08-01T03:59:35.956725+00:00",
+      "language": "kotlin",
+      "lines": 474,
+      "mtime_ns": 1785556376049899500,
+      "size": 22488,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                146,
+                164
+              ],
+              "name": "start",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                166,
+                180
+              ],
+              "name": "stop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                182,
+                261
+              ],
+              "name": "runCycle",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                272,
+                291
+              ],
+              "name": "publishEngineContext",
+              "signature": "(endpointName: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                300,
+                310
+              ],
+              "name": "pushResolverBudget",
+              "signature": "(cwnd: Int, timeoutMs: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                313,
+                336
+              ],
+              "name": "selectBestEndpoint",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                338,
+                351
+              ],
+              "name": "retargetPool",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                370,
+                395
+              ],
+              "name": "enqueueBatch",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                398,
+                406
+              ],
+              "name": "degradedBatch",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                408,
+                408
+              ],
+              "name": "nextUdpId",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                410,
+                410
+              ],
+              "name": "BeastProbe",
+              "type": "class"
+            },
+            {
+              "lines": [
+                412,
+                412
+              ],
+              "name": "ProbeResult",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            74,
+            413
+          ],
+          "name": "MonokumaDnsEngine",
+          "type": "class"
+        },
+        {
+          "lines": [
+            422,
+            425
+          ],
+          "name": "pushRtt",
+          "signature": "(ring: java.util.ArrayDeque<Double>, value: Double)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            431,
+            436
+          ],
+          "name": "jitterStdOf",
+          "signature": "(ring: java.util.ArrayDeque<Double>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            439,
+            444
+          ],
+          "name": "p95Of",
+          "signature": "(ring: java.util.ArrayDeque<Double>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            457,
+            474
+          ],
+          "name": "buildBeastOrNull",
+          "signature": "(sink: BeastMetricSinkImpl, logDir: String? = null)",
+          "type": "function"
+        }
+      ]
+    },
+    "MonokumaDnsEngineManager.kt": {
+      "hash": "bc5f9581d01d",
+      "indexed_at": "2026-08-01T03:59:36.251718+00:00",
+      "language": "kotlin",
+      "lines": 236,
+      "mtime_ns": 1785556376062900000,
+      "size": 10995,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                75,
+                133
+              ],
+              "name": "startEngine",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                141,
+                162
+              ],
+              "name": "readEngineConfig",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                169,
+                181
+              ],
+              "name": "loadBlocklist",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                183,
+                197
+              ],
+              "name": "stopEngine",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                200,
+                200
+              ],
+              "name": "isRunning",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                204,
+                207
+              ],
+              "name": "onDnsCryptStarted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                214,
+                216
+              ],
+              "name": "onDnsCryptStopped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                222,
+                227
+              ],
+              "name": "restartEngine",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            50,
+            236
+          ],
+          "name": "MonokumaDnsEngineManager",
+          "type": "class"
+        }
+      ]
+    },
+    "PillarLog.kt": {
+      "hash": "f930b5967212",
+      "indexed_at": "2026-08-01T03:59:36.834586+00:00",
+      "language": "kotlin",
+      "lines": 168,
+      "mtime_ns": 1785556376073900000,
+      "size": 9452,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                77,
+                109
+              ],
+              "name": "Pillar",
+              "type": "class"
+            },
+            {
+              "lines": [
+                124,
+                125
+              ],
+              "name": "pathFor",
+              "signature": "(appDataDir: String, pillar: Pillar)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                132,
+                167
+              ],
+              "name": "event",
+              "signature": "(appDataDir: String, pillar: Pillar, event: String, vararg fields: Pair<String, Any?>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            55,
+            168
+          ],
+          "name": "PillarLog",
+          "type": "class"
+        }
+      ]
+    },
+    "QueryLogTailer.kt": {
+      "hash": "3a134cb4d759",
+      "indexed_at": "2026-08-01T03:59:37.123240+00:00",
+      "language": "kotlin",
+      "lines": 264,
+      "mtime_ns": 1785556376085898700,
+      "size": 13494,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                110,
+                110
+              ],
+              "name": "queryLogPath",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                119,
+                136
+              ],
+              "name": "start",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                139,
+                151
+              ],
+              "name": "stop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                159,
+                202
+              ],
+              "name": "tailOnce",
+              "signature": "(path: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                210,
+                226
+              ],
+              "name": "endsWithNewline",
+              "signature": "(raf: RandomAccessFile, pos: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                239,
+                257
+              ],
+              "name": "parseLine",
+              "signature": "(line: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            78,
+            264
+          ],
+          "name": "QueryLogTailer",
+          "type": "class"
+        }
+      ]
+    },
+    "ResolverRuntime.kt": {
+      "hash": "e72c471e3ceb",
+      "indexed_at": "2026-08-01T03:59:37.430844+00:00",
+      "language": "kotlin",
+      "lines": 2168,
+      "mtime_ns": 1785556376098898700,
+      "size": 124952,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                264,
+                364
+              ],
+              "name": "onDnsCryptStarted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                378,
+                459
+              ],
+              "name": "applyDnsmasqTogglesFromPref",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                477,
+                530
+              ],
+              "name": "applyDnscryptConfigAuthority",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                546,
+                553
+              ],
+              "name": "syncDurableSingleLists",
+              "signature": "(durableDir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                555,
+                566
+              ],
+              "name": "syncSingleList",
+              "signature": "(durableDir: String, path: String, record: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                584,
+                614
+              ],
+              "name": "armQueryFeedFromConfig",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                633,
+                639
+              ],
+              "name": "isNativeArmed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                648,
+                649
+              ],
+              "name": "durableDir",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                656,
+                713
+              ],
+              "name": "onDnsCryptStopped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                727,
+                765
+              ],
+              "name": "configureFromUpstreams",
+              "signature": "(dnsCryptRunning: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                794,
+                805
+              ],
+              "name": "poolMode",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                830,
+                872
+              ],
+              "name": "buildSpecsJson",
+              "signature": "(dnsCryptRunning: Boolean, mode: PoolMode)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                894,
+                962
+              ],
+              "name": "deriveConfiguredUpstreams",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                978,
+                1075
+              ],
+              "name": "deriveConfiguredUpstreamsTyped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1079,
+                1083
+              ],
+              "name": "OdohUpstream",
+              "type": "class"
+            },
+            {
+              "lines": [
+                1093,
+                1140
+              ],
+              "name": "deriveOdohUpstreams",
+              "signature": "(\n        cfg: uniffi.torta_core.DnscryptProxyConfig,\n        pv: PathVars,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1160,
+                1214
+              ],
+              "name": "applyRotatedPool",
+              "signature": "(\n        specs: List<uniffi.torta_core.UpstreamSpec>,\n        timeoutMs: Long,\n        cacheCap:...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1222,
+                1229
+              ],
+              "name": "warmStartRtt",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1242,
+                1255
+              ],
+              "name": "wrapSpecs",
+              "signature": "(upstreams: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1260,
+                1266
+              ],
+              "name": "PoolMode",
+              "type": "class"
+            },
+            {
+              "lines": [
+                1276,
+                1300
+              ],
+              "name": "startFallbackCheckLoop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1308,
+                1316
+              ],
+              "name": "checkpointCache",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1319,
+                1326
+              ],
+              "name": "stopFallbackCheckLoop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1351,
+                1398
+              ],
+              "name": "maybeFallbackToGo",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1418,
+                1433
+              ],
+              "name": "reconfigure",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1440,
+                1440
+              ],
+              "name": "ResolverStatsSnap",
+              "type": "class"
+            },
+            {
+              "lines": [
+                1448,
+                1458
+              ],
+              "name": "parseResolverStats",
+              "signature": "(json: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1461,
+                1472
+              ],
+              "name": "jsonLong",
+              "signature": "(json: String, key: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1491,
+                1589
+              ],
+              "name": "shadowCompare",
+              "signature": "(rr: ResourceRecord)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1626,
+                1732
+              ],
+              "name": "shadowCompare",
+              "signature": "(qname: String, realReturnCode: String?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1741,
+                1744
+              ],
+              "name": "isPositiveReturnCode",
+              "signature": "(rcode: String?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1752,
+                1771
+              ],
+              "name": "shouldShadowNow",
+              "signature": "(qname: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1785,
+                1786
+              ],
+              "name": "synthQuery",
+              "signature": "(qname: String, qtype: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1800,
+                1833
+              ],
+              "name": "buildWireQuery",
+              "signature": "(qname: String, qtype: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1842,
+                1842
+              ],
+              "name": "ShadowAnswer",
+              "type": "class"
+            },
+            {
+              "lines": [
+                1849,
+                1896
+              ],
+              "name": "parseAnswer",
+              "signature": "(resp: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1917,
+                1965
+              ],
+              "name": "recordsAgree",
+              "signature": "(\n        shadow: ShadowAnswer,\n        qtype: Int,\n        realFamily: Int,\n        realResource...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1973,
+                1979
+              ],
+              "name": "ipFamilyOf",
+              "signature": "(resource: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "----",
+              "lines": [
+                1984,
+                1987
+              ],
+              "name": "u16",
+              "signature": "(b: ByteArray, off: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1994,
+                2008
+              ],
+              "name": "skipName",
+              "signature": "(b: ByteArray, start: Int)",
+              "type": "method"
+            },
+            {
+              "docstring": "---- Shadow telemetry (compact, periodic, qname-free at default verbosity, T20). ----",
+              "lines": [
+                2012,
+                2029
+              ],
+              "name": "maybeLogShadowSummary",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2031,
+                2057
+              ],
+              "name": "logShadowSummary",
+              "signature": "(reason: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            90,
+            2168
+          ],
+          "name": "ResolverRuntime",
+          "type": "class"
+        }
+      ]
+    },
+    "RotationManager.kt": {
+      "hash": "5a200a87e8cb",
+      "indexed_at": "2026-08-01T03:59:37.734157+00:00",
+      "language": "kotlin",
+      "lines": 1307,
+      "mtime_ns": 1785556376110899800,
+      "size": 78151,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                187,
+                227
+              ],
+              "name": "start",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                230,
+                241
+              ],
+              "name": "stop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                258,
+                271
+              ],
+              "name": "onCadencePrefChanged",
+              "signature": "(prefs: SharedPreferences)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                274,
+                274
+              ],
+              "name": "onDnsCryptStarted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                281,
+                290
+              ],
+              "name": "onDnsCryptStopped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                293,
+                293
+              ],
+              "name": "isRunning",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                305,
+                320
+              ],
+              "name": "rotateNow",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                332,
+                348
+              ],
+              "name": "bootPickThenLoop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                359,
+                382
+              ],
+              "name": "rotationLoop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                390,
+                398
+              ],
+              "name": "checkpointRotationRtt",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                413,
+                551
+              ],
+              "name": "rotateOnce",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                574,
+                593
+              ],
+              "name": "poolAnswersRealQueries",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                605,
+                616
+              ],
+              "name": "probeReachable",
+              "signature": "(rotated: RotatedSet)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                626,
+                643
+              ],
+              "name": "filterRoutableRelayPairs",
+              "signature": "(\n        relayPairs: List<Pair<String, String>>,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                650,
+                651
+              ],
+              "name": "renderRttHints",
+              "signature": "(samples: List<RotationPing.RttSample>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                658,
+                667
+              ],
+              "name": "seedCommittedRtt",
+              "signature": "(samples: List<RotationPing.RttSample>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                681,
+                703
+              ],
+              "name": "rehydrateRotationCursor",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                714,
+                730
+              ],
+              "name": "persistRotationCursor",
+              "signature": "(rttHints: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                738,
+                739
+              ],
+              "name": "durableDir",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                745,
+                752
+              ],
+              "name": "parseField",
+              "signature": "(summary: String, key: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                769,
+                801
+              ],
+              "name": "composeRotatedUpstreams",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                813,
+                836
+              ],
+              "name": "rotationPolicy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                846,
+                903
+              ],
+              "name": "buildRotatedSet",
+              "signature": "(\n        picked: List<RotationSelector.ResolverCandidate>,\n        stampedById: Map<String, Rota...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                910,
+                911
+              ],
+              "name": "readMaxServers",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                914,
+                915
+              ],
+              "name": "readMaxRelays",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                925,
+                963
+              ],
+              "name": "applyRotationToDnscrypt",
+              "signature": "(rotated: RotatedSet)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                968,
+                977
+              ],
+              "name": "RotatedSet",
+              "type": "class"
+            },
+            {
+              "lines": [
+                995,
+                1003
+              ],
+              "name": "readCadenceMs",
+              "signature": "(prefs: SharedPreferences)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            101,
+            1307
+          ],
+          "name": "RotationManager",
+          "type": "class"
+        }
+      ]
+    },
+    "RotationPing.kt": {
+      "hash": "3890b5ba0e8f",
+      "indexed_at": "2026-08-01T03:59:38.065198+00:00",
+      "language": "kotlin",
+      "lines": 179,
+      "mtime_ns": 1785556376122900600,
+      "size": 9681,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                86,
+                90
+              ],
+              "name": "Candidate",
+              "type": "class"
+            },
+            {
+              "lines": [
+                93,
+                96
+              ],
+              "name": "RttSample",
+              "type": "class"
+            },
+            {
+              "lines": [
+                104,
+                117
+              ],
+              "name": "rttFor",
+              "signature": "(candidate: Candidate)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                125,
+                130
+              ],
+              "name": "rankCandidates",
+              "signature": "(candidates: List<Candidate>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                143,
+                152
+              ],
+              "name": "filterRoutableRelays",
+              "signature": "(relays: List<Candidate>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            67,
+            179
+          ],
+          "name": "RotationPing",
+          "type": "class"
+        }
+      ]
+    },
+    "RotationPoolSource.kt": {
+      "hash": "3786144b4067",
+      "indexed_at": "2026-08-01T03:59:38.369867+00:00",
+      "language": "kotlin",
+      "lines": 352,
+      "mtime_ns": 1785556376135901400,
+      "size": 18444,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                48,
+                52
+              ],
+              "name": "StampedCandidate",
+              "type": "class"
+            },
+            {
+              "lines": [
+                61,
+                67
+              ],
+              "name": "readNamedStamps",
+              "signature": "(path: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                70,
+                88
+              ],
+              "name": "scanNamedStamps",
+              "signature": "(lines: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                96,
+                97
+              ],
+              "name": "readStampedCandidates",
+              "signature": "(path: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                104,
+                111
+              ],
+              "name": "decodeStamped",
+              "signature": "(name: String, sdns: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                125,
+                151
+              ],
+              "name": "decodeStampBytes",
+              "signature": "(name: String, sdns: String, bin: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                162,
+                181
+              ],
+              "name": "policyFromPrefs",
+              "signature": "(prefs: SharedPreferences)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                193,
+                216
+              ],
+              "name": "policyFromConfig",
+              "signature": "(\n        requireNolog: Boolean,\n        requireDnssec: Boolean,\n        requireNofilter: Boolean...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                228,
+                247
+              ],
+              "name": "policyFromConfigOdoh",
+              "signature": "(\n        requireNolog: Boolean,\n        requireDnssec: Boolean,\n        requireNofilter: Boolean...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                255,
+                276
+              ],
+              "name": "decodeDnscryptAddr",
+              "signature": "(bin: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                288,
+                299
+              ],
+              "name": "stampFamily",
+              "signature": "(proto: Int, bin: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                309,
+                320
+              ],
+              "name": "familyOfAddr",
+              "signature": "(addr: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                328,
+                329
+              ],
+              "name": "isCleanToken",
+              "signature": "(s: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            37,
+            352
+          ],
+          "name": "RotationPoolSource",
+          "type": "class"
+        }
+      ]
+    },
+    "RotationSelector.kt": {
+      "hash": "3775a5eea630",
+      "indexed_at": "2026-08-01T03:59:38.668881+00:00",
+      "language": "kotlin",
+      "lines": 322,
+      "mtime_ns": 1785556376148900600,
+      "size": 20936,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                89,
+                100
+              ],
+              "name": "ResolverCandidate",
+              "type": "class"
+            },
+            {
+              "lines": [
+                122,
+                153
+              ],
+              "name": "RotationPolicy",
+              "type": "class"
+            },
+            {
+              "lines": [
+                176,
+                189
+              ],
+              "name": "select",
+              "signature": "(\n        candidates: List<ResolverCandidate>,\n        lastOperatorFamily: String?,\n        polic...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                201,
+                215
+              ],
+              "name": "selectRandomSet",
+              "signature": "(\n        candidates: List<ResolverCandidate>,\n        lastOperatorFamily: String?,\n        seed:...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                225,
+                236
+              ],
+              "name": "filterTrusted",
+              "signature": "(\n        candidates: List<ResolverCandidate>,\n        policy: RotationPolicy = RotationPolicy(),...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                244,
+                251
+              ],
+              "name": "excludeFamily",
+              "signature": "(\n        candidates: List<ResolverCandidate>,\n        lastOperatorFamily: String?,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                267,
+                274
+              ],
+              "name": "score",
+              "signature": "(candidate: ResolverCandidate, policy: RotationPolicy = RotationPolicy())",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            56,
+            322
+          ],
+          "name": "RotationSelector",
+          "type": "class"
+        }
+      ]
+    },
+    "RuntimeTierManager.kt": {
+      "hash": "760ab031834a",
+      "indexed_at": "2026-08-01T03:59:38.968735+00:00",
+      "language": "kotlin",
+      "lines": 422,
+      "mtime_ns": 1785556376161900800,
+      "size": 27014,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                141,
+                158
+              ],
+              "name": "start",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                166,
+                173
+              ],
+              "name": "stop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                176,
+                176
+              ],
+              "name": "onDnsCryptStarted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                183,
+                189
+              ],
+              "name": "onDnsCryptStopped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                192,
+                192
+              ],
+              "name": "isRunning",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                216,
+                383
+              ],
+              "name": "rehydrateTier",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                386,
+                390
+              ],
+              "name": "decodeBase64",
+              "signature": "(text: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            104,
+            422
+          ],
+          "name": "RuntimeTierManager",
+          "type": "class"
+        }
+      ]
+    },
+    "SolverCacheManager.kt": {
+      "hash": "20c7d1ef2950",
+      "indexed_at": "2026-08-01T03:59:42.715828+00:00",
+      "language": "kotlin",
+      "lines": 311,
+      "mtime_ns": 1785556376174902700,
+      "size": 16488,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                106,
+                133
+              ],
+              "name": "start",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                143,
+                176
+              ],
+              "name": "onPoolApplied",
+              "signature": "(resolverId: String, rttMs: Int, nowMs: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                184,
+                203
+              ],
+              "name": "onPoolUnreachable",
+              "signature": "(nowMs: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                211,
+                214
+              ],
+              "name": "persistThrough",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                223,
+                271
+              ],
+              "name": "currentFingerprint",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- the FFI row mapping (LockedBinding \u21c4 SolverBindingRow, field-for-field, lossless) ----",
+              "lines": [
+                275,
+                285
+              ],
+              "name": "toRow",
+              "signature": "(fpKey: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                287,
+                296
+              ],
+              "name": "toLockedBinding",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                298,
+                303
+              ],
+              "name": "toFfi",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                305,
+                310
+              ],
+              "name": "fromFfi",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            83,
+            311
+          ],
+          "name": "SolverCacheManager",
+          "type": "class"
+        }
+      ]
+    },
+    "SourceListUpdateManager.kt": {
+      "hash": "26f6a229e513",
+      "indexed_at": "2026-08-01T03:59:43.024711+00:00",
+      "language": "kotlin",
+      "lines": 679,
+      "mtime_ns": 1785556376188899500,
+      "size": 34920,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                114,
+                135
+              ],
+              "name": "start",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                138,
+                141
+              ],
+              "name": "stop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                144,
+                144
+              ],
+              "name": "onDnsCryptStarted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                150,
+                156
+              ],
+              "name": "onDnsCryptStopped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                169,
+                183
+              ],
+              "name": "refreshAllLists",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                193,
+                201
+              ],
+              "name": "awaitResolverReady",
+              "signature": "(canaryHost: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                207,
+                269
+              ],
+              "name": "refreshOne",
+              "signature": "(spec: ListSpec, dir: File)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            85,
+            679
+          ],
+          "name": "SourceListUpdateManager",
+          "type": "class"
+        }
+      ]
+    },
+    "TrustManager.kt": {
+      "hash": "e2009272a86f",
+      "indexed_at": "2026-08-01T03:59:43.326761+00:00",
+      "language": "kotlin",
+      "lines": 607,
+      "mtime_ns": 1785556376201900400,
+      "size": 33620,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                135,
+                161
+              ],
+              "name": "start",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                164,
+                171
+              ],
+              "name": "stop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                174,
+                174
+              ],
+              "name": "onDnsCryptStarted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                180,
+                190
+              ],
+              "name": "onDnsCryptStopped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                193,
+                193
+              ],
+              "name": "isRunning",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                205,
+                246
+              ],
+              "name": "scoreAndPublish",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                249,
+                253
+              ],
+              "name": "publishIdle",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                287,
+                308
+              ],
+              "name": "readOverBlockWarnings",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                317,
+                342
+              ],
+              "name": "parseSidecarJson",
+              "signature": "(text: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                359,
+                364
+              ],
+              "name": "OverBlockWarning",
+              "type": "class"
+            },
+            {
+              "lines": [
+                371,
+                394
+              ],
+              "name": "WarnKind",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            79,
+            437
+          ],
+          "name": "TrustManager",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                481,
+                503
+              ],
+              "name": "scoreInstalledList",
+              "signature": "(appDataDir: String? = null)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                515,
+                567
+              ],
+              "name": "crownReputation",
+              "signature": "(fingerprint: Long, appDataDir: String?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                594,
+                606
+              ],
+              "name": "computeScore",
+              "signature": "(\n        signed: Boolean,\n        baseTrust: Int,\n        reputation: Int,\n        corroboration...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            453,
+            607
+          ],
+          "name": "InstalledListTrust",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:43.328505+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,4667 @@
+{
+  "directory": "rust\\torta_core\\src\\warden",
+  "files": {
+    "asn.rs": {
+      "hash": "3b4433b0edfa",
+      "indexed_at": "2026-07-26T19:12:58.157388+00:00",
+      "language": "rust",
+      "lines": 187,
+      "mtime_ns": 1785030833278604300,
+      "size": 8545,
+      "symbols": [
+        {
+          "docstring": "the tracker's `asn = \"\"`, which the ASN fold skips (the `asName != ''` Dao discipline).",
+          "lines": [
+            49,
+            60
+          ],
+          "name": "as_name",
+          "signature": "(ip: IpAddr)",
+          "type": "function"
+        },
+        {
+          "docstring": "Start-table probe \u2192 `name_id`, or `None` on the sentinel / before the first record.",
+          "lines": [
+            63,
+            69
+          ],
+          "name": "lookup",
+          "signature": "(table: &[u8], rec: usize, key: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "non-UTF-8) degrades to `None` \u2014 corrupt data renders blank, never panics.",
+          "lines": [
+            73,
+            90
+          ],
+          "name": "name_at",
+          "signature": "(blob: &[u8], id: u32)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                96,
+                98
+              ],
+              "name": "ip",
+              "signature": "(s: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "[10,20) = ALPHA \u00b7 [20,30) = SENTINEL gap \u00b7 [30,50) = BETA \u00b7 [50,\u221e) = SENTINEL tail.",
+              "lines": [
+                102,
+                115
+              ],
+              "name": "fixture",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                118,
+                132
+              ],
+              "name": "lookup_and_name_boundary_semantics_on_a_synthetic_table",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                135,
+                158
+              ],
+              "name": "embedded_tables_are_well_formed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                161,
+                173
+              ],
+              "name": "stable_anchors_resolve_to_their_networks",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                176,
+                180
+              ],
+              "name": "unrouted_space_is_unknown_never_a_guess",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                183,
+                186
+              ],
+              "name": "v4_mapped_v6_routes_to_the_v4_table",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            93,
+            187
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "attribution.rs": {
+      "hash": "b70edb08ad8e",
+      "indexed_at": "2026-07-28T23:13:00.023074+00:00",
+      "language": "rust",
+      "lines": 329,
+      "mtime_ns": 1785280235878395000,
+      "size": 15555,
+      "symbols": [
+        {
+          "docstring": "One remembered attribution: the query qname + the instant it stops being trustworthy.",
+          "lines": [
+            54,
+            57
+          ],
+          "name": "Entry",
+          "type": "struct"
+        },
+        {
+          "docstring": "entry, and stale entries are already the documented failure mode.",
+          "lines": [
+            63,
+            65
+          ],
+          "name": "AttributionMap",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                68,
+                70
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                95
+              ],
+              "name": "record",
+              "signature": "(&self, ip: IpAddr, domain: &str, ttl_secs: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                105,
+                107
+              ],
+              "name": "record_at",
+              "signature": "(&self, ip: IpAddr, domain: &str, ttl_secs: u32, now: Instant)",
+              "type": "method"
+            },
+            {
+              "docstring": "shared across the reply's addresses.",
+              "lines": [
+                111,
+                118
+              ],
+              "name": "record_reply",
+              "signature": "(&self, qname: &str, addrs: &[(IpAddr, u32)], now: Instant)",
+              "type": "method"
+            },
+            {
+              "docstring": "The one insert path: clamp the TTL, sweep/evict at cap, insert.",
+              "lines": [
+                121,
+                134
+              ],
+              "name": "record_at_shared",
+              "signature": "(&self, ip: IpAddr, domain: Arc<str>, ttl_secs: u32, now: Instant)",
+              "type": "method"
+            },
+            {
+              "docstring": "next at-cap sweep.",
+              "lines": [
+                140,
+                142
+              ],
+              "name": "lookup",
+              "signature": "(&self, ip: &IpAddr)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                144,
+                147
+              ],
+              "name": "lookup_at",
+              "signature": "(&self, ip: &IpAddr, now: Instant)",
+              "type": "method"
+            },
+            {
+              "docstring": "truth gauge).",
+              "lines": [
+                151,
+                153
+              ],
+              "name": "len",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                155,
+                157
+              ],
+              "name": "is_empty",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            67,
+            158
+          ],
+          "name": "AttributionMap",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                161,
+                163
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            160,
+            164
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "docstring": "The process-global attribution map \u2014 the resolve hooks write here, verdict() reads here.",
+          "lines": [
+            173,
+            175
+          ],
+          "name": "global",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "malformed, negative, or address-free \u2014 never an error: attribution is best-effort by law).",
+          "lines": [
+            181,
+            189
+          ],
+          "name": "record_from_reply",
+          "signature": "(reply: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "Global-map lookup \u2014 the verdict() seam.",
+          "lines": [
+            192,
+            194
+          ],
+          "name": "lookup",
+          "signature": "(ip: &IpAddr)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                205,
+                207
+              ],
+              "name": "ip",
+              "signature": "(s: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                210,
+                217
+              ],
+              "name": "record_then_lookup_roundtrip",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                220,
+                226
+              ],
+              "name": "entry_expires_at_its_deadline",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                229,
+                240
+              ],
+              "name": "ttl_clamps_floor_and_ceiling",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                243,
+                252
+              ],
+              "name": "rerecord_replaces_domain_and_refreshes_deadline",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                255,
+                270
+              ],
+              "name": "at_cap_sweeps_expired_first",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                273,
+                290
+              ],
+              "name": "at_cap_with_no_corpses_evicts_earliest_deadline",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                293,
+                302
+              ],
+              "name": "record_reply_shares_one_domain_across_addrs",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                305,
+                328
+              ],
+              "name": "record_from_reply_end_to_end_and_rejects_junk",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            202,
+            329
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "cidr_match.rs": {
+      "hash": "67ff261d0a06",
+      "indexed_at": "2026-07-29T00:46:28.172203+00:00",
+      "language": "rust",
+      "lines": 236,
+      "mtime_ns": 1785284655489337500,
+      "size": 9456,
+      "symbols": [
+        {
+          "lines": [
+            34,
+            49
+          ],
+          "name": "CidrMatch",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "idea, expressed as the enum tag). One masked compare per family; no allocation.",
+              "lines": [
+                55,
+                66
+              ],
+              "name": "matches",
+              "signature": "(&self, addr: IpAddr)",
+              "type": "method"
+            },
+            {
+              "docstring": "directly.",
+              "lines": [
+                73,
+                102
+              ],
+              "name": "parse",
+              "signature": "(input: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            51,
+            103
+          ],
+          "name": "CidrMatch",
+          "type": "impl"
+        },
+        {
+          "docstring": "1..=31`), so no overflow.",
+          "lines": [
+            108,
+            117
+          ],
+          "name": "v4_contains",
+          "signature": "(net: u32, prefix: u8, ip: u32)",
+          "type": "function"
+        },
+        {
+          "docstring": "`ip` \u2208 `net/prefix` for IPv6 \u2014 the masked compare (the `u128` sibling of [`v4_contains`]).",
+          "lines": [
+            120,
+            129
+          ],
+          "name": "v6_contains",
+          "signature": "(net: u128, prefix: u8, ip: u128)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                136,
+                138
+              ],
+              "name": "v4",
+              "signature": "(s: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                139,
+                141
+              ],
+              "name": "v6",
+              "signature": "(s: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                144,
+                178
+              ],
+              "name": "cidr_match_v4_v6",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                181,
+                188
+              ],
+              "name": "prefix_zero_matches_all",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                191,
+                203
+              ],
+              "name": "family_mismatch_never_matches",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                206,
+                235
+              ],
+              "name": "parse_round_trips_v4_and_v6",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            132,
+            236
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "geoip.rs": {
+      "hash": "4ad7b6591354",
+      "indexed_at": "2026-07-26T19:12:58.162437+00:00",
+      "language": "rust",
+      "lines": 172,
+      "mtime_ns": 1785030833309604800,
+      "size": 8705,
+      "symbols": [
+        {
+          "docstring": "`None` is the tracker's `cc = \"\"` \u2192 the \ud83c\udf10 globe: unknown renders as unknown, never as a guess.",
+          "lines": [
+            50,
+            55
+          ],
+          "name": "country_code",
+          "signature": "(ip: IpAddr)",
+          "type": "function"
+        },
+        {
+          "docstring": "(a mislabeled IP is the user's known trade-off), surfaced as such in the inspector.",
+          "lines": [
+            66,
+            74
+          ],
+          "name": "country_code_raw",
+          "signature": "(ip: IpAddr)",
+          "type": "function"
+        },
+        {
+          "docstring": "precedes the first record or lands on a `[0,0]` UNKNOWN sentinel.",
+          "lines": [
+            78,
+            83
+          ],
+          "name": "lookup",
+          "signature": "(table: &[u8], rec: usize, key: u64)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                89,
+                91
+              ],
+              "name": "ip",
+              "signature": "(s: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "[10,20) = aa \u00b7 [20,30) = SENTINEL gap \u00b7 [30,50) = bb \u00b7 [50,\u221e) = SENTINEL tail.",
+              "lines": [
+                95,
+                102
+              ],
+              "name": "fixture",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                105,
+                118
+              ],
+              "name": "lookup_boundary_semantics_on_a_synthetic_table",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                144
+              ],
+              "name": "embedded_tables_are_well_formed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                147,
+                156
+              ],
+              "name": "stable_anchors_resolve_to_their_registries",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                159,
+                163
+              ],
+              "name": "unrouted_space_is_unknown_never_a_guess",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                166,
+                171
+              ],
+              "name": "v4_mapped_v6_routes_to_the_v4_table",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            86,
+            172
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "log.rs": {
+      "hash": "cbfad5e03c8a",
+      "indexed_at": "2026-07-29T00:46:28.471374+00:00",
+      "language": "rust",
+      "lines": 222,
+      "mtime_ns": 1785284655497338000,
+      "size": 8932,
+      "symbols": [
+        {
+          "docstring": "The human-legible reason token for a DENY \u2014 the rule class that fired (first-match). `-` on an ALLOW.",
+          "lines": [
+            45,
+            52
+          ],
+          "name": "reason_token",
+          "signature": "(reason: Option<DnsDenyReason>)",
+          "type": "function"
+        },
+        {
+          "docstring": "device-local and bounded (the T20 ring) \u2014 never network-exported.",
+          "lines": [
+            65,
+            88
+          ],
+          "name": "format_dns_line",
+          "signature": "(\r\n    now_ms: u64,\r\n    verdict: Verdict,\r\n    name: &str,\r\n    addrs: &[IpAddr],\r\n    reason: O...",
+          "type": "function"
+        },
+        {
+          "docstring": "dir \u2192 no path \u2192 no log).",
+          "lines": [
+            94,
+            111
+          ],
+          "name": "append_dns_verdict",
+          "signature": "(\r\n    path: &Path,\r\n    now_ms: u64,\r\n    verdict: Verdict,\r\n    name: &str,\r\n    addrs: &[IpAdd...",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                118,
+                120
+              ],
+              "name": "v4",
+              "signature": "(s: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                123,
+                136
+              ],
+              "name": "format_allow_line_is_deterministic",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                139,
+                172
+              ],
+              "name": "format_deny_lines_carry_the_reason",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                175,
+                181
+              ],
+              "name": "empty_name_renders_dash",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                184,
+                221
+              ],
+              "name": "round_trips_through_log_tier",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            114,
+            222
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "mod.rs": {
+      "hash": "1c0ae47ec50c",
+      "indexed_at": "2026-07-30T23:02:12.196877+00:00",
+      "language": "rust",
+      "lines": 4557,
+      "mtime_ns": 1785452487689529900,
+      "size": 220053,
+      "symbols": [
+        {
+          "docstring": "[`object`] for the why. Always-built (NOT feature-gated \u2014 the Warden ships in every config).",
+          "lines": [
+            59,
+            59
+          ],
+          "name": "object",
+          "type": "module"
+        },
+        {
+          "docstring": "dnsmasq-2.93 `pattern.c` (IDEAS only \u2014 the Russ Cox public glob + RFC-1123); ZERO derived bytes.",
+          "lines": [
+            64,
+            64
+          ],
+          "name": "pattern",
+          "type": "module"
+        },
+        {
+          "docstring": "family-tagged prefix match. Closes the v4-only gap for the DNS-answer address-walk; ZERO derived bytes.",
+          "lines": [
+            68,
+            68
+          ],
+          "name": "cidr_match",
+          "type": "module"
+        },
+        {
+          "docstring": "TIER-5 `dns_blocked` seam the per-connection cascade consumes; ZERO derived bytes.",
+          "lines": [
+            73,
+            73
+          ],
+          "name": "verdict_loop",
+          "type": "module"
+        },
+        {
+          "docstring": "review-channel seam ([`Warden::dns_verdict_logged`]) \u2014 never the pure hot-path verdict.",
+          "lines": [
+            78,
+            78
+          ],
+          "name": "log",
+          "type": "module"
+        },
+        {
+          "docstring": "(slice-2, LIVE); the `asn` producer is [`asn`] (slice-3, LIVE).",
+          "lines": [
+            85,
+            85
+          ],
+          "name": "tracker",
+          "type": "module"
+        },
+        {
+          "docstring": "attribution must never drive a DENY) holds by construction: nothing on a verdict path reads this.",
+          "lines": [
+            91,
+            91
+          ],
+          "name": "geoip",
+          "type": "module"
+        },
+        {
+          "docstring": "informs the panel, never a verdict.",
+          "lines": [
+            97,
+            97
+          ],
+          "name": "asn",
+          "type": "module"
+        },
+        {
+          "docstring": "numeric compare, so one search body serves every key width.",
+          "lines": [
+            101,
+            101
+          ],
+          "name": "start_table",
+          "type": "module"
+        },
+        {
+          "docstring": "label must NEVER drive a DENY) is enforced by the consumer's bare re-ask, documented there.",
+          "lines": [
+            107,
+            107
+          ],
+          "name": "attribution",
+          "type": "module"
+        },
+        {
+          "lines": [
+            123,
+            134
+          ],
+          "name": "NetworkType",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            141,
+            147
+          ],
+          "name": "Verdict",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            168,
+            187
+          ],
+          "name": "WardenStats",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            198,
+            216
+          ],
+          "name": "ConnFacts",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            231,
+            238
+          ],
+          "name": "CacheKey",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                241,
+                250
+              ],
+              "name": "from_conn",
+              "signature": "(conn: &ConnFacts)",
+              "type": "method"
+            },
+            {
+              "docstring": "MISS+recompute, NEVER a wrong verdict.",
+              "lines": [
+                256,
+                263
+              ],
+              "name": "matches",
+              "signature": "(&self, conn: &ConnFacts)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            240,
+            264
+          ],
+          "name": "CacheKey",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            271,
+            279
+          ],
+          "name": "CacheSlot",
+          "type": "struct"
+        },
+        {
+          "docstring": "D16/D20 deliberately keep the two recency engines in step, `warden/mod.rs:233-235` documents the twin.)",
+          "lines": [
+            289,
+            299
+          ],
+          "name": "DecisionCache",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                302,
+                311
+              ],
+              "name": "new",
+              "signature": "(cap: usize)",
+              "type": "method"
+            },
+            {
+              "docstring": "same bucket.",
+              "lines": [
+                317,
+                326
+              ],
+              "name": "hash_conn",
+              "signature": "(conn: &ConnFacts)",
+              "type": "method"
+            },
+            {
+              "docstring": "slot's old recency entry, assign a fresh monotonic seq, re-insert. No-op if absent.",
+              "lines": [
+                330,
+                337
+              ],
+              "name": "touch",
+              "signature": "(&mut self, hash: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "epoch-stale entry is dropped (a miss). No owned [`CacheKey`] is built on this path.",
+              "lines": [
+                342,
+                367
+              ],
+              "name": "get",
+              "signature": "(&mut self, conn: &ConnFacts, live_epoch: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "`cap`. The owned [`CacheKey`] is built HERE \u2014 the ONLY clone, on the miss/insert path.",
+              "lines": [
+                371,
+                398
+              ],
+              "name": "insert",
+              "signature": "(&mut self, conn: &ConnFacts, verdict: Verdict, epoch: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "keeps advancing \u2014 a monotonic stamp never needs resetting.",
+              "lines": [
+                402,
+                405
+              ],
+              "name": "clear",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Live entry count (the RAM hot-tier size the snapshot surfaces).",
+              "lines": [
+                408,
+                410
+              ],
+              "name": "len",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                414,
+                418
+              ],
+              "name": "contains_conn",
+              "signature": "(&self, conn: &ConnFacts)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            301,
+            419
+          ],
+          "name": "DecisionCache",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            452,
+            471
+          ],
+          "name": "UniversalToggles",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "reads the individual bits directly); exercised by tests.",
+              "lines": [
+                476,
+                478
+              ],
+              "name": "is_empty",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "bit order is STABLE (a format contract \u2014 never reorder; a new toggle takes the next free bit).",
+              "lines": [
+                482,
+                492
+              ],
+              "name": "to_bits",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "off) \u2014 a fail-safe, never an over-block.",
+              "lines": [
+                497,
+                509
+              ],
+              "name": "from_bits",
+              "signature": "(bits: u16)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            473,
+            510
+          ],
+          "name": "UniversalToggles",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            521,
+            534
+          ],
+          "name": "AppMatrixRow",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "A per-app row with no special mode, no meteredness block, no temp-allow \u2014 the default-allow row.",
+              "lines": [
+                542,
+                549
+              ],
+              "name": "new",
+              "signature": "(uid: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "(a lockdown is NOT paused by a temp-allow; an app-level block IS).",
+              "lines": [
+                554,
+                556
+              ],
+              "name": "temp_allow_active",
+              "signature": "(&self, now_ms: u64)",
+              "type": "method"
+            }
+          ],
+          "docstring": "driving `expire_temp_allows` so the sweep and the cascade cannot disagree about what active means.",
+          "lines": [
+            540,
+            557
+          ],
+          "name": "AppMatrixRow",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            563,
+            565
+          ],
+          "name": "AppMatrix",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "An empty matrix (the default-allow baseline \u2014 no rows \u21d2 the per-app tier abstains).",
+              "lines": [
+                569,
+                571
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "the per-app verdict tier).",
+              "lines": [
+                575,
+                577
+              ],
+              "name": "set",
+              "signature": "(&mut self, row: AppMatrixRow)",
+              "type": "method"
+            },
+            {
+              "docstring": "Remove the row for `uid` (e.g. on app uninstall \u2014 the tombstone is a separate concern, slice 2).",
+              "lines": [
+                580,
+                582
+              ],
+              "name": "remove",
+              "signature": "(&mut self, uid: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "subject to `UniversalToggles::block_new_apps` + `block_unknown_conns`, TIER 2).",
+              "lines": [
+                586,
+                588
+              ],
+              "name": "get",
+              "signature": "(&self, uid: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "durable user intent for one UID). Order unspecified (the Object sorts for a stable UI).",
+              "lines": [
+                592,
+                594
+              ],
+              "name": "rows",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The number of held rows.",
+              "lines": [
+                597,
+                599
+              ],
+              "name": "len",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "True if the matrix holds no rows. Convenience predicate; exercised by tests.",
+              "lines": [
+                602,
+                604
+              ],
+              "name": "is_empty",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "kept (mode/meteredness are durable user intent \u2014 only the TTL'd pause expires).",
+              "lines": [
+                612,
+                627
+              ],
+              "name": "expire_temp_allows",
+              "signature": "(&mut self, now_ms: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "the same call. Durable user intent (mode / meteredness) on an existing row is preserved.",
+              "lines": [
+                640,
+                645
+              ],
+              "name": "grant_temp_allow",
+              "signature": "(&mut self, uid: u32, expires_at_ms: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "without reaching into the row's representation.",
+              "lines": [
+                650,
+                656
+              ],
+              "name": "temp_allow_of",
+              "signature": "(&self, uid: u32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            567,
+            657
+          ],
+          "name": "AppMatrix",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            669,
+            681
+          ],
+          "name": "WardenRuleSets",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            687,
+            696
+          ],
+          "name": "DenyTier",
+          "type": "enum"
+        },
+        {
+          "docstring": "removed \u2014 denies come only from the matrix / toggles / rule-sets / the `dns_blocked` seam).",
+          "lines": [
+            705,
+            756
+          ],
+          "name": "Warden",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "an empty Warden is the explicit \"armed but no rules\" state",
+              "lines": [
+                762,
+                764
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Construct with an explicit cache cap (the W3 Expert-tuned RAM-tier knob). Allow-by-default.",
+              "lines": [
+                767,
+                780
+              ],
+              "name": "with_cache_cap",
+              "signature": "(cap: usize)",
+              "type": "method"
+            },
+            {
+              "docstring": "surface). Flushes the cache on a flip (defensive \u2014 a posture change never stale-serves).",
+              "lines": [
+                785,
+                790
+              ],
+              "name": "set_fail_closed",
+              "signature": "(&mut self, fail_closed: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "re-decide every connection for that UID).",
+              "lines": [
+                794,
+                799
+              ],
+              "name": "set_app_row",
+              "signature": "(&mut self, row: AppMatrixRow)",
+              "type": "method"
+            },
+            {
+              "docstring": "Install/replace the universal toggles (TIER 2). Invalidates the cache.",
+              "lines": [
+                802,
+                807
+              ],
+              "name": "set_universal_toggles",
+              "signature": "(&mut self, toggles: UniversalToggles)",
+              "type": "method"
+            },
+            {
+              "docstring": "direct seam (host tests + the cascade-truth-table fixtures arm a full set with it).",
+              "lines": [
+                814,
+                818
+              ],
+              "name": "install_rule_sets",
+              "signature": "(&mut self, rule_sets: WardenRuleSets)",
+              "type": "method"
+            },
+            {
+              "docstring": "without the ability to author, and without copying a rule body across the FFI boundary.",
+              "lines": [
+                823,
+                825
+              ],
+              "name": "rule_sets",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "READ-ONLY view of the universal (TIER-4) toggle field. Diagnostics seam, see [`Self::rule_sets`].",
+              "lines": [
+                828,
+                830
+              ],
+              "name": "toggles",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "`expires_at_ms == 0` revokes (the disabled encoding), so grant and revoke are one call.",
+              "lines": [
+                842,
+                845
+              ],
+              "name": "set_temp_allow",
+              "signature": "(&mut self, uid: u32, expires_at_ms: u64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                847,
+                849
+              ],
+              "name": "matrix",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "re-authoring the domain rules must not clobber the armed CIDR rules.",
+              "lines": [
+                854,
+                859
+              ],
+              "name": "set_domain_rules",
+              "signature": "(&mut self, domain: DomainRuleSet)",
+              "type": "method"
+            },
+            {
+              "docstring": "the cache. The Object's `install_cidr_rules` seam (the sibling of [`set_domain_rules`]).",
+              "lines": [
+                863,
+                868
+              ],
+              "name": "set_cidr_rules",
+              "signature": "(&mut self, cidr: CidrRuleSet)",
+              "type": "method"
+            },
+            {
+              "docstring": "order) and flushes the cache. Idempotent \u2014 [`CidrRuleSet::insert`] drops an exact duplicate.",
+              "lines": [
+                875,
+                881
+              ],
+              "name": "add_cidr_rule",
+              "signature": "(&mut self, rule: IpRule)",
+              "type": "method"
+            },
+            {
+              "docstring": "against the shrunk set. Returns `true` iff a rule was dropped (`false` = out-of-range index).",
+              "lines": [
+                888,
+                895
+              ],
+              "name": "remove_cidr_rule_at",
+              "signature": "(&mut self, index: usize)",
+              "type": "method"
+            },
+            {
+              "docstring": "consult globs, so this never alters a per-conn verdict.",
+              "lines": [
+                902,
+                907
+              ],
+              "name": "set_domain_globs",
+              "signature": "(&mut self, globs: Vec<pattern::DomainPattern>)",
+              "type": "method"
+            },
+            {
+              "docstring": "per-app tier reverts to the untracked/default-allow path). The Object's `remove_app_row` seam.",
+              "lines": [
+                911,
+                916
+              ],
+              "name": "remove_app_row",
+              "signature": "(&mut self, uid: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "Install/replace the armed universal rules (the RULE enum set driving TIER 2). Invalidates the cache.",
+              "lines": [
+                919,
+                924
+              ],
+              "name": "set_universal_rules",
+              "signature": "(&mut self, rules: Vec<UniversalRule>)",
+              "type": "method"
+            },
+            {
+              "docstring": "`set_geo_blocks` seam; the durable mirror rides slice-2's state blob when bound.",
+              "lines": [
+                930,
+                945
+              ],
+              "name": "set_geo_blocks",
+              "signature": "(&mut self, codes: &[String])",
+              "type": "method"
+            },
+            {
+              "docstring": "never a `HashSet`-order shuffle).",
+              "lines": [
+                949,
+                957
+              ],
+              "name": "geo_blocks",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "decision cache is flushed (the restored posture must re-decide every connection).",
+              "lines": [
+                977,
+                986
+              ],
+              "name": "bind_durable",
+              "signature": "(&mut self, dir: PathBuf, now_ms: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "state is gently write-through. Returns the count expired.",
+              "lines": [
+                993,
+                1000
+              ],
+              "name": "expire_temp_allows",
+              "signature": "(&mut self, now_ms: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "NEVER from [`verdict_at`](Warden::verdict_at).",
+              "lines": [
+                1007,
+                1011
+              ],
+              "name": "write_through_state",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "in-memory tier stays the source of truth.",
+              "lines": [
+                1036,
+                1135
+              ],
+              "name": "snapshot_state",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "count is the boot-log metric [`bind_durable`] surfaces).",
+              "lines": [
+                1152,
+                1347
+              ],
+              "name": "restore_state",
+              "signature": "(&mut self, payload: &[u8], now_ms: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "rule-sets are the deny source; the epoch is the cache-coherence signal).",
+              "lines": [
+                1358,
+                1360
+              ],
+              "name": "verdict",
+              "signature": "(&mut self, conn: &ConnFacts)",
+              "type": "method"
+            },
+            {
+              "docstring": "and tallies belong to the CONNECTION verdict; this answer verdict leaves them untouched.",
+              "lines": [
+                1373,
+                1379
+              ],
+              "name": "dns_verdict",
+              "signature": "(&self, name: &str, addrs: &[IpAddr])",
+              "type": "method"
+            },
+            {
+              "docstring": "(NO cache, NO stats, NO clock, NO IO) \u2014 the producer-half invariant.",
+              "lines": [
+                1386,
+                1395
+              ],
+              "name": "dns_outcome",
+              "signature": "(&self, name: &str, addrs: &[IpAddr])",
+              "type": "method"
+            },
+            {
+              "docstring": "clock (the warden clock-injection invariant). A no-op or failed log NEVER changes the returned verdict.",
+              "lines": [
+                1405,
+                1420
+              ],
+              "name": "dns_verdict_logged",
+              "signature": "(&self, name: &str, addrs: &[IpAddr], now_ms: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "Warden is UNBOUND (RAM-only; the verdict still works, it simply writes no review log \u2014 the fail-safe).",
+              "lines": [
+                1425,
+                1434
+              ],
+              "name": "query_warden_log_path",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "the firewall silently inheriting a persisted matrix. See [`log_dir`](Self::log_dir).",
+              "lines": [
+                1439,
+                1441
+              ],
+              "name": "bind_log_dir",
+              "signature": "(&mut self, dir: PathBuf)",
+              "type": "method"
+            },
+            {
+              "docstring": "- TIER 6 \u2014 default ALLOW (RULE0); FAIL-CLOSED on engine exception.",
+              "lines": [
+                1455,
+                1512
+              ],
+              "name": "verdict_at",
+              "signature": "(&mut self, conn: &ConnFacts, epoch: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "bit is set, so a stale settings write cannot deny alone).",
+              "lines": [
+                1519,
+                1573
+              ],
+              "name": "check_universal_toggles",
+              "signature": "(\r\n        &self,\r\n        conn: &ConnFacts,\r\n        app_mode: AppFirewallMode,\r\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "universal toggles \u2014 a lockdown is not paused by a temp-allow; that was TIER 2 above).",
+              "lines": [
+                1578,
+                1621
+              ],
+              "name": "check_per_app",
+              "signature": "(&self, conn: &ConnFacts, app_row: &Option<AppMatrixRow>)",
+              "type": "method"
+            },
+            {
+              "docstring": "universal deny fires, `None` otherwise.",
+              "lines": [
+                1625,
+                1653
+              ],
+              "name": "check_universal_rules",
+              "signature": "(&self, conn: &ConnFacts)",
+              "type": "method"
+            },
+            {
+              "docstring": "attribution invariant: a deny is attributed to EXACTLY one tier).",
+              "lines": [
+                1657,
+                1665
+              ],
+              "name": "record_deny",
+              "signature": "(&mut self, tier: DenyTier)",
+              "type": "method"
+            },
+            {
+              "docstring": "freshly-constructed / disarmed Warden returns all-zero (the inert \"off\" the card shows honestly).",
+              "lines": [
+                1671,
+                1673
+              ],
+              "name": "stats",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "(dashboard label continuity) but its value is now TIER 5 only (the dns_blocked seam).",
+              "lines": [
+                1684,
+                1695
+              ],
+              "name": "stats_json",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            758,
+            1696
+          ],
+          "name": "Warden",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            1743,
+            1747
+          ],
+          "name": "RuleNode",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "stack. Mirrors `blocklist.rs:84-97`.",
+              "lines": [
+                1753,
+                1766
+              ],
+              "name": "walk_terminals",
+              "signature": "(&self, suffix: &str, f: &mut impl FnMut(&str))",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1749,
+            1767
+          ],
+          "name": "RuleNode",
+          "type": "impl"
+        },
+        {
+          "docstring": "canonicalize byte-identically.",
+          "lines": [
+            1778,
+            1785
+          ],
+          "name": "normalize_rule",
+          "signature": "(domain: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "cache + the W6 \"rule-set changed\" dashboard card depend on this).",
+          "lines": [
+            1791,
+            1793
+          ],
+          "name": "rule_fnv1a",
+          "signature": "(s: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "differing only in a high-octet IP collided (the \"rule-set changed\" signal could report \"unchanged\").",
+          "lines": [
+            1800,
+            1807
+          ],
+          "name": "rule_fnv1a_bytes",
+          "signature": "(b: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1814,
+            1821
+          ],
+          "name": "DomainRule",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            1838,
+            1845
+          ],
+          "name": "DomainRuleSet",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            1850,
+            1852
+          ],
+          "name": "DomainTrie",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "fingerprint stay accurate \u2014 the caller folds them in `DomainRuleSet::insert`).",
+              "lines": [
+                1858,
+                1880
+              ],
+              "name": "insert",
+              "signature": "(&mut self, domain: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "fold the stored keys were `normalize_rule`'d with, so lookups stay byte-identical).",
+              "lines": [
+                1891,
+                1920
+              ],
+              "name": "matches",
+              "signature": "(&self, domain: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1854,
+            1921
+          ],
+          "name": "DomainTrie",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "An empty rule-set.",
+              "lines": [
+                1925,
+                1927
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "trie. Idempotent + canonical; call [`finalize`](Self::finalize) once after a batch.",
+              "lines": [
+                1936,
+                1942
+              ],
+              "name": "insert",
+              "signature": "(&mut self, rule: DomainRule)",
+              "type": "method"
+            },
+            {
+              "docstring": "authorings of the same set produce the same digest. Mirrors `blocklist.rs:199-208`.",
+              "lines": [
+                1947,
+                1969
+              ],
+              "name": "finalize",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The number of canonical terminal rules (after [`finalize`](Self::finalize)).",
+              "lines": [
+                1972,
+                1974
+              ],
+              "name": "len",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "True if the set holds no rules.",
+              "lines": [
+                1977,
+                1979
+              ],
+              "name": "is_empty",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The set-derived content digest (after [`finalize`](Self::finalize)).",
+              "lines": [
+                1982,
+                1984
+              ],
+              "name": "fingerprint",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "`AppFirewallMode::BypassUniversal` can skip TIER 4 without the per-app check re-catching it.",
+              "lines": [
+                1993,
+                2006
+              ],
+              "name": "matches",
+              "signature": "(&self, uid: u32, qname: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "`BypassUniversal` truly bypasses the universal domain rules.",
+              "lines": [
+                2012,
+                2016
+              ],
+              "name": "matches_app",
+              "signature": "(&self, uid: u32, qname: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "TIER 4 \u2014 true if a UNIVERSAL (`UID_UNIVERSAL`) BLOCK rule matches `qname`. ONLY the universal trie.",
+              "lines": [
+                2019,
+                2023
+              ],
+              "name": "matches_universal",
+              "signature": "(&self, qname: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "stable across reads (the walk itself is HashMap-order, hence the explicit sort).",
+              "lines": [
+                2031,
+                2044
+              ],
+              "name": "rules",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1923,
+            2045
+          ],
+          "name": "DomainRuleSet",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            2062,
+            2069
+          ],
+          "name": "IpStatus",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            2075,
+            2087
+          ],
+          "name": "IpRule",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            2091,
+            2096
+          ],
+          "name": "PortSpec",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            2100,
+            2109
+          ],
+          "name": "ProtoSpec",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Does this filter accept `proto` (the IP protocol byte from [`ConnFacts::proto`])?",
+              "lines": [
+                2113,
+                2120
+              ],
+              "name": "accepts",
+              "signature": "(&self, proto: u8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2111,
+            2121
+          ],
+          "name": "ProtoSpec",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Does this filter accept `port` (the destination port from [`ConnFacts::dport`])?",
+              "lines": [
+                2125,
+                2130
+              ],
+              "name": "accepts",
+              "signature": "(&self, port: u16)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2123,
+            2131
+          ],
+          "name": "PortSpec",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            2139,
+            2148
+          ],
+          "name": "CidrRuleSet",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            2154,
+            2159
+          ],
+          "name": "CidrHit",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "An empty rule-set.",
+              "lines": [
+                2163,
+                2165
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "dropped. BLOCK and Bypass rules coexist; the lookup distinguishes them by [`IpStatus`].",
+              "lines": [
+                2169,
+                2177
+              ],
+              "name": "insert",
+              "signature": "(&mut self, rule: IpRule)",
+              "type": "method"
+            },
+            {
+              "docstring": "produce the same digest.",
+              "lines": [
+                2186,
+                2233
+              ],
+              "name": "finalize",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The number of rules (after [`finalize`](Self::finalize)).",
+              "lines": [
+                2236,
+                2238
+              ],
+              "name": "len",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "True if the set holds no rules.",
+              "lines": [
+                2241,
+                2243
+              ],
+              "name": "is_empty",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The set-derived content digest (after [`finalize`](Self::finalize)).",
+              "lines": [
+                2246,
+                2248
+              ],
+              "name": "fingerprint",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "rendered list + the remove-by-index stay stable across reads.",
+              "lines": [
+                2254,
+                2264
+              ],
+              "name": "rules",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "so the index the pane rendered points at the same rule.",
+              "lines": [
+                2273,
+                2296
+              ],
+              "name": "remove_at",
+              "signature": "(&mut self, index: usize)",
+              "type": "method"
+            },
+            {
+              "docstring": "universal-inclusive lookups. `None` = no rule in THIS bucket matches.",
+              "lines": [
+                2303,
+                2318
+              ],
+              "name": "scan_bucket",
+              "signature": "(&self, uid: u32, addr: IpAddr, dport: u16, proto: u8)",
+              "type": "method"
+            },
+            {
+              "docstring": "(TIER 4).",
+              "lines": [
+                2325,
+                2333
+              ],
+              "name": "lookup",
+              "signature": "(&self, uid: u32, addr: IpAddr, dport: u16, proto: u8)",
+              "type": "method"
+            },
+            {
+              "docstring": "`BypassUniversal` truly bypasses the universal CIDR rules.",
+              "lines": [
+                2338,
+                2340
+              ],
+              "name": "lookup_app",
+              "signature": "(&self, uid: u32, addr: IpAddr, dport: u16, proto: u8)",
+              "type": "method"
+            },
+            {
+              "docstring": "TIER 4 \u2014 look up ONLY the UNIVERSAL (`UID_UNIVERSAL`) CIDR rules.",
+              "lines": [
+                2343,
+                2345
+              ],
+              "name": "lookup_universal",
+              "signature": "(&self, addr: IpAddr, dport: u16, proto: u8)",
+              "type": "method"
+            },
+            {
+              "docstring": "verdict (off the per-connection hot path).",
+              "lines": [
+                2355,
+                2368
+              ],
+              "name": "universal_blocks",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2161,
+            2369
+          ],
+          "name": "CidrRuleSet",
+          "type": "impl"
+        },
+        {
+          "docstring": "key, so it is implied equal here.)",
+          "lines": [
+            2373,
+            2375
+          ],
+          "name": "rules_key_equal",
+          "signature": "(a: &IpRule, b: &IpRule)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2386,
+            2412
+          ],
+          "name": "UniversalRule",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            2418,
+            2434
+          ],
+          "name": "AppFirewallMode",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            2440,
+            2449
+          ],
+          "name": "NetClass",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            2460,
+            2465
+          ],
+          "name": "TempAllow",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Construct a temp-allow for `uid` expiring at `expires_at_ms` (epoch ms).",
+              "lines": [
+                2469,
+                2474
+              ],
+              "name": "new",
+              "signature": "(uid: u32, expires_at_ms: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "temp-allow is inert: RULE19 does not fire, the underlying [`AppFirewallMode`] governs.",
+              "lines": [
+                2479,
+                2481
+              ],
+              "name": "is_active",
+              "signature": "(&self, now_ms: u64)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2467,
+            2482
+          ],
+          "name": "TempAllow",
+          "type": "impl"
+        },
+        {
+          "docstring": "- `Metered` blocks on Gsm/Roaming only (block-mobile).",
+          "lines": [
+            2494,
+            2501
+          ],
+          "name": "meteredness_blocks",
+          "signature": "(meteredness: NetClass, net: NetworkType)",
+          "type": "function"
+        },
+        {
+          "docstring": "one sort axis honest.",
+          "lines": [
+            2507,
+            2512
+          ],
+          "name": "cidr_specificity",
+          "signature": "(c: &cidr_match::CidrMatch)",
+          "type": "function"
+        },
+        {
+          "docstring": "Stable [`AppFirewallMode`] \u2192 `u8` map for the durable blob (a FORMAT CONTRACT \u2014 never renumber).",
+          "lines": [
+            2543,
+            2552
+          ],
+          "name": "app_mode_to_u8",
+          "signature": "(m: AppFirewallMode)",
+          "type": "function"
+        },
+        {
+          "docstring": "fail-safe: a corrupt/forward mode never silently denies, it falls to the no-special-mode path).",
+          "lines": [
+            2556,
+            2565
+          ],
+          "name": "app_mode_from_u8",
+          "signature": "(b: u8)",
+          "type": "function"
+        },
+        {
+          "docstring": "Stable [`NetClass`] \u2192 `u8` map for the durable blob (a FORMAT CONTRACT \u2014 never renumber).",
+          "lines": [
+            2568,
+            2575
+          ],
+          "name": "net_class_to_u8",
+          "signature": "(n: NetClass)",
+          "type": "function"
+        },
+        {
+          "docstring": "fail-safe: a corrupt/forward meteredness never silently blocks the network).",
+          "lines": [
+            2579,
+            2586
+          ],
+          "name": "net_class_from_u8",
+          "signature": "(b: u8)",
+          "type": "function"
+        },
+        {
+          "docstring": "Stable [`IpStatus`] \u2192 `u8` map for the V2 rule-set blob (a FORMAT CONTRACT \u2014 never renumber).",
+          "lines": [
+            2589,
+            2595
+          ],
+          "name": "ip_status_to_u8",
+          "signature": "(s: IpStatus)",
+          "type": "function"
+        },
+        {
+          "docstring": "DENY; a corrupt/forward status falls to the BLOCK it was authored as, never silently to an inert None).",
+          "lines": [
+            2599,
+            2605
+          ],
+          "name": "ip_status_from_u8",
+          "signature": "(b: u8)",
+          "type": "function"
+        },
+        {
+          "docstring": "new variant takes the next free byte). By-ref (the enum is not `Copy`); match ergonomics bind through.",
+          "lines": [
+            2609,
+            2622
+          ],
+          "name": "universal_rule_to_u8",
+          "signature": "(r: &UniversalRule)",
+          "type": "function"
+        },
+        {
+          "docstring": "never wrote is simply DROPPED from the restored set \u2014 fail-safe, never a guessed rule).",
+          "lines": [
+            2626,
+            2640
+          ],
+          "name": "universal_rule_from_u8",
+          "signature": "(b: u8)",
+          "type": "function"
+        },
+        {
+          "docstring": "the parse STOPS, never an OOB read). Mirrors `resolver/cache.rs:750`.",
+          "lines": [
+            2644,
+            2648
+          ],
+          "name": "take_one",
+          "signature": "(cur: &mut &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "Read a big-endian `u16` off the cursor, advancing it; `None` if fewer than 2 bytes remain.",
+          "lines": [
+            2651,
+            2658
+          ],
+          "name": "read_u16_be",
+          "signature": "(cur: &mut &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "Read a big-endian `u32` off the cursor, advancing it; `None` if fewer than 4 bytes remain.",
+          "lines": [
+            2661,
+            2668
+          ],
+          "name": "read_u32_be",
+          "signature": "(cur: &mut &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "Read a big-endian `u64` off the cursor, advancing it; `None` if fewer than 8 bytes remain.",
+          "lines": [
+            2671,
+            2679
+          ],
+          "name": "read_u64_be",
+          "signature": "(cur: &mut &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "so one fixed-width read serves both families.",
+          "lines": [
+            2684,
+            2692
+          ],
+          "name": "read_u128_be",
+          "signature": "(cur: &mut &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "(domain / glob names) ride this.",
+          "lines": [
+            2697,
+            2704
+          ],
+          "name": "read_bytes",
+          "signature": "(cur: &mut &[u8], len: usize)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "docstring": "did not flag it) \u2014 the TIER-5 seam abstains unless a test sets the flag explicitly.",
+              "lines": [
+                2717,
+                2727
+              ],
+              "name": "dns_conn",
+              "signature": "(uid: u32, qname: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "A non-DNS connection on Wi-Fi for `uid` (no qname). `dns_blocked = false`.",
+              "lines": [
+                2730,
+                2740
+              ],
+              "name": "plain_conn",
+              "signature": "(uid: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "A finalized UNIVERSAL-domain (`UID_UNIVERSAL`) BLOCK rule-set over `domains` (TIER 4 deny source).",
+              "lines": [
+                2743,
+                2754
+              ],
+              "name": "universal_domain_block",
+              "signature": "(domains: &[&str])",
+              "type": "method"
+            },
+            {
+              "docstring": "A finalized PER-APP domain BLOCK rule-set over `domains` for `uid` (TIER 3 deny source).",
+              "lines": [
+                2757,
+                2768
+              ],
+              "name": "app_domain_block",
+              "signature": "(uid: u32, domains: &[&str])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2773,
+                2792
+              ],
+              "name": "cascade_universal_domain_rule_denies_at_tier4_and_covers_subdomains",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2795,
+                2814
+              ],
+              "name": "cascade_dns_blocked_seam_denies_at_tier5",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2819,
+                2836
+              ],
+              "name": "per_app_domain_rule_denies_at_tier3",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2839,
+                2861
+              ],
+              "name": "per_app_cidr_rule_denies_at_tier3",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2864,
+                2895
+              ],
+              "name": "per_app_cidr_rule_denies_a_v6_daddr_at_tier3",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2898,
+                2933
+              ],
+              "name": "geo_family_block_denies_the_country_at_tier4",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2936,
+                2965
+              ],
+              "name": "add_cidr_rule_is_additive_and_blocks_the_host",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2968,
+                2992
+              ],
+              "name": "app_mode_isolate_denies_non_lan_allows_lan",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2995,
+                3018
+              ],
+              "name": "app_meteredness_blocks_metered_passes_unmetered",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3021,
+                3035
+              ],
+              "name": "app_temp_allow_pauses_per_app_denies",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "dep). Mirrors `runtime_tier.rs:271` / `resolver/cache.rs` `temp_cache_dir`.",
+              "lines": [
+                3041,
+                3049
+              ],
+              "name": "temp_dir",
+              "signature": "(tag: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3058,
+                3077
+              ],
+              "name": "bind_log_dir_writes_the_review_log_without_binding_durable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3083,
+                3099
+              ],
+              "name": "an_unbound_warden_writes_no_review_log",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3102,
+                3137
+              ],
+              "name": "dns_verdict_logged_writes_query_warden_log",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3140,
+                3158
+              ],
+              "name": "dns_verdict_logged_unbound_is_silent_noop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3161,
+                3169
+              ],
+              "name": "query_warden_log_path_sits_beside_the_matrix_blob",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3172,
+                3213
+              ],
+              "name": "temp_allow_ttl_sweep_resumes_per_app_deny",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3216,
+                3254
+              ],
+              "name": "matrix_durable_round_trips_through_bind",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3257,
+                3293
+              ],
+              "name": "temp_allow_expires_across_reboot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3296,
+                3334
+              ],
+              "name": "snapshot_restore_codec_is_faithful",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3337,
+                3379
+              ],
+              "name": "restore_state_is_failsafe_on_corrupt_input",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3382,
+                3501
+              ],
+              "name": "v2_rulesets_round_trip_across_a_restart",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3504,
+                3542
+              ],
+              "name": "v1_matrix_only_blob_still_restores_under_v2_codec",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3545,
+                3584
+              ],
+              "name": "every_truncation_of_a_v2_blob_is_panic_free",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3587,
+                3601
+              ],
+              "name": "unbound_matrix_is_ram_only_and_touches_no_disk",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3604,
+                3628
+              ],
+              "name": "convenience_predicates",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Used only by the exhaustive codec tests below.",
+              "lines": [
+                3632,
+                3644
+              ],
+              "name": "toggles_from_index",
+              "signature": "(i: u16)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3647,
+                3676
+              ],
+              "name": "universal_toggle_codec_round_trips_every_one_of_the_512_combinations",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3679,
+                3706
+              ],
+              "name": "universal_toggle_bit_order_is_the_documented_format_contract",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3709,
+                3784
+              ],
+              "name": "arming_a_universal_toggle_never_turns_a_deny_into_an_allow",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3787,
+                3802
+              ],
+              "name": "universal_toggle_decoder_ignores_unknown_high_bits",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3805,
+                3825
+              ],
+              "name": "universal_toggle_lockdown_inert_until_rule_armed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3828,
+                3849
+              ],
+              "name": "bypass_universal_skips_tier4_universal_rules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3852,
+                3866
+              ],
+              "name": "bypass_dns_firewall_skips_tier5_seam",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3869,
+                3891
+              ],
+              "name": "install_rule_sets_whole_unit_arms_the_cascade",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3896,
+                3925
+              ],
+              "name": "cache_hit_equals_fresh_compute",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3928,
+                3949
+              ],
+              "name": "cache_epoch_change_invalidates",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3954,
+                3980
+              ],
+              "name": "cache_is_bounded_and_evicts_lru",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3983,
+                3991
+              ],
+              "name": "zero_cap_clamps_to_one",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3996,
+                4010
+              ],
+              "name": "stats_zero_on_fresh_warden",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4013,
+                4071
+              ],
+              "name": "stats_tally_allow_and_the_deny_tier_split",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4074,
+                4092
+              ],
+              "name": "stats_first_match_attribution",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4095,
+                4108
+              ],
+              "name": "stats_cache_hit_does_not_recount",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4111,
+                4127
+              ],
+              "name": "stats_json_carries_no_qname_or_domain",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4136,
+                4165
+              ],
+              "name": "public_verdict_is_pure_firewall_at_the_live_epoch",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2711,
+            4166
+          ],
+          "name": "tests",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "docstring": "same big-endian/host-order convention the rules' `net: u32` uses).",
+              "lines": [
+                4182,
+                4184
+              ],
+              "name": "v4",
+              "signature": "(ip: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4186,
+                4192
+              ],
+              "name": "dom",
+              "signature": "(domain: &str, uid: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4195,
+                4207
+              ],
+              "name": "empty_rule_sets_match_nothing_and_have_zero_fingerprint",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4210,
+                4221
+              ],
+              "name": "domain_rule_matches_apex_and_every_subdomain",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4224,
+                4230
+              ],
+              "name": "domain_rule_is_case_insensitive_and_dot_trimmed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4233,
+                4245
+              ],
+              "name": "domain_universal_tier_applies_to_every_app_but_per_app_is_isolated",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4248,
+                4255
+              ],
+              "name": "domain_canonical_parent_subsumes_children",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4258,
+                4273
+              ],
+              "name": "domain_fingerprint_is_order_independent",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4276,
+                4306
+              ],
+              "name": "cidr_fingerprint_folds_high_octet_ips_d39",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4309,
+                4332
+              ],
+              "name": "cidr_contains_honors_prefix_boundaries",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4335,
+                4348
+              ],
+              "name": "proto_and_port_filters_accept_correctly",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4350,
+                4365
+              ],
+              "name": "ip_rule",
+              "signature": "(\r\n        uid: u32,\r\n        net: u32,\r\n        prefix: u8,\r\n        port: PortSpec,\r\n        pr...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4368,
+                4404
+              ],
+              "name": "cidr_lookup_block_bypass_and_filters",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4407,
+                4420
+              ],
+              "name": "cidr_inert_none_status_is_skipped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4423,
+                4460
+              ],
+              "name": "most_specific_rule_wins_regardless_of_insertion_order",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4463,
+                4487
+              ],
+              "name": "v6_rule_matches_v6_and_never_v4",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4490,
+                4517
+              ],
+              "name": "fingerprint_separates_v4_and_v6_rules_with_equal_net_bits",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4520,
+                4538
+              ],
+              "name": "cidr_dedup_drops_identical_rule",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4541,
+                4549
+              ],
+              "name": "temp_allow_ttl_is_active_window_only",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4552,
+                4556
+              ],
+              "name": "universal_rule_variants_are_distinct",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4176,
+            4557
+          ],
+          "name": "wa_tests",
+          "type": "module"
+        }
+      ]
+    },
+    "object.rs": {
+      "hash": "22190d6aed5b",
+      "indexed_at": "2026-07-29T00:46:28.800161+00:00",
+      "language": "rust",
+      "lines": 2461,
+      "mtime_ns": 1785284655689338300,
+      "size": 117771,
+      "symbols": [
+        {
+          "lines": [
+            105,
+            147
+          ],
+          "name": "WardenError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "The single mapping point from the internal integrity-gate reason to the FFI-bridged error.",
+              "lines": [
+                151,
+                165
+              ],
+              "name": "from",
+              "signature": "(m: super::pattern::MalformedPattern)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            149,
+            166
+          ],
+          "name": "WardenError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            182,
+            191
+          ],
+          "name": "WardenVerdict",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "kept as a named fn so the ordinal contract is documented + asserted in tests.",
+              "lines": [
+                196,
+                198
+              ],
+              "name": "code",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "firewall deny at this coarse grain. [`WardenVerdict::DenyByBlocklist`] is the datapath's slot.",
+              "lines": [
+                203,
+                208
+              ],
+              "name": "from_internal",
+              "signature": "(v: Verdict)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            193,
+            209
+          ],
+          "name": "WardenVerdict",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            216,
+            227
+          ],
+          "name": "WardenNetworkType",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "The stable ordinal (asserted in tests against the internal declaration order).",
+              "lines": [
+                231,
+                233
+              ],
+              "name": "code",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Map to the internal [`NetworkType`] for the verdict compose.",
+              "lines": [
+                236,
+                244
+              ],
+              "name": "to_internal",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            229,
+            245
+          ],
+          "name": "WardenNetworkType",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            251,
+            258
+          ],
+          "name": "WardenIpStatus",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                261,
+                267
+              ],
+              "name": "to_internal",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "FFI for the settings-pane rule LIST ([`WardenObject::cidr_rules`]).",
+              "lines": [
+                271,
+                277
+              ],
+              "name": "from_internal",
+              "signature": "(v: IpStatus)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            260,
+            278
+          ],
+          "name": "WardenIpStatus",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            285,
+            306
+          ],
+          "name": "WardenUniversalRule",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "internal enum's `#[non_exhaustive]`, which only restricts FOREIGN crates).",
+              "lines": [
+                311,
+                324
+              ],
+              "name": "to_internal",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            308,
+            325
+          ],
+          "name": "WardenUniversalRule",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            332,
+            345
+          ],
+          "name": "WardenAppMode",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                348,
+                357
+              ],
+              "name": "to_internal",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "([`WardenObject::app_rows`], the per-app firewall UI list).",
+              "lines": [
+                361,
+                370
+              ],
+              "name": "from_internal",
+              "signature": "(mode: AppFirewallMode)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            347,
+            371
+          ],
+          "name": "WardenAppMode",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            377,
+            386
+          ],
+          "name": "WardenNetClass",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                389,
+                396
+              ],
+              "name": "to_internal",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "([`WardenObject::app_rows`], the per-app firewall UI list).",
+              "lines": [
+                400,
+                407
+              ],
+              "name": "from_internal",
+              "signature": "(class: NetClass)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            388,
+            408
+          ],
+          "name": "WardenNetClass",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            419,
+            437
+          ],
+          "name": "WardenConnFacts",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "the caller fails the verdict CLOSED). Pure; no IO.",
+              "lines": [
+                442,
+                453
+              ],
+              "name": "to_internal",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            439,
+            454
+          ],
+          "name": "WardenConnFacts",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            459,
+            466
+          ],
+          "name": "WardenDomainRule",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            472,
+            485
+          ],
+          "name": "WardenCidrRule",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "`accepts` semantics (6 \u2192 Tcp, 17 \u2192 Udp, other \u2192 Other) so the matcher behaves identically.",
+              "lines": [
+                490,
+                511
+              ],
+              "name": "to_internal",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "`null`; a concrete [`ProtoSpec`] maps back to its IP protocol byte.",
+              "lines": [
+                518,
+                539
+              ],
+              "name": "from_internal",
+              "signature": "(rule: IpRule)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            487,
+            540
+          ],
+          "name": "WardenCidrRule",
+          "type": "impl"
+        },
+        {
+          "docstring": "whichever family it is. Bare `Any`/`Any` = no suffix (a blanket host block).",
+          "lines": [
+            548,
+            564
+          ],
+          "name": "format_cidr_rule",
+          "signature": "(rule: &IpRule)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            570,
+            581
+          ],
+          "name": "WardenAppRow",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                584,
+                591
+              ],
+              "name": "to_internal",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "across the FFI for the per-app firewall UI read ([`WardenObject::app_rows`]).",
+              "lines": [
+                595,
+                602
+              ],
+              "name": "from_internal",
+              "signature": "(row: &AppMatrixRow)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            583,
+            603
+          ],
+          "name": "WardenAppRow",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            610,
+            638
+          ],
+          "name": "WardenUniversalToggles",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                641,
+                653
+              ],
+              "name": "to_internal",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                655,
+                667
+              ],
+              "name": "from_internal",
+              "signature": "(t: UniversalToggles)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            640,
+            668
+          ],
+          "name": "WardenUniversalToggles",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            675,
+            707
+          ],
+          "name": "WardenSnapshot",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            715,
+            720
+          ],
+          "name": "WardenRejectedRule",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            728,
+            736
+          ],
+          "name": "WardenInstallReport",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            764,
+            772
+          ],
+          "name": "WardenObject",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                787,
+                792
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "pause can never shield an app until the next reboot.",
+              "lines": [
+                809,
+                831
+              ],
+              "name": "verdict",
+              "signature": "(&self, conn: WardenConnFacts)",
+              "type": "method"
+            },
+            {
+              "docstring": "Panic-firewalled to a no-op.",
+              "lines": [
+                837,
+                843
+              ],
+              "name": "set_fail_closed",
+              "signature": "(&self, fail_closed: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "poison SILENTLY). Panic-firewalled \u2192 an empty report (`accepted = 0`, no rejections).",
+              "lines": [
+                851,
+                915
+              ],
+              "name": "install_domain_rules",
+              "signature": "(&self, rules: Vec<WardenDomainRule>)",
+              "type": "method"
+            },
+            {
+              "docstring": "and returns the rule COUNT. Panic-firewalled \u2192 `0`.",
+              "lines": [
+                920,
+                937
+              ],
+              "name": "install_cidr_rules",
+              "signature": "(&self, rules: Vec<WardenCidrRule>)",
+              "type": "method"
+            },
+            {
+              "docstring": "armed. Panic-firewalled \u2192 `0`.",
+              "lines": [
+                941,
+                954
+              ],
+              "name": "set_universal_rules",
+              "signature": "(&self, rules: Vec<WardenUniversalRule>)",
+              "type": "method"
+            },
+            {
+              "docstring": "USER-EXPLICIT policy, so it legitimately drives a TIER-4 deny. Panic-firewalled \u2192 `0`.",
+              "lines": [
+                961,
+                970
+              ],
+              "name": "set_geo_blocks",
+              "signature": "(&self, codes: Vec<String>)",
+              "type": "method"
+            },
+            {
+              "docstring": "current country-block posture. Pure read; panic-firewalled / poisoned lock \u2192 an empty list.",
+              "lines": [
+                974,
+                980
+              ],
+              "name": "geo_blocks",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "`false` on a malformed CIDR (abstain \u2014 never a false deny) or a poisoned lock. Panic-firewalled.",
+              "lines": [
+                989,
+                1011
+              ],
+              "name": "block_ip",
+              "signature": "(&self, uid: u32, cidr: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "consults it on the app's next connection. Panic-firewalled to a no-op.",
+              "lines": [
+                1015,
+                1021
+              ],
+              "name": "set_app_row",
+              "signature": "(&self, row: WardenAppRow)",
+              "type": "method"
+            },
+            {
+              "docstring": "default-allow path. Panic-firewalled to a no-op.",
+              "lines": [
+                1025,
+                1031
+              ],
+              "name": "remove_app_row",
+              "signature": "(&self, uid: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "list order. Pure read; panic-firewalled / poisoned-lock \u2192 an empty list.",
+              "lines": [
+                1038,
+                1052
+              ],
+              "name": "app_rows",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "(`uid = 0`). Pure read; panic-firewalled / poisoned lock \u2192 an empty list.",
+              "lines": [
+                1062,
+                1088
+              ],
+              "name": "domain_rules",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Pure read; panic-firewalled / poisoned lock \u2192 an empty list.",
+              "lines": [
+                1095,
+                1107
+              ],
+              "name": "cidr_rules",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "so the Kotlin split is unambiguous. Pure read; panic-firewalled / poisoned lock -> an empty list.",
+              "lines": [
+                1118,
+                1137
+              ],
+              "name": "cidr_rules_wire",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "poisoned lock / out-of-range index -> `false`.",
+              "lines": [
+                1145,
+                1151
+              ],
+              "name": "remove_cidr_rule_at",
+              "signature": "(&self, index: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "Panic-firewalled to a no-op.",
+              "lines": [
+                1156,
+                1162
+              ],
+              "name": "set_universal_toggles",
+              "signature": "(&self, toggles: WardenUniversalToggles)",
+              "type": "method"
+            },
+            {
+              "docstring": "all-`false` (the inert baseline).",
+              "lines": [
+                1169,
+                1175
+              ],
+              "name": "universal_toggles",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "absent / corrupt \u2014 fail-safe). Panic-firewalled \u2192 `0`.",
+              "lines": [
+                1186,
+                1192
+              ],
+              "name": "bind_durable",
+              "signature": "(&self, dir: String, now_ms: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "(Java gate + Rust tunnel). This method stays as the reboot-edge + manual sweep.",
+              "lines": [
+                1204,
+                1210
+              ],
+              "name": "expire_temp_allows",
+              "signature": "(&self, now_ms: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "Pure read; panic-firewalled \u2192 an all-zero snapshot.",
+              "lines": [
+                1215,
+                1217
+              ],
+              "name": "stats",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "faked number). Pure read; panic-firewalled \u2192 an all-zero snapshot.",
+              "lines": [
+                1223,
+                1252
+              ],
+              "name": "snapshot",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "legitimate name, the connectivity-breaking hole the fail-safe law forbids.",
+              "lines": [
+                1267,
+                1278
+              ],
+              "name": "dns_verdict",
+              "signature": "(&self, name: String, addrs: Vec<String>)",
+              "type": "method"
+            },
+            {
+              "docstring": "[`dns_verdict`] \u2014 an advisory producer must not brick a name on a fault.",
+              "lines": [
+                1292,
+                1303
+              ],
+              "name": "log_dns_verdict",
+              "signature": "(&self, name: String, addrs: Vec<String>, now_ms: u64)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            780,
+            1304
+          ],
+          "name": "WardenObject",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            1314,
+            1326
+          ],
+          "name": "warden_validate_pattern",
+          "signature": "(rule: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1368,
+            1370
+          ],
+          "name": "warden_datapath_instance",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1376,
+            1378
+          ],
+          "name": "warden_set_datapath_enforced",
+          "signature": "(on: bool)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1382,
+            1384
+          ],
+          "name": "warden_datapath_enforced",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "a fault). Never constructs: minting is control-plane work, not verdict work.",
+          "lines": [
+            1392,
+            1398
+          ],
+          "name": "datapath_verdict",
+          "signature": "(conn: &ConnFacts)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "docstring": "like the Java datapath does.",
+              "lines": [
+                1406,
+                1420
+              ],
+              "name": "verdict_internal",
+              "signature": "(&self, conn: &ConnFacts)",
+              "type": "method"
+            },
+            {
+              "docstring": "A pre-epoch clock skips the sweep (best-effort \u2014 the boot-edge sweep still covers reboots).",
+              "lines": [
+                1433,
+                1447
+              ],
+              "name": "temp_allow_sweep_due",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1400,
+            1448
+          ],
+          "name": "WardenObject",
+          "type": "impl"
+        },
+        {
+          "docstring": "The all-zero snapshot \u2014 the honest \"off\" a poisoned lock / panic falls to.",
+          "lines": [
+            1451,
+            1467
+          ],
+          "name": "zero_snapshot",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "docstring": "A DNS-bearing Wi-Fi connection for `uid` querying `qname` (dns_blocked = false).",
+              "lines": [
+                1474,
+                1484
+              ],
+              "name": "conn",
+              "signature": "(uid: u32, qname: Option<&str>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1487,
+                1503
+              ],
+              "name": "constructor_builds_allow_all_fail_safe_baseline",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1506,
+                1516
+              ],
+              "name": "verdict_on_disabled_baseline_is_allow",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1519,
+                1525
+              ],
+              "name": "verdict_with_malformed_daddr_fails_closed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1528,
+                1545
+              ],
+              "name": "dns_blocked_seam_denies_through_the_object",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1548,
+                1554
+              ],
+              "name": "set_fail_closed_reflects_in_snapshot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1557,
+                1594
+              ],
+              "name": "install_domain_rules_arms_the_cascade_and_counts",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1597,
+                1645
+              ],
+              "name": "domain_rules_enumerates_trie_and_globs_round_trip",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1648,
+                1693
+              ],
+              "name": "cidr_rules_enumerates_round_trip",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1696,
+                1732
+              ],
+              "name": "rule_remove_by_index_is_enumerate_drop_reinstall",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1735,
+                1787
+              ],
+              "name": "install_domain_rules_rejects_poisoned_overbroad_rules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1790,
+                1815
+              ],
+              "name": "warden_validate_pattern_is_a_typed_preflight_d27",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1818,
+                1877
+              ],
+              "name": "dns_verdict_denies_name_and_address_through_the_object",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1880,
+                1932
+              ],
+              "name": "cidr_wire_shows_v6_and_remove_at_drops_by_index",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1935,
+                1963
+              ],
+              "name": "install_cidr_rules_arms_the_cascade_and_counts",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1966,
+                1975
+              ],
+              "name": "set_universal_rules_counts_in_snapshot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1978,
+                1998
+              ],
+              "name": "universal_toggle_plus_rule_denies_through_the_object",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2001,
+                2031
+              ],
+              "name": "universal_toggles_read_back_round_trips_a6",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2034,
+                2058
+              ],
+              "name": "app_row_isolate_denies_and_counts",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2061,
+                2095
+              ],
+              "name": "app_rows_reads_back_the_held_matrix_f1_efix2",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2098,
+                2122
+              ],
+              "name": "bypass_universal_skips_tier4_through_the_object",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2125,
+                2133
+              ],
+              "name": "snapshot_is_consistent_across_reads",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2136,
+                2145
+              ],
+              "name": "enum_codes_match_the_stable_ordinal_contract",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2148,
+                2158
+              ],
+              "name": "pure_firewall_never_attributes_a_blocklist_deny_without_the_seam",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2161,
+                2231
+              ],
+              "name": "object_bind_durable_round_trips_and_expires_temp_allow",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2234,
+                2291
+              ],
+              "name": "rule19_verdict_edge_sweep_clears_lapsed_pause_and_rate_limits",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2294,
+                2318
+              ],
+              "name": "rule19_edge_sweep_covers_the_tunnel_datapath_verdict_internal",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2321,
+                2367
+              ],
+              "name": "log_dns_verdict_writes_through_the_ffi_surface",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2370,
+                2387
+              ],
+              "name": "log_dns_verdict_unbound_is_panic_safe_noop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "An internal-facts WAN connection (the tunnel hot-path shape \u2014 no FFI twin).",
+              "lines": [
+                2397,
+                2407
+              ],
+              "name": "dp_conn",
+              "signature": "(uid: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2410,
+                2427
+              ],
+              "name": "datapath_disarmed_abstains_and_instance_is_canonical",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2430,
+                2460
+              ],
+              "name": "datapath_enforced_rules_through_the_canonical_engine",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1470,
+            2461
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "pattern.rs": {
+      "hash": "a0c627363721",
+      "indexed_at": "2026-08-01T00:04:55.098288+00:00",
+      "language": "rust",
+      "lines": 426,
+      "mtime_ns": 1785542668320520200,
+      "size": 19110,
+      "symbols": [
+        {
+          "lines": [
+            48,
+            70
+          ],
+          "name": "MalformedPattern",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            76,
+            79
+          ],
+          "name": "PatternLabel",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            85,
+            87
+          ],
+          "name": "DomainPattern",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "allocation; the name is split + folded in place.",
+              "lines": [
+                94,
+                114
+              ],
+              "name": "matches",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "live glob set and a plain pattern to the reversed-label trie.",
+              "lines": [
+                118,
+                120
+              ],
+              "name": "has_any_wildcard",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "(`[a-z0-9-*]`), so the join is exact \u2014 a `*.example.com` pattern round-trips to `\"*.example.com\"`.",
+              "lines": [
+                126,
+                132
+              ],
+              "name": "source",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            89,
+            133
+          ],
+          "name": "DomainPattern",
+          "type": "impl"
+        },
+        {
+          "docstring": "allocation, no catastrophic backtracking. ASCII case-folded (DNS is case-insensitive).",
+          "lines": [
+            139,
+            168
+          ],
+          "name": "glob_match",
+          "signature": "(text: &[u8], pat: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "verdict. Ideas overhauled from dnsmasq `pattern.c` (the validators); zero derived bytes.",
+          "lines": [
+            182,
+            239
+          ],
+          "name": "validate_pattern",
+          "signature": "(input: &str)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                253,
+                290
+              ],
+              "name": "wildcard_bounds_reject_over_broad_rules_in_both_directions",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                295,
+                315
+              ],
+              "name": "glob_match_cases",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                318,
+                336
+              ],
+              "name": "dot_is_a_barrier",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                339,
+                349
+              ],
+              "name": "mid_label_glob_pattern_matches",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                352,
+                391
+              ],
+              "name": "validator_rejects_overbroad",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                394,
+                414
+              ],
+              "name": "validator_accepts_legit_patterns",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                417,
+                425
+              ],
+              "name": "validated_plain_pattern_matches_exactly",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            242,
+            426
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "start_table.rs": {
+      "hash": "d37f5a8304bd",
+      "indexed_at": "2026-07-26T19:12:58.198743+00:00",
+      "language": "rust",
+      "lines": 35,
+      "mtime_ns": 1785030833363604600,
+      "size": 1555,
+      "symbols": [
+        {
+          "docstring": "mapping is the CALLER's contract, this layer doesn't know one payload from another.",
+          "lines": [
+            18,
+            35
+          ],
+          "name": "lookup",
+          "signature": "(table: &'t [u8], rec: usize, key_len: usize, key: &[u8])",
+          "type": "function"
+        }
+      ]
+    },
+    "tracker.rs": {
+      "hash": "d2641f8ee56e",
+      "indexed_at": "2026-07-31T23:34:40.729825+00:00",
+      "language": "rust",
+      "lines": 894,
+      "mtime_ns": 1785540872044896000,
+      "size": 39790,
+      "symbols": [
+        {
+          "docstring": "output is a real flag or the globe, never tofu-adjacent garbage.",
+          "lines": [
+            53,
+            72
+          ],
+          "name": "flag_emoji",
+          "signature": "(cc: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            79,
+            120
+          ],
+          "name": "FlowRecord",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            126,
+            138
+          ],
+          "name": "CountrySummary",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            143,
+            152
+          ],
+          "name": "AsnSummary",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            161,
+            184
+          ],
+          "name": "AppFlowSummary",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            191,
+            218
+          ],
+          "name": "DestRecord",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            234,
+            236
+          ],
+          "name": "ConnTracker",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "tests exercise folding, not the GeoIP table.",
+              "lines": [
+                242,
+                248
+              ],
+              "name": "push",
+              "signature": "(&self, rec: FlowRecord)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            238,
+            249
+          ],
+          "name": "ConnTracker",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                255,
+                259
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "ring is a live panel, not a ledger).",
+              "lines": [
+                266,
+                273
+              ],
+              "name": "record",
+              "signature": "(&self, rec: FlowRecord)",
+              "type": "method"
+            },
+            {
+              "docstring": "only for the clone, never across the FFI render.",
+              "lines": [
+                277,
+                280
+              ],
+              "name": "snapshot",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Retained flow count (`0..=`[`FLOW_CAP`]).",
+              "lines": [
+                283,
+                286
+              ],
+              "name": "count",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Drop every retained flow (the panel's \"clear log\").",
+              "lines": [
+                289,
+                292
+              ],
+              "name": "clear",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "top [`SUMMARY_LIMIT`]. Unknown-country flows (`cc == \"\"`) stay as the \ud83c\udf10 bucket, per the Dao.",
+              "lines": [
+                296,
+                322
+              ],
+              "name": "country_summary",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "count DESC (ties: `asn` ASC), top [`SUMMARY_LIMIT`].",
+              "lines": [
+                326,
+                351
+              ],
+              "name": "asn_summary",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "fields naturally. Capped at [`INSPECTOR_LIMIT`].",
+              "lines": [
+                359,
+                430
+              ],
+              "name": "app_flow_summary",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "most-recent domain/port/proto/carried fields. Capped at [`INSPECTOR_LIMIT`].",
+              "lines": [
+                437,
+                514
+              ],
+              "name": "app_destinations",
+              "signature": "(&self, uid: i32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            252,
+            515
+          ],
+          "name": "ConnTracker",
+          "type": "impl"
+        },
+        {
+          "docstring": "The process-wide tracker \u2014 lazily built on first touch, then one `Arc` clone per call.",
+          "lines": [
+            526,
+            528
+          ],
+          "name": "global",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            534,
+            536
+          ],
+          "name": "conn_tracker",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "table); on the forwarder per-FLOW \u2014 session-collapse is future polish, [`FLOW_CAP`] bounds it.",
+          "lines": [
+            550,
+            579
+          ],
+          "name": "feed",
+          "signature": "(\n    uid: i32,\n    ip: std::net::IpAddr,\n    port: u16,\n    proto: u8,\n    verdict: WardenVerdic...",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "docstring": "A minimal allowed flow for `cc` \u2014 the fold tests vary only what they assert on.",
+              "lines": [
+                586,
+                603
+              ],
+              "name": "flow",
+              "signature": "(cc: &str, verdict: WardenVerdict)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                614,
+                643
+              ],
+              "name": "inspector_limit_is_128_and_keeps_the_newest_apps",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                646,
+                655
+              ],
+              "name": "flag_emoji_maps_iso_codes_and_falls_back_to_globe",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                658,
+                678
+              ],
+              "name": "record_derives_cc_flag_and_asn_from_ip_never_the_wire",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                681,
+                702
+              ],
+              "name": "record_folds_live_derived_countries_and_networks",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                705,
+                717
+              ],
+              "name": "ring_evicts_oldest_past_the_cap",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                720,
+                735
+              ],
+              "name": "snapshot_is_newest_first_and_clear_empties",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                738,
+                772
+              ],
+              "name": "country_summary_folds_allowed_flows_only_sorted_and_capped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                775,
+                782
+              ],
+              "name": "global_ring_is_one_instance_shared_with_the_ffi_accessor",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                785,
+                812
+              ],
+              "name": "feed_stamps_the_clock_and_derives_attribution",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                815,
+                829
+              ],
+              "name": "asn_summary_skips_unknown_asn_and_denied_flows",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "[`ConnTracker::push`], so the fold logic is under test, not the GeoIP derivation).",
+              "lines": [
+                833,
+                841
+              ],
+              "name": "app_flow",
+              "signature": "(uid: i32, ip: &str, app: &str, cc: &str, verdict: WardenVerdict, ts: i64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                844,
+                865
+              ],
+              "name": "app_flow_summary_groups_by_uid_counts_verdicts_and_distincts",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                868,
+                893
+              ],
+              "name": "app_destinations_folds_one_apps_endpoints_by_ip",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            582,
+            894
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "verdict_loop.rs": {
+      "hash": "6caf8b20344b",
+      "indexed_at": "2026-07-29T00:46:29.391116+00:00",
+      "language": "rust",
+      "lines": 232,
+      "mtime_ns": 1785284655718339100,
+      "size": 9540,
+      "symbols": [
+        {
+          "lines": [
+            40,
+            49
+          ],
+          "name": "DnsDenyReason",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            54,
+            61
+          ],
+          "name": "DnsVerdict",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "the slice-6 log).",
+              "lines": [
+                66,
+                68
+              ],
+              "name": "is_deny",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            63,
+            69
+          ],
+          "name": "DnsVerdict",
+          "type": "impl"
+        },
+        {
+          "docstring": "never add-to-kernel-set.",
+          "lines": [
+            80,
+            115
+          ],
+          "name": "apply_dns_verdict",
+          "signature": "(\r\n    name: &str,\r\n    addrs: &[IpAddr],\r\n    domain: &DomainRuleSet,\r\n    glob_patterns: &[Doma...",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                124,
+                135
+              ],
+              "name": "universal_domain",
+              "signature": "(domains: &[&str])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                137,
+                139
+              ],
+              "name": "v4",
+              "signature": "(s: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                142,
+                182
+              ],
+              "name": "dns_verdict_first_match_deny",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                185,
+                208
+              ],
+              "name": "dns_verdict_allow_when_no_match",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                211,
+                231
+              ],
+              "name": "dns_verdict_cidr_v6_deny",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            118,
+            232
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T00:04:55.099893+00:00",
+  "version": "1.0"
+}

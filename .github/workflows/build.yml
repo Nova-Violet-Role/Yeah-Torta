@@ -1,0 +1,266 @@
+##
+##  Yeah! Tortä — the whole product, built from source, by GitHub.
+##
+##  THE POINT OF THIS FILE: nothing binary is committed any more. The engine `.so`, the Slint UI
+##  `.so`, and the UniFFI Kotlin bindings are BUILD OUTPUT and are produced here, on a clean
+##  runner, from source alone. If this workflow is green, the repository genuinely contains
+##  everything needed to make the app — which a repository that ships prebuilt artifacts can never
+##  prove about itself.
+##
+##  Every job below is a gate that CAN FAIL, and each one was chosen because the corresponding
+##  failure has actually happened on this project:
+##
+##    rust-tests      1311 unit tests. A regression in the engine must never reach an APK.
+##    bindings-drift  the committed torta_core.kt must equal what the CURRENT Rust surface
+##                    generates. Hand-edited or stale bindings compile fine and then fail at
+##                    runtime with an ABI mismatch, which is the worst place to find out.
+##    android         builds arm64-v8a + x86_64 and CHECKS THE SYMBOLS ARE IN THE .so. A build
+##                    without `--features mirror` succeeds, produces a .so with ZERO
+##                    `mirror_status` symbols, and silently disables Centauri. That near-miss is
+##                    why the symbol assertion exists.
+##
+##  Release artefacts are marked PRE-RELEASE, because that is what an alpha is.
+##
+
+name: build
+
+on:
+  push:
+    branches: [main, torta]
+    tags: ['v*']
+  pull_request:
+    branches: [main, torta]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+  # A cross-compile that fails late costs ten minutes; failing fast costs seconds.
+  CARGO_INCREMENTAL: 0
+  RUST_BACKTRACE: 1
+
+jobs:
+
+  # ---------------------------------------------------------------------------------------------
+  # 1. THE ENGINE'S OWN TESTS — before anything is packaged.
+  # ---------------------------------------------------------------------------------------------
+  rust-tests:
+    name: engine tests (1311)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust/torta_core
+
+      # `--features mirror` is NOT optional. Without it the Centauri tests do not even compile in,
+      # so a green run would be reporting on a smaller suite than the one that guards the product.
+      - name: cargo test --features mirror
+        working-directory: rust/torta_core
+        run: cargo test --lib --features mirror
+
+      - name: cargo fmt / clippy (advisory)
+        working-directory: rust/torta_core
+        continue-on-error: true
+        run: |
+          cargo fmt --check || echo "::warning::rustfmt differences present"
+          cargo clippy --lib --features mirror -- -W clippy::all || true
+
+  # ---------------------------------------------------------------------------------------------
+  # 2. BINDINGS DRIFT — the generated Kotlin must match the Rust surface that exists TODAY.
+  # ---------------------------------------------------------------------------------------------
+  bindings-drift:
+    name: uniffi bindings are not stale
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust/torta_core
+
+      # UniFFI 0.31 ships no standalone CLI, so the generator is a bin target IN THIS REPO,
+      # gated behind `uniffi-cli` so clap never enters the shipped cdylib.
+      #
+      # MEASURED TRAP: `--library` must point at the HOST cdylib. Given a cross-compiled Android
+      # .so, uniffi-bindgen exits 0 and writes NOTHING — two runs looked green and produced no
+      # file. On this runner the host cdylib is target/debug/libtorta_core.so.
+      - name: Generate bindings from the HOST cdylib
+        working-directory: rust/torta_core
+        run: |
+          cargo build --lib --features mirror
+          test -f target/debug/libtorta_core.so || { echo "::error::host cdylib missing — bindgen would silently write nothing"; exit 1; }
+          cargo run --bin uniffi-bindgen --features uniffi-cli -- \
+            generate --library target/debug/libtorta_core.so \
+            --language kotlin --out-dir "$RUNNER_TEMP/bindgen_out"
+          test -s "$RUNNER_TEMP/bindgen_out/uniffi/torta_core/torta_core.kt" \
+            || { echo "::error::bindgen produced no output"; exit 1; }
+
+      - name: Diff against the committed bindings
+        run: |
+          COMMITTED=libumdnscrypt/src/main/kotlin/uniffi/torta_core/torta_core.kt
+          GENERATED="$RUNNER_TEMP/bindgen_out/uniffi/torta_core/torta_core.kt"
+          if ! diff -q "$COMMITTED" "$GENERATED" >/dev/null; then
+            echo "::error::Committed UniFFI bindings are STALE. Regenerate them:"
+            echo "  cd rust/torta_core && cargo run --bin uniffi-bindgen --features uniffi-cli -- \\"
+            echo "    generate --library target/debug/libtorta_core.so --language kotlin \\"
+            echo "    --out-dir ../../libumdnscrypt/src/main/kotlin"
+            diff "$COMMITTED" "$GENERATED" | head -60
+            exit 1
+          fi
+          echo "bindings match the current Rust surface"
+
+  # ---------------------------------------------------------------------------------------------
+  # 3. THE APKs — arm64-v8a and universal (x86_64), each with the engine built from source.
+  # ---------------------------------------------------------------------------------------------
+  android:
+    name: apk (${{ matrix.flavor }})
+    needs: [rust-tests, bindings-drift]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - flavor: arm64
+            abi: arm64-v8a
+            rust_target: aarch64-linux-android
+          - flavor: universal
+            abi: x86_64
+            rust_target: x86_64-linux-android
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Node (the A14 uniffi-records guard is a node script)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust_target }}
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            rust/torta_core
+            rust/torta_ui
+          key: ${{ matrix.abi }}
+
+      - name: Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: NDK
+        run: |
+          sdkmanager --install "ndk;26.3.11579264" >/dev/null
+          echo "ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/26.3.11579264" >> "$GITHUB_ENV"
+
+      - name: cargo-ndk
+        run: cargo install cargo-ndk --locked
+
+      # THE ENGINE. `--features mirror` is load-bearing: without it the resulting .so carries zero
+      # mirror symbols and Centauri regresses to inert while every other signal stays green.
+      - name: Build torta_core (${{ matrix.abi }})
+        working-directory: rust/torta_core
+        run: |
+          cargo ndk -t ${{ matrix.abi }} -o ../../libumdnscrypt/src/main/jniLibs \
+            build --release --features mirror
+
+      # THE UI. The entire interface is compiled Rust + Slint; slint-build rasterises the .slint
+      # files during this step, so a broken scene fails HERE rather than at runtime.
+      - name: Build torta_ui (${{ matrix.abi }})
+        working-directory: rust/torta_ui
+        run: |
+          cargo ndk -t ${{ matrix.abi }} -o ../../libumdnscrypt/src/main/jniLibs \
+            build --release
+
+      # ★ THE SYMBOL GATE. A cargo build that "succeeded" is not evidence the pillar shipped.
+      # This project once produced a release .so with 0 mirror_status symbols against an
+      # expected 4 — a green build that would have killed Centauri's serve leg on every device.
+      - name: Assert the pillar symbols are actually in the .so
+        run: |
+          SO=libumdnscrypt/src/main/jniLibs/${{ matrix.abi }}/libtorta_core.so
+          UI=libumdnscrypt/src/main/jniLibs/${{ matrix.abi }}/libtorta_ui.so
+          test -f "$SO" || { echo "::error::$SO was not produced"; exit 1; }
+          test -f "$UI" || { echo "::error::$UI was not produced"; exit 1; }
+          for sym in mirror_status centauri_serve_hits resolver_doh_sinkhole_on; do
+            n=$(grep -ac "$sym" "$SO" || true)
+            echo "  $sym: $n"
+            [ "$n" -gt 0 ] || { echo "::error::$sym MISSING from $SO — built without --features mirror?"; exit 1; }
+          done
+          ls -la libumdnscrypt/src/main/jniLibs/${{ matrix.abi }}/
+
+      - name: Gradle assemble ${{ matrix.flavor }}Debug
+        run: ./gradlew :libumdnscrypt:assemble${{ matrix.flavor == 'arm64' && 'Arm64' || 'Universal' }}Debug --stacktrace
+
+      - name: JVM unit tests
+        run: ./gradlew :libumdnscrypt:test${{ matrix.flavor == 'arm64' && 'Arm64' || 'Universal' }}DebugUnitTest --stacktrace
+
+      - name: Name the APK
+        id: apk
+        run: |
+          APK=$(find libumdnscrypt/build/outputs/apk -name '*.apk' | head -1)
+          test -n "$APK" || { echo "::error::no APK produced"; exit 1; }
+          echo "path=$APK" >> "$GITHUB_OUTPUT"
+          echo "APK: $APK ($(du -h "$APK" | cut -f1))"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yeah-torta-${{ matrix.flavor }}-alpha
+          path: ${{ steps.apk.outputs.path }}
+          if-no-files-found: error
+          retention-days: 30
+
+  # ---------------------------------------------------------------------------------------------
+  # 4. PRE-RELEASE — tag-driven. Alpha means alpha; the flag says so.
+  # ---------------------------------------------------------------------------------------------
+  prerelease:
+    name: publish pre-release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [android]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Collect the APKs
+        run: |
+          mkdir -p release
+          find artifacts -name '*.apk' -exec cp {} release/ \;
+          ls -la release/
+          test -n "$(ls -A release/)" || { echo "::error::no APKs to publish"; exit 1; }
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: release/*.apk
+          prerelease: true
+          generate_release_notes: true
+          name: "Yeah! Tortä ${{ github.ref_name }} — ALPHA"
+          body: |
+            **This is a PRE-RELEASE (alpha).**
+
+            Built end to end by GitHub Actions from source: the Rust engine, the Slint UI, the
+            UniFFI bindings and both APKs. No binary in this repository was trusted to produce
+            them.
+
+            Gates that had to pass first:
+            - engine unit tests (`cargo test --lib --features mirror`)
+            - UniFFI bindings match the current Rust surface (no stale generated Kotlin)
+            - the built `.so` actually carries the pillar symbols (`mirror_status`,
+              `centauri_serve_hits`, `resolver_doh_sinkhole_on`)
+            - A14 uniffi-record guard and the A4 Slint golden gate
+            - JVM unit tests for the flavour
+
+            See README.md for what is proven and — deliberately — what is not yet.

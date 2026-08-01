@@ -1,0 +1,386 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\utils\\connectionchecker",
+  "files": {
+    "HttpInternetChecker.kt": {
+      "hash": "b745be273d5d",
+      "indexed_at": "2026-08-01T04:00:32.348628+00:00",
+      "language": "kotlin",
+      "lines": 93,
+      "mtime_ns": 1785556378454899400,
+      "size": 2762,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                37,
+                54
+              ],
+              "name": "checkConnectionAvailability",
+              "signature": "(\n        site: String,\n        proxyAddress: String,\n        proxyPort: Int,\n        proxyUser: ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                92
+              ],
+              "name": "checkConnection",
+              "signature": "(\n        site: String,\n        proxyAddress: String,\n        proxyPort: Int,\n        proxyUser: ...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            33,
+            93
+          ],
+          "name": "HttpInternetChecker",
+          "type": "class"
+        }
+      ]
+    },
+    "NetworkChecker.kt": {
+      "hash": "1b997f7144e0",
+      "indexed_at": "2026-08-01T04:00:32.663524+00:00",
+      "language": "kotlin",
+      "lines": 556,
+      "mtime_ns": 1785556378466899800,
+      "size": 23073,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                44,
+                75
+              ],
+              "name": "isNetworkAvailable",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                83
+              ],
+              "name": "hasActiveTransport",
+              "signature": "(capabilities: NetworkCapabilities)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                86,
+                121
+              ],
+              "name": "isCellularActive",
+              "signature": "(context: Context, checkAllNetworks: Boolean = false)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                123,
+                127
+              ],
+              "name": "hasCellularTransport",
+              "signature": "(capabilities: NetworkCapabilities)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                130,
+                169
+              ],
+              "name": "isRoaming",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                172,
+                177
+              ],
+              "name": "hasRoamingTransport",
+              "signature": "(capabilities: NetworkCapabilities)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                179,
+                214
+              ],
+              "name": "isWifiActive",
+              "signature": "(context: Context, checkAllNetworks: Boolean = false)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                216,
+                219
+              ],
+              "name": "hasWifiTransport",
+              "signature": "(capabilities: NetworkCapabilities)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                221,
+                252
+              ],
+              "name": "isEthernetActive",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                254,
+                257
+              ],
+              "name": "hasEthernetTransport",
+              "signature": "(capabilities: NetworkCapabilities)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                259,
+                289
+              ],
+              "name": "isMeteredNetwork",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                291,
+                314
+              ],
+              "name": "isVpnActive",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                316,
+                337
+              ],
+              "name": "getVpnInterfaceName",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                339,
+                341
+              ],
+              "name": "hasVpnTransport",
+              "signature": "(capabilities: NetworkCapabilities)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                343,
+                361
+              ],
+              "name": "getMtu",
+              "signature": "(context: Context, network: Network)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                363,
+                376
+              ],
+              "name": "isVpnNetwork",
+              "signature": "(\n        connectivityManager: ConnectivityManager?,\n        network: Network?\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                379,
+                402
+              ],
+              "name": "isCaptivePortalDetected",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "docstring": "Use of background networks requires CHANGE_NETWORK_STATE permission.",
+              "lines": [
+                405,
+                459
+              ],
+              "name": "getAvailableNetworksSorted",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "docstring": "This is required because the cellular interface may only be available for ims",
+              "lines": [
+                462,
+                467
+              ],
+              "name": "isCellularInternetMayBeAvailable",
+              "signature": "(capabilities: NetworkCapabilities)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                469,
+                485
+              ],
+              "name": "getCurrentActiveInterface",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                487,
+                501
+              ],
+              "name": "getUnderlyingVpnActiveInterface",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                503,
+                504
+              ],
+              "name": "getConnectivityManager",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                506,
+                508
+              ],
+              "name": "isRootMode",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                510,
+                523
+              ],
+              "name": "isActiveNetwork",
+              "signature": "(\n        connectivityManager: ConnectivityManager?,\n        network: Network?\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                525,
+                537
+              ],
+              "name": "getActiveNetworkHash",
+              "signature": "(connectivityManager: ConnectivityManager?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                539,
+                555
+              ],
+              "name": "networkToId",
+              "signature": "(connectivityManager: ConnectivityManager?, network: Network?)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            41,
+            556
+          ],
+          "name": "NetworkChecker",
+          "type": "class"
+        }
+      ]
+    },
+    "ProxyAuthManager.kt": {
+      "hash": "48c28dbf76ed",
+      "indexed_at": "2026-08-01T04:00:32.985368+00:00",
+      "language": "kotlin",
+      "lines": 42,
+      "mtime_ns": 1785556378477900300,
+      "size": 1448,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                34
+              ],
+              "name": "setDefaultAuth",
+              "signature": "(proxyUser: String, proxyPass: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                36,
+                41
+              ],
+              "name": "getAuth",
+              "signature": "(user: String?, password: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            42
+          ],
+          "name": "ProxyAuthManager",
+          "type": "class"
+        }
+      ]
+    },
+    "SocketInternetChecker.kt": {
+      "hash": "37c6d2844edc",
+      "indexed_at": "2026-08-01T04:00:33.293138+00:00",
+      "language": "kotlin",
+      "lines": 138,
+      "mtime_ns": 1785556378489899500,
+      "size": 4156,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                30,
+                74
+              ],
+              "name": "checkConnectionAvailability",
+              "signature": "(\n        ip: String,\n        port: Int,\n        proxyAddress: String,\n        proxyPort: Int,\n  ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                76,
+                127
+              ],
+              "name": "checkConnectionPing",
+              "signature": "(\n        ip: String,\n        port: Int,\n        proxyAddress: String,\n        proxyPort: Int,\n  ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                129,
+                132
+              ],
+              "name": "isProxyUsed",
+              "signature": "(\n        proxyAddress: String,\n        proxyPort: Int\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            28,
+            138
+          ],
+          "name": "SocketInternetChecker",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:33.294787+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,708 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT Rotation ||| SETTINGS section — slice 9 of the Rotation pillar (the 🎷 Violet facet).
+//
+// This is the rust-native (SLINT, NO XML / NO Java / NO Compose) Rotation settings surface reached from the
+// |||  triple-burger — the operator-family wheel's controls the ||| Advanced burger opens onto. Three controls:
+// the CADENCE SELECTOR (how often the wheel turns), the ROTATE-NOW action (a manual one-shot flip), and the
+// MANUAL FAMILY-PIN toggle (hold the current family; stop the wheel). The host pushes the CURRENT rotation
+// posture onto the `in-out` scalar inputs; the user's intents flow back out as typed CALLBACKS; the host owns
+// the truth (one-way data flow — the live engine is the single source, no engine fork, Chroma F1).
+//
+// ── GROUND-TRUTH honesty (the felt-truth law — every callback's REAL destination MEASURED from the tree) ──
+//   ★ THE NO-FORK CONSENSUS (Eidolon/Anti-Venom/Chroma, cross-lens): the Rotate-Now + set-cadence + pin
+//   controls are NOT torta_core setters — they are HOST/Kotlin-owned. torta_core holds NO live in-RAM rotation
+//   (the `RotationManager` owns the in-flight cursor + persists it; `RotationSnapshot` (object.rs:212) is the
+//   LAST-PERSISTED READ only). A rust `rotate_now()` would be a 2nd durable writer racing Kotlin's
+//   `persist_resolver_rotation` (Chroma F14, the record-goes-backwards race); a rust `set_cadence()` would be a
+//   dual-source vs the authoritative Kotlin pref (Chroma F15). So these callbacks signal INTENT; the host wires
+//   each to its REAL Kotlin destination, and the settings surface stays a legible display + intent (honest):
+//     - `rotate-now()`       -> RotationManager.rotateNow() (RotationManager.kt:209) via the ModulesService
+//                               ACTION_ROTATE_RESOLVERS_NOW intent (ModulesStateLoop.kt:326). Guarded on
+//                               isRunning() Kotlin-side; rotateOnce re-checks shouldRotate() — so it is INERT
+//                               while the engine is stopped OR the family is pinned (see the guard below).
+//     - `set-cadence(secs)`  -> the Kotlin cadence pref RESOLVER_ROTATION_CADENCE_MINUTES (readCadenceMs,
+//                               RotationManager.kt:590 — minute-granular, expert-clamped 5 min .. 7 days,
+//                               DEFAULT 30 min). The selector passes SECONDS (the dashboard's cadence unit); the
+//                               host divides by 60 for the minute pref. Gated behind DNS_ENGINE_EXPERT (kt:589).
+//     - `cadence-stepped(dir)` -> the same pref, stepped -/+ (the Expert raw knob); the HOST owns the step
+//                               magnitude + the [5 min, 7 days] clamp, then pushes the clamped value back.
+//     - `pin-toggled(on)`    -> the Kotlin RESOLVER_ROTATION_ENABLED pref (shouldRotate, RotationManager.kt:612)
+//                               written INVERTED: pin ON  == rotation DISABLED (the wheel holds the current
+//                               family); pin OFF == rotation enabled (the wheel resumes). torta_core has NO pin
+//                               setter — "pinned" is exactly the dashboard's PINNED state (cadence inert), the
+//                               honest meaning of holding one family. The pinned family = `rotation-family`.
+//     - `expert-toggled(on)` -> reveal the raw cadence stepper (mirrors the ONE DNS_ENGINE_EXPERT gate the
+//                               RotationManager doc :74 puts the cadence behind — feedback-simple-ux).
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android cross-compile spike #69.
+//
+// 🎷 THE DECISION-POINT GUARD (the Violet facet's load-bearing job — read the felt-truth, warn WHERE the choice
+// is MADE, not after it bites): the dashboard (slice 8) surfaces a fault AFTER the wheel silently freezes; the
+// SETTINGS surface warns AT the knob. Pinning to a family that does not exist yet (cold), a sub-5-min cadence
+// that the host will silently clamp (your value won't stick), tapping Rotate-Now while the family is pinned (a
+// no-op the engine will swallow), the cadence you set being ignored while pinned — each reads as a colored
+// banner at the moment of the choice, with the live witness (the family / index) beside the control so the
+// non-geek SEES it (the feedback-simple-ux law: the simple controls up top, the raw cadence knob behind Expert).
+//
+// NOTE: slint uses `:` for property bindings (not `=`); `\{expr}` is string interpolation; `out property`
+// values are derived + host-readable (the proof test asserts the guard derivations fire); interactive controls
+// are built on the core `TouchArea` (zero std-widget-style dependency) + the proven `Button`.
+
+import { VerticalBox, HorizontalBox, Button } from "std-widgets.slint";
+// The orbital-wheel palette (slice 10) — the single source of truth, shared with rotation.slint (slice 8). NO XML.
+import { Wheel } from "rotation_palette.slint";
+import { ThemeBook, MotifWash, UpperMoonChip } from "theme_tokens.slint";
+
+// ===========================================================================================
+// Local controls (TouchArea-built — zero std-widget-style dependency; the host build proves them green).
+// ===========================================================================================
+
+// A pill toggle. Visual reads the host-owned `on`; a tap fires `toggled(!on)` so the host updates state + writes
+// the Kotlin pref (one-way to the engine, the single source of truth).
+component ToggleSwitch inherits Rectangle {
+    in property <bool> on: false;
+    in property <color> on-color: Wheel.turn;
+    callback toggled(bool);
+    width: 42px;
+    height: 24px;
+    border-radius: 12px;
+    background: root.on ? root.on-color : Wheel.track;
+    animate background { duration: 120ms; }
+    Rectangle {
+        width: 18px;
+        height: 18px;
+        border-radius: 9px;
+        background: white;
+        x: root.on ? parent.width - self.width - 3px : 3px;
+        y: (parent.height - self.height) / 2;
+        animate x { duration: 120ms; }
+    }
+    TouchArea {
+        clicked => {
+            root.toggled(!root.on);
+        }
+    }
+}
+
+// A section title.
+component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: Wheel.dim;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+// A row card shell.
+component RowCard inherits Rectangle {
+    background: @linear-gradient(90deg, Wheel.abyss.with-alpha(0.55) 0%, Wheel.orbit-void.with-alpha(0.30) 100%);
+    border-radius: 6px;
+}
+
+// A decision-point alert banner (local) — instantiated via a guarding `if`, so an inactive warning occupies ZERO
+// layout space. The danger reads colored, at the moment the choice is made.
+component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: Wheel.wound;
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: Wheel.strike;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: Wheel.strike;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A cadence preset chip — a tap selects a whole cadence at once (the SELECTOR shape, simpler than a raw stepper
+// for a non-geek). The active preset (its `secs` == the live cadence) reads lit in TURN green; a tap fires
+// `chosen(secs)` so the host writes the minute pref.
+component CadenceChip inherits Rectangle {
+    in property <string> label;
+    in property <int> secs;
+    in property <bool> active: false;
+    callback chosen(int);
+    min-width: 56px;
+    height: 30px;
+    border-radius: 8px;
+    background: root.active ? Wheel.turn : Wheel.panel;
+    border-width: 1px;
+    border-color: root.active ? Wheel.turn : Wheel.hairline;
+    HorizontalLayout {
+        alignment: center;
+        Text {
+            text: root.label;
+            color: root.active ? Wheel.strike : Wheel.haze;
+            font-size: 12px;
+            font-weight: root.active ? 900 : 700;
+            vertical-alignment: center;
+        }
+    }
+    TouchArea {
+        clicked => {
+            root.chosen(root.secs);
+        }
+    }
+}
+
+// A single -/+ tap pill for the Expert numeric stepper.
+component StepPill inherits Rectangle {
+    in property <string> glyph;
+    callback tapped();
+    width: 26px;
+    height: 24px;
+    border-radius: 6px;
+    background: @linear-gradient(135deg, Wheel.panel.with-alpha(0.64) 0%, Wheel.abyss.with-alpha(0.40) 100%);
+    border-width: 1px;
+    border-color: Wheel.hairline;
+    HorizontalLayout {
+        alignment: center;
+        Text {
+            text: root.glyph;
+            color: Wheel.spoke;
+            font-size: 15px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+    }
+    TouchArea {
+        clicked => {
+            root.tapped();
+        }
+    }
+}
+
+// A read-only witness chip — the live counter beside a control that makes the guard legible (turn the warning
+// into a number the non-geek can SEE, the feedback-simple-ux law).
+component StatChip inherits Rectangle {
+    in property <string> label;
+    in property <string> value;
+    in property <color> tint: Wheel.spoke;
+    min-width: 64px;
+    border-radius: 6px;
+    background: @linear-gradient(135deg, Wheel.panel.with-alpha(0.64) 0%, Wheel.abyss.with-alpha(0.40) 100%);
+    border-width: 1px;
+    border-color: Wheel.hairline;
+    VerticalLayout {
+        padding: 7px;
+        spacing: 1px;
+        Text {
+            text: root.value;
+            color: root.tint;
+            font-size: 15px;
+            font-weight: 900;
+            horizontal-alignment: center;
+        }
+        Text {
+            text: root.label;
+            color: Wheel.haze;
+            font-size: 9px;
+            horizontal-alignment: center;
+        }
+    }
+}
+
+// THE EMBEDDABLE PANE (inherits Rectangle) — the single-android-surface form the shell mounts in the
+// "rotation-settings" section (the MaskSolver/Warden/Centauri SettingsPane precedent). The `RotationSettings`
+// Window forwarder below re-exposes every in-out prop + derived out property + callback so the host test +
+// the standalone preview keep working unchanged.
+export component RotationSettingsPane inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.rotation; width: 100%; height: 100%; }
+    // ===== "THE ORBIT" settings signature — a quarter-ring over the top-right shoulder. =====
+    Rectangle {
+        width: 100%; height: 100%; clip: true;
+        Rectangle {
+            x: parent.width * 0.72; y: -parent.width * 0.28;
+            width: parent.width * 0.56; height: self.width;
+            border-radius: self.width / 2; background: transparent;
+            border-width: 1px; border-color: Wheel.spoke.with-alpha(0.28);
+        }
+    }
+    background: Wheel.orbit-void.with-alpha(0.42);
+
+    // ===== ROTATION POSTURE (host pushes from RotationSnapshot + the RESOLVER_ROTATION_* prefs) =====
+    in-out property <bool> configured: false;        // the pillar is armed (DNS_ENGINE + the engine is running)
+    in-out property <string> rotation-family: "";    // snapshot.last_family (the family a pin would HOLD; "" = cold)
+    in-out property <int> rotation-index: 0;         // snapshot.rotation_index (the diversity cursor witness)
+    in-out property <int> cadence-secs: 1800;        // the live cadence in seconds (from the minute pref; default 30 min)
+    in-out property <bool> pinned: false;            // the manual family pin (host: !RESOLVER_ROTATION_ENABLED)
+    in-out property <bool> expert-open: false;       // reveal the raw cadence stepper (mirrors DNS_ENGINE_EXPERT)
+
+    // The cadence-selector presets (the selector shape — one tap picks a whole cadence). SECONDS the host maps to
+    // the minute pref. 300s (5 min, the expert-clamp FLOOR) · 1800s (30 min, the DEFAULT) · 1h · 6h · 1 day.
+    property <int> preset-floor: 300;
+    property <int> preset-default: 1800;
+    property <int> preset-hour: 3600;
+    property <int> preset-6hour: 21600;
+    property <int> preset-day: 86400;
+
+    // ===== 🎷 THE DECISION-POINT GUARD — derived, host-readable (the proof test asserts these fire) =====
+    // The wheel is turning: armed, NOT pinned, and a positive cadence is set.
+    out property <bool> rotating: root.configured && !root.pinned && root.cadence-secs > 0;
+    // (1) PIN-TO-NOTHING — pinning the "current family" while there is NO family yet (cold). The pin holds nothing;
+    //     it is a no-op until a first rotation lands a family. Actionable — warn at the pin tap.
+    out property <bool> warn-pin-cold: root.pinned && root.rotation-family == "";
+    // (2) CADENCE CLAMPED — a sub-5-min cadence is BELOW the host's expert-clamp floor; the host will silently
+    //     coerce it to 5 min, so your value will not stick. Actionable — the non-silent clamp (warn, never coerce mute).
+    out property <bool> warn-cadence-clamped: !root.pinned && root.cadence-secs > 0 && root.cadence-secs < root.preset-floor;
+    // (3) ROTATE-NOW INERT (PINNED) — the family is pinned, so a manual Rotate-Now is swallowed (rotateOnce
+    //     re-checks shouldRotate() == false). Informational (the pin is a CHOSEN state, not a misconfiguration).
+    out property <bool> note-rotate-inert-pinned: root.pinned;
+    // (4) CADENCE IGNORED (PINNED) — a cadence is set but the wheel is pinned, so the cadence is held until you
+    //     unpin. Informational — the felt-truth that the two controls interact.
+    out property <bool> note-cadence-ignored-pinned: root.pinned && root.cadence-secs > 0;
+    // (5) DORMANT — the engine is not armed/running → Rotate-Now is inert + the controls STAGE for the next start.
+    //     Informational (a soft stage-and-apply notice, NOT a red alarm).
+    out property <bool> note-dormant: !root.configured;
+    // Master of the ACTIONABLE dangers (the PINNED / DORMANT notes are chosen/soft states, excluded — like the
+    // MaskSolver settings' unconfigured note: informational, they do not raise warn-any).
+    out property <bool> warn-any: root.warn-pin-cold || root.warn-cadence-clamped;
+
+    // Which preset (if any) the live cadence matches — lights exactly one chip (or none for a custom Expert value).
+    out property <bool> preset-floor-active: !root.pinned && root.cadence-secs == root.preset-floor;
+    out property <bool> preset-default-active: !root.pinned && root.cadence-secs == root.preset-default;
+    out property <bool> preset-hour-active: !root.pinned && root.cadence-secs == root.preset-hour;
+    out property <bool> preset-6hour-active: !root.pinned && root.cadence-secs == root.preset-6hour;
+    out property <bool> preset-day-active: !root.pinned && root.cadence-secs == root.preset-day;
+
+    // The plain-words cadence label (decode the seconds — the feedback-simple-ux felt-truth; "pinned" when held).
+    out property <string> cadence-label:
+        root.pinned ? "pinned"
+        : (root.cadence-secs <= 0 ? "off"
+        : (root.cadence-secs >= 86400 ? "\{Math.round(root.cadence-secs / 86400)} day"
+        : (root.cadence-secs >= 3600 ? "\{Math.round(root.cadence-secs / 3600)} hr"
+        : (root.cadence-secs >= 60 ? "\{Math.round(root.cadence-secs / 60)} min"
+        : "\{root.cadence-secs} sec"))));
+
+    // The plain-words posture summary (the Violet felt-truth: tell the non-geek what their knobs MEAN).
+    out property <string> posture-line:
+        !root.configured ? "not armed — the controls stage for the next start"
+        : (root.pinned ? "PINNED to \{root.rotation-family != "" ? root.rotation-family : "no operator yet"} · the wheel is held"
+        : "ROTATING every \{root.cadence-label} · operator \{root.rotation-family != "" ? root.rotation-family : "cold"} · flip #\{root.rotation-index}");
+
+    // ===== The user's edit intents — the host wires each to its Kotlin destination (see the GROUND-TRUTH header) =====
+    callback pin-toggled(bool);        // -> RESOLVER_ROTATION_ENABLED (inverted: pin ON == rotation OFF)
+    callback rotate-now();             // -> RotationManager.rotateNow() (ACTION_ROTATE_RESOLVERS_NOW)
+    callback set-cadence(int);         // -> RESOLVER_ROTATION_CADENCE_MINUTES (the selector, seconds/60)
+    callback cadence-stepped(int);     // -> the same pref, stepped -/+ (the Expert raw knob; host clamps)
+    callback expert-toggled(bool);     // -> reveal the raw cadence stepper (DNS_ENGINE_EXPERT)
+    callback close-settings();
+
+    VerticalBox {
+        padding: 14px;
+        spacing: 12px;
+
+        // ---- Header + the plain-words posture summary ----
+        HorizontalBox {
+            spacing: 8px;
+            VerticalLayout {
+                Text {
+                    text: "ROTATION  |||";
+                    color: Wheel.spoke;
+                    font-size: 22px;
+                    font-weight: 900;
+                }
+                Text {
+                    text: "rotates your DNS servers — cadence · rotate now · pin";
+                    color: Wheel.haze;
+                    font-size: 11px;
+                    // Measured cut on device: rendered as "…cadence · rotate n", losing "ow · pin"
+                    // — the header stopped naming one of the pane's three controls.
+                    wrap: word-wrap;
+                }
+            }
+            Rectangle { }  // spacer
+            Text {
+                text: root.rotating ? "TURNING" : (root.pinned ? "PINNED" : (root.configured ? "ARMED" : "OFF"));
+                color: root.rotating ? Wheel.turn : (root.pinned ? Wheel.warm : Wheel.haze);
+                font-size: 11px;
+                font-weight: 800;
+                vertical-alignment: center;
+                horizontal-alignment: right;
+            }
+        }
+        RowCard {
+            HorizontalLayout {
+                padding: 8px;
+                Text {
+                    text: root.posture-line;
+                    color: Wheel.haze;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+            }
+        }
+
+        // ---- 🎷 The decision-point guard banners (each exists ONLY while its danger/note is live) ----
+        if root.warn-pin-cold : AlertBanner {
+            accent: Wheel.wound;
+            message: "PIN TO NOTHING -> you are pinning the current servers, but the wheel has NOT rotated yet (cold). The pin holds nothing until a first rotation lands one. Rotate once, or leave rotation on.";
+        }
+        if root.warn-cadence-clamped : AlertBanner {
+            accent: Wheel.caution;
+            message: "CADENCE TOO SHORT -> a \{root.cadence-secs}s cadence is below the 5-min floor; the host will clamp it to 5 min, so your value will not stick. Pick 5 min or longer.";
+        }
+        if root.note-cadence-ignored-pinned : AlertBanner {
+            accent: Wheel.panel;
+            message: "PINNED -> the servers are pinned, so the cadence (\{root.cadence-label == "pinned" ? "held" : root.cadence-label}) is on hold. It resumes the moment you unpin. (a chosen state, not a fault.)";
+        }
+        if root.note-dormant : AlertBanner {
+            accent: Wheel.panel;
+            message: "Engine not armed yet — these controls STAGE and take effect on the next start. Rotate-Now is inert until the resolver is running.";
+        }
+
+        // ---- MANUAL PIN: hold the current servers / stop the wheel (the simple control up top) ----
+        SectionTitle { text: "MANUAL PIN  (\{root.rotation-family != "" ? root.rotation-family : "cold"})"; }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    Text {
+                        text: "Pin to current servers";
+                        color: Wheel.starlight;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: root.rotation-family != ""
+                            ? "Hold \{root.rotation-family} and stop rotating. Turn OFF to resume the diversity wheel at your cadence."
+                            : "Hold whichever servers are live and stop rotating. (Nothing is set yet — pin after a first rotation.)";
+                        color: Wheel.haze;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+                ToggleSwitch {
+                    on: root.pinned;
+                    on-color: root.warn-pin-cold ? Wheel.stall : Wheel.warm;
+                    toggled(v) => {
+                        root.pinned = v;
+                        root.pin-toggled(v);
+                    }
+                }
+            }
+        }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 8px;
+                StatChip {
+                    label: "operator";
+                    value: root.rotation-family != "" ? root.rotation-family : "cold";
+                    tint: root.rotation-family != "" ? (root.pinned ? Wheel.warm : Wheel.turn) : Wheel.haze;
+                }
+                StatChip {
+                    label: "index";
+                    value: "\{root.rotation-index}";
+                    tint: Wheel.spoke;
+                }
+                Rectangle { }  // spacer
+                Text {
+                    text: root.pinned ? "wheel HELD" : (root.rotating ? "wheel TURNING" : "wheel idle");
+                    color: root.pinned ? Wheel.warm : (root.rotating ? Wheel.turn : Wheel.haze);
+                    font-size: 11px;
+                    font-weight: 800;
+                    vertical-alignment: center;
+                }
+            }
+        }
+
+        // ---- ROTATE NOW: the manual one-shot flip (inert while pinned or the engine is stopped) ----
+        SectionTitle { text: "ROTATE NOW  (manual one-shot)"; }
+        RowCard {
+            VerticalLayout {
+                padding: 10px;
+                spacing: 8px;
+                Text {
+                    text: "Flip to a fresh set of DNS servers right now — one manual rotation, then the cadence continues.";
+                    color: Wheel.haze;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+                if root.note-rotate-inert-pinned && !root.note-dormant : Text {
+                    text: "Rotate-Now is INERT while pinned — unpin first, or this tap is swallowed.";
+                    color: Wheel.caution;
+                    font-size: 10px;
+                    font-weight: 700;
+                    wrap: word-wrap;
+                }
+                HorizontalLayout {
+                    spacing: 8px;
+                    Button {
+                        text: "Rotate now";
+                        // Only meaningful when armed AND not pinned (rotateOnce re-checks shouldRotate()).
+                        enabled: root.configured && !root.pinned;
+                        clicked => {
+                            root.rotate-now();
+                        }
+                    }
+                    Rectangle { }  // spacer
+                    Text {
+                        text: root.configured ? (root.pinned ? "held" : "ready") : "engine off";
+                        color: root.configured ? (root.pinned ? Wheel.warm : Wheel.turn) : Wheel.dim;
+                        font-size: 11px;
+                        font-weight: 800;
+                        vertical-alignment: center;
+                    }
+                }
+            }
+        }
+
+        // ---- CADENCE SELECTOR: how often the wheel turns (the preset chips — one tap picks a cadence) ----
+        SectionTitle { text: "CADENCE  (how often the wheel turns · default 30 min)"; }
+        RowCard {
+            VerticalLayout {
+                padding: 10px;
+                spacing: 8px;
+                HorizontalLayout {
+                    spacing: 6px;
+                    CadenceChip {
+                        label: "5 min";
+                        secs: root.preset-floor;
+                        active: root.preset-floor-active;
+                        chosen(s) => {
+                            root.cadence-secs = s;
+                            root.pinned = false;
+                            root.set-cadence(s);
+                        }
+                    }
+                    CadenceChip {
+                        label: "30 min";
+                        secs: root.preset-default;
+                        active: root.preset-default-active;
+                        chosen(s) => {
+                            root.cadence-secs = s;
+                            root.pinned = false;
+                            root.set-cadence(s);
+                        }
+                    }
+                    CadenceChip {
+                        label: "1 hr";
+                        secs: root.preset-hour;
+                        active: root.preset-hour-active;
+                        chosen(s) => {
+                            root.cadence-secs = s;
+                            root.pinned = false;
+                            root.set-cadence(s);
+                        }
+                    }
+                }
+                // SECOND ROW — five chips DO NOT FIT the content column while the burger rail is
+                // open (~618px). Measured on the AVD: "6 hr" was clipped at the right edge and
+                // "1 day" was entirely offscreen, so the two LONGEST cadences this pane advertises
+                // could not be selected at all — not a cosmetic clip, an unreachable control.
+                // Wrapping to a second row is the shape THE TUNE already uses in
+                // beast_settings.slint (2x2) for exactly this reason.
+                HorizontalLayout {
+                    spacing: 6px;
+                    CadenceChip {
+                        label: "6 hr";
+                        secs: root.preset-6hour;
+                        active: root.preset-6hour-active;
+                        chosen(s) => {
+                            root.cadence-secs = s;
+                            root.pinned = false;
+                            root.set-cadence(s);
+                        }
+                    }
+                    CadenceChip {
+                        label: "1 day";
+                        secs: root.preset-day;
+                        active: root.preset-day-active;
+                        chosen(s) => {
+                            root.cadence-secs = s;
+                            root.pinned = false;
+                            root.set-cadence(s);
+                        }
+                    }
+                }
+                HorizontalLayout {
+                    spacing: 8px;
+                    Text {
+                        text: root.pinned ? "cadence on hold (pinned)" : "every \{root.cadence-label}";
+                        color: root.pinned ? Wheel.warm : Wheel.starlight;
+                        font-size: 12px;
+                        font-weight: 800;
+                        vertical-alignment: center;
+                    }
+                    Rectangle { }  // spacer
+                    Text {
+                        text: "shorter = more diversity · more restarts";
+                        color: Wheel.dim;
+                        font-size: 9px;
+                        vertical-alignment: center;
+                        // Measured cut on device at "…more resta" — the trade-off this hint exists
+                        // to state was the part that got dropped.
+                        wrap: word-wrap;
+                    }
+                }
+            }
+        }
+
+        // ---- EXPERT: the raw cadence stepper behind a reveal (mirrors DNS_ENGINE_EXPERT; feedback-simple-ux) ----
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    Text {
+                        text: "Expert cadence";
+                        color: Wheel.starlight;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "Reveal a raw cadence knob for a custom value between the 5-min floor and the 7-day ceiling.";
+                        color: Wheel.haze;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+                ToggleSwitch {
+                    on: root.expert-open;
+                    on-color: Wheel.spoke;
+                    toggled(v) => {
+                        root.expert-open = v;
+                        root.expert-toggled(v);
+                    }
+                }
+            }
+        }
+        if root.expert-open : RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    Text {
+                        text: "Custom cadence";
+                        color: Wheel.starlight;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "Step the cadence by minutes. The host clamps to [5 min, 7 days]; a sub-floor value warns above.";
+                        color: Wheel.haze;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+                HorizontalLayout {
+                    spacing: 6px;
+                    alignment: center;
+                    StepPill {
+                        glyph: "-";
+                        tapped => {
+                            root.cadence-stepped(-1);
+                        }
+                    }
+                    Text {
+                        text: root.cadence-label;
+                        color: root.warn-cadence-clamped ? Wheel.stall : Wheel.spoke;
+                        font-size: 15px;
+                        font-weight: 900;
+                        min-width: 72px;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                    StepPill {
+                        glyph: "+";
+                        tapped => {
+                            root.cadence-stepped(1);
+                        }
+                    }
+                }
+            }
+        }
+
+        // ---- Footer: close ----
+        HorizontalBox {
+            spacing: 8px;
+            Rectangle { }  // spacer
+            Button {
+                text: "Done";
+                clicked => {
+                    root.close-settings();
+                }
+            }
+        }
+
+        Rectangle { }  // tail spacer
+    }
+
+    // ===== #36 THE UPPER MOON SEAL — the dash is the Hashira; the settings pane bears the
+    //       matching demon's rank (the technique obsessive rides the rotation). Declared LAST. =====
+    UpperMoonChip {
+        x: parent.width - self.width - 10px;
+        y: 8px;
+        kanji: "上弦・参";
+        moon-name: "UPPER THREE — AKAZA";
+        tint: #e05a78;
+    }
+}
+
+// THE WINDOW FORWARDER — the standalone/preview + host-test form. Re-exposes every Pane in-out prop, derived
+// out property, and callback so `RotationSettings::new()` (the host test's felt-truth harness) is unchanged by
+// the embed split. The shell mounts the Pane directly; this Window is the desktop-preview twin.
+export component RotationSettings inherits Window {
+    title: "Yeah! Tortä — Rotation  |||";
+    preferred-width: 440px;
+    preferred-height: 980px;
+    background: Wheel.orbit-void.with-alpha(0.42);
+
+    // ---- posture (host pushes) ----
+    in-out property <bool> configured <=> pane.configured;
+    in-out property <string> rotation-family <=> pane.rotation-family;
+    in-out property <int> rotation-index <=> pane.rotation-index;
+    in-out property <int> cadence-secs <=> pane.cadence-secs;
+    in-out property <bool> pinned <=> pane.pinned;
+    in-out property <bool> expert-open <=> pane.expert-open;
+
+    // ---- derived decision-point guard (host-readable — the proof test asserts these fire) ----
+    out property <bool> rotating <=> pane.rotating;
+    out property <bool> warn-pin-cold <=> pane.warn-pin-cold;
+    out property <bool> warn-cadence-clamped <=> pane.warn-cadence-clamped;
+    out property <bool> note-rotate-inert-pinned <=> pane.note-rotate-inert-pinned;
+    out property <bool> note-cadence-ignored-pinned <=> pane.note-cadence-ignored-pinned;
+    out property <bool> note-dormant <=> pane.note-dormant;
+    out property <bool> warn-any <=> pane.warn-any;
+    out property <bool> preset-floor-active <=> pane.preset-floor-active;
+    out property <bool> preset-default-active <=> pane.preset-default-active;
+    out property <bool> preset-hour-active <=> pane.preset-hour-active;
+    out property <bool> preset-6hour-active <=> pane.preset-6hour-active;
+    out property <bool> preset-day-active <=> pane.preset-day-active;
+    out property <string> cadence-label <=> pane.cadence-label;
+    out property <string> posture-line <=> pane.posture-line;
+
+    // ---- intents (host wires each to its Kotlin destination) ----
+    callback pin-toggled <=> pane.pin-toggled;
+    callback rotate-now <=> pane.rotate-now;
+    callback set-cadence <=> pane.set-cadence;
+    callback cadence-stepped <=> pane.cadence-stepped;
+    callback expert-toggled <=> pane.expert-toggled;
+    callback close-settings <=> pane.close-settings;
+
+    pane := RotationSettingsPane { }
+}

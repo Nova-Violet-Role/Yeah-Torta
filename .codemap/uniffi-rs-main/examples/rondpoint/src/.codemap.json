@@ -1,0 +1,1489 @@
+{
+  "directory": "uniffi-rs-main\\examples\\rondpoint\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "740d70ab5ca2",
+      "indexed_at": "2026-07-24T20:35:12.330159+00:00",
+      "language": "rust",
+      "lines": 293,
+      "mtime_ns": 1782136568000000000,
+      "size": 6500,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            13
+          ],
+          "name": "Dictionnaire",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            16,
+            21
+          ],
+          "name": "DictionnaireNombres",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            24,
+            29
+          ],
+          "name": "DictionnaireNombresSignes",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            32,
+            36
+          ],
+          "name": "Enumeration",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            39,
+            43
+          ],
+          "name": "EnumerationAvecDonnees",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            47,
+            49
+          ],
+          "name": "minusculeMAJUSCULEDict",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            52,
+            54
+          ],
+          "name": "minusculeMAJUSCULEEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            56,
+            58
+          ],
+          "name": "copie_enumeration",
+          "signature": "(e: Enumeration)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            60,
+            62
+          ],
+          "name": "copie_enumerations",
+          "signature": "(e: Vec<Enumeration>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            64,
+            68
+          ],
+          "name": "copie_carte",
+          "signature": "(\n    e: HashMap<String, EnumerationAvecDonnees>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            70,
+            72
+          ],
+          "name": "copie_dictionnaire",
+          "signature": "(d: Dictionnaire)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            74,
+            76
+          ],
+          "name": "switcheroo",
+          "signature": "(b: bool)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            82,
+            82
+          ],
+          "name": "Retourneur",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                84,
+                86
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                87,
+                89
+              ],
+              "name": "identique_i8",
+              "signature": "(&self, value: i8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                90,
+                92
+              ],
+              "name": "identique_u8",
+              "signature": "(&self, value: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                95
+              ],
+              "name": "identique_i16",
+              "signature": "(&self, value: i16)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                96,
+                98
+              ],
+              "name": "identique_u16",
+              "signature": "(&self, value: u16)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                99,
+                101
+              ],
+              "name": "identique_i32",
+              "signature": "(&self, value: i32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                104
+              ],
+              "name": "identique_u32",
+              "signature": "(&self, value: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                105,
+                107
+              ],
+              "name": "identique_i64",
+              "signature": "(&self, value: i64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                110
+              ],
+              "name": "identique_u64",
+              "signature": "(&self, value: u64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                113
+              ],
+              "name": "identique_float",
+              "signature": "(&self, value: f32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                114,
+                116
+              ],
+              "name": "identique_double",
+              "signature": "(&self, value: f64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                117,
+                119
+              ],
+              "name": "identique_boolean",
+              "signature": "(&self, value: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                120,
+                122
+              ],
+              "name": "identique_string",
+              "signature": "(&self, value: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                123,
+                128
+              ],
+              "name": "identique_nombres_signes",
+              "signature": "(\n        &self,\n        value: DictionnaireNombresSignes,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                129,
+                131
+              ],
+              "name": "identique_nombres",
+              "signature": "(&self, value: DictionnaireNombres)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                132,
+                137
+              ],
+              "name": "identique_optionneur_dictionnaire",
+              "signature": "(\n        &self,\n        value: OptionneurDictionnaire,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            83,
+            138
+          ],
+          "name": "Retourneur",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            141,
+            141
+          ],
+          "name": "Stringifier",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                145,
+                147
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                148,
+                150
+              ],
+              "name": "to_string_i8",
+              "signature": "(&self, value: i8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                151,
+                153
+              ],
+              "name": "to_string_u8",
+              "signature": "(&self, value: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                154,
+                156
+              ],
+              "name": "to_string_i16",
+              "signature": "(&self, value: i16)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                157,
+                159
+              ],
+              "name": "to_string_u16",
+              "signature": "(&self, value: u16)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                160,
+                162
+              ],
+              "name": "to_string_i32",
+              "signature": "(&self, value: i32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                163,
+                165
+              ],
+              "name": "to_string_u32",
+              "signature": "(&self, value: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                166,
+                168
+              ],
+              "name": "to_string_i64",
+              "signature": "(&self, value: i64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                169,
+                171
+              ],
+              "name": "to_string_u64",
+              "signature": "(&self, value: u64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                172,
+                174
+              ],
+              "name": "to_string_float",
+              "signature": "(&self, value: f32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                175,
+                177
+              ],
+              "name": "to_string_double",
+              "signature": "(&self, value: f64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                178,
+                180
+              ],
+              "name": "to_string_boolean",
+              "signature": "(&self, value: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                181,
+                183
+              ],
+              "name": "well_known_string",
+              "signature": "(&self, value: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            144,
+            184
+          ],
+          "name": "Stringifier",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            187,
+            187
+          ],
+          "name": "Optionneur",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                189,
+                191
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                192,
+                194
+              ],
+              "name": "sinon_string",
+              "signature": "(&self, value: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                195,
+                197
+              ],
+              "name": "sinon_null",
+              "signature": "(&self, value: Option<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                198,
+                200
+              ],
+              "name": "sinon_boolean",
+              "signature": "(&self, value: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                201,
+                203
+              ],
+              "name": "sinon_sequence",
+              "signature": "(&self, value: Vec<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                205,
+                207
+              ],
+              "name": "sinon_zero",
+              "signature": "(&self, value: Option<i32>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                209,
+                211
+              ],
+              "name": "sinon_u8_dec",
+              "signature": "(&self, value: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                212,
+                214
+              ],
+              "name": "sinon_i8_dec",
+              "signature": "(&self, value: i8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                215,
+                217
+              ],
+              "name": "sinon_u16_dec",
+              "signature": "(&self, value: u16)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                218,
+                220
+              ],
+              "name": "sinon_i16_dec",
+              "signature": "(&self, value: i16)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                221,
+                223
+              ],
+              "name": "sinon_u32_dec",
+              "signature": "(&self, value: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                224,
+                226
+              ],
+              "name": "sinon_i32_dec",
+              "signature": "(&self, value: i32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                227,
+                229
+              ],
+              "name": "sinon_u64_dec",
+              "signature": "(&self, value: u64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                230,
+                232
+              ],
+              "name": "sinon_i64_dec",
+              "signature": "(&self, value: i64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                234,
+                236
+              ],
+              "name": "sinon_u8_hex",
+              "signature": "(&self, value: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                237,
+                239
+              ],
+              "name": "sinon_i8_hex",
+              "signature": "(&self, value: i8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                240,
+                242
+              ],
+              "name": "sinon_u16_hex",
+              "signature": "(&self, value: u16)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                243,
+                245
+              ],
+              "name": "sinon_i16_hex",
+              "signature": "(&self, value: i16)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                246,
+                248
+              ],
+              "name": "sinon_u32_hex",
+              "signature": "(&self, value: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                249,
+                251
+              ],
+              "name": "sinon_i32_hex",
+              "signature": "(&self, value: i32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                252,
+                254
+              ],
+              "name": "sinon_u64_hex",
+              "signature": "(&self, value: u64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                255,
+                257
+              ],
+              "name": "sinon_i64_hex",
+              "signature": "(&self, value: i64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                259,
+                261
+              ],
+              "name": "sinon_u32_oct",
+              "signature": "(&self, value: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                263,
+                265
+              ],
+              "name": "sinon_f32",
+              "signature": "(&self, value: f32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                266,
+                268
+              ],
+              "name": "sinon_f64",
+              "signature": "(&self, value: f64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                270,
+                272
+              ],
+              "name": "sinon_enum",
+              "signature": "(&self, value: Enumeration)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            188,
+            273
+          ],
+          "name": "Optionneur",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            275,
+            291
+          ],
+          "name": "OptionneurDictionnaire",
+          "type": "struct"
+        }
+      ]
+    },
+    "rondpoint.udl": {
+      "hash": "c903cb8c95b3",
+      "indexed_at": "2026-07-24T20:35:12.331252+00:00",
+      "language": "udl",
+      "lines": 146,
+      "mtime_ns": 1782136568000000000,
+      "size": 4156,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                2,
+                2
+              ],
+              "name": "copie_dictionnaire",
+              "signature": "(Dictionnaire d) : Dictionnaire",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "copie_enumeration",
+              "signature": "(Enumeration e) : Enumeration",
+              "type": "method"
+            },
+            {
+              "lines": [
+                4,
+                4
+              ],
+              "name": "copie_enumerations",
+              "signature": "(sequence<Enumeration> e) : sequence<Enumeration>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "copie_carte",
+              "signature": "(record<string, EnumerationAvecDonnees> c) : record<string, EnumerationAvecDonnees>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                6,
+                6
+              ],
+              "name": "switcheroo",
+              "signature": "(boolean b) : boolean",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1,
+            7
+          ],
+          "name": "rondpoint",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                10,
+                10
+              ],
+              "name": "minusculeMAJUSCULEField",
+              "signature": "boolean",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            9,
+            11
+          ],
+          "name": "minusculeMAJUSCULEDict",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            13,
+            15
+          ],
+          "name": "minusculeMAJUSCULEEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            17,
+            21
+          ],
+          "name": "Enumeration",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "Zero",
+              "signature": "()",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "Un",
+              "signature": "(u32 premier)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "Deux",
+              "signature": "(u32 premier, string second)",
+              "type": "variant"
+            }
+          ],
+          "lines": [
+            24,
+            28
+          ],
+          "name": "EnumerationAvecDonnees",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                31,
+                31
+              ],
+              "name": "un",
+              "signature": "Enumeration",
+              "type": "field"
+            },
+            {
+              "lines": [
+                32,
+                32
+              ],
+              "name": "deux",
+              "signature": "boolean",
+              "type": "field"
+            },
+            {
+              "lines": [
+                33,
+                33
+              ],
+              "name": "petit_nombre",
+              "signature": "u8",
+              "type": "field"
+            },
+            {
+              "lines": [
+                34,
+                34
+              ],
+              "name": "gros_nombre",
+              "signature": "u64",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            30,
+            35
+          ],
+          "name": "Dictionnaire",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                38,
+                38
+              ],
+              "name": "petit_nombre",
+              "signature": "u8",
+              "type": "field"
+            },
+            {
+              "lines": [
+                39,
+                39
+              ],
+              "name": "court_nombre",
+              "signature": "u16",
+              "type": "field"
+            },
+            {
+              "lines": [
+                40,
+                40
+              ],
+              "name": "nombre_simple",
+              "signature": "u32",
+              "type": "field"
+            },
+            {
+              "lines": [
+                41,
+                41
+              ],
+              "name": "gros_nombre",
+              "signature": "u64",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            37,
+            42
+          ],
+          "name": "DictionnaireNombres",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                45
+              ],
+              "name": "petit_nombre",
+              "signature": "i8",
+              "type": "field"
+            },
+            {
+              "lines": [
+                46,
+                46
+              ],
+              "name": "court_nombre",
+              "signature": "i16",
+              "type": "field"
+            },
+            {
+              "lines": [
+                47,
+                47
+              ],
+              "name": "nombre_simple",
+              "signature": "i32",
+              "type": "field"
+            },
+            {
+              "lines": [
+                48,
+                48
+              ],
+              "name": "gros_nombre",
+              "signature": "i64",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            44,
+            49
+          ],
+          "name": "DictionnaireNombresSignes",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                52,
+                52
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                53,
+                53
+              ],
+              "name": "identique_i8",
+              "signature": "(i8 value) : i8",
+              "type": "method"
+            },
+            {
+              "lines": [
+                54,
+                54
+              ],
+              "name": "identique_u8",
+              "signature": "(u8 value) : u8",
+              "type": "method"
+            },
+            {
+              "lines": [
+                55,
+                55
+              ],
+              "name": "identique_i16",
+              "signature": "(i16 value) : i16",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                56
+              ],
+              "name": "identique_u16",
+              "signature": "(u16 value) : u16",
+              "type": "method"
+            },
+            {
+              "lines": [
+                57,
+                57
+              ],
+              "name": "identique_i32",
+              "signature": "(i32 value) : i32",
+              "type": "method"
+            },
+            {
+              "lines": [
+                58,
+                58
+              ],
+              "name": "identique_u32",
+              "signature": "(u32 value) : u32",
+              "type": "method"
+            },
+            {
+              "lines": [
+                59,
+                59
+              ],
+              "name": "identique_i64",
+              "signature": "(i64 value) : i64",
+              "type": "method"
+            },
+            {
+              "lines": [
+                60,
+                60
+              ],
+              "name": "identique_u64",
+              "signature": "(u64 value) : u64",
+              "type": "method"
+            },
+            {
+              "lines": [
+                61,
+                61
+              ],
+              "name": "identique_float",
+              "signature": "(float value) : float",
+              "type": "method"
+            },
+            {
+              "lines": [
+                62,
+                62
+              ],
+              "name": "identique_double",
+              "signature": "(double value) : double",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                63
+              ],
+              "name": "identique_boolean",
+              "signature": "(boolean value) : boolean",
+              "type": "method"
+            },
+            {
+              "lines": [
+                64,
+                64
+              ],
+              "name": "identique_string",
+              "signature": "(string value) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                66,
+                66
+              ],
+              "name": "identique_nombres_signes",
+              "signature": "(DictionnaireNombresSignes value) : DictionnaireNombresSignes",
+              "type": "method"
+            },
+            {
+              "lines": [
+                67,
+                67
+              ],
+              "name": "identique_nombres",
+              "signature": "(DictionnaireNombres value) : DictionnaireNombres",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                68
+              ],
+              "name": "identique_optionneur_dictionnaire",
+              "signature": "(OptionneurDictionnaire value) : OptionneurDictionnaire",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            51,
+            69
+          ],
+          "name": "Retourneur",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                72,
+                72
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                73,
+                73
+              ],
+              "name": "well_known_string",
+              "signature": "(string value) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                75,
+                75
+              ],
+              "name": "to_string_i8",
+              "signature": "(i8 value) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                76,
+                76
+              ],
+              "name": "to_string_u8",
+              "signature": "(u8 value) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                77
+              ],
+              "name": "to_string_i16",
+              "signature": "(i16 value) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                78,
+                78
+              ],
+              "name": "to_string_u16",
+              "signature": "(u16 value) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                79
+              ],
+              "name": "to_string_i32",
+              "signature": "(i32 value) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                80,
+                80
+              ],
+              "name": "to_string_u32",
+              "signature": "(u32 value) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                81,
+                81
+              ],
+              "name": "to_string_i64",
+              "signature": "(i64 value) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                82,
+                82
+              ],
+              "name": "to_string_u64",
+              "signature": "(u64 value) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                83,
+                83
+              ],
+              "name": "to_string_float",
+              "signature": "(float value) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                84,
+                84
+              ],
+              "name": "to_string_double",
+              "signature": "(double value) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                85,
+                85
+              ],
+              "name": "to_string_boolean",
+              "signature": "(boolean value) : string",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            71,
+            86
+          ],
+          "name": "Stringifier",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                89,
+                89
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                90,
+                90
+              ],
+              "name": "sinon_boolean",
+              "signature": "(optional boolean value = false) : boolean",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                91
+              ],
+              "name": "sinon_string",
+              "signature": "(optional string value = \"\") : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                93
+              ],
+              "name": "sinon_sequence",
+              "signature": "(optional sequence<string> value = []) : sequence<string>",
+              "type": "method"
+            },
+            {
+              "docstring": "Either sides of nullable.",
+              "lines": [
+                96,
+                96
+              ],
+              "name": "sinon_null",
+              "signature": "(optional string? value = null) : string?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                97,
+                97
+              ],
+              "name": "sinon_zero",
+              "signature": "(optional i32? value = 0) : i32?",
+              "type": "method"
+            },
+            {
+              "docstring": "Decimal integers, all 42.",
+              "lines": [
+                100,
+                100
+              ],
+              "name": "sinon_u8_dec",
+              "signature": "(optional u8 value = 42) : u8",
+              "type": "method"
+            },
+            {
+              "lines": [
+                101,
+                101
+              ],
+              "name": "sinon_i8_dec",
+              "signature": "(optional i8 value = -42) : i8",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                102
+              ],
+              "name": "sinon_u16_dec",
+              "signature": "(optional u16 value = 42) : u16",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                103
+              ],
+              "name": "sinon_i16_dec",
+              "signature": "(optional i16 value = 42) : i16",
+              "type": "method"
+            },
+            {
+              "lines": [
+                104,
+                104
+              ],
+              "name": "sinon_u32_dec",
+              "signature": "(optional u32 value = 42) : u32",
+              "type": "method"
+            },
+            {
+              "lines": [
+                105,
+                105
+              ],
+              "name": "sinon_i32_dec",
+              "signature": "(optional i32 value = 42) : i32",
+              "type": "method"
+            },
+            {
+              "lines": [
+                106,
+                106
+              ],
+              "name": "sinon_u64_dec",
+              "signature": "(optional u64 value = 42) : u64",
+              "type": "method"
+            },
+            {
+              "lines": [
+                107,
+                107
+              ],
+              "name": "sinon_i64_dec",
+              "signature": "(optional i64 value = 42) : i64",
+              "type": "method"
+            },
+            {
+              "docstring": "Hexadecimal, including negatgives.",
+              "lines": [
+                110,
+                110
+              ],
+              "name": "sinon_u8_hex",
+              "signature": "(optional u8 value = 0xff) : u8",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                111
+              ],
+              "name": "sinon_i8_hex",
+              "signature": "(optional i8 value = -0x7f) : i8",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                112
+              ],
+              "name": "sinon_u16_hex",
+              "signature": "(optional u16 value = 0xffff) : u16",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                113
+              ],
+              "name": "sinon_i16_hex",
+              "signature": "(optional i16 value = 0x7f) : i16",
+              "type": "method"
+            },
+            {
+              "lines": [
+                114,
+                114
+              ],
+              "name": "sinon_u32_hex",
+              "signature": "(optional u32 value = 0xffffffff) : u32",
+              "type": "method"
+            },
+            {
+              "lines": [
+                115,
+                115
+              ],
+              "name": "sinon_i32_hex",
+              "signature": "(optional i32 value = 0x7fffffff) : i32",
+              "type": "method"
+            },
+            {
+              "lines": [
+                116,
+                116
+              ],
+              "name": "sinon_u64_hex",
+              "signature": "(optional u64 value = 0xffffffffffffffff) : u64",
+              "type": "method"
+            },
+            {
+              "lines": [
+                117,
+                117
+              ],
+              "name": "sinon_i64_hex",
+              "signature": "(optional i64 value = 0x7fffffffffffffff) : i64",
+              "type": "method"
+            },
+            {
+              "docstring": "Octal, FWIW.",
+              "lines": [
+                120,
+                120
+              ],
+              "name": "sinon_u32_oct",
+              "signature": "(optional u32 value = 0755) : u32",
+              "type": "method"
+            },
+            {
+              "docstring": "Floats",
+              "lines": [
+                123,
+                123
+              ],
+              "name": "sinon_f32",
+              "signature": "(optional f32 value = 42.0) : f32",
+              "type": "method"
+            },
+            {
+              "lines": [
+                124,
+                124
+              ],
+              "name": "sinon_f64",
+              "signature": "(optional f64 value = 42.1) : f64",
+              "type": "method"
+            },
+            {
+              "docstring": "Enums, which we have to treat as strings in the UDL frontend.",
+              "lines": [
+                127,
+                127
+              ],
+              "name": "sinon_enum",
+              "signature": "(optional Enumeration value = \"\") : Enumeration",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            88,
+            128
+          ],
+          "name": "Optionneur",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            130,
+            146
+          ],
+          "name": "OptionneurDictionnaire",
+          "type": "dictionary"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.653001+00:00",
+  "version": "1.0"
+}

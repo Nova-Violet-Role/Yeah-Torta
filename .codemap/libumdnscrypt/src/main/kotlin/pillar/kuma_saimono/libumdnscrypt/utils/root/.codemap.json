@@ -1,0 +1,444 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\utils\\root",
+  "files": {
+    "RootCommands.kt": {
+      "hash": "c8eed062b8c6",
+      "indexed_at": "2026-08-01T04:00:47.932869+00:00",
+      "language": "kotlin",
+      "lines": 36,
+      "mtime_ns": 1785556379000900400,
+      "size": 1244,
+      "symbols": [
+        {
+          "lines": [
+            23,
+            36
+          ],
+          "name": "RootCommands",
+          "type": "class"
+        }
+      ]
+    },
+    "RootCommandsMark.kt": {
+      "hash": "b9a681efd5e3",
+      "indexed_at": "2026-08-01T04:00:48.236003+00:00",
+      "language": "kotlin",
+      "lines": 47,
+      "mtime_ns": 1785556379012900800,
+      "size": 1591,
+      "symbols": []
+    },
+    "RootExecService.kt": {
+      "hash": "ed93a144623a",
+      "indexed_at": "2026-08-01T04:00:48.548684+00:00",
+      "language": "kotlin",
+      "lines": 253,
+      "mtime_ns": 1785556379024900500,
+      "size": 8584,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                64,
+                78
+              ],
+              "name": "onCreate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                80,
+                88
+              ],
+              "name": "onDestroy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                90,
+                120
+              ],
+              "name": "onStartCommand",
+              "signature": "(intent: Intent?, flags: Int, startId: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                122,
+                138
+              ],
+              "name": "sendResult",
+              "signature": "(commandsResult: List<String>?, mark: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                140,
+                142
+              ],
+              "name": "onBind",
+              "signature": "(intent: Intent)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                144,
+                151
+              ],
+              "name": "moveServiceToForeground",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                153,
+                166
+              ],
+              "name": "moveServiceToBackground",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                168,
+                170
+              ],
+              "name": "onCommandsProgress",
+              "signature": "(progress: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                172,
+                180
+              ],
+              "name": "updateNotificationProgress",
+              "signature": "(progress: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                182,
+                185
+              ],
+              "name": "onCommandsDone",
+              "signature": "(results: List<String>, mark: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                187,
+                190
+              ],
+              "name": "onTimeout",
+              "signature": "(startId: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                192,
+                216
+              ],
+              "name": "switchToVpnMode",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                218,
+                223
+              ],
+              "name": "RootConsoleClosedException",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            46,
+            253
+          ],
+          "name": "RootExecService",
+          "type": "class"
+        }
+      ]
+    },
+    "RootExecutor.kt": {
+      "hash": "373bc3eff2a3",
+      "indexed_at": "2026-08-01T04:00:48.858668+00:00",
+      "language": "kotlin",
+      "lines": 372,
+      "mtime_ns": 1785556379036899300,
+      "size": 11614,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                108,
+                113
+              ],
+              "name": "execute",
+              "signature": "(\n        commands: List<String>,\n        @RootCommandsMark mark: Int\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                115,
+                118
+              ],
+              "name": "stopExecutor",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                120,
+                183
+              ],
+              "name": "executeCommands",
+              "signature": "(\n        commands: List<String>,\n        @RootCommandsMark mark: Int\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                185,
+                187
+              ],
+              "name": "updateNotificationProgress",
+              "signature": "(progress: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                189,
+                192
+              ],
+              "name": "commandsDone",
+              "signature": "(results: List<String>, mark: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                194,
+                206
+              ],
+              "name": "makeAutostartDelayIfRequired",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                208,
+                232
+              ],
+              "name": "executeCommand",
+              "signature": "(command: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                234,
+                259
+              ],
+              "name": "openCommandShell",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                261,
+                273
+              ],
+              "name": "closeRootCommandShell",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                275,
+                314
+              ],
+              "name": "getResult",
+              "signature": "(command: String, commandResult: ExecutionResult)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                316,
+                352
+              ],
+              "name": "saveToFile",
+              "signature": "(commands: List<String>, commandResults: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                354,
+                357
+              ],
+              "name": "CommandsWithMark",
+              "type": "class"
+            },
+            {
+              "lines": [
+                359,
+                363
+              ],
+              "name": "ExecutionResult",
+              "type": "class"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    366,
+                    366
+                  ],
+                  "name": "onCommandsDone",
+                  "signature": "(results: List<String>, mark: Int)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                365,
+                367
+              ],
+              "name": "OnCommandsDoneListener",
+              "type": "interface"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    370,
+                    370
+                  ],
+                  "name": "onCommandsProgress",
+                  "signature": "(progress: Int)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                369,
+                371
+              ],
+              "name": "OnCommandsProgressListener",
+              "type": "interface"
+            }
+          ],
+          "lines": [
+            48,
+            372
+          ],
+          "name": "RootExecutor",
+          "type": "class"
+        }
+      ]
+    },
+    "RootServiceNotificationManager.kt": {
+      "hash": "09fb48e638b0",
+      "indexed_at": "2026-08-01T04:00:49.182233+00:00",
+      "language": "kotlin",
+      "lines": 207,
+      "mtime_ns": 1785556379048898900,
+      "size": 7284,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                61
+              ],
+              "name": "createNotificationChannel",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                86
+              ],
+              "name": "sendNotification",
+              "signature": "(title: String, text: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                88,
+                105
+              ],
+              "name": "updateNotification",
+              "signature": "(title: String, text: String, progress: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                107,
+                109
+              ],
+              "name": "resetNotification",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                132
+              ],
+              "name": "getContentIntent",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                134,
+                139
+              ],
+              "name": "getStartMainActivityIntent",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                141,
+                153
+              ],
+              "name": "getIconResource",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                161,
+                172
+              ],
+              "name": "getBrandColor",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                174,
+                200
+              ],
+              "name": "getNotification",
+              "signature": "(\n        contentIntent: PendingIntent,\n        iconResource: Int,\n        title: String,\n       ...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            37,
+            207
+          ],
+          "name": "RootServiceNotificationManager",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:49.183829+00:00",
+  "version": "1.0"
+}

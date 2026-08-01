@@ -1,0 +1,8 @@
+error[E0596]: cannot borrow data in an `Arc` as mutable
+ --> $OUT_DIR[uniffi_uitests]/counter.uniffi.rs
+  |
+  | #[::uniffi::export_for_udl]
+  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^ cannot borrow as mutable
+  |
+  = help: trait `DerefMut` is required to modify through a dereference, but it is not implemented for `Arc<Counter>`
+  = note: this error originates in the attribute macro `::uniffi::export_for_udl` (in Nightly builds, run with -Z macro-backtrace for more info)

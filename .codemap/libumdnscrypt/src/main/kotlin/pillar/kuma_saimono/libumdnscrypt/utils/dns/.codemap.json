@@ -1,0 +1,516 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\utils\\dns",
+  "files": {
+    "DnsMessage.kt": {
+      "hash": "bb7a70270a8b",
+      "indexed_at": "2026-08-01T04:00:34.535966+00:00",
+      "language": "kotlin",
+      "lines": 31,
+      "mtime_ns": 1785556378525900800,
+      "size": 907,
+      "symbols": [
+        {
+          "lines": [
+            19,
+            31
+          ],
+          "name": "DnsMessage",
+          "type": "class"
+        }
+      ]
+    },
+    "DnsRequest.kt": {
+      "hash": "3690582aa3ff",
+      "indexed_at": "2026-08-01T04:00:34.858429+00:00",
+      "language": "kotlin",
+      "lines": 100,
+      "mtime_ns": 1785556378538899500,
+      "size": 3243,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                40,
+                99
+              ],
+              "name": "toDnsQuestionData",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            24,
+            100
+          ],
+          "name": "DnsRequest",
+          "type": "class"
+        }
+      ]
+    },
+    "DnsResolver.kt": {
+      "hash": "a0d449cd210f",
+      "indexed_at": "2026-08-01T04:00:35.233839+00:00",
+      "language": "kotlin",
+      "lines": 168,
+      "mtime_ns": 1785556378550899900,
+      "size": 5906,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                32,
+                48
+              ],
+              "name": "resolve",
+              "signature": "(domain: Domain)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                74
+              ],
+              "name": "reverseResolve",
+              "signature": "(ip: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                76,
+                85
+              ],
+              "name": "ipToPointerRequest",
+              "signature": "(ip: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                87,
+                89
+              ],
+              "name": "isIPv6Address",
+              "signature": "(ip: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                141
+              ],
+              "name": "decompressIPv6Address",
+              "signature": "(ip: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                143,
+                146
+              ],
+              "name": "lookupHost",
+              "signature": "(host: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                148,
+                159
+              ],
+              "name": "request",
+              "signature": "(host: String?, recordType: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                161,
+                162
+              ],
+              "name": "request",
+              "signature": "(server: String, host: String, recordType: Int)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            24,
+            168
+          ],
+          "name": "DnsResolver",
+          "type": "class"
+        }
+      ]
+    },
+    "DnsResponse.kt": {
+      "hash": "3bb93a6c9d6f",
+      "indexed_at": "2026-08-01T04:00:35.564042+00:00",
+      "language": "kotlin",
+      "lines": 317,
+      "mtime_ns": 1785556378562899800,
+      "size": 9838,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                52,
+                80
+              ],
+              "name": "parse",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                82,
+                108
+              ],
+              "name": "parseHeader",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                110,
+                120
+              ],
+              "name": "parseQuestion",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                122,
+                152
+              ],
+              "name": "parseResourceRecord",
+              "signature": "(resource: RecordResource)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                154,
+                193
+              ],
+              "name": "getNameFrom",
+              "signature": "(from: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                195,
+                239
+              ],
+              "name": "readData",
+              "signature": "(recordType: Int, from: Int, length: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                241,
+                249
+              ],
+              "name": "readRecordDataInet6Address",
+              "signature": "(from: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                251,
+                257
+              ],
+              "name": "readRecordDataInt8",
+              "signature": "(from: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                259,
+                267
+              ],
+              "name": "readRecordDataInt16",
+              "signature": "(from: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                269,
+                279
+              ],
+              "name": "readRecordDataInt32",
+              "signature": "(from: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                281,
+                281
+              ],
+              "name": "getAA",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                283,
+                283
+              ],
+              "name": "getRCode",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                285,
+                285
+              ],
+              "name": "getAnswerArray",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                287,
+                287
+              ],
+              "name": "getAdditionalArray",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                289,
+                289
+              ],
+              "name": "getAuthorityArray",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                291,
+                296
+              ],
+              "name": "toString",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    306,
+                    310
+                  ],
+                  "name": "addRecord",
+                  "signature": "(record: Record?)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                298,
+                311
+              ],
+              "name": "RecordResource",
+              "type": "class"
+            },
+            {
+              "lines": [
+                313,
+                316
+              ],
+              "name": "RecordName",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            25,
+            317
+          ],
+          "name": "DnsResponse",
+          "type": "class"
+        }
+      ]
+    },
+    "DohResolver.kt": {
+      "hash": "1024a7c5c68f",
+      "indexed_at": "2026-08-01T04:00:35.872968+00:00",
+      "language": "kotlin",
+      "lines": 72,
+      "mtime_ns": 1785556378574899000,
+      "size": 2515,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                33,
+                71
+              ],
+              "name": "request",
+              "signature": "(server: String, host: String, recordType: Int)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            27,
+            72
+          ],
+          "name": "DohResolver",
+          "type": "class"
+        }
+      ]
+    },
+    "Domain.kt": {
+      "hash": "eb717be4fbdf",
+      "indexed_at": "2026-08-01T04:00:36.192894+00:00",
+      "language": "kotlin",
+      "lines": 24,
+      "mtime_ns": 1785556378586899900,
+      "size": 807,
+      "symbols": [
+        {
+          "lines": [
+            19,
+            24
+          ],
+          "name": "Domain",
+          "type": "class"
+        }
+      ]
+    },
+    "Record.kt": {
+      "hash": "102ad74c64df",
+      "indexed_at": "2026-08-01T04:00:36.521347+00:00",
+      "language": "kotlin",
+      "lines": 133,
+      "mtime_ns": 1785556378598902200,
+      "size": 3225,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                74,
+                85
+              ],
+              "name": "equals",
+              "signature": "(o: Any?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                95,
+                95
+              ],
+              "name": "isExpired",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                97,
+                102
+              ],
+              "name": "isExpired",
+              "signature": "(time: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                104,
+                109
+              ],
+              "name": "toString",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                117
+              ],
+              "name": "Source",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            23,
+            133
+          ],
+          "name": "Record",
+          "type": "class"
+        }
+      ]
+    },
+    "Resolver.kt": {
+      "hash": "c3d1ce879ca6",
+      "indexed_at": "2026-08-01T04:00:36.847732+00:00",
+      "language": "kotlin",
+      "lines": 33,
+      "mtime_ns": 1785556378610900000,
+      "size": 941,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                25
+              ],
+              "name": "resolve",
+              "signature": "(domain: Domain)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                27,
+                28
+              ],
+              "name": "reverseResolve",
+              "signature": "(ip: String)",
+              "type": "method"
+            }
+          ],
+          "docstring": "https://datatracker.ietf.org/doc/html/rfc1035",
+          "lines": [
+            22,
+            33
+          ],
+          "name": "Resolver",
+          "type": "interface"
+        }
+      ]
+    },
+    "UdpResolver.kt": {
+      "hash": "0490c2e915e4",
+      "indexed_at": "2026-08-01T04:00:37.177108+00:00",
+      "language": "kotlin",
+      "lines": 55,
+      "mtime_ns": 1785556378623900000,
+      "size": 1899,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                35,
+                54
+              ],
+              "name": "request",
+              "signature": "(server: String, host: String, recordType: Int)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            26,
+            55
+          ],
+          "name": "UdpResolver",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:37.178853+00:00",
+  "version": "1.0"
+}

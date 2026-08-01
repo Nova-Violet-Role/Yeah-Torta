@@ -1,0 +1,71 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\regressions\\unary-result-alias\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "a270f6243f26",
+      "indexed_at": "2026-07-24T20:35:12.644586+00:00",
+      "language": "rust",
+      "lines": 13,
+      "mtime_ns": 1782136568000000000,
+      "size": 285,
+      "symbols": [
+        {
+          "lines": [
+            2,
+            5
+          ],
+          "name": "MyError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "returns_unary_result_alias",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "unary-result-alias.udl": {
+      "hash": "ccc8e3fd86b0",
+      "indexed_at": "2026-07-24T20:35:12.645160+00:00",
+      "language": "udl",
+      "lines": 9,
+      "mtime_ns": 1782136568000000000,
+      "size": 141,
+      "symbols": [
+        {
+          "lines": [
+            2,
+            4
+          ],
+          "name": "MyError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                8
+              ],
+              "name": "returns_unary_result_alias",
+              "signature": "() : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            6,
+            9
+          ],
+          "name": "unary_result_alias",
+          "type": "namespace"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.725899+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,1135 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT Rotation dashboard — slice 8 of the Rotation pillar (the 🩸 Carnage facet).
+//
+// This is the rust-native (SLINT, NO XML / NO Java / NO Compose) one-glance Rotation surface — THE ORBITAL
+// WHEEL. It renders a `RotationSnapshot` (torta_core `resolver::object::RotationSnapshot`, object.rs:212) the
+// HOST sets: the last-persisted operator FAMILY, the rotation INDEX (the diversity cursor + `RotationSelector`
+// shuffle seed), the CADENCE seconds (a reflection of the Kotlin pref), the live NEXT-FLIP countdown (host-
+// computed — torta_core holds no clock, so the durable read reports 0 and Kotlin pushes `cadence −
+// elapsedSinceLastFlip`), the warm-RTT HINT list, and the `rehydrated_warm` flag (the #98 crown: a rebooted
+// phone kept its schedule instead of restarting cold at family 0). The ring of operator FAMILIES + the
+// recent-rotation feed are host-supplied (from the pool candidates + the `query-rotation.log` tail).
+//
+// ★ THE NO-HOT-PATH-WRITE KEYSTONE (the pillar's safety law): the RotationSnapshot is a CONTROL-PLANE READ of
+// the LAST-PERSISTED durable `rotation::RotationState` (via `MaskSolver::rotation_snapshot()` →
+// `RotationState::rehydrate_opt`) — NEVER the resolve hot path (`resolve_inner` stays byte-identical). A
+// corrupt / cold / unbound read degrades to the honest cold zero; the dashboard never triggers a durable write.
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android cross-compile spike #69.
+// SLINT can't read a Rust struct directly; the host (Kotlin SurfaceView bridge / the slint-viewer preview /
+// the lib.rs proof test) constructs `RotationDashboard`, pulls a live `RotationSnapshot`, and pushes each field
+// onto the `in-out` inputs. The recent-rotation feed is the tail of the per-pillar `query-rotation.log`.
+//
+// 🩸 THE ROTATION-FAULT HUNT (the facet's load-bearing job): a rotation's worst SILENT failures are not loud
+// crashes — they are the ways the wheel LIES while looking "on". (1) STALLED: the wheel is armed + a cadence is
+// set, but the next flip is OVERDUE (`next_flip_secs < 0`) — the rotation timer is starved or dead, the wheel
+// frozen on one family (the diversity the rotation PROMISES has silently stopped). (2) DIAL FAULT: the countdown
+// exceeds the whole cadence window (`next_flip_secs > cadence_secs`) — the next-flip clock is miscomputed, the
+// dial cannot be trusted. Plus the informational states: PINNED (cadence 0 = a chosen manual lock, not a fault),
+// COLD-START (`!rehydrated_warm` = the anti-#98 posture, honest), COLD-LEADERBOARD (turning but the warm-RTT
+// feed is still inert — an honest empty, not a red alert), DORMANT (the pillar is not armed). The dashboard
+// derives + surfaces these (the `out property` flags below) as alert banners + a one-glance crown verdict.
+//
+// NOTE: slint uses `:` for property bindings (not `=`); `\{expr}` is string interpolation; `out property`
+// values are derived + host-readable (the proof test asserts the rotation-fault + warm-resume derivations fire).
+
+import { VerticalBox, HorizontalBox } from "std-widgets.slint";
+// The orbital-wheel palette (slice 10) — the single source of truth for the rotation colors. NO XML.
+import { Wheel } from "rotation_palette.slint";
+import { ThemeBook, MotifWash } from "theme_tokens.slint";
+
+// One operator-family ring segment — the host fills this from the pool's configured operator families (the
+// wheel the rotation steps through). `name` = the family label (`operatorFamily`, RotationSelector — a stable
+// label, never an upstream url/qname, T20). The dashboard highlights the segment whose name == the live
+// `rotation-family`, so the wheel shows WHERE the cursor sits in the ring.
+export struct RotationFamilyRow {
+    name: string,
+}
+
+// One warm-RTT leaderboard row — the host fills this from `RotationSnapshot.rtt_hints` (the typed `RttHint`
+// list, object.rs:192, bounded to MAX_RTT_HINTS=64). `id` = the stable transport LABEL (never PII, T20);
+// `rtt` = the last-known warm RTT pre-formatted ("12ms"); `ms` = the raw ms (for the fastest-first ordering the
+// host sorts by). This is the warm carry-across-reboot: which upstream the next fastest-first pick prefers.
+export struct RotationHintRow {
+    id: string,
+    rtt: string,
+    ms: int,
+}
+
+// One rotation-history row — the host fills this from the tail of the per-pillar `query-rotation.log`
+// (`PillarLog.Pillar.ROTATION` → `log_tier::log_tail_recent`, the #133 RAM⊗NAND pattern). `event` = the flip
+// kind ("switch" a live flip / "warm" a boot-rehydrate resume / "cadence" a cadence change); `at` = the
+// log line's own timestamp (the `[ts]` prefix — WHEN the flip happened, the #22 s5C plain-language rescope);
+// `servers` / `relays` = the actual resolver / relay NAMES that flip installed (" · "-joined; "" on old lines
+// that predate the enriched log); `family` = the internal operator label (kept for old-line fallback); `idx` =
+// the rotation index. T20: public resolver/relay labels + counts only, never a qname/IP.
+export struct RotationLogRow {
+    event: string,
+    family: string,
+    idx: int,
+    at: string,
+    servers: string,
+    relays: string,
+}
+
+// A compact metric tile (local, non-exported). `tint` colors the value + lifts a number at a glance.
+component StatTile inherits Rectangle {
+    in property <string> label;
+    in property <string> value;
+    in property <color> tint: Wheel.starlight;
+    min-width: 70px;
+    min-height: 52px;
+    border-radius: 8px;
+    background: @linear-gradient(0deg, Wheel.tile.with-alpha(0.60) 0%, Wheel.abyss.with-alpha(0.38) 100%);
+    border-width: 1px;
+    border-color: Wheel.hairline;
+    VerticalLayout {
+        padding: 8px;
+        spacing: 2px;
+        Text {
+            text: root.value;
+            color: root.tint;
+            font-size: 19px;
+            font-weight: 800;
+        }
+        Text {
+            text: root.label;
+            color: Wheel.haze;
+            font-size: 10px;
+        }
+    }
+}
+
+// A rotation-fault alert banner (local). Only instantiated (via a guarding `if`) when its fault is live, so an
+// inactive alert occupies ZERO layout space — the stack collapses to exactly the live faults.
+component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: Wheel.wound;
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: Wheel.strike;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: Wheel.strike;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A section title (local).
+component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: Wheel.dim;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+// THE EMBEDDABLE PANE (SLINT substitution · 2-FEED-Rotation) — the dashboard body as a Rectangle-rooted
+// pane so the shell mounts it IN-SHELL (the G2 idiom: "inherits Rectangle — embeddable from birth"; a
+// Window can never be a child element). THE ANDROID SINGLE-SURFACE LAW (lib.rs android_main): on-device
+// only the LAST-constructed Window owns the surface, so a standalone pillar Window can never render
+// alongside TortaShell. The `RotationDashboard` Window below re-wraps THIS pane for the slint-viewer
+// preview + the main.slint re-export + the lib.rs proof test; the on-device host feeds THIS pane (mounted
+// in home_shell.slint via the ||| → PILLARS → ROTATION dashboard chip) field-for-field from the live
+// `MaskSolver::rotation_snapshot()` Record (the Beast/Centauri pane precedent).
+export component RotationPane inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.rotation; width: 100%; height: 100%; }
+    // ===== "THE ORBIT" scenery — two ring arcs over the top-right shoulder + one patient
+    // satellite riding the inner ring (the Wheel grammar: machine precision, slow revolution). =====
+    Rectangle {
+        width: 100%; height: 100%; clip: true;
+        Rectangle {
+            x: parent.width * 0.55; y: -parent.width * 0.35;
+            width: parent.width * 0.85; height: self.width;
+            border-radius: self.width / 2; background: transparent;
+            border-width: 1px; border-color: Wheel.spoke.with-alpha(0.16);
+        }
+        Rectangle {
+            x: parent.width * 0.40; y: -parent.width * 0.50;
+            width: parent.width * 1.15; height: self.width;
+            border-radius: self.width / 2; background: transparent;
+            border-width: 1px; border-color: Wheel.hairline;
+        }
+        Rectangle {
+            property <angle> a: 360deg * (animation-tick() / 9.7s);
+            x: parent.width * 0.975 + parent.width * 0.425 * Math.cos(self.a) - self.width / 2;
+            y: parent.width * 0.075 + parent.width * 0.425 * Math.sin(self.a) - self.width / 2;
+            width: parent.width * 0.022; height: self.width;
+            border-radius: self.width / 2;
+            background: Wheel.spoke.with-alpha(0.55);
+        }
+        Rectangle {     // #36 the counter-satellite — outer ring, opposite spin (nothing in lockstep)
+            property <angle> a: -360deg * (animation-tick() / 14.3s);
+            x: parent.width * 0.975 + parent.width * 0.575 * Math.cos(self.a) - self.width / 2;
+            y: parent.width * 0.075 + parent.width * 0.575 * Math.sin(self.a) - self.width / 2;
+            width: parent.width * 0.016; height: self.width;
+            border-radius: self.width / 2;
+            background: Wheel.hairline;
+        }
+        Rectangle {     // #36 the turning wheel — four spokes, one patient machine revolution
+            x: parent.width * 0.055; y: parent.height - self.height - 26px;
+            width: 64px; height: 64px;
+            border-radius: 32px;
+            background: transparent;
+            border-width: 1px; border-color: Wheel.spoke.with-alpha(0.35);
+            transform-rotation: 360deg * Math.mod(animation-tick() / 11s, 1.0);
+            Rectangle { x: parent.width / 2 - 1px; y: 2px; width: 2px; height: parent.height - 4px; background: Wheel.spoke.with-alpha(0.30); }
+            Rectangle { x: 2px; y: parent.height / 2 - 1px; width: parent.width - 4px; height: 2px; background: Wheel.spoke.with-alpha(0.30); }
+            Rectangle { x: parent.width / 2 - 4px; y: parent.height / 2 - 4px; width: 8px; height: 8px; border-radius: 4px; background: Wheel.spoke.with-alpha(0.55); }
+        }
+        engine := Rectangle {   // #36b THE ROTATION ENGINE — the meshed cog machine, the Speed-Racer
+            // heart: two gears in mesh (the big server-wheel and its counter-pinion, ratio 11:7 —
+            // nothing in lockstep), parked beside the patient wheel. LIVE-KEYED per the live-wiring
+            // law: the machine burns Wheel.turn green ONLY while the real engine turns
+            // (engine-running && rotation-enabled) — a stopped engine is a grey machine, never a lie.
+            // ON-TOUCH NFS SPIN-UP: tap the machine and the gears rev 4× with speed-lines streaming
+            // (the toggle law — tap again and the engine winds back down).
+            x: parent.width * 0.30; y: parent.height - self.height - 22px;
+            width: 132px; height: 84px; background: transparent;
+            in-out property <bool> revved: false;
+            property <float> rev: self.revved ? 1.0 : 0.0;
+            animate rev { duration: 1300ms; easing: ease-out; }
+            property <bool> alive: root.engine-running && root.rotation-enabled;
+            property <angle> spin: 360deg * (animation-tick() / 7.3s) * (1.0 + 3.0 * self.rev);
+            for t in 3: Rectangle { // NFS speed-lines — they only exist while the engine is revved
+                x: parent.width * (1.0 - 1.35 * Math.mod(animation-tick() / (0.7s + t * 0.25s), 1.0));
+                y: 14px + t * 24px; width: 34px; height: 2px; border-radius: 1px;
+                background: Wheel.turn;
+                opacity: engine.rev * (0.15 + 0.30 * Math.mod(animation-tick() / (0.7s + t * 0.25s), 1.0));
+            }
+            Rectangle { // the big cog — the server-wheel, four teeth riding the rim
+                x: 46px; y: parent.height / 2 - 22px; width: 44px; height: 44px; border-radius: 22px;
+                background: transparent; border-width: 2px;
+                border-color: engine.alive ? Wheel.turn.with-alpha(0.55 + 0.25 * engine.rev) : Wheel.hairline;
+                transform-rotation: engine.spin;
+                Rectangle { x: parent.width / 2 - 3px; y: -4px; width: 6px; height: 9px; background: engine.alive ? Wheel.turn.with-alpha(0.60) : Wheel.hairline; }
+                Rectangle { x: parent.width / 2 - 3px; y: parent.height - 5px; width: 6px; height: 9px; background: engine.alive ? Wheel.turn.with-alpha(0.60) : Wheel.hairline; }
+                Rectangle { x: -4px; y: parent.height / 2 - 3px; width: 9px; height: 6px; background: engine.alive ? Wheel.turn.with-alpha(0.60) : Wheel.hairline; }
+                Rectangle { x: parent.width - 5px; y: parent.height / 2 - 3px; width: 9px; height: 6px; background: engine.alive ? Wheel.turn.with-alpha(0.60) : Wheel.hairline; }
+                Rectangle { x: parent.width / 2 - 3px; y: parent.height / 2 - 3px; width: 6px; height: 6px; border-radius: 3px; background: Wheel.spoke.with-alpha(0.60); }
+            }
+            Rectangle { // the counter-pinion — meshed, opposite spin, geared 11:7
+                x: 92px; y: parent.height / 2 - 14px; width: 28px; height: 28px; border-radius: 14px;
+                background: transparent; border-width: 2px;
+                border-color: engine.alive ? Wheel.spoke.with-alpha(0.50 + 0.25 * engine.rev) : Wheel.hairline;
+                transform-rotation: -engine.spin * 1.571;
+                Rectangle { x: parent.width / 2 - 2px; y: -3px; width: 4px; height: 7px; background: Wheel.spoke.with-alpha(0.50); }
+                Rectangle { x: parent.width / 2 - 2px; y: parent.height - 4px; width: 4px; height: 7px; background: Wheel.spoke.with-alpha(0.50); }
+                Rectangle { x: parent.width / 2 - 2px; y: parent.height / 2 - 2px; width: 4px; height: 4px; border-radius: 2px; background: Wheel.spoke.with-alpha(0.50); }
+            }
+            TouchArea { clicked => { engine.revved = !engine.revved; } }
+        }
+        Rectangle {     // #36 the comet — one streak across the void, then patience
+            property <float> p: Math.mod(animation-tick() / 8.9s, 1.0);
+            x: parent.width * (1.05 - 1.3 * self.p);
+            y: parent.height * (0.10 + 0.30 * self.p);
+            width: 90px; height: 2px;
+            transform-rotation: -14deg;
+            opacity: self.p < 0.30 ? 0.45 * (1 - self.p / 0.30) : 0;
+            background: @linear-gradient(90deg, transparent 0%, Wheel.spoke 100%);
+        }
+    }
+    background: Wheel.orbit-void.with-alpha(0.42);
+
+    // ===== RotationSnapshot inputs (host sets each from `MaskSolver::rotation_snapshot()`, object.rs:212) =====
+    in-out property <bool> configured: false;         // the rotation pillar is armed (DNS_ENGINE + ROTATION enabled)
+    in-out property <string> rotation-family: "";     // snapshot.last_family (the operator family at the last flip)
+    in-out property <int> cadence-secs: 0;            // snapshot.cadence_secs (a reflection of the Kotlin cadence pref)
+    in-out property <int> rotation-index: 0;          // snapshot.rotation_index (the diversity cursor + shuffle seed)
+    in-out property <int> next-flip-secs: 0;          // snapshot.next_flip_secs (host-computed live countdown; durable read=0)
+    in-out property <bool> rehydrated-warm: false;    // snapshot.rehydrated_warm (the #98 warm-resume crown witness)
+
+    // ===== the operator-family ring (host fills from the pool candidates; sample defaults for preview) =====
+    in-out property <[RotationFamilyRow]> families: [
+        { name: "cloudflare" },
+        { name: "quad9" },
+        { name: "google" },
+    ];
+
+    // ===== the warm-RTT leaderboard (host fills from `snapshot.rtt_hints`, pre-sorted fastest-first) =====
+    in-out property <[RotationHintRow]> rtt-hints: [
+        { id: "cloudflare-doh", rtt: "12ms", ms: 12 },
+        { id: "quad9-doh", rtt: "18ms", ms: 18 },
+    ];
+
+    // ===== the rotation-history feed (host fills from the query-rotation.log tail) =====
+    in-out property <[RotationLogRow]> recent-rotations: [
+        { event: "switch", family: "cloudflare", idx: 7, at: "12:41:02", servers: "cloudflare · quad9-doh", relays: "anon-cs-berlin" },
+        { event: "warm", family: "quad9", idx: 6, at: "12:11:40", servers: "", relays: "" },
+        { event: "switch", family: "quad9", idx: 6, at: "11:41:07", servers: "quad9 · adguard-dns", relays: "anon-serbica" },
+    ];
+
+    // ===== #22 s5C — the LIVE relay chain (bridge `chain_relays`: the DISTINCT relay names the last
+    // committed rotation's routes actually ride; "" until the first commit of this engine process) =====
+    in-out property <string> chain-relays: "";
+    in-out property <int> chain-depth: 0;
+
+    // ===== 🩸 THE ROTATION-FAULT HUNT — derived, host-readable (the proof test asserts these fire) =====
+    // The wheel is healthy: armed AND a cadence is set → it is turning.
+    out property <bool> rotating: root.configured && root.cadence-secs > 0;
+    // PINNED — cadence 0 = rotation disabled / a manual family lock (a chosen state, NOT a fault).
+    out property <bool> pinned: root.configured && root.cadence-secs <= 0;
+    // (1) STALLED — the next flip is OVERDUE: the rotation timer is starved/dead, the wheel frozen on one family.
+    out property <bool> stalled: root.configured && root.cadence-secs > 0 && root.next-flip-secs < 0;
+    // (2) DIAL FAULT — the countdown exceeds the whole cadence window (a miscomputed next-flip clock).
+    out property <bool> dial-anomaly: root.configured && root.cadence-secs > 0 && root.next-flip-secs > root.cadence-secs;
+    // The #98 CROWN WIN — a real durable record was resumed at boot (warm, not cold at family 0).
+    out property <bool> warm-resume: root.rehydrated-warm;
+    // COLD-START — armed but no record resumed (the anti-#98 posture; honest, informational).
+    out property <bool> cold-start: root.configured && !root.rehydrated-warm;
+    // COLD-LEADERBOARD — the wheel is turning but the warm-RTT feed is still inert (honest empty, not an alarm).
+    out property <bool> cold-leaderboard: root.rotating && root.rtt-hints.length == 0;
+    // Master: ANY actionable rotation fault (PINNED / COLD / DORMANT are informational, not faults).
+    out property <bool> hidden-fault-any: root.stalled || root.dial-anomaly;
+
+    // THE CROWN headline — the wheel's one-glance verdict (state machine, breach beats the healthy states).
+    out property <string> crown-headline: root.stalled ? "STALLED"
+        : (root.dial-anomaly ? "DIAL FAULT"
+        : (!root.configured ? "DORMANT"
+        : (root.pinned ? "PINNED" : "ROTATING")));
+    out property <color> crown-color: root.stalled ? Wheel.stall
+        : (root.dial-anomaly ? Wheel.caution
+        : (!root.configured ? Wheel.dim
+        : (root.pinned ? Wheel.warm : Wheel.turn)));
+
+    // The plain-words cadence label (decode the seconds — the feedback-simple-ux felt-truth).
+    out property <string> cadence-label:
+        root.cadence-secs <= 0 ? "pinned"
+        : (root.cadence-secs >= 86400 ? "\{Math.round(root.cadence-secs / 86400)} day"
+        : (root.cadence-secs >= 3600 ? "\{Math.round(root.cadence-secs / 3600)} hr"
+        : (root.cadence-secs >= 60 ? "\{Math.round(root.cadence-secs / 60)} min"
+        : "\{root.cadence-secs} sec")));
+
+    // The live next-flip countdown label (host-computed value; "overdue" when the flip is late, "—" when idle).
+    out property <string> next-flip-label:
+        !root.rotating ? "—"
+        : (root.next-flip-secs < 0 ? "overdue"
+        : (root.next-flip-secs >= 60 ? "\{Math.round(root.next-flip-secs / 60)}m" : "\{root.next-flip-secs}s"));
+
+    // The cadence-dial remaining fraction [0,1] — the countdown depleting toward the next flip (clamped;
+    // an overdue/negative countdown reads empty).
+    property <float> dial-frac: root.cadence-secs > 0
+        ? Math.max(0.0, Math.min(1.0, root.next-flip-secs / (root.cadence-secs * 1.0)))
+        : 0.0;
+
+    // ===== 2-DRIVE-PILLARS: the LIVE-DRIVE controls (host truth in ⇄ intent out — the felt-truth flow) =====
+    // These reach the REAL RotationManager path on-device: the host JNI-calls TortaPillarBridge, which mirrors
+    // the canonical RotationDashboardFragment (ACTION_ROTATE_RESOLVERS_NOW → ModulesService → ModulesStateLoop →
+    // RotationManager.rotateNow()) + writes the SAME default-prefs (RESOLVER_ROTATION_ENABLED / _CADENCE_MINUTES)
+    // the manager gates on. NO local echo — every value below is HOST truth (never a fake flip); the callbacks
+    // carry the INTENT. On a non-android/witness build the JNI is a fail-open no-op → these keep their defaults.
+    in-out property <bool> rotation-enabled: true;   // the real RESOLVER_ROTATION_ENABLED pref (host reads it)
+    in-out property <int> cadence-minutes: 30;       // the real RESOLVER_ROTATION_CADENCE_MINUTES pref (minutes)
+    in-out property <bool> engine-running: false;    // DNSCrypt RUNNING (host JNI-reads dnsCryptState) — a flip needs it up
+    in-out property <int> rotate-status: 0;          // Rotate-Now feedback: 0 idle · 1 SENT · 2 engine-off · 3 rotation-off · 5 error
+
+    callback rotate-now();               // fire ONE immediate rotation (ACTION_ROTATE_RESOLVERS_NOW)
+    callback rotation-toggled(bool);     // write RESOLVER_ROTATION_ENABLED
+    callback cadence-picked(int);        // write RESOLVER_ROTATION_CADENCE_MINUTES (minutes)
+
+    // ── #22 s5A: THE PICK FILTER + POOL SHAPE (Socio: "a real filter ipv4,ipv6… dnssec,no-log,no-filter"
+    //    + "how many Relays per resolver? how many Resolver total per rotation?"). Filter chips read/write
+    //    the ONE dnscrypt-toml authority (the SAME require_*/family keys the DNSCrypt pillar's burger chips
+    //    edit — RotationManager.rotationPolicy() consumes that toml at every pick: one filter set, never a
+    //    second policy store). Shape steppers read/write the GEEK-clamped rotation prefs (max servers 1..20,
+    //    max relays 0..20 (Socio raise: "even 20 Relays per 1 Resolver") — 0 = direct, no relays).
+    //    HOST truth in ⇄ intent out; no local echo. ──
+    in-out property <bool> crit-nolog: false;     // toml require_nolog
+    in-out property <bool> crit-dnssec: false;    // toml require_dnssec
+    in-out property <bool> crit-nofilter: false;  // toml require_nofilter
+    in-out property <bool> crit-ipv4: true;       // toml ipv4_servers (the address-family gate)
+    in-out property <bool> crit-ipv6: false;      // toml ipv6_servers
+    // Socio (s5A-ext): "Set inside the Rotation Engine, to filter the PROTOCOL! dnscrpyt,ODOH,DOH" —
+    // the protocol chips ride the SAME toml server-type bits the DNSCrypt pillar's chips edit.
+    // dnscrypt+doh gate the random pick (RotationPolicy.allowDnsCrypt/allowDoh); odoh gates its OWN
+    // lane (ResolverRuntime.deriveOdohUpstreams) — honest label below says so.
+    in-out property <bool> crit-proto-dnscrypt: true;   // toml dnscrypt_servers
+    in-out property <bool> crit-proto-doh: false;       // toml doh_servers
+    in-out property <bool> crit-proto-odoh: false;      // toml odoh_servers
+    // Socio (s5A-ext): "Include a Kill switch in both of them 'IGNORE SYSTEM DNS' so that the User
+    // is 100% sure that this prevents any Intromission from their ISP dns or router standard dns" —
+    // toml ignore_system_dns (engine default TRUE, dnscrypt_config.rs def_true()); key "sysdns".
+    in-out property <bool> crit-sysdns: true;
+    in-out property <int> max-servers: 10;        // pref_resolver_rotation_max_servers (≥1, NO upper limit — Socio no-limits law; default 10)
+    in-out property <int> max-relays: 10;         // pref_resolver_rotation_max_relays (≥0, NO upper limit; default 10)
+    callback criteria-toggled(string, bool);      // "nolog"|"dnssec"|"nofilter"|"ipv4"|"ipv6" → authority write
+    callback max-servers-stepped(int);            // -1|+1 — host clamps floor-only + persists the pref
+    callback max-relays-stepped(int);             // -1|+1 — host clamps floor-only + persists the pref
+
+    callback close-dashboard();
+
+    VerticalBox {
+        padding: 14px;
+        spacing: 12px;
+
+        // ---- Header ----
+        HorizontalBox {
+            spacing: 8px;
+            VerticalLayout {
+                Text {
+                    text: "ROTATION";
+                    color: Wheel.spoke;
+                    font-size: 24px;
+                    font-weight: 900;
+                }
+                Text {
+                    text: "rotates your DNS servers · warm across reboot";
+                    color: Wheel.haze;
+                    font-size: 11px;
+                }
+            }
+            Rectangle { }  // spacer
+            VerticalLayout {
+                alignment: center;
+                Text {
+                    text: root.rotating ? "TURNING" : (root.pinned ? "PINNED" : (root.configured ? "ARMED" : "OFF"));
+                    color: root.stalled ? Wheel.stall : (root.rotating ? Wheel.turn : Wheel.haze);
+                    font-size: 12px;
+                    font-weight: 800;
+                    horizontal-alignment: right;
+                }
+                Text {
+                    text: root.rehydrated-warm ? "resumed warm" : "cold boot";
+                    color: root.rehydrated-warm ? Wheel.warm : Wheel.dim;
+                    font-size: 10px;
+                    horizontal-alignment: right;
+                }
+            }
+        }
+
+        // ---- THE CROWN card — the wheel's headline verdict + the #98 warm-resume badge ----
+        Rectangle {
+            border-radius: 10px;
+            background: @linear-gradient(135deg, Wheel.panel.with-alpha(0.64) 0%, Wheel.abyss.with-alpha(0.40) 100%);
+            border-width: 1px;
+            border-color: root.crown-color;
+            VerticalLayout {
+                padding: 12px;
+                spacing: 6px;
+                HorizontalLayout {
+                    spacing: 8px;
+                    VerticalLayout {
+                        Text {
+                            text: "WHEEL";
+                            color: Wheel.haze;
+                            font-size: 11px;
+                            font-weight: 700;
+                        }
+                        Text {
+                            text: root.crown-headline;
+                            color: root.crown-color;
+                            font-size: 32px;
+                            font-weight: 900;
+                        }
+                        Text {
+                            text: root.rotation-family != "" ? "operator: \{root.rotation-family} · flip #\{root.rotation-index}"
+                                : "no rotation yet (cold)";
+                            color: Wheel.haze;
+                            font-size: 10px;
+                        }
+                        // #22 s5C — the live relay chain, by NAME (honest: "direct" when no relays ride).
+                        Text {
+                            text: root.chain-relays != "" ? "relay chain: \{root.chain-relays}"
+                                : "relay chain: none yet — queries go direct until a rotation commits relays";
+                            color: root.chain-relays != "" ? Wheel.warm : Wheel.dim;
+                            font-size: 10px;
+                            wrap: word-wrap;
+                        }
+                    }
+                    Rectangle { }  // spacer
+                    VerticalLayout {
+                        alignment: start;
+                        Text {
+                            text: root.rehydrated-warm ? "WARM RESUME" : "COLD START";
+                            color: root.rehydrated-warm ? Wheel.warm : Wheel.dim;
+                            font-size: 13px;
+                            font-weight: 900;
+                            horizontal-alignment: right;
+                        }
+                        Text {
+                            text: "\{root.rtt-hints.length} warm hint(s)";
+                            color: root.rtt-hints.length > 0 ? Wheel.warm : Wheel.haze;
+                            font-size: 10px;
+                            horizontal-alignment: right;
+                        }
+                    }
+                }
+            }
+        }
+
+        // ---- 2-DRIVE-PILLARS: THE ACTION CARD — the live-drive controls (Rotate Now · rotation on/off · cadence) ----
+        // Every control here DRIVES the real RotationManager path (host → TortaPillarBridge, the canonical
+        // RotationDashboardFragment mirror). Built from primitives (no shared-widget dependency), Wheel-themed.
+        Rectangle {
+            border-radius: 10px;
+            background: @linear-gradient(135deg, Wheel.panel.with-alpha(0.64) 0%, Wheel.abyss.with-alpha(0.40) 100%);
+            border-width: 1px;
+            border-color: Wheel.hairline;
+            VerticalLayout {
+                padding: 12px;
+                spacing: 10px;
+
+                // ── ROTATION on/off — writes RESOLVER_ROTATION_ENABLED ──
+                HorizontalLayout {
+                    spacing: 8px;
+                    VerticalLayout {
+                        alignment: center;
+                        Text {
+                            text: "ROTATION";
+                            color: Wheel.spoke;
+                            font-size: 13px;
+                            font-weight: 800;
+                        }
+                        Text {
+                            text: root.rotation-enabled ? "on — the wheel is free to turn" : "off — pinned to the current servers";
+                            color: Wheel.haze;
+                            font-size: 10px;
+                        }
+                    }
+                    Rectangle { }  // spacer
+                    // the switch (primitive; 48px hit-slop TouchArea overlaid, the touch-honesty law)
+                    Rectangle {
+                        width: 46px;
+                        height: 26px;
+                        border-radius: 13px;
+                        background: root.rotation-enabled ? Wheel.turn : Wheel.track;
+                        animate background { duration: 120ms; }
+                        Rectangle {
+                            width: 20px;
+                            height: 20px;
+                            border-radius: 10px;
+                            background: white;
+                            x: root.rotation-enabled ? parent.width - self.width - 3px : 3px;
+                            y: (parent.height - self.height) / 2;
+                            animate x { duration: 120ms; }
+                        }
+                        TouchArea {
+                            width: max(parent.width, 48px);
+                            height: 48px;
+                            x: (parent.width - self.width) / 2;
+                            y: (parent.height - self.height) / 2;
+                            clicked => { root.rotation-toggled(!root.rotation-enabled); }
+                        }
+                    }
+                }
+
+                // ── CADENCE — writes RESOLVER_ROTATION_CADENCE_MINUTES (the selected chip lit) ──
+                Text {
+                    text: "CADENCE — flip every";
+                    color: Wheel.dim;
+                    font-size: 10px;
+                    font-weight: 700;
+                }
+                HorizontalLayout {
+                    spacing: 6px;
+                    for m in [5, 15, 30, 60] : Rectangle {
+                        height: 32px;
+                        border-radius: 8px;
+                        background: root.cadence-minutes == m ? Wheel.turn : Wheel.abyss;
+                        border-width: 1px;
+                        border-color: root.cadence-minutes == m ? Wheel.turn : Wheel.hairline;
+                        HorizontalLayout {
+                            alignment: center;
+                            Text {
+                                text: "\{m}m";
+                                color: root.cadence-minutes == m ? Wheel.orbit-void : Wheel.haze;
+                                font-size: 12px;
+                                font-weight: 900;
+                                vertical-alignment: center;
+                            }
+                        }
+                        TouchArea {
+                            height: max(parent.height, 48px);
+                            y: (parent.height - self.height) / 2;
+                            clicked => { root.cadence-picked(m); }
+                        }
+                    }
+                }
+
+                // ── #22 s5A · PICK FILTER — the SAME criteria set the DNSCrypt pillar trusts (one toml
+                //    authority; a lit chip = the requirement is ON and every future pick honours it) ──
+                Text {
+                    text: "PICK FILTER — same criteria as the DNSCrypt pillar";
+                    color: Wheel.dim;
+                    font-size: 10px;
+                    font-weight: 700;
+                }
+                HorizontalLayout {
+                    spacing: 6px;
+                    for crit in [
+                        { key: "nolog",    label: "NO-LOG",    on: root.crit-nolog },
+                        { key: "dnssec",   label: "DNSSEC",    on: root.crit-dnssec },
+                        { key: "nofilter", label: "NO-FILTER", on: root.crit-nofilter },
+                        { key: "ipv4",     label: "IPv4",      on: root.crit-ipv4 },
+                        { key: "ipv6",     label: "IPv6",      on: root.crit-ipv6 },
+                    ] : Rectangle {
+                        height: 32px;
+                        border-radius: 8px;
+                        background: crit.on ? Wheel.turn : Wheel.abyss;
+                        border-width: 1px;
+                        border-color: crit.on ? Wheel.turn : Wheel.hairline;
+                        HorizontalLayout {
+                            alignment: center;
+                            Text {
+                                text: crit.label;
+                                color: crit.on ? Wheel.orbit-void : Wheel.haze;
+                                font-size: 10px;
+                                font-weight: 900;
+                                vertical-alignment: center;
+                            }
+                        }
+                        TouchArea {
+                            height: max(parent.height, 48px);
+                            y: (parent.height - self.height) / 2;
+                            clicked => { root.criteria-toggled(crit.key, !crit.on); }
+                        }
+                    }
+                }
+
+                // ── #22 s5A-ext · KILL SWITCH — ISP/router DNS intromission block (Socio: "in both of
+                //    them"; the same toml ignore_system_dns bit the DNSCrypt pillar's kill switch edits) ──
+                Rectangle {
+                    height: 40px;
+                    border-radius: 8px;
+                    background: root.crit-sysdns ? Wheel.abyss : #3a1414;
+                    border-width: 1px;
+                    border-color: root.crit-sysdns ? Wheel.turn : #b3402f;
+                    HorizontalLayout {
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        spacing: 8px;
+                        Text {
+                            text: "KILL SWITCH — IGNORE SYSTEM DNS";
+                            color: root.crit-sysdns ? Wheel.turn : #ff8a70;
+                            font-size: 11px;
+                            font-weight: 900;
+                            vertical-alignment: center;
+                            horizontal-stretch: 1;
+                        }
+                        Text {
+                            text: root.crit-sysdns ? "ARMED — ISP/router DNS blocked" : "OFF — system DNS may intrude";
+                            color: root.crit-sysdns ? Wheel.dim : #ff8a70;
+                            font-size: 10px;
+                            vertical-alignment: center;
+                        }
+                    }
+                    TouchArea {
+                        height: max(parent.height, 48px);
+                        y: (parent.height - self.height) / 2;
+                        clicked => { root.criteria-toggled("sysdns", !root.crit-sysdns); }
+                    }
+                }
+
+                // ── #22 s5A-ext · PROTOCOL — its own row per the Socio model: DNSCrypt pillar = per-user
+                //    instruction, Rotation = cadence-timer random pick — SAME filter set + protocol on both.
+                //    dnscrypt/doh gate the random pick; odoh gates its own derive lane (honest sublabel). ──
+                Text {
+                    text: "PROTOCOL — dnscrypt · doh ride the random pick; odoh its own lane";
+                    color: Wheel.dim;
+                    font-size: 10px;
+                    font-weight: 700;
+                }
+                HorizontalLayout {
+                    spacing: 6px;
+                    for proto in [
+                        { key: "dnscrypt", label: "DNSCRYPT", on: root.crit-proto-dnscrypt },
+                        { key: "doh",      label: "DOH",      on: root.crit-proto-doh },
+                        { key: "odoh",     label: "ODOH",     on: root.crit-proto-odoh },
+                    ] : Rectangle {
+                        height: 32px;
+                        border-radius: 8px;
+                        background: proto.on ? Wheel.turn : Wheel.abyss;
+                        border-width: 1px;
+                        border-color: proto.on ? Wheel.turn : Wheel.hairline;
+                        HorizontalLayout {
+                            alignment: center;
+                            Text {
+                                text: proto.label;
+                                color: proto.on ? Wheel.orbit-void : Wheel.haze;
+                                font-size: 10px;
+                                font-weight: 900;
+                                vertical-alignment: center;
+                            }
+                        }
+                        TouchArea {
+                            height: max(parent.height, 48px);
+                            y: (parent.height - self.height) / 2;
+                            clicked => { root.criteria-toggled(proto.key, !proto.on); }
+                        }
+                    }
+                }
+
+                // ── #22 s5A · POOL SHAPE — how many resolvers per rotation, how many relays per resolver
+                //    (the GEEK-clamped rotation prefs readMaxServers/readMaxRelays consume at every pick) ──
+                Text {
+                    text: "POOL SHAPE — resolvers per rotation · relays per resolver";
+                    color: Wheel.dim;
+                    font-size: 10px;
+                    font-weight: 700;
+                }
+                HorizontalLayout {
+                    spacing: 10px;
+                    for shape in [
+                        { label: "resolvers", value: root.max-servers, servers: true },
+                        { label: "relays",    value: root.max-relays,  servers: false },
+                    ] : Rectangle {
+                        border-radius: 8px;
+                        background: @linear-gradient(90deg, Wheel.abyss.with-alpha(0.55) 0%, Wheel.orbit-void.with-alpha(0.30) 100%);
+                        border-width: 1px;
+                        border-color: Wheel.hairline;
+                        HorizontalLayout {
+                            padding: 6px;
+                            spacing: 8px;
+                            Rectangle {
+                                width: 32px;
+                                height: 32px;
+                                border-radius: 8px;
+                                background: @linear-gradient(135deg, Wheel.panel.with-alpha(0.64) 0%, Wheel.abyss.with-alpha(0.40) 100%);
+                                Text { text: "–"; color: Wheel.spoke; font-size: 16px; font-weight: 900; horizontal-alignment: center; vertical-alignment: center; }
+                                TouchArea {
+                                    width: max(parent.width, 48px);
+                                    height: max(parent.height, 48px);
+                                    x: (parent.width - self.width) / 2;
+                                    y: (parent.height - self.height) / 2;
+                                    clicked => { if (shape.servers) { root.max-servers-stepped(-1); } else { root.max-relays-stepped(-1); } }
+                                }
+                            }
+                            VerticalLayout {
+                                alignment: center;
+                                Text {
+                                    text: shape.value == 0 && !shape.servers ? "direct" : "\{shape.value}";
+                                    color: Wheel.spoke;
+                                    font-size: 14px;
+                                    font-weight: 900;
+                                    horizontal-alignment: center;
+                                }
+                                Text {
+                                    text: shape.label;
+                                    color: Wheel.haze;
+                                    font-size: 9px;
+                                    horizontal-alignment: center;
+                                }
+                            }
+                            Rectangle {
+                                width: 32px;
+                                height: 32px;
+                                border-radius: 8px;
+                                background: @linear-gradient(135deg, Wheel.panel.with-alpha(0.64) 0%, Wheel.abyss.with-alpha(0.40) 100%);
+                                Text { text: "+"; color: Wheel.spoke; font-size: 16px; font-weight: 900; horizontal-alignment: center; vertical-alignment: center; }
+                                TouchArea {
+                                    width: max(parent.width, 48px);
+                                    height: max(parent.height, 48px);
+                                    x: (parent.width - self.width) / 2;
+                                    y: (parent.height - self.height) / 2;
+                                    clicked => { if (shape.servers) { root.max-servers-stepped(1); } else { root.max-relays-stepped(1); } }
+                                }
+                            }
+                        }
+                    }
+                }
+                Text {
+                    text: "filter + shape apply at the next flip — or ROTATE NOW below";
+                    color: Wheel.haze;
+                    font-size: 9px;
+                }
+
+                // ── ROTATE NOW — fires ACTION_ROTATE_RESOLVERS_NOW (needs the engine up + rotation on) ──
+                Rectangle {
+                    height: 46px;
+                    border-radius: 10px;
+                    background: (root.engine-running && root.rotation-enabled) ? Wheel.turn : Wheel.abyss;
+                    border-width: 1px;
+                    border-color: (root.engine-running && root.rotation-enabled) ? Wheel.turn : Wheel.hairline;
+                    HorizontalLayout {
+                        alignment: center;
+                        Text {
+                            text: "ROTATE NOW";
+                            color: (root.engine-running && root.rotation-enabled) ? Wheel.orbit-void : Wheel.dim;
+                            font-size: 15px;
+                            font-weight: 900;
+                            vertical-alignment: center;
+                        }
+                    }
+                    TouchArea {
+                        clicked => { root.rotate-now(); }
+                    }
+                }
+
+                // ── honest Rotate-Now feedback (host sets rotate-status from the bridge's return code) ──
+                if root.rotate-status > 0 : Text {
+                    text: root.rotate-status == 1 ? "SENT — rotating resolvers now; watch the servers + history swap"
+                        : (root.rotate-status == 2 ? "start DNSCrypt first, then rotate"
+                        : (root.rotate-status == 3 ? "turn rotation on first, then rotate"
+                        : "rotate failed — check the query log"));
+                    color: root.rotate-status == 1 ? Wheel.turn : Wheel.caution;
+                    font-size: 10px;
+                    font-weight: 700;
+                    wrap: word-wrap;
+                }
+            }
+        }
+
+        // ---- 🩸 The rotation-fault alert stack (each banner exists ONLY while its fault is live) ----
+        if root.stalled : AlertBanner {
+            accent: Wheel.wound;
+            message: "STALLED -> the next flip is OVERDUE by \{0 - root.next-flip-secs}s. The rotation timer is starved or dead; the wheel is frozen on \{root.rotation-family != "" ? root.rotation-family : "one operator"} and the diversity it promises has stopped. Restart the DNS engine / check the cadence timer.";
+        }
+        if root.dial-anomaly : AlertBanner {
+            accent: Wheel.caution;
+            message: "DIAL FAULT -> the countdown (\{root.next-flip-secs}s) exceeds the whole cadence window (\{root.cadence-secs}s). The next-flip clock is miscomputed; the dial cannot be trusted until the timer resyncs.";
+        }
+        if root.cold-leaderboard : AlertBanner {
+            accent: Wheel.hairline;
+            message: "NO WARM HINTS YET -> the wheel is turning but the warm-RTT leaderboard is empty. The per-upstream RTT feed has not been persisted yet; the next fastest-first pick starts cold. (honest, not a fault.)";
+        }
+
+        // ---- THE ROTATION WHEEL — the hub (active family + index) + the operator-family ring ----
+        SectionTitle { text: "THE ROTATION WHEEL"; }
+        HorizontalLayout {
+            alignment: center;
+            Rectangle {
+                width: 148px;
+                height: 148px;
+                border-radius: 74px;
+                background: @linear-gradient(135deg, Wheel.panel.with-alpha(0.64) 0%, Wheel.abyss.with-alpha(0.40) 100%);
+                border-width: 3px;
+                border-color: root.crown-color;
+                VerticalLayout {
+                    alignment: center;
+                    spacing: 2px;
+                    Text {
+                        text: "OPERATOR";
+                        color: Wheel.dim;
+                        font-size: 10px;
+                        font-weight: 700;
+                        horizontal-alignment: center;
+                    }
+                    Text {
+                        text: root.rotation-family != "" ? root.rotation-family : "cold";
+                        color: root.rotating ? Wheel.turn : Wheel.haze;
+                        font-size: 20px;
+                        font-weight: 900;
+                        horizontal-alignment: center;
+                        overflow: elide;
+                    }
+                    Text {
+                        text: "index \{root.rotation-index}";
+                        color: Wheel.spoke;
+                        font-size: 12px;
+                        font-weight: 700;
+                        horizontal-alignment: center;
+                    }
+                }
+            }
+        }
+        // The ring of operator families — the active one (name == the live family) lit in TURN green.
+        HorizontalLayout {
+            alignment: center;
+            spacing: 6px;
+            for f in root.families : Rectangle {
+                background: f.name == root.rotation-family ? Wheel.turn : Wheel.abyss;
+                border-radius: 6px;
+                border-width: 1px;
+                border-color: f.name == root.rotation-family ? Wheel.turn : Wheel.hairline;
+                HorizontalLayout {
+                    padding-left: 9px;
+                    padding-right: 9px;
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                    Text {
+                        text: f.name;
+                        color: f.name == root.rotation-family ? Wheel.strike : Wheel.haze;
+                        font-size: 11px;
+                        font-weight: f.name == root.rotation-family ? 800 : 600;
+                    }
+                }
+            }
+        }
+
+        // ---- THE CADENCE DIAL — the countdown to the next flip + the depletion bar ----
+        SectionTitle { text: "CADENCE DIAL"; }
+        Rectangle {
+            border-radius: 10px;
+            background: @linear-gradient(135deg, Wheel.panel.with-alpha(0.64) 0%, Wheel.abyss.with-alpha(0.40) 100%);
+            border-width: 1px;
+            border-color: Wheel.hairline;
+            VerticalLayout {
+                padding: 12px;
+                spacing: 8px;
+                HorizontalLayout {
+                    spacing: 8px;
+                    VerticalLayout {
+                        Text {
+                            text: "NEXT FLIP";
+                            color: Wheel.haze;
+                            font-size: 11px;
+                            font-weight: 700;
+                        }
+                        Text {
+                            text: root.next-flip-label;
+                            color: root.stalled ? Wheel.stall : root.crown-color;
+                            font-size: 34px;
+                            font-weight: 900;
+                        }
+                        Text {
+                            text: "every \{root.cadence-label}";
+                            color: Wheel.haze;
+                            font-size: 10px;
+                        }
+                    }
+                    Rectangle { }  // spacer
+                    VerticalLayout {
+                        alignment: center;
+                        Text {
+                            text: "\{Math.round(root.dial-frac * 100)}%";
+                            color: root.stalled ? Wheel.stall : Wheel.spoke;
+                            font-size: 22px;
+                            font-weight: 900;
+                            horizontal-alignment: right;
+                        }
+                        Text {
+                            text: "of window left";
+                            color: Wheel.dim;
+                            font-size: 10px;
+                            horizontal-alignment: right;
+                        }
+                    }
+                }
+                // the countdown depletion bar (the remaining fraction of the cadence window).
+                Rectangle {
+                    height: 10px;
+                    border-radius: 5px;
+                    background: @linear-gradient(90deg, Wheel.abyss.with-alpha(0.55) 0%, Wheel.orbit-void.with-alpha(0.30) 100%);
+                    clip: true;
+                    Rectangle {
+                        x: 0px;
+                        width: parent.width * root.dial-frac;
+                        height: parent.height;
+                        border-radius: 5px;
+                        background: root.stalled ? Wheel.stall : Wheel.spoke;
+                    }
+                }
+            }
+        }
+
+        // ---- One-glance rotation tiles (two rows of 3+2 — five in one row clips at the pane edge) ----
+        HorizontalBox {
+            spacing: 8px;
+            StatTile {
+                label: "index";
+                value: "\{root.rotation-index}";
+                tint: Wheel.spoke;
+            }
+            StatTile {
+                label: "cadence";
+                value: root.cadence-label;
+                tint: root.pinned ? Wheel.warm : Wheel.starlight;
+            }
+            StatTile {
+                label: "operators";
+                value: "\{root.families.length}";
+                tint: Wheel.starlight;
+            }
+        }
+        HorizontalBox {
+            spacing: 8px;
+            StatTile {
+                label: "warm hints";
+                value: "\{root.rtt-hints.length}";
+                tint: root.rtt-hints.length > 0 ? Wheel.warm : Wheel.haze;
+            }
+            // #22 s5C — the HONEST chain-depth tile: how many DISTINCT relays the live routes ride
+            // (0 = direct, no anonymization hop; the crown card names them). Host-counted from the
+            // bridge's `chain_relays` names — never a guessed depth.
+            StatTile {
+                label: "relay chain";
+                value: root.chain-depth > 0 ? "\{root.chain-depth} deep" : "direct";
+                tint: root.chain-depth > 0 ? Wheel.turn : Wheel.haze;
+            }
+        }
+
+        // ---- THE WARM-RTT LEADERBOARD — the upstreams by last-known RTT (fastest first, the warm carry) ----
+        SectionTitle { text: "WARM-RTT LEADERBOARD  (\{root.rtt-hints.length} upstream(s))"; }
+        if root.rtt-hints.length == 0 : Rectangle {
+            border-radius: 6px;
+            background: @linear-gradient(90deg, Wheel.abyss.with-alpha(0.55) 0%, Wheel.orbit-void.with-alpha(0.30) 100%);
+            HorizontalLayout {
+                padding: 10px;
+                Text {
+                    text: "no warm hints yet — the fastest-first pick starts cold until the RTT feed persists";
+                    color: Wheel.dim;
+                    font-size: 11px;
+                    wrap: word-wrap;
+                }
+            }
+        }
+        VerticalLayout {
+            spacing: 4px;
+            for h[i] in root.rtt-hints : Rectangle {
+                background: @linear-gradient(90deg, Wheel.abyss.with-alpha(0.55) 0%, Wheel.orbit-void.with-alpha(0.30) 100%);
+                border-radius: 6px;
+                HorizontalLayout {
+                    padding: 6px;
+                    spacing: 8px;
+                    Text {
+                        text: "#\{i + 1}";
+                        color: i == 0 ? Wheel.turn : Wheel.dim;
+                        font-size: 11px;
+                        font-weight: 800;
+                        width: 30px;
+                    }
+                    Text {
+                        text: h.id;
+                        color: Wheel.starlight;
+                        font-size: 11px;
+                        font-weight: 700;
+                        overflow: elide;
+                    }
+                    Rectangle { }  // spacer
+                    Text {
+                        text: h.rtt;
+                        color: i == 0 ? Wheel.turn : Wheel.warm;
+                        font-size: 11px;
+                        font-weight: 800;
+                    }
+                }
+            }
+        }
+
+        // ---- ROTATION HISTORY — the per-pillar query-rotation.log tail, in plain language (#22 s5C):
+        //      WHEN each flip happened, WHICH servers it installed, WHICH relays rode along. Old log
+        //      lines that predate the enriched fields fall back to the bare operator label. ----
+        SectionTitle { text: "ROTATION HISTORY — when · servers · relays"; }
+        VerticalLayout {
+            spacing: 4px;
+            for r in root.recent-rotations : Rectangle {
+                background: @linear-gradient(90deg, Wheel.abyss.with-alpha(0.55) 0%, Wheel.orbit-void.with-alpha(0.30) 100%);
+                border-radius: 6px;
+                VerticalLayout {
+                    padding: 6px;
+                    spacing: 2px;
+                    HorizontalLayout {
+                        spacing: 8px;
+                        Text {
+                            text: r.event == "switch" ? "SWITCHED"
+                                : (r.event == "warm" ? "WARM RESUME" : r.event);
+                            color: r.event == "switch" ? Wheel.turn
+                                : (r.event == "warm" ? Wheel.warm : Wheel.haze);
+                            font-size: 11px;
+                            font-weight: 800;
+                        }
+                        Rectangle { }  // spacer
+                        Text {
+                            text: r.at != "" ? "\{r.at} · flip #\{r.idx}" : "flip #\{r.idx}";
+                            color: Wheel.dim;
+                            font-size: 10px;
+                        }
+                    }
+                    Text {
+                        text: r.servers != "" ? "servers: \{r.servers}"
+                            : (r.family != "" ? "operator: \{r.family}" : "servers: (not recorded)");
+                        color: Wheel.starlight;
+                        font-size: 11px;
+                        wrap: word-wrap;
+                    }
+                    // Relays are a SWITCH property (what that flip installed) — a warm-resume row
+                    // installs nothing, so it gets no relay line (never a false "direct" claim).
+                    if r.event == "switch" : Text {
+                        text: r.relays != "" ? "relays: \{r.relays}" : "relays: none (direct)";
+                        color: r.relays != "" ? Wheel.warm : Wheel.dim;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+            }
+        }
+
+        Rectangle { }  // tail spacer
+    }
+}
+
+// THE STANDALONE WINDOW WRAPPER (SLINT substitution · 2-FEED-Rotation) — re-wraps RotationPane as a Window
+// for the slint-viewer preview + the main.slint `RotationDashboard` re-export (a non-Window pane exported
+// from the root generates NO Rust code — the measured slint rule) + the lib.rs proof test (which constructs
+// THIS Window and drives the pane's real prop + 🩸 rotation-fault-derivation surface through the byte-equal
+// `<=>` aliases; one logic surface — the pane; the wrapper is the Window face). On-device the host drives
+// the PANE directly (mounted in home_shell.slint), never this wrapper.
+export component RotationDashboard inherits Window {
+    title: "Yeah! Tortä — Rotation";
+    preferred-width: 420px;
+    preferred-height: 1020px;
+
+    // ---- RotationSnapshot inputs (forwarded to the pane) ----
+    in-out property <bool> configured <=> rp.configured;
+    in-out property <string> rotation-family <=> rp.rotation-family;
+    in-out property <int> cadence-secs <=> rp.cadence-secs;
+    in-out property <int> rotation-index <=> rp.rotation-index;
+    in-out property <int> next-flip-secs <=> rp.next-flip-secs;
+    in-out property <bool> rehydrated-warm <=> rp.rehydrated-warm;
+    in-out property <[RotationFamilyRow]> families <=> rp.families;
+    in-out property <[RotationHintRow]> rtt-hints <=> rp.rtt-hints;
+    in-out property <[RotationLogRow]> recent-rotations <=> rp.recent-rotations;
+    in-out property <string> chain-relays <=> rp.chain-relays;
+    in-out property <int> chain-depth <=> rp.chain-depth;
+
+    // ---- derived (the 🩸 rotation-fault hunt + the crown + the plain-words labels) ----
+    out property <bool> rotating <=> rp.rotating;
+    out property <bool> pinned <=> rp.pinned;
+    out property <bool> stalled <=> rp.stalled;
+    out property <bool> dial-anomaly <=> rp.dial-anomaly;
+    out property <bool> warm-resume <=> rp.warm-resume;
+    out property <bool> cold-start <=> rp.cold-start;
+    out property <bool> cold-leaderboard <=> rp.cold-leaderboard;
+    out property <bool> hidden-fault-any <=> rp.hidden-fault-any;
+    out property <string> crown-headline <=> rp.crown-headline;
+    out property <color> crown-color <=> rp.crown-color;
+    out property <string> cadence-label <=> rp.cadence-label;
+    out property <string> next-flip-label <=> rp.next-flip-label;
+
+    // ---- 2-DRIVE-PILLARS: the live-drive controls (forwarded to the pane) ----
+    in-out property <bool> rotation-enabled <=> rp.rotation-enabled;
+    in-out property <int> cadence-minutes <=> rp.cadence-minutes;
+    // #22 s5A — the PICK FILTER + POOL SHAPE pass-throughs (one authority, see RotationPane).
+    in-out property <bool> crit-nolog <=> rp.crit-nolog;
+    in-out property <bool> crit-dnssec <=> rp.crit-dnssec;
+    in-out property <bool> crit-nofilter <=> rp.crit-nofilter;
+    in-out property <bool> crit-ipv4 <=> rp.crit-ipv4;
+    in-out property <bool> crit-ipv6 <=> rp.crit-ipv6;
+    in-out property <bool> crit-proto-dnscrypt <=> rp.crit-proto-dnscrypt;
+    in-out property <bool> crit-proto-doh <=> rp.crit-proto-doh;
+    in-out property <bool> crit-proto-odoh <=> rp.crit-proto-odoh;
+    in-out property <bool> crit-sysdns <=> rp.crit-sysdns;
+    in-out property <int> max-servers <=> rp.max-servers;
+    in-out property <int> max-relays <=> rp.max-relays;
+    in-out property <bool> engine-running <=> rp.engine-running;
+    in-out property <int> rotate-status <=> rp.rotate-status;
+    callback rotate-now <=> rp.rotate-now;
+    callback rotation-toggled <=> rp.rotation-toggled;
+    callback cadence-picked <=> rp.cadence-picked;
+    callback criteria-toggled <=> rp.criteria-toggled;        // #22 s5A
+    callback max-servers-stepped <=> rp.max-servers-stepped;  // #22 s5A
+    callback max-relays-stepped <=> rp.max-relays-stepped;    // #22 s5A
+
+    callback close-dashboard <=> rp.close-dashboard;
+
+    rp := RotationPane { }
+}

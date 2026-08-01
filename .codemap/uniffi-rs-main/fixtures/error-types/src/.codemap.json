@@ -1,0 +1,541 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\error-types\\src",
+  "files": {
+    "error_types.udl": {
+      "hash": "e23905aad435",
+      "indexed_at": "2026-07-24T20:35:12.475237+00:00",
+      "language": "udl",
+      "lines": 34,
+      "mtime_ns": 1782136568000000000,
+      "size": 678,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "oops",
+              "signature": "() : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                6,
+                6
+              ],
+              "name": "oops_nowrap",
+              "signature": "() : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                8,
+                8
+              ],
+              "name": "get_error",
+              "signature": "(string message) : ErrorInterface",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11,
+                11
+              ],
+              "name": "throw_rich",
+              "signature": "(string message) : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1,
+            12
+          ],
+          "name": "error_types",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                15,
+                15
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                18,
+                18
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "oops",
+              "signature": "() : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            14,
+            22
+          ],
+          "name": "TestInterface",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "chain",
+              "signature": "() : sequence<string>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "link",
+              "signature": "(u64 index) : string?",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            25,
+            28
+          ],
+          "name": "ErrorInterface",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            33,
+            34
+          ],
+          "name": "RichError",
+          "type": "interface"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "2065662aea18",
+      "indexed_at": "2026-07-24T20:35:12.476945+00:00",
+      "language": "rust",
+      "lines": 275,
+      "mtime_ns": 1782136568000000000,
+      "size": 6844,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "ErrorInterface",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                16
+              ],
+              "name": "chain",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                19
+              ],
+              "name": "link",
+              "signature": "(&self, ndx: u64)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            13,
+            20
+          ],
+          "name": "ErrorInterface",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                27
+              ],
+              "name": "from",
+              "signature": "(e: anyhow::Error)",
+              "type": "method"
+            }
+          ],
+          "docstring": "We can't use this implicitly yet, but it still helps.",
+          "lines": [
+            24,
+            28
+          ],
+          "name": "ErrorInterface",
+          "type": "impl"
+        },
+        {
+          "docstring": "Test an interface as the error type",
+          "lines": [
+            31,
+            38
+          ],
+          "name": "oops",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "Like `oops`, but let UniFFI handle wrapping the interface with an arc",
+          "lines": [
+            41,
+            46
+          ],
+          "name": "oops_nowrap",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            49,
+            53
+          ],
+          "name": "toops",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            56,
+            58
+          ],
+          "name": "aoops",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            60,
+            62
+          ],
+          "name": "get_error",
+          "signature": "(message: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            65,
+            67
+          ],
+          "name": "ErrorTrait",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            71,
+            73
+          ],
+          "name": "ErrorTraitImpl",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                76,
+                78
+              ],
+              "name": "msg",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            75,
+            79
+          ],
+          "name": "ErrorTrait",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            81,
+            83
+          ],
+          "name": "throw_rich",
+          "signature": "(e: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            88,
+            90
+          ],
+          "name": "RichError",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            92,
+            92
+          ],
+          "name": "RichError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            94,
+            94
+          ],
+          "name": "TestInterface",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                97,
+                99
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                101,
+                103
+              ],
+              "name": "fallible_new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                105,
+                111
+              ],
+              "name": "oops",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            96,
+            112
+          ],
+          "name": "TestInterface",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "can't define this in UDL due to #1915",
+              "lines": [
+                117,
+                119
+              ],
+              "name": "aoops",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            115,
+            120
+          ],
+          "name": "TestInterface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            125,
+            127
+          ],
+          "name": "ProcErrorInterface",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                131,
+                133
+              ],
+              "name": "message",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            130,
+            134
+          ],
+          "name": "ProcErrorInterface",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                137,
+                139
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut std::fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            136,
+            140
+          ],
+          "name": "ProcErrorInterface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            143,
+            145
+          ],
+          "name": "throw_proc_error",
+          "signature": "(e: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            148,
+            150
+          ],
+          "name": "return_proc_error",
+          "signature": "(e: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            154,
+            156
+          ],
+          "name": "NonUniffiType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            161,
+            164
+          ],
+          "name": "Inner",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            170,
+            175
+          ],
+          "name": "FlatInner",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            179,
+            193
+          ],
+          "name": "Error",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            196,
+            222
+          ],
+          "name": "oops_enum",
+          "signature": "(i: u16)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            226,
+            231
+          ],
+          "name": "TupleError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            234,
+            242
+          ],
+          "name": "oops_tuple",
+          "signature": "(i: u16)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            245,
+            245
+          ],
+          "name": "CustomError",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                248,
+                250
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut std::fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            247,
+            251
+          ],
+          "name": "CustomError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            266,
+            268
+          ],
+          "name": "oops_custom",
+          "signature": "(i: u16)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            271,
+            273
+          ],
+          "name": "get_tuple",
+          "signature": "(t: Option<TupleError>)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.681846+00:00",
+  "version": "1.0"
+}

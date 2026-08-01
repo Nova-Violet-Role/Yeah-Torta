@@ -1,0 +1,211 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\dns_engine\\socket",
+  "files": {
+    "ConnectionPool.kt": {
+      "hash": "c2abe91cb604",
+      "indexed_at": "2026-08-01T03:59:40.173572+00:00",
+      "language": "kotlin",
+      "lines": 179,
+      "mtime_ns": 1785556376383900200,
+      "size": 6952,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                59,
+                61
+              ],
+              "name": "bestRttMs",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                63
+              ],
+              "name": "nextQueryId",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                65,
+                65
+              ],
+              "name": "warm",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                89
+              ],
+              "name": "resize",
+              "signature": "(target: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                100
+              ],
+              "name": "createSlot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                122
+              ],
+              "name": "startReader",
+              "signature": "(slot: ConnectionSlot)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                124,
+                132
+              ],
+              "name": "readFully",
+              "signature": "(input: InputStream, buf: ByteArray, n: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                139,
+                166
+              ],
+              "name": "sendProbe",
+              "signature": "(domain: String, timeoutMs: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                168,
+                172
+              ],
+              "name": "bestAliveSlot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                174,
+                178
+              ],
+              "name": "shutdown",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            37,
+            179
+          ],
+          "name": "ConnectionPool",
+          "type": "class"
+        }
+      ]
+    },
+    "ConnectionSlot.kt": {
+      "hash": "654baf86902d",
+      "indexed_at": "2026-08-01T03:59:40.502486+00:00",
+      "language": "kotlin",
+      "lines": 101,
+      "mtime_ns": 1785556376395901700,
+      "size": 2989,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                71,
+                71
+              ],
+              "name": "isAged",
+              "signature": "(nowMs: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                73,
+                84
+              ],
+              "name": "connect",
+              "signature": "(nowMs: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                86,
+                89
+              ],
+              "name": "recordSuccess",
+              "signature": "(rttMs: Double)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                93
+              ],
+              "name": "recordFailure",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                95,
+                100
+              ],
+              "name": "close",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            30,
+            101
+          ],
+          "name": "ConnectionSlot",
+          "type": "class"
+        }
+      ]
+    },
+    "UdpProber.kt": {
+      "hash": "4e4fd02f70d4",
+      "indexed_at": "2026-08-01T03:59:40.832973+00:00",
+      "language": "kotlin",
+      "lines": 59,
+      "mtime_ns": 1785556376406900000,
+      "size": 2462,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                38,
+                58
+              ],
+              "name": "probe",
+              "signature": "(host: String, port: Int, domain: String, queryId: Int, timeoutMs: Int)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            30,
+            59
+          ],
+          "name": "UdpProber",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:40.835001+00:00",
+  "version": "1.0"
+}

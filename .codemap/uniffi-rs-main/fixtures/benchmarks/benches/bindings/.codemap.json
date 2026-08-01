@@ -1,0 +1,544 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\benchmarks\\benches\\bindings",
+  "files": {
+    "run_benchmarks.kts": {
+      "hash": "32479dd4db35",
+      "indexed_at": "2026-07-24T20:35:12.394657+00:00",
+      "language": "kotlin",
+      "lines": 290,
+      "mtime_ns": 1782136568000000000,
+      "size": 9104,
+      "symbols": [
+        {
+          "docstring": "construct these objects.",
+          "lines": [
+            12,
+            47
+          ],
+          "name": "TestData",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                50,
+                51
+              ],
+              "name": "callOnly",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                53,
+                55
+              ],
+              "name": "primitives",
+              "signature": "(a: UByte, b: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                57,
+                59
+              ],
+              "name": "strings",
+              "signature": "(a: String, b: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                61,
+                63
+              ],
+              "name": "largeStrings",
+              "signature": "(a: String, b: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                65,
+                67
+              ],
+              "name": "records",
+              "signature": "(a: TestRecord, b: TestRecord)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                69,
+                79
+              ],
+              "name": "largeRecords",
+              "signature": "(a: TestLargeRecord, b: TestLargeRecord)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                81,
+                91
+              ],
+              "name": "enums",
+              "signature": "(a: TestEnum, b: TestEnum)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                98
+              ],
+              "name": "hashMaps",
+              "signature": "(\n        a: Map<UInt, UInt>,\n        b: Map<UInt, UInt>\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                107
+              ],
+              "name": "interfaces",
+              "signature": "(a: TestInterface, b: TestInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                109,
+                119
+              ],
+              "name": "traitInterfaces",
+              "signature": "(\n        a: TestTraitInterface,\n        b: TestTraitInterface\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                133
+              ],
+              "name": "optionals",
+              "signature": "(a: UInt?, b: Boolean?, c: String?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                135,
+                137
+              ],
+              "name": "bytes",
+              "signature": "(v: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                139,
+                141
+              ],
+              "name": "vecSmall",
+              "signature": "(a: List<UInt>, b: List<UInt>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                143,
+                145
+              ],
+              "name": "vecPrimitives",
+              "signature": "(v: List<UInt>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                147,
+                149
+              ],
+              "name": "vecRecords",
+              "signature": "(v: List<TestRecord>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                151,
+                164
+              ],
+              "name": "nestedData",
+              "signature": "(a: NestedData, b: NestedData)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                166,
+                168
+              ],
+              "name": "errors",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                170,
+                287
+              ],
+              "name": "runTest",
+              "signature": "(testCase: TestCase, count: ULong)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            49,
+            288
+          ],
+          "name": "TestCallbackObj",
+          "type": "class"
+        }
+      ]
+    },
+    "run_benchmarks.py": {
+      "hash": "0a49d63c0b42",
+      "indexed_at": "2026-07-24T20:35:12.396583+00:00",
+      "language": "python",
+      "lines": 218,
+      "mtime_ns": 1782136568000000000,
+      "size": 7067,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                49,
+                50
+              ],
+              "name": "call_only",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                52,
+                53
+              ],
+              "name": "primitives",
+              "signature": "(self, a, b)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                55,
+                56
+              ],
+              "name": "strings",
+              "signature": "(self, a, b)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                58,
+                59
+              ],
+              "name": "large_strings",
+              "signature": "(self, a, b)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                61,
+                66
+              ],
+              "name": "records",
+              "signature": "(self, a, b)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                77
+              ],
+              "name": "large_records",
+              "signature": "(self, a, b)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                88
+              ],
+              "name": "enums",
+              "signature": "(self, a, b)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                90,
+                91
+              ],
+              "name": "hash_maps",
+              "signature": "(self, a, b)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                98
+              ],
+              "name": "interfaces",
+              "signature": "(self, a, b)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                105
+              ],
+              "name": "trait_interfaces",
+              "signature": "(self, a, b)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                107,
+                115
+              ],
+              "name": "optionals",
+              "signature": "(self, a, b, c)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                117,
+                118
+              ],
+              "name": "bytes",
+              "signature": "(self, a)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                120,
+                121
+              ],
+              "name": "vec_small",
+              "signature": "(self, a, b)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                123,
+                124
+              ],
+              "name": "vec_primitives",
+              "signature": "(self, a)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                126,
+                127
+              ],
+              "name": "vec_records",
+              "signature": "(self, a)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                129,
+                130
+              ],
+              "name": "nested_data",
+              "signature": "(self, a, b)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                132,
+                133
+              ],
+              "name": "errors",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                135,
+                216
+              ],
+              "name": "run_test",
+              "signature": "(self, test_case, count)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            48,
+            216
+          ],
+          "name": "TestCallbackObj",
+          "type": "class"
+        }
+      ]
+    },
+    "run_benchmarks.swift": {
+      "hash": "4da48955faec",
+      "indexed_at": "2026-07-24T20:35:12.399932+00:00",
+      "language": "swift",
+      "lines": 289,
+      "mtime_ns": 1782136568000000000,
+      "size": 8199,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                53,
+                54
+              ],
+              "name": "callOnly",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                58
+              ],
+              "name": "primitives",
+              "type": "method"
+            },
+            {
+              "lines": [
+                60,
+                62
+              ],
+              "name": "strings",
+              "type": "method"
+            },
+            {
+              "lines": [
+                64,
+                66
+              ],
+              "name": "largeStrings",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                74
+              ],
+              "name": "records",
+              "type": "method"
+            },
+            {
+              "lines": [
+                76,
+                86
+              ],
+              "name": "largeRecords",
+              "type": "method"
+            },
+            {
+              "lines": [
+                88,
+                98
+              ],
+              "name": "enums",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                105
+              ],
+              "name": "hashMaps",
+              "type": "method"
+            },
+            {
+              "lines": [
+                107,
+                114
+              ],
+              "name": "interfaces",
+              "type": "method"
+            },
+            {
+              "lines": [
+                116,
+                126
+              ],
+              "name": "traitInterfaces",
+              "type": "method"
+            },
+            {
+              "lines": [
+                128,
+                140
+              ],
+              "name": "optionals",
+              "type": "method"
+            },
+            {
+              "lines": [
+                142,
+                144
+              ],
+              "name": "bytes",
+              "type": "method"
+            },
+            {
+              "lines": [
+                146,
+                148
+              ],
+              "name": "vecSmall",
+              "type": "method"
+            },
+            {
+              "lines": [
+                150,
+                152
+              ],
+              "name": "vecPrimitives",
+              "type": "method"
+            },
+            {
+              "lines": [
+                154,
+                156
+              ],
+              "name": "vecRecords",
+              "type": "method"
+            },
+            {
+              "lines": [
+                158,
+                164
+              ],
+              "name": "nestedData",
+              "type": "method"
+            },
+            {
+              "lines": [
+                166,
+                168
+              ],
+              "name": "errors",
+              "type": "method"
+            },
+            {
+              "lines": [
+                170,
+                284
+              ],
+              "name": "runTest",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            52,
+            285
+          ],
+          "name": "TestCallbackObj",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.664939+00:00",
+  "version": "1.0"
+}

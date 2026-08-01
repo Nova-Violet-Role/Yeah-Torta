@@ -1,0 +1,227 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src\\macro_metadata",
+  "files": {
+    "ci.rs": {
+      "hash": "fd1524a868f2",
+      "indexed_at": "2026-07-24T20:35:13.072582+00:00",
+      "language": "rust",
+      "lines": 122,
+      "mtime_ns": 1782136568000000000,
+      "size": 4370,
+      "symbols": [
+        {
+          "docstring": "the `Metadata` items that the macro creates.",
+          "lines": [
+            17,
+            35
+          ],
+          "name": "add_to_ci",
+          "signature": "(\n    iface: &mut ComponentInterface,\n    metadata_items: Vec<Metadata>,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "Add items from a MetadataGroup to a component interface",
+          "lines": [
+            38,
+            55
+          ],
+          "name": "add_group_to_ci",
+          "signature": "(iface: &mut ComponentInterface, group: MetadataGroup)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            57,
+            65
+          ],
+          "name": "add_enum_to_ci",
+          "signature": "(iface: &mut ComponentInterface, meta: EnumMetadata)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            67,
+            122
+          ],
+          "name": "add_item_to_ci",
+          "signature": "(iface: &mut ComponentInterface, item: Metadata)",
+          "type": "function"
+        }
+      ]
+    },
+    "extract.rs": {
+      "hash": "cd7e0786f62d",
+      "indexed_at": "2026-07-24T20:35:13.074258+00:00",
+      "language": "rust",
+      "lines": 283,
+      "mtime_ns": 1782136568000000000,
+      "size": 10580,
+      "symbols": [
+        {
+          "docstring": "the interface.",
+          "lines": [
+            23,
+            25
+          ],
+          "name": "extract_from_library",
+          "signature": "(path: &Utf8Path)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            27,
+            36
+          ],
+          "name": "extract_from_bytes",
+          "signature": "(file_data: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            38,
+            93
+          ],
+          "name": "extract_from_elf",
+          "signature": "(elf: Elf<'_>, file_data: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            95,
+            109
+          ],
+          "name": "extract_from_pe",
+          "signature": "(pe: PE<'_>, file_data: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            111,
+            125
+          ],
+          "name": "extract_from_mach",
+          "signature": "(mach: Mach<'_>, file_data: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            127,
+            165
+          ],
+          "name": "extract_from_macho",
+          "signature": "(macho: MachO<'_>, file_data: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            167,
+            195
+          ],
+          "name": "extract_from_archive",
+          "signature": "(\n    archive: Archive<'_>,\n    file_data: &[u8],\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            197,
+            238
+          ],
+          "name": "extract_from_coff",
+          "signature": "(coff: Coff<'_>, file_data: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            242,
+            247
+          ],
+          "name": "ExtractedItems",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                250,
+                252
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                254,
+                272
+              ],
+              "name": "extract_item",
+              "signature": "(&mut self, name: &str, file_data: &[u8], offset: usize)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                274,
+                276
+              ],
+              "name": "into_metadata",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            249,
+            277
+          ],
+          "name": "ExtractedItems",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            279,
+            283
+          ],
+          "name": "is_metadata_symbol",
+          "signature": "(name: &str)",
+          "type": "function"
+        }
+      ]
+    },
+    "mod.rs": {
+      "hash": "28035a14d54b",
+      "indexed_at": "2026-07-24T20:35:13.074839+00:00",
+      "language": "rust",
+      "lines": 24,
+      "mtime_ns": 1782136568000000000,
+      "size": 733,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            9
+          ],
+          "name": "ci",
+          "type": "module"
+        },
+        {
+          "lines": [
+            10,
+            10
+          ],
+          "name": "extract",
+          "type": "module"
+        },
+        {
+          "lines": [
+            15,
+            24
+          ],
+          "name": "add_to_ci_from_library",
+          "signature": "(\n    iface: &mut ComponentInterface,\n    library_path: &Utf8Path,\n)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.779457+00:00",
+  "version": "1.0"
+}

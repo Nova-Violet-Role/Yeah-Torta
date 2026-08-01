@@ -1,0 +1,696 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\benchmarks\\src",
+  "files": {
+    "cli.rs": {
+      "hash": "62ecd65f6a05",
+      "indexed_at": "2026-07-24T20:35:12.401325+00:00",
+      "language": "rust",
+      "lines": 176,
+      "mtime_ns": 1782136568000000000,
+      "size": 6332,
+      "symbols": [
+        {
+          "lines": [
+            14,
+            70
+          ],
+          "name": "Args",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Should we run the tests for a foreign language?",
+              "lines": [
+                74,
+                77
+              ],
+              "name": "should_run_foreign_language",
+              "signature": "(&self, language: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                81
+              ],
+              "name": "test_case_name_matches_filter",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "bindings script, and we don't want to parse all of that.",
+              "lines": [
+                88,
+                101
+              ],
+              "name": "parse_for_run_benchmarks",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Build a Criterion instance from the arguments",
+              "lines": [
+                104,
+                110
+              ],
+              "name": "build_criterion",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                114
+              ],
+              "name": "skip_measurements",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                116,
+                118
+              ],
+              "name": "has_compare",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                120,
+                122
+              ],
+              "name": "has_save_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                124,
+                134
+              ],
+              "name": "calculate_save_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                136,
+                147
+              ],
+              "name": "determine_save_name_from_jj_commit",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                149,
+                175
+              ],
+              "name": "determine_save_name_from_jj_parent",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            72,
+            176
+          ],
+          "name": "Args",
+          "type": "impl"
+        }
+      ]
+    },
+    "compare.rs": {
+      "hash": "c30d9b6fe0bd",
+      "indexed_at": "2026-07-24T20:35:12.403149+00:00",
+      "language": "rust",
+      "lines": 275,
+      "mtime_ns": 1782136568000000000,
+      "size": 9534,
+      "symbols": [
+        {
+          "lines": [
+            20,
+            23
+          ],
+          "name": "CriterionMeasurementTracker",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                26,
+                42
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                44,
+                54
+              ],
+              "name": "save",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                64
+              ],
+              "name": "delete_save",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                66,
+                77
+              ],
+              "name": "read",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                108
+              ],
+              "name": "find_last_compare_names",
+              "signature": "(\n        &self,\n        count: usize,\n        save_name: Option<&str>,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                110,
+                181
+              ],
+              "name": "compare",
+              "signature": "(\n        &self,\n        compare: &[String],\n        compare_last: Option<usize>,\n        save_na...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                183,
+                193
+              ],
+              "name": "times_from_last_run",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                195,
+                204
+              ],
+              "name": "path_changed",
+              "signature": "(&self, path: &Utf8Path)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            25,
+            205
+          ],
+          "name": "CriterionMeasurementTracker",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            207,
+            217
+          ],
+          "name": "test_case_dirs",
+          "signature": "(workspace_dir: &Utf8Path)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            219,
+            223
+          ],
+          "name": "estimate_path",
+          "signature": "(test_case_dir: &Utf8Path)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            225,
+            242
+          ],
+          "name": "find_workspace_root",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            244,
+            254
+          ],
+          "name": "read_time",
+          "signature": "(estimates_json_path: &Utf8Path)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            256,
+            258
+          ],
+          "name": "utf8_path_buf",
+          "signature": "(path_buf: std::path::PathBuf)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            260,
+            266
+          ],
+          "name": "print_col",
+          "signature": "(label: &str, columns: impl IntoIterator<Item = impl Into<String>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            268,
+            275
+          ],
+          "name": "format_time",
+          "signature": "(nanoseconds: u64)",
+          "type": "function"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "da37902e3b0d",
+      "indexed_at": "2026-07-24T20:35:12.405871+00:00",
+      "language": "rust",
+      "lines": 536,
+      "mtime_ns": 1782136568000000000,
+      "size": 16382,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            7
+          ],
+          "name": "cli",
+          "type": "module"
+        },
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "compare",
+          "type": "module"
+        },
+        {
+          "lines": [
+            16,
+            35
+          ],
+          "name": "TestCase",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                38,
+                60
+              ],
+              "name": "iter_all",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                62,
+                83
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                85,
+                87
+              ],
+              "name": "rust_to_foreign_name",
+              "signature": "(&self, language: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                89,
+                91
+              ],
+              "name": "foreign_to_rust_name",
+              "signature": "(&self, language: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                101
+              ],
+              "name": "all_names_for_language",
+              "signature": "(language: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                107
+              ],
+              "name": "skip_foreign_side",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                109,
+                241
+              ],
+              "name": "callback_test_case_fn",
+              "signature": "(&self, cb: Arc<dyn TestCallbackInterface>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            37,
+            242
+          ],
+          "name": "TestCase",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            245,
+            249
+          ],
+          "name": "TestRecord",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            252,
+            260
+          ],
+          "name": "TestLargeRecord",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            263,
+            266
+          ],
+          "name": "TestEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            269,
+            269
+          ],
+          "name": "TestInterface",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                274,
+                276
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            272,
+            277
+          ],
+          "name": "TestInterface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            280,
+            280
+          ],
+          "name": "TestTraitInterface",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            282,
+            282
+          ],
+          "name": "TestTraitInterfaceImpl",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            284,
+            284
+          ],
+          "name": "TestTraitInterface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            287,
+            289
+          ],
+          "name": "make_test_trait_interface",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            292,
+            296
+          ],
+          "name": "NestedData",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            299,
+            304
+          ],
+          "name": "TestError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            315,
+            315
+          ],
+          "name": "test_case_call_only",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            318,
+            320
+          ],
+          "name": "test_case_primitives",
+          "signature": "(a: u8, b: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            323,
+            325
+          ],
+          "name": "test_case_strings",
+          "signature": "(a: String, b: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            328,
+            330
+          ],
+          "name": "test_case_large_strings",
+          "signature": "(a: String, b: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            333,
+            339
+          ],
+          "name": "test_case_records",
+          "signature": "(a: TestRecord, b: TestRecord)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            342,
+            352
+          ],
+          "name": "test_case_large_records",
+          "signature": "(a: TestLargeRecord, b: TestLargeRecord)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            355,
+            365
+          ],
+          "name": "test_case_enums",
+          "signature": "(a: TestEnum, b: TestEnum)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            368,
+            370
+          ],
+          "name": "test_case_hashmaps",
+          "signature": "(a: HashMap<u32, u32>, b: HashMap<u32, u32>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            373,
+            380
+          ],
+          "name": "test_case_interfaces",
+          "signature": "(a: Arc<TestInterface>, b: Arc<TestInterface>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            383,
+            393
+          ],
+          "name": "test_case_trait_interfaces",
+          "signature": "(\n    a: Arc<dyn TestTraitInterface>,\n    b: Arc<dyn TestTraitInterface>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            396,
+            408
+          ],
+          "name": "test_case_optionals",
+          "signature": "(a: Option<u32>, b: Option<bool>, c: Option<String>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            411,
+            413
+          ],
+          "name": "test_case_bytes",
+          "signature": "(v: Vec<u8>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            416,
+            418
+          ],
+          "name": "test_case_vec_small",
+          "signature": "(a: Vec<u32>, b: Vec<u32>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            421,
+            423
+          ],
+          "name": "test_case_vec_primitives",
+          "signature": "(v: Vec<u32>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            426,
+            428
+          ],
+          "name": "test_case_vec_records",
+          "signature": "(v: Vec<TestRecord>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            431,
+            437
+          ],
+          "name": "test_case_nested_data",
+          "signature": "(a: NestedData, b: NestedData)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            440,
+            442
+          ],
+          "name": "test_case_errors",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                446,
+                446
+              ],
+              "name": "noop_method",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            445,
+            447
+          ],
+          "name": "TestInterface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            454,
+            481
+          ],
+          "name": "TestCallbackInterface",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            488,
+            496
+          ],
+          "name": "run_callback_test",
+          "signature": "(cb: Arc<dyn TestCallbackInterface>, test_case: TestCase, n: u64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            500,
+            534
+          ],
+          "name": "run_benchmarks",
+          "signature": "(language: String, cb: Arc<dyn TestCallbackInterface>)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.665858+00:00",
+  "version": "1.0"
+}

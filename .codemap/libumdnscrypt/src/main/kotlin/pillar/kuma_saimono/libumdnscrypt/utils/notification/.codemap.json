@@ -1,0 +1,166 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\utils\\notification",
+  "files": {
+    "NotificationPermissionDialog.kt": {
+      "hash": "79bcce2a1101",
+      "indexed_at": "2026-08-01T04:00:44.092045+00:00",
+      "language": "kotlin",
+      "lines": 64,
+      "mtime_ns": 1785556378865898900,
+      "size": 2420,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                26,
+                48
+              ],
+              "name": "assignBuilder",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                58
+              ],
+              "name": "getListener",
+              "signature": "(manager: FragmentManager)",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    61,
+                    61
+                  ],
+                  "name": "notificationPermissionDialogOkPressed",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    62,
+                    62
+                  ],
+                  "name": "notificationPermissionDialogDoNotShowPressed",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                60,
+                63
+              ],
+              "name": "NotificationPermissionDialogListener",
+              "type": "interface"
+            }
+          ],
+          "lines": [
+            24,
+            64
+          ],
+          "name": "NotificationPermissionDialog",
+          "type": "class"
+        }
+      ]
+    },
+    "NotificationPermissionManager.kt": {
+      "hash": "3cfc397bad2c",
+      "indexed_at": "2026-08-01T04:00:44.402756+00:00",
+      "language": "kotlin",
+      "lines": 121,
+      "mtime_ns": 1785556378876902100,
+      "size": 4717,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                49,
+                62
+              ],
+              "name": "isNotificationPermissionRequestRequired",
+              "signature": "(activity: FragmentActivity)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                64,
+                85
+              ],
+              "name": "requestNotificationPermission",
+              "signature": "(activity: FragmentActivity)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                87,
+                91
+              ],
+              "name": "launchNotificationPermissionSystemDialog",
+              "signature": "(launcher: ActivityResultLauncher<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                114
+              ],
+              "name": "getNotificationPermissionLauncher",
+              "signature": "(activity: FragmentActivity)",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    117,
+                    117
+                  ],
+                  "name": "onAllowed",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    118,
+                    118
+                  ],
+                  "name": "onShowRationale",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    119,
+                    119
+                  ],
+                  "name": "onDenied",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                116,
+                120
+              ],
+              "name": "OnPermissionResultListener",
+              "type": "interface"
+            }
+          ],
+          "lines": [
+            44,
+            121
+          ],
+          "name": "NotificationPermissionManager",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:44.404275+00:00",
+  "version": "1.0"
+}

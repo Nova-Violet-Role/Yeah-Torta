@@ -1,0 +1,550 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src\\bindings\\python\\templates",
+  "files": {
+    "Async.py": {
+      "hash": "61dd897b2b91",
+      "indexed_at": "2026-07-24T20:35:12.850254+00:00",
+      "language": "python",
+      "lines": 128,
+      "mtime_ns": 1782136568000000000,
+      "size": 5694,
+      "symbols": []
+    },
+    "BoxTemplate.py": {
+      "hash": "d3f64b74e0fb",
+      "indexed_at": "2026-07-24T20:35:12.850964+00:00",
+      "language": "python",
+      "lines": 12,
+      "mtime_ns": 1782136568000000000,
+      "size": 403,
+      "symbols": []
+    },
+    "CallableArgs.py": {
+      "hash": "2ac45846a6a2",
+      "indexed_at": "2026-07-24T20:35:12.851640+00:00",
+      "language": "python",
+      "lines": 8,
+      "mtime_ns": 1782136568000000000,
+      "size": 379,
+      "symbols": []
+    },
+    "CallableBody.py": {
+      "hash": "0641ad6c644e",
+      "indexed_at": "2026-07-24T20:35:12.852338+00:00",
+      "language": "python",
+      "lines": 68,
+      "mtime_ns": 1782136568000000000,
+      "size": 2153,
+      "symbols": []
+    },
+    "CallbackInterfaceImpl.py": {
+      "hash": "5e773791f990",
+      "indexed_at": "2026-07-24T20:35:12.853059+00:00",
+      "language": "python",
+      "lines": 113,
+      "mtime_ns": 1782136568000000000,
+      "size": 4337,
+      "symbols": []
+    },
+    "CallbackInterfaceRuntime.py": {
+      "hash": "8ffe6640283b",
+      "indexed_at": "2026-07-24T20:35:12.853834+00:00",
+      "language": "python",
+      "lines": 32,
+      "mtime_ns": 1782136568000000000,
+      "size": 820,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "lift",
+              "signature": "(cls, handle)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                16,
+                19
+              ],
+              "name": "read",
+              "signature": "(cls, buf)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                23
+              ],
+              "name": "check_lower",
+              "signature": "(cls, cb)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                28
+              ],
+              "name": "lower",
+              "signature": "(cls, cb)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                30,
+                32
+              ],
+              "name": "write",
+              "signature": "(cls, cb, buf)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            9,
+            32
+          ],
+          "name": "_UniffiCallbackInterfaceFfiConverter",
+          "type": "class"
+        }
+      ]
+    },
+    "CallbackInterfaceTemplate.py": {
+      "hash": "983a878b1c1a",
+      "indexed_at": "2026-07-24T20:35:12.854514+00:00",
+      "language": "python",
+      "lines": 10,
+      "mtime_ns": 1782136568000000000,
+      "size": 415,
+      "symbols": []
+    },
+    "CustomType.py": {
+      "hash": "885f0baae724",
+      "indexed_at": "2026-07-24T20:35:12.855205+00:00",
+      "language": "python",
+      "lines": 68,
+      "mtime_ns": 1782136568000000000,
+      "size": 2249,
+      "symbols": []
+    },
+    "EnumTemplate.py": {
+      "hash": "c6b5c2f6f425",
+      "indexed_at": "2026-07-24T20:35:12.856010+00:00",
+      "language": "python",
+      "lines": 208,
+      "mtime_ns": 1782136568000000000,
+      "size": 8088,
+      "symbols": []
+    },
+    "ErrorTemplate.py": {
+      "hash": "0ca314af0277",
+      "indexed_at": "2026-07-24T20:35:12.856761+00:00",
+      "language": "python",
+      "lines": 126,
+      "mtime_ns": 1782136568000000000,
+      "size": 5031,
+      "symbols": []
+    },
+    "HandleMap.py": {
+      "hash": "f35b74c294fc",
+      "indexed_at": "2026-07-24T20:35:12.857608+00:00",
+      "language": "python",
+      "lines": 51,
+      "mtime_ns": 1782136568000000000,
+      "size": 1578,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                11,
+                15
+              ],
+              "name": "__init__",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                19
+              ],
+              "name": "insert",
+              "signature": "(self, obj)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                22,
+                26
+              ],
+              "name": "_insert",
+              "signature": "(self, obj)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                33
+              ],
+              "name": "get",
+              "signature": "(self, handle)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                35,
+                41
+              ],
+              "name": "clone",
+              "signature": "(self, handle)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                43,
+                48
+              ],
+              "name": "remove",
+              "signature": "(self, handle)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                51
+              ],
+              "name": "__len__",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "docstring": "A map where inserting, getting and removing data is synchronized with a lock.",
+          "lines": [
+            6,
+            51
+          ],
+          "name": "_UniffiHandleMap",
+          "type": "class"
+        }
+      ]
+    },
+    "Helpers.py": {
+      "hash": "fe6b3081c479",
+      "indexed_at": "2026-07-24T20:35:12.858652+00:00",
+      "language": "python",
+      "lines": 89,
+      "mtime_ns": 1782136568000000000,
+      "size": 3755,
+      "symbols": [
+        {
+          "lines": [
+            4,
+            5
+          ],
+          "name": "InternalError",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                21,
+                23
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                33
+              ],
+              "name": "__str__",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Error runtime.",
+          "lines": [
+            7,
+            33
+          ],
+          "name": "_UniffiRustCallStatus",
+          "type": "class"
+        },
+        {
+          "lines": [
+            35,
+            37
+          ],
+          "name": "_uniffi_rust_call",
+          "signature": "(fn, *args)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            39,
+            49
+          ],
+          "name": "_uniffi_rust_call_with_error",
+          "signature": "(error_ffi_converter, fn, *args)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            51,
+            71
+          ],
+          "name": "_uniffi_check_call_status",
+          "signature": "(error_ffi_converter, call_status)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            73,
+            78
+          ],
+          "name": "_uniffi_trait_interface_call",
+          "signature": "(call_status, make_call, write_return_value)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            80,
+            89
+          ],
+          "name": "_uniffi_trait_interface_call_with_error",
+          "signature": "(call_status, make_call, write_return_value, error_type, lower_error)",
+          "type": "function"
+        }
+      ]
+    },
+    "InterfaceTemplate.py": {
+      "hash": "be267b9acd87",
+      "indexed_at": "2026-07-24T20:35:12.859408+00:00",
+      "language": "python",
+      "lines": 165,
+      "mtime_ns": 1782136568000000000,
+      "size": 5898,
+      "symbols": []
+    },
+    "MapTemplate.py": {
+      "hash": "daa90bb06473",
+      "indexed_at": "2026-07-24T20:35:12.860089+00:00",
+      "language": "python",
+      "lines": 30,
+      "mtime_ns": 1782136568000000000,
+      "size": 1203,
+      "symbols": []
+    },
+    "Module.py": {
+      "hash": "b364b07291ef",
+      "indexed_at": "2026-07-24T20:35:12.860794+00:00",
+      "language": "python",
+      "lines": 69,
+      "mtime_ns": 1782136568000000000,
+      "size": 1974,
+      "symbols": []
+    },
+    "NamespaceLibraryTemplate.py": {
+      "hash": "7def69df0cd8",
+      "indexed_at": "2026-07-24T20:35:12.861771+00:00",
+      "language": "python",
+      "lines": 97,
+      "mtime_ns": 1782136568000000000,
+      "size": 3799,
+      "symbols": []
+    },
+    "OptionalTemplate.py": {
+      "hash": "e6111c2669aa",
+      "indexed_at": "2026-07-24T20:35:12.862450+00:00",
+      "language": "python",
+      "lines": 24,
+      "mtime_ns": 1782136568000000000,
+      "size": 722,
+      "symbols": []
+    },
+    "Protocol.py": {
+      "hash": "a9fef6f12c42",
+      "indexed_at": "2026-07-24T20:35:12.863136+00:00",
+      "language": "python",
+      "lines": 11,
+      "mtime_ns": 1782136568000000000,
+      "size": 572,
+      "symbols": []
+    },
+    "RecordTemplate.py": {
+      "hash": "08a3d968e055",
+      "indexed_at": "2026-07-24T20:35:12.864441+00:00",
+      "language": "python",
+      "lines": 84,
+      "mtime_ns": 1782136568000000000,
+      "size": 3027,
+      "symbols": []
+    },
+    "RustBufferHelper.py": {
+      "hash": "a48e5ed1dcde",
+      "indexed_at": "2026-07-24T20:35:12.865292+00:00",
+      "language": "python",
+      "lines": 45,
+      "mtime_ns": 1782136568000000000,
+      "size": 1796,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                3,
+                5
+              ],
+              "name": "lift",
+              "signature": "(cls, value)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                7,
+                9
+              ],
+              "name": "lower",
+              "signature": "(cls, value)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            9
+          ],
+          "name": "_UniffiConverterPrimitive",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                12,
+                21
+              ],
+              "name": "check_lower",
+              "signature": "(cls, value)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            11,
+            21
+          ],
+          "name": "_UniffiConverterPrimitiveInt",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                31
+              ],
+              "name": "check_lower",
+              "signature": "(cls, value)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            31
+          ],
+          "name": "_UniffiConverterPrimitiveFloat",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                36,
+                39
+              ],
+              "name": "lift",
+              "signature": "(cls, rbuf)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                41,
+                45
+              ],
+              "name": "lower",
+              "signature": "(cls, value)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            35,
+            45
+          ],
+          "name": "_UniffiConverterRustBuffer",
+          "type": "class"
+        }
+      ]
+    },
+    "RustBufferTemplate.py": {
+      "hash": "9bb6148a9343",
+      "indexed_at": "2026-07-24T20:35:12.866223+00:00",
+      "language": "python",
+      "lines": 258,
+      "mtime_ns": 1782136568000000000,
+      "size": 7903,
+      "symbols": []
+    },
+    "SequenceTemplate.py": {
+      "hash": "6a23f986616d",
+      "indexed_at": "2026-07-24T20:35:12.866889+00:00",
+      "language": "python",
+      "lines": 22,
+      "mtime_ns": 1782136568000000000,
+      "size": 685,
+      "symbols": []
+    },
+    "SetTemplate.py": {
+      "hash": "f02e7c3bac8f",
+      "indexed_at": "2026-07-24T20:35:12.867552+00:00",
+      "language": "python",
+      "lines": 21,
+      "mtime_ns": 1782136568000000000,
+      "size": 657,
+      "symbols": []
+    },
+    "TopLevelFunctionTemplate.py": {
+      "hash": "8715ffd8fecd",
+      "indexed_at": "2026-07-24T20:35:12.868225+00:00",
+      "language": "python",
+      "lines": 6,
+      "mtime_ns": 1782136568000000000,
+      "size": 304,
+      "symbols": []
+    },
+    "Types.py": {
+      "hash": "f83180720802",
+      "indexed_at": "2026-07-24T20:35:12.868928+00:00",
+      "language": "python",
+      "lines": 104,
+      "mtime_ns": 1782136568000000000,
+      "size": 2530,
+      "symbols": []
+    },
+    "UniffiTraitImpls.py": {
+      "hash": "28f518091524",
+      "indexed_at": "2026-07-24T20:35:12.869644+00:00",
+      "language": "python",
+      "lines": 72,
+      "mtime_ns": 1782136568000000000,
+      "size": 2406,
+      "symbols": []
+    }
+  },
+  "generated_at": "2026-08-01T02:52:28.891644+00:00",
+  "version": "1.0"
+}

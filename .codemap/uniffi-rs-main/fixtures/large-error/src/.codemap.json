@@ -1,0 +1,162 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\large-error\\src",
+  "files": {
+    "large_error.udl": {
+      "hash": "74ef7d679e38",
+      "indexed_at": "2026-07-24T20:35:12.567997+00:00",
+      "language": "udl",
+      "lines": 1,
+      "mtime_ns": 1782136568000000000,
+      "size": 26,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "large_error",
+          "type": "namespace"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "41d18e648dec",
+      "indexed_at": "2026-07-24T20:35:12.570205+00:00",
+      "language": "rust",
+      "lines": 701,
+      "mtime_ns": 1782136568000000000,
+      "size": 22856,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            13
+          ],
+          "name": "ErrorPayload",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                15,
+                21
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            14,
+            22
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                30
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut std::fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            31
+          ],
+          "name": "ErrorPayload",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            35,
+            636
+          ],
+          "name": "LargeError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                639,
+                641
+              ],
+              "name": "discriminant",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            638,
+            642
+          ],
+          "name": "LargeError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            645,
+            648
+          ],
+          "name": "ErrorWithContext",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            651,
+            653
+          ],
+          "name": "error_message_from_error",
+          "signature": "(error: &LargeError)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            656,
+            658
+          ],
+          "name": "error_code_from_error",
+          "signature": "(error: &LargeError)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                666,
+                683
+              ],
+              "name": "discriminant",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                686,
+                698
+              ],
+              "name": "message",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            661,
+            699
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.705920+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,351 @@
+{
+  "directory": "",
+  "files": {
+    "README.md": {
+      "hash": "45f351085197",
+      "indexed_at": "2026-08-01T04:01:07.103648+00:00",
+      "language": "markdown",
+      "lines": 285,
+      "mtime_ns": 1785556696488611100,
+      "size": 18550,
+      "symbols": [
+        {
+          "docstring": "Most privacy tools on Android tell you they are working. A switch turns green, a card says *protected*, a counter goes up. Almost none of them can tel",
+          "lines": [
+            25,
+            39
+          ],
+          "name": "\ud83d\udcdc About",
+          "type": "section"
+        },
+        {
+          "docstring": "The APK is literally named `libumdnscrypt-universal-alpha.apk`, and that is not decoration. **This is a pre-release.** Some pillars are proven on a de",
+          "lines": [
+            40,
+            55
+          ],
+          "name": "\ud83d\udea7 Status: this is an ALPHA",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "`rust/torta_core/src/warden/` \u00b7 9,751 lines",
+              "lines": [
+                60,
+                64
+              ],
+              "name": "1. \ud83d\udee1\ufe0f WARDEN \u2014 the datapath gate",
+              "type": "subsection"
+            },
+            {
+              "docstring": "`rust/torta_core/src/mirror/` \u00b7 24,223 lines \u00b7 `#[cfg(feature = \"mirror\")]`",
+              "lines": [
+                65,
+                71
+              ],
+              "name": "2. \ud83c\udf0c CENTAURI \u2014 the offline CDN",
+              "type": "subsection"
+            },
+            {
+              "docstring": "`rust/torta_core/src/resolver/` \u00b7 `query-masksolver.log`",
+              "lines": [
+                72,
+                76
+              ],
+              "name": "3. \ud83c\udfad MASKSOLVER \u2014 the resolution ladder",
+              "type": "subsection"
+            },
+            {
+              "docstring": "`rust/torta_core/src/beast/` \u00b7 7,785 lines",
+              "lines": [
+                77,
+                81
+              ],
+              "name": "4. \ud83d\udc3a BEAST \u2014 the adaptive tuner",
+              "type": "subsection"
+            },
+            {
+              "docstring": "`RotationManager.kt` + engine pool/routing",
+              "lines": [
+                82,
+                86
+              ],
+              "name": "5. \ud83d\udd04 ROTATION \u2014 the upstream carousel",
+              "type": "subsection"
+            },
+            {
+              "docstring": "`libumdnscrypt/src/main/kotlin/.../wire_cake_inu/`",
+              "lines": [
+                87,
+                91
+              ],
+              "name": "6. \ud83c\udf70 WIRE CAKE INU \u2014 privileged capability, without root",
+              "type": "subsection"
+            },
+            {
+              "docstring": "`rust/torta_core/src/resolver/dnscrypt.rs` + `ResolverRuntime.kt`",
+              "lines": [
+                92,
+                96
+              ],
+              "name": "7. \ud83d\udd10 DNSCRYPT \u2014 encrypted transport",
+              "type": "subsection"
+            },
+            {
+              "docstring": "`rust/torta_core/src/resolver/underground.rs`",
+              "lines": [
+                97,
+                103
+              ],
+              "name": "8. \ud83d\udd73\ufe0f UNDERGROUND LAYER \u2014 the deny plane",
+              "type": "subsection"
+            },
+            {
+              "docstring": "`rust/torta_core/src/forwarder/` \u00b7 3,603 lines",
+              "lines": [
+                104,
+                110
+              ],
+              "name": "9. \ud83c\udf10 NETSTACK FORWARDER \u2014 the tun datapath",
+              "type": "subsection"
+            }
+          ],
+          "docstring": "Each pillar is a distinct guarantee with its own code, its own counters and its own failure mode.",
+          "lines": [
+            56,
+            110
+          ],
+          "name": "\ud83c\udfdb\ufe0f The nine pillars",
+          "type": "section"
+        },
+        {
+          "docstring": "Measured with `git ls-files` on the published tree, **2,437 files / 615,494 lines**:",
+          "lines": [
+            111,
+            130
+          ],
+          "name": "\ud83d\uddfa\ufe0f Codemap \u2014 what this repository is made of",
+          "type": "section"
+        },
+        {
+          "lines": [
+            131,
+            159
+          ],
+          "name": "\ud83e\uddf1 Architecture",
+          "type": "section"
+        },
+        {
+          "docstring": "Requires the Android NDK, a Rust toolchain with the Android target, and JDK 17.",
+          "lines": [
+            160,
+            188
+          ],
+          "name": "\ud83d\udd28 Building",
+          "type": "section"
+        },
+        {
+          "docstring": "Some properties must hold for **every** input, not for the inputs a test happens to supply. Those are proved in **Lean 4** \u2014 machine-checked, zero `so",
+          "lines": [
+            189,
+            217
+          ],
+          "name": "\ud83d\udcd0 What is proved, not merely tested",
+          "type": "section"
+        },
+        {
+          "docstring": "Nothing here is claimed on the strength of reading the code.",
+          "lines": [
+            218,
+            234
+          ],
+          "name": "\ud83d\udd2c Instruments",
+          "type": "section"
+        },
+        {
+          "docstring": "This is a pre-release and the surface is moving. Pull requests are welcome, and the bar is the same one the project holds itself to:",
+          "lines": [
+            235,
+            252
+          ],
+          "name": "\ud83e\udd1d Contributing",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "*Nine pillars. One ledger. No claim without an instrument.*",
+              "lines": [
+                263,
+                286
+              ],
+              "name": "\ud83c\udf70 Yeah! Tort\u00e4",
+              "type": "subsection"
+            }
+          ],
+          "docstring": "Dual-licensed at your option under **AGPL-3.0-or-later** OR **EUPL-1.2** \u2014 see [LICENSES/](LICENSES/).",
+          "lines": [
+            253,
+            286
+          ],
+          "name": "\ud83d\udcc4 License",
+          "type": "section"
+        }
+      ]
+    },
+    "TORTA-CODEBASE.md": {
+      "hash": "57c48cc1bbe2",
+      "indexed_at": "2026-08-01T04:01:11.152964+00:00",
+      "language": "markdown",
+      "lines": 195,
+      "mtime_ns": 1785556303317651700,
+      "size": 9480,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            22
+          ],
+          "name": "The one-line flow",
+          "type": "section"
+        },
+        {
+          "docstring": "| folder | what it is | tracked files | |---|---|---| | **`rust/`** | the engine \u2014 all Rust | 2020 | | **`libumdnscrypt/`** | the Android app \u2014 Kotlin",
+          "lines": [
+            23,
+            39
+          ],
+          "name": "Top level",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "The most complicated folder, and the one where the DNS actually happens.",
+              "lines": [
+                49,
+                74
+              ],
+              "name": "`torta_core` \u2014 the core",
+              "type": "subsection"
+            },
+            {
+              "docstring": "Not just the launcher icon. Two commands in `main.rs`:",
+              "lines": [
+                75,
+                91
+              ],
+              "name": "`torta_iconforge` \u2014 the render forge AND its own verdict",
+              "type": "subsection"
+            }
+          ],
+          "docstring": "| crate | lines | linked into the app? | |---|---|---| | **`torta_core`** | the bulk of 172k Rust lines | **YES** \u2014 this is the `.so` | | **`torta_ui`",
+          "lines": [
+            40,
+            91
+          ],
+          "name": "`rust/` \u2014 the engine",
+          "type": "section"
+        },
+        {
+          "lines": [
+            92,
+            119
+          ],
+          "name": "`libumdnscrypt/` \u2014 the app",
+          "type": "section"
+        },
+        {
+          "docstring": "| pillar | engine | app | |---|---|---| | WARDEN | `warden/` | `WardenDatapathGate`, warden dashboard | | CENTAURI | `mirror/` (content-addressed stor",
+          "lines": [
+            120,
+            135
+          ],
+          "name": "The nine pillars, and where each one lives",
+          "type": "section"
+        },
+        {
+          "lines": [
+            136,
+            162
+          ],
+          "name": "Build & test commands that are known to work",
+          "type": "section"
+        },
+        {
+          "docstring": "| instrument | what it settles | |---|---| | `cargo test --lib --features mirror` | the engine's logic, 1307 tests | | `gradlew test\u2026UnitTest` | the a",
+          "lines": [
+            163,
+            183
+          ],
+          "name": "Proof instruments (where the truth comes from)",
+          "type": "section"
+        },
+        {
+          "docstring": "* **Never read a build's exit code through a pipe.** `cmd | tail` gives you `tail`'s status. * On-device `grep` over a uiautomator XML **segfaults** \u2014",
+          "lines": [
+            184,
+            196
+          ],
+          "name": "Hazards that cost real time (each learned once, the hard way)",
+          "type": "section"
+        }
+      ]
+    },
+    "build.gradle": {
+      "hash": "0a2d93510e56",
+      "indexed_at": "2026-07-31T02:37:19.591387+00:00",
+      "language": "gradle",
+      "lines": 42,
+      "mtime_ns": 1785464167216333200,
+      "size": 1118,
+      "symbols": [
+        {
+          "lines": [
+            3,
+            26
+          ],
+          "name": "buildscript",
+          "type": "block"
+        },
+        {
+          "lines": [
+            28,
+            30
+          ],
+          "name": "plugins",
+          "type": "block"
+        },
+        {
+          "lines": [
+            32,
+            38
+          ],
+          "name": "allprojects",
+          "type": "block"
+        },
+        {
+          "lines": [
+            40,
+            42
+          ],
+          "name": "tasks.register",
+          "signature": "\"\", Delete",
+          "type": "block"
+        }
+      ]
+    },
+    "settings.gradle": {
+      "hash": "45b2812f0226",
+      "indexed_at": "2026-08-01T04:01:09.537056+00:00",
+      "language": "gradle",
+      "lines": 4,
+      "mtime_ns": 1785556284954321300,
+      "size": 238,
+      "symbols": []
+    }
+  },
+  "generated_at": "2026-08-01T04:01:11.154617+00:00",
+  "version": "1.0"
+}

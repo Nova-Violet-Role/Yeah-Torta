@@ -1,0 +1,108 @@
+# This file is part of Yeah! Tortä.
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+#
+# Real dependency updates. Every PR Dependabot opens here must survive the SAME
+# gates a human PR does (build.yml): the engine's 1311 unit tests, the UniFFI
+# bindings-drift check, both APK builds, and the symbol assertion that a built
+# .so actually carries its pillar symbols. So repo activity and repo
+# correctness are one signal here, not two -- a bump that breaks Centauri
+# cannot merge just because it is small.
+#
+# CADENCE, measured against what Dependabot actually accepts: `schedule.interval`
+# takes ONLY daily | weekly | monthly. There is no cron field, and Dependabot
+# cannot be renamed or cloned into a second service. `weekly` is chosen for the
+# two big ecosystems because a daily Cargo/Gradle bump on a repo this size opens
+# more PRs than a reviewer can honestly read -- and an unread PR that merges is
+# worse than no automation at all.
+#
+# NOT MANAGED HERE: the Lean 4 / mathlib pin, because Dependabot has no Lake
+# ecosystem. Those proofs live in a separate workspace and are rebuilt by hand
+# against their pinned toolchain.
+
+version: 2
+updates:
+
+  # ---------------------------------------------------------------------------
+  # The workflows themselves. Small, safe, and the ones most likely to rot.
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "ci"
+    labels:
+      - "dependencies"
+      - "github-actions"
+
+  # ---------------------------------------------------------------------------
+  # The Rust engine. Each crate stands alone -- there is no workspace root -- so
+  # each manifest directory is declared separately. A missing entry here means
+  # that crate silently stops receiving security updates.
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: "cargo"
+    directory: "/rust/torta_core"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps(core)"
+    labels:
+      - "dependencies"
+      - "rust"
+      - "engine"
+
+  - package-ecosystem: "cargo"
+    directory: "/rust/torta_ui"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "deps(ui)"
+    labels:
+      - "dependencies"
+      - "rust"
+      - "ui"
+
+  - package-ecosystem: "cargo"
+    directory: "/rust/carbon_bridge"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "deps(carbon)"
+    labels:
+      - "dependencies"
+      - "rust"
+
+  - package-ecosystem: "cargo"
+    directory: "/rust/torta_iconforge"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 2
+    commit-message:
+      prefix: "deps(iconforge)"
+    labels:
+      - "dependencies"
+      - "rust"
+      - "tooling"
+
+  # ---------------------------------------------------------------------------
+  # The Android app.
+  # ---------------------------------------------------------------------------
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps(app)"
+    labels:
+      - "dependencies"
+      - "android"

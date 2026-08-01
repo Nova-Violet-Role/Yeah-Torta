@@ -1,0 +1,247 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\utils\\ap",
+  "files": {
+    "ApManager.kt": {
+      "hash": "09043fe3b065",
+      "indexed_at": "2026-08-01T04:00:30.040343+00:00",
+      "language": "kotlin",
+      "lines": 236,
+      "mtime_ns": 1785556378383898700,
+      "size": 8233,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "check whether wifi hotspot on or off",
+              "lines": [
+                42,
+                44
+              ],
+              "name": "isApOn",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                46,
+                54
+              ],
+              "name": "confirmApState",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "toggle wifi hotspot on or off",
+              "lines": [
+                57,
+                83
+              ],
+              "name": "configApState",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                85,
+                110
+              ],
+              "name": "configureHotspotBeforeNougat",
+              "signature": "(wifiManager: WifiManager?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                142
+              ],
+              "name": "configureHotspotNougat",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                144,
+                191
+              ],
+              "name": "configureHotspotOreoAndHigher",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                193,
+                231
+              ],
+              "name": "callStartTethering",
+              "signature": "(internalConnectivityManager: Any?)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            34,
+            236
+          ],
+          "name": "ApManager",
+          "type": "class"
+        }
+      ]
+    },
+    "InternetSharingChecker.kt": {
+      "hash": "dd6f63660415",
+      "indexed_at": "2026-08-01T04:00:30.396841+00:00",
+      "language": "kotlin",
+      "lines": 450,
+      "mtime_ns": 1785556378395898500,
+      "size": 17652,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                71,
+                174
+              ],
+              "name": "updateData",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                176,
+                186
+              ],
+              "name": "checkEthernetAvailable",
+              "signature": "(networkInterface: NetworkInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                188,
+                206
+              ],
+              "name": "checkApInterfaceFromReceiver",
+              "signature": "(networkInterface: NetworkInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                208,
+                226
+              ],
+              "name": "checkUsbInterfaceFromReceiver",
+              "signature": "(networkInterface: NetworkInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                228,
+                241
+              ],
+              "name": "checkWiFiAccessPointAvailableStandard",
+              "signature": "(networkInterface: NetworkInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                243,
+                261
+              ],
+              "name": "checkWiFiAccessPointAvailableExtended",
+              "signature": "(networkInterface: NetworkInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                263,
+                271
+              ],
+              "name": "check3GIsUp",
+              "signature": "(networkInterface: NetworkInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                273,
+                290
+              ],
+              "name": "checkWiFiIsUp",
+              "signature": "(networkInterface: NetworkInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                292,
+                305
+              ],
+              "name": "checkUsbModemAvailableStandard",
+              "signature": "(networkInterface: NetworkInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                307,
+                329
+              ],
+              "name": "checkUsbModemAvailableExtended",
+              "signature": "(networkInterface: NetworkInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                331,
+                333
+              ],
+              "name": "isNotIPv6Address",
+              "signature": "(address: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                335,
+                337
+              ],
+              "name": "isInetAddress",
+              "signature": "(address: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                339,
+                355
+              ],
+              "name": "setVpnInterfaceName",
+              "signature": "(intf: NetworkInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                357,
+                391
+              ],
+              "name": "checkApOn",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                393,
+                430
+              ],
+              "name": "setTetherInterfaceName",
+              "signature": "(interfaceNames: List<String>?)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            46,
+            450
+          ],
+          "name": "InternetSharingChecker",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:30.398508+00:00",
+  "version": "1.0"
+}

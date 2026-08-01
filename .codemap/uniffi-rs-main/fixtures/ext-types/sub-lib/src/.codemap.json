@@ -1,0 +1,97 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\ext-types\\sub-lib\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "80d1115e42ba",
+      "indexed_at": "2026-07-24T20:35:12.523033+00:00",
+      "language": "rust",
+      "lines": 44,
+      "mtime_ns": 1782136568000000000,
+      "size": 1077,
+      "symbols": [
+        {
+          "lines": [
+            5,
+            9
+          ],
+          "name": "SubLibType",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            12,
+            14
+          ],
+          "name": "get_sub_type",
+          "signature": "(existing: Option<SubLibType>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            16,
+            16
+          ],
+          "name": "OneImpl",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "hello",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            18,
+            22
+          ],
+          "name": "UniffiOneTrait",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            25,
+            27
+          ],
+          "name": "get_trait_impl",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            30,
+            32
+          ],
+          "name": "NotToThrowError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                35,
+                41
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut std::fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            34,
+            42
+          ],
+          "name": "NotToThrowError",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.694398+00:00",
+  "version": "1.0"
+}

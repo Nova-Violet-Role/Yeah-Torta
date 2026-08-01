@@ -1,0 +1,18 @@
+[package]
+name = "uniffi-fixture-metadata"
+version = "0.1.0"
+edition = "2021"
+license = "MPL-2.0"
+publish = false
+
+[lib]
+name = "uniffi_fixture_metadata"
+
+[dependencies]
+thiserror = "2"
+uniffi = { workspace = true }
+uniffi_meta = { path = "../../uniffi_meta" }
+uniffi_core = { path = "../../uniffi_core" }
+
+[features]
+ffi-trace = ["uniffi/ffi-trace"]

@@ -1,0 +1,314 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\rename\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "1a3d98faa0da",
+      "indexed_at": "2026-07-24T20:35:12.658806+00:00",
+      "language": "rust",
+      "lines": 196,
+      "mtime_ns": 1782136568000000000,
+      "size": 5062,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                9
+              ],
+              "name": "function",
+              "signature": "(record: Record)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                16
+              ],
+              "name": "Record",
+              "type": "struct"
+            },
+            {
+              "lines": [
+                20,
+                24
+              ],
+              "name": "Enum",
+              "type": "enum"
+            },
+            {
+              "lines": [
+                28,
+                34
+              ],
+              "name": "EnumWithFields",
+              "type": "enum"
+            },
+            {
+              "lines": [
+                38,
+                42
+              ],
+              "name": "MyError",
+              "type": "enum"
+            },
+            {
+              "lines": [
+                46,
+                48
+              ],
+              "name": "Object",
+              "type": "struct"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    54,
+                    56
+                  ],
+                  "name": "new",
+                  "signature": "(value: i32)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    59,
+                    61
+                  ],
+                  "name": "new_secondary",
+                  "signature": "(value: i32)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    64,
+                    66
+                  ],
+                  "name": "method",
+                  "signature": "(&self)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    68,
+                    68
+                  ],
+                  "name": "method_to_exclude",
+                  "signature": "(&self)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                51,
+                69
+              ],
+              "name": "Object",
+              "type": "impl"
+            },
+            {
+              "lines": [
+                73,
+                76
+              ],
+              "name": "Trait",
+              "type": "trait"
+            },
+            {
+              "lines": [
+                78,
+                80
+              ],
+              "name": "TraitImpl",
+              "type": "struct"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    83,
+                    85
+                  ],
+                  "name": "trait_method",
+                  "signature": "(&self, value: i32)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                82,
+                86
+              ],
+              "name": "Trait",
+              "type": "impl"
+            },
+            {
+              "lines": [
+                89,
+                91
+              ],
+              "name": "create_trait_impl",
+              "signature": "(multiplier: i32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                105
+              ],
+              "name": "binding_function",
+              "signature": "(record: Option<BindingRecord>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                110
+              ],
+              "name": "BindingRecord",
+              "type": "struct"
+            },
+            {
+              "lines": [
+                113,
+                115
+              ],
+              "name": "RecordToExclude",
+              "type": "struct"
+            },
+            {
+              "lines": [
+                118,
+                121
+              ],
+              "name": "BindingEnum",
+              "type": "enum"
+            },
+            {
+              "lines": [
+                124,
+                132
+              ],
+              "name": "BindingEnumWithFields",
+              "type": "enum"
+            },
+            {
+              "lines": [
+                135,
+                138
+              ],
+              "name": "BindingError",
+              "type": "enum"
+            },
+            {
+              "lines": [
+                141,
+                143
+              ],
+              "name": "BindingObject",
+              "type": "struct"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    148,
+                    150
+                  ],
+                  "name": "new",
+                  "signature": "(value: i32)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    152,
+                    154
+                  ],
+                  "name": "method",
+                  "signature": "(&self, arg: i32)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                146,
+                155
+              ],
+              "name": "BindingObject",
+              "type": "impl"
+            },
+            {
+              "lines": [
+                158,
+                160
+              ],
+              "name": "BindingTrait",
+              "type": "trait"
+            },
+            {
+              "lines": [
+                162,
+                164
+              ],
+              "name": "BindingTraitImpl",
+              "type": "struct"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    167,
+                    169
+                  ],
+                  "name": "trait_method",
+                  "signature": "(&self, value: i32)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                166,
+                170
+              ],
+              "name": "BindingTrait",
+              "type": "impl"
+            },
+            {
+              "lines": [
+                173,
+                175
+              ],
+              "name": "create_binding_trait_impl",
+              "signature": "(multiplier: i32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                178,
+                178
+              ],
+              "name": "function_to_exclude",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                189,
+                191
+              ],
+              "name": "roundtrip_url",
+              "signature": "(url: Url)",
+              "type": "method"
+            }
+          ],
+          "docstring": "/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file,",
+          "lines": [
+            5,
+            192
+          ],
+          "name": "submodule",
+          "type": "module"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.730461+00:00",
+  "version": "1.0"
+}

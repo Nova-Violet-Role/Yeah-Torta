@@ -1,0 +1,100 @@
+ipv4_servers = true
+ipv6_servers = true
+require_dnssec = false
+require_nolog = false
+require_nofilter = false
+block_ipv6 = false
+force_tcp = true
+server_names = ['adguard-dns', 'adguard-dns-ipv6', 'controld-block-malware-ad', 'dnsforge.de', 'dnsforge.de-ipv6', 'libredns-noads', 'mullvad-base-doh', 'sfw.scaleway-fr']
+disabled_server_names = []
+listen_addresses = ['127.0.0.1:5354', '[::1]:5354']
+max_clients = 250
+#user_name = '0'
+dnscrypt_servers = true
+doh_servers = true
+odoh_servers = true
+timeout = 5000
+keepalive = 30
+netprobe_timeout = -1
+log_level = 2
+log_file = '/data/user/0/pan.alexander.libumdnscrypt/logs/DnsCrypt.log'
+use_syslog = false
+cert_refresh_delay = 240
+dnscrypt_ephemeral_keys = false
+tls_disable_session_tickets = false
+bootstrap_resolvers = ['9.9.9.9:53', '[2620:fe::fe]:53']
+netprobe_address = '9.9.9.9:53'
+block_unqualified = true
+block_undelegated = true
+reject_ttl = 10
+ignore_system_dns = false
+http3 = true
+log_files_max_size = 1
+log_files_max_age = 7
+log_files_max_backups = 1
+cache = true
+cache_size = 4096
+cache_min_ttl = 2400
+cache_max_ttl = 86400
+cache_neg_ttl = 60
+cache_neg_max_ttl = 600
+forwarding_rules = 'forwarding-rules.txt'
+cloaking_rules = 'cloaking-rules.txt'
+#proxy = 'socks5://127.0.0.1:9050'
+[captive_portals]
+map_file = 'captive-portals.txt'
+[dns64]
+#prefix = ['64:ff9b::/96']
+[local_doh]
+#listen_addresses = ['127.0.0.1:3000']
+#path = '/dns-query'
+#cert_file = 'localhost.pem'
+#cert_key_file = 'localhost.pem'
+[query_log]
+format = 'tsv'
+#file = '/data/user/0/pan.alexander.libumdnscrypt/cache/query.log'
+ignored_qtypes = ['DNSKEY', 'NS']
+[nx_log]
+format = 'tsv'
+#file = '/data/user/0/pan.alexander.libumdnscrypt/cache/nx.log'
+[blocked_names]
+blocked_names_file = 'blacklist.txt'
+[blocked_ips]
+blocked_ips_file = 'ip-blacklist.txt'
+[allowed_names]
+allowed_names_file = 'whitelist.txt'
+[sources]
+[sources.'public-resolvers']
+urls = ['https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md', 'https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md', 'https://ipv6.download.dnscrypt.info/resolvers-list/v3/public-resolvers.md']
+minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
+cache_file = 'public-resolvers.md'
+refresh_delay = 72
+prefix = ''
+[sources.'relays']
+urls = ['https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/relays.md', 'https://download.dnscrypt.info/resolvers-list/v3/relays.md', 'https://ipv6.download.dnscrypt.info/resolvers-list/v3/relays.md']
+cache_file = 'relays.md'
+minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
+refresh_delay = 72
+prefix = ''
+[sources.'odoh-servers']
+urls = ['https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/odoh-servers.md', 'https://download.dnscrypt.info/resolvers-list/v3/odoh-servers.md', 'https://ipv6.download.dnscrypt.info/resolvers-list/v3/odoh-servers.md']
+cache_file = 'odoh-servers.md'
+minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
+refresh_delay = 72
+prefix = ''
+[sources.'odoh-relays']
+urls = ['https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/odoh-relays.md', 'https://download.dnscrypt.info/resolvers-list/v3/odoh-relays.md', 'https://ipv6.download.dnscrypt.info/resolvers-list/v3/odoh-relays.md']
+cache_file = 'odoh-relays.md'
+minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
+refresh_delay = 72
+prefix = ''
+[broken_implementations]
+fragments_blocked = ['cisco', 'cisco-ipv6', 'cisco-familyshield', 'cisco-familyshield-ipv6', 'cleanbrowsing-adult', 'cleanbrowsing-adult-ipv6', 'cleanbrowsing-family', 'cleanbrowsing-family-ipv6', 'cleanbrowsing-security', 'cleanbrowsing-security-ipv6']
+[anonymized_dns]
+skip_incompatible = false
+routes = [
+{ server_name = 'adguard-dns', via=['anon-kama', 'anon-scaleway', 'anon-tiarap'] },
+{ server_name = 'sfw.scaleway-fr', via=['anon-kama', 'anon-serbica', 'anon-tiarap'] },
+{ server_name = 'adguard-dns-ipv6', via=['anon-ams-ipv6', 'anon-scaleway-ams-ipv6', 'anon-tiarap-ipv6'] }
+]
+[static]

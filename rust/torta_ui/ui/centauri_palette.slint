@@ -1,0 +1,68 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// ============================================================================
+//  centauri_palette.slint — THE CENTAURI CONSTELLATION PALETTE  (Centauri overhaul, slice 10)
+//  ⬜ Soleil facet · SLINT/Rust color set — NO XML (the no-XML law).
+// ============================================================================
+//
+// The offline-CDN's colors, centralized as ONE SLINT global — density without
+// loss: every token below is consumed by an importer, none is dead, and after
+// this file there is ZERO magic hex anywhere in the Centauri UI surface. The
+// motif is a DRIFTING-STARS CONSTELLATION: Centauri is named for Alpha Centauri,
+// the NEAREST star — the asset you needed was never a galaxy away on a remote
+// CDN, it was already here, one hop, served from your own device. Each served
+// asset is a star that drifted home; the dashboard is the night sky they hang in.
+// That stellar identity IS the privacy verdict language:
+//
+//   • the VOID scale   → deep space: the dark grounds a card/tile lifts off of
+//   • STARLIGHT scale  → the bright values + the muted speech struck on the dark
+//   • the STELLAR cyan → Centauri's own star: the served-from-cache glow (the brand)
+//   • CROWN green      → the win: "CDN SAW 0" — served locally, the CDN never saw it
+//   • caution amber    → version FALLBACK (an SRI-pinned consumer may decline)
+//   • breach red       → the hidden killers: BLACKHOLE (armed-but-empty) / strict LEAK
+//
+// This is the SLINT/Rust replacement for a would-be `colors_centauri.xml` (the
+// no-XML law) — a distinct identity from the Warden's Monokuma judge-motif
+// (black/white/red courtroom) and a sibling in house style to monokuma_palette.
+// THE single source of truth, imported by centauri.slint (slice 8, the dashboard)
+// AND centauri_settings.slint (slice 9, the ||| CROWN controls).
+//
+// USAGE — a SLINT global is a shared singleton of read-only constants:
+//   import { Centauri } from "centauri_palette.slint";
+//   background: Centauri.void;   color: Centauri.starlight;   accent: Centauri.stellar;
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android
+// cross-compile spike #69; the palette is host-side constants, no device claim.
+// Compiled via build.rs (main.slint → centauri.slint → here, the import graph).
+// ============================================================================
+
+export global Centauri {
+    // ── DEEP SPACE — the void scale (deepest → faintest), so a card lifts off the
+    //    window and a tile lifts off the card by GROUND alone, not by border. ─────
+    out property <color> void:     #0a0e14;  // deepest space — the dashboard Window ground
+    out property <color> abyss:    #0f141c;  // one step up — the recent-serve feed / matrix rows
+    out property <color> nebula:   #131a24;  // the CROWN / Trust card panel
+    out property <color> panel:    #161e2a;  // the metric (StatTile) panels
+    out property <color> hairline: #243044;  // hairline borders / rules on the dark
+    out property <color> track:    #3a3a3a;  // inactive control track — the toggle OFF rail (vs. crown ON)
+
+    // ── STARLIGHT — the bright strike + the muted speech (brightest → faintest). ──
+    out property <color> starlight: #eaf2ff;  // primary text — the bright values
+    out property <color> haze:      #8a97ab;  // secondary text — labels, the muted voice
+    out property <color> dim:       #5d6b80;  // tertiary text — section titles, the faintest read
+
+    // ── THE STELLAR ACCENT & the verdict accents — Centauri's ruling. ─────────────
+    out property <color> stellar: #28c8d8;  // THE STAR — the served-from-cache glow / brand accent
+    out property <color> crown:   #2ee6a6;  // green — CDN SAW 0 / served locally (the privacy win)
+    out property <color> caution: #f0a830;  // amber — version FALLBACK / review / self-fill leak
+    out property <color> breach:  #ef4d57;  // red — BLACKHOLE (armed-but-empty) / strict LEAK / fail
+    out property <color> wound:   #c0392b;  // the deeper blood-red — alert-banner FILL (≠ the stroke)
+    // LAPIS LAZULI — the GUIDANCE fill. Amber and red both read as "something is wrong"; the CA-trust
+    // banner is neither a fault nor an alarm, it is an instruction the user can act on. Lapis carries
+    // that without competing with the verdict accents above, and sits in Centauri's own blue register.
+    out property <color> lapis:   #26619c;  // the CA-trust instruction banner FILL
+    out property <color> lapis-edge: #4d8fd6;  // its lighter stroke / glyph — legible on the fill
+    out property <color> strike:  white;    // the bright text struck on a filled alert banner
+}

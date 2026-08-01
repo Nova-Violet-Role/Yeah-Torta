@@ -1,0 +1,198 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\utils\\web",
+  "files": {
+    "HttpsConnectionManager.kt": {
+      "hash": "42760671757b",
+      "indexed_at": "2026-08-01T04:00:51.131291+00:00",
+      "language": "kotlin",
+      "lines": 277,
+      "mtime_ns": 1785556379095901000,
+      "size": 10338,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                64,
+                86
+              ],
+              "name": "get",
+              "signature": "(url: String, block: (inputStream: InputStream) -> Unit)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                88,
+                123
+              ],
+              "name": "get",
+              "signature": "(url: String, data: Map<String, String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                125,
+                160
+              ],
+              "name": "post",
+              "signature": "(url: String, data: Map<String, String>, block: (inputStream: InputStream) -> Unit)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                162,
+                211
+              ],
+              "name": "post",
+              "signature": "(url: String, data: Map<String, String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                213,
+                265
+              ],
+              "name": "getHttpsUrlConnection",
+              "signature": "(url: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                267,
+                272
+              ],
+              "name": "tryGetCompatibleTlsSocketFactory",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                274,
+                276
+              ],
+              "name": "mapToQuery",
+              "signature": "(data: Map<String, String>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            52,
+            277
+          ],
+          "name": "HttpsConnectionManager",
+          "type": "class"
+        }
+      ]
+    },
+    "TLSSocketFactory.kt": {
+      "hash": "75e9e9b9909d",
+      "indexed_at": "2026-08-01T04:00:51.458758+00:00",
+      "language": "kotlin",
+      "lines": 135,
+      "mtime_ns": 1785556379107901700,
+      "size": 4820,
+      "symbols": [
+        {
+          "lines": [
+            37,
+            37
+          ],
+          "name": "TLSSocketFactory",
+          "type": "class"
+        },
+        {
+          "lines": [
+            55,
+            57
+          ],
+          "name": "getDefaultCipherSuites",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            59,
+            61
+          ],
+          "name": "getSupportedCipherSuites",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            63,
+            66
+          ],
+          "name": "createSocket",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            68,
+            71
+          ],
+          "name": "createSocket",
+          "signature": "(s: Socket, host: String, port: Int, autoClose: Boolean)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            73,
+            76
+          ],
+          "name": "createSocket",
+          "signature": "(host: String, port: Int)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            78,
+            81
+          ],
+          "name": "createSocket",
+          "signature": "(host: String, port: Int, localHost: InetAddress, localPort: Int)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            83,
+            86
+          ],
+          "name": "createSocket",
+          "signature": "(host: InetAddress, port: Int)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            88,
+            91
+          ],
+          "name": "createSocket",
+          "signature": "(address: InetAddress, port: Int, localAddress: InetAddress, localPort: Int)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            93,
+            98
+          ],
+          "name": "enableTLSOnSocket",
+          "signature": "(socket: Socket)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            100,
+            134
+          ],
+          "name": "getTrustManagerFactory",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:51.461188+00:00",
+  "version": "1.0"
+}

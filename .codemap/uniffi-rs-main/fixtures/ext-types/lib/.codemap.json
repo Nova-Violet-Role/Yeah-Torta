@@ -1,0 +1,319 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\ext-types\\lib",
+  "files": {
+    "Cargo.toml": {
+      "hash": "063abcd4817a",
+      "indexed_at": "2026-07-24T20:35:12.502730+00:00",
+      "language": "toml",
+      "lines": 44,
+      "mtime_ns": 1782136568000000000,
+      "size": 1179,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                2,
+                2
+              ],
+              "name": "name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "edition",
+              "type": "key"
+            },
+            {
+              "lines": [
+                4,
+                4
+              ],
+              "name": "version",
+              "type": "key"
+            },
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "license",
+              "type": "key"
+            },
+            {
+              "lines": [
+                6,
+                6
+              ],
+              "name": "publish",
+              "type": "key"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    9,
+                    9
+                  ],
+                  "name": "external-crates",
+                  "type": "key"
+                }
+              ],
+              "lines": [
+                8,
+                16
+              ],
+              "name": "package.metadata.uniffi.testing",
+              "type": "table"
+            }
+          ],
+          "lines": [
+            1,
+            7
+          ],
+          "name": "package",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                18,
+                18
+              ],
+              "name": "crate-type",
+              "type": "key"
+            },
+            {
+              "lines": [
+                19,
+                19
+              ],
+              "name": "name",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            17,
+            20
+          ],
+          "name": "lib",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "anyhow",
+              "type": "key"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "bytes",
+              "type": "key"
+            },
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "uniffi",
+              "type": "key"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "uniffi-fixture-ext-types-external-crate",
+              "type": "key"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "uniffi-fixture-ext-types-lib-one",
+              "type": "key"
+            },
+            {
+              "lines": [
+                29,
+                29
+              ],
+              "name": "uniffi-fixture-ext-types-custom-types",
+              "type": "key"
+            },
+            {
+              "lines": [
+                30,
+                30
+              ],
+              "name": "uniffi-fixture-ext-types-sub-lib",
+              "type": "key"
+            },
+            {
+              "lines": [
+                33,
+                33
+              ],
+              "name": "uniffi-example-custom-types",
+              "type": "key"
+            },
+            {
+              "lines": [
+                35,
+                35
+              ],
+              "name": "url",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            21,
+            36
+          ],
+          "name": "dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                38,
+                38
+              ],
+              "name": "uniffi",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            37,
+            39
+          ],
+          "name": "build-dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                41,
+                41
+              ],
+              "name": "uniffi",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            40,
+            42
+          ],
+          "name": "dev-dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                44,
+                44
+              ],
+              "name": "ffi-trace",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            43,
+            45
+          ],
+          "name": "features",
+          "type": "table"
+        }
+      ]
+    },
+    "build.rs": {
+      "hash": "97508087e67c",
+      "indexed_at": "2026-07-24T20:35:12.502023+00:00",
+      "language": "rust",
+      "lines": 7,
+      "mtime_ns": 1782136568000000000,
+      "size": 288,
+      "symbols": [
+        {
+          "docstring": "/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file,",
+          "lines": [
+            5,
+            7
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "uniffi.toml": {
+      "hash": "cebf437aa2b5",
+      "indexed_at": "2026-07-24T20:35:12.503242+00:00",
+      "language": "toml",
+      "lines": 6,
+      "mtime_ns": 1782136568000000000,
+      "size": 219,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "custom_types",
+              "type": "key"
+            },
+            {
+              "lines": [
+                4,
+                4
+              ],
+              "name": "ext_types_custom",
+              "type": "key"
+            },
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "uniffi_one_ns",
+              "type": "key"
+            },
+            {
+              "lines": [
+                6,
+                6
+              ],
+              "name": "imported_types_sublib",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            1,
+            7
+          ],
+          "name": "bindings.python.external_packages",
+          "type": "table"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.688978+00:00",
+  "version": "1.0"
+}

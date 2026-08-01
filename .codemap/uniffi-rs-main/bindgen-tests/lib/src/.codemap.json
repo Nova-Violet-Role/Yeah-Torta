@@ -1,0 +1,2992 @@
+{
+  "directory": "uniffi-rs-main\\bindgen-tests\\lib\\src",
+  "files": {
+    "bytes.rs": {
+      "hash": "6daf15eb0548",
+      "indexed_at": "2026-07-24T20:35:12.075318+00:00",
+      "language": "rust",
+      "lines": 18,
+      "mtime_ns": 1782136568000000000,
+      "size": 491,
+      "symbols": [
+        {
+          "lines": [
+            6,
+            8
+          ],
+          "name": "roundtrip_bytes",
+          "signature": "(a: Vec<u8>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            11,
+            13
+          ],
+          "name": "sum_bytes_procmacro",
+          "signature": "(buf: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            16,
+            18
+          ],
+          "name": "first_byte_procmacro",
+          "signature": "(buf: &[u8])",
+          "type": "function"
+        }
+      ]
+    },
+    "callback_interfaces.rs": {
+      "hash": "c8a151c08404",
+      "indexed_at": "2026-07-24T20:35:12.076063+00:00",
+      "language": "rust",
+      "lines": 68,
+      "mtime_ns": 1782136568000000000,
+      "size": 2010,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            25
+          ],
+          "name": "TestCallbackInterface",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            28,
+            31
+          ],
+          "name": "CallbackInterfaceNumbers",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            34,
+            36
+          ],
+          "name": "invoke_test_callback_interface_noop",
+          "signature": "(cbi: Box<dyn TestCallbackInterface>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            39,
+            41
+          ],
+          "name": "invoke_test_callback_interface_get_value",
+          "signature": "(cbi: Box<dyn TestCallbackInterface>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            44,
+            46
+          ],
+          "name": "invoke_test_callback_interface_set_value",
+          "signature": "(cbi: Box<dyn TestCallbackInterface>, value: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            49,
+            54
+          ],
+          "name": "invoke_test_callback_interface_throw_if_equal",
+          "signature": "(\n    cbi: Box<dyn TestCallbackInterface>,\n    numbers: CallbackInterfaceNumbers,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            57,
+            62
+          ],
+          "name": "invoke_test_callback_interface_echo",
+          "signature": "(\n    cbi: Box<dyn TestCallbackInterface>,\n    s: String,\n)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                65,
+                67
+              ],
+              "name": "from",
+              "signature": "(e: uniffi::UnexpectedUniFFICallbackError)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            64,
+            68
+          ],
+          "name": "TestError",
+          "type": "impl"
+        }
+      ]
+    },
+    "collections.rs": {
+      "hash": "821878f2216b",
+      "indexed_at": "2026-07-24T20:35:12.077033+00:00",
+      "language": "rust",
+      "lines": 137,
+      "mtime_ns": 1782136568000000000,
+      "size": 2919,
+      "symbols": [
+        {
+          "lines": [
+            11,
+            13
+          ],
+          "name": "CollectionsRec",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            17,
+            24
+          ],
+          "name": "RecWithCollections",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            27,
+            31
+          ],
+          "name": "EnumWithCollections",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            35,
+            37
+          ],
+          "name": "roundtrip_vec_i8",
+          "signature": "(a: Vec<i8>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            40,
+            42
+          ],
+          "name": "roundtrip_vec_u16",
+          "signature": "(a: Vec<u16>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            45,
+            47
+          ],
+          "name": "roundtrip_vec_i16",
+          "signature": "(a: Vec<i16>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            50,
+            52
+          ],
+          "name": "roundtrip_vec_u32",
+          "signature": "(a: Vec<u32>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            55,
+            57
+          ],
+          "name": "roundtrip_vec_i32",
+          "signature": "(a: Vec<i32>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            60,
+            62
+          ],
+          "name": "roundtrip_vec_u64",
+          "signature": "(a: Vec<u64>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            65,
+            67
+          ],
+          "name": "roundtrip_vec_i64",
+          "signature": "(a: Vec<i64>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            70,
+            72
+          ],
+          "name": "roundtrip_vec_f32",
+          "signature": "(a: Vec<f32>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            75,
+            77
+          ],
+          "name": "roundtrip_vec_f64",
+          "signature": "(a: Vec<f64>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            80,
+            82
+          ],
+          "name": "roundtrip_vec_string",
+          "signature": "(a: Vec<String>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            85,
+            87
+          ],
+          "name": "roundtrip_vec_bool",
+          "signature": "(a: Vec<bool>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            90,
+            92
+          ],
+          "name": "roundtrip_vec_rec",
+          "signature": "(a: Vec<CollectionsRec>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            95,
+            97
+          ],
+          "name": "roundtrip_hash_map",
+          "signature": "(a: HashMap<String, u32>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            100,
+            102
+          ],
+          "name": "roundtrip_hash_set",
+          "signature": "(a: HashSet<String>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            105,
+            107
+          ],
+          "name": "roundtrip_vec_hash_set",
+          "signature": "(a: Option<Vec<HashSet<String>>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            110,
+            112
+          ],
+          "name": "roundtrip_hash_map_u32_key",
+          "signature": "(a: HashMap<u32, u32>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            115,
+            117
+          ],
+          "name": "roundtrip_rec_with_collections",
+          "signature": "(a: RecWithCollections)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            120,
+            124
+          ],
+          "name": "CollectionsComplexRec",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            127,
+            130
+          ],
+          "name": "CollectionsEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            133,
+            137
+          ],
+          "name": "roundtrip_complex_collection_type",
+          "signature": "(\n    a: Option<Vec<HashMap<String, CollectionsComplexRec>>>,\n)",
+          "type": "function"
+        }
+      ]
+    },
+    "custom_types.rs": {
+      "hash": "69ce2658f8f8",
+      "indexed_at": "2026-07-24T20:35:12.077649+00:00",
+      "language": "rust",
+      "lines": 28,
+      "mtime_ns": 1782136568000000000,
+      "size": 830,
+      "symbols": [
+        {
+          "docstring": "Bindings tests will typically customize only one of them on the foreign side.",
+          "lines": [
+            8,
+            8
+          ],
+          "name": "CustomType1",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            9,
+            9
+          ],
+          "name": "CustomType2",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            21,
+            23
+          ],
+          "name": "roundtrip_custom_type1",
+          "signature": "(custom1: CustomType1)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            26,
+            28
+          ],
+          "name": "roundtrip_custom_type2",
+          "signature": "(custom2: CustomType2)",
+          "type": "function"
+        }
+      ]
+    },
+    "defaults.rs": {
+      "hash": "b0c86c0426ce",
+      "indexed_at": "2026-07-24T20:35:12.078328+00:00",
+      "language": "rust",
+      "lines": 42,
+      "mtime_ns": 1782136568000000000,
+      "size": 962,
+      "symbols": [
+        {
+          "lines": [
+            6,
+            11
+          ],
+          "name": "RecWithDefault",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            14,
+            21
+          ],
+          "name": "EnumWithDefault",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            24,
+            26
+          ],
+          "name": "func_with_default",
+          "signature": "(arg: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            29,
+            29
+          ],
+          "name": "InterfaceWithDefaults",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                34,
+                36
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                41
+              ],
+              "name": "method_with_default",
+              "signature": "(&self, arg: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            32,
+            42
+          ],
+          "name": "InterfaceWithDefaults",
+          "type": "impl"
+        }
+      ]
+    },
+    "enums.rs": {
+      "hash": "247eadcaf430",
+      "indexed_at": "2026-07-24T20:35:12.079064+00:00",
+      "language": "rust",
+      "lines": 69,
+      "mtime_ns": 1782136568000000000,
+      "size": 1385,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            12
+          ],
+          "name": "EnumNoData",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            15,
+            19
+          ],
+          "name": "EnumWithData",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                23,
+                25
+              ],
+              "name": "roundtrip",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            22,
+            26
+          ],
+          "name": "EnumWithData",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            29,
+            33
+          ],
+          "name": "ComplexEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            38,
+            45
+          ],
+          "name": "ExplicitValuedEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            50,
+            54
+          ],
+          "name": "GappedEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            57,
+            59
+          ],
+          "name": "roundtrip_enum_no_data",
+          "signature": "(en: EnumNoData)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            62,
+            64
+          ],
+          "name": "roundtrip_enum_with_data",
+          "signature": "(en: EnumWithData)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            67,
+            69
+          ],
+          "name": "roundtrip_complex_enum",
+          "signature": "(en: ComplexEnum)",
+          "type": "function"
+        }
+      ]
+    },
+    "errors.rs": {
+      "hash": "c1ed2b64f43c",
+      "indexed_at": "2026-07-24T20:35:12.079860+00:00",
+      "language": "rust",
+      "lines": 76,
+      "mtime_ns": 1782136568000000000,
+      "size": 2156,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            16
+          ],
+          "name": "TestError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            25,
+            30
+          ],
+          "name": "TestFlatError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            36,
+            43
+          ],
+          "name": "TestErrorNoData",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            46,
+            55
+          ],
+          "name": "func_with_error",
+          "signature": "(input: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            58,
+            66
+          ],
+          "name": "func_with_flat_error",
+          "signature": "(input: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            69,
+            76
+          ],
+          "name": "func_with_error_no_data",
+          "signature": "(input: u32)",
+          "type": "function"
+        }
+      ]
+    },
+    "external_types.rs": {
+      "hash": "38a8ef45089c",
+      "indexed_at": "2026-07-24T20:35:12.080450+00:00",
+      "language": "rust",
+      "lines": 28,
+      "mtime_ns": 1782136568000000000,
+      "size": 777,
+      "symbols": [
+        {
+          "lines": [
+            11,
+            13
+          ],
+          "name": "roundtrip_ext_record",
+          "signature": "(rec: ExternalRec)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            16,
+            18
+          ],
+          "name": "roundtrip_ext_enum",
+          "signature": "(en: ExternalEnum)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            21,
+            23
+          ],
+          "name": "roundtrip_ext_interface",
+          "signature": "(interface: Arc<ExternalInterface>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            26,
+            28
+          ],
+          "name": "roundtrip_ext_custom_type",
+          "signature": "(custom: ExternalCustomType)",
+          "type": "function"
+        }
+      ]
+    },
+    "futures.rs": {
+      "hash": "a97901f4884d",
+      "indexed_at": "2026-07-24T20:35:12.081518+00:00",
+      "language": "rust",
+      "lines": 156,
+      "mtime_ns": 1782136568000000000,
+      "size": 3404,
+      "symbols": [
+        {
+          "lines": [
+            14,
+            16
+          ],
+          "name": "async_roundtrip_u8",
+          "signature": "(v: u8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            19,
+            21
+          ],
+          "name": "async_roundtrip_i8",
+          "signature": "(v: i8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            24,
+            26
+          ],
+          "name": "async_roundtrip_u16",
+          "signature": "(v: u16)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            29,
+            31
+          ],
+          "name": "async_roundtrip_i16",
+          "signature": "(v: i16)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            34,
+            36
+          ],
+          "name": "async_roundtrip_u32",
+          "signature": "(v: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            39,
+            41
+          ],
+          "name": "async_roundtrip_i32",
+          "signature": "(v: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            44,
+            46
+          ],
+          "name": "async_roundtrip_u64",
+          "signature": "(v: u64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            49,
+            51
+          ],
+          "name": "async_roundtrip_i64",
+          "signature": "(v: i64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            54,
+            56
+          ],
+          "name": "async_roundtrip_f32",
+          "signature": "(v: f32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            59,
+            61
+          ],
+          "name": "async_roundtrip_f64",
+          "signature": "(v: f64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            64,
+            66
+          ],
+          "name": "async_roundtrip_string",
+          "signature": "(v: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            69,
+            71
+          ],
+          "name": "async_roundtrip_vec",
+          "signature": "(v: Vec<u32>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            74,
+            76
+          ],
+          "name": "async_roundtrip_map",
+          "signature": "(v: HashMap<String, String>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            79,
+            81
+          ],
+          "name": "async_throw_error",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            84,
+            86
+          ],
+          "name": "AsyncInterface",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                91,
+                93
+              ],
+              "name": "new",
+              "signature": "(name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                95,
+                97
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            89,
+            98
+          ],
+          "name": "AsyncInterface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            101,
+            103
+          ],
+          "name": "AsyncRecord",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                107,
+                109
+              ],
+              "name": "get_name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            106,
+            110
+          ],
+          "name": "AsyncRecord",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            113,
+            115
+          ],
+          "name": "async_roundtrip_obj",
+          "signature": "(v: Arc<AsyncInterface>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            120,
+            128
+          ],
+          "name": "TestAsyncCallbackInterface",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            131,
+            133
+          ],
+          "name": "invoke_test_async_callback_interface_noop",
+          "signature": "(cbi: Box<dyn TestAsyncCallbackInterface>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            136,
+            140
+          ],
+          "name": "invoke_test_async_callback_interface_get_value",
+          "signature": "(\n    cbi: Box<dyn TestAsyncCallbackInterface>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            143,
+            148
+          ],
+          "name": "invoke_test_async_callback_interface_set_value",
+          "signature": "(\n    cbi: Box<dyn TestAsyncCallbackInterface>,\n    value: u32,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            151,
+            156
+          ],
+          "name": "invoke_test_async_callback_interface_throw_if_equal",
+          "signature": "(\n    cbi: Box<dyn TestAsyncCallbackInterface>,\n    numbers: CallbackInterfaceNumbers,\n)",
+          "type": "function"
+        }
+      ]
+    },
+    "interfaces.rs": {
+      "hash": "b567bda16e95",
+      "indexed_at": "2026-07-24T20:35:12.082306+00:00",
+      "language": "rust",
+      "lines": 75,
+      "mtime_ns": 1782136568000000000,
+      "size": 1905,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            10
+          ],
+          "name": "TestInterface",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                15,
+                17
+              ],
+              "name": "new",
+              "signature": "(value: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                20,
+                22
+              ],
+              "name": "secondary_constructor",
+              "signature": "(value: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                26
+              ],
+              "name": "get_value",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The count does not include the extra reference needed to call this method.",
+              "lines": [
+                31,
+                33
+              ],
+              "name": "ref_count",
+              "signature": "(self: Arc<Self>)",
+              "type": "method"
+            },
+            {
+              "docstring": "foreign language.",
+              "lines": [
+                37,
+                39
+              ],
+              "name": "method_with_multi_word_arg",
+              "signature": "(&self, the_argument: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            13,
+            40
+          ],
+          "name": "TestInterface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            43,
+            45
+          ],
+          "name": "clone_interface",
+          "signature": "(interface: Arc<TestInterface>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            49,
+            53
+          ],
+          "name": "roundtrip_optional_interface",
+          "signature": "(\n    interface: Option<Arc<TestInterface>>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            57,
+            60
+          ],
+          "name": "TwoTestInterfaces",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            63,
+            68
+          ],
+          "name": "swap_test_interfaces",
+          "signature": "(interfaces: TwoTestInterfaces)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            72,
+            75
+          ],
+          "name": "TestInterfaceEnum",
+          "type": "enum"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "034d13773e4b",
+      "indexed_at": "2026-07-24T20:35:12.083533+00:00",
+      "language": "rust",
+      "lines": 157,
+      "mtime_ns": 1782136568000000000,
+      "size": 4357,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "bytes",
+          "type": "module"
+        },
+        {
+          "lines": [
+            11,
+            11
+          ],
+          "name": "callback_interfaces",
+          "type": "module"
+        },
+        {
+          "lines": [
+            14,
+            14
+          ],
+          "name": "collections",
+          "type": "module"
+        },
+        {
+          "lines": [
+            17,
+            17
+          ],
+          "name": "custom_types",
+          "type": "module"
+        },
+        {
+          "lines": [
+            20,
+            20
+          ],
+          "name": "defaults",
+          "type": "module"
+        },
+        {
+          "lines": [
+            23,
+            23
+          ],
+          "name": "enums",
+          "type": "module"
+        },
+        {
+          "lines": [
+            26,
+            26
+          ],
+          "name": "errors",
+          "type": "module"
+        },
+        {
+          "lines": [
+            29,
+            29
+          ],
+          "name": "external_types",
+          "type": "module"
+        },
+        {
+          "lines": [
+            32,
+            32
+          ],
+          "name": "futures",
+          "type": "module"
+        },
+        {
+          "lines": [
+            35,
+            35
+          ],
+          "name": "interfaces",
+          "type": "module"
+        },
+        {
+          "lines": [
+            38,
+            38
+          ],
+          "name": "options",
+          "type": "module"
+        },
+        {
+          "lines": [
+            41,
+            41
+          ],
+          "name": "primitive_types",
+          "type": "module"
+        },
+        {
+          "lines": [
+            44,
+            44
+          ],
+          "name": "records",
+          "type": "module"
+        },
+        {
+          "lines": [
+            47,
+            47
+          ],
+          "name": "recursive_types",
+          "type": "module"
+        },
+        {
+          "lines": [
+            50,
+            50
+          ],
+          "name": "references",
+          "type": "module"
+        },
+        {
+          "lines": [
+            53,
+            53
+          ],
+          "name": "renames",
+          "type": "module"
+        },
+        {
+          "lines": [
+            56,
+            56
+          ],
+          "name": "rust_traits",
+          "type": "module"
+        },
+        {
+          "lines": [
+            59,
+            59
+          ],
+          "name": "simple_fns",
+          "type": "module"
+        },
+        {
+          "lines": [
+            62,
+            62
+          ],
+          "name": "time",
+          "type": "module"
+        },
+        {
+          "lines": [
+            65,
+            65
+          ],
+          "name": "trait_interfaces",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                80,
+                82
+              ],
+              "name": "current_crate_dir",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                84,
+                97
+              ],
+              "name": "workspace_dir",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                99,
+                103
+              ],
+              "name": "library_filename",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                105,
+                115
+              ],
+              "name": "setup_test_dir",
+              "signature": "(language_name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                117,
+                133
+              ],
+              "name": "build_library",
+              "signature": "(tempdir: &Utf8Path)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                135,
+                145
+              ],
+              "name": "generate_sources",
+              "signature": "(library_dir: &Utf8Path, language: uniffi::TargetLanguage)",
+              "type": "method"
+            },
+            {
+              "docstring": "globspec is relative to the current crate directory",
+              "lines": [
+                150,
+                156
+              ],
+              "name": "copy_test_sources",
+              "signature": "(tempdir: &Utf8Path, globspec: &str)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Utility functions for the Rust tests",
+          "lines": [
+            68,
+            157
+          ],
+          "name": "test_util",
+          "type": "module"
+        }
+      ]
+    },
+    "options.rs": {
+      "hash": "7537dea9c8b2",
+      "indexed_at": "2026-07-24T20:35:12.084299+00:00",
+      "language": "rust",
+      "lines": 76,
+      "mtime_ns": 1782136568000000000,
+      "size": 1537,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "OptionsRec",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            14,
+            16
+          ],
+          "name": "roundtrip_option_u8",
+          "signature": "(a: Option<u8>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            19,
+            21
+          ],
+          "name": "roundtrip_option_i8",
+          "signature": "(a: Option<i8>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            24,
+            26
+          ],
+          "name": "roundtrip_option_u16",
+          "signature": "(a: Option<u16>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            29,
+            31
+          ],
+          "name": "roundtrip_option_i16",
+          "signature": "(a: Option<i16>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            34,
+            36
+          ],
+          "name": "roundtrip_option_u32",
+          "signature": "(a: Option<u32>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            39,
+            41
+          ],
+          "name": "roundtrip_option_i32",
+          "signature": "(a: Option<i32>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            44,
+            46
+          ],
+          "name": "roundtrip_option_u64",
+          "signature": "(a: Option<u64>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            49,
+            51
+          ],
+          "name": "roundtrip_option_i64",
+          "signature": "(a: Option<i64>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            54,
+            56
+          ],
+          "name": "roundtrip_option_f32",
+          "signature": "(a: Option<f32>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            59,
+            61
+          ],
+          "name": "roundtrip_option_f64",
+          "signature": "(a: Option<f64>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            64,
+            66
+          ],
+          "name": "roundtrip_option_string",
+          "signature": "(a: Option<String>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            69,
+            71
+          ],
+          "name": "roundtrip_option_bool",
+          "signature": "(a: Option<bool>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            74,
+            76
+          ],
+          "name": "roundtrip_option_rec",
+          "signature": "(a: Option<OptionsRec>)",
+          "type": "function"
+        }
+      ]
+    },
+    "primitive_types.rs": {
+      "hash": "273b272b5550",
+      "indexed_at": "2026-07-24T20:35:12.085503+00:00",
+      "language": "rust",
+      "lines": 217,
+      "mtime_ns": 1782136568000000000,
+      "size": 3754,
+      "symbols": [
+        {
+          "lines": [
+            10,
+            10
+          ],
+          "name": "input_u8",
+          "signature": "(_a: u8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            13,
+            13
+          ],
+          "name": "input_i8",
+          "signature": "(_a: i8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            16,
+            16
+          ],
+          "name": "input_u16",
+          "signature": "(_a: u16)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            19,
+            19
+          ],
+          "name": "input_i16",
+          "signature": "(_a: i16)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            22,
+            22
+          ],
+          "name": "input_u32",
+          "signature": "(_a: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            25,
+            25
+          ],
+          "name": "input_i32",
+          "signature": "(_a: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            28,
+            28
+          ],
+          "name": "input_u64",
+          "signature": "(_a: u64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            31,
+            31
+          ],
+          "name": "input_i64",
+          "signature": "(_a: i64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            34,
+            34
+          ],
+          "name": "input_f32",
+          "signature": "(_a: f32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            37,
+            37
+          ],
+          "name": "input_f64",
+          "signature": "(_a: f64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            40,
+            40
+          ],
+          "name": "input_bool",
+          "signature": "(_a: bool)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            43,
+            43
+          ],
+          "name": "input_string",
+          "signature": "(_a: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            46,
+            48
+          ],
+          "name": "output_u8",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            51,
+            53
+          ],
+          "name": "output_i8",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            56,
+            58
+          ],
+          "name": "output_u16",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            61,
+            63
+          ],
+          "name": "output_u8_max",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            66,
+            68
+          ],
+          "name": "output_u16_max",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            71,
+            73
+          ],
+          "name": "output_i16",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            76,
+            78
+          ],
+          "name": "output_u32",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            81,
+            83
+          ],
+          "name": "output_i32",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            86,
+            88
+          ],
+          "name": "output_u64",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            91,
+            93
+          ],
+          "name": "output_i64",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            96,
+            98
+          ],
+          "name": "output_f32",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            101,
+            103
+          ],
+          "name": "output_f64",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            106,
+            108
+          ],
+          "name": "output_bool",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            111,
+            113
+          ],
+          "name": "output_string",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            116,
+            118
+          ],
+          "name": "roundtrip_u8",
+          "signature": "(a: u8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            121,
+            123
+          ],
+          "name": "roundtrip_i8",
+          "signature": "(a: i8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            126,
+            128
+          ],
+          "name": "roundtrip_u16",
+          "signature": "(a: u16)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            131,
+            133
+          ],
+          "name": "roundtrip_i16",
+          "signature": "(a: i16)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            136,
+            138
+          ],
+          "name": "roundtrip_u32",
+          "signature": "(a: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            141,
+            143
+          ],
+          "name": "roundtrip_i32",
+          "signature": "(a: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            146,
+            148
+          ],
+          "name": "roundtrip_u64",
+          "signature": "(a: u64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            151,
+            153
+          ],
+          "name": "roundtrip_i64",
+          "signature": "(a: i64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            156,
+            158
+          ],
+          "name": "roundtrip_f32",
+          "signature": "(a: f32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            161,
+            163
+          ],
+          "name": "roundtrip_f64",
+          "signature": "(a: f64)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            166,
+            168
+          ],
+          "name": "roundtrip_bool",
+          "signature": "(a: bool)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            171,
+            173
+          ],
+          "name": "roundtrip_string",
+          "signature": "(a: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            178,
+            201
+          ],
+          "name": "sum_with_many_types",
+          "signature": "(\n    a: u8,\n    b: i8,\n    c: u16,\n    d: i16,\n    e: u32,\n    f: i32,\n    g: u64,\n    h: i64,\n ...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            206,
+            208
+          ],
+          "name": "func_with_multi_word_arg",
+          "signature": "(the_argument: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            215,
+            217
+          ],
+          "name": "string_with_bom",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "records.rs": {
+      "hash": "9600662a5b00",
+      "indexed_at": "2026-07-24T20:35:12.086166+00:00",
+      "language": "rust",
+      "lines": 46,
+      "mtime_ns": 1782136568000000000,
+      "size": 1019,
+      "symbols": [
+        {
+          "lines": [
+            6,
+            8
+          ],
+          "name": "SimpleRec",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "roundtrip",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            11,
+            15
+          ],
+          "name": "SimpleRec",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            18,
+            18
+          ],
+          "name": "UnitRec",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            23,
+            36
+          ],
+          "name": "ComplexRec",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            39,
+            41
+          ],
+          "name": "roundtrip_simple_rec",
+          "signature": "(rec: SimpleRec)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            44,
+            46
+          ],
+          "name": "roundtrip_complex_rec",
+          "signature": "(rec: ComplexRec)",
+          "type": "function"
+        }
+      ]
+    },
+    "recursive_types.rs": {
+      "hash": "dcc8c89795fd",
+      "indexed_at": "2026-07-24T20:35:12.087251+00:00",
+      "language": "rust",
+      "lines": 152,
+      "mtime_ns": 1782136568000000000,
+      "size": 3609,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            12
+          ],
+          "name": "Tree",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            16,
+            23
+          ],
+          "name": "Expr",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            26,
+            31
+          ],
+          "name": "BoolExpr",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            35,
+            41
+          ],
+          "name": "LinkedList",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            44,
+            49
+          ],
+          "name": "list_sum",
+          "signature": "(list: LinkedList)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            53,
+            58
+          ],
+          "name": "Trie",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            61,
+            66
+          ],
+          "name": "trie_sum",
+          "signature": "(trie: Trie)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            70,
+            73
+          ],
+          "name": "RoseTree",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            76,
+            79
+          ],
+          "name": "RoseData",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            82,
+            89
+          ],
+          "name": "sum_rose_tree",
+          "signature": "(tree: RoseTree)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            92,
+            97
+          ],
+          "name": "sum_tree",
+          "signature": "(tree: Tree)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            100,
+            111
+          ],
+          "name": "eval_expr",
+          "signature": "(expr: Expr)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            114,
+            121
+          ],
+          "name": "eval_bool",
+          "signature": "(expr: BoolExpr)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            127,
+            130
+          ],
+          "name": "EvalError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                133,
+                138
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut std::fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            132,
+            139
+          ],
+          "name": "EvalError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            141,
+            141
+          ],
+          "name": "EvalError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            144,
+            152
+          ],
+          "name": "maybe_throw_error",
+          "signature": "(should_throw: bool)",
+          "type": "function"
+        }
+      ]
+    },
+    "references.rs": {
+      "hash": "afbcb182e84c",
+      "indexed_at": "2026-07-24T20:35:12.087975+00:00",
+      "language": "rust",
+      "lines": 57,
+      "mtime_ns": 1782136568000000000,
+      "size": 1427,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "roundtrip_u8_ref",
+          "signature": "(a: &u8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            15,
+            17
+          ],
+          "name": "call_double_value",
+          "signature": "(i: &ReferenceTestInterface, a: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            21,
+            23
+          ],
+          "name": "call_triple_value_trait_interface",
+          "signature": "(t: &dyn ReferenceTestTraitInterface, a: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            26,
+            26
+          ],
+          "name": "ReferenceTestInterface",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                31,
+                33
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Test a method that inputs a reference",
+              "lines": [
+                36,
+                38
+              ],
+              "name": "double_value",
+              "signature": "(&self, a: &u32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            29,
+            39
+          ],
+          "name": "ReferenceTestInterface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            42,
+            44
+          ],
+          "name": "ReferenceTestTraitInterface",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            47,
+            49
+          ],
+          "name": "create_reference_test_trait_interface",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            51,
+            51
+          ],
+          "name": "ReferenceTestTraitInterfaceImpl",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                54,
+                56
+              ],
+              "name": "triple_value",
+              "signature": "(&self, a: u32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            53,
+            57
+          ],
+          "name": "ReferenceTestTraitInterface",
+          "type": "impl"
+        }
+      ]
+    },
+    "renames.rs": {
+      "hash": "1e0759f065be",
+      "indexed_at": "2026-07-24T20:35:12.089081+00:00",
+      "language": "rust",
+      "lines": 154,
+      "mtime_ns": 1782136568000000000,
+      "size": 3751,
+      "symbols": [
+        {
+          "lines": [
+            6,
+            8
+          ],
+          "name": "function_to_rename",
+          "signature": "(record: RecordToRename)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            12,
+            14
+          ],
+          "name": "RecordToRename",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            18,
+            22
+          ],
+          "name": "EnumToRename",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            26,
+            30
+          ],
+          "name": "ErrorToRename",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            34,
+            36
+          ],
+          "name": "ObjectToRename",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                41,
+                43
+              ],
+              "name": "new",
+              "signature": "(value: i32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                46,
+                48
+              ],
+              "name": "method",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            39,
+            49
+          ],
+          "name": "ObjectToRename",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            53,
+            56
+          ],
+          "name": "TraitToRename",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            58,
+            60
+          ],
+          "name": "TraitImpl",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                63,
+                65
+              ],
+              "name": "trait_method",
+              "signature": "(&self, value: i32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            62,
+            66
+          ],
+          "name": "TraitToRename",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            69,
+            71
+          ],
+          "name": "create_trait_to_rename_impl",
+          "signature": "(multiplier: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            80,
+            87
+          ],
+          "name": "binding_function_to_rename",
+          "signature": "(\n    record: Option<BindingRecordToRename>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            90,
+            92
+          ],
+          "name": "BindingRecordToRename",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            95,
+            98
+          ],
+          "name": "BindingEnumToRename",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            101,
+            109
+          ],
+          "name": "BindingEnumWithFieldsToRename",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            112,
+            115
+          ],
+          "name": "BindingErrorToRename",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            118,
+            120
+          ],
+          "name": "BindingObjectToRename",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                125,
+                127
+              ],
+              "name": "new",
+              "signature": "(value: i32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                129,
+                131
+              ],
+              "name": "method",
+              "signature": "(&self, arg: i32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            123,
+            132
+          ],
+          "name": "BindingObjectToRename",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            135,
+            137
+          ],
+          "name": "BindingTraitToRename",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            139,
+            141
+          ],
+          "name": "BindingTraitImpl",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                144,
+                146
+              ],
+              "name": "trait_method",
+              "signature": "(&self, value: i32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            143,
+            147
+          ],
+          "name": "BindingTraitToRename",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            150,
+            154
+          ],
+          "name": "create_binding_trait_to_rename_impl",
+          "signature": "(\n    multiplier: i32,\n)",
+          "type": "function"
+        }
+      ]
+    },
+    "rust_traits.rs": {
+      "hash": "3e29066338c2",
+      "indexed_at": "2026-07-24T20:35:12.089939+00:00",
+      "language": "rust",
+      "lines": 77,
+      "mtime_ns": 1782136568000000000,
+      "size": 1918,
+      "symbols": [
+        {
+          "lines": [
+            14,
+            17
+          ],
+          "name": "RustTraitTest",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                22
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            23
+          ],
+          "name": "RustTraitTest",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                26,
+                28
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            25,
+            29
+          ],
+          "name": "RustTraitTest",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                35,
+                37
+              ],
+              "name": "hash",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "docstring": "This gives us a way to test this in the foreign bindings.",
+          "lines": [
+            34,
+            38
+          ],
+          "name": "Hash",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                41,
+                43
+              ],
+              "name": "eq",
+              "signature": "(&self, other: &RustTraitTest)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            40,
+            44
+          ],
+          "name": "RustTraitTest",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                48,
+                50
+              ],
+              "name": "partial_cmp",
+              "signature": "(&self, other: &RustTraitTest)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            47,
+            51
+          ],
+          "name": "RustTraitTest",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                54,
+                56
+              ],
+              "name": "cmp",
+              "signature": "(&self, other: &RustTraitTest)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            53,
+            57
+          ],
+          "name": "Ord",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            60,
+            64
+          ],
+          "name": "rust_trait_test_hash",
+          "signature": "(trait_test: RustTraitTest)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            68,
+            71
+          ],
+          "name": "RustTraitTest2",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                74,
+                76
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            73,
+            77
+          ],
+          "name": "RustTraitTest2",
+          "type": "impl"
+        }
+      ]
+    },
+    "simple_fns.rs": {
+      "hash": "3829c2cce869",
+      "indexed_at": "2026-07-24T20:35:12.090485+00:00",
+      "language": "rust",
+      "lines": 16,
+      "mtime_ns": 1782136568000000000,
+      "size": 698,
+      "symbols": [
+        {
+          "lines": [
+            10,
+            10
+          ],
+          "name": "test_func",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            14,
+            16
+          ],
+          "name": "test_unexpected_error_func",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "time.rs": {
+      "hash": "f1a5ce95e07f",
+      "indexed_at": "2026-07-24T20:35:12.091020+00:00",
+      "language": "rust",
+      "lines": 17,
+      "mtime_ns": 1782136568000000000,
+      "size": 449,
+      "symbols": [
+        {
+          "lines": [
+            10,
+            12
+          ],
+          "name": "roundtrip_systemtime",
+          "signature": "(a: SystemTime)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            15,
+            17
+          ],
+          "name": "roundtrip_duration",
+          "signature": "(a: Duration)",
+          "type": "function"
+        }
+      ]
+    },
+    "trait_interfaces.rs": {
+      "hash": "9fddd55757e4",
+      "indexed_at": "2026-07-24T20:35:12.092590+00:00",
+      "language": "rust",
+      "lines": 310,
+      "mtime_ns": 1782136568000000000,
+      "size": 9130,
+      "symbols": [
+        {
+          "lines": [
+            25,
+            48
+          ],
+          "name": "TestTraitInterface",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            51,
+            53
+          ],
+          "name": "invoke_test_trait_interface_noop",
+          "signature": "(interface: Arc<dyn TestTraitInterface>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            56,
+            58
+          ],
+          "name": "invoke_test_trait_interface_get_value",
+          "signature": "(interface: Arc<dyn TestTraitInterface>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            61,
+            63
+          ],
+          "name": "invoke_test_trait_interface_set_value",
+          "signature": "(interface: Arc<dyn TestTraitInterface>, value: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            66,
+            71
+          ],
+          "name": "invoke_test_trait_interface_roundtrip_record",
+          "signature": "(\n    interface: Arc<dyn TestTraitInterface>,\n    rec: SimpleRec,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            74,
+            79
+          ],
+          "name": "invoke_test_trait_interface_roundtrip_enum",
+          "signature": "(\n    interface: Arc<dyn TestTraitInterface>,\n    en: EnumWithData,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            82,
+            87
+          ],
+          "name": "invoke_test_trait_interface_roundtrip_interface",
+          "signature": "(\n    interface: Arc<dyn TestTraitInterface>,\n    iface: Arc<TestInterface>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            90,
+            95
+          ],
+          "name": "invoke_test_trait_interface_throw_if_equal",
+          "signature": "(\n    interface: Arc<dyn TestTraitInterface>,\n    numbers: CallbackInterfaceNumbers,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            99,
+            103
+          ],
+          "name": "create_test_trait_interface",
+          "signature": "(value: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            105,
+            107
+          ],
+          "name": "TestTraitInterfaceImpl",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                110,
+                110
+              ],
+              "name": "noop",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                114
+              ],
+              "name": "get_value",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                116,
+                118
+              ],
+              "name": "set_value",
+              "signature": "(&self, value: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                120,
+                122
+              ],
+              "name": "roundtrip_record",
+              "signature": "(&self, value: SimpleRec)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                124,
+                126
+              ],
+              "name": "roundtrip_enum",
+              "signature": "(&self, value: EnumWithData)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                128,
+                130
+              ],
+              "name": "roundtrip_interface",
+              "signature": "(&self, value: Arc<TestInterface>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                132,
+                141
+              ],
+              "name": "throw_if_equal",
+              "signature": "(\n        &self,\n        numbers: CallbackInterfaceNumbers,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            109,
+            142
+          ],
+          "name": "TestTraitInterface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            147,
+            162
+          ],
+          "name": "AsyncTestTraitInterface",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            165,
+            169
+          ],
+          "name": "create_async_test_trait_interface",
+          "signature": "(value: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            172,
+            174
+          ],
+          "name": "invoke_async_test_trait_interface_noop",
+          "signature": "(interface: Arc<dyn AsyncTestTraitInterface>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            177,
+            181
+          ],
+          "name": "invoke_async_test_trait_interface_get_value",
+          "signature": "(\n    interface: Arc<dyn AsyncTestTraitInterface>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            184,
+            189
+          ],
+          "name": "invoke_async_test_trait_interface_set_value",
+          "signature": "(\n    interface: Arc<dyn AsyncTestTraitInterface>,\n    value: u32,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            192,
+            197
+          ],
+          "name": "invoke_async_test_trait_interface_throw_if_equal",
+          "signature": "(\n    interface: Arc<dyn AsyncTestTraitInterface>,\n    numbers: CallbackInterfaceNumbers,\n)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                201,
+                201
+              ],
+              "name": "noop",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                203,
+                205
+              ],
+              "name": "get_value",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                207,
+                209
+              ],
+              "name": "set_value",
+              "signature": "(&self, value: u32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                211,
+                220
+              ],
+              "name": "throw_if_equal",
+              "signature": "(\n        &self,\n        numbers: CallbackInterfaceNumbers,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            200,
+            221
+          ],
+          "name": "AsyncTestTraitInterface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            226,
+            231
+          ],
+          "name": "TestRustOnlyTraitInterface",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            235,
+            237
+          ],
+          "name": "create_rust_only_test_trait_interface",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            239,
+            239
+          ],
+          "name": "TestRustOnlyTraitInterfaceImpl",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                242,
+                251
+              ],
+              "name": "throw_if_equal",
+              "signature": "(\n        &self,\n        numbers: CallbackInterfaceNumbers,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            241,
+            252
+          ],
+          "name": "TestRustOnlyTraitInterface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            257,
+            262
+          ],
+          "name": "TestForeignOnlyTraitInterface",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            265,
+            270
+          ],
+          "name": "invoke_test_foreign_only_trait_throw_if_equal",
+          "signature": "(\n    interface: Arc<dyn TestForeignOnlyTraitInterface>,\n    numbers: CallbackInterfaceNumbers,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            273,
+            277
+          ],
+          "name": "roundtrip_test_foreign_only_trait",
+          "signature": "(\n    interface: Arc<dyn TestForeignOnlyTraitInterface>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            285,
+            289
+          ],
+          "name": "roundtrip_test_trait_interface",
+          "signature": "(\n    interface: Arc<dyn TestTraitInterface>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            292,
+            296
+          ],
+          "name": "roundtrip_test_trait_interface_list",
+          "signature": "(\n    interfaces: Vec<Arc<dyn TestTraitInterface>>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            299,
+            303
+          ],
+          "name": "roundtrip_async_test_trait_interface",
+          "signature": "(\n    interface: Arc<dyn AsyncTestTraitInterface>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            306,
+            310
+          ],
+          "name": "roundtrip_async_test_trait_interface_list",
+          "signature": "(\n    interfaces: Vec<Arc<dyn AsyncTestTraitInterface>>,\n)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.579844+00:00",
+  "version": "1.0"
+}

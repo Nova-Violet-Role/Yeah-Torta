@@ -1,0 +1,157 @@
+{
+  "directory": "uniffi-rs-main\\examples\\traits\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "dbb87b683330",
+      "indexed_at": "2026-07-24T20:35:12.361070+00:00",
+      "language": "rust",
+      "lines": 37,
+      "mtime_ns": 1782136568000000000,
+      "size": 785,
+      "symbols": [
+        {
+          "docstring": "namespace functions.",
+          "lines": [
+            8,
+            10
+          ],
+          "name": "get_buttons",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            12,
+            14
+          ],
+          "name": "press",
+          "signature": "(button: Arc<dyn Button>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            17,
+            19
+          ],
+          "name": "Button",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            21,
+            21
+          ],
+          "name": "GoButton",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                26
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            27
+          ],
+          "name": "Button",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            29,
+            29
+          ],
+          "name": "StopButton",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                32,
+                34
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            31,
+            35
+          ],
+          "name": "Button",
+          "type": "impl"
+        }
+      ]
+    },
+    "traits.udl": {
+      "hash": "c5527a7e1d5e",
+      "indexed_at": "2026-07-24T20:35:12.361612+00:00",
+      "language": "udl",
+      "lines": 12,
+      "mtime_ns": 1782136568000000000,
+      "size": 260,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "Get all the buttons we can press.",
+              "lines": [
+                3,
+                3
+              ],
+              "name": "get_buttons",
+              "signature": "() : sequence<Button>",
+              "type": "method"
+            },
+            {
+              "docstring": "press a button and return it.",
+              "lines": [
+                5,
+                5
+              ],
+              "name": "press",
+              "signature": "(Button button) : Button",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1,
+            6
+          ],
+          "name": "traits",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                11,
+                11
+              ],
+              "name": "name",
+              "signature": "() : string",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            12
+          ],
+          "name": "Button",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.659766+00:00",
+  "version": "1.0"
+}

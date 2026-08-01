@@ -1,0 +1,829 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\metadata\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "8ff8588ab603",
+      "indexed_at": "2026-07-24T20:35:12.571701+00:00",
+      "language": "rust",
+      "lines": 11,
+      "mtime_ns": 1782136568000000000,
+      "size": 471,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            9
+          ],
+          "name": "tests",
+          "type": "module"
+        },
+        {
+          "lines": [
+            11,
+            11
+          ],
+          "name": "UniFfiTag",
+          "type": "struct"
+        }
+      ]
+    },
+    "tests.rs": {
+      "hash": "7550d3671ee7",
+      "indexed_at": "2026-07-24T20:35:12.577525+00:00",
+      "language": "rust",
+      "lines": 1311,
+      "mtime_ns": 1782136568000000000,
+      "size": 47111,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                20
+              ],
+              "name": "Person",
+              "type": "struct"
+            }
+          ],
+          "lines": [
+            11,
+            21
+          ],
+          "name": "person",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                26,
+                31
+              ],
+              "name": "Weapon",
+              "type": "enum"
+            }
+          ],
+          "lines": [
+            23,
+            32
+          ],
+          "name": "weapon",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                38,
+                42
+              ],
+              "name": "State",
+              "type": "enum"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    47,
+                    47
+                  ],
+                  "name": "state_method",
+                  "signature": "(&self)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                45,
+                48
+              ],
+              "name": "State",
+              "type": "impl"
+            }
+          ],
+          "lines": [
+            34,
+            49
+          ],
+          "name": "state",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                54,
+                58
+              ],
+              "name": "ReprU8",
+              "type": "enum"
+            },
+            {
+              "lines": [
+                61,
+                63
+              ],
+              "name": "NoRepr",
+              "type": "enum"
+            }
+          ],
+          "lines": [
+            51,
+            64
+          ],
+          "name": "enum_repr",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                72,
+                77
+              ],
+              "name": "FlatError",
+              "type": "enum"
+            },
+            {
+              "lines": [
+                80,
+                87
+              ],
+              "name": "ComplexError",
+              "type": "enum"
+            }
+          ],
+          "lines": [
+            66,
+            88
+          ],
+          "name": "error",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                93,
+                93
+              ],
+              "name": "Calculator",
+              "type": "struct"
+            }
+          ],
+          "lines": [
+            90,
+            94
+          ],
+          "name": "calc",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                99,
+                99
+              ],
+              "name": "Special",
+              "type": "struct"
+            },
+            {
+              "lines": [
+                103,
+                105
+              ],
+              "name": "SpecialEnum",
+              "type": "enum"
+            },
+            {
+              "lines": [
+                109,
+                111
+              ],
+              "name": "SpecialRecord",
+              "type": "struct"
+            }
+          ],
+          "lines": [
+            96,
+            112
+          ],
+          "name": "uniffi_traits",
+          "type": "module"
+        },
+        {
+          "lines": [
+            115,
+            117
+          ],
+          "name": "Logger",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            120,
+            120
+          ],
+          "name": "RealLogger",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                124,
+                124
+              ],
+              "name": "log",
+              "signature": "(&self, _message: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            123,
+            125
+          ],
+          "name": "Logger",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                140,
+                148
+              ],
+              "name": "check_type_id",
+              "signature": "(correct_type: Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                151,
+                164
+              ],
+              "name": "simple_types",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                167,
+                181
+              ],
+              "name": "test_user_types",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                184,
+                199
+              ],
+              "name": "test_generics",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            134,
+            200
+          ],
+          "name": "test_type_ids",
+          "type": "module"
+        },
+        {
+          "lines": [
+            202,
+            207
+          ],
+          "name": "check_metadata",
+          "signature": "(encoded: &[u8], correct_metadata: impl Into<Metadata>)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                213,
+                251
+              ],
+              "name": "test_record",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                254,
+                291
+              ],
+              "name": "test_simple_enum",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                294,
+                346
+              ],
+              "name": "test_complex_enum",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                349,
+                386
+              ],
+              "name": "test_repr_enum",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                389,
+                410
+              ],
+              "name": "test_no_repr_enum",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                413,
+                432
+              ],
+              "name": "test_enum_method",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                435,
+                465
+              ],
+              "name": "test_simple_error",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                468,
+                520
+              ],
+              "name": "test_complex_error",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                523,
+                535
+              ],
+              "name": "test_interface",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                538,
+                559
+              ],
+              "name": "test_uniffi_traits_object",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                562,
+                583
+              ],
+              "name": "test_uniffi_traits_enum",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                586,
+                607
+              ],
+              "name": "test_uniffi_traits_record",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            209,
+            608
+          ],
+          "name": "test_metadata",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                616,
+                618
+              ],
+              "name": "test_func",
+              "signature": "(person: Person, weapon: Weapon)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                621,
+                623
+              ],
+              "name": "test_func_no_return",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                626,
+                628
+              ],
+              "name": "test_func_that_throws",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                631,
+                633
+              ],
+              "name": "test_func_no_return_that_throws",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                637,
+                639
+              ],
+              "name": "test_async_func",
+              "signature": "(person: Person, weapon: Weapon)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                642,
+                644
+              ],
+              "name": "test_async_func_that_throws",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                647,
+                650
+              ],
+              "name": "CalculatorDisplay",
+              "type": "trait"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    655,
+                    657
+                  ],
+                  "name": "new",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    660,
+                    662
+                  ],
+                  "name": "new2",
+                  "signature": "()",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    665,
+                    667
+                  ],
+                  "name": "add",
+                  "signature": "(&self, a: u8, b: u8)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    670,
+                    672
+                  ],
+                  "name": "async_sub",
+                  "signature": "(&self, a: u8, b: u8)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    675,
+                    677
+                  ],
+                  "name": "get_display",
+                  "signature": "(&self)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                653,
+                678
+              ],
+              "name": "Calculator",
+              "type": "impl"
+            },
+            {
+              "lines": [
+                681,
+                683
+              ],
+              "name": "TraitWithForeign",
+              "type": "trait"
+            },
+            {
+              "lines": [
+                687,
+                687
+              ],
+              "name": "input_trait_with_foreign",
+              "signature": "(val: Arc<dyn TraitWithForeign>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                691,
+                693
+              ],
+              "name": "TraitExplicitRust",
+              "type": "trait"
+            },
+            {
+              "lines": [
+                697,
+                697
+              ],
+              "name": "input_trait_explicit_rust",
+              "signature": "(val: Arc<dyn TraitExplicitRust>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                701,
+                703
+              ],
+              "name": "TraitImplsAny",
+              "type": "trait"
+            },
+            {
+              "lines": [
+                707,
+                707
+              ],
+              "name": "input_trait_impls_any",
+              "signature": "(val: Arc<dyn TraitImplsAny>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                711,
+                713
+              ],
+              "name": "TraitImplsForeign",
+              "type": "trait"
+            },
+            {
+              "lines": [
+                717,
+                717
+              ],
+              "name": "input_trait_impls_foreign",
+              "signature": "(val: Arc<dyn TraitImplsForeign>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                720,
+                752
+              ],
+              "name": "test_function",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                755,
+                772
+              ],
+              "name": "test_function_no_return",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                775,
+                798
+              ],
+              "name": "test_function_that_throws",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                801,
+                822
+              ],
+              "name": "test_function_that_throws_no_return",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                825,
+                848
+              ],
+              "name": "test_method",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                851,
+                886
+              ],
+              "name": "test_constructor",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                889,
+                921
+              ],
+              "name": "test_async_function",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                924,
+                948
+              ],
+              "name": "test_async_function_that_throws",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                951,
+                974
+              ],
+              "name": "test_async_method",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                977,
+                989
+              ],
+              "name": "test_trait_metadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                992,
+                1004
+              ],
+              "name": "test_trait_with_foreign_metadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1007,
+                1032
+              ],
+              "name": "test_trait_type_data",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1035,
+                1056
+              ],
+              "name": "test_trait_method",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1059,
+                1089
+              ],
+              "name": "test_trait_with_foreign_type_data",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1092,
+                1120
+              ],
+              "name": "test_callback_interface",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1123,
+                1161
+              ],
+              "name": "test_explicit_rust_metadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1164,
+                1201
+              ],
+              "name": "test_impls_any_metadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1204,
+                1242
+              ],
+              "name": "test_impls_foreign_metadata",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1245,
+                1272
+              ],
+              "name": "test_trait_object_impl",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            610,
+            1273
+          ],
+          "name": "test_function_metadata",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1278,
+                1278
+              ],
+              "name": "CustomString",
+              "type": "struct"
+            },
+            {
+              "lines": [
+                1281,
+                1281
+              ],
+              "name": "CustomPerson",
+              "type": "struct"
+            },
+            {
+              "lines": [
+                1285,
+                1310
+              ],
+              "name": "test_custom_types",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1275,
+            1311
+          ],
+          "name": "test_custom_types",
+          "type": "module"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.706867+00:00",
+  "version": "1.0"
+}

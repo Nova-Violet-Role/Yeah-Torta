@@ -1,0 +1,148 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SHARED WIDGET LIBRARY (OMEGA Stage-D · D3, the Design Finale — the first hoist of the
+// B4-G8 shared component families).
+//
+// The 12 pillar surfaces each carry FILE-LOCAL copies of these families (the sibling law that kept
+// every pillar wave bounded); the Design-Finale surfaces (home_tab / engine_tab / query_tab /
+// home_shell) are the first to consume ONE shared source instead. The widgets are PARAMETERIZED by
+// color slots (G8's design: "palettes stay per-pillar, the widget takes the colors") with Monokuma
+// defaults — the app-shell chrome language (the B4-G9 base-theme direction the D2 burger set).
+// Migrating the 12 existing surfaces onto this module is the later enrichment pass, deliberately
+// NOT this wave (additive-only: zero regression risk on the landed pillar surfaces).
+//
+// Touch honesty baked in from birth (the B4-G12 law): every interactive widget carries a >= 48px
+// hit-slop TouchArea regardless of its visual size — invisible, zero layout change.
+
+import { Monokuma } from "monokuma_palette.slint";
+
+// The muted section header — the house typography for a card group's title.
+export component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: Monokuma.dim;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+// The panel card every row family sits on.
+export component RowCard inherits Rectangle {
+    background: Monokuma.pitch;
+    border-radius: 6px;
+}
+
+// The filled alert banner — the [!] verdict voice (wound = alarm, caution = review).
+export component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: Monokuma.wound;
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: Monokuma.strike;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: Monokuma.strike;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// The metric tile — label under value, accent-tinted; `muted` renders the gated "—" (the F6
+// profile-honesty idiom: an inert metric never reads as a live zero).
+export component StatTile inherits Rectangle {
+    in property <string> label;
+    in property <string> value;
+    in property <color> tint: Monokuma.bone;
+    in property <bool> muted: false;
+    min-width: 70px;
+    min-height: 52px;
+    border-radius: 8px;
+    background: Monokuma.slate;
+    VerticalLayout {
+        padding: 8px;
+        spacing: 2px;
+        Text {
+            text: root.muted ? "—" : root.value;
+            color: root.muted ? Monokuma.dim : root.tint;
+            font-size: 19px;
+            font-weight: 800;
+        }
+        Text {
+            text: root.label;
+            color: Monokuma.ash;
+            font-size: 9px;
+            font-weight: 700;
+        }
+    }
+}
+
+// The switch — 42×24 visual, 48px invisible hit-slop (G12), 120ms knob glide. NO local echo:
+// `on` is host truth; `toggled(bool)` carries the intent (the felt-truth data flow).
+export component ToggleSwitch inherits Rectangle {
+    in property <bool> on: false;
+    in property <color> on-color: Monokuma.safe;
+    callback toggled(bool);
+    width: 42px;
+    height: 24px;
+    border-radius: 12px;
+    background: root.on ? root.on-color : Monokuma.iron;
+    animate background { duration: 120ms; }
+    Rectangle {
+        width: 18px;
+        height: 18px;
+        border-radius: 9px;
+        background: white;
+        x: root.on ? parent.width - self.width - 3px : 3px;
+        y: (parent.height - self.height) / 2;
+        animate x { duration: 120ms; }
+    }
+    TouchArea {
+        width: max(parent.width, 48px);
+        height: 48px;
+        x: (parent.width - self.width) / 2;
+        y: (parent.height - self.height) / 2;
+        clicked => { root.toggled(!root.on); }
+    }
+}
+
+// The selectable chip — the one-of-N picker unit (query sources, presets). Selected wears the
+// accent border + text; the 48px hit-slop rides invisibly.
+export component Chip inherits Rectangle {
+    in property <string> label;
+    in property <bool> selected: false;
+    in property <color> accent: Monokuma.bone;
+    callback tapped();
+    height: 26px;
+    border-radius: 13px;
+    background: root.selected ? Monokuma.slate : transparent;
+    border-width: 1px;
+    border-color: root.selected ? root.accent : Monokuma.iron;
+    Text {
+        text: root.label;
+        color: root.selected ? root.accent : Monokuma.ash;
+        font-size: 9px;
+        font-weight: 900;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+    TouchArea {
+        height: max(parent.height, 48px);
+        y: (parent.height - self.height) / 2;
+        clicked => { root.tapped(); }
+    }
+}

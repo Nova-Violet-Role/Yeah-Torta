@@ -1,0 +1,86 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// ============================================================================
+//  beast_palette.slint — THE BEAST MOLTEN-FOUNTAIN PALETTE  (Beast surface overhaul, slice 10)
+//  ⬜ Soleil facet · SLINT/Rust color set — NO XML (the no-XML law).
+// ============================================================================
+//
+// The Beast's colors, centralized as ONE SLINT global — density without loss:
+// every token below is consumed by beast.slint (the dashboard) OR reserved for
+// beast_settings.slint (the ||| controls — `track` the toggle OFF rail); none is
+// dead, and after this file there is ZERO magic hex anywhere in the Beast UI
+// surface. The motif is THE LIVING ENGINE / MOLTEN CAKE-FOUNTAIN: the Beast is
+// why DNS *feels fast* — the YeAH brain is the PUMP setting the flow rate
+// (cwnd/pacing), three stacked priority BASINS (Critical → High → Normal) that
+// queries pour through, and the CoBALT BLUE valves are the pressure-relief that
+// sheds (SERVFAIL-fast, never silent) when a basin backs up. That engine identity
+// IS the flow verdict language:
+//
+//   • the ABYSS scale  → the dark WARM-black ground a card/tile/basin lifts off of
+//   • the INK scale    → the bright values + the muted speech struck on the dark
+//   • the FLOW gold    → the fountain water: the Beast's own brand accent
+//   • the HEAT grade   → the basins Critical(hot) → High(gold) → Normal(cool)
+//   • the GEAR ramp    → the live YeahMode: warming / thrust / backoff / climb
+//   • the SHED red     → the BLUE valve open / drops / a basin overflowing
+//
+// This is the SLINT/Rust replacement for a would-be `colors_beast.xml` (the no-XML
+// law) — a distinct identity from the Warden's Monokuma judge-motif (black/white/red
+// courtroom) and the Centauri stellar constellation (deep-space cyan), a sibling in
+// house style to monokuma_palette / centauri_palette / masksolver_palette. THE
+// single source of truth, imported by beast.slint (slice 8, the dashboard) AND
+// beast_settings.slint (slice 9, the ||| Beast controls).
+//
+// USAGE — a SLINT global is a shared singleton of read-only constants:
+//   import { Beast } from "beast_palette.slint";
+//   background: Beast.abyss;   color: Beast.ink;   accent: Beast.flow;
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android
+// cross-compile spike #69; the palette is host-side constants, no device claim.
+// Compiled via build.rs (main.slint → beast.slint → here, the import graph).
+// ============================================================================
+
+export global Beast {
+    // ── THE ABYSS — the WARM-black void scale (deepest → faintest), so a card
+    //    lifts off the window and a tile/basin lifts off the card by GROUND alone,
+    //    not by border. A molten undertone (warm black, not neutral) — the Beast's
+    //    identity vs. Monokuma's neutral pitch + Centauri's blue-black void. ──────
+    out property <color> abyss:    #0d0b08;  // deepest — the dashboard Window ground
+    out property <color> pit:      #14110c;  // one step up — the recent-tick feed rows + the valve track
+    out property <color> panel:    #191510;  // the CROWN / card panels
+    out property <color> trough:   #1e1a13;  // the metric (StatTile) panels + the basin/valve troughs
+    out property <color> hairline: #33291c;  // hairline borders / rules on the dark
+
+    // ── THE INK — the warm bright strike + the muted speech (brightest → faintest). ──
+    out property <color> ink:  #fdf6ec;  // primary text — the warm-white bright values
+    out property <color> mist: #b8ab97;  // secondary text — labels, the muted voice
+    out property <color> dim:  #7a6f5f;  // tertiary text — section titles, muted/gated "—", the faintest read
+
+    // ── THE FLOW & the basin HEAT grade — the fountain water. The mid (High) basin
+    //    deliberately WEARS the brand gold: `warm` aliases `flow` so the fountain's
+    //    signature jet reads as its own brand at mid-heat (Critical hotter, Normal cooler). ──
+    out property <color> flow: #ffb454;  // THE FOUNTAIN — molten gold, the Beast brand accent
+    out property <color> hot:  #ff6b3d;  // Critical basin — the hottest jet (highest priority)
+    out property <color> warm: #ffb454;  // High basin — the warm jet (== flow: the brand-gold mid-heat, by design)
+    out property <color> cool: #35c8b0;  // Normal basin — the cool teal jet (bulk traffic)
+
+    // ── THE GEAR RAMP — the live YeahMode phase (the pump's gear). Four distinct
+    //    hues so the mode reads at a glance without the label. ────────────────────
+    out property <color> warming: #5bc7e0;  // SLOW-START — cool cyan (warming up, exponential)
+    out property <color> thrust:  #4ade80;  // YEAH        — go-green (full throttle; ALSO the healthy verdict)
+    out property <color> backoff: #f5a623;  // COMPETING   — amber (sensed contention, backing off)
+    out property <color> climb:   #6ea8ff;  // RECOVERY    — blue (climbing the window back)
+
+    // ── THE VERDICT ACCENTS — the flow's ruling. ────────────────────────────────
+    out property <color> shed:    #ef4d57;  // red — BLUE valve open / drops / a basin OVERFLOW
+    out property <color> wound:   #b03a2e;  // the deeper blood-red — alert-banner FILL (≠ the stroke)
+    out property <color> caution: #f0a830;  // amber — near-overflow / review (dashboard) + settings decision-point
+    out property <color> strike:  white;    // the bright text struck on a filled alert banner
+
+    // ── SETTINGS-RESERVED — consumed by beast_settings.slint (slice 9, the ||| controls),
+    //    NOT the dashboard; the sibling-standard token every _settings surface needs.
+    //    A warm inert grey (above `hairline`) so an OFF rail never competes with the
+    //    flow gold — the Beast-warm counterpart of centauri/masksolver `track` (#3a3a3a). ──
+    out property <color> track: #3a322a;  // inactive control track — the toggle OFF rail (settings reuse)
+}

@@ -1,0 +1,1227 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\rust",
+  "files": {
+    "AppStateBridge.kt": {
+      "hash": "908e1796dc6a",
+      "indexed_at": "2026-08-01T04:00:15.942318+00:00",
+      "language": "kotlin",
+      "lines": 164,
+      "mtime_ns": 1785556377751900200,
+      "size": 7385,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                58,
+                60
+              ],
+              "name": "durableDir",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                66,
+                73
+              ],
+              "name": "store",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                76,
+                104
+              ],
+              "name": "absorbLegacyOnce",
+              "signature": "(store: uniffi.torta_core.AppStateStore)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                110,
+                119
+              ],
+              "name": "savedDnsCryptState",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                122,
+                135
+              ],
+              "name": "setSavedDnsCryptState",
+              "signature": "(token: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                138,
+                147
+              ],
+              "name": "defaultPresetSeeded",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                150,
+                163
+              ],
+              "name": "setDefaultPresetSeeded",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            52,
+            164
+          ],
+          "name": "AppStateBridge",
+          "type": "class"
+        }
+      ]
+    },
+    "BlocklistRuntime.kt": {
+      "hash": "61f08533bd24",
+      "indexed_at": "2026-08-01T04:00:16.250281+00:00",
+      "language": "kotlin",
+      "lines": 88,
+      "mtime_ns": 1785556377764901800,
+      "size": 3647,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                42,
+                53
+              ],
+              "name": "compileFromFiles",
+              "signature": "(paths: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                69
+              ],
+              "name": "compileFromArtifact",
+              "signature": "(bytes: ByteArray, merge: Boolean = false)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                72,
+                78
+              ],
+              "name": "observe",
+              "signature": "(domain: String?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                81,
+                81
+              ],
+              "name": "armedCount",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                84,
+                84
+              ],
+              "name": "observedCount",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                87,
+                87
+              ],
+              "name": "blockedCount",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            33,
+            88
+          ],
+          "name": "BlocklistRuntime",
+          "type": "class"
+        }
+      ]
+    },
+    "TortaCore.kt": {
+      "hash": "0f28f86d9631",
+      "indexed_at": "2026-08-01T04:00:16.577791+00:00",
+      "language": "kotlin",
+      "lines": 2442,
+      "mtime_ns": 1785556377778901800,
+      "size": 114191,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                45
+              ],
+              "name": "isEngineLoaded",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                47,
+                57
+              ],
+              "name": "ensureLoaded",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                76,
+                90
+              ],
+              "name": "trustCrownOpen",
+              "signature": "(durableDir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                93
+              ],
+              "name": "trustCrownOrNull",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                126
+              ],
+              "name": "appStateOpen",
+              "signature": "(durableDir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                129,
+                129
+              ],
+              "name": "appStateOrNull",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                330,
+                339
+              ],
+              "name": "versionSafe",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                345,
+                354
+              ],
+              "name": "compileBlocklist",
+              "signature": "(path: String, merge: Boolean = false)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                360,
+                369
+              ],
+              "name": "compileBlocklistText",
+              "signature": "(text: String, merge: Boolean = false)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                380,
+                389
+              ],
+              "name": "compileBlocklistArtifact",
+              "signature": "(bytes: ByteArray, merge: Boolean = false)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                409,
+                436
+              ],
+              "name": "verifyArtifactSignature",
+              "signature": "(\n        artifactBytes: ByteArray,\n        minisigText: String,\n        pinnedPubKeyBase64: Stri...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                445,
+                457
+              ],
+              "name": "decodeMinisigBlob",
+              "signature": "(minisigText: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                462,
+                471
+              ],
+              "name": "isBlocked",
+              "signature": "(domain: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                474,
+                483
+              ],
+              "name": "blocklistCount",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                489,
+                498
+              ],
+              "name": "blocklistFingerprint",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                512,
+                525
+              ],
+              "name": "configureResolver",
+              "signature": "(\n        specsJson: String,\n        timeoutMs: Long = 5000L,\n        cacheCap: Int = 1024,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                537,
+                551
+              ],
+              "name": "configureResolverTyped",
+              "signature": "(\n        specs: List<uniffi.torta_core.UpstreamSpec>,\n        routes: List<uniffi.torta_core.Rou...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                559,
+                568
+              ],
+              "name": "resolverRoutesList",
+              "signature": "(dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                577,
+                586
+              ],
+              "name": "logTailRecent",
+              "signature": "(path: String, maxLines: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                594,
+                603
+              ],
+              "name": "logStartedOk",
+              "signature": "(path: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                612,
+                621
+              ],
+              "name": "logStaleSecs",
+              "signature": "(path: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                635,
+                640
+              ],
+              "name": "logAppend",
+              "signature": "(path: String, line: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                647,
+                656
+              ],
+              "name": "resolve",
+              "signature": "(query: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                667,
+                676
+              ],
+              "name": "buildQuery",
+              "signature": "(qname: String, qtype: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                679,
+                688
+              ],
+              "name": "resolverStats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                701,
+                710
+              ],
+              "name": "mirrorStatus",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                716,
+                724
+              ],
+              "name": "shutdownResolver",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                736,
+                747
+              ],
+              "name": "resolverStartLoopback",
+              "signature": "(port: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                759,
+                764
+              ],
+              "name": "resolverSetPoolBudget",
+              "signature": "(cwndCap: Int, timeoutMs: Long, pacingQps: Double)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                780,
+                785
+              ],
+              "name": "setRebindEnforce",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                798,
+                803
+              ],
+              "name": "setDohSinkhole",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                806,
+                815
+              ],
+              "name": "dohSinkholeOn",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                822,
+                831
+              ],
+              "name": "dohSinkholeDenied",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                837,
+                842
+              ],
+              "name": "setBogusPriv",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                848,
+                853
+              ],
+              "name": "setProxyDnssec",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                861,
+                866
+              ],
+              "name": "setFilterRr",
+              "signature": "(dropTypesCsv: String, anyDefang: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                873,
+                878
+              ],
+              "name": "setCloakAction",
+              "signature": "(action: Int, customIp: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                881,
+                886
+              ],
+              "name": "setCacheRr",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                898,
+                903
+              ],
+              "name": "resolverArmQueryFeed",
+              "signature": "(file: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                909,
+                914
+              ],
+              "name": "setAllServers",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                920,
+                925
+              ],
+              "name": "setNeverForward",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                932,
+                937
+              ],
+              "name": "setSolveLadder",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                945,
+                950
+              ],
+              "name": "setServeStale",
+              "signature": "(secs: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                957,
+                962
+              ],
+              "name": "setTtlFloor",
+              "signature": "(secs: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                969,
+                974
+              ],
+              "name": "setTtlCeiling",
+              "signature": "(secs: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                981,
+                986
+              ],
+              "name": "setCacheCap",
+              "signature": "(cap: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                993,
+                998
+              ],
+              "name": "setQueryTimeout",
+              "signature": "(ms: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1011,
+                1016
+              ],
+              "name": "beastSetYeahProfile",
+              "signature": "(id: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1022,
+                1027
+              ],
+              "name": "beastSetCakeProfile",
+              "signature": "(id: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1034,
+                1039
+              ],
+              "name": "beastSetTunables",
+              "signature": "(maxWindow: Int, freeThreshMilli: Int, competeThreshMilli: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1047,
+                1056
+              ],
+              "name": "persistCache",
+              "signature": "(dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1064,
+                1073
+              ],
+              "name": "rehydrateCache",
+              "signature": "(dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1089,
+                1098
+              ],
+              "name": "localRecordsSet",
+              "signature": "(text: String, dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1104,
+                1113
+              ],
+              "name": "localRecordsText",
+              "signature": "(dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1120,
+                1129
+              ],
+              "name": "localRecordsRehydrate",
+              "signature": "(dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1135,
+                1144
+              ],
+              "name": "localRecordsCount",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1153,
+                1162
+              ],
+              "name": "resolverRoutesSet",
+              "signature": "(text: String, dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1168,
+                1177
+              ],
+              "name": "resolverRoutesText",
+              "signature": "(dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1186,
+                1195
+              ],
+              "name": "resolverRoutesJson",
+              "signature": "(dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1225,
+                1230
+              ],
+              "name": "maskSolverSnapshot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1244,
+                1252
+              ],
+              "name": "maskSolverRotationSnapshot",
+              "signature": "(dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1266,
+                1275
+              ],
+              "name": "fortressVerifyBytes",
+              "signature": "(bytes: ByteArray, sig: ByteArray, pubkey: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1283,
+                1292
+              ],
+              "name": "fortressVerifyList",
+              "signature": "(listBytes: ByteArray, sig: ByteArray, pubkey: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1300,
+                1313
+              ],
+              "name": "fortressVerifyDnscryptProxy",
+              "signature": "(\n        binBytes: ByteArray,\n        sig: ByteArray,\n        pubkey: ByteArray,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1333,
+                1342
+              ],
+              "name": "wardenStats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1358,
+                1367
+              ],
+              "name": "centauriCatalogVerify",
+              "signature": "(bytes: ByteArray, sig: ByteArray, pubkey: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1383,
+                1393
+              ],
+              "name": "centauriMirrorStart",
+              "signature": "(cacheDir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1400,
+                1409
+              ],
+              "name": "centauriMirrorStats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1420,
+                1429
+              ],
+              "name": "centauriCdnHosts",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1438,
+                1447
+              ],
+              "name": "centauriResolveCdn",
+              "signature": "(host: String, path: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1458,
+                1467
+              ],
+              "name": "centauriCloakingRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1502,
+                1511
+              ],
+              "name": "centauriCreate",
+              "signature": "(cacheDir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1519,
+                1533
+              ],
+              "name": "centauriInstallCatalogObject",
+              "signature": "(\n        centauri: CentauriHandle?, bytes: ByteArray, sig: ByteArray, pubkey: ByteArray\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1541,
+                1553
+              ],
+              "name": "centauriStartObject",
+              "signature": "(centauri: CentauriHandle?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1560,
+                1571
+              ],
+              "name": "centauriSnapshotObject",
+              "signature": "(centauri: CentauriHandle?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1578,
+                1591
+              ],
+              "name": "centauriRecentServes",
+              "signature": "(\n        centauri: CentauriHandle?, max: Int\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1599,
+                1612
+              ],
+              "name": "centauriWarmUp",
+              "signature": "(\n        centauri: CentauriHandle?, maxTargets: Int\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1624,
+                1637
+              ],
+              "name": "centauriArmDeviceCatalog",
+              "signature": "(\n        centauri: CentauriHandle?, contentDir: String, keyDir: String\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1648,
+                1660
+              ],
+              "name": "centauriRehydrateDeviceCatalog",
+              "signature": "(centauri: CentauriHandle?, keyDir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1667,
+                1678
+              ],
+              "name": "centauriQueryLogPath",
+              "signature": "(centauri: CentauriHandle?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1688,
+                1696
+              ],
+              "name": "resolverSetCentauriCloak",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1709,
+                1717
+              ],
+              "name": "centauriTlsArm",
+              "signature": "(certPem: String?, keyPem: String?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1725,
+                1733
+              ],
+              "name": "centauriAbsorbCount",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1749,
+                1756
+              ],
+              "name": "centauriPublishCloakTlsTrust",
+              "signature": "(trusted: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1759,
+                1766
+              ],
+              "name": "centauriCloakTlsTrusted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1769,
+                1776
+              ],
+              "name": "centauriServableCloakCount",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1778,
+                1786
+              ],
+              "name": "centauriTlsRetrust",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1789,
+                1796
+              ],
+              "name": "centauriPromotedCloakCount",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1799,
+                1806
+              ],
+              "name": "centauriTlsDistrustCount",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1809,
+                1816
+              ],
+              "name": "centauriTlsArmed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1826,
+                1826
+              ],
+              "name": "CentauriHandle",
+              "type": "class"
+            },
+            {
+              "lines": [
+                1869,
+                1881
+              ],
+              "name": "wardenValidatePattern",
+              "signature": "(rule: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1901,
+                1915
+              ],
+              "name": "rehydrateBlocklistFromSigned",
+              "signature": "(\n        dir: String,\n        base: String,\n        pubkey: ByteArray,\n        merge: Boolean = ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1930,
+                1939
+              ],
+              "name": "rehydrateCentauriFromSigned",
+              "signature": "(dir: String, base: String, pubkey: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1973,
+                1973
+              ],
+              "name": "epochDayNow",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1978,
+                1987
+              ],
+              "name": "undergroundLoadLanes",
+              "signature": "(dir: String, pubkey: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1995,
+                2004
+              ],
+              "name": "undergroundLaneCounts",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2014,
+                2023
+              ],
+              "name": "undergroundIngestLane",
+              "signature": "(slug: String, tcat: ByteArray, sig: ByteArray, pubkey: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2046,
+                2055
+              ],
+              "name": "rehydrateResolverRotation",
+              "signature": "(dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2073,
+                2094
+              ],
+              "name": "persistResolverRotation",
+              "signature": "(\n        dir: String,\n        lastFamily: String,\n        cadenceSecs: Long,\n        rotationInd...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2105,
+                2114
+              ],
+              "name": "checkpointResolverRotation",
+              "signature": "(dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2125,
+                2134
+              ],
+              "name": "warmStartResolverRtt",
+              "signature": "(dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2149,
+                2158
+              ],
+              "name": "seedResolverRtt",
+              "signature": "(hints: List<uniffi.torta_core.RttHint>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2169,
+                2178
+              ],
+              "name": "dnscryptConfigImportOrDefault",
+              "signature": "(toml: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2184,
+                2193
+              ],
+              "name": "dnscryptConfigSet",
+              "signature": "(cfg: uniffi.torta_core.DnscryptProxyConfig)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2200,
+                2209
+              ],
+              "name": "dnscryptConfigToToml",
+              "signature": "(cfg: uniffi.torta_core.DnscryptProxyConfig)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2220,
+                2229
+              ],
+              "name": "dnscryptConfigApply",
+              "signature": "(cfg: uniffi.torta_core.DnscryptProxyConfig)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2243,
+                2252
+              ],
+              "name": "persistDnscryptConfig",
+              "signature": "(dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2263,
+                2272
+              ],
+              "name": "rehydrateDnscryptConfig",
+              "signature": "(dir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2283,
+                2292
+              ],
+              "name": "materializeDnscryptToml",
+              "signature": "(path: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2309,
+                2318
+              ],
+              "name": "persistDnsRuleList",
+              "signature": "(dir: String, record: String, lines: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2330,
+                2339
+              ],
+              "name": "materializeDnsRuleList",
+              "signature": "(dir: String, record: String, path: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2349,
+                2358
+              ],
+              "name": "currentDnscryptEnvelope",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2368,
+                2377
+              ],
+              "name": "buildDnscryptSyncPlan",
+              "signature": "(upstreamEnvelope: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2387,
+                2396
+              ],
+              "name": "applyDnscryptSyncPlan",
+              "signature": "(dir: String, upstreamEnvelope: String, nowSecs: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2406,
+                2415
+              ],
+              "name": "rehydrateDnscryptSync",
+              "signature": "(dir: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            25,
+            2442
+          ],
+          "name": "TortaCore",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:16.579296+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,1814 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src\\bindings\\kotlin\\gen_kotlin",
+  "files": {
+    "callback_interface.rs": {
+      "hash": "741100c2b4b4",
+      "indexed_at": "2026-07-24T20:35:12.775089+00:00",
+      "language": "rust",
+      "lines": 31,
+      "mtime_ns": 1782136568000000000,
+      "size": 817,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "CallbackInterfaceCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                16
+              ],
+              "name": "new",
+              "signature": "(id: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            13,
+            17
+          ],
+          "name": "CallbackInterfaceCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                22
+              ],
+              "name": "type_label",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                26
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                30
+              ],
+              "name": "initialization_fn",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            31
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        }
+      ]
+    },
+    "compounds.rs": {
+      "hash": "e2e6d4d1d6d5",
+      "indexed_at": "2026-07-24T20:35:12.776462+00:00",
+      "language": "rust",
+      "lines": 176,
+      "mtime_ns": 1782136568000000000,
+      "size": 4454,
+      "symbols": [
+        {
+          "lines": [
+            13,
+            15
+          ],
+          "name": "OptionalCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                18,
+                20
+              ],
+              "name": "new",
+              "signature": "(inner: Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                23
+              ],
+              "name": "inner",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            17,
+            24
+          ],
+          "name": "OptionalCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                27,
+                32
+              ],
+              "name": "type_label",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                34,
+                39
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                41,
+                49
+              ],
+              "name": "default",
+              "signature": "(&self, default: &DefaultValue, ci: &ComponentInterface)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            26,
+            50
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            53,
+            55
+          ],
+          "name": "SequenceCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                58,
+                60
+              ],
+              "name": "new",
+              "signature": "(inner: Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                61,
+                63
+              ],
+              "name": "inner",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            57,
+            64
+          ],
+          "name": "SequenceCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                67,
+                72
+              ],
+              "name": "type_label",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                74,
+                79
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                81,
+                88
+              ],
+              "name": "default",
+              "signature": "(&self, default: &DefaultValue, _ci: &ComponentInterface)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            66,
+            89
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            92,
+            95
+          ],
+          "name": "MapCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                98,
+                100
+              ],
+              "name": "new",
+              "signature": "(key: Type, value: Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                104
+              ],
+              "name": "key",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                106,
+                108
+              ],
+              "name": "value",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            97,
+            109
+          ],
+          "name": "MapCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                112,
+                118
+              ],
+              "name": "type_label",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                120,
+                126
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                128,
+                135
+              ],
+              "name": "default",
+              "signature": "(&self, default: &DefaultValue, _ci: &ComponentInterface)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            111,
+            136
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            139,
+            141
+          ],
+          "name": "SetCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                144,
+                146
+              ],
+              "name": "new",
+              "signature": "(inner: Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                148,
+                150
+              ],
+              "name": "inner",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            143,
+            151
+          ],
+          "name": "SetCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                154,
+                159
+              ],
+              "name": "type_label",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                161,
+                166
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                168,
+                175
+              ],
+              "name": "default",
+              "signature": "(&self, default: &DefaultValue, _ci: &ComponentInterface)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            153,
+            176
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        }
+      ]
+    },
+    "custom.rs": {
+      "hash": "259a2eddcb1b",
+      "indexed_at": "2026-07-24T20:35:12.777239+00:00",
+      "language": "rust",
+      "lines": 34,
+      "mtime_ns": 1782136568000000000,
+      "size": 1033,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            12
+          ],
+          "name": "CustomCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                15,
+                17
+              ],
+              "name": "new",
+              "signature": "(name: String, builtin: Box<dyn CodeType>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            14,
+            18
+          ],
+          "name": "CustomCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                21,
+                23
+              ],
+              "name": "type_label",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                27
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                33
+              ],
+              "name": "default",
+              "signature": "(&self, default: &DefaultValue, ci: &ComponentInterface)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            20,
+            34
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        }
+      ]
+    },
+    "enum_.rs": {
+      "hash": "38f4f59e0fbe",
+      "indexed_at": "2026-07-24T20:35:12.778039+00:00",
+      "language": "rust",
+      "lines": 43,
+      "mtime_ns": 1782136568000000000,
+      "size": 1138,
+      "symbols": [
+        {
+          "lines": [
+            13,
+            15
+          ],
+          "name": "EnumCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                18,
+                20
+              ],
+              "name": "new",
+              "signature": "(id: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            17,
+            21
+          ],
+          "name": "EnumCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                26
+              ],
+              "name": "type_label",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                30
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                32,
+                42
+              ],
+              "name": "default",
+              "signature": "(&self, default: &DefaultValue, ci: &ComponentInterface)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            43
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        }
+      ]
+    },
+    "miscellany.rs": {
+      "hash": "0853a4c6bb90",
+      "indexed_at": "2026-07-24T20:35:12.778836+00:00",
+      "language": "rust",
+      "lines": 27,
+      "mtime_ns": 1782136568000000000,
+      "size": 863,
+      "symbols": []
+    },
+    "mod.rs": {
+      "hash": "41a772cb4f4e",
+      "indexed_at": "2026-07-24T20:35:12.784687+00:00",
+      "language": "rust",
+      "lines": 1129,
+      "mtime_ns": 1782136568000000000,
+      "size": 41076,
+      "symbols": [
+        {
+          "lines": [
+            19,
+            19
+          ],
+          "name": "callback_interface",
+          "type": "module"
+        },
+        {
+          "lines": [
+            20,
+            20
+          ],
+          "name": "compounds",
+          "type": "module"
+        },
+        {
+          "lines": [
+            21,
+            21
+          ],
+          "name": "custom",
+          "type": "module"
+        },
+        {
+          "lines": [
+            22,
+            22
+          ],
+          "name": "enum_",
+          "type": "module"
+        },
+        {
+          "lines": [
+            23,
+            23
+          ],
+          "name": "miscellany",
+          "type": "module"
+        },
+        {
+          "lines": [
+            24,
+            24
+          ],
+          "name": "object",
+          "type": "module"
+        },
+        {
+          "lines": [
+            25,
+            25
+          ],
+          "name": "primitives",
+          "type": "module"
+        },
+        {
+          "lines": [
+            26,
+            26
+          ],
+          "name": "record",
+          "type": "module"
+        },
+        {
+          "lines": [
+            27,
+            27
+          ],
+          "name": "variant",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "docstring": "default for named types is to assume a ctor exists.",
+              "lines": [
+                42,
+                47
+              ],
+              "name": "default",
+              "signature": "(&self, default: &DefaultValue, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "docstring": "backends to using this.",
+              "lines": [
+                57,
+                59
+              ],
+              "name": "ffi_converter_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Function to run at startup",
+              "lines": [
+                62,
+                64
+              ],
+              "name": "initialization_fn",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            29,
+            65
+          ],
+          "name": "CodeType",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            69,
+            93
+          ],
+          "name": "Config",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                96,
+                98
+              ],
+              "name": "android_cleaner",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                102
+              ],
+              "name": "use_enum_entries",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "If it's not valid, this function will panic.",
+              "lines": [
+                107,
+                116
+              ],
+              "name": "get_kotlin_version",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the package name for an external type",
+              "lines": [
+                119,
+                130
+              ],
+              "name": "external_package_name",
+              "signature": "(&self, module_path: &str, namespace: Option<&str>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            95,
+            131
+          ],
+          "name": "Config",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            134,
+            134
+          ],
+          "name": "KotlinVersion",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                137,
+                139
+              ],
+              "name": "new",
+              "signature": "(major: u16, minor: u16, patch: u16)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                141,
+                156
+              ],
+              "name": "parse",
+              "signature": "(version: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            136,
+            157
+          ],
+          "name": "KotlinVersion",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            161,
+            168
+          ],
+          "name": "CustomTypeConfig",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                172,
+                179
+              ],
+              "name": "lift",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                180,
+                187
+              ],
+              "name": "lower",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            }
+          ],
+          "docstring": "functions replace literal \"{}\" in strings with a specified value.",
+          "lines": [
+            171,
+            188
+          ],
+          "name": "CustomTypeConfig",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "We insist someone has already configured us - any defaults we supply would be wrong.",
+              "lines": [
+                192,
+                197
+              ],
+              "name": "package_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                199,
+                204
+              ],
+              "name": "cdylib_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Whether to generate immutable records (`val` instead of `var`)",
+              "lines": [
+                207,
+                209
+              ],
+              "name": "generate_immutable_records",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "and the record is not listed in `mutable_records`.",
+              "lines": [
+                214,
+                216
+              ],
+              "name": "is_record_immutable",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                218,
+                220
+              ],
+              "name": "disable_java_cleaner",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            190,
+            221
+          ],
+          "name": "Config",
+          "type": "impl"
+        },
+        {
+          "docstring": "Generate kotlin bindings for the given ComponentInterface, as a string.",
+          "lines": [
+            224,
+            230
+          ],
+          "name": "generate_bindings",
+          "signature": "(config: &Config, ci: &ComponentInterface)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            232,
+            250
+          ],
+          "name": "ensure_flat_enum_trait_methods_supported",
+          "signature": "(ci: &ComponentInterface)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            254,
+            259
+          ],
+          "name": "ImportRequirement",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Render the Kotlin import statement.",
+              "lines": [
+                263,
+                270
+              ],
+              "name": "render",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            261,
+            271
+          ],
+          "name": "ImportRequirement",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            279,
+            284
+          ],
+          "name": "TypeRenderer",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                287,
+                293
+              ],
+              "name": "new",
+              "signature": "(config: &'a Config, ci: &'a ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the package name for an external type",
+              "lines": [
+                296,
+                299
+              ],
+              "name": "external_type_package_name",
+              "signature": "(&self, module_path: &str, namespace: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Returns an empty string so that it can be used inside an askama `{{ }}` block.",
+              "lines": [
+                309,
+                314
+              ],
+              "name": "add_import",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Like add_import, but arranges for `import name as as_name`",
+              "lines": [
+                317,
+                325
+              ],
+              "name": "add_import_as",
+              "signature": "(&self, name: &str, as_name: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            286,
+            326
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            330,
+            335
+          ],
+          "name": "KotlinWrapper",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                338,
+                348
+              ],
+              "name": "new",
+              "signature": "(config: Config, ci: &'a ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                350,
+                376
+              ],
+              "name": "initialization_fns",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                378,
+                380
+              ],
+              "name": "imports",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            337,
+            381
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "docstring": "If not, then lower only lowers the concrete class (ie, our simple instance with the pointer).",
+          "lines": [
+            393,
+            400
+          ],
+          "name": "object_interface_name",
+          "signature": "(ci: &ComponentInterface, obj: &Object)",
+          "type": "function"
+        },
+        {
+          "docstring": "(we should either fold it into object or kill it!)",
+          "lines": [
+            404,
+            431
+          ],
+          "name": "trait_interface_name",
+          "signature": "(ci: &ComponentInterface, trait_ty: &Type)",
+          "type": "function"
+        },
+        {
+          "docstring": "The name of the object exposing a Rust implementation.",
+          "lines": [
+            434,
+            441
+          ],
+          "name": "object_impl_name",
+          "signature": "(ci: &ComponentInterface, obj: &Object)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            444,
+            444
+          ],
+          "name": "KotlinCodeOracle",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                447,
+                449
+              ],
+              "name": "find",
+              "signature": "(&self, type_: &Type)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the idiomatic Kotlin rendering of a class name (for enums, records, errors, etc).",
+              "lines": [
+                452,
+                460
+              ],
+              "name": "class_name",
+              "signature": "(&self, ci: &ComponentInterface, nm: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                462,
+                467
+              ],
+              "name": "convert_error_suffix",
+              "signature": "(&self, nm: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the idiomatic Kotlin rendering of a function name.",
+              "lines": [
+                470,
+                472
+              ],
+              "name": "fn_name",
+              "signature": "(&self, nm: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the idiomatic Kotlin rendering of a variable name.",
+              "lines": [
+                475,
+                477
+              ],
+              "name": "var_name",
+              "signature": "(&self, nm: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "`var_name` without the backticks.  Useful for using in `@Structure.FieldOrder`.",
+              "lines": [
+                480,
+                482
+              ],
+              "name": "var_name_raw",
+              "signature": "(&self, nm: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the idiomatic Kotlin rendering of an individual enum variant.",
+              "lines": [
+                485,
+                487
+              ],
+              "name": "enum_variant_name",
+              "signature": "(&self, nm: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the idiomatic Kotlin rendering of an FFI callback function name",
+              "lines": [
+                490,
+                492
+              ],
+              "name": "ffi_callback_name",
+              "signature": "(&self, nm: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the idiomatic Kotlin rendering of an FFI struct name",
+              "lines": [
+                495,
+                497
+              ],
+              "name": "ffi_struct_name",
+              "signature": "(&self, nm: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                499,
+                505
+              ],
+              "name": "ffi_type_label_by_value",
+              "signature": "(&self, ffi_type: &FfiType, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "docstring": "converters lift it back into the public UByte/UShort API types.",
+              "lines": [
+                510,
+                519
+              ],
+              "name": "ffi_type_label_for_direct_return",
+              "signature": "(\n        &self,\n        ffi_type: &FfiType,\n        ci: &ComponentInterface,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "won't work in some JNA contexts.",
+              "lines": [
+                525,
+                532
+              ],
+              "name": "ffi_type_label_for_ffi_struct",
+              "signature": "(&self, ffi_type: &FfiType, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "docstring": "- Set a default for structs, which JNA sometimes requires",
+              "lines": [
+                539,
+                553
+              ],
+              "name": "ffi_default_value",
+              "signature": "(&self, ffi_type: &FfiType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                555,
+                572
+              ],
+              "name": "ffi_type_label_by_reference",
+              "signature": "(&self, ffi_type: &FfiType, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                574,
+                601
+              ],
+              "name": "ffi_type_label",
+              "signature": "(&self, ffi_type: &FfiType, ci: &ComponentInterface)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            446,
+            602
+          ],
+          "name": "KotlinCodeOracle",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            604,
+            606
+          ],
+          "name": "AsCodeType",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                609,
+                657
+              ],
+              "name": "as_codetype",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            608,
+            658
+          ],
+          "name": "AsCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                665,
+                671
+              ],
+              "name": "type_name",
+              "signature": "(\n        as_ct: &impl AsCodeType,\n        _: &dyn askama::Values,\n        ci: &ComponentInterfac...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                674,
+                679
+              ],
+              "name": "canonical_name",
+              "signature": "(\n        as_ct: &impl AsCodeType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                682,
+                693
+              ],
+              "name": "qualified_type_name",
+              "signature": "(\n        as_type: &T,\n        _: &dyn askama::Values,\n        ci: &ComponentInterface,\n        c...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                696,
+                701
+              ],
+              "name": "ffi_converter_name",
+              "signature": "(\n        as_ct: &impl AsCodeType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                704,
+                709
+              ],
+              "name": "ffi_type",
+              "signature": "(\n        type_: &impl AsType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                712,
+                720
+              ],
+              "name": "lower_fn",
+              "signature": "(\n        as_ct: &impl AsCodeType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                723,
+                731
+              ],
+              "name": "allocation_size_fn",
+              "signature": "(\n        as_ct: &impl AsCodeType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                734,
+                742
+              ],
+              "name": "write_fn",
+              "signature": "(\n        as_ct: &impl AsCodeType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                745,
+                750
+              ],
+              "name": "lift_fn",
+              "signature": "(\n        as_ct: &impl AsCodeType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                753,
+                758
+              ],
+              "name": "read_fn",
+              "signature": "(\n        as_ct: &impl AsCodeType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                760,
+                800
+              ],
+              "name": "fully_qualified_type_label",
+              "signature": "(\n        ty: &Type,\n        ci: &ComponentInterface,\n        config: &Config,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                802,
+                812
+              ],
+              "name": "package_for_type",
+              "signature": "(ty: &Type, ci: &ComponentInterface, config: &Config)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                815,
+                825
+              ],
+              "name": "render_default",
+              "signature": "(\n        default: &DefaultValue,\n        _: &dyn askama::Values,\n        as_ct: &T,\n        ci: ...",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the idiomatic Kotlin rendering of an integer.",
+              "lines": [
+                828,
+                842
+              ],
+              "name": "int_literal",
+              "signature": "(t: &Option<Type>, base10: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                846,
+                861
+              ],
+              "name": "variant_discr_literal",
+              "signature": "(\n        e: &Enum,\n        _: &dyn askama::Values,\n        index: &usize,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                864,
+                870
+              ],
+              "name": "ffi_type_name_by_value",
+              "signature": "(\n        type_: &FfiType,\n        _: &dyn askama::Values,\n        ci: &ComponentInterface,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                873,
+                879
+              ],
+              "name": "ffi_type_name_for_direct_return",
+              "signature": "(\n        type_: &FfiType,\n        _: &dyn askama::Values,\n        ci: &ComponentInterface,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                882,
+                888
+              ],
+              "name": "ffi_type_name_for_ffi_struct",
+              "signature": "(\n        type_: &FfiType,\n        _: &dyn askama::Values,\n        ci: &ComponentInterface,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                891,
+                896
+              ],
+              "name": "ffi_default_value",
+              "signature": "(\n        type_: FfiType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                900,
+                906
+              ],
+              "name": "class_name",
+              "signature": "(\n        nm: S,\n        _: &dyn askama::Values,\n        ci: &ComponentInterface,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                910,
+                912
+              ],
+              "name": "fn_name",
+              "signature": "(nm: S, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                916,
+                918
+              ],
+              "name": "var_name",
+              "signature": "(nm: S, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                922,
+                927
+              ],
+              "name": "var_name_raw",
+              "signature": "(\n        nm: S,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                935,
+                945
+              ],
+              "name": "lower_type_name_for_arg",
+              "signature": "(\n        arg: &Argument,\n        _: &dyn askama::Values,\n        ci: &ComponentInterface,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                951,
+                960
+              ],
+              "name": "lower_fn_for_arg",
+              "signature": "(\n        arg: &Argument,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                964,
+                966
+              ],
+              "name": "variant_name",
+              "signature": "(v: &Variant, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                969,
+                975
+              ],
+              "name": "error_variant_name",
+              "signature": "(\n        v: &Variant,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                979,
+                984
+              ],
+              "name": "ffi_callback_name",
+              "signature": "(\n        nm: S,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                988,
+                993
+              ],
+              "name": "ffi_struct_name",
+              "signature": "(\n        nm: S,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                996,
+                1005
+              ],
+              "name": "async_poll",
+              "signature": "(\n        callable: impl Callable,\n        _: &dyn askama::Values,\n        ci: &ComponentInterfac...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1008,
+                1030
+              ],
+              "name": "async_complete",
+              "signature": "(\n        callable: impl Callable,\n        _: &dyn askama::Values,\n        ci: &ComponentInterfac...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1033,
+                1040
+              ],
+              "name": "async_free",
+              "signature": "(\n        callable: impl Callable,\n        _: &dyn askama::Values,\n        ci: &ComponentInterfac...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1048,
+                1050
+              ],
+              "name": "unquote",
+              "signature": "(nm: S, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1054,
+                1064
+              ],
+              "name": "docstring",
+              "signature": "(\n        docstring: S,\n        _: &dyn askama::Values,\n        spaces: &i32,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            660,
+            1065
+          ],
+          "name": "filters",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1072,
+                1091
+              ],
+              "name": "test_kotlin_version",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1094,
+                1128
+              ],
+              "name": "checksum_functions_use_direct_return_carriers",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1068,
+            1129
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "object.rs": {
+      "hash": "1cb8d1f5eaf0",
+      "indexed_at": "2026-07-24T20:35:12.785469+00:00",
+      "language": "rust",
+      "lines": 34,
+      "mtime_ns": 1782136568000000000,
+      "size": 927,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            12
+          ],
+          "name": "ObjectCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                15,
+                17
+              ],
+              "name": "new",
+              "signature": "(name: String, imp: ObjectImpl)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            14,
+            18
+          ],
+          "name": "ObjectCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                21,
+                23
+              ],
+              "name": "type_label",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                27
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                33
+              ],
+              "name": "initialization_fn",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            20,
+            34
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        }
+      ]
+    },
+    "primitives.rs": {
+      "hash": "a4701ff781fa",
+      "indexed_at": "2026-07-24T20:35:12.786539+00:00",
+      "language": "rust",
+      "lines": 93,
+      "mtime_ns": 1782136568000000000,
+      "size": 3571,
+      "symbols": [
+        {
+          "lines": [
+            12,
+            55
+          ],
+          "name": "render_literal",
+          "signature": "(literal: &Literal, _ci: &ComponentInterface)",
+          "type": "function"
+        }
+      ]
+    },
+    "record.rs": {
+      "hash": "96fd1a180095",
+      "indexed_at": "2026-07-24T20:35:12.787257+00:00",
+      "language": "rust",
+      "lines": 27,
+      "mtime_ns": 1782136568000000000,
+      "size": 656,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "RecordCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                16
+              ],
+              "name": "new",
+              "signature": "(id: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            13,
+            17
+          ],
+          "name": "RecordCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                22
+              ],
+              "name": "type_label",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                26
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            27
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        }
+      ]
+    },
+    "variant.rs": {
+      "hash": "d111d6888745",
+      "indexed_at": "2026-07-24T20:35:12.788023+00:00",
+      "language": "rust",
+      "lines": 33,
+      "mtime_ns": 1782136568000000000,
+      "size": 920,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "VariantCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                16
+              ],
+              "name": "type_label",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                18,
+                20
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            13,
+            21
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                26
+              ],
+              "name": "as_codetype",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            27
+          ],
+          "name": "AsCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                30,
+                32
+              ],
+              "name": "as_codetype",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            29,
+            33
+          ],
+          "name": "AsCodeType",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.756495+00:00",
+  "version": "1.0"
+}

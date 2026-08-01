@@ -1,0 +1,19 @@
+[alias]
+# Cargo command to release a new version for all packages, except uniffi
+release-backend-crates = [
+    "release",
+    "--execute",
+    "--no-publish",
+    "-p", "uniffi_core",
+    "-p", "uniffi_bindgen",
+    "-p", "uniffi_build",
+    "-p", "uniffi_checksum_derive",
+    "-p", "uniffi_internal_macros",
+    "-p", "uniffi_macros",
+    "-p", "uniffi_meta",
+    "-p", "uniffi_pipeline",
+    "-p", "uniffi_testing",
+    "-p", "uniffi_udl",
+]
+release-uniffi = ["release", "--execute", "--no-publish", "-p", "uniffi"]
+uniffi-bench  = ["bench", "-p", "uniffi-fixture-benchmarks", "--"]

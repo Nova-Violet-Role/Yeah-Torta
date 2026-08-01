@@ -1,0 +1,239 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.google.devtools.ksp'
+    id "kotlin-parcelize"
+}
+
+def keystorePropertiesFile = file("/home/alexander/.local/KStore/keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+android {
+    compileSdkVersion 37
+
+    namespace 'pillar.kuma_saimono.libumdnscrypt'
+
+    flavorDimensions = ["version", "processor"]
+
+    signingConfigs {
+        stablesign {
+            storeFile file("/home/alexander/.local/KStore/pan_alexander.jks")
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keySAlias']
+            keyPassword keystoreProperties['keySPassword']
+        }
+
+        betasign {
+            storeFile file("/home/alexander/.local/KStore/pan_alexander.jks")
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyBAlias']
+            keyPassword keystoreProperties['keyBPassword']
+        }
+    }
+
+    productFlavors {
+        lite {
+            applicationId "pillar.kuma_saimono.libumdnscrypt.stable"
+            versionName "7.4.0"
+            dimension = 'version'
+            signingConfig signingConfigs.stablesign
+            resValue 'string', 'package_name', applicationId
+            dependenciesInfo.includeInApk false
+            dependenciesInfo.includeInBundle false
+        }
+
+        pro {
+            applicationId "pillar.kuma_saimono.libumdnscrypt.stable"
+            versionName "7.4.0"
+            dimension = 'version'
+            signingConfig signingConfigs.stablesign
+            resValue 'string', 'package_name', applicationId
+            dependenciesInfo.includeInApk false
+            dependenciesInfo.includeInBundle false
+        }
+
+        beta {
+            applicationId "pillar.kuma_saimono.libumdnscrypt"
+            versionName "2.7.0"
+            dimension = 'version'
+            signingConfig signingConfigs.betasign
+            resValue 'string', 'package_name', applicationId
+            dependenciesInfo.includeInApk false
+            dependenciesInfo.includeInBundle false
+        }
+
+        google_play {
+            minSdkVersion 22
+            applicationId "pillar.kuma_saimono.libumdnscrypt.gp"
+            versionName "7.4.0"
+            dimension = 'version'
+            signingConfig signingConfigs.stablesign
+            resValue 'string', 'package_name', applicationId
+            resValue 'string', 'gp_property', keystoreProperties['gpPublicKey']
+        }
+
+        armv7a {
+            dimension = 'processor'
+            resValue 'string', 'appProcVersion', 'armv7a'
+            versionCode = 2
+
+            ndk {
+                abiFilters 'armeabi-v7a'
+            }
+        }
+
+        arm64 {
+            dimension = 'processor'
+            resValue 'string', 'appProcVersion', 'arm64'
+            versionCode = 3
+
+            ndk {
+                abiFilters 'arm64-v8a'
+            }
+        }
+
+        x64 {
+            dimension = 'processor'
+            resValue 'string', 'appProcVersion', 'x86_64'
+            versionCode = 4
+
+            ndk {
+                abiFilters 'x86_64'
+            }
+        }
+
+    }
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 36
+        versionCode 270
+
+        resourceConfigurations += ['en', 'ru', 'pl', 'de', 'fa', 'fi', 'in', 'fr', 'ja', 'zh', 'es', 'pt', 'pt-rBR', 'el', 'tr', 'it', 'uk', 'bg', 'ar', 'nl', 'ta']
+
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+                arguments "-DANDROID_PLATFORM=android-21", "-DANDROID_ARM_NEON=ON"
+            }
+        }
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        def buildDate = System.getenv("SOURCE_DATE_EPOCH") == null
+                ? System.currentTimeMillis() : 1000 * Long.parseLong(System.getenv("SOURCE_DATE_EPOCH"))
+        buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + buildDate + "L)"
+
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            multiDexEnabled = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.betasign
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = 17
+        targetCompatibility = 17
+    }
+    buildToolsVersion = '36.0.0'
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs 'libs/'
+        }
+    }
+
+    packagingOptions {
+        jniLibs {
+            keepDebugSymbols += ['*/*/libdnscrypt-proxy.so', '*/*/libobfs4proxy.so', '*/*/libsnowflake.so', '*/*/libconjure.so', '*/*/libdnstt.so']
+        }
+        jniLibs.useLegacyPackaging = true
+
+    }
+
+    applicationVariants.configureEach { variant ->
+
+        def abiVersion = variant.mergedFlavor.versionCode
+
+        variant.outputs.each { output ->
+            output.versionCodeOverride = abiVersion * 1000 + defaultConfig.versionCode
+        }
+    }
+
+    ndkVersion '23.1.7779620'
+
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
+        }
+    }
+
+    ksp {
+        arg("dagger.fastInit", "enabled")
+    }
+
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'androidx.preference:preference-ktx:1.2.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.13.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'androidx.recyclerview:recyclerview:1.4.0'
+    implementation 'androidx.lifecycle:lifecycle-process:2.9.4'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.9.4'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.4'
+    google_playImplementation 'com.android.billingclient:billing:7.1.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
+    implementation 'eu.chainfire:libsuperuser:1.1.1'
+    implementation 'com.jrummyapps:android-shell:1.0.1'
+    implementation 'androidx.core:core-ktx:1.17.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
+    implementation project(':filepicker')
+
+    //DI
+    implementation "com.google.dagger:dagger:$dagger_version"
+    ksp "com.google.dagger:dagger-compiler:$dagger_version"
+    //Persistent Work Manager
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+
+}

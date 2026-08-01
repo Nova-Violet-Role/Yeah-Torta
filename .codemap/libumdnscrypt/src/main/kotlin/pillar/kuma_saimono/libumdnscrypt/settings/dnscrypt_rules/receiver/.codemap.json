@@ -1,0 +1,136 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\settings\\dnscrypt_rules\\receiver",
+  "files": {
+    "DnsRulesReceiver.kt": {
+      "hash": "b234de83bdca",
+      "indexed_at": "2026-08-01T04:00:20.185028+00:00",
+      "language": "kotlin",
+      "lines": 275,
+      "mtime_ns": 1785556377962900300,
+      "size": 10409,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                51,
+                73
+              ],
+              "name": "registerReceiver",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                75,
+                84
+              ],
+              "name": "unregisterReceiver",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                86,
+                93
+              ],
+              "name": "onReceive",
+              "signature": "(context: Context?, intent: Intent?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                95,
+                149
+              ],
+              "name": "downloadRemoteRulesProgress",
+              "signature": "(intent: Intent)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                151,
+                207
+              ],
+              "name": "updateRemoteRulesProgress",
+              "signature": "(intent: Intent)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                209,
+                262
+              ],
+              "name": "updateLocalRulesProgress",
+              "signature": "(intent: Intent)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                264,
+                267
+              ],
+              "name": "updateTotalRulesProgress",
+              "signature": "(intent: Intent)",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    270,
+                    270
+                  ],
+                  "name": "onUpdateRemoteRules",
+                  "signature": "(rules: DnsRuleRecycleItem.DnsRemoteRule)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    271,
+                    271
+                  ],
+                  "name": "onUpdateLocalRules",
+                  "signature": "(rules: DnsRuleRecycleItem.DnsLocalRule)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    272,
+                    272
+                  ],
+                  "name": "onUpdateTotalRules",
+                  "signature": "(count: Int)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    273,
+                    273
+                  ],
+                  "name": "onUpdateFinished",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                269,
+                274
+              ],
+              "name": "Callback",
+              "type": "interface"
+            }
+          ],
+          "lines": [
+            39,
+            275
+          ],
+          "name": "DnsRulesReceiver",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:20.187743+00:00",
+  "version": "1.0"
+}

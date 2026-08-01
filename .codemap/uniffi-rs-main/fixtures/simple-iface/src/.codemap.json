@@ -1,0 +1,63 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\simple-iface\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "3841fbd140d4",
+      "indexed_at": "2026-07-24T20:35:12.674245+00:00",
+      "language": "rust",
+      "lines": 29,
+      "mtime_ns": 1782136568000000000,
+      "size": 661,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            10
+          ],
+          "name": "Object",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            13,
+            15
+          ],
+          "name": "make_object",
+          "signature": "(inner: i32)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "get_inner",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Test that uniffi::export can handle Self in arbitrary positions",
+              "lines": [
+                24,
+                26
+              ],
+              "name": "some_method",
+              "signature": "(self: Arc<Self>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            18,
+            27
+          ],
+          "name": "Object",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.733919+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,1219 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\rename",
+  "files": {
+    "Cargo.toml": {
+      "hash": "e00b1a43997f",
+      "indexed_at": "2026-07-24T20:35:12.656291+00:00",
+      "language": "toml",
+      "lines": 23,
+      "mtime_ns": 1782136568000000000,
+      "size": 422,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                2,
+                2
+              ],
+              "name": "name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "edition",
+              "type": "key"
+            },
+            {
+              "lines": [
+                4,
+                4
+              ],
+              "name": "version",
+              "type": "key"
+            },
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "license",
+              "type": "key"
+            },
+            {
+              "lines": [
+                6,
+                6
+              ],
+              "name": "publish",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            1,
+            7
+          ],
+          "name": "package",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "crate-type",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            8,
+            10
+          ],
+          "name": "lib",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                12,
+                12
+              ],
+              "name": "uniffi",
+              "type": "key"
+            },
+            {
+              "lines": [
+                13,
+                13
+              ],
+              "name": "url",
+              "type": "key"
+            },
+            {
+              "lines": [
+                14,
+                14
+              ],
+              "name": "thiserror",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            11,
+            15
+          ],
+          "name": "dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "uniffi",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            16,
+            18
+          ],
+          "name": "build-dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "uniffi",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            19,
+            21
+          ],
+          "name": "dev-dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "ffi-trace",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            22,
+            24
+          ],
+          "name": "features",
+          "type": "table"
+        }
+      ]
+    },
+    "uniffi.toml": {
+      "hash": "22f05665a160",
+      "indexed_at": "2026-07-24T20:35:12.657187+00:00",
+      "language": "toml",
+      "lines": 240,
+      "mtime_ns": 1782136568000000000,
+      "size": 6149,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                8
+              ],
+              "name": "binding_function",
+              "type": "key"
+            },
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "binding_function.record",
+              "type": "key"
+            },
+            {
+              "lines": [
+                12,
+                12
+              ],
+              "name": "BindingRecord",
+              "type": "key"
+            },
+            {
+              "lines": [
+                13,
+                13
+              ],
+              "name": "BindingRecord.item",
+              "type": "key"
+            },
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "BindingEnum",
+              "type": "key"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "BindingEnum.VariantA",
+              "type": "key"
+            },
+            {
+              "lines": [
+                18,
+                18
+              ],
+              "name": "BindingEnum.Record",
+              "type": "key"
+            },
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "BindingEnumWithFields",
+              "type": "key"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "BindingEnumWithFields.VariantA",
+              "type": "key"
+            },
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "BindingEnumWithFields.VariantA.binding_int",
+              "type": "key"
+            },
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "BindingError",
+              "type": "key"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "BindingError.Simple",
+              "type": "key"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "BindingTrait",
+              "type": "key"
+            },
+            {
+              "lines": [
+                29,
+                29
+              ],
+              "name": "BindingTrait.trait_method",
+              "type": "key"
+            },
+            {
+              "lines": [
+                31,
+                31
+              ],
+              "name": "BindingObject",
+              "type": "key"
+            },
+            {
+              "lines": [
+                34,
+                34
+              ],
+              "name": "BindingObject.method",
+              "type": "key"
+            },
+            {
+              "lines": [
+                35,
+                35
+              ],
+              "name": "BindingObject.method.arg",
+              "type": "key"
+            },
+            {
+              "lines": [
+                37,
+                37
+              ],
+              "name": "Url",
+              "type": "key"
+            },
+            {
+              "lines": [
+                45,
+                45
+              ],
+              "name": "function_to_exclude",
+              "type": "key"
+            },
+            {
+              "lines": [
+                46,
+                46
+              ],
+              "name": "RenamedObject.new",
+              "type": "key"
+            },
+            {
+              "lines": [
+                47,
+                47
+              ],
+              "name": "RenamedObject.method_to_exclude",
+              "type": "key"
+            },
+            {
+              "lines": [
+                48,
+                48
+              ],
+              "name": "RecordToExclude",
+              "type": "key"
+            }
+          ],
+          "docstring": "Kotlin",
+          "lines": [
+            6,
+            49
+          ],
+          "name": "bindings.kotlin.rename",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                51,
+                51
+              ],
+              "name": "exclude",
+              "type": "key"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    226,
+                    226
+                  ],
+                  "name": "type_name",
+                  "type": "key"
+                },
+                {
+                  "lines": [
+                    227,
+                    227
+                  ],
+                  "name": "imports",
+                  "type": "key"
+                },
+                {
+                  "lines": [
+                    228,
+                    228
+                  ],
+                  "name": "lift",
+                  "type": "key"
+                },
+                {
+                  "lines": [
+                    229,
+                    229
+                  ],
+                  "name": "lower",
+                  "type": "key"
+                }
+              ],
+              "lines": [
+                225,
+                230
+              ],
+              "name": "bindings.kotlin.custom_types.RenamedUrl",
+              "type": "table"
+            }
+          ],
+          "lines": [
+            50,
+            60
+          ],
+          "name": "bindings.kotlin",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                62,
+                62
+              ],
+              "name": "binding_function",
+              "type": "key"
+            },
+            {
+              "lines": [
+                63,
+                63
+              ],
+              "name": "binding_function.record",
+              "type": "key"
+            },
+            {
+              "lines": [
+                65,
+                65
+              ],
+              "name": "BindingRecord",
+              "type": "key"
+            },
+            {
+              "lines": [
+                66,
+                66
+              ],
+              "name": "BindingRecord.item",
+              "type": "key"
+            },
+            {
+              "lines": [
+                68,
+                68
+              ],
+              "name": "BindingEnum",
+              "type": "key"
+            },
+            {
+              "lines": [
+                69,
+                69
+              ],
+              "name": "BindingEnum.VariantA",
+              "type": "key"
+            },
+            {
+              "lines": [
+                70,
+                70
+              ],
+              "name": "BindingEnum.Record",
+              "type": "key"
+            },
+            {
+              "lines": [
+                72,
+                72
+              ],
+              "name": "BindingEnumWithFields",
+              "type": "key"
+            },
+            {
+              "lines": [
+                73,
+                73
+              ],
+              "name": "BindingEnumWithFields.VariantA",
+              "type": "key"
+            },
+            {
+              "lines": [
+                74,
+                74
+              ],
+              "name": "BindingEnumWithFields.VariantA.binding_int",
+              "type": "key"
+            },
+            {
+              "lines": [
+                75,
+                75
+              ],
+              "name": "BindingEnumWithFields.Record",
+              "type": "key"
+            },
+            {
+              "lines": [
+                76,
+                76
+              ],
+              "name": "BindingEnumWithFields.Record.binding_record",
+              "type": "key"
+            },
+            {
+              "lines": [
+                77,
+                77
+              ],
+              "name": "BindingEnumWithFields.Record.binding_int",
+              "type": "key"
+            },
+            {
+              "lines": [
+                79,
+                79
+              ],
+              "name": "BindingError",
+              "type": "key"
+            },
+            {
+              "lines": [
+                80,
+                80
+              ],
+              "name": "BindingError.Simple",
+              "type": "key"
+            },
+            {
+              "lines": [
+                82,
+                82
+              ],
+              "name": "BindingTrait",
+              "type": "key"
+            },
+            {
+              "lines": [
+                83,
+                83
+              ],
+              "name": "BindingTrait.trait_method",
+              "type": "key"
+            },
+            {
+              "lines": [
+                85,
+                85
+              ],
+              "name": "BindingObject",
+              "type": "key"
+            },
+            {
+              "lines": [
+                86,
+                86
+              ],
+              "name": "BindingObject.method",
+              "type": "key"
+            },
+            {
+              "lines": [
+                87,
+                87
+              ],
+              "name": "BindingObject.method.arg",
+              "type": "key"
+            },
+            {
+              "lines": [
+                89,
+                89
+              ],
+              "name": "Url",
+              "type": "key"
+            },
+            {
+              "lines": [
+                92,
+                92
+              ],
+              "name": "function_to_exclude",
+              "type": "key"
+            },
+            {
+              "lines": [
+                93,
+                93
+              ],
+              "name": "RenamedObject.new",
+              "type": "key"
+            },
+            {
+              "lines": [
+                94,
+                94
+              ],
+              "name": "RenamedObject.method_to_exclude",
+              "type": "key"
+            },
+            {
+              "lines": [
+                95,
+                95
+              ],
+              "name": "RecordToExclude",
+              "type": "key"
+            }
+          ],
+          "docstring": "Ruby",
+          "lines": [
+            61,
+            96
+          ],
+          "name": "bindings.ruby.rename",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                98,
+                98
+              ],
+              "name": "exclude",
+              "type": "key"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    237,
+                    237
+                  ],
+                  "name": "type_name",
+                  "type": "key"
+                },
+                {
+                  "lines": [
+                    238,
+                    238
+                  ],
+                  "name": "imports",
+                  "type": "key"
+                },
+                {
+                  "lines": [
+                    239,
+                    239
+                  ],
+                  "name": "lift",
+                  "type": "key"
+                },
+                {
+                  "lines": [
+                    240,
+                    240
+                  ],
+                  "name": "lower",
+                  "type": "key"
+                }
+              ],
+              "lines": [
+                236,
+                241
+              ],
+              "name": "bindings.ruby.custom_types.RenamedUrl",
+              "type": "table"
+            }
+          ],
+          "lines": [
+            97,
+            107
+          ],
+          "name": "bindings.ruby",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                109,
+                109
+              ],
+              "name": "binding_function",
+              "type": "key"
+            },
+            {
+              "lines": [
+                110,
+                110
+              ],
+              "name": "binding_function.record",
+              "type": "key"
+            },
+            {
+              "lines": [
+                112,
+                112
+              ],
+              "name": "BindingRecord",
+              "type": "key"
+            },
+            {
+              "lines": [
+                113,
+                113
+              ],
+              "name": "BindingRecord.item",
+              "type": "key"
+            },
+            {
+              "lines": [
+                115,
+                115
+              ],
+              "name": "BindingEnum",
+              "type": "key"
+            },
+            {
+              "lines": [
+                116,
+                116
+              ],
+              "name": "BindingEnum.VariantA",
+              "type": "key"
+            },
+            {
+              "lines": [
+                117,
+                117
+              ],
+              "name": "BindingEnum.Record",
+              "type": "key"
+            },
+            {
+              "lines": [
+                119,
+                119
+              ],
+              "name": "BindingEnumWithFields",
+              "type": "key"
+            },
+            {
+              "lines": [
+                120,
+                120
+              ],
+              "name": "BindingEnumWithFields.VariantA",
+              "type": "key"
+            },
+            {
+              "lines": [
+                121,
+                121
+              ],
+              "name": "BindingEnumWithFields.VariantA.binding_int",
+              "type": "key"
+            },
+            {
+              "lines": [
+                122,
+                122
+              ],
+              "name": "BindingEnumWithFields.Record",
+              "type": "key"
+            },
+            {
+              "lines": [
+                123,
+                123
+              ],
+              "name": "BindingEnumWithFields.Record.binding_record",
+              "type": "key"
+            },
+            {
+              "lines": [
+                124,
+                124
+              ],
+              "name": "BindingEnumWithFields.Record.binding_int",
+              "type": "key"
+            },
+            {
+              "lines": [
+                126,
+                126
+              ],
+              "name": "BindingError",
+              "type": "key"
+            },
+            {
+              "lines": [
+                127,
+                127
+              ],
+              "name": "BindingError.Simple",
+              "type": "key"
+            },
+            {
+              "lines": [
+                129,
+                129
+              ],
+              "name": "BindingTrait",
+              "type": "key"
+            },
+            {
+              "lines": [
+                130,
+                130
+              ],
+              "name": "BindingTrait.trait_method",
+              "type": "key"
+            },
+            {
+              "lines": [
+                132,
+                132
+              ],
+              "name": "BindingObject",
+              "type": "key"
+            },
+            {
+              "lines": [
+                133,
+                133
+              ],
+              "name": "BindingObject.new.value",
+              "type": "key"
+            },
+            {
+              "lines": [
+                135,
+                135
+              ],
+              "name": "BindingObject.method",
+              "type": "key"
+            },
+            {
+              "lines": [
+                136,
+                136
+              ],
+              "name": "BindingObject.method.arg",
+              "type": "key"
+            },
+            {
+              "lines": [
+                138,
+                138
+              ],
+              "name": "Url",
+              "type": "key"
+            },
+            {
+              "lines": [
+                146,
+                146
+              ],
+              "name": "function_to_exclude",
+              "type": "key"
+            },
+            {
+              "lines": [
+                147,
+                147
+              ],
+              "name": "RenamedObject.new",
+              "type": "key"
+            },
+            {
+              "lines": [
+                148,
+                148
+              ],
+              "name": "RenamedObject.method_to_exclude",
+              "type": "key"
+            },
+            {
+              "lines": [
+                149,
+                149
+              ],
+              "name": "RecordToExclude",
+              "type": "key"
+            }
+          ],
+          "docstring": "Python",
+          "lines": [
+            108,
+            150
+          ],
+          "name": "bindings.python.rename",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                152,
+                152
+              ],
+              "name": "exclude",
+              "type": "key"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    220,
+                    220
+                  ],
+                  "name": "type_name",
+                  "type": "key"
+                },
+                {
+                  "lines": [
+                    221,
+                    221
+                  ],
+                  "name": "imports",
+                  "type": "key"
+                },
+                {
+                  "lines": [
+                    222,
+                    222
+                  ],
+                  "name": "lift",
+                  "type": "key"
+                },
+                {
+                  "lines": [
+                    223,
+                    223
+                  ],
+                  "name": "lower",
+                  "type": "key"
+                }
+              ],
+              "lines": [
+                219,
+                224
+              ],
+              "name": "bindings.python.custom_types.Url",
+              "type": "table"
+            }
+          ],
+          "lines": [
+            151,
+            161
+          ],
+          "name": "bindings.python",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                164,
+                164
+              ],
+              "name": "binding_function",
+              "type": "key"
+            },
+            {
+              "lines": [
+                165,
+                165
+              ],
+              "name": "binding_function.record",
+              "type": "key"
+            },
+            {
+              "lines": [
+                168,
+                168
+              ],
+              "name": "BindingRecord",
+              "type": "key"
+            },
+            {
+              "lines": [
+                169,
+                169
+              ],
+              "name": "BindingRecord.item",
+              "type": "key"
+            },
+            {
+              "lines": [
+                172,
+                172
+              ],
+              "name": "BindingEnum",
+              "type": "key"
+            },
+            {
+              "lines": [
+                173,
+                173
+              ],
+              "name": "BindingEnum.VariantA",
+              "type": "key"
+            },
+            {
+              "lines": [
+                174,
+                174
+              ],
+              "name": "BindingEnum.Record",
+              "type": "key"
+            },
+            {
+              "lines": [
+                176,
+                176
+              ],
+              "name": "BindingEnumWithFields",
+              "type": "key"
+            },
+            {
+              "lines": [
+                177,
+                177
+              ],
+              "name": "BindingEnumWithFields.VariantA",
+              "type": "key"
+            },
+            {
+              "lines": [
+                178,
+                178
+              ],
+              "name": "BindingEnumWithFields.VariantA.binding_int",
+              "type": "key"
+            },
+            {
+              "lines": [
+                181,
+                181
+              ],
+              "name": "BindingError",
+              "type": "key"
+            },
+            {
+              "lines": [
+                182,
+                182
+              ],
+              "name": "BindingError.Simple",
+              "type": "key"
+            },
+            {
+              "lines": [
+                184,
+                184
+              ],
+              "name": "BindingTrait",
+              "type": "key"
+            },
+            {
+              "lines": [
+                185,
+                185
+              ],
+              "name": "BindingTrait.trait_method",
+              "type": "key"
+            },
+            {
+              "lines": [
+                187,
+                187
+              ],
+              "name": "BindingObject",
+              "type": "key"
+            },
+            {
+              "lines": [
+                189,
+                189
+              ],
+              "name": "BindingObject.method",
+              "type": "key"
+            },
+            {
+              "lines": [
+                190,
+                190
+              ],
+              "name": "BindingObject.method.arg",
+              "type": "key"
+            },
+            {
+              "lines": [
+                192,
+                192
+              ],
+              "name": "Url",
+              "type": "key"
+            },
+            {
+              "lines": [
+                200,
+                200
+              ],
+              "name": "function_to_exclude",
+              "type": "key"
+            },
+            {
+              "lines": [
+                201,
+                201
+              ],
+              "name": "RenamedObject.new",
+              "type": "key"
+            },
+            {
+              "lines": [
+                202,
+                202
+              ],
+              "name": "RenamedObject.method_to_exclude",
+              "type": "key"
+            },
+            {
+              "lines": [
+                203,
+                203
+              ],
+              "name": "RecordToExclude",
+              "type": "key"
+            }
+          ],
+          "docstring": "Swift",
+          "lines": [
+            162,
+            204
+          ],
+          "name": "bindings.swift.rename",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                206,
+                206
+              ],
+              "name": "exclude",
+              "type": "key"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    232,
+                    232
+                  ],
+                  "name": "type_name",
+                  "type": "key"
+                },
+                {
+                  "lines": [
+                    233,
+                    233
+                  ],
+                  "name": "lift",
+                  "type": "key"
+                },
+                {
+                  "lines": [
+                    234,
+                    234
+                  ],
+                  "name": "lower",
+                  "type": "key"
+                }
+              ],
+              "lines": [
+                231,
+                235
+              ],
+              "name": "bindings.swift.custom_types.RenamedUrl",
+              "type": "table"
+            }
+          ],
+          "lines": [
+            205,
+            218
+          ],
+          "name": "bindings.swift",
+          "type": "table"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.728789+00:00",
+  "version": "1.0"
+}

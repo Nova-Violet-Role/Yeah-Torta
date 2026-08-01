@@ -1,0 +1,260 @@
+{
+  "directory": "android-filepicker\\filepicker\\src\\main\\java\\com\\github\\angads25\\filepicker\\model",
+  "files": {
+    "DialogConfigs.java": {
+      "hash": "60f3c887708f",
+      "indexed_at": "2026-07-24T20:35:09.778365+00:00",
+      "language": "java",
+      "lines": 65,
+      "mtime_ns": 1782501335880875700,
+      "size": 2082,
+      "symbols": [
+        {
+          "docstring": "/*  Helper class for setting properties of Dialog.\n */",
+          "lines": [
+            27,
+            65
+          ],
+          "name": "DialogConfigs",
+          "type": "class"
+        }
+      ]
+    },
+    "DialogProperties.java": {
+      "hash": "337f147f56c1",
+      "indexed_at": "2026-07-24T20:35:09.779341+00:00",
+      "language": "java",
+      "lines": 88,
+      "mtime_ns": 1782501335881876100,
+      "size": 2835,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                80,
+                87
+              ],
+              "name": "DialogProperties",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "/*  Descriptor class to define properties of the Dialog. Actions are performed upon\n *  these Properties\n */",
+          "lines": [
+            31,
+            88
+          ],
+          "name": "DialogProperties",
+          "type": "class"
+        }
+      ]
+    },
+    "FileListItem.java": {
+      "hash": "a2966ec54d05",
+      "indexed_at": "2026-07-24T20:35:09.780590+00:00",
+      "language": "java",
+      "lines": 95,
+      "mtime_ns": 1782501335880875700,
+      "size": 2673,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                34,
+                36
+              ],
+              "name": "getFilename",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                38,
+                40
+              ],
+              "name": "setFilename",
+              "signature": "(String filename)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                42,
+                44
+              ],
+              "name": "getLocation",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                46,
+                48
+              ],
+              "name": "setLocation",
+              "signature": "(String location)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                52
+              ],
+              "name": "isDirectory",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                54,
+                56
+              ],
+              "name": "setDirectory",
+              "signature": "(boolean directory)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                58,
+                60
+              ],
+              "name": "getTime",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                62,
+                64
+              ],
+              "name": "setTime",
+              "signature": "(long time)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                66,
+                68
+              ],
+              "name": "isMarked",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                70,
+                72
+              ],
+              "name": "setMarked",
+              "signature": "(boolean marked)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                74,
+                94
+              ],
+              "name": "compareTo",
+              "signature": "(FileListItem fileListItem)",
+              "type": "method"
+            }
+          ],
+          "docstring": "The model/container class holding file list data.",
+          "lines": [
+            29,
+            95
+          ],
+          "name": "FileListItem",
+          "type": "class"
+        }
+      ]
+    },
+    "MarkedItemList.java": {
+      "hash": "6a94f5ae3a12",
+      "indexed_at": "2026-07-24T20:35:09.781718+00:00",
+      "language": "java",
+      "lines": 69,
+      "mtime_ns": 1782501335880875700,
+      "size": 1926,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                35,
+                37
+              ],
+              "name": "addSelectedItem",
+              "signature": "(FileListItem item)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                41
+              ],
+              "name": "removeSelectedItem",
+              "signature": "(String key)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                43,
+                45
+              ],
+              "name": "hasItem",
+              "signature": "(String key)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                47,
+                49
+              ],
+              "name": "clearSelectionList",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                51,
+                54
+              ],
+              "name": "addSingleFile",
+              "signature": "(FileListItem item)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                64
+              ],
+              "name": "getSelectedPaths",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                66,
+                68
+              ],
+              "name": "getFileCount",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "/*  SingleTon containing <Key,Value> pair of all the selected files.\n *  Key: Directory/File path.\n *  Value: FileListItem Object.\n */",
+          "lines": [
+            32,
+            69
+          ],
+          "name": "MarkedItemList",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.311479+00:00",
+  "version": "1.0"
+}

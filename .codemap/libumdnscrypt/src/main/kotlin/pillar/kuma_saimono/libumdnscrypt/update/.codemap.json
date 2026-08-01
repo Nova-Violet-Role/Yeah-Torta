@@ -1,0 +1,218 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\update",
+  "files": {
+    "DownloadTask.kt": {
+      "hash": "e21001e58b86",
+      "indexed_at": "2026-08-01T04:00:29.383127+00:00",
+      "language": "kotlin",
+      "lines": 406,
+      "mtime_ns": 1785556378284901300,
+      "size": 15601,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                83,
+                167
+              ],
+              "name": "run",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                169,
+                235
+              ],
+              "name": "downloadFile",
+              "signature": "(fileToDownload: String, urlToDownload: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                237,
+                248
+              ],
+              "name": "installApkForNougatAndHigher",
+              "signature": "(outputFile: File)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                250,
+                259
+              ],
+              "name": "installApkLowerNougat",
+              "signature": "(outputFile: File)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                261,
+                279
+              ],
+              "name": "removeOldApkFileFromPrevUpdate",
+              "signature": "(dirPath: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                281,
+                289
+              ],
+              "name": "sendUpdateResultBroadcast",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                291,
+                296
+              ],
+              "name": "makeDelay",
+              "signature": "(sec: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                298,
+                322
+              ],
+              "name": "crc32",
+              "signature": "(file: File)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                324,
+                397
+              ],
+              "name": "updateNotification",
+              "signature": "(fileToDownload: String, percent: Int)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            57,
+            406
+          ],
+          "name": "DownloadTask",
+          "type": "class"
+        }
+      ]
+    },
+    "UpdateService.kt": {
+      "hash": "d47fc05b2eb5",
+      "indexed_at": "2026-08-01T04:00:29.708612+00:00",
+      "language": "kotlin",
+      "lines": 302,
+      "mtime_ns": 1785556378296899600,
+      "size": 11519,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                64,
+                66
+              ],
+              "name": "onBind",
+              "signature": "(intent: Intent)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                89
+              ],
+              "name": "onCreate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                109
+              ],
+              "name": "onStartCommand",
+              "signature": "(intent: Intent?, flags: Int, startId: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                127
+              ],
+              "name": "onTimeout",
+              "signature": "(startId: Int, fgsType: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                129,
+                136
+              ],
+              "name": "onDestroy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                138,
+                155
+              ],
+              "name": "startDownloadAction",
+              "signature": "(intent: Intent, startId: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                157,
+                172
+              ],
+              "name": "stopDownloadAction",
+              "signature": "(intent: Intent)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                174,
+                198
+              ],
+              "name": "installationRequestAction",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                200,
+                212
+              ],
+              "name": "createNotificationChannel",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                214,
+                292
+              ],
+              "name": "sendNotification",
+              "signature": "(serviceStartId: Int, notificationId: Int, startTime: Long, Ticker: String, Title: String, Text: ...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            46,
+            302
+          ],
+          "name": "UpdateService",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:29.710867+00:00",
+  "version": "1.0"
+}

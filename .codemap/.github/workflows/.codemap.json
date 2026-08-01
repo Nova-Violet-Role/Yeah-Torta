@@ -1,0 +1,1147 @@
+{
+  "directory": ".github\\workflows",
+  "files": {
+    "build.yml": {
+      "hash": "be48fbfda9eb",
+      "indexed_at": "2026-08-01T03:59:06.780465+00:00",
+      "language": "yaml",
+      "lines": 266,
+      "mtime_ns": 1785556606524763100,
+      "size": 11505,
+      "symbols": [
+        {
+          "docstring": "build",
+          "lines": [
+            25,
+            26
+          ],
+          "name": "name",
+          "type": "key"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "docstring": "[main, torta]",
+                  "lines": [
+                    29,
+                    29
+                  ],
+                  "name": "branches",
+                  "type": "collection"
+                },
+                {
+                  "docstring": "['v*']",
+                  "lines": [
+                    30,
+                    30
+                  ],
+                  "name": "tags",
+                  "type": "collection"
+                }
+              ],
+              "lines": [
+                28,
+                30
+              ],
+              "name": "push",
+              "type": "section"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "[main, torta]",
+                  "lines": [
+                    32,
+                    32
+                  ],
+                  "name": "branches",
+                  "type": "collection"
+                }
+              ],
+              "lines": [
+                31,
+                32
+              ],
+              "name": "pull_request",
+              "type": "section"
+            },
+            {
+              "lines": [
+                33,
+                34
+              ],
+              "name": "workflow_dispatch",
+              "type": "section"
+            }
+          ],
+          "lines": [
+            27,
+            34
+          ],
+          "name": "on",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "always",
+              "lines": [
+                36,
+                37
+              ],
+              "name": "CARGO_TERM_COLOR",
+              "type": "key"
+            },
+            {
+              "docstring": "0",
+              "lines": [
+                38,
+                38
+              ],
+              "name": "CARGO_INCREMENTAL",
+              "type": "key"
+            },
+            {
+              "docstring": "1",
+              "lines": [
+                39,
+                40
+              ],
+              "name": "RUST_BACKTRACE",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            35,
+            40
+          ],
+          "name": "env",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "docstring": "engine tests (1311)",
+                  "lines": [
+                    47,
+                    47
+                  ],
+                  "name": "name",
+                  "type": "key"
+                },
+                {
+                  "docstring": "ubuntu-latest",
+                  "lines": [
+                    48,
+                    48
+                  ],
+                  "name": "runs-on",
+                  "type": "key"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "actions/checkout@v4",
+                      "lines": [
+                        50,
+                        51
+                      ],
+                      "name": "uses",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "Install Rust",
+                      "lines": [
+                        52,
+                        52
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "dtolnay/rust-toolchain@stable",
+                      "lines": [
+                        53,
+                        54
+                      ],
+                      "name": "uses",
+                      "type": "key"
+                    },
+                    {
+                      "docstring": "Swatinem/rust-cache@v2",
+                      "lines": [
+                        55,
+                        55
+                      ],
+                      "name": "uses",
+                      "type": "item"
+                    },
+                    {
+                      "children": [
+                        {
+                          "docstring": "rust/torta_core",
+                          "lines": [
+                            57,
+                            60
+                          ],
+                          "name": "workspaces",
+                          "type": "key"
+                        }
+                      ],
+                      "lines": [
+                        56,
+                        60
+                      ],
+                      "name": "with",
+                      "type": "section"
+                    },
+                    {
+                      "docstring": "cargo test --features mirror",
+                      "lines": [
+                        61,
+                        61
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "rust/torta_core",
+                      "lines": [
+                        62,
+                        62
+                      ],
+                      "name": "working-directory",
+                      "type": "key"
+                    },
+                    {
+                      "docstring": "cargo test --lib --features mirror",
+                      "lines": [
+                        63,
+                        64
+                      ],
+                      "name": "run",
+                      "type": "key"
+                    },
+                    {
+                      "docstring": "cargo fmt / clippy (advisory)",
+                      "lines": [
+                        65,
+                        65
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "rust/torta_core",
+                      "lines": [
+                        66,
+                        66
+                      ],
+                      "name": "working-directory",
+                      "type": "key"
+                    },
+                    {
+                      "docstring": "true",
+                      "lines": [
+                        67,
+                        67
+                      ],
+                      "name": "continue-on-error",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        68,
+                        74
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    }
+                  ],
+                  "lines": [
+                    49,
+                    74
+                  ],
+                  "name": "steps",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                46,
+                74
+              ],
+              "name": "rust-tests",
+              "type": "section"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "uniffi bindings are not stale",
+                  "lines": [
+                    76,
+                    76
+                  ],
+                  "name": "name",
+                  "type": "key"
+                },
+                {
+                  "docstring": "ubuntu-latest",
+                  "lines": [
+                    77,
+                    77
+                  ],
+                  "name": "runs-on",
+                  "type": "key"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "actions/checkout@v4",
+                      "lines": [
+                        79,
+                        79
+                      ],
+                      "name": "uses",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "dtolnay/rust-toolchain@stable",
+                      "lines": [
+                        80,
+                        80
+                      ],
+                      "name": "uses",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "Swatinem/rust-cache@v2",
+                      "lines": [
+                        81,
+                        81
+                      ],
+                      "name": "uses",
+                      "type": "item"
+                    },
+                    {
+                      "children": [
+                        {
+                          "docstring": "rust/torta_core",
+                          "lines": [
+                            83,
+                            90
+                          ],
+                          "name": "workspaces",
+                          "type": "key"
+                        }
+                      ],
+                      "lines": [
+                        82,
+                        90
+                      ],
+                      "name": "with",
+                      "type": "section"
+                    },
+                    {
+                      "docstring": "Generate bindings from the HOST cdylib",
+                      "lines": [
+                        91,
+                        91
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "rust/torta_core",
+                      "lines": [
+                        92,
+                        92
+                      ],
+                      "name": "working-directory",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        93,
+                        101
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Diff against the committed bindings",
+                      "lines": [
+                        102,
+                        102
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        103,
+                        118
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    }
+                  ],
+                  "lines": [
+                    78,
+                    118
+                  ],
+                  "name": "steps",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                75,
+                118
+              ],
+              "name": "bindings-drift",
+              "type": "section"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "apk (${{ matrix.flavor }})",
+                  "lines": [
+                    120,
+                    120
+                  ],
+                  "name": "name",
+                  "type": "key"
+                },
+                {
+                  "docstring": "[rust-tests, bindings-drift]",
+                  "lines": [
+                    121,
+                    121
+                  ],
+                  "name": "needs",
+                  "type": "collection"
+                },
+                {
+                  "docstring": "ubuntu-latest",
+                  "lines": [
+                    122,
+                    122
+                  ],
+                  "name": "runs-on",
+                  "type": "key"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "false",
+                      "lines": [
+                        124,
+                        124
+                      ],
+                      "name": "fail-fast",
+                      "type": "key"
+                    },
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "docstring": "arm64",
+                              "lines": [
+                                127,
+                                127
+                              ],
+                              "name": "flavor",
+                              "type": "item"
+                            },
+                            {
+                              "docstring": "arm64-v8a",
+                              "lines": [
+                                128,
+                                128
+                              ],
+                              "name": "abi",
+                              "type": "key"
+                            },
+                            {
+                              "docstring": "aarch64-linux-android",
+                              "lines": [
+                                129,
+                                129
+                              ],
+                              "name": "rust_target",
+                              "type": "key"
+                            },
+                            {
+                              "docstring": "universal",
+                              "lines": [
+                                130,
+                                130
+                              ],
+                              "name": "flavor",
+                              "type": "item"
+                            },
+                            {
+                              "docstring": "x86_64",
+                              "lines": [
+                                131,
+                                131
+                              ],
+                              "name": "abi",
+                              "type": "key"
+                            },
+                            {
+                              "docstring": "x86_64-linux-android",
+                              "lines": [
+                                132,
+                                132
+                              ],
+                              "name": "rust_target",
+                              "type": "key"
+                            }
+                          ],
+                          "lines": [
+                            126,
+                            132
+                          ],
+                          "name": "include",
+                          "type": "list"
+                        }
+                      ],
+                      "lines": [
+                        125,
+                        132
+                      ],
+                      "name": "matrix",
+                      "type": "section"
+                    }
+                  ],
+                  "lines": [
+                    123,
+                    132
+                  ],
+                  "name": "strategy",
+                  "type": "section"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "actions/checkout@v4",
+                      "lines": [
+                        134,
+                        135
+                      ],
+                      "name": "uses",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "JDK 17",
+                      "lines": [
+                        136,
+                        136
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "actions/setup-java@v4",
+                      "lines": [
+                        137,
+                        137
+                      ],
+                      "name": "uses",
+                      "type": "key"
+                    },
+                    {
+                      "children": [
+                        {
+                          "docstring": "temurin",
+                          "lines": [
+                            139,
+                            139
+                          ],
+                          "name": "distribution",
+                          "type": "key"
+                        },
+                        {
+                          "docstring": "'17'",
+                          "lines": [
+                            140,
+                            141
+                          ],
+                          "name": "java-version",
+                          "type": "key"
+                        }
+                      ],
+                      "lines": [
+                        138,
+                        141
+                      ],
+                      "name": "with",
+                      "type": "section"
+                    },
+                    {
+                      "docstring": "Node (the A14 uniffi-records guard is a node script)",
+                      "lines": [
+                        142,
+                        142
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "actions/setup-node@v4",
+                      "lines": [
+                        143,
+                        143
+                      ],
+                      "name": "uses",
+                      "type": "key"
+                    },
+                    {
+                      "children": [
+                        {
+                          "docstring": "'20'",
+                          "lines": [
+                            145,
+                            146
+                          ],
+                          "name": "node-version",
+                          "type": "key"
+                        }
+                      ],
+                      "lines": [
+                        144,
+                        146
+                      ],
+                      "name": "with",
+                      "type": "section"
+                    },
+                    {
+                      "docstring": "dtolnay/rust-toolchain@stable",
+                      "lines": [
+                        147,
+                        147
+                      ],
+                      "name": "uses",
+                      "type": "item"
+                    },
+                    {
+                      "children": [
+                        {
+                          "docstring": "${{ matrix.rust_target }}",
+                          "lines": [
+                            149,
+                            150
+                          ],
+                          "name": "targets",
+                          "type": "key"
+                        }
+                      ],
+                      "lines": [
+                        148,
+                        150
+                      ],
+                      "name": "with",
+                      "type": "section"
+                    },
+                    {
+                      "docstring": "Swatinem/rust-cache@v2",
+                      "lines": [
+                        151,
+                        151
+                      ],
+                      "name": "uses",
+                      "type": "item"
+                    },
+                    {
+                      "children": [
+                        {
+                          "lines": [
+                            153,
+                            155
+                          ],
+                          "name": "workspaces",
+                          "type": "multiline"
+                        },
+                        {
+                          "docstring": "${{ matrix.abi }}",
+                          "lines": [
+                            156,
+                            157
+                          ],
+                          "name": "key",
+                          "type": "key"
+                        }
+                      ],
+                      "lines": [
+                        152,
+                        157
+                      ],
+                      "name": "with",
+                      "type": "section"
+                    },
+                    {
+                      "docstring": "Android SDK",
+                      "lines": [
+                        158,
+                        158
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "android-actions/setup-android@v3",
+                      "lines": [
+                        159,
+                        160
+                      ],
+                      "name": "uses",
+                      "type": "key"
+                    },
+                    {
+                      "docstring": "NDK",
+                      "lines": [
+                        161,
+                        161
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        162,
+                        165
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "cargo-ndk",
+                      "lines": [
+                        166,
+                        166
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "cargo install cargo-ndk --locked",
+                      "lines": [
+                        167,
+                        170
+                      ],
+                      "name": "run",
+                      "type": "key"
+                    },
+                    {
+                      "docstring": "Build torta_core (${{ matrix.abi }})",
+                      "lines": [
+                        171,
+                        171
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "rust/torta_core",
+                      "lines": [
+                        172,
+                        172
+                      ],
+                      "name": "working-directory",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        173,
+                        178
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Build torta_ui (${{ matrix.abi }})",
+                      "lines": [
+                        179,
+                        179
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "rust/torta_ui",
+                      "lines": [
+                        180,
+                        180
+                      ],
+                      "name": "working-directory",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        181,
+                        187
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Assert the pillar symbols are actually in the .so",
+                      "lines": [
+                        188,
+                        188
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        189,
+                        200
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Gradle assemble ${{ matrix.flavor }}Debug",
+                      "lines": [
+                        201,
+                        201
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "./gradlew :libumdnscrypt:assemble${{ matrix.flavor == 'arm64' && 'Arm64' || 'Universal' }}Debug --st...",
+                      "lines": [
+                        202,
+                        203
+                      ],
+                      "name": "run",
+                      "type": "key"
+                    },
+                    {
+                      "docstring": "JVM unit tests",
+                      "lines": [
+                        204,
+                        204
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "./gradlew :libumdnscrypt:test${{ matrix.flavor == 'arm64' && 'Arm64' || 'Universal' }}DebugUnitTest ...",
+                      "lines": [
+                        205,
+                        206
+                      ],
+                      "name": "run",
+                      "type": "key"
+                    },
+                    {
+                      "docstring": "Name the APK",
+                      "lines": [
+                        207,
+                        207
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "apk",
+                      "lines": [
+                        208,
+                        208
+                      ],
+                      "name": "id",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        209,
+                        214
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "actions/upload-artifact@v4",
+                      "lines": [
+                        215,
+                        215
+                      ],
+                      "name": "uses",
+                      "type": "item"
+                    },
+                    {
+                      "children": [
+                        {
+                          "docstring": "yeah-torta-${{ matrix.flavor }}-alpha",
+                          "lines": [
+                            217,
+                            217
+                          ],
+                          "name": "name",
+                          "type": "key"
+                        },
+                        {
+                          "docstring": "${{ steps.apk.outputs.path }}",
+                          "lines": [
+                            218,
+                            218
+                          ],
+                          "name": "path",
+                          "type": "key"
+                        },
+                        {
+                          "docstring": "error",
+                          "lines": [
+                            219,
+                            219
+                          ],
+                          "name": "if-no-files-found",
+                          "type": "key"
+                        },
+                        {
+                          "docstring": "30",
+                          "lines": [
+                            220,
+                            224
+                          ],
+                          "name": "retention-days",
+                          "type": "key"
+                        }
+                      ],
+                      "lines": [
+                        216,
+                        224
+                      ],
+                      "name": "with",
+                      "type": "section"
+                    }
+                  ],
+                  "lines": [
+                    133,
+                    224
+                  ],
+                  "name": "steps",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                119,
+                224
+              ],
+              "name": "android",
+              "type": "section"
+            },
+            {
+              "children": [
+                {
+                  "docstring": "publish pre-release",
+                  "lines": [
+                    226,
+                    226
+                  ],
+                  "name": "name",
+                  "type": "key"
+                },
+                {
+                  "docstring": "startsWith(github.ref, 'refs/tags/v')",
+                  "lines": [
+                    227,
+                    227
+                  ],
+                  "name": "if",
+                  "type": "key"
+                },
+                {
+                  "docstring": "[android]",
+                  "lines": [
+                    228,
+                    228
+                  ],
+                  "name": "needs",
+                  "type": "collection"
+                },
+                {
+                  "docstring": "ubuntu-latest",
+                  "lines": [
+                    229,
+                    229
+                  ],
+                  "name": "runs-on",
+                  "type": "key"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "write",
+                      "lines": [
+                        231,
+                        231
+                      ],
+                      "name": "contents",
+                      "type": "key"
+                    }
+                  ],
+                  "lines": [
+                    230,
+                    231
+                  ],
+                  "name": "permissions",
+                  "type": "section"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "actions/checkout@v4",
+                      "lines": [
+                        233,
+                        233
+                      ],
+                      "name": "uses",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "actions/download-artifact@v4",
+                      "lines": [
+                        234,
+                        234
+                      ],
+                      "name": "uses",
+                      "type": "item"
+                    },
+                    {
+                      "children": [
+                        {
+                          "docstring": "artifacts",
+                          "lines": [
+                            236,
+                            237
+                          ],
+                          "name": "path",
+                          "type": "key"
+                        }
+                      ],
+                      "lines": [
+                        235,
+                        237
+                      ],
+                      "name": "with",
+                      "type": "section"
+                    },
+                    {
+                      "docstring": "Collect the APKs",
+                      "lines": [
+                        238,
+                        238
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        239,
+                        244
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "softprops/action-gh-release@v2",
+                      "lines": [
+                        245,
+                        245
+                      ],
+                      "name": "uses",
+                      "type": "item"
+                    },
+                    {
+                      "children": [
+                        {
+                          "docstring": "release/*.apk",
+                          "lines": [
+                            247,
+                            247
+                          ],
+                          "name": "files",
+                          "type": "key"
+                        },
+                        {
+                          "docstring": "true",
+                          "lines": [
+                            248,
+                            248
+                          ],
+                          "name": "prerelease",
+                          "type": "key"
+                        },
+                        {
+                          "docstring": "true",
+                          "lines": [
+                            249,
+                            249
+                          ],
+                          "name": "generate_release_notes",
+                          "type": "key"
+                        },
+                        {
+                          "docstring": "\"Yeah! Tort\u00e4 ${{ github.ref_name }} \u2014 ALPHA\"",
+                          "lines": [
+                            250,
+                            250
+                          ],
+                          "name": "name",
+                          "type": "key"
+                        },
+                        {
+                          "lines": [
+                            251,
+                            267
+                          ],
+                          "name": "body",
+                          "type": "multiline"
+                        }
+                      ],
+                      "lines": [
+                        246,
+                        267
+                      ],
+                      "name": "with",
+                      "type": "section"
+                    }
+                  ],
+                  "lines": [
+                    232,
+                    267
+                  ],
+                  "name": "steps",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                225,
+                267
+              ],
+              "name": "prerelease",
+              "type": "section"
+            }
+          ],
+          "lines": [
+            41,
+            267
+          ],
+          "name": "jobs",
+          "type": "section"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:06.781771+00:00",
+  "version": "1.0"
+}

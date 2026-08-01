@@ -1,0 +1,74 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// ============================================================================
+//  inu_palette.slint — THE LOYAL-HOUND / COLLAR-TAG PALETTE  (Wire Cake Inu, slice 10)
+//  ⬜ Soleil facet · SLINT/Rust color set — NO XML (the no-XML law).
+// ============================================================================
+//
+// The Wire Cake Inu pillar's colors, centralized as ONE SLINT global — density
+// without loss: every token is consumed by inu.slint (slice 8, the dashboard) OR
+// inu_settings.slint (slice 9, the ||| controls); none is dead, and after this
+// file there is ZERO magic hex anywhere in the Inu UI surface.
+//
+// The motif is THE LOYAL HOUND AT THE GATE. "Inu" = Shizuku the dog (the no-root
+// framework we STUDIED, never copied). Wire Cake Inu is our own in-app no-root
+// ADB self-elevation: the friendly hound that fetches you privileged access and
+// GUARDS the door — no companion app to install (Shizuku needs a 2nd app; ours is
+// in-app). That warmth IS the pillar's verdict language, and it is deliberately a
+// WARM den — distinct from the five cold-ground pillars (the Warden's Monokuma
+// courtroom black/white/red, Centauri's deep-space cyan, the MaskSolver's midnight
+// violet, the Beast's molten orange, Rotation's orbital azure):
+//
+//   • the DEN scale     → the warm hound's-den night: the dark a card/medallion lifts off of
+//   • the COAT scale    → the cream-bright values + the muted speech struck on the dark
+//   • the COLLAR teal   → the brand: headings + the medallion ring + the friendly accent
+//   • GOODBOY green      → ELEVATED / a power granted / "good dog" (the Inu did its job)
+//   • the TAG gold        → the warm dog-tag glow: paired-warm + the "keep protected" (durable) grant
+//   • caution amber       → REVIEW: drift-that-won't-survive-reboot + the settings decision point
+//   • the GROWL red       → the silent killers: GHOST GRANT / PAIR LOST / not-elevated fault
+//
+// This is the SLINT/Rust replacement for a would-be `colors_wire_cake_inu.xml`
+// (the no-XML law) — it succeeds the stripped `ic_wireless_debug.xml` tint set +
+// the `WdStep*` style colors. THE single source of truth, imported by inu.slint
+// (slice 8, the dashboard) AND inu_settings.slint (slice 9, the ||| controls).
+//
+// USAGE — a SLINT global is a shared singleton of read-only constants:
+//   import { Inu } from "inu_palette.slint";
+//   background: Inu.den;   color: Inu.cream;   accent: Inu.collar;
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android
+// cross-compile spike #69; the palette is host-side constants, no device claim.
+// Compiled via build.rs (main.slint -> inu.slint -> here, the import graph).
+// ============================================================================
+
+export global Inu {
+    // ── THE DEN — the warm hound's-den night ground scale (deepest -> faintest), so a
+    //    card lifts off the window and a tile lifts off the card by GROUND alone, not by
+    //    border. Warm-black (a whisper of brown), never the cold blues of the other pillars. ──
+    out property <color> den:    #12100c;   // deepest — the dashboard Window ground (warm-black)
+    out property <color> burrow: #1a1610;   // one step up — feed rows / the collar-ring pips
+    out property <color> kennel: #201b14;   // the CROWN medallion / card panel
+    out property <color> straw:  #262019;   // the metric (StatTile) panels
+    out property <color> leash:  #3a3327;   // hairline borders / rules on the dark (the thin lead line)
+    out property <color> track:  #3a3a3a;   // inactive control track — the toggle OFF rail (settings reuse)
+
+    // ── THE COAT — the cream-bright strike + the muted speech (a hound's cream coat;
+    //    brightest -> faintest-still-legible). ─────────────────────────────────────────
+    out property <color> cream: #f6f0e6;    // primary text — the bright values (the warm bone)
+    out property <color> fur:   #a89a85;    // secondary text — labels, the muted voice
+    out property <color> dim:   #7c7160;    // tertiary text — section titles, the faintest read
+
+    // ── THE COLLAR & the verdict accents — the loyal hound's ruling.
+    //    BRILLIANCE LAW (Socio directive 2026-07-22): every accent lifted from muted
+    //    toward chroma + specular brilliance — brilliant, never murky. ──────────────────
+    out property <color> collar:  #3fd4c2;  // THE COLLAR — headings / medallion ring / the pillar brand accent (brilliant teal)
+    out property <color> goodboy: #62e087;  // green — ELEVATED / a power granted / GOOD DOG (the Inu did its job)
+    out property <color> tag:     #ffc233;  // gold — the warm dog-TAG glow: paired-warm + "keep protected" (durable grant)
+    out property <color> gleam:   #b9fff2;  // specular GLEAM — collar highlights / the clasp flash / mascot shine (brilliance law)
+    out property <color> caution: #f0932b;  // amber — REVIEW: drift-won't-survive-reboot + the SETTINGS decision point (slice 9)
+    out property <color> growl:   #e5533c;  // red — GHOST GRANT / PAIR LOST / not-elevated fault (the growl)
+    out property <color> wound:   #a5342a;  // the deeper blood-red — alert-banner FILL (≠ the accent stroke)
+    out property <color> strike:  white;    // the bright text struck on a filled alert banner
+}

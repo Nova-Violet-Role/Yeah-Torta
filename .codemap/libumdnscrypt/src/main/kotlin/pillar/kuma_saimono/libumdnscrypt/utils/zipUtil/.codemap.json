@@ -1,0 +1,90 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\utils\\zipUtil",
+  "files": {
+    "ZipFileManager.kt": {
+      "hash": "8b3a872ed47c",
+      "indexed_at": "2026-08-01T04:00:52.082782+00:00",
+      "language": "kotlin",
+      "lines": 204,
+      "mtime_ns": 1785556379131900300,
+      "size": 7404,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                39,
+                87
+              ],
+              "name": "extractZipFromInputStream",
+              "signature": "(inputStream: InputStream, outputPathDir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                89,
+                101
+              ],
+              "name": "extractZip",
+              "signature": "(outputPathDir: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                124
+              ],
+              "name": "createZip",
+              "signature": "(context: Context, vararg inputSource: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                126,
+                154
+              ],
+              "name": "addZipEntry",
+              "signature": "(context: Context, zipOutputStream: ZipOutputStream, inputPath: String, fileName: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                156,
+                163
+              ],
+              "name": "copyData",
+              "signature": "(input: InputStream, output: OutputStream)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                165,
+                171
+              ],
+              "name": "removeEndSlash",
+              "signature": "(path: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                173,
+                203
+              ],
+              "name": "checkAndRestoreAccess",
+              "signature": "(context: Context, path: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            37,
+            204
+          ],
+          "name": "ZipFileManager",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:52.084430+00:00",
+  "version": "1.0"
+}

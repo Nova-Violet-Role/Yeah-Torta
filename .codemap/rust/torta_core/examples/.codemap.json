@@ -1,0 +1,121 @@
+{
+  "directory": "rust\\torta_core\\examples",
+  "files": {
+    "asn_gen.rs": {
+      "hash": "b1f4688293a0",
+      "indexed_at": "2026-07-26T19:12:57.753349+00:00",
+      "language": "rust",
+      "lines": 195,
+      "mtime_ns": 1785030832299604900,
+      "size": 7624,
+      "symbols": [
+        {
+          "lines": [
+            43,
+            46
+          ],
+          "name": "Names",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                49,
+                57
+              ],
+              "name": "intern",
+              "signature": "(&mut self, name: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            48,
+            58
+          ],
+          "name": "Names",
+          "type": "impl"
+        },
+        {
+          "docstring": "Insert dropping any overlap FIRST-IN-WINS (the dumps should be disjoint; trust nothing).",
+          "lines": [
+            61,
+            75
+          ],
+          "name": "insert",
+          "signature": "(ranges: &mut Ranges, start: u128, end: u128, id: u32, dropped: &mut u64)",
+          "type": "function"
+        },
+        {
+          "docstring": "Merge adjacent same-name ranges, then emit start records + gap sentinels.",
+          "lines": [
+            78,
+            114
+          ],
+          "name": "emit",
+          "signature": "(path: &std::path::Path, ranges: &Ranges, key_bytes: usize, key_max: u128)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            116,
+            195
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "geoip_gen.rs": {
+      "hash": "efb171cc5732",
+      "indexed_at": "2026-07-26T19:12:57.754809+00:00",
+      "language": "rust",
+      "lines": 167,
+      "mtime_ns": 1785030832309604400,
+      "size": 7330,
+      "symbols": [
+        {
+          "lines": [
+            34,
+            116
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "not worth double-claiming). Returns 1 if dropped as an overlap.",
+          "lines": [
+            121,
+            133
+          ],
+          "name": "insert",
+          "signature": "(map: &mut Ranges, s: u64, e: u64, cc: [u8; 2])",
+          "type": "function"
+        },
+        {
+          "docstring": "final range). Returns (bytes, merged_range_count, gap_sentinel_count).",
+          "lines": [
+            138,
+            163
+          ],
+          "name": "emit",
+          "signature": "(map: &Ranges, key_bytes: usize)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            165,
+            167
+          ],
+          "name": "key_max",
+          "signature": "(key_bytes: usize)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-26T19:12:58.608725+00:00",
+  "version": "1.0"
+}

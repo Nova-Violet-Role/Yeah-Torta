@@ -1,0 +1,519 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// ★ #49 · THE NETSTACK FORWARDER DASHBOARD — the per-flow docket surface.
+//
+// The forwarder is the tunnel's PACKET MOVER: every TCP/UDP flow the netstack accepts off tun0 is
+// carried by one of its four arms (udp / udp-paced / tcp / tcp-paced). Until this panel existed the
+// ENGINE tab could only show AGGREGATES — "17 flows, 4.2 MB up" — with no way to see WHICH flow was
+// paced, which one stalled, which one the CAKE shaper had put in the BULK tin. #47 built the
+// per-flow registry in Rust, #48 carried it across the UniFFI seam and the Kotlin bridge; this is
+// the surface that finally renders it.
+//
+// IDENTITY: THE CARBON RING (ThemeBook.carbon) — the engine plane's graphite + cyan, the same
+// identity the ||| Carbon bar already wears. The forwarder is NOT one of the eight named pillars;
+// it is the datapath underneath them, so it borrows the engine-plane skin rather than inventing a
+// ninth pillar's colours.
+//
+// THE FEED (the two-.so law, task #74): `torta_core` is linked TWICE — standalone
+// `libtorta_core.so` (where the tunnel and therefore the forwarder actually run) and statically
+// inside `libtorta_ui.so` (this shell). The shell's own copy owns a SEPARATE, permanently empty
+// flow registry. So every number here crosses the Kotlin pillar bridge
+// (`TortaPillarBridge.liveForwarderDocket` → `engine_bridge::live_forwarder_docket` →
+// `parse_forwarder_docket`), exactly like the Warden flows docket. A bridge-silent read renders the
+// honest empty docket — NEVER the cold twin's zeros dressed up as a measurement.
+//
+// T20 PRIVACY holds end to end: a row carries the folded CAKE flow key, its tin and the engine's own
+// counters. No address, no port, no hostname ever reaches this panel — there is nothing here to leak
+// because the wire never carried it.
+
+import { ThemeBook, MotifWash, CharcoalLump, SectionTheme } from "theme_tokens.slint";
+
+// One live flow, as the docket enumerates it. Mirrors `torta_core::ForwarderFlowRow` field for
+// field, after `parse_forwarder_docket` has turned the engine's raw numbers into display truth:
+// `key` folded to short hex, `proto`/`tin` resolved to their labels.
+export struct FwdFlowRow {
+    key: string,        // the folded CAKE flow key as short hex — an identity, never an address
+    proto: string,      // "TCP" | "UDP"
+    tin: string,        // "CRITICAL" (53/853) | "HIGH" (443/80/22) | "BULK" (the paced remainder)
+    paced: bool,        // rides the YeAH write-budget shaper (BULK only, by design)
+    cwnd: int,          // the shaper's live congestion window; 0 on an unpaced flow (not a stall)
+    bytes-up: float,    // client → upstream
+    bytes-down: float,  // upstream → client
+    rtt-ms: int,        // -1 = UNMEASURED (no paced write has completed yet), never rendered as 0
+    age-ms: float,      // how long this flow has been on the docket
+    stalls: int,        // write stalls this flow has fed back to the shaper
+}
+
+// ── file-local widget family (the per-pillar sibling law: palettes stay per-surface) ────────────
+
+// The metric tile. `muted` renders the gated "—": an inert metric must never read as a live zero
+// (the house empty-state idiom — the law #96 was closed on).
+component Tile inherits Rectangle {
+    in property <SectionTheme> th;
+    in property <string> label;
+    in property <string> value;
+    in property <color> tint: root.th.bright;
+    in property <bool> muted: false;
+    min-width: 78px;
+    min-height: 54px;
+    border-radius: 8px;
+    background: root.th.panel;
+    border-width: 1px;
+    border-color: root.th.edge;
+    VerticalLayout {
+        padding: 8px;
+        spacing: 2px;
+        Text {
+            text: root.muted ? "—" : root.value;
+            color: root.muted ? root.th.faint : root.tint;
+            font-size: root.th.value-size;
+            font-weight: root.th.value-weight;
+            overflow: elide;
+        }
+        Text {
+            text: root.label;
+            color: root.th.muted;
+            font-size: root.th.label-size;
+            font-weight: root.th.label-weight;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A group heading.
+component GroupTitle inherits Text {
+    in property <SectionTheme> th;
+    color: root.th.faint;
+    font-size: 11px;
+    font-weight: 800;
+    wrap: word-wrap;
+}
+
+// The filled verdict banner — the [!] voice.
+component Banner inherits Rectangle {
+    in property <SectionTheme> th;
+    in property <string> message;
+    in property <color> fill: root.th.wound;
+    border-radius: 6px;
+    background: root.fill;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: root.th.strike;
+            font-size: 13px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: root.th.strike;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A small status pill.
+component Pill inherits Rectangle {
+    in property <SectionTheme> th;
+    in property <string> text;
+    in property <color> tint: root.th.accent;
+    border-radius: 9px;
+    background: root.tint.with-alpha(0.16);
+    border-width: 1px;
+    border-color: root.tint.with-alpha(0.55);
+    height: 20px;
+    HorizontalLayout {
+        padding-left: 8px;
+        padding-right: 8px;
+        Text {
+            text: root.text;
+            color: root.tint;
+            font-size: 9px;
+            font-weight: 800;
+            vertical-alignment: center;
+        }
+    }
+}
+
+// ── the docket row ───────────────────────────────────────────────────────────────────────────────
+
+// One flow, rendered. The tin drives the accent: CRITICAL is the latency lane (DNS), HIGH the
+// interactive lane (web/ssh), BULK the paced lane the CAKE shaper actually governs.
+component DocketRow inherits Rectangle {
+    in property <SectionTheme> th;
+    // NOT named `row`: every Rectangle already owns a built-in `row` (the grid-layout coordinate),
+    // and Slint refuses to let a component override it. The measured error, kept as the reason.
+    in property <FwdFlowRow> flow;
+    // The tin's colour grammar — CRITICAL rides good (it is never shaped), HIGH the accent, BULK the
+    // secondary lick (the one the shaper is working on).
+    property <color> tin-tint: root.flow.tin == "CRITICAL" ? root.th.good
+        : root.flow.tin == "HIGH" ? root.th.accent
+        : root.th.accent2;
+    height: 62px;
+    border-radius: 6px;
+    background: root.th.floor;
+    border-width: 1px;
+    border-color: root.th.edge;
+    VerticalLayout {
+        padding: 7px;
+        spacing: 4px;
+        // line 1 — identity: key · proto · tin · pacing posture
+        HorizontalLayout {
+            spacing: 6px;
+            Text {
+                text: root.flow.key;
+                color: root.th.bright;
+                font-size: 11px;
+                font-weight: 800;
+                vertical-alignment: center;
+            }
+            Pill { th: root.th; text: root.flow.proto; tint: root.flow.proto == "TCP" ? root.th.accent : root.th.accent2; }
+            Pill { th: root.th; text: root.flow.tin; tint: root.tin-tint; }
+            // PACED is a capability statement, not a fault: CRITICAL/HIGH run unshaped BY DESIGN so
+            // latency-sensitive traffic never waits on a write budget. The row says which regime it
+            // is in rather than leaving a zero window to be misread as a broken shaper.
+            Pill {
+                th: root.th;
+                text: root.flow.paced ? "PACED cwnd \{root.flow.cwnd}" : "UNSHAPED";
+                tint: root.flow.paced ? root.th.accent : root.th.faint;
+            }
+            Rectangle { }
+            // Stalls are the shaper's back-pressure signal. Zero is the healthy reading, so it stays
+            // quiet; any stall at all earns the warn tint.
+            Text {
+                text: root.flow.stalls > 0 ? "⚠ \{root.flow.stalls} stall(s)" : "";
+                color: root.th.warn;
+                font-size: 10px;
+                font-weight: 800;
+                vertical-alignment: center;
+            }
+        }
+        // line 2 — the numbers: bytes both ways, rtt, age
+        HorizontalLayout {
+            spacing: 10px;
+            Text {
+                text: "↑ \{ForwarderFmt.bytes(root.flow.bytes-up)}";
+                color: root.th.muted;
+                font-size: 10px;
+                font-weight: 700;
+            }
+            Text {
+                text: "↓ \{ForwarderFmt.bytes(root.flow.bytes-down)}";
+                color: root.th.muted;
+                font-size: 10px;
+                font-weight: 700;
+            }
+            // -1 is UNMEASURED, not instantaneous. A flow that has not completed a paced write yet
+            // has no round trip to report, and saying "0ms" would be a lie the panel tells itself.
+            Text {
+                text: root.flow.rtt-ms >= 0 ? "rtt \{root.flow.rtt-ms}ms" : "rtt —";
+                color: root.flow.rtt-ms >= 0 ? root.th.bright : root.th.faint;
+                font-size: 10px;
+                font-weight: 700;
+            }
+            Rectangle { }
+            Text {
+                text: "age \{ForwarderFmt.duration(root.flow.age-ms)}";
+                color: root.th.faint;
+                font-size: 10px;
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+// Formatting the engine's raw numbers. A global so the row and the crown format identically — one
+// source, zero drift between "4 MB" in a tile and "4096 kB" in a row.
+export global ForwarderFmt {
+    // Byte scale. Integer-only rendering (the proven house idiom — beast.slint's Math.round tiles):
+    // a float that renders its own decimals is a different string on every tick.
+    public pure function bytes(b: float) -> string {
+        b >= 1048576 ? "\{Math.round(b / 1048576)} MB"
+            : b >= 1024 ? "\{Math.round(b / 1024)} kB"
+            : "\{Math.round(b)} B"
+    }
+    // Age scale — ms until a second has passed, then seconds, then minutes.
+    public pure function duration(ms: float) -> string {
+        ms >= 60000 ? "\{Math.round(ms / 60000)}m"
+            : ms >= 1000 ? "\{Math.round(ms / 1000)}s"
+            : "\{Math.round(ms)}ms"
+    }
+}
+
+// ── the pane ─────────────────────────────────────────────────────────────────────────────────────
+
+// Inherits Rectangle (NOT Window) so it embeds on the single android surface — the same law
+// MaskSolver / Centauri / Beast / DnscryptSection follow.
+export component ForwarderPane inherits Rectangle {
+    property <SectionTheme> th: ThemeBook.carbon;
+
+    // ── the aggregate surface (ForwarderSnapshot, via TortaPillarBridge.liveForwarderStats) ──
+    // These mirror the ENGINE tab's `fwd-*` names one for one: the shell feeds BOTH surfaces from
+    // ONE parse, so the card and this dashboard can never disagree (the single-authority law).
+    in-out property <bool> armed: false;            // snapshot.armed (netstack switched on)
+    // The HOST PREF (swNetstackForwarder), a SEPARATE authority from `armed` above. The two answer
+    // different questions: `pref-armed` is "did the operator ask for it?", `armed` is "is the
+    // running datapath carrying it?". Telling an operator to arm a switch they already armed is a
+    // lie of advice, so every OFF-state sentence below is chosen from the PREF, not the snapshot.
+    in-out property <bool> pref-armed: false;
+    in-out property <bool> live: false;             // snapshot.live (accept loop actually running)
+    in-out property <int> flows-tcp: 0;             // lifetime
+    in-out property <int> flows-udp: 0;
+    // ★ #51 — the remainder AFTER the echo lane: protocols we do not carry (ICMPv6, IGMP, ESP).
+    // Before the lane existed this tile counted every ping too, which read as a fault when it was
+    // really a missing feature.
+    in-out property <int> flows-other: 0;
+    // ★ #51 N9 — the ECHO lane. `icmp-echo` is every ping that crossed the tun; `icmp-replied` the
+    // ones a REAL destination answered; `icmp-failed` the ones that did not come back. The lane
+    // dials for real, so a failure here is a fact about the network — never a decoration.
+    in-out property <int> icmp-echo: 0;
+    in-out property <int> icmp-replied: 0;
+    in-out property <int> icmp-failed: 0;
+    in-out property <int> active-flows: 0;          // right now
+    in-out property <int> tin-critical: 0;
+    in-out property <int> tin-high: 0;
+    in-out property <int> tin-normal: 0;
+    in-out property <int> dns-answered: 0;
+    in-out property <int> paced-flows: 0;
+    in-out property <float> bytes-up: 0.0;
+    in-out property <float> bytes-down: 0.0;
+    in-out property <int> rtt-samples: 0;
+    in-out property <int> stalls: 0;
+    in-out property <int> warden-denied: 0;
+    in-out property <int> cwnd-last: 0;
+    in-out property <int> dial-protect-failed: 0;
+    in-out property <int> dial-connect-failed: 0;
+    // ★ N-dial CLASSIFIED, surfaced HERE and not only in the ENGINE ROOM. Without these the banner
+    // below could only see the TOTAL, so it GUESSED an attribution -- it read "the network, not the
+    // seam" while the measured truth was 597 refused / 0 unreachable / 0 timed out / 0 other. A
+    // refusal is a peer answering RST; that is the opposite diagnosis from unreachable, and the two
+    // demand opposite fixes. The four always sum to `dial-connect-failed`.
+    in-out property <int> dial-refused: 0;
+    in-out property <int> dial-unreachable: 0;
+    in-out property <int> dial-timed-out: 0;
+    in-out property <int> dial-other: 0;
+
+    // ── ★ #47/#49 the PER-FLOW DOCKET ──
+    // `docket-total` is the engine's TRUE active-flow count; `docket` is what actually fits on the
+    // wire (Rust caps the registry at 256, Kotlin the wire at 12, the parser the render at 12). The
+    // crown prints "shown of total" from the pair so a cap NEVER reads as "that was all the traffic".
+    in-out property <[FwdFlowRow]> docket: [];
+    in-out property <int> docket-total: 0;
+
+    background: root.th.ground;
+
+    // Identity layer - Carbon theme drench
+    MotifWash { theme: ThemeBook.carbon; width: 100%; height: 100%; }
+
+    VerticalLayout {
+        padding: 12px;
+        spacing: 10px;
+
+        // ── CROWN ──
+        HorizontalLayout {
+            spacing: 8px;
+            CharcoalLump { lump-size: 20px; }
+            Text {
+                text: "NETSTACK FORWARDER";
+                color: root.th.accent;
+                font-size: root.th.title-size;
+                font-weight: root.th.title-weight;
+                vertical-alignment: center;
+            }
+            Rectangle { }
+            // The posture is a THREE-state truth, not a boolean: a forwarder can be armed by the
+            // host pref while its accept loop has not come up yet, and the two readings demand
+            // opposite responses from the user.
+            Pill {
+                th: root.th;
+                text: root.live ? "LIVE" : ((root.armed || root.pref-armed) ? "ARMED · loop not up" : "DORMANT");
+                tint: root.live ? root.th.good : ((root.armed || root.pref-armed) ? root.th.warn : root.th.faint);
+            }
+        }
+        Text {
+            text: "every flow tun0 accepts, carried by the CAKE-shaped datapath · counts only, never an address";
+            color: root.th.faint;
+            font-size: 10px;
+            font-weight: 600;
+            wrap: word-wrap;
+        }
+
+        // The DORMANT banner names the CAUSE, not just the symptom (the #98 law: when a metric reads
+        // zero, say which of its causes you are asserting).
+        // Gated on the PREF, so this only ever appears when the switch really is off. It is the one
+        // case where "go arm it" is true advice.
+        if !root.armed && !root.pref-armed : Banner {
+            th: root.th;
+            fill: root.th.wound;
+            message: "the netstack forwarder is switched OFF — no flow can exist to be docketed. Arm it on the ENGINE tab.";
+        }
+        // The switch IS armed but nothing is being carried. Two distinct causes, and the operator's
+        // next move differs: with no tunnel they start the engine, with a tunnel up they wait for the
+        // loop to latch. Naming the wrong one would send them to the wrong control.
+        if root.pref-armed && !root.armed && !root.live : Banner {
+            th: root.th;
+            fill: root.th.warn.with-alpha(0.30);
+            message: "armed and waiting — the tunnel is down, so the accept loop has nothing to attach to. Start the engine on HOME.";
+        }
+        if root.armed && !root.live : Banner {
+            th: root.th;
+            fill: root.th.warn.with-alpha(0.30);
+            message: "armed, but the accept loop is not running yet — the switch latches on the next tunnel start.";
+        }
+
+        // ── LANES ──
+        GroupTitle { th: root.th; text: "LANES  ·  what the datapath is carrying"; }
+        HorizontalLayout {
+            spacing: 8px;
+            Tile { th: root.th; label: "ACTIVE NOW"; value: "\{root.active-flows}"; tint: root.th.accent; muted: !root.armed; }
+            Tile { th: root.th; label: "TCP (lifetime)"; value: "\{root.flows-tcp}"; muted: !root.armed; }
+            Tile { th: root.th; label: "UDP (lifetime)"; value: "\{root.flows-udp}"; muted: !root.armed; }
+            // ★ #51 CLOSED THE GAP THIS TILE WAS REPORTING. It used to count every ping, because
+            // ICMP had no lane; now it is the honest remainder — protocols we have chosen not to
+            // carry (ICMPv6, IGMP, ESP). Still amber when non-zero: a real capability gap made
+            // visible is the tile doing its job.
+            Tile { th: root.th; label: "OTHER (not carried)"; value: "\{root.flows-other}"; tint: root.flows-other > 0 ? root.th.warn : root.th.bright; muted: !root.armed; }
+        }
+
+        // ── ★ #51 N9 · THE ECHO LANE ──
+        GroupTitle { th: root.th; text: "ICMP ECHO  ·  every ping dialed for real, never synthesized"; }
+        HorizontalLayout {
+            spacing: 8px;
+            Tile { th: root.th; label: "PINGS SENT"; value: "\{root.icmp-echo}"; muted: !root.armed; }
+            // THE metric that matters: a reply here is a round trip the device actually completed
+            // while shielded — measured through a protected unprivileged ping socket.
+            Tile { th: root.th; label: "REPLIED (real)"; value: "\{root.icmp-replied}"; tint: root.icmp-replied > 0 ? root.th.good : root.th.bright; muted: !root.armed; }
+            // Amber, not red: an unanswered ping is usually the destination, not the seam. The lane
+            // is ALLOWED to report failure — that is what separates a diagnostic from a decoration.
+            Tile { th: root.th; label: "NO REPLY"; value: "\{root.icmp-failed}"; tint: root.icmp-failed > 0 ? root.th.warn : root.th.bright; muted: !root.armed; }
+        }
+        if root.live && root.icmp-echo > 0 && root.icmp-replied == 0 : Banner {
+            th: root.th;
+            fill: root.th.warn.with-alpha(0.30);
+            // NAME WHICH CAUSE YOU ARE ASSERTING (the #98 law): pings left, none came back. That is
+            // the destination or the kernel's ping-socket permission — stated as the two candidates
+            // it actually is, rather than as a bare zero the operator has to guess at.
+            message: "pings are leaving but nothing is coming back — either the destination is unreachable, or this kernel denies unprivileged ping sockets (ping_group_range).";
+        }
+
+        // ── TRIAGE ──
+        GroupTitle { th: root.th; text: "TIN TRIAGE  ·  the CAKE classifier's verdict per flow"; }
+        HorizontalLayout {
+            spacing: 8px;
+            Tile { th: root.th; label: "CRITICAL 53/853"; value: "\{root.tin-critical}"; tint: root.th.good; muted: !root.armed; }
+            Tile { th: root.th; label: "HIGH 443/80/22"; value: "\{root.tin-high}"; tint: root.th.accent; muted: !root.armed; }
+            Tile { th: root.th; label: "BULK (paced)"; value: "\{root.tin-normal}"; tint: root.th.accent2; muted: !root.armed; }
+            Tile { th: root.th; label: "SHAPED FLOWS"; value: "\{root.paced-flows}"; muted: !root.armed; }
+        }
+
+        // ── THROUGHPUT ──
+        GroupTitle { th: root.th; text: "THROUGHPUT  ·  bytes the forwarder actually moved"; }
+        HorizontalLayout {
+            spacing: 8px;
+            Tile { th: root.th; label: "UP"; value: ForwarderFmt.bytes(root.bytes-up); tint: root.th.accent; muted: !root.armed; }
+            Tile { th: root.th; label: "DOWN"; value: ForwarderFmt.bytes(root.bytes-down); tint: root.th.accent2; muted: !root.armed; }
+            // In-loop DNS never leaves the process — it is answered by the resolver on the datapath
+            // itself, which is why it can be counted here at all.
+            Tile { th: root.th; label: "DNS ANSWERED"; value: "\{root.dns-answered}"; tint: root.th.good; muted: !root.armed; }
+            Tile { th: root.th; label: "RTT SAMPLES"; value: "\{root.rtt-samples}"; muted: !root.armed; }
+        }
+
+        // ── HEALTH ──
+        GroupTitle { th: root.th; text: "HEALTH  ·  back-pressure, refusals and dial faults"; }
+        HorizontalLayout {
+            spacing: 8px;
+            Tile { th: root.th; label: "STALLS"; value: "\{root.stalls}"; tint: root.stalls > 0 ? root.th.warn : root.th.bright; muted: !root.armed; }
+            // A Warden refusal is the firewall WORKING, so it is never tinted as a fault.
+            Tile { th: root.th; label: "WARDEN DENIED"; value: "\{root.warden-denied}"; tint: root.th.good; muted: !root.armed; }
+            // The last shaped window. Unpaced-only traffic legitimately leaves this at 0, so the
+            // tile mutes rather than claiming a collapsed window.
+            Tile { th: root.th; label: "LAST cwnd"; value: "\{root.cwnd-last}"; muted: !root.armed || root.cwnd-last <= 0; }
+            Tile {
+                th: root.th;
+                label: "DIAL FAULTS";
+                value: "\{root.dial-protect-failed + root.dial-connect-failed}";
+                tint: (root.dial-protect-failed + root.dial-connect-failed) > 0 ? root.th.bad : root.th.bright;
+                muted: !root.armed;
+            }
+        }
+        // The two dial faults demand OPPOSITE fixes, so when either fires it is named explicitly
+        // rather than left inside a summed tile.
+        if root.dial-protect-failed > 0 : Banner {
+            th: root.th;
+            message: "VpnService.protect() refused \{root.dial-protect-failed} socket(s) — the VPN seam, not the network. In-loop DNS keeps working, which is why this can hide.";
+        }
+        if root.dial-connect-failed > 0 : Banner {
+            th: root.th;
+            fill: root.th.warn.with-alpha(0.30);
+            // NAME the errno class; never assign blame the counters cannot support. REFUSED means a
+            // peer sent RST (something answered and said no -- a listener that is gone, a loopback
+            // hairpin with nothing behind it, a port closed); UNREACHABLE means no route existed at
+            // all. Reporting the first as "the network" sends the reader in the wrong direction,
+            // which is exactly what happened for three weeks.
+            message: "\{root.dial-connect-failed} upstream dial(s) failed — refused \{root.dial-refused} · unreachable \{root.dial-unreachable} · timed out \{root.dial-timed-out} · other \{root.dial-other}. REFUSED = a peer answered with RST (a listener that is not there); UNREACHABLE = no route. They demand opposite fixes.";
+        }
+
+        // ── ★ THE PER-FLOW DOCKET ──
+        HorizontalLayout {
+            spacing: 8px;
+            GroupTitle { th: root.th; text: "PER-FLOW DOCKET  ·  live"; }
+            Rectangle { }
+            // "shown of total" — the cap is stated, never implied away.
+            Text {
+                text: root.docket.length < root.docket-total
+                    ? "showing \{root.docket.length} of \{root.docket-total}"
+                    : "\{root.docket-total} flow(s)";
+                color: root.th.faint;
+                font-size: 10px;
+                font-weight: 700;
+                vertical-alignment: center;
+            }
+        }
+
+        // Three distinct empty states, because they mean three different things and only one of them
+        // is a problem (the empty-state law this codebase keeps re-learning).
+        if !root.armed : Text {
+            text: "DORMANT — the docket is empty because the forwarder is off, not because traffic is idle.";
+            color: root.th.faint;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+        if root.armed && root.docket.length == 0 && root.docket-total == 0 : Text {
+            text: "NO FLOWS RIGHT NOW — the forwarder is live and waiting. Open an app that talks to the network and rows appear here within a second.";
+            color: root.th.muted;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+        // The docket registry itself is capped at 256 in Rust; past that a flow runs perfectly but is
+        // never enrolled. If the engine reports more live flows than could ever be listed, say so.
+        if root.armed && root.docket.length == 0 && root.docket-total > 0 : Text {
+            text: "\{root.docket-total} flow(s) are live, but none reached this list — the registry cap or the wire cap swallowed them. The flows themselves are unaffected.";
+            color: root.th.warn;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+
+        for r in root.docket : DocketRow { th: root.th; flow: r; }
+
+        Rectangle { }
+    }
+}
+
+// The Window wrapper — the live render on device is the embedded `ForwarderPane` above; this exists
+// for the Slint preview and the lib.rs proof test (the exact pattern BeastDashboard follows).
+export component ForwarderDashboard inherits Window {
+    title: "Yeah! Tortä — NETSTACK FORWARDER";
+    background: ThemeBook.carbon.ground;
+    preferred-width: 420px;
+    preferred-height: 900px;
+    pane := ForwarderPane { width: 100%; }
+}

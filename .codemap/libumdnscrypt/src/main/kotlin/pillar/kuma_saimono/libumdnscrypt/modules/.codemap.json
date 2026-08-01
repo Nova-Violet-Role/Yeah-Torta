@@ -1,0 +1,2176 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\modules",
+  "files": {
+    "ContextUIDUpdater.kt": {
+      "hash": "920602274caf",
+      "indexed_at": "2026-08-01T04:00:08.115624+00:00",
+      "language": "kotlin",
+      "lines": 76,
+      "mtime_ns": 1785556377448900100,
+      "size": 3487,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                40,
+                75
+              ],
+              "name": "updateModulesContextAndUID",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            26,
+            76
+          ],
+          "name": "ContextUIDUpdater",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesActionSender.kt": {
+      "hash": "b5755a3cb4a3",
+      "indexed_at": "2026-08-01T04:00:08.405447+00:00",
+      "language": "kotlin",
+      "lines": 52,
+      "mtime_ns": 1785556377461900800,
+      "size": 1824,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                27,
+                51
+              ],
+              "name": "sendIntent",
+              "signature": "(context: Context, action: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            26,
+            52
+          ],
+          "name": "ModulesActionSender",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesAux.kt": {
+      "hash": "dcb5eae0738d",
+      "indexed_at": "2026-08-01T04:00:08.693873+00:00",
+      "language": "kotlin",
+      "lines": 148,
+      "mtime_ns": 1785556377473899100,
+      "size": 5578,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                34,
+                56
+              ],
+              "name": "switchModes",
+              "signature": "(rootIsAvailable: Boolean, runModulesWithRoot: Boolean, operationMode: OperationMode)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                58,
+                64
+              ],
+              "name": "isDnsCryptSavedStateRunning",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                66,
+                72
+              ],
+              "name": "saveDNSCryptStateRunning",
+              "signature": "(running: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                74,
+                80
+              ],
+              "name": "isFirewallSavedStateRunning",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                82,
+                86
+              ],
+              "name": "saveFirewallStateRunning",
+              "signature": "(running: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                88,
+                102
+              ],
+              "name": "stopModulesIfRunning",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                104,
+                107
+              ],
+              "name": "stopModulesService",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                109,
+                112
+              ],
+              "name": "requestModulesStatusUpdate",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                114,
+                117
+              ],
+              "name": "recoverService",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                119,
+                122
+              ],
+              "name": "speedupModulesStateLoopTimer",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                124,
+                127
+              ],
+              "name": "slowdownModulesStateLoopTimer",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                129,
+                132
+              ],
+              "name": "makeModulesStateExtraLoop",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                134,
+                137
+              ],
+              "name": "startArpDetection",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                139,
+                142
+              ],
+              "name": "stopArpDetection",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                144,
+                147
+              ],
+              "name": "clearIptablesCommandsSavedHash",
+              "signature": "(context: Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            29,
+            148
+          ],
+          "name": "ModulesAux",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesKiller.kt": {
+      "hash": "35177b60f1c4",
+      "indexed_at": "2026-08-01T04:00:08.973632+00:00",
+      "language": "kotlin",
+      "lines": 444,
+      "mtime_ns": 1785556377485899100,
+      "size": 17180,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                70,
+                76
+              ],
+              "name": "sendResultIntent",
+              "signature": "(moduleMark: Int, moduleKeyWord: String, binaryPath: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                78,
+                84
+              ],
+              "name": "makeDelay",
+              "signature": "(sec: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                86,
+                88
+              ],
+              "name": "setDnsCryptThread",
+              "signature": "(dnsCryptThread: Thread?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                90,
+                92
+              ],
+              "name": "getDnsCryptThread",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                94,
+                193
+              ],
+              "name": "getDNSCryptKillerRunnable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                195,
+                254
+              ],
+              "name": "killModule",
+              "signature": "(module: String, pid: String, thread: Thread?, killWithRoot: Boolean, signal: String, delaySec: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                256,
+                267
+              ],
+              "name": "killWithPid",
+              "signature": "(signal: String, pid: String, delay: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                269,
+                279
+              ],
+              "name": "killWithSH",
+              "signature": "(module: String, commands: List<String>, delay: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                281,
+                290
+              ],
+              "name": "killWithSU",
+              "signature": "(module: String, commands: List<String>)",
+              "type": "method"
+            },
+            {
+              "docstring": "kill default signal SIGTERM - 15, SIGKILL -9, SIGQUIT - 3",
+              "lines": [
+                293,
+                342
+              ],
+              "name": "prepareKillCommands",
+              "signature": "(module: String, pid: String, signal: String, killWithRoot: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                344,
+                357
+              ],
+              "name": "doThreeAttemptsToStopModule",
+              "signature": "(modulePath: String, pid: String, thread: Thread?, moduleStartedWithRoot: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                359,
+                381
+              ],
+              "name": "stopModuleWithInterruptThread",
+              "signature": "(thread: Thread?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                383,
+                398
+              ],
+              "name": "readPidFile",
+              "signature": "(path: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            45,
+            444
+          ],
+          "name": "ModulesKiller",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesReceiver.kt": {
+      "hash": "4fa7ac4e2607",
+      "indexed_at": "2026-08-01T04:00:09.288750+00:00",
+      "language": "kotlin",
+      "lines": 1217,
+      "mtime_ns": 1785556377498899200,
+      "size": 48317,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                131,
+                174
+              ],
+              "name": "onReceive",
+              "signature": "(context: Context?, intent: Intent?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                176,
+                207
+              ],
+              "name": "intentOnReceive",
+              "signature": "(intent: Intent, action: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                209,
+                244
+              ],
+              "name": "registerReceivers",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                246,
+                271
+              ],
+              "name": "unregisterReceivers",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                273,
+                280
+              ],
+              "name": "registerIdleStateChanged",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                282,
+                293
+              ],
+              "name": "registerConnectivityChanges",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                295,
+                300
+              ],
+              "name": "registerAPisOn",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                302,
+                307
+              ],
+              "name": "registerUSBModemIsOn",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                309,
+                321
+              ],
+              "name": "registerPowerOFF",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                323,
+                330
+              ],
+              "name": "registerPackageChanged",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                332,
+                759
+              ],
+              "name": "listenNetworkChanges",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                761,
+                763
+              ],
+              "name": "isPreventDnsLeaks",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                765,
+                771
+              ],
+              "name": "unlistenNetworkChanges",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                773,
+                780
+              ],
+              "name": "listenConnectivityChanges",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                782,
+                791
+              ],
+              "name": "registerVpnRevokeReceiver",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                793,
+                818
+              ],
+              "name": "listenVpnConnectivityChanges",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                820,
+                832
+              ],
+              "name": "unlistenVpnConnectivityChanges",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                834,
+                840
+              ],
+              "name": "registerInteractiveStateReceiver",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                842,
+                868
+              ],
+              "name": "idleStateChanged",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                870,
+                911
+              ],
+              "name": "connectivityStateChanged",
+              "signature": "(intent: Intent?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                913,
+                929
+              ],
+              "name": "interactiveStateChanged",
+              "signature": "(intent: Intent)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                931,
+                996
+              ],
+              "name": "checkInternetSharingState",
+              "signature": "(intent: Intent)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                998,
+                1028
+              ],
+              "name": "powerOFFDetected",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1030,
+                1048
+              ],
+              "name": "packageChanged",
+              "signature": "(intent: Intent)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1050,
+                1059
+              ],
+              "name": "vpnRevoked",
+              "signature": "(vpnRevoked: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1061,
+                1067
+              ],
+              "name": "checkVpnRestoreAfterRevoke",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1069,
+                1083
+              ],
+              "name": "startVPNService",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1085,
+                1117
+              ],
+              "name": "updateIptablesRules",
+              "signature": "(forceUpdate: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1119,
+                1127
+              ],
+              "name": "resetArpScanner",
+              "signature": "(connectionAvailable: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1129,
+                1139
+              ],
+              "name": "resetArpScanner",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1141,
+                1146
+              ],
+              "name": "setInternetAvailable",
+              "signature": "(available: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1148,
+                1152
+              ],
+              "name": "checkInternetConnection",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1154,
+                1166
+              ],
+              "name": "onConnectionChecked",
+              "signature": "(available: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1168,
+                1170
+              ],
+              "name": "isActive",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1172,
+                1174
+              ],
+              "name": "isVpnMode",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1176,
+                1178
+              ],
+              "name": "isRootMode",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1180,
+                1182
+              ],
+              "name": "isProxyMode",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1184,
+                1187
+              ],
+              "name": "isNetworkAvailable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1189,
+                1191
+              ],
+              "name": "setNetworkAvailable",
+              "signature": "(available: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1193,
+                1195
+              ],
+              "name": "isFirewallEnabled",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            98,
+            1217
+          ],
+          "name": "ModulesReceiver",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesRestarter.kt": {
+      "hash": "a32d90ba541f",
+      "indexed_at": "2026-08-01T04:00:09.619316+00:00",
+      "language": "kotlin",
+      "lines": 28,
+      "mtime_ns": 1785556377509899300,
+      "size": 876,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                23,
+                27
+              ],
+              "name": "restartDNSCrypt",
+              "signature": "(context: Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            28
+          ],
+          "name": "ModulesRestarter",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesRunner.kt": {
+      "hash": "ba33515cc4d0",
+      "indexed_at": "2026-08-01T04:00:09.914165+00:00",
+      "language": "kotlin",
+      "lines": 27,
+      "mtime_ns": 1785556377521900500,
+      "size": 810,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                23,
+                26
+              ],
+              "name": "runDNSCrypt",
+              "signature": "(context: Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            27
+          ],
+          "name": "ModulesRunner",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesService.kt": {
+      "hash": "a987959aa1a0",
+      "indexed_at": "2026-08-01T04:00:10.215029+00:00",
+      "language": "kotlin",
+      "lines": 802,
+      "mtime_ns": 1785556377533899300,
+      "size": 27561,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                133,
+                166
+              ],
+              "name": "onCreate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                169,
+                252
+              ],
+              "name": "onStartCommand",
+              "signature": "(intent: Intent?, flags: Int, startId: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                254,
+                258
+              ],
+              "name": "startEngineStandalone",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                260,
+                264
+              ],
+              "name": "stopEngineStandalone",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "RotationManager (this AppComponent-injected service cannot hold it directly). No-op if not yet built.",
+              "lines": [
+                268,
+                272
+              ],
+              "name": "rotateResolversNow",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                274,
+                334
+              ],
+              "name": "startDNSCrypt",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                336,
+                353
+              ],
+              "name": "checkPreviouslyRunningDNSCryptModule",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                355,
+                374
+              ],
+              "name": "changeDNSCryptStatus",
+              "signature": "(dnsCryptThread: Thread?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                376,
+                402
+              ],
+              "name": "stopDNSCryptIfPortIsBusy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                404,
+                406
+              ],
+              "name": "stopDNSCrypt",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                408,
+                437
+              ],
+              "name": "restartDNSCrypt",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                439,
+                443
+              ],
+              "name": "checkInternetConnection",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                445,
+                454
+              ],
+              "name": "dismissNotification",
+              "signature": "(startId: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                456,
+                462
+              ],
+              "name": "startModulesThreadsTimer",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                464,
+                481
+              ],
+              "name": "speedupTimer",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                483,
+                500
+              ],
+              "name": "slowdownTimer",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                502,
+                508
+              ],
+              "name": "makeExtraLoop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                510,
+                515
+              ],
+              "name": "stopModulesThreadsTimer",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                517,
+                526
+              ],
+              "name": "stopVPNServiceIfRunning",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                528,
+                535
+              ],
+              "name": "manageWakelocks",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                537,
+                542
+              ],
+              "name": "releaseWakelocks",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                544,
+                546
+              ],
+              "name": "onBind",
+              "signature": "(intent: Intent?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                548,
+                585
+              ],
+              "name": "onDestroy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                587,
+                599
+              ],
+              "name": "stopService",
+              "signature": "(startID: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                601,
+                638
+              ],
+              "name": "recoverAppState",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                640,
+                642
+              ],
+              "name": "saveModulesStateRunning",
+              "signature": "(saveDNSCryptRunning: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                644,
+                653
+              ],
+              "name": "stopModulesService",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                655,
+                663
+              ],
+              "name": "stopModulesServiceForeground",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                665,
+                675
+              ],
+              "name": "stopModulesServiceForeground",
+              "signature": "(startId: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                677,
+                690
+              ],
+              "name": "setBroadcastReceiver",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                692,
+                698
+              ],
+              "name": "unregisterModulesBroadcastReceiver",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                700,
+                706
+              ],
+              "name": "makeDelay",
+              "signature": "(sec: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                708,
+                728
+              ],
+              "name": "findThreadByName",
+              "signature": "(threadName: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                730,
+                740
+              ],
+              "name": "getRootThreadGroup",
+              "signature": "(thread: Thread)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                742,
+                756
+              ],
+              "name": "cleanLogFileNoRootMethod",
+              "signature": "(logFilePath: String, text: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                758,
+                767
+              ],
+              "name": "startArpScanner",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                769,
+                775
+              ],
+              "name": "stopArpScanner",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                777,
+                781
+              ],
+              "name": "clearIptablesCommandsSavedHash",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                783,
+                786
+              ],
+              "name": "stopRootExecServiceIfRequired",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            90,
+            802
+          ],
+          "name": "ModulesService",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesServiceActions.kt": {
+      "hash": "c561a0545117",
+      "indexed_at": "2026-08-01T04:00:10.507973+00:00",
+      "language": "kotlin",
+      "lines": 42,
+      "mtime_ns": 1785556377544900600,
+      "size": 2518,
+      "symbols": [
+        {
+          "lines": [
+            19,
+            42
+          ],
+          "name": "ModulesServiceActions",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesServiceNotificationManager.kt": {
+      "hash": "2d3cd2df9af5",
+      "indexed_at": "2026-08-01T04:00:10.814359+00:00",
+      "language": "kotlin",
+      "lines": 379,
+      "mtime_ns": 1785556377557899000,
+      "size": 15360,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                43,
+                67
+              ],
+              "name": "getContentIntent",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                69,
+                92
+              ],
+              "name": "getStopIntent",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                94,
+                120
+              ],
+              "name": "getStartIntent",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                122,
+                144
+              ],
+              "name": "createNotificationChannel",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                146,
+                148
+              ],
+              "name": "getNotificationManager",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                150,
+                170
+              ],
+              "name": "getSmallIcon",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                182,
+                193
+              ],
+              "name": "getBrandColor",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                196,
+                251
+              ],
+              "name": "sendNotification",
+              "signature": "(service: Service, title: String, text: String, startTime: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                253,
+                297
+              ],
+              "name": "updateNotification",
+              "signature": "(context: Context, title: String, text: String, startTime: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                299,
+                305
+              ],
+              "name": "isAnyModuleRunning",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                307,
+                311
+              ],
+              "name": "onReceive",
+              "signature": "(context: Context?, intent: Intent?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                313,
+                315
+              ],
+              "name": "stopServices",
+              "signature": "(context: Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            39,
+            379
+          ],
+          "name": "ModulesServiceNotificationManager",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesStarterHelper.kt": {
+      "hash": "4a67edc9376e",
+      "indexed_at": "2026-08-01T04:00:11.129124+00:00",
+      "language": "kotlin",
+      "lines": 793,
+      "mtime_ns": 1785556377569901200,
+      "size": 41809,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                93,
+                284
+              ],
+              "name": "getDNSCryptStarterRunnable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                286,
+                288
+              ],
+              "name": "readDnsCryptConfiguration",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                290,
+                311
+              ],
+              "name": "checkDnsCryptPortsForBusyness",
+              "signature": "(lines: MutableList<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                338,
+                385
+              ],
+              "name": "patchHttp3FromPref",
+              "signature": "(lines: MutableList<String>?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                398,
+                405
+              ],
+              "name": "patchLogRotation",
+              "signature": "(lines: MutableList<String>?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                412,
+                440
+              ],
+              "name": "setOrAddTopLevelToml",
+              "signature": "(lines: MutableList<String>, key: String, value: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                453,
+                472
+              ],
+              "name": "patchForceTcpFromPref",
+              "signature": "(lines: MutableList<String>?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                495,
+                525
+              ],
+              "name": "patchIgnoreSystemDnsFromPref",
+              "signature": "(lines: MutableList<String>?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                551,
+                561
+              ],
+              "name": "applyResolverNativeFromPref",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                590,
+                598
+              ],
+              "name": "applyWardenNativeFromPref",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                600,
+                602
+              ],
+              "name": "saveDnsCryptConfiguration",
+              "signature": "(lines: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                634,
+                682
+              ],
+              "name": "enableQueryLogForDebug",
+              "signature": "(lines: MutableList<String>?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                702,
+                721
+              ],
+              "name": "fixDnsCryptLogFilePath",
+              "signature": "(lines: MutableList<String>?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                723,
+                729
+              ],
+              "name": "sendResultIntent",
+              "signature": "(moduleMark: Int, moduleKeyWord: String, binaryPath: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                731,
+                736
+              ],
+              "name": "sendAskRestoreDefaults",
+              "signature": "(context: Context, module: ModuleName)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                738,
+                749
+              ],
+              "name": "checkModulesConfigPatches",
+              "signature": "(forceCheck: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                751,
+                761
+              ],
+              "name": "showErrorToast",
+              "signature": "(prefix: String, shellResult: CommandResult)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                763,
+                786
+              ],
+              "name": "logNativeCrash",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            60,
+            793
+          ],
+          "name": "ModulesStarterHelper",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesStateLoop.kt": {
+      "hash": "e8c71d2172f4",
+      "indexed_at": "2026-08-01T04:00:11.479854+00:00",
+      "language": "kotlin",
+      "lines": 922,
+      "mtime_ns": 1785556377581900200,
+      "size": 50301,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                156,
+                215
+              ],
+              "name": "run",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                217,
+                271
+              ],
+              "name": "updateModulesState",
+              "signature": "(dnsCryptState: ModuleState)",
+              "type": "method"
+            },
+            {
+              "docstring": "reset stopCounter (so the service survives with no other module); otherwise reflect STOPPED.",
+              "lines": [
+                275,
+                286
+              ],
+              "name": "updateEngineState",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Standalone engine start/stop, driven by ACTION_START_ENGINE / ACTION_STOP_ENGINE in ModulesService.",
+              "lines": [
+                289,
+                372
+              ],
+              "name": "startEngineStandalone",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                374,
+                404
+              ],
+              "name": "stopEngineStandalone",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                413,
+                419
+              ],
+              "name": "rotateResolversNow",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                438,
+                444
+              ],
+              "name": "isNativeResolverArmed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                446,
+                455
+              ],
+              "name": "updateFixTTLRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                457,
+                695
+              ],
+              "name": "updateIptablesRules",
+              "signature": "(\n            dnsCryptState: ModuleState,\n            firewallState: ModuleState,\n            ope...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                697,
+                716
+              ],
+              "name": "updateContextUID",
+              "signature": "(dnsCryptState: ModuleState)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                718,
+                740
+              ],
+              "name": "restoreModulesSavedState",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                742,
+                763
+              ],
+              "name": "startVPNService",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                765,
+                774
+              ],
+              "name": "safeStopModulesService",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                776,
+                778
+              ],
+              "name": "setDnsCryptThread",
+              "signature": "(dnsCryptThread: Thread)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                780,
+                782
+              ],
+              "name": "clearIptablesCommandHash",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                784,
+                792
+              ],
+              "name": "removeHandlerTasks",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                794,
+                803
+              ],
+              "name": "onDNSCryptLogUpdated",
+              "signature": "(dnsCryptLogData: LogDataModel)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                805,
+                809
+              ],
+              "name": "saveDNSCryptState",
+              "signature": "(dnsCryptState: ModuleState)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                811,
+                824
+              ],
+              "name": "setDNSCryptReady",
+              "signature": "(ready: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                826,
+                840
+              ],
+              "name": "denySystemDNS",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                842,
+                849
+              ],
+              "name": "saveFirewallState",
+              "signature": "(firewallState: ModuleState)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                851,
+                853
+              ],
+              "name": "isActive",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                855,
+                858
+              ],
+              "name": "isFixTTL",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                860,
+                866
+              ],
+              "name": "slowDownModulesStateTimerIfRequired",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                868,
+                876
+              ],
+              "name": "startNflogIfRootMode",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                878,
+                885
+              ],
+              "name": "stopNflogIfRootMode",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            82,
+            922
+          ],
+          "name": "ModulesStateLoop",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesStatus.kt": {
+      "hash": "fea704097928",
+      "indexed_at": "2026-08-01T04:00:11.776056+00:00",
+      "language": "kotlin",
+      "lines": 143,
+      "mtime_ns": 1785556377592899800,
+      "size": 4664,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                74,
+                89
+              ],
+              "name": "setFirewallState",
+              "signature": "(firewallState: ModuleState, preferenceRepository: PreferenceRepository)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                94
+              ],
+              "name": "isIptablesRulesUpdateRequested",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                96,
+                99
+              ],
+              "name": "setIptablesRulesUpdateRequested",
+              "signature": "(requestIptablesUpdate: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                101,
+                105
+              ],
+              "name": "setIptablesRulesUpdateRequested",
+              "signature": "(context: Context, requestIptablesUpdate: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                107,
+                109
+              ],
+              "name": "isFixTTLRulesUpdateRequested",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                113
+              ],
+              "name": "setFixTTLRulesUpdateRequested",
+              "signature": "(requestFixTTLRulesUpdate: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                115,
+                118
+              ],
+              "name": "setFixTTLRulesUpdateRequested",
+              "signature": "(context: Context, requestFixTTLRulesUpdate: Boolean)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            30,
+            143
+          ],
+          "name": "ModulesStatus",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesStatusBroadcaster.kt": {
+      "hash": "5da02f2e183d",
+      "indexed_at": "2026-08-01T04:00:12.073001+00:00",
+      "language": "kotlin",
+      "lines": 128,
+      "mtime_ns": 1785556377604899000,
+      "size": 4030,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                43,
+                51
+              ],
+              "name": "broadcastDNSCryptRunning",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                53,
+                61
+              ],
+              "name": "broadcastDNSCryptReady",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                71
+              ],
+              "name": "broadcastDNSCryptStopped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                73,
+                78
+              ],
+              "name": "broadcastFirewallRunning",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                80,
+                85
+              ],
+              "name": "broadcastFirewallStopped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                87,
+                92
+              ],
+              "name": "getDNSCryptIntent",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                94,
+                98
+              ],
+              "name": "getFirewallIntent",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                106
+              ],
+              "name": "broadcastRemoteControlDisabled",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                110
+              ],
+              "name": "onRemoteControlChanged",
+              "signature": "(enabled: Boolean)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            31,
+            128
+          ],
+          "name": "ModulesStatusBroadcaster",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesVersions.kt": {
+      "hash": "63875bbb603f",
+      "indexed_at": "2026-08-01T04:00:12.376627+00:00",
+      "language": "kotlin",
+      "lines": 120,
+      "mtime_ns": 1785556377616899000,
+      "size": 3880,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                44,
+                60
+              ],
+              "name": "refreshVersions",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                62,
+                65
+              ],
+              "name": "isBinaryFileAccessible",
+              "signature": "(path: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                67,
+                78
+              ],
+              "name": "sendResult",
+              "signature": "(context: Context, version: String?, mark: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                80,
+                90
+              ],
+              "name": "checkModulesVersions",
+              "signature": "(pathVars: PathVars)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                92,
+                99
+              ],
+              "name": "checkModulesVersionsModern",
+              "signature": "(context: Context, pathVars: PathVars)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                101,
+                109
+              ],
+              "name": "openCommandShell",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                119
+              ],
+              "name": "closeCommandShell",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            35,
+            120
+          ],
+          "name": "ModulesVersions",
+          "type": "class"
+        }
+      ]
+    },
+    "ProcessStarter.kt": {
+      "hash": "2b32cad99972",
+      "indexed_at": "2026-08-01T04:00:12.666159+00:00",
+      "language": "kotlin",
+      "lines": 79,
+      "mtime_ns": 1785556377630900500,
+      "size": 2914,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                78
+              ],
+              "name": "startProcess",
+              "signature": "(startCommand: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            79
+          ],
+          "name": "ProcessStarter",
+          "type": "class"
+        }
+      ]
+    },
+    "UsageStatistic.kt": {
+      "hash": "22bd62502d15",
+      "indexed_at": "2026-08-01T04:00:12.956185+00:00",
+      "language": "kotlin",
+      "lines": 290,
+      "mtime_ns": 1785556377643901000,
+      "size": 9338,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                82,
+                85
+              ],
+              "name": "startUpdate",
+              "signature": "(period: Int = NOTIFICATION_UPDATE_SHORT_PERIOD_SEC)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                87,
+                109
+              ],
+              "name": "tryStartUpdate",
+              "signature": "(period: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                138
+              ],
+              "name": "tryUpdate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                140,
+                142
+              ],
+              "name": "stopUpdate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                144,
+                158
+              ],
+              "name": "tryStopUpdate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                160,
+                174
+              ],
+              "name": "getTitle",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                176,
+                178
+              ],
+              "name": "getMessage",
+              "signature": "(currentTime: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                180,
+                236
+              ],
+              "name": "tryGetMessage",
+              "signature": "(currentTime: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                238,
+                245
+              ],
+              "name": "isStatisticAllowed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                248,
+                252
+              ],
+              "name": "initModulesLogsTimer",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                254,
+                271
+              ],
+              "name": "getReadableSpeedString",
+              "signature": "(fileSizeInBytes: Long, timePeriod: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                273,
+                288
+              ],
+              "name": "humanReadableByteCountBin",
+              "signature": "(bytes: Long)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            49,
+            290
+          ],
+          "name": "UsageStatistic",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:12.957891+00:00",
+  "version": "1.0"
+}

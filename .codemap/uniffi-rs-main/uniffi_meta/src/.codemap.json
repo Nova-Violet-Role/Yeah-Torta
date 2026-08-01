@@ -1,0 +1,1877 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_meta\\src",
+  "files": {
+    "ffi_names.rs": {
+      "hash": "de3f3e977041",
+      "indexed_at": "2026-07-24T20:35:13.214018+00:00",
+      "language": "rust",
+      "lines": 99,
+      "mtime_ns": 1782136568000000000,
+      "size": 4372,
+      "symbols": [
+        {
+          "docstring": "FFI symbol name for a top-level function",
+          "lines": [
+            19,
+            23
+          ],
+          "name": "fn_symbol_name",
+          "signature": "(module_path: &str, name: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "FFI symbol name for an object constructor",
+          "lines": [
+            26,
+            31
+          ],
+          "name": "constructor_symbol_name",
+          "signature": "(module_path: &str, object_name: &str, name: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "FFI symbol name for an object method",
+          "lines": [
+            34,
+            39
+          ],
+          "name": "method_symbol_name",
+          "signature": "(module_path: &str, object_name: &str, name: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "FFI symbol name for the `clone` function for an object.",
+          "lines": [
+            42,
+            46
+          ],
+          "name": "clone_fn_symbol_name",
+          "signature": "(module_path: &str, object_name: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "FFI symbol name for the `free` function for an object.",
+          "lines": [
+            49,
+            53
+          ],
+          "name": "free_fn_symbol_name",
+          "signature": "(module_path: &str, object_name: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "FFI symbol name for the `init_callback` function for a callback interface",
+          "lines": [
+            56,
+            63
+          ],
+          "name": "init_callback_vtable_fn_symbol_name",
+          "signature": "(\n    module_path: &str,\n    callback_interface_name: &str,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "FFI checksum symbol name for a top-level function",
+          "lines": [
+            66,
+            70
+          ],
+          "name": "fn_checksum_symbol_name",
+          "signature": "(module_path: &str, name: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "FFI checksum symbol name for an object constructor",
+          "lines": [
+            73,
+            82
+          ],
+          "name": "constructor_checksum_symbol_name",
+          "signature": "(\n    module_path: &str,\n    object_name: &str,\n    name: &str,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "FFI checksum symbol name for an object method",
+          "lines": [
+            85,
+            90
+          ],
+          "name": "method_checksum_symbol_name",
+          "signature": "(module_path: &str, object_name: &str, name: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "Get the symbol name for a FFI-buffer version of a function",
+          "lines": [
+            93,
+            99
+          ],
+          "name": "ffi_buffer_symbol_name",
+          "signature": "(fn_name: &str)",
+          "type": "function"
+        }
+      ]
+    },
+    "group.rs": {
+      "hash": "29a2b287cab5",
+      "indexed_at": "2026-07-24T20:35:13.214754+00:00",
+      "language": "rust",
+      "lines": 74,
+      "mtime_ns": 1782136568000000000,
+      "size": 2413,
+      "symbols": [
+        {
+          "docstring": "Create empty metadata groups based on the metadata items.",
+          "lines": [
+            13,
+            41
+          ],
+          "name": "create_metadata_groups",
+          "signature": "(items: &[Metadata])",
+          "type": "function"
+        },
+        {
+          "docstring": "Consume the items into the previously created metadata groups.",
+          "lines": [
+            44,
+            61
+          ],
+          "name": "group_metadata",
+          "signature": "(group_map: &mut MetadataGroupMap, items: Vec<Metadata>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            64,
+            68
+          ],
+          "name": "MetadataGroup",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                71,
+                73
+              ],
+              "name": "add_item",
+              "signature": "(&mut self, item: Metadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            70,
+            74
+          ],
+          "name": "MetadataGroup",
+          "type": "impl"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "22fcdf0a7f7a",
+      "indexed_at": "2026-07-24T20:35:13.218024+00:00",
+      "language": "rust",
+      "lines": 681,
+      "mtime_ns": 1782136568000000000,
+      "size": 19546,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            9
+          ],
+          "name": "ffi_names",
+          "type": "module"
+        },
+        {
+          "lines": [
+            12,
+            12
+          ],
+          "name": "group",
+          "type": "module"
+        },
+        {
+          "lines": [
+            15,
+            15
+          ],
+          "name": "reader",
+          "type": "module"
+        },
+        {
+          "lines": [
+            18,
+            18
+          ],
+          "name": "types",
+          "type": "module"
+        },
+        {
+          "lines": [
+            21,
+            21
+          ],
+          "name": "metadata",
+          "type": "module"
+        },
+        {
+          "docstring": "the same way across platforms. #[derive(Checksum)] will do the right thing.",
+          "lines": [
+            34,
+            36
+          ],
+          "name": "Checksum",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                39,
+                41
+              ],
+              "name": "checksum",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            38,
+            42
+          ],
+          "name": "Checksum",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                47
+              ],
+              "name": "checksum",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            44,
+            48
+          ],
+          "name": "Checksum",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                51,
+                53
+              ],
+              "name": "checksum",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            50,
+            54
+          ],
+          "name": "Checksum",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                57,
+                59
+              ],
+              "name": "checksum",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            56,
+            60
+          ],
+          "name": "Checksum",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                63,
+                68
+              ],
+              "name": "checksum",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            62,
+            69
+          ],
+          "name": "Checksum",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                72,
+                74
+              ],
+              "name": "checksum",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            71,
+            75
+          ],
+          "name": "Checksum",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                78,
+                84
+              ],
+              "name": "checksum",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            77,
+            85
+          ],
+          "name": "Checksum",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                88,
+                96
+              ],
+              "name": "checksum",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            87,
+            97
+          ],
+          "name": "Checksum",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                100,
+                103
+              ],
+              "name": "checksum",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            99,
+            104
+          ],
+          "name": "Checksum",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                107,
+                109
+              ],
+              "name": "checksum",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            106,
+            110
+          ],
+          "name": "Checksum",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                113,
+                115
+              ],
+              "name": "checksum",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            112,
+            116
+          ],
+          "name": "Checksum",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            122,
+            125
+          ],
+          "name": "NamespaceMetadata",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            131,
+            137
+          ],
+          "name": "UdlFile",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            140,
+            151
+          ],
+          "name": "FnMetadata",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                154,
+                156
+              ],
+              "name": "ffi_symbol_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                158,
+                160
+              ],
+              "name": "checksum_symbol_name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            153,
+            161
+          ],
+          "name": "FnMetadata",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            164,
+            175
+          ],
+          "name": "ConstructorMetadata",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                178,
+                180
+              ],
+              "name": "ffi_symbol_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                182,
+                184
+              ],
+              "name": "checksum_symbol_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                186,
+                188
+              ],
+              "name": "is_primary",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            177,
+            189
+          ],
+          "name": "ConstructorMetadata",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            192,
+            205
+          ],
+          "name": "MethodMetadata",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                208,
+                210
+              ],
+              "name": "ffi_symbol_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                212,
+                214
+              ],
+              "name": "checksum_symbol_name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            207,
+            215
+          ],
+          "name": "MethodMetadata",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            218,
+            234
+          ],
+          "name": "TraitMethodMetadata",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                237,
+                239
+              ],
+              "name": "ffi_symbol_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                241,
+                243
+              ],
+              "name": "checksum_symbol_name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            236,
+            244
+          ],
+          "name": "TraitMethodMetadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                247,
+                261
+              ],
+              "name": "from",
+              "signature": "(meta: TraitMethodMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            246,
+            262
+          ],
+          "name": "MethodMetadata",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            265,
+            271
+          ],
+          "name": "FnParamMetadata",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                274,
+                282
+              ],
+              "name": "simple",
+              "signature": "(name: &str, ty: Type)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            273,
+            283
+          ],
+          "name": "FnParamMetadata",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            286,
+            305
+          ],
+          "name": "LiteralMetadata",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                308,
+                310
+              ],
+              "name": "new_uint",
+              "signature": "(v: u64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                311,
+                313
+              ],
+              "name": "new_int",
+              "signature": "(v: i64)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            307,
+            314
+          ],
+          "name": "LiteralMetadata",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            319,
+            323
+          ],
+          "name": "Radix",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            326,
+            331
+          ],
+          "name": "DefaultValueMetadata",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            334,
+            342
+          ],
+          "name": "RecordMetadata",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            345,
+            352
+          ],
+          "name": "FieldMetadata",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            355,
+            358
+          ],
+          "name": "EnumShape",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                361,
+                367
+              ],
+              "name": "as_u8",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                369,
+                376
+              ],
+              "name": "from",
+              "signature": "(v: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                378,
+                380
+              ],
+              "name": "is_error",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            360,
+            381
+          ],
+          "name": "EnumShape",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            384,
+            395
+          ],
+          "name": "EnumMetadata",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            398,
+            405
+          ],
+          "name": "VariantMetadata",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            408,
+            416
+          ],
+          "name": "ObjectMetadata",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            419,
+            423
+          ],
+          "name": "CallbackInterfaceMetadata",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "back to Rust.",
+              "lines": [
+                430,
+                432
+              ],
+              "name": "clone_ffi_symbol_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "This function is used to free the memory used by this object.",
+              "lines": [
+                437,
+                439
+              ],
+              "name": "free_ffi_symbol_name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            425,
+            440
+          ],
+          "name": "ObjectMetadata",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            447,
+            464
+          ],
+          "name": "UniffiTraitMetadata",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                467,
+                476
+              ],
+              "name": "module_path",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                478,
+                487
+              ],
+              "name": "self_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                489,
+                498
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            466,
+            499
+          ],
+          "name": "UniffiTraitMetadata",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            503,
+            509
+          ],
+          "name": "UniffiTraitDiscriminants",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                512,
+                521
+              ],
+              "name": "from",
+              "signature": "(v: u8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            511,
+            522
+          ],
+          "name": "UniffiTraitDiscriminants",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            527,
+            530
+          ],
+          "name": "ObjectTraitImplMetadata",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                533,
+                536
+              ],
+              "name": "checksum",
+              "signature": "(&self, state: &mut H)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            532,
+            537
+          ],
+          "name": "Checksum",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            540,
+            546
+          ],
+          "name": "CustomTypeMetadata",
+          "type": "struct"
+        },
+        {
+          "docstring": "bindings generation.",
+          "lines": [
+            552,
+            556
+          ],
+          "name": "checksum",
+          "signature": "(val: &T)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            561,
+            575
+          ],
+          "name": "Metadata",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                578,
+                580
+              ],
+              "name": "read",
+              "signature": "(data: &[u8])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                582,
+                598
+              ],
+              "name": "module_path",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            577,
+            599
+          ],
+          "name": "Metadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                602,
+                604
+              ],
+              "name": "from",
+              "signature": "(value: NamespaceMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            601,
+            605
+          ],
+          "name": "Metadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                608,
+                610
+              ],
+              "name": "from",
+              "signature": "(value: UdlFile)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            607,
+            611
+          ],
+          "name": "Metadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                614,
+                616
+              ],
+              "name": "from",
+              "signature": "(value: FnMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            613,
+            617
+          ],
+          "name": "Metadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                620,
+                622
+              ],
+              "name": "from",
+              "signature": "(c: ConstructorMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            619,
+            623
+          ],
+          "name": "Metadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                626,
+                628
+              ],
+              "name": "from",
+              "signature": "(m: MethodMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            625,
+            629
+          ],
+          "name": "Metadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                632,
+                634
+              ],
+              "name": "from",
+              "signature": "(r: RecordMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            631,
+            635
+          ],
+          "name": "Metadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                638,
+                640
+              ],
+              "name": "from",
+              "signature": "(e: EnumMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            637,
+            641
+          ],
+          "name": "Metadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                644,
+                646
+              ],
+              "name": "from",
+              "signature": "(v: ObjectMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            643,
+            647
+          ],
+          "name": "Metadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                650,
+                652
+              ],
+              "name": "from",
+              "signature": "(v: CallbackInterfaceMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            649,
+            653
+          ],
+          "name": "Metadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                656,
+                658
+              ],
+              "name": "from",
+              "signature": "(v: TraitMethodMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            655,
+            659
+          ],
+          "name": "Metadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                662,
+                664
+              ],
+              "name": "from",
+              "signature": "(v: CustomTypeMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            661,
+            665
+          ],
+          "name": "Metadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                668,
+                670
+              ],
+              "name": "from",
+              "signature": "(v: UniffiTraitMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            667,
+            671
+          ],
+          "name": "Metadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                674,
+                676
+              ],
+              "name": "from",
+              "signature": "(t: ObjectTraitImplMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            673,
+            677
+          ],
+          "name": "Metadata",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            679,
+            681
+          ],
+          "name": "crate_name",
+          "signature": "(module_path: &str)",
+          "type": "function"
+        }
+      ]
+    },
+    "metadata.rs": {
+      "hash": "2795f61b0b8f",
+      "indexed_at": "2026-07-24T20:35:13.218958+00:00",
+      "language": "rust",
+      "lines": 102,
+      "mtime_ns": 1782136568000000000,
+      "size": 3567,
+      "symbols": [
+        {
+          "docstring": "Metadata constants, make sure to keep this in sync with copy in `uniffi_core::metadata`",
+          "lines": [
+            11,
+            77
+          ],
+          "name": "codes",
+          "type": "module"
+        },
+        {
+          "docstring": "that the bindings were generated from.",
+          "lines": [
+            83,
+            85
+          ],
+          "name": "checksum_metadata",
+          "signature": "(buf: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            87,
+            102
+          ],
+          "name": "calc_checksum",
+          "signature": "(bytes: &[u8], size: usize)",
+          "type": "function"
+        }
+      ]
+    },
+    "reader.rs": {
+      "hash": "8df316202e0d",
+      "indexed_at": "2026-07-24T20:35:13.222253+00:00",
+      "language": "rust",
+      "lines": 651,
+      "mtime_ns": 1782136568000000000,
+      "size": 23541,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "read_metadata",
+          "signature": "(data: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "Read a metadata type, this is pub so that we can test it in the metadata fixture",
+          "lines": [
+            14,
+            16
+          ],
+          "name": "read_metadata_type",
+          "signature": "(data: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "Helper struct for read_metadata()",
+          "lines": [
+            19,
+            24
+          ],
+          "name": "MetadataReader",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                27,
+                32
+              ],
+              "name": "new",
+              "signature": "(data: &'a [u8])",
+              "type": "method"
+            },
+            {
+              "docstring": "This consumes self because MetadataReader is only intended to read a single item.",
+              "lines": [
+                37,
+                69
+              ],
+              "name": "read_metadata",
+              "signature": "(mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                71,
+                79
+              ],
+              "name": "read_u8",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                81,
+                87
+              ],
+              "name": "peek_u8",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                89,
+                98
+              ],
+              "name": "read_u16",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                112
+              ],
+              "name": "read_u32",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                114,
+                116
+              ],
+              "name": "read_bool",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                118,
+                123
+              ],
+              "name": "read_string",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                125,
+                128
+              ],
+              "name": "read_optional_string",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                130,
+                135
+              ],
+              "name": "read_long_string",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                137,
+                139
+              ],
+              "name": "read_optional_long_string",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                141,
+                217
+              ],
+              "name": "read_type",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                219,
+                227
+              ],
+              "name": "read_optional_type",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                229,
+                241
+              ],
+              "name": "read_return_type",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                243,
+                262
+              ],
+              "name": "read_func",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                264,
+                298
+              ],
+              "name": "read_constructor",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                300,
+                322
+              ],
+              "name": "read_method",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                324,
+                333
+              ],
+              "name": "read_record",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                335,
+                361
+              ],
+              "name": "read_enum",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                363,
+                370
+              ],
+              "name": "read_trait_kind",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                372,
+                381
+              ],
+              "name": "read_object",
+              "signature": "(&mut self, imp: ObjectImpl)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                383,
+                393
+              ],
+              "name": "read_custom_type",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                395,
+                421
+              ],
+              "name": "read_uniffi_trait",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                423,
+                429
+              ],
+              "name": "read_callback_interface",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                431,
+                455
+              ],
+              "name": "read_trait_method",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                457,
+                462
+              ],
+              "name": "read_object_trait_impl",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                464,
+                481
+              ],
+              "name": "read_fields",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                483,
+                496
+              ],
+              "name": "read_variants",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                498,
+                511
+              ],
+              "name": "read_flat_variants",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                513,
+                530
+              ],
+              "name": "read_inputs",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                532,
+                536
+              ],
+              "name": "calc_checksum",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                538,
+                548
+              ],
+              "name": "read_optional_default",
+              "signature": "(\n        &mut self,\n        name: &str,\n        ty: &Type,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                550,
+                558
+              ],
+              "name": "read_default",
+              "signature": "(&mut self, name: &str, ty: &Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                560,
+                566
+              ],
+              "name": "read_optional_literal",
+              "signature": "(&mut self, name: &str, ty: &Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                568,
+                650
+              ],
+              "name": "read_literal",
+              "signature": "(&mut self, name: &str, ty: &Type)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            26,
+            651
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        }
+      ]
+    },
+    "types.rs": {
+      "hash": "c72dff80fa69",
+      "indexed_at": "2026-07-24T20:35:13.223673+00:00",
+      "language": "rust",
+      "lines": 263,
+      "mtime_ns": 1782136568000000000,
+      "size": 8503,
+      "symbols": [
+        {
+          "lines": [
+            24,
+            29
+          ],
+          "name": "ObjectImpl",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            33,
+            40
+          ],
+          "name": "TraitKind",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "this would also include them.",
+              "lines": [
+                47,
+                53
+              ],
+              "name": "rust_name_for",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                55,
+                57
+              ],
+              "name": "is_trait_interface",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                59,
+                61
+              ],
+              "name": "has_callback_interface",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                65
+              ],
+              "name": "has_struct",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            42,
+            66
+          ],
+          "name": "ObjectImpl",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "True if foreign code can implement this trait",
+              "lines": [
+                70,
+                72
+              ],
+              "name": "has_foreign",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "True if Rust code can implement this trait",
+              "lines": [
+                75,
+                77
+              ],
+              "name": "has_rust",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            68,
+            78
+          ],
+          "name": "TraitKind",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            84,
+            147
+          ],
+          "name": "Type",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "iterate over all types contained in the type, *including self*.",
+              "lines": [
+                151,
+                153
+              ],
+              "name": "iter_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "iterate over all types contained in the type but *not including self*.",
+              "lines": [
+                156,
+                168
+              ],
+              "name": "iter_nested_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                170,
+                179
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                181,
+                190
+              ],
+              "name": "module_path",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                192,
+                195
+              ],
+              "name": "crate_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                197,
+                206
+              ],
+              "name": "rename",
+              "signature": "(&mut self, new_name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                208,
+                234
+              ],
+              "name": "rename_recursive",
+              "signature": "(&mut self, name_transformer: &impl Fn(&str) -> String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            149,
+            235
+          ],
+          "name": "Type",
+          "type": "impl"
+        },
+        {
+          "docstring": "A trait so various things can turn into a type.",
+          "lines": [
+            238,
+            240
+          ],
+          "name": "AsType",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                243,
+                245
+              ],
+              "name": "as_type",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            242,
+            246
+          ],
+          "name": "AsType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                254,
+                256
+              ],
+              "name": "as_type",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Needed to handle &&Type and &&&Type values, which we sometimes end up with in the template code",
+          "lines": [
+            249,
+            257
+          ],
+          "name": "AsType",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.799431+00:00",
+  "version": "1.0"
+}

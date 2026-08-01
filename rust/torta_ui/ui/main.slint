@@ -1,0 +1,195 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT root module — the rust-native UI substrate, COMPLETE (OMEGA Stage-D · D3).
+//
+// This is the COMPILED root (build.rs compiles ONLY this file; every surface enters the graph via a
+// re-export or import from here). The substrate arc closed in three steps: D1 (#69) opened the
+// on-device render rail, D2 raised the ||| Advanced burger (step 7 — the navigation surface), and
+// D3 raised THE DESIGN FINALE (step 8 — home_shell.slint `TortaShell`, the 4-tab Home: ① HOME the
+// dnsmasq×rethink hybrid · ② Tortä ENGINE · ③ DNS the K5 section · ④ QUERY the unified log feed),
+// which RETIRED the `TortaRoot` proof-of-substrate stub that used to close this file — the last
+// Garmatin-shaped surface concept (the InviZible main screen) is now a Rust-native original.
+//
+// SLINT markup = rust-flavored declarative UI (like a typed QML). Components → Rust structs; callbacks →
+// Rust fns; properties → typed Rust fields. NOTE: slint uses `:` (colon) for property bindings, not `=`.
+
+// The Warden dashboard (slice 8) lives in its own .slint. Re-exporting it from the COMPILED root file
+// (build.rs compiles main.slint) is what surfaces `WardenDashboard` + `AppRow` as generated Rust structs
+// through `slint::include_modules!()` — the host (lib.rs proof test / Kotlin bridge) constructs it + pushes
+// a live `WardenSnapshot`. Both inherit Window, so the dashboard is a sibling preview surface, not embedded.
+export { WardenDashboard, AppRow } from "warden.slint";
+
+// The Warden |||  SETTINGS section (slice 9) lives in its own .slint, re-exported from the COMPILED root the
+// same way — this surfaces `WardenSettings` + its row structs (`UniversalToggle` / `RuleEntry` / `AppToggleRow`)
+// as generated Rust structs through `slint::include_modules!()`. The host constructs it, pushes the live armed
+// Warden state (toggles / rules / matrix), and wires the edit callbacks to the `WardenObject` setters. (No trust
+// row: the Warden layer has no trust concept by design law.) It REPLACES every legacy firewall settings screen.
+export { WardenSettings, UniversalToggle, RuleEntry, AppToggleRow } from "warden_settings.slint";
+
+// The Centauri offline-CDN CONSTELLATION dashboard (slice 8) — re-exported from the COMPILED root the same way
+// so `CentauriDashboard` + its `ServeRow` feed struct surface as generated Rust structs through
+// `slint::include_modules!()`. The host constructs it, pulls a live `CentauriSnapshot` (mirror::object,
+// object.rs:346) + the cloaked-host watch-list (centauri_cdn_hosts(), lib.rs:1568), and pushes the CROWN
+// witness counters — so "the CDN saw ≤ 1 / saw 0" renders from REAL counters (Chroma F2), never asserted.
+export { CentauriDashboard, ServeRow } from "centauri.slint";
+
+// The Centauri |||  SETTINGS section (slice 9) — re-exported the same way: `CentauriSettings` + its `CdnHostRow`
+// surface as generated Rust structs. The host pushes the live opt-out state (strict / cloak / seed policy +
+// the catalog-assets/libraries scalars) and wires the edit callbacks to `Centauri::set_cache_mode` /
+// `resolver_set_centauri_cloak` / `Centauri::warm_up`. It REPLACES the legacy CentauriPillarFragment + its XML.
+export { CentauriSettings, CdnHostRow } from "centauri_settings.slint";
+
+// The MaskSolver (Resolver&Cache pillar) dashboard (slice 8) — re-exported from the COMPILED root the same way
+// so `MaskSolverDashboard` + its `MaskRow` (the query-masksolver.log resolve feed) + `MaskTransportRow` (the R7
+// per-upstream RTT/loss EWMA health row) surface as generated Rust structs through `slint::include_modules!()`.
+// The host constructs it, pulls a live `MaskSolver::snapshot()`/`solve_state()` (resolver::object, object.rs:427/490)
+// via the UniFFI Object + tails `query-masksolver.log`, and pushes each field — so the SOLVE/CACHE witnesses +
+// the 🩸 hidden-fault hunt (DEAD POOL / SILENT MISS / REBIND LEAK / STALE-SERVING / LADDER STORM / PANIC) render
+// from REAL atomics (the single-source proof, no engine fork — Chroma F1/F2), never asserted. Its palette global
+// `Masque` (masksolver_palette.slint, slice 10) is pulled into the compile graph by the dashboard's own import.
+// 2-FEED-MaskSolver: the shell mounts the Rectangle-rooted `MaskSolverPane` IN-SHELL (||| → PILLARS →
+// MASKSOLVER dashboard chip), imported directly from masksolver.slint; the host feeds it field-for-
+// field from the live `MaskSolver` Object. `MaskSolverDashboard` stays the FORWARDING Window wrapper
+// (preview + the lib.rs proof test) — a non-Window pane re-exported here would generate no code.
+export { MaskSolverDashboard, MaskRow, MaskTransportRow } from "masksolver.slint";
+
+// The MaskSolver |||  SETTINGS section (slice 9) — re-exported from the COMPILED root the same way so
+// `MaskSolverSettings` surfaces as a generated Rust struct through `slint::include_modules!()`. The host pushes
+// the live posture (pool state · the SOLVE retry/failover toggles · the cache size/serve-stale/TTL config · the
+// P12 rebind guard · the rotation cadence) and wires the edit callbacks to the `MaskSolver` Expert setters
+// (`set_solve_ladder` / `set_all_servers` / `set_rebind_enforce` / …) + the config-carried `configure()`
+// re-apply — so the 🎷 decision-point guard (DEAD-POOL ARM / REBIND-OFF / SHORT-DEADLINE / STALE-INERT /
+// TINY-CACHE) warns where a counterproductive choice is MADE, from REAL host-pushed state (Chroma F2), not asserted.
+export { MaskSolverSettings } from "masksolver_settings.slint";
+
+// The Beast (the flagship CAKE × YeAH flow engine) dashboard — the surface overhaul of the landed Genesis
+// engine. Re-exported from the COMPILED root the same way so `BeastDashboard` + its `BeastTickRow` (the
+// query-beast.log recent-tick feed struct) surface as generated Rust structs through `slint::include_modules!()`.
+// The host constructs it, pulls a live `BeastSnapshot` (beast::mod, mod.rs:128) via the UniFFI Object two ways
+// (the `BeastMetricSink` push callback OR the `Beast::snapshot()` poll-free pull, both from the ONE
+// `build_snapshot` reader so they can't drift), and pushes each field — so THE CAKE-FOUNTAIN (per-tin fill +
+// the advanced-depth per-tin CoBALT valves / DRR++ fairness / live YeahMode) renders from REAL engine reads
+// (Chroma F16), with the canonical + CoBALT cards profile-gated so a Legacy brain's inert 0s never read as live
+// (Chroma F6). Its palette global `Beast` (beast_palette.slint, slice 10) is pulled into the compile graph by
+// the dashboard's own import. 2-FEED-Beast adds `BeastPane` — the Rectangle-rooted embeddable pane the shell
+// mounts in-shell (||| → PILLARS → BEAST dashboard chip), host-fed a live `BeastSnapshot` field-for-field.
+// `BeastPane` is NOT re-exported here — a non-Window pane exported from the root generates NO Rust code (the
+// measured slint rule); it enters the compile graph via home_shell.slint's direct import + the FORWARDING
+// `BeastDashboard` Window wrapper (preview + the lib.rs proof test). The on-device render is live via #69.
+export { BeastDashboard, BeastTickRow } from "beast.slint";
+
+// ★ #49 · THE NETSTACK FORWARDER dashboard (the per-flow docket surface #47/#48 built the engine and
+// the seam for). Re-exported from the COMPILED root so `ForwarderDashboard` + its `FwdFlowRow` (one
+// live flow) surface as generated Rust structs through `slint::include_modules!()`. `ForwarderPane`
+// — the Rectangle-rooted embeddable the shell actually renders — is deliberately NOT re-exported
+// here: the measured slint rule above (a non-Window pane exported from the root generates NO Rust
+// code) applies to it exactly as it does to BeastPane. It enters the compile graph through
+// home_shell.slint's direct import plus this forwarding Window wrapper (preview + proof test).
+export { ForwarderDashboard, FwdFlowRow } from "forwarder_dashboard.slint";
+
+// The Beast |||  SETTINGS section (slice 9) — re-exported from the COMPILED root the same way so `BeastSettings`
+// surfaces as a generated Rust struct through `slint::include_modules!()`. The host pushes the live applied tune
+// (the YeahProfile brain / CakeProfile queue from BeastSnapshot + the beast_preset-resolved tunables) and wires
+// the edit callbacks to the profile REBUILD (`Beast::new`, mod.rs:165 — profile is construction-time, so a change
+// reconstructs the Object) + the flat `beast_preset`/`beast_clamp` tune table (lib.rs:376/417). The 🎷 Violet
+// decision-point guard warns/informs where the choice is MADE — the Chroma F6 profile-blindness honesty (Legacy
+// picks make the deep dashboard cards go dark) surfaced BEFORE the user puzzles over a graph of zeros.
+export { BeastSettings } from "beast_settings.slint";
+
+// The Rotation pillar (the operator-family wheel) dashboard — re-exported from the COMPILED root the same way
+// so `RotationDashboard` + its `RotationFamilyRow` (the wheel ring), `RotationHintRow` (the warm-RTT
+// leaderboard), + `RotationLogRow` (the query-rotation.log feed) surface as generated Rust structs through
+// `slint::include_modules!()`. The host constructs it, pulls a live `RotationSnapshot`
+// (resolver::object::RotationSnapshot, object.rs:212 — last_family/cadence_secs/rotation_index/next_flip_secs/
+// rtt_hints/rehydrated_warm) via the UniFFI Object as a CONTROL-PLANE READ of the last-persisted durable cursor
+// (NEVER the resolve hot path — resolve_inner stays byte-identical) + tails `query-rotation.log`, and pushes each
+// field — so the #98 WARM-RESUME crown + the 🩸 rotation-fault hunt (STALLED / DIAL FAULT / cold-leaderboard)
+// render from the REAL durable state (Chroma F1/F4), never asserted. Its palette global `Wheel`
+// (rotation_palette.slint, slice 10) is pulled into the compile graph by the dashboard's own import.
+// HOST-PREVIEW only this wave; the on-device SLINT render is gated by spike #69.
+export { RotationDashboard, RotationFamilyRow, RotationHintRow, RotationLogRow } from "rotation.slint";
+
+// The Rotation |||  SETTINGS section (slice 9) — re-exported from the COMPILED root the same way so
+// `RotationSettings` surfaces as a generated Rust struct through `slint::include_modules!()`. The host pushes the
+// live rotation posture (armed state · the current family/index · the cadence · the manual pin) and wires the
+// three edit callbacks to their REAL Kotlin destinations (the NO-FORK consensus — torta_core holds no live
+// rotation): `rotate-now()` -> RotationManager.rotateNow() (ACTION_ROTATE_RESOLVERS_NOW), `set-cadence`/
+// `cadence-stepped` -> the RESOLVER_ROTATION_CADENCE_MINUTES pref, `pin-toggled` -> RESOLVER_ROTATION_ENABLED
+// (inverted). So the 🎷 decision-point guard (PIN-TO-NOTHING / CADENCE-CLAMPED / ROTATE-INERT-PINNED) warns where
+// a counterproductive choice is MADE, from REAL host-pushed state (Chroma F1/F2), never asserted. Its palette
+// global `Wheel` (rotation_palette.slint, slice 10) is already in the compile graph via the dashboard's import.
+// HOST-PREVIEW only this wave; the on-device SLINT render is gated by spike #69.
+export { RotationSettings } from "rotation_settings.slint";
+
+// The Wire Cake Inu pillar (the no-root ADB self-elevation surface — the Shizuku-studied, in-app original)
+// dashboard (slice 8) — re-exported from the COMPILED root the same way so `InuDashboard` + its `PowerRow`
+// (the per-power grant-map row) + `InuLogRow` (the query-inu.log feed) surface as generated Rust structs
+// through `slint::include_modules!()`. The host constructs it, pulls the live `InuState` (torta_core
+// `inu_state::InuState` — the DurableTier RAM⊗NAND Record that succeeds the 4 SharedPreferences keys) via the
+// UniFFI Record + the live Kotlin elevation status, and pushes each field — so THE COLLAR MEDALLION verdict +
+// the 🩸 elevation-fault hunt (GHOST GRANT / PAIR LOST / NO PROVIDER / DRIFT UNGUARDED, the silent-enforcement
+// killers) render from REAL reads (Chroma F10/F17), never asserted. Its palette global `Inu`
+// (inu_palette.slint, slice 10) is pulled into the compile graph by the dashboard's own import. It REPLACES
+// the legacy `activity_wireless_debug.xml` + `ic_wireless_debug.xml`. HOST-PREVIEW only this wave; the
+// on-device SLINT render is gated by spike #69.
+export { InuDashboard, PowerRow, InuLogRow } from "inu.slint";
+
+// The Wire Cake Inu |||  SETTINGS section (slice 9) — re-exported from the COMPILED root the same way so
+// `InuSettings` + its `PowerToggleRow` (the editable per-power protect row) surface as generated Rust structs
+// through `slint::include_modules!()`. The host pushes the live posture (paired / provider / always-on /
+// boot-reapply / provider-preference / the per-power desired map + the folded desired-count scalars) and wires
+// the edit callbacks to the real destinations (`pair-now` → the ADB pair+elevate flow, `power-toggled` →
+// GrantEngine set/revert, `boot-reapply-toggled` → the live BootComplete re-establish branch, `manual-pair` →
+// the Expert raw ADB knobs). So the 🎷 decision-point guard (PROTECT WITHOUT PAIR / WON'T SURVIVE REBOOT)
+// warns WHERE a counterproductive choice is MADE, from REAL host-pushed state (Chroma F9/F10), never asserted.
+// It REPLACES the interactive half of `activity_wireless_debug.xml` (the pair wizard + Expert panel).
+export { InuSettings, PowerToggleRow } from "inu_settings.slint";
+
+// #15 UNDERGROUND H — the Underground Layer's OWN pillar space (the standing directive: out of
+// the ENGINE tab). The Window forwarders + the typed docket row surface as generated Rust
+// structs through `slint::include_modules!()` for the host-preview proof tests; the PANES mount
+// in-shell as the "underground-dash" / "underground-settings" advanced sections (home_shell).
+export { UndergroundDashboard, UgHostRow } from "underground_dashboard.slint";
+export { UndergroundSettings } from "underground_settings.slint";
+
+// The |||  ADVANCED HAMBURGER (OMEGA Stage-D · D2, charter step 7) — THE SLINT NAVIGATION SURFACE.
+// Re-exported from the COMPILED root so `AdvancedBurger` + its `PillarTabRow` private-tab struct
+// surface as generated Rust structs through `slint::include_modules!()`. ONE Window carries the |||
+// drawer rail, the PER-PILLAR PRIVATE TABS (host-pushed live statuses; DASHBOARD/SETTINGS chips fire
+// `open-pillar-dashboard/settings(id)` for the host to route to the pillar Windows until the
+// Design-Finale G2 pane refactor embeds them), and TWO REAL EMBEDDED SECTIONS: the overhauled
+// DNSCRYPT section (dnscrypt_section.slint — the K5 `DnscryptProxyConfig` typed surface, every
+// callback doc-mapped to the typed Record; the `Candle` namesake palette) and the GENERAL section
+// (general_section.slint — the SLINT home the retired general-settings .java rows point at). The
+// burger root forwards both panes' state/intents as aliases — the host constructs ONE component.
+// The host feeds: on-device `android_main` (the D1 #69 rail — since D3 the burger rides BEHIND the
+// TortaShell's ||| door, window-swapped on the one event loop) reads the REAL on-disk
+// dnscrypt-proxy.toml via `dnscrypt_config_import_or_default` (lib.rs:1223) and applies edits back
+// through `dnscrypt_config_to_toml` (VALUE-only, datapath-safe — the module restart stays the
+// Kotlin ModulesStateLoop's authority, the D09 law).
+export { AdvancedBurger, PillarTabRow } from "advanced_burger.slint";
+
+// THE DESIGN FINALE (OMEGA Stage-D · D3, charter step 8) — THE 4-TAB SLINT HOME. Re-exported from
+// the COMPILED root so `TortaShell` (home_shell.slint) + the `QueryRow` typed feed struct
+// (query_tab.slint) surface as generated Rust structs through `slint::include_modules!()`. ONE root
+// Window carries the four tabs as embedded panes: ① HOME (home_tab.slint — the dnsmasq×rethink
+// hybrid: the engine crown + master switch, the resolver-ledger counters read from the typed
+// `MaskSolverSnapshot`/`CentauriSnapshot`, the pillar health chips), ② Tortä ENGINE
+// (engine_tab.slint — the Beast porthole over the typed `BeastSnapshot`, profile-gated F6 honesty),
+// ③ DNS (the SAME K5 `DnscryptSection` pane the ||| burger embeds — one typed authority, two
+// mounts, the root forwards the burger's IDENTICAL alias set so one host feed drives either), and
+// ④ QUERY (query_tab.slint — the unified per-pillar query-log feed over `log_tail_recent`/
+// `log_stale_secs`, the first virtualized ListView in the crate). The ||| door fires
+// `open-advanced()` → the host swaps to the D2 AdvancedBurger on the one event loop. This surface
+// REPLACED the `TortaRoot` proof-of-substrate stub — the Design Finale IS the substrate now.
+export { TortaShell } from "home_shell.slint";
+export { QueryRow } from "query_tab.slint";
+
+// #33 THE THEME-TOKEN SPINE — the per-section identity book (palette + motif + typography as ONE
+// normalized `SectionTheme` grammar) + the Demon-Slayer duality switch (`akuma`: Hashira ↔ Upper
+// Moons) the ||| burger chrome binds. Exported from the COMPILED root so the host reads/drives the
+// tokens as typed state (`.global::<ThemeBook>()`) — the lib.rs proof test flips `akuma` and
+// asserts the chrome set actually changes (load-bearing, never dead config).
+export { ThemeBook, SectionTheme } from "theme_tokens.slint";

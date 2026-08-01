@@ -1,0 +1,251 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\uniffi-fixture-time\\src",
+  "files": {
+    "chronological.udl": {
+      "hash": "a77b0d1f4c6c",
+      "indexed_at": "2026-07-24T20:35:12.726178+00:00",
+      "language": "udl",
+      "lines": 35,
+      "mtime_ns": 1782136568000000000,
+      "size": 759,
+      "symbols": [
+        {
+          "lines": [
+            2,
+            5
+          ],
+          "name": "ChronologicalError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "return_timestamp",
+              "signature": "(timestamp a) : timestamp",
+              "type": "method"
+            },
+            {
+              "lines": [
+                12,
+                12
+              ],
+              "name": "return_duration",
+              "signature": "(duration a) : duration",
+              "type": "method"
+            },
+            {
+              "lines": [
+                14,
+                14
+              ],
+              "name": "to_string_timestamp",
+              "signature": "(timestamp a) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "get_pre_epoch_timestamp",
+              "signature": "() : timestamp",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                19
+              ],
+              "name": "add",
+              "signature": "(timestamp a, duration b) : timestamp",
+              "type": "method"
+            },
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "diff",
+              "signature": "(timestamp a, timestamp b) : duration",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "now",
+              "signature": "() : timestamp",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "equal",
+              "signature": "(timestamp a, timestamp b) : boolean",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "optional",
+              "signature": "(timestamp? a, duration? b) : boolean",
+              "type": "method"
+            },
+            {
+              "lines": [
+                31,
+                31
+              ],
+              "name": "get_seconds_before_unix_epoch",
+              "signature": "(timestamp a) : u64",
+              "type": "method"
+            },
+            {
+              "lines": [
+                34,
+                34
+              ],
+              "name": "set_seconds_before_unix_epoch",
+              "signature": "(u64 seconds) : timestamp",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            7,
+            35
+          ],
+          "name": "chronological",
+          "type": "namespace"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "8773aefcbf69",
+      "indexed_at": "2026-07-24T20:35:12.726992+00:00",
+      "language": "rust",
+      "lines": 73,
+      "mtime_ns": 1782136568000000000,
+      "size": 2041,
+      "symbols": [
+        {
+          "lines": [
+            11,
+            16
+          ],
+          "name": "ChronologicalError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            18,
+            20
+          ],
+          "name": "return_timestamp",
+          "signature": "(a: SystemTime)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            22,
+            24
+          ],
+          "name": "return_duration",
+          "signature": "(a: Duration)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            26,
+            29
+          ],
+          "name": "to_string_timestamp",
+          "signature": "(a: SystemTime)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            31,
+            35
+          ],
+          "name": "get_pre_epoch_timestamp",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            37,
+            40
+          ],
+          "name": "add",
+          "signature": "(a: SystemTime, b: Duration)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            42,
+            45
+          ],
+          "name": "diff",
+          "signature": "(a: SystemTime, b: SystemTime)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            47,
+            49
+          ],
+          "name": "now",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            51,
+            53
+          ],
+          "name": "equal",
+          "signature": "(a: SystemTime, b: SystemTime)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            55,
+            57
+          ],
+          "name": "optional",
+          "signature": "(a: Option<SystemTime>, b: Option<Duration>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            59,
+            61
+          ],
+          "name": "get_seconds_before_unix_epoch",
+          "signature": "(b: SystemTime)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            63,
+            69
+          ],
+          "name": "set_seconds_before_unix_epoch",
+          "signature": "(seconds: u64)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.745185+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,5254 @@
+{
+  "directory": "rust\\torta_core\\src\\mirror",
+  "files": {
+    "absorb.rs": {
+      "hash": "c107eff3ebe7",
+      "indexed_at": "2026-07-26T19:13:00.414977+00:00",
+      "language": "rust",
+      "lines": 390,
+      "mtime_ns": 1784951096339727100,
+      "size": 15677,
+      "symbols": [
+        {
+          "lines": [
+            52,
+            54
+          ],
+          "name": "index",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            56,
+            58
+          ],
+          "name": "store_dir_cell",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "Deterministic by construction, so the same URL always names the same binding across processes.",
+          "lines": [
+            65,
+            71
+          ],
+          "name": "absorb_name",
+          "signature": "(host: &str, path: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "missing asset is recoverable; a poisoned binding is not.",
+          "lines": [
+            80,
+            86
+          ],
+          "name": "absorb_url",
+          "signature": "(host: &str, path: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "Bind the durable dir + rehydrate any previously absorbed bindings. Idempotent.",
+          "lines": [
+            89,
+            94
+          ],
+          "name": "arm",
+          "signature": "(dir: PathBuf)",
+          "type": "function"
+        },
+        {
+          "docstring": "fresh absorb \u2014 never a panic on the serve path).",
+          "lines": [
+            99,
+            104
+          ],
+          "name": "lookup",
+          "signature": "(name: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "ceiling is reached and the name is new (the asset still serves this request; it just is not remembered).",
+          "lines": [
+            109,
+            126
+          ],
+          "name": "remember",
+          "signature": "(name: String, hash: ContentHash)",
+          "type": "function"
+        },
+        {
+          "docstring": "How many assets this device has absorbed (the dashboard's absorbed-asset tally).",
+          "lines": [
+            129,
+            134
+          ],
+          "name": "count",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "\u2500\u2500 Durability \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+          "lines": [
+            138,
+            143
+          ],
+          "name": "store_path",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            145,
+            152
+          ],
+          "name": "hex_lower",
+          "signature": "(bytes: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            154,
+            166
+          ],
+          "name": "parse_hash",
+          "signature": "(hex: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "FNV-1a over each binding, XOR-folded per row so a HashMap walk order cannot change the signature.",
+          "lines": [
+            169,
+            182
+          ],
+          "name": "signature",
+          "signature": "(m: &HashMap<String, ContentHash>)",
+          "type": "function"
+        },
+        {
+          "docstring": "stands and the next absorb retries the write.",
+          "lines": [
+            186,
+            216
+          ],
+          "name": "persist",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "partially-written file still restores every good binding.",
+          "lines": [
+            220,
+            253
+          ],
+          "name": "load",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                267,
+                277
+              ],
+              "name": "absorb_url_fails_closed_on_a_path_without_a_leading_slash",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                279,
+                290
+              ],
+              "name": "scrub",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                293,
+                304
+              ],
+              "name": "name_is_deterministic_and_host_normalized",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                307,
+                318
+              ],
+              "name": "url_is_https_only_and_rejects_a_malformed_host",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                321,
+                325
+              ],
+              "name": "lookup_is_free_until_something_is_absorbed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                328,
+                344
+              ],
+              "name": "remember_then_lookup_round_trips_and_revalidation_overwrites",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                347,
+                370
+              ],
+              "name": "bindings_round_trip_through_the_tsv",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                373,
+                389
+              ],
+              "name": "a_malformed_row_is_skipped_not_fatal",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            256,
+            390
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "cache.rs": {
+      "hash": "20f28a2320bb",
+      "indexed_at": "2026-07-31T23:37:04.099828+00:00",
+      "language": "rust",
+      "lines": 985,
+      "mtime_ns": 1785540999434875000,
+      "size": 44796,
+      "symbols": [
+        {
+          "lines": [
+            70,
+            73
+          ],
+          "name": "CacheEntry",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "`hash == content_hash(bytes)` invariant for every entry that enters the store.",
+              "lines": [
+                78,
+                84
+              ],
+              "name": "new",
+              "signature": "(bytes: Vec<u8>)",
+              "type": "method"
+            },
+            {
+              "docstring": "The entry's content address (its cache key).",
+              "lines": [
+                87,
+                89
+              ],
+              "name": "hash",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Borrow the cached asset bytes.",
+              "lines": [
+                92,
+                94
+              ],
+              "name": "bytes",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "gets the verified bytes WITHOUT a memcpy and the store guard can drop immediately.",
+              "lines": [
+                98,
+                100
+              ],
+              "name": "bytes_arc",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The byte length of the cached asset (the dashboard's \"X MB cached\" feed).",
+              "lines": [
+                103,
+                105
+              ],
+              "name": "len",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Is the cached asset empty? (A zero-length asset is well-defined \u2014 its hash is `BLAKE2b-256(\"\")`.)",
+              "lines": [
+                108,
+                110
+              ],
+              "name": "is_empty",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            75,
+            111
+          ],
+          "name": "CacheEntry",
+          "type": "impl"
+        },
+        {
+          "docstring": "unchanged in shape (`blake2::Digest` is the SAME `digest 0.10` trait `sha2` used \u2014 `lib.rs:83`).",
+          "lines": [
+            121,
+            125
+          ],
+          "name": "content_hash",
+          "signature": "(bytes: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "allocation-bounded (exactly 64 chars), the same one-way name\u2192hash mapping [`parse_hex_hash`] inverts.",
+          "lines": [
+            129,
+            137
+          ],
+          "name": "hex_lower",
+          "signature": "(hash: &ContentHash)",
+          "type": "function"
+        },
+        {
+          "docstring": "exactly a 64-hex string (so a stray `.tmp` / non-asset file in the cache dir is skipped on rehydrate).",
+          "lines": [
+            141,
+            153
+          ],
+          "name": "parse_hex_hash",
+          "signature": "(name: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "are written lower-case by [`hex_lower`], so upper-case is treated as a non-asset filename and skipped).",
+          "lines": [
+            157,
+            163
+          ],
+          "name": "hex_val",
+          "signature": "(c: u8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            174,
+            179
+          ],
+          "name": "CacheLookup",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "`true` iff this lookup found a verified cached asset.",
+              "lines": [
+                183,
+                185
+              ],
+              "name": "is_hit",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "`true` iff this lookup missed (the caller owes exactly one upstream fetch).",
+              "lines": [
+                188,
+                190
+              ],
+              "name": "is_miss",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            181,
+            191
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            195,
+            204
+          ],
+          "name": "CacheReject",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            214,
+            222
+          ],
+          "name": "CacheStore",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                225,
+                227
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            224,
+            228
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "A fresh, empty cache store at the default [`MAX_ENTRIES`] bound (in-memory only).",
+              "lines": [
+                232,
+                238
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "fetch-once loop into never being able to cache). Used by tests + the dashboard's configurable cap.",
+              "lines": [
+                242,
+                248
+              ],
+              "name": "with_capacity",
+              "signature": "(capacity: usize)",
+              "type": "method"
+            },
+            {
+              "docstring": "THREE invariants (content-addressed, fail-closed, bounded) hold identically whether or not `dir` is set.",
+              "lines": [
+                257,
+                263
+              ],
+              "name": "with_dir",
+              "signature": "(dir: PathBuf)",
+              "type": "method"
+            },
+            {
+              "docstring": "thin `.ok()` over it, so the fail-closed semantics are identical.",
+              "lines": [
+                275,
+                281
+              ],
+              "name": "insert_verified",
+              "signature": "(\n        &mut self,\n        expected: ContentHash,\n        bytes: Vec<u8>,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "no-op success (idempotent re-insert: the same verified bytes are already served).",
+              "lines": [
+                289,
+                305
+              ],
+              "name": "try_insert_verified",
+              "signature": "(\n        &mut self,\n        expected: ContentHash,\n        bytes: Vec<u8>,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "the entry's `hash == content_hash(bytes)` invariant already holds by construction/verification).",
+              "lines": [
+                309,
+                331
+              ],
+              "name": "admit",
+              "signature": "(&mut self, entry: CacheEntry)",
+              "type": "method"
+            },
+            {
+              "docstring": "after `fetch.rs` returns hash-verified bytes; it never serves or stores unverified bytes.",
+              "lines": [
+                340,
+                345
+              ],
+              "name": "insert_verified_entry",
+              "signature": "(&mut self, entry: CacheEntry)",
+              "type": "method"
+            },
+            {
+              "docstring": "rename over an existing file (same content address) is a harmless overwrite of identical bytes.",
+              "lines": [
+                350,
+                365
+              ],
+              "name": "write_to_disk",
+              "signature": "(dir: &Path, hash: &ContentHash, bytes: &[u8])",
+              "type": "method"
+            },
+            {
+              "docstring": "passed `dir`, mirroring on-disk truth into memory). Battery-frugal: a single directory scan at start.",
+              "lines": [
+                373,
+                413
+              ],
+              "name": "load_from_disk",
+              "signature": "(&mut self, dir: &Path)",
+              "type": "method"
+            },
+            {
+              "docstring": "asset\" (\u00a73.1) the only shape the caller can express.",
+              "lines": [
+                421,
+                426
+              ],
+              "name": "lookup",
+              "signature": "(&self, hash: &ContentHash)",
+              "type": "method"
+            },
+            {
+              "docstring": "O(1) \u2014 the content address IS the index (D23).",
+              "lines": [
+                432,
+                434
+              ],
+              "name": "get",
+              "signature": "(&self, hash: &ContentHash)",
+              "type": "method"
+            },
+            {
+              "docstring": "Borrow the verified bytes for a content address, if cached (the direct serve-on-match accessor).",
+              "lines": [
+                437,
+                439
+              ],
+              "name": "get_bytes",
+              "signature": "(&self, hash: &ContentHash)",
+              "type": "method"
+            },
+            {
+              "docstring": "Is this content address already cached? O(1) keyed probe (D23).",
+              "lines": [
+                442,
+                444
+              ],
+              "name": "contains",
+              "signature": "(&self, hash: &ContentHash)",
+              "type": "method"
+            },
+            {
+              "docstring": "The number of cached assets (the dashboard's \"serving N libraries\" count).",
+              "lines": [
+                447,
+                449
+              ],
+              "name": "len",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Is the cache empty?",
+              "lines": [
+                452,
+                454
+              ],
+              "name": "is_empty",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The bounded store's capacity (the fail-closed ceiling).",
+              "lines": [
+                457,
+                459
+              ],
+              "name": "capacity",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Is the bounded store full? (A full store rejects a NEW address fail-closed.)",
+              "lines": [
+                462,
+                464
+              ],
+              "name": "is_full",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The total bytes held across all cached assets (the dashboard's \"X MB never left your device\" feed).",
+              "lines": [
+                467,
+                469
+              ],
+              "name": "total_bytes",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Collect every cached asset's 32-byte content address (the serve-snapshot's content-address set).",
+              "lines": [
+                472,
+                474
+              ],
+              "name": "content_hashes",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            230,
+            475
+          ],
+          "name": "CacheStore",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                490,
+                529
+              ],
+              "name": "max_entries_refuses_fail_closed_and_never_evicts",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "A deterministic pseudo-asset of `len` bytes seeded by `seed` (no rng dep \u2014 host-pure + reproducible).",
+              "lines": [
+                535,
+                539
+              ],
+              "name": "asset",
+              "signature": "(seed: u8, len: usize)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                544,
+                550
+              ],
+              "name": "content_hash_matches_blake2b",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                553,
+                562
+              ],
+              "name": "empty_asset_hashes_to_blake2b_of_empty",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                567,
+                583
+              ],
+              "name": "insert_verified_rejects_content_address_mismatch",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                586,
+                600
+              ],
+              "name": "insert_verified_accepts_matching_hash_and_serves_on_match",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                603,
+                611
+              ],
+              "name": "insert_verified_is_idempotent_on_repeat",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                614,
+                628
+              ],
+              "name": "insert_verified_rejects_oversized_asset",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                633,
+                651
+              ],
+              "name": "full_store_rejects_a_new_asset_fail_closed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                654,
+                663
+              ],
+              "name": "full_store_still_accepts_an_already_present_asset",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                666,
+                673
+              ],
+              "name": "zero_capacity_is_clamped_so_one_asset_can_cache",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                678,
+                699
+              ],
+              "name": "lookup_miss_then_insert_then_hit",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                704,
+                723
+              ],
+              "name": "store_content_hashes_are_exactly_the_cached_addresses",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                730,
+                757
+              ],
+              "name": "prop_roundtrip_over_many_assets",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                763,
+                779
+              ],
+              "name": "prop_any_tampered_byte_is_rejected",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                784,
+                798
+              ],
+              "name": "prop_truncated_asset_is_rejected",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                803,
+                822
+              ],
+              "name": "prop_fetch_once_idempotency",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "the test's seed give a collision-free path). Returns the path; the test cleans it up at the end.",
+              "lines": [
+                828,
+                836
+              ],
+              "name": "temp_cache_dir",
+              "signature": "(tag: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                839,
+                855
+              ],
+              "name": "hex_roundtrip_is_faithful",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                858,
+                882
+              ],
+              "name": "disk_write_through_persists_under_the_content_address",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                885,
+                899
+              ],
+              "name": "disk_mismatch_is_never_written",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                902,
+                927
+              ],
+              "name": "load_from_disk_rehydrates_verified_assets",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                930,
+                953
+              ],
+              "name": "load_from_disk_rejects_a_tampered_file_fail_closed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                956,
+                966
+              ],
+              "name": "load_from_disk_on_absent_dir_is_zero_not_error",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                969,
+                984
+              ],
+              "name": "insert_verified_entry_admits_and_persists",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            478,
+            985
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "catalog.rs": {
+      "hash": "fa67abeab5e7",
+      "indexed_at": "2026-07-31T23:54:58.826970+00:00",
+      "language": "rust",
+      "lines": 1058,
+      "mtime_ns": 1785542072923368000,
+      "size": 51514,
+      "symbols": [
+        {
+          "docstring": "Reader for [`LEGACY_ALGO_REJECTIONS`]. Honest zero is the expected reading.",
+          "lines": [
+            102,
+            104
+          ],
+          "name": "legacy_algo_rejections",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            107,
+            109
+          ],
+          "name": "reset_legacy_algo_rejections_for_test",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            137,
+            146
+          ],
+          "name": "CatalogEntry",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            156,
+            160
+          ],
+          "name": "CloakSet",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "True iff `host` (after normalization) is in the cloak set \u2014 the cloak path's verdict query.",
+              "lines": [
+                164,
+                170
+              ],
+              "name": "is_cloaked",
+              "signature": "(&self, host: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "`None` means \"let it resolve normally\". Mirrors `is_blocked`'s `Some/None`-shaped verdict.",
+              "lines": [
+                175,
+                181
+              ],
+              "name": "cloak_ip",
+              "signature": "(&self, host: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Borrow the sorted, normalized cloaked hostnames (the cloak-rules-file write source, `PathVars.java:280`).",
+              "lines": [
+                184,
+                186
+              ],
+              "name": "hosts",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The number of cloaked hosts.",
+              "lines": [
+                189,
+                191
+              ],
+              "name": "len",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Is the cloak set empty?",
+              "lines": [
+                194,
+                196
+              ],
+              "name": "is_empty",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            162,
+            197
+          ],
+          "name": "CloakSet",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            205,
+            211
+          ],
+          "name": "Catalog",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            215,
+            231
+          ],
+          "name": "CatalogError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "`signature.rs:121` FFI-input discipline).",
+              "lines": [
+                244,
+                258
+              ],
+              "name": "parse_verified",
+              "signature": "(\r\n        bytes: &[u8],\r\n        sig_blob: &[u8],\r\n        pubkey_blob: &[u8],\r\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "covers these bytes; this validates the STRUCTURE the producer must honor.",
+              "lines": [
+                265,
+                372
+              ],
+              "name": "parse_body",
+              "signature": "(verified: &[u8])",
+              "type": "method"
+            },
+            {
+              "docstring": "Borrow the authorized asset entries.",
+              "lines": [
+                375,
+                377
+              ],
+              "name": "entries",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "math is `now - epoch` ONLY when `epoch != 0` (\u2605 #22 slice 2).",
+              "lines": [
+                382,
+                384
+              ],
+              "name": "authored_at_secs",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Look up an asset's content address by its request name (the server's routing query).",
+              "lines": [
+                387,
+                392
+              ],
+              "name": "content_hash_for",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "the datapath: the Forge crew wires it into the cloak-rules write / in-resolver consult.",
+              "lines": [
+                398,
+                409
+              ],
+              "name": "cloak_set",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The number of authorized assets in the catalog.",
+              "lines": [
+                412,
+                414
+              ],
+              "name": "len",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Is the catalog empty?",
+              "lines": [
+                417,
+                419
+              ],
+              "name": "is_empty",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            233,
+            420
+          ],
+          "name": "Catalog",
+          "type": "impl"
+        },
+        {
+          "docstring": "(length \u2264 `max` and within the buffer) and UTF-8-validated; any failure is `Malformed`, never a panic.",
+          "lines": [
+            424,
+            438
+          ],
+          "name": "read_len_prefixed_str",
+          "signature": "(buf: &[u8], cur: &mut usize, max: usize)",
+          "type": "function"
+        },
+        {
+          "docstring": "homograph layer is the DNS Guardian's concern, \u00a72.C, deliberately NOT folded here).",
+          "lines": [
+            444,
+            447
+          ],
+          "name": "normalize_host",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "a pinned epoch, never a live clock).",
+          "lines": [
+            461,
+            482
+          ],
+          "name": "encode_catalog",
+          "signature": "(entries: &[CatalogEntry], authored_at_secs: u64)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                496,
+                538
+              ],
+              "name": "len_prefixed_reader_refuses_every_malformed_shape",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "---- minisign blob helpers (mirror signature.rs:148/157 EXACTLY \u2014 the legacy `Ed` shape) ----",
+              "lines": [
+                546,
+                552
+              ],
+              "name": "make_pubkey_blob",
+              "signature": "(pk: &[u8; 32], key_id: &[u8; 8])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                554,
+                561
+              ],
+              "name": "sign_legacy",
+              "signature": "(sk: &SigningKey, key_id: &[u8; 8], bytes: &[u8])",
+              "type": "method"
+            },
+            {
+              "docstring": "---- catalog wire-format builder (the producer's exact byte layout, host-side) ----",
+              "lines": [
+                565,
+                570
+              ],
+              "name": "WireEntry",
+              "type": "struct"
+            },
+            {
+              "docstring": "the byte layout can never drift between test vectors and the shipped author).",
+              "lines": [
+                575,
+                586
+              ],
+              "name": "build_catalog",
+              "signature": "(entries: &[WireEntry])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                588,
+                594
+              ],
+              "name": "signed",
+              "signature": "(bytes: &[u8])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                596,
+                617
+              ],
+              "name": "sample_entries",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                622,
+                633
+              ],
+              "name": "parse_rejects_bad_signature_before_parsing",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                636,
+                649
+              ],
+              "name": "parse_rejects_tampered_body_at_the_signature_gate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                654,
+                686
+              ],
+              "name": "device_signed_catalog_round_trips_against_its_own_pubkey",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                689,
+                712
+              ],
+              "name": "parse_accepts_and_reads_a_genuinely_signed_catalog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                715,
+                723
+              ],
+              "name": "empty_catalog_is_well_defined",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                728,
+                747
+              ],
+              "name": "cloak_set_collects_only_cloaked_hosts_sorted_deduped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                750,
+                772
+              ],
+              "name": "cloak_ip_maps_a_cloaked_host_to_loopback_and_others_to_none",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                775,
+                796
+              ],
+              "name": "cloak_lookup_normalizes_like_the_blocklist_consult",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                799,
+                816
+              ],
+              "name": "parse_normalizes_a_mixed_case_host_into_the_entry",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Re-sign a (possibly mutated) body so it passes the signature gate, isolating the body parser.",
+              "lines": [
+                821,
+                824
+              ],
+              "name": "parse_resigned",
+              "signature": "(body: &[u8])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                827,
+                831
+              ],
+              "name": "rejects_bad_magic",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                834,
+                838
+              ],
+              "name": "rejects_wrong_version",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                855,
+                889
+              ],
+              "name": "a_retired_algorithm_catalog_moves_the_alarm",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                892,
+                960
+              ],
+              "name": "rejects_wrong_hash_algo_id",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                963,
+                987
+              ],
+              "name": "rejects_nonzero_reserved_fields",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                990,
+                1000
+              ],
+              "name": "v1_catalog_still_parses_with_epoch_zero",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1003,
+                1007
+              ],
+              "name": "rejects_unknown_entry_flag_bit",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1010,
+                1017
+              ],
+              "name": "rejects_truncated_body",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1020,
+                1024
+              ],
+              "name": "rejects_trailing_garbage",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1027,
+                1030
+              ],
+              "name": "rejects_header_shorter_than_24_bytes",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1033,
+                1040
+              ],
+              "name": "rejects_overlarge_entry_count_without_oom",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1043,
+                1057
+              ],
+              "name": "rejects_zero_length_name_field",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            485,
+            1058
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "devkey.rs": {
+      "hash": "7897d7edcc6c",
+      "indexed_at": "2026-07-26T19:12:57.927252+00:00",
+      "language": "rust",
+      "lines": 225,
+      "mtime_ns": 1785030832770605100,
+      "size": 10103,
+      "symbols": [
+        {
+          "docstring": "the local content-authority against which THIS device's catalog verifies.",
+          "lines": [
+            57,
+            60
+          ],
+          "name": "DeviceKey",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            65,
+            68
+          ],
+          "name": "DeviceKeyError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "for this key.",
+              "lines": [
+                74,
+                78
+              ],
+              "name": "generate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "every 32-byte value is a valid Ed25519 seed.",
+              "lines": [
+                82,
+                86
+              ],
+              "name": "from_seed",
+              "signature": "(seed: &[u8; DEVICE_SEED_LEN])",
+              "type": "method"
+            },
+            {
+              "docstring": "NEVER transmit it: possession of this seed IS possession of the device's Centauri authority.",
+              "lines": [
+                90,
+                92
+              ],
+              "name": "secret_seed",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The 8-byte key_id (`BLAKE2b-256(pk)[..8]`) \u2014 the deterministic, public device identity.",
+              "lines": [
+                95,
+                97
+              ],
+              "name": "key_id",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "catalog is checked against.",
+              "lines": [
+                101,
+                108
+              ],
+              "name": "pubkey_blob",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "sig`), legacy `Ed` over the RAW bytes \u2014 byte-identical to [`crate::signature`]'s verify contract.",
+              "lines": [
+                112,
+                119
+              ],
+              "name": "sign",
+              "signature": "(&self, artifact: &[u8])",
+              "type": "method"
+            },
+            {
+              "docstring": "self-consistent signing identity (the First-Boot witness asserts this on both mint and reload).",
+              "lines": [
+                124,
+                128
+              ],
+              "name": "self_verify",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            70,
+            129
+          ],
+          "name": "DeviceKey",
+          "type": "impl"
+        },
+        {
+          "docstring": "id), deterministic so a reloaded key is the same recognizable authority.",
+          "lines": [
+            133,
+            138
+          ],
+          "name": "derive_key_id",
+          "signature": "(vk: &VerifyingKey)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                145,
+                151
+              ],
+              "name": "generate_self_verifies",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                154,
+                165
+              ],
+              "name": "from_seed_is_deterministic",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                168,
+                178
+              ],
+              "name": "secret_seed_round_trips",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                181,
+                190
+              ],
+              "name": "different_seeds_are_different_authorities",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                193,
+                199
+              ],
+              "name": "blob_lengths_match_minisign",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                202,
+                206
+              ],
+              "name": "algo_tag_is_legacy_ed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                209,
+                215
+              ],
+              "name": "tampered_artifact_fails_verify",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                218,
+                224
+              ],
+              "name": "swapped_key_fails_verify",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            141,
+            225
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "fetch.rs": {
+      "hash": "376e29c52399",
+      "indexed_at": "2026-07-26T19:12:57.929476+00:00",
+      "language": "rust",
+      "lines": 403,
+      "mtime_ns": 1785030832780604400,
+      "size": 20565,
+      "symbols": [
+        {
+          "lines": [
+            51,
+            64
+          ],
+          "name": "FetchError",
+          "type": "enum"
+        },
+        {
+          "docstring": "returns an `Err` and zero bytes.",
+          "lines": [
+            78,
+            91
+          ],
+          "name": "fetch_once",
+          "signature": "(\n    url: &str,\n    expected: &ContentHash,\n    tls: Arc<rustls::ClientConfig>,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "served from the content-addressed cache with zero egress.",
+          "lines": [
+            108,
+            115
+          ],
+          "name": "fetch_absorb",
+          "signature": "(\n    url: &str,\n    tls: Arc<rustls::ClientConfig>,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "never drift in transport hardening.",
+          "lines": [
+            121,
+            199
+          ],
+          "name": "fetch_bytes",
+          "signature": "(url: &str, tls: Arc<rustls::ClientConfig>)",
+          "type": "function"
+        },
+        {
+          "docstring": "address.",
+          "lines": [
+            207,
+            212
+          ],
+          "name": "uncloaked_addrs",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "allowlist all speak h2, but a DISCOVERED host is any CDN the user happens to browse).",
+          "lines": [
+            220,
+            263
+          ],
+          "name": "fetch_via_addrs",
+          "signature": "(\n    uri: &Uri,\n    host: &str,\n    port: u16,\n    addrs: &[std::net::IpAddr],\n    tls: Arc<rust...",
+          "type": "function"
+        },
+        {
+          "docstring": "HTTP/2 GET over an established TLS stream (absolute-form URI \u2014 h2 carries `:authority`).",
+          "lines": [
+            266,
+            286
+          ],
+          "name": "get_h2",
+          "signature": "(stream: S, uri: &Uri)",
+          "type": "function"
+        },
+        {
+          "docstring": "HTTP/1.1 GET over an established TLS stream (origin-form path + an explicit `Host`).",
+          "lines": [
+            289,
+            317
+          ],
+          "name": "get_h1",
+          "signature": "(stream: S, uri: &Uri, host: &str, port: u16)",
+          "type": "function"
+        },
+        {
+          "docstring": "the stream stops the moment it would cross [`MAX_ASSET_BYTES`] rather than buffering unbounded.",
+          "lines": [
+            321,
+            337
+          ],
+          "name": "read_capped",
+          "signature": "(resp: http::Response<hyper::body::Incoming>)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                352,
+                366
+              ],
+              "name": "hash_gate_accepts_only_a_content_match",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                371,
+                375
+              ],
+              "name": "empty_body_has_a_deterministic_address",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                381,
+                392
+              ],
+              "name": "shared_tls_is_arc_shareable_in_the_fetch_shape",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                397,
+                402
+              ],
+              "name": "fetch_error_variants_are_distinct",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            340,
+            403
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "localcdn.rs": {
+      "hash": "7b3e63e55b3e",
+      "indexed_at": "2026-07-30T00:28:00.288689+00:00",
+      "language": "rust",
+      "lines": 1971,
+      "mtime_ns": 1785371228449303100,
+      "size": 96781,
+      "symbols": [
+        {
+          "docstring": "(`\"3.6\"` \u2192 `(3, 6, 0)`, `\"3\"` \u2192 `(3, 0, 0)`); a non-numeric component ends the parse.",
+          "lines": [
+            39,
+            46
+          ],
+          "name": "parse_version",
+          "signature": "(v: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            51,
+            60
+          ],
+          "name": "Substitution",
+          "type": "enum"
+        },
+        {
+          "docstring": "Classify whether a bundled version may stand in for a requested one (RFC-semver compatibility).",
+          "lines": [
+            63,
+            75
+          ],
+          "name": "substitution",
+          "signature": "(requested: &str, bundled: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "and how it relates to the request.",
+          "lines": [
+            81,
+            108
+          ],
+          "name": "best_bundled_version",
+          "signature": "(\n    requested: &str,\n    bundled: &[&'a str],\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            114,
+            123
+          ],
+          "name": "ResourceMap",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            127,
+            134
+          ],
+          "name": "Resolution",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "is authored by the offline GHC brain under this exact convention.",
+              "lines": [
+                144,
+                146
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            136,
+            147
+          ],
+          "name": "Resolution",
+          "type": "impl"
+        },
+        {
+          "docstring": "[`resolve`] stays the table-injected core (the seed table drives the unit tests).",
+          "lines": [
+            188,
+            190
+          ],
+          "name": "resolve_full",
+          "signature": "(host: &str, path: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "build-once static set. Returned as a `&'static` slice so no caller allocates per read.",
+          "lines": [
+            208,
+            219
+          ],
+          "name": "cdn_hosts",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "actually exists. Either way the verdict is ONE `binary_search` over the memoized [`cdn_hosts`] set.",
+          "lines": [
+            229,
+            246
+          ],
+          "name": "is_cdn_host",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "panic on a query, and a missed entry is exactly the pre-existing behaviour.",
+          "lines": [
+            271,
+            279
+          ],
+          "name": "is_tls_distrusted",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "name on a guess and the guess was wrong.\"",
+          "lines": [
+            330,
+            340
+          ],
+          "name": "serve_miss_should_uncloak",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            342,
+            347
+          ],
+          "name": "note_unservable",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "[`note_unservable`]) from the mirror's catalog-miss path.",
+          "lines": [
+            352,
+            374
+          ],
+          "name": "note_tls_rejected",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "store so a host that refused us in an earlier process is still un-cloaked on this one.",
+          "lines": [
+            394,
+            426
+          ],
+          "name": "arm_tls_distrust_store",
+          "signature": "(dir: &std::path::Path)",
+          "type": "function"
+        },
+        {
+          "docstring": "keeps working out of RAM exactly as it did before.",
+          "lines": [
+            430,
+            451
+          ],
+          "name": "persist_tls_distrust",
+          "signature": "(set: &[String])",
+          "type": "function"
+        },
+        {
+          "docstring": "How many hosts have refused our leaf \u2014 the dashboard's honest \"could not be served here\" count.",
+          "lines": [
+            454,
+            459
+          ],
+          "name": "tls_distrust_count",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "Returns how many hosts were forgiven, so the caller can log an honest number.",
+          "lines": [
+            470,
+            486
+          ],
+          "name": "clear_tls_distrust",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "query). `host` must already be normalized (trimmed, root-dot stripped, lowercase).",
+          "lines": [
+            505,
+            513
+          ],
+          "name": "is_promoted_cloak_host",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "callers cannot publish an unsorted set that would break the `binary_search` consult.",
+          "lines": [
+            518,
+            540
+          ],
+          "name": "publish_promoted_cloak",
+          "signature": "(hosts: Vec<String>)",
+          "type": "function"
+        },
+        {
+          "docstring": "the absorb lane instead. Normalizes the host the same way the cloak consult does.",
+          "lines": [
+            546,
+            556
+          ],
+          "name": "is_promoted_host",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "How many hosts the promoted cloak lane currently carries (the dashboard's absorbed-host tally).",
+          "lines": [
+            559,
+            564
+          ],
+          "name": "promoted_cloak_count",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "observation may pass `true` here \u2014 never an assumption that installation succeeded.",
+          "lines": [
+            598,
+            600
+          ],
+          "name": "publish_cloak_tls_trust",
+          "signature": "(trusted: bool)",
+          "type": "function"
+        },
+        {
+          "docstring": "Exposed so a dashboard can explain a dark offline-CDN instead of leaving it mysterious.",
+          "lines": [
+            604,
+            606
+          ],
+          "name": "cloak_tls_trusted",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "stops cloaking what it can no longer serve (a stale larger set is exactly the defect).",
+          "lines": [
+            612,
+            622
+          ],
+          "name": "publish_servable_cloak",
+          "signature": "(hosts: &[String])",
+          "type": "function"
+        },
+        {
+          "docstring": "How many hosts the live servable-cloak gate carries (0 \u21d2 the gate cloaks NOTHING).",
+          "lines": [
+            625,
+            630
+          ],
+          "name": "servable_cloak_count",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "normalization split would reintroduce the defect for hosts differing only in case.",
+          "lines": [
+            638,
+            676
+          ],
+          "name": "is_servable_cloak_host",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "this reached a device.",
+          "lines": [
+            688,
+            693
+          ],
+          "name": "promoted_cloak_hosts",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "`path` is lowercased for the prefix probe.",
+          "lines": [
+            713,
+            722
+          ],
+          "name": "is_blocked_fingerprinter",
+          "signature": "(host: &str, path: &str)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                729,
+                747
+              ],
+              "name": "blocks_each_known_fingerprinter",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                750,
+                759
+              ],
+              "name": "passes_benign_libraries_on_the_same_hosts",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                762,
+                768
+              ],
+              "name": "normalizes_host_case_trailing_dot_and_whitespace",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            725,
+            769
+          ],
+          "name": "fingerprinter_gate_tests",
+          "type": "module"
+        },
+        {
+          "docstring": "The BEGIN/END fence lets a writer replace just the Centauri block in a file that also holds user rules.",
+          "lines": [
+            802,
+            832
+          ],
+          "name": "cloaking_rules",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "still separate from writing it (the arming step), exactly as [`cloaking_rules`] is.",
+          "lines": [
+            866,
+            890
+          ],
+          "name": "cloaking_rules_for",
+          "signature": "(servable_hosts: &[S])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            892,
+            918
+          ],
+          "name": "resolve",
+          "signature": "(host: &str, path: &str, maps: &[ResourceMap])",
+          "type": "function"
+        },
+        {
+          "docstring": "NEVER become a leak. https-only is re-enforced downstream in [`super::serve::fetch_once`].",
+          "lines": [
+            929,
+            950
+          ],
+          "name": "upstream_url_for",
+          "signature": "(host: &str, path: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            982,
+            994
+          ],
+          "name": "AddressedResolution",
+          "type": "struct"
+        },
+        {
+          "docstring": "here \u2014 [`best_bundled_version`] never returns it \u2014 but it floors defensively.)",
+          "lines": [
+            999,
+            1006
+          ],
+          "name": "substitution_quality",
+          "signature": "(sub: Substitution)",
+          "type": "function"
+        },
+        {
+          "docstring": "serve than an `Exact` one at equal corroboration \u2014 the properties the slice's tests pin.",
+          "lines": [
+            1021,
+            1032
+          ],
+          "name": "resolution_trust",
+          "signature": "(\n    sub: Substitution,\n    corroboration: u32,\n    now_days: u32,\n    catalog_epoch_days: u32,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "corroboration source. jQuery 3.6.0 mapped from `ajax.googleapis.com` AND `cdnjs.cloudflare.com` = 2.",
+          "lines": [
+            1036,
+            1049
+          ],
+          "name": "corroboration_for",
+          "signature": "(library: &str, served_version: &str, maps: &[ResourceMap])",
+          "type": "function"
+        },
+        {
+          "docstring": "entry point. `now_days` is the epoch-day clock for the recency axis (pass `0` to treat as fresh).",
+          "lines": [
+            1054,
+            1067
+          ],
+          "name": "resolve_addressed",
+          "signature": "(\n    host: &str,\n    path: &str,\n    catalog: &Catalog,\n    now_days: u32,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "resolver lacks (it picks a `served_version` from a static list divorced from real coverage).",
+          "lines": [
+            1079,
+            1132
+          ],
+          "name": "resolve_addressed_in",
+          "signature": "(\n    host: &str,\n    path: &str,\n    maps: &[ResourceMap],\n    catalog: &Catalog,\n    now_days: ...",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1145,
+                1191
+              ],
+              "name": "tls_refusal_uncloaks_the_host_and_survives_a_republish",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1205,
+                1232
+              ],
+              "name": "refusal_survives_a_cold_start",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1241,
+                1266
+              ],
+              "name": "reloading_the_ca_at_boot_does_not_forgive_the_ledger",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1269,
+                1275
+              ],
+              "name": "substitution_classifies_semver",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1278,
+                1296
+              ],
+              "name": "best_version_prefers_exact_then_smallest_newer_then_closest_older",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1299,
+                1310
+              ],
+              "name": "resolve_maps_googleapis_jquery",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1313,
+                1323
+              ],
+              "name": "resolve_falls_back_to_newer_bundled",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1326,
+                1342
+              ],
+              "name": "resolve_captures_the_file_tail",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1345,
+                1353
+              ],
+              "name": "canonical_name_is_library_servedversion_file",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1356,
+                1366
+              ],
+              "name": "canonical_name_uses_the_served_version_after_fallback",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1369,
+                1384
+              ],
+              "name": "canonical_name_is_host_independent_dedup",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1387,
+                1394
+              ],
+              "name": "resolve_is_host_case_insensitive",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1397,
+                1425
+              ],
+              "name": "full_map_is_populated_and_resolves_real_cdn_urls",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1428,
+                1446
+              ],
+              "name": "upstream_url_for_reconstructs_the_served_version_leak_target",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1449,
+                1457
+              ],
+              "name": "upstream_url_for_is_none_when_unfetchable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1460,
+                1479
+              ],
+              "name": "cdn_hosts_is_sorted_deduped_and_covers_the_majors",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1482,
+                1494
+              ],
+              "name": "is_cdn_host_normalizes_and_rejects_unknowns",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1501,
+                1506
+              ],
+              "name": "cloak_sentinel_ip_equals_resolver_sentinel_v4",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1509,
+                1550
+              ],
+              "name": "cloaking_rules_fences_and_maps_every_host_to_loopback",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1553,
+                1567
+              ],
+              "name": "resolve_rejects_unknown_host_and_crossmajor",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "like the on-device install path (the `server.rs`/`catalog.rs` test signer shape; no production key).",
+              "lines": [
+                1574,
+                1607
+              ],
+              "name": "signed_catalog_for",
+              "signature": "(entries: &[(&str, ContentHash)])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1610,
+                1639
+              ],
+              "name": "resolve_addressed_carries_the_catalog_hash_for_a_covered_url",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1642,
+                1657
+              ],
+              "name": "resolve_addressed_is_none_for_a_mapped_but_uncatalogued_url",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1660,
+                1691
+              ],
+              "name": "resolve_addressed_coverage_gate_picks_a_covered_fallback",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1694,
+                1710
+              ],
+              "name": "resolution_trust_is_always_in_the_signed_band",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1713,
+                1729
+              ],
+              "name": "resolution_trust_is_monotone_in_corroboration",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1732,
+                1741
+              ],
+              "name": "resolution_trust_ranks_exact_above_riskyolder",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1744,
+                1752
+              ],
+              "name": "corroboration_for_counts_distinct_cdn_hosts",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1135,
+            1753
+          ],
+          "name": "tests",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Extract the cloaked hosts back out of a rendered block, so the assertions are about the SET.",
+              "lines": [
+                1764,
+                1770
+              ],
+              "name": "hosts_in",
+              "signature": "(block: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1775,
+                1779
+              ],
+              "name": "only_servable_hosts_are_cloaked",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1786,
+                1805
+              ],
+              "name": "the_old_generator_overclaims_against_a_one_asset_store",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1810,
+                1828
+              ],
+              "name": "a_complete_store_reproduces_the_corpus_block_byte_for_byte",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1833,
+                1839
+              ],
+              "name": "an_empty_store_cloaks_nothing_but_still_writes_the_fence",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1844,
+                1848
+              ],
+              "name": "the_block_is_order_and_duplicate_stable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1853,
+                1856
+              ],
+              "name": "an_empty_host_is_never_emitted",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1760,
+            1857
+          ],
+          "name": "cloak_servable_tests",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1874,
+                1889
+              ],
+              "name": "an_unpublished_gate_cloaks_nothing_even_for_a_corpus_host",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1893,
+                1901
+              ],
+              "name": "a_published_servable_corpus_host_is_cloaked",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1906,
+                1912
+              ],
+              "name": "publishing_a_non_corpus_host_does_not_cloak_it",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1917,
+                1929
+              ],
+              "name": "a_shrinking_store_stops_cloaking_immediately",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1938,
+                1955
+              ],
+              "name": "an_untrusted_ca_cloaks_nothing_however_servable_the_host_is",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1960,
+                1970
+              ],
+              "name": "the_gate_normalizes_case_and_the_fqdn_dot_like_is_cdn_host",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1865,
+            1971
+          ],
+          "name": "live_cloak_gate_tests",
+          "type": "module"
+        }
+      ]
+    },
+    "localcdn_maps.rs": {
+      "hash": "3da0bd2749cd",
+      "indexed_at": "2026-07-26T19:12:57.979254+00:00",
+      "language": "rust",
+      "lines": 12150,
+      "mtime_ns": 1785030832804604000,
+      "size": 375436,
+      "symbols": []
+    },
+    "log.rs": {
+      "hash": "c202558dd955",
+      "indexed_at": "2026-07-26T19:12:57.981110+00:00",
+      "language": "rust",
+      "lines": 375,
+      "mtime_ns": 1785030832815604600,
+      "size": 15722,
+      "symbols": [
+        {
+          "docstring": "- `FETCHFAIL` \u2014 the one allowed fetch failed (transport / oversize / hash-mismatch) \u2014 no bytes served.",
+          "lines": [
+            53,
+            61
+          ],
+          "name": "outcome_verb",
+          "signature": "(o: CentauriServeOutcome)",
+          "type": "function"
+        },
+        {
+          "docstring": "AND for `NotApplicable` (a non-serve miss: no verdict exists \u2014 the log never fakes an \"exact\" on a 404).",
+          "lines": [
+            65,
+            72
+          ],
+          "name": "sub_token",
+          "signature": "(s: CentauriSubstitution)",
+          "type": "function"
+        },
+        {
+          "docstring": "network-exported.",
+          "lines": [
+            88,
+            122
+          ],
+          "name": "format_serve_line",
+          "signature": "(record: &CentauriServeRecord)",
+          "type": "function"
+        },
+        {
+          "docstring": "explicit review-channel seam, off the per-serve hot path.",
+          "lines": [
+            129,
+            138
+          ],
+          "name": "append_serve",
+          "signature": "(path: &Path, record: &CentauriServeRecord)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                147,
+                168
+              ],
+              "name": "rec",
+              "signature": "(\n        now_ms: u64,\n        outcome: CentauriServeOutcome,\n        host: &str,\n        canonic...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                171,
+                187
+              ],
+              "name": "format_local_exact_line_is_deterministic",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                190,
+                206
+              ],
+              "name": "format_leak_fallback_line_carries_the_version_drift",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                209,
+                254
+              ],
+              "name": "format_block_miss_and_fetchfail_lines_are_deterministic",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                257,
+                272
+              ],
+              "name": "empty_host_and_name_render_dash",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                275,
+                324
+              ],
+              "name": "round_trips_through_log_tier",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                327,
+                374
+              ],
+              "name": "strict_mode_emits_no_leak_lines_so_the_crown_is_greppable",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            141,
+            375
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "mod.rs": {
+      "hash": "a3ea18238094",
+      "indexed_at": "2026-08-01T03:38:25.911281+00:00",
+      "language": "rust",
+      "lines": 114,
+      "mtime_ns": 1785554644850121800,
+      "size": 6900,
+      "symbols": [
+        {
+          "lines": [
+            41,
+            41
+          ],
+          "name": "absorb",
+          "type": "module"
+        },
+        {
+          "lines": [
+            42,
+            42
+          ],
+          "name": "cache",
+          "type": "module"
+        },
+        {
+          "lines": [
+            43,
+            43
+          ],
+          "name": "catalog",
+          "type": "module"
+        },
+        {
+          "lines": [
+            44,
+            44
+          ],
+          "name": "devkey",
+          "type": "module"
+        },
+        {
+          "lines": [
+            45,
+            45
+          ],
+          "name": "fetch",
+          "type": "module"
+        },
+        {
+          "lines": [
+            46,
+            46
+          ],
+          "name": "localcdn",
+          "type": "module"
+        },
+        {
+          "lines": [
+            47,
+            47
+          ],
+          "name": "localcdn_maps",
+          "type": "module"
+        },
+        {
+          "lines": [
+            48,
+            48
+          ],
+          "name": "log",
+          "type": "module"
+        },
+        {
+          "lines": [
+            49,
+            49
+          ],
+          "name": "object",
+          "type": "module"
+        },
+        {
+          "lines": [
+            50,
+            50
+          ],
+          "name": "packaging",
+          "type": "module"
+        },
+        {
+          "lines": [
+            51,
+            51
+          ],
+          "name": "serve",
+          "type": "module"
+        },
+        {
+          "lines": [
+            52,
+            52
+          ],
+          "name": "server",
+          "type": "module"
+        },
+        {
+          "docstring": "asset reaches the same absorb-once/serve-forever path the `:80` hairpin already uses.",
+          "lines": [
+            55,
+            55
+          ],
+          "name": "tlsca",
+          "type": "module"
+        }
+      ]
+    },
+    "object.rs": {
+      "hash": "acc532c62532",
+      "indexed_at": "2026-07-31T23:50:05.645891+00:00",
+      "language": "rust",
+      "lines": 3281,
+      "mtime_ns": 1785541314353093900,
+      "size": 177925,
+      "symbols": [
+        {
+          "lines": [
+            110,
+            119
+          ],
+          "name": "CentauriServeState",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "zero-cost cast; kept as a named fn so the ordinal contract is documented + asserted in tests.",
+              "lines": [
+                125,
+                127
+              ],
+              "name": "code",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "An out-of-range code degrades to `Stopped` (the safe baseline), never panics.",
+              "lines": [
+                133,
+                140
+              ],
+              "name": "from_code",
+              "signature": "(code: u8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            122,
+            141
+          ],
+          "name": "CentauriServeState",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            158,
+            172
+          ],
+          "name": "CentauriSubstitution",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                176,
+                183
+              ],
+              "name": "from",
+              "signature": "(s: Substitution)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            175,
+            184
+          ],
+          "name": "CentauriSubstitution",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            193,
+            204
+          ],
+          "name": "CentauriServeOutcome",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                208,
+                216
+              ],
+              "name": "from",
+              "signature": "(v: &ServeVerdict)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            207,
+            217
+          ],
+          "name": "CentauriServeOutcome",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            227,
+            233
+          ],
+          "name": "CentauriCacheMode",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "The stable `u8` code the Object stores in its `cache_mode` atomic (lock-free toggle).",
+              "lines": [
+                238,
+                240
+              ],
+              "name": "code",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Decode the stored `u8` back to the mode (out-of-range \u21d2 the safe `LeakOnMiss` default).",
+              "lines": [
+                243,
+                248
+              ],
+              "name": "from_code",
+              "signature": "(code: u8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            236,
+            249
+          ],
+          "name": "CentauriCacheMode",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                253,
+                258
+              ],
+              "name": "from",
+              "signature": "(m: CacheMode)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            252,
+            259
+          ],
+          "name": "CentauriCacheMode",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "it threads into [`crate::mirror::serve_addressed`] when it adopts the privacy flow (#85 seam).",
+              "lines": [
+                265,
+                270
+              ],
+              "name": "from",
+              "signature": "(m: CentauriCacheMode)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            262,
+            271
+          ],
+          "name": "CacheMode",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            321,
+            347
+          ],
+          "name": "CentauriError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            358,
+            434
+          ],
+          "name": "CentauriSnapshot",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            442,
+            455
+          ],
+          "name": "CentauriResolution",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                459,
+                470
+              ],
+              "name": "from",
+              "signature": "(r: Resolution)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            458,
+            471
+          ],
+          "name": "CentauriResolution",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            480,
+            499
+          ],
+          "name": "CentauriServeRecord",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            508,
+            519
+          ],
+          "name": "CentauriWarmUpReport",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            528,
+            531
+          ],
+          "name": "CentauriServeSink",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            538,
+            547
+          ],
+          "name": "CentauriCacheStat",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            555,
+            580
+          ],
+          "name": "CentauriArmReport",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            593,
+            613
+          ],
+          "name": "CentauriLiveStats",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            620,
+            628
+          ],
+          "name": "CentauriStats",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            651,
+            694
+          ],
+          "name": "Centauri",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                707,
+                738
+              ],
+              "name": "new",
+              "signature": "(cache_dir: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "surface's accounting). Panic-firewalled \u2192 `Err(Panic)`.",
+              "lines": [
+                748,
+                809
+              ],
+              "name": "install_catalog",
+              "signature": "(\n        &self,\n        bytes: Vec<u8>,\n        sig: Vec<u8>,\n        pubkey: Vec<u8>,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2192 a zeroed report (`installed=false`, `key_id_hex=\"\"`).",
+              "lines": [
+                842,
+                940
+              ],
+              "name": "arm_device_catalog",
+              "signature": "(&self, content_dir: String, key_seed_dir: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2192 an empty list.",
+              "lines": [
+                947,
+                990
+              ],
+              "name": "cdn_hosts",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2192 `null`.",
+              "lines": [
+                998,
+                1008
+              ],
+              "name": "resolve_cdn",
+              "signature": "(&self, host: String, path: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "Panic-firewalled \u2192 an empty string.",
+              "lines": [
+                1016,
+                1019
+              ],
+              "name": "cloaking_rules",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "missing manifest must never mean \"intercept the whole corpus\".",
+              "lines": [
+                1038,
+                1041
+              ],
+              "name": "servable_cloaking_rules",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "mismatch, and a test over rendered text would not have caught it.",
+              "lines": [
+                1047,
+                1071
+              ],
+              "name": "servable_cloaked_hosts",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "to this method on the Socio's bindgen regen. Panic-firewalled \u2192 `Err(Panic)`.",
+              "lines": [
+                1087,
+                1221
+              ],
+              "name": "start",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "is 0 + the serve state is Stopped. Pure read; panic-firewalled \u2192 an empty/zero snapshot.",
+              "lines": [
+                1228,
+                1230
+              ],
+              "name": "status",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "content-addressed store (rehydrated via the constructor's `load_from_disk`), NOT re-dumped here.",
+              "lines": [
+                1247,
+                1290
+              ],
+              "name": "rehydrate_from_signed",
+              "signature": "(\n        &self,\n        base: String,\n        pubkey: Vec<u8>,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "no key, no possible author. Panic-firewalled by the delegate.",
+              "lines": [
+                1304,
+                1385
+              ],
+              "name": "rehydrate_device_catalog",
+              "signature": "(\n        &self,\n        key_seed_dir: String,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "driven, not a hot streaming metric). Pure read; panic-firewalled \u2192 an empty/zero snapshot.",
+              "lines": [
+                1390,
+                1469
+              ],
+              "name": "snapshot",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "ADDITIVE typed surface the Kotlin call-site adopts on the Socio's bindgen regen.",
+              "lines": [
+                1485,
+                1493
+              ],
+              "name": "resolve_cdn_typed",
+              "signature": "(&self, host: String, path: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "[`CacheMode`] via the `From` cross) when it adopts the privacy flow (#85). Pure setter, never panics.",
+              "lines": [
+                1499,
+                1501
+              ],
+              "name": "set_cache_mode",
+              "signature": "(&self, mode: CentauriCacheMode)",
+              "type": "method"
+            },
+            {
+              "docstring": "Lock-free; an out-of-range stored code decodes to the safe `LeakOnMiss` default. Never panics.",
+              "lines": [
+                1505,
+                1507
+              ],
+              "name": "cache_mode",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "embeds, never faked. Pure read; panic-firewalled \u2192 a zeroed stat.",
+              "lines": [
+                1512,
+                1533
+              ],
+              "name": "cache_stat",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "(slice 6's `query-centauri.log`): a small glance feed. Pure read; panic-firewalled \u2192 an empty list.",
+              "lines": [
+                1538,
+                1548
+              ],
+              "name": "recent_serves",
+              "signature": "(&self, max: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "log-tail read path consumes it. Never panics (a pure join + lossless-enough lossy conversion).",
+              "lines": [
+                1555,
+                1557
+              ],
+              "name": "query_centauri_log_path",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "clock-injection invariant \u2014 the Object never reads a wall clock in its methods).",
+              "lines": [
+                1568,
+                1572
+              ],
+              "name": "record_serve_logged",
+              "signature": "(&self, rec: CentauriServeRecord)",
+              "type": "method"
+            },
+            {
+              "docstring": "dashboard polls are no longer invisible). A re-attach REPLACES the previous reader. Never panics.",
+              "lines": [
+                1577,
+                1581
+              ],
+              "name": "attach_serve_sink",
+              "signature": "(&self, sink: Arc<dyn CentauriServeSink>)",
+              "type": "method"
+            },
+            {
+              "docstring": "stops pushing (counters/ring/log keep self-feeding). Never panics.",
+              "lines": [
+                1585,
+                1589
+              ],
+              "name": "detach_serve_sink",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "batch is an honest zero-target no-op (no egress). Panic-firewalled \u2192 a zeroed report.",
+              "lines": [
+                1601,
+                1665
+              ],
+              "name": "warm_up",
+              "signature": "(&self, max_targets: u32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            698,
+            1666
+          ],
+          "name": "Centauri",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            1681,
+            1703
+          ],
+          "name": "load_or_mint_device_key",
+          "signature": "(dir: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1718,
+            1732
+          ],
+          "name": "persist_device_pair",
+          "signature": "(dir: &std::path::Path, body: &[u8], sig: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1740,
+            1751
+          ],
+          "name": "ManifestRow",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            1761,
+            1800
+          ],
+          "name": "read_content_manifest",
+          "signature": "(dir: &std::path::Path)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1805,
+            1813
+          ],
+          "name": "hex_lower_key_id",
+          "signature": "(id: &[u8; 8])",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "docstring": "- `NotInCatalog` / `FetchFailed` \u21d2 no counter (no asset was served).",
+              "lines": [
+                1833,
+                1835
+              ],
+              "name": "record_serve",
+              "signature": "(&self, rec: CentauriServeRecord)",
+              "type": "method"
+            },
+            {
+              "docstring": "(The exported String twin is [`Centauri::query_centauri_log_path`] \u2014 D29.)",
+              "lines": [
+                1842,
+                1844
+              ],
+              "name": "log_path",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "clock-free (the #133/warden clock-injection invariant).",
+              "lines": [
+                1851,
+                1863
+              ],
+              "name": "serve_observer",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "poisoned cache/stats lock still reports the honest current toggle), everything else zero.",
+              "lines": [
+                1867,
+                1894
+              ],
+              "name": "zeroed_snapshot",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1821,
+            1895
+          ],
+          "name": "Centauri",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            1907,
+            1935
+          ],
+          "name": "apply_serve",
+          "signature": "(\n    live: &CentauriLiveStats,\n    recent: &Mutex<VecDeque<CentauriServeRecord>>,\n    rec: Centa...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1940,
+            1952
+          ],
+          "name": "tally_substitution",
+          "signature": "(live: &CentauriLiveStats, sub: CentauriSubstitution)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1966,
+            2024
+          ],
+          "name": "record_from_trace",
+          "signature": "(\n    now_ms: u64,\n    trace: &mirror::server::ServeTrace<'_>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2032,
+            2066
+          ],
+          "name": "observe_trace",
+          "signature": "(\n    live: &CentauriLiveStats,\n    recent: &Mutex<VecDeque<CentauriServeRecord>>,\n    sink: &Mut...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            2074,
+            2119
+          ],
+          "name": "warm_targets",
+          "signature": "(catalog: &Catalog, max: usize)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                2126,
+                2136
+              ],
+              "name": "constructor_builds_empty_store_for_cold_dir",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2139,
+                2152
+              ],
+              "name": "install_catalog_with_empty_sig_is_invalid_signature_err",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2155,
+                2163
+              ],
+              "name": "cdn_hosts_is_non_empty_pure_set",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2166,
+                2171
+              ],
+              "name": "cloaking_rules_is_fenced_block",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2174,
+                2182
+              ],
+              "name": "resolve_cdn_unmapped_host_is_none",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2185,
+                2198
+              ],
+              "name": "rehydrate_from_signed_absent_pair_is_rehydrate_failed_err",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2201,
+                2209
+              ],
+              "name": "snapshot_is_consistent_across_reads",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2212,
+                2217
+              ],
+              "name": "enum_codes_match_the_stable_ordinal_contract",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2222,
+                2269
+              ],
+              "name": "record_serve_logged_writes_query_centauri_log_and_bumps_counters",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2272,
+                2285
+              ],
+              "name": "query_centauri_log_path_sits_beside_the_cache_dir",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "`parse_verified`). Replicates the `catalog.rs` wire layout exactly.",
+              "lines": [
+                2293,
+                2327
+              ],
+              "name": "signed_one_entry_catalog",
+              "signature": "(\n        name: &str,\n        hash: [u8; 32],\n        host: &str,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2330,
+                2357
+              ],
+              "name": "install_catalog_retains_the_verified_catalog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "A fresh per-test temp dir (process-id + tag suffixed) \u2014 rehydrate tests write real `.tcat` pairs.",
+              "lines": [
+                2362,
+                2368
+              ],
+              "name": "rehydrate_dir",
+              "signature": "(tag: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2371,
+                2397
+              ],
+              "name": "rehydrate_from_signed_retains_the_verified_catalog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2400,
+                2416
+              ],
+              "name": "rehydrate_absent_pair_is_rehydrate_failed_typed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2419,
+                2452
+              ],
+              "name": "rehydrate_bad_signature_is_invalid_signature_and_never_clobbers_retained",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2455,
+                2483
+              ],
+              "name": "rehydrate_malformed_signed_body_is_malformed_catalog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Build a serve record for the `record_serve` CROWN-counter tests (the clock is injected, not read).",
+              "lines": [
+                2488,
+                2505
+              ],
+              "name": "serve_record",
+              "signature": "(\n        now_ms: u64,\n        outcome: CentauriServeOutcome,\n        substitution: CentauriSubst...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2508,
+                2579
+              ],
+              "name": "new_enums_cross_their_internal_twins_both_ways",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2582,
+                2591
+              ],
+              "name": "cache_mode_toggle_is_live_in_method_and_snapshot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2594,
+                2611
+              ],
+              "name": "centauri_resolution_from_carries_substitution_and_canonical_name",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2614,
+                2642
+              ],
+              "name": "resolve_cdn_typed_resolves_a_mapped_url_and_tallies",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2645,
+                2681
+              ],
+              "name": "record_serve_witnesses_the_crown_counters",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2684,
+                2710
+              ],
+              "name": "recent_serves_is_bounded_and_newest_first",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2713,
+                2721
+              ],
+              "name": "cache_stat_matches_the_snapshot_cache_fields",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "reader (D26 \u2014 the Beast one-reader discipline) without a socket or a Kotlin runtime.",
+              "lines": [
+                2727,
+                2729
+              ],
+              "name": "CountingSink",
+              "type": "struct"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    2731,
+                    2735
+                  ],
+                  "name": "on_serve",
+                  "signature": "(&self, record: CentauriServeRecord)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                2730,
+                2736
+              ],
+              "name": "CentauriServeSink",
+              "type": "impl"
+            },
+            {
+              "lines": [
+                2739,
+                2825
+              ],
+              "name": "observer_feeds_ring_counters_log_and_sink_from_a_served_trace",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2828,
+                2893
+              ],
+              "name": "observer_resolve_tally_splits_hit_from_miss_and_ignores_owned",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2896,
+                2944
+              ],
+              "name": "warm_targets_derive_from_catalog_intersect_map",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2947,
+                2955
+              ],
+              "name": "warm_up_with_no_catalog_is_a_zero_target_no_op",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2958,
+                2975
+              ],
+              "name": "start_marks_serving_and_snapshot_reflects_it",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2978,
+                3093
+              ],
+              "name": "arm_device_catalog_seeds_owned_content_and_installs_a_device_signed_catalog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3096,
+                3169
+              ],
+              "name": "sovereign_loop_arm_persists_then_reboot_rehydrates_by_device_key",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2122,
+            3170
+          ],
+          "name": "tests",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                3176,
+                3188
+              ],
+              "name": "rec",
+              "signature": "(i: u64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3199,
+                3246
+              ],
+              "name": "max_manifest_rows_caps_accepted_rows_not_skipped_lines",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3256,
+                3280
+              ],
+              "name": "recent_serves_cap_is_64_and_the_breach_is_loud",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            3173,
+            3281
+          ],
+          "name": "recent_ring_cap_tests",
+          "type": "module"
+        }
+      ]
+    },
+    "packaging.rs": {
+      "hash": "61b942568d3a",
+      "indexed_at": "2026-07-26T19:12:58.000128+00:00",
+      "language": "rust",
+      "lines": 662,
+      "mtime_ns": 1785030832847604300,
+      "size": 31868,
+      "symbols": [
+        {
+          "lines": [
+            81,
+            91
+          ],
+          "name": "SeedPolicy",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "OFL/MIT \u00b7 MathJax Apache-2.0). The shipped default `CatalogOnly` and the opt-in `WarmUpBatch` ship 0.",
+              "lines": [
+                97,
+                99
+              ],
+              "name": "ships_asset_bytes",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            93,
+            100
+          ],
+          "name": "SeedPolicy",
+          "type": "impl"
+        },
+        {
+          "docstring": "defined). Equality with the cap is INCLUSIVE (an exactly-`MAX` asset still fetches).",
+          "lines": [
+            110,
+            112
+          ],
+          "name": "is_packageable",
+          "signature": "(asset_bytes: usize)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            130,
+            138
+          ],
+          "name": "WarmUpTarget",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Build a single-CDN target from its catalog name + upstream url (no alternates).",
+              "lines": [
+                142,
+                148
+              ],
+              "name": "new",
+              "signature": "(name: impl Into<String>, url: impl Into<String>)",
+              "type": "method"
+            },
+            {
+              "docstring": "so a wider list can never widen the who-learns privacy surface).",
+              "lines": [
+                153,
+                164
+              ],
+              "name": "with_alternates",
+              "signature": "(\n        name: impl Into<String>,\n        url: impl Into<String>,\n        mut alt_urls: Vec<Stri...",
+              "type": "method"
+            },
+            {
+              "docstring": "The full ladder in try-order: primary first, then each alternate.",
+              "lines": [
+                167,
+                169
+              ],
+              "name": "ladder",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            140,
+            170
+          ],
+          "name": "WarmUpTarget",
+          "type": "impl"
+        },
+        {
+          "docstring": "unit-testable with a closure, exactly the [`warm_up`] fetch-shape one level down.",
+          "lines": [
+            178,
+            193
+          ],
+          "name": "fetch_via_ladder",
+          "signature": "(\n    target: &'t WarmUpTarget,\n    hash: ContentHash,\n    mut fetch: F,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            200,
+            212
+          ],
+          "name": "WarmUpReport",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "math: `cdn_requests == filled`, and every filled asset is then 0 CDN forever.",
+              "lines": [
+                217,
+                219
+              ],
+              "name": "cdn_requests",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            214,
+            220
+          ],
+          "name": "WarmUpReport",
+          "type": "impl"
+        },
+        {
+          "docstring": "(fail-closed) rather than blackholing \u2014 the runtime backstop to the curation guard.",
+          "lines": [
+            244,
+            278
+          ],
+          "name": "warm_up",
+          "signature": "(\n    catalog: &Catalog,\n    cache: &Arc<Mutex<CacheStore>>,\n    inflight: &InFlight,\n    targets...",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "docstring": "feature; the warm-up is serial, so a current-thread runtime is exactly right + deterministic).",
+              "lines": [
+                292,
+                298
+              ],
+              "name": "block",
+              "signature": "(f: Fut)",
+              "type": "method"
+            },
+            {
+              "docstring": "A fresh shared content cache.",
+              "lines": [
+                301,
+                303
+              ],
+              "name": "empty_cache",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "like the on-device install path (the `serve.rs`/`localcdn.rs` test signer shape; no production key).",
+              "lines": [
+                308,
+                341
+              ],
+              "name": "signed_catalog",
+              "signature": "(entries: &[(&str, ContentHash)])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                344,
+                347
+              ],
+              "name": "seed_policy_default_is_catalog_only",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                350,
+                356
+              ],
+              "name": "only_bundled_seed_ships_asset_bytes",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                359,
+                363
+              ],
+              "name": "packageable_cap_equals_the_fetch_cap",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                366,
+                378
+              ],
+              "name": "is_packageable_excludes_oversize_assets",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                381,
+                386
+              ],
+              "name": "declined_seed_tree_is_far_above_the_per_asset_cap",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                389,
+                445
+              ],
+              "name": "warm_up_self_fills_uncached_targets_once_each",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                448,
+                478
+              ],
+              "name": "warm_up_skips_already_cached_targets_zero_cdn",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                481,
+                508
+              ],
+              "name": "warm_up_skips_uncatalogued_targets_via_the_sig_gate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                511,
+                541
+              ],
+              "name": "warm_up_counts_fetch_failures_fail_closed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                544,
+                580
+              ],
+              "name": "warm_up_dedups_a_duplicate_target_to_one_fetch",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                585,
+                607
+              ],
+              "name": "ladder_stops_at_the_first_rung_that_answers",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                610,
+                649
+              ],
+              "name": "ladder_fails_over_to_the_next_cdn_and_exhaustion_is_err",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                652,
+                661
+              ],
+              "name": "with_alternates_re_truncates_past_the_privacy_cap",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            281,
+            662
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "serve.rs": {
+      "hash": "f0fcfecd6456",
+      "indexed_at": "2026-07-26T19:12:58.004503+00:00",
+      "language": "rust",
+      "lines": 885,
+      "mtime_ns": 1785030832858604500,
+      "size": 40224,
+      "symbols": [
+        {
+          "lines": [
+            68,
+            77
+          ],
+          "name": "CacheMode",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            83,
+            99
+          ],
+          "name": "ServeVerdict",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "The served bytes for a verdict that produced an asset (`ServedLocal`/`LeakedThenServed`), else `None`.",
+              "lines": [
+                103,
+                108
+              ],
+              "name": "served_bytes",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "`true` iff this serve cost ZERO CDN requests (a local hit or a strict-mode block).",
+              "lines": [
+                111,
+                116
+              ],
+              "name": "is_zero_egress",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            101,
+            117
+          ],
+          "name": "ServeVerdict",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            132,
+            134
+          ],
+          "name": "InFlight",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "A fresh, empty single-flight coordinator.",
+              "lines": [
+                138,
+                142
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "O(1) entry insert \u2014 never across an await.",
+              "lines": [
+                147,
+                153
+              ],
+              "name": "slot",
+              "signature": "(&self, hash: &ContentHash)",
+              "type": "method"
+            },
+            {
+              "docstring": "entry. Keeps the map bounded by the LIVE concurrent-miss set with zero correctness cost.",
+              "lines": [
+                162,
+                169
+              ],
+              "name": "prune",
+              "signature": "(&self, hash: &ContentHash, held: &Arc<tokio::sync::Mutex<()>>)",
+              "type": "method"
+            },
+            {
+              "docstring": "The number of content addresses with a live keyed lock (the in-flight set size \u2014 a test/diag read).",
+              "lines": [
+                172,
+                174
+              ],
+              "name": "in_flight_len",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            136,
+            175
+          ],
+          "name": "InFlight",
+          "type": "impl"
+        },
+        {
+          "docstring": "panicked by it.",
+          "lines": [
+            182,
+            185
+          ],
+          "name": "cache_get",
+          "signature": "(cache: &Arc<Mutex<CacheStore>>, hash: &ContentHash)",
+          "type": "function"
+        },
+        {
+          "docstring": "re-hit the warmed cache and never call theirs).",
+          "lines": [
+            203,
+            261
+          ],
+          "name": "serve_addressed",
+          "signature": "(\n    cache: &Arc<Mutex<CacheStore>>,\n    inflight: &InFlight,\n    mode: CacheMode,\n    hash: Con...",
+          "type": "function"
+        },
+        {
+          "docstring": "single-flight map, or the network (no unverified asset is ever served, no egress for an unknown name).",
+          "lines": [
+            267,
+            285
+          ],
+          "name": "serve_name_private",
+          "signature": "(\n    catalog: &Catalog,\n    cache: &Arc<Mutex<CacheStore>>,\n    inflight: &InFlight,\n    mode: C...",
+          "type": "function"
+        },
+        {
+          "docstring": "content-hash-verified by `fetch_once`, AND re-verified at the cache `insert_verified` gate \u2014 a double gate.",
+          "lines": [
+            293,
+            299
+          ],
+          "name": "fetch_leg",
+          "signature": "(\n    url: &str,\n    hash: ContentHash,\n    tls: Arc<rustls::ClientConfig>,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "\u21d2 `https://<host><base_path><served_version>/<file>`. https-only (re-enforced inside `fetch_once`).",
+          "lines": [
+            305,
+            307
+          ],
+          "name": "upstream_url",
+          "signature": "(host: &str, base_path: &str, served_version: &str, file: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            312,
+            323
+          ],
+          "name": "FetchProbeReport",
+          "type": "struct"
+        },
+        {
+          "docstring": "with `ok = false` \u2014 the wrong bytes are never served, exactly like production.",
+          "lines": [
+            334,
+            375
+          ],
+          "name": "fetch_probe",
+          "signature": "(url: &str, expected_hex: &str)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "docstring": "cooperative via `join!`, which is deterministic and exactly what the single-flight proof needs).",
+              "lines": [
+                391,
+                397
+              ],
+              "name": "block",
+              "signature": "(f: F)",
+              "type": "method"
+            },
+            {
+              "docstring": "A shared content cache pre-seeded with `seed` assets (none by default).",
+              "lines": [
+                400,
+                402
+              ],
+              "name": "empty_cache",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "like the on-device install path (the `catalog.rs`/`server.rs`/`object.rs` test signer; no production key).",
+              "lines": [
+                407,
+                440
+              ],
+              "name": "signed_catalog",
+              "signature": "(entries: &[(&str, ContentHash)])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                443,
+                446
+              ],
+              "name": "cache_mode_default_is_leak_on_miss",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                449,
+                484
+              ],
+              "name": "serve_from_cache_first_is_zero_cdn",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                487,
+                552
+              ],
+              "name": "miss_fetches_exactly_once_then_serves_forever_zero",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                555,
+                611
+              ],
+              "name": "concurrent_misses_coalesce_to_one_fetch",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                614,
+                667
+              ],
+              "name": "strict_mode_serves_nothing_on_miss_so_cdn_sees_zero",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                670,
+                701
+              ],
+              "name": "sig_gate_unauthorized_name_is_not_in_catalog_zero_cdn",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                704,
+                745
+              ],
+              "name": "sig_gate_authorized_name_self_fills_once",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                748,
+                778
+              ],
+              "name": "fetch_returning_wrong_bytes_is_fail_closed_and_caches_nothing",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                781,
+                795
+              ],
+              "name": "fetch_transport_error_is_fail_closed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                798,
+                820
+              ],
+              "name": "inflight_prunes_after_a_serial_serve",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                823,
+                860
+              ],
+              "name": "production_fetch_leg_wires_into_the_flow_and_a_hit_makes_zero_cdn_requests",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                863,
+                884
+              ],
+              "name": "upstream_url_reconstructs_the_served_cdn_url",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            378,
+            885
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "server.rs": {
+      "hash": "b778cf645e06",
+      "indexed_at": "2026-08-01T03:38:26.260627+00:00",
+      "language": "rust",
+      "lines": 1290,
+      "mtime_ns": 1785554856595328000,
+      "size": 72397,
+      "symbols": [
+        {
+          "docstring": "serve verdict. Borrowed \u2014 the observer copies what it keeps; the serve path allocates nothing for it.",
+          "lines": [
+            65,
+            74
+          ],
+          "name": "ServeTrace",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            97,
+            101
+          ],
+          "name": "ServerConfig",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            105,
+            130
+          ],
+          "name": "ServeOutcome",
+          "type": "enum"
+        },
+        {
+          "docstring": "server.",
+          "lines": [
+            138,
+            142
+          ],
+          "name": "MirrorServer",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Build a server over a signature-verified catalog + a content-addressed cache.",
+              "lines": [
+                146,
+                152
+              ],
+              "name": "new",
+              "signature": "(config: ServerConfig, catalog: Catalog, cache: CacheStore)",
+              "type": "method"
+            },
+            {
+              "docstring": "The server's configuration (loopback port).",
+              "lines": [
+                155,
+                157
+              ],
+              "name": "config",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Fail-closed: an unknown name is never served.",
+              "lines": [
+                165,
+                175
+              ],
+              "name": "serve_name",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "an empty path (`GET /`) yields `\"\"`, which the fail-closed catalog lookup rejects as `NotInCatalog`.",
+              "lines": [
+                180,
+                182
+              ],
+              "name": "request_name",
+              "signature": "(path: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "asset is served \u2014 so the real CDN sees \u2264 1 request (the opt-out local-CDN crown).",
+              "lines": [
+                196,
+                229
+              ],
+              "name": "serve_cdn_url",
+              "signature": "(&self, host: &str, path: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "`service_fn` future is total and `serve_connection`'s `S::Error: Into<Box<\u2026>>` bound holds.",
+              "lines": [
+                239,
+                274
+              ],
+              "name": "outcome_to_response",
+              "signature": "(outcome: ServeOutcome)",
+              "type": "method"
+            },
+            {
+              "docstring": "`serve_connection`'s `S::Error: Into<Box<dyn StdError + Send + Sync>>`.",
+              "lines": [
+                286,
+                311
+              ],
+              "name": "handle",
+              "signature": "(&self, req: Request<Incoming>)",
+              "type": "method"
+            },
+            {
+              "docstring": "the listener for good, and keeps `bind` host-testable (it really opens a socket on loopback).",
+              "lines": [
+                318,
+                322
+              ],
+              "name": "bind",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "resolver's `rt.block_on(exchange)` pattern (`resolver/mod.rs:308`).",
+              "lines": [
+                331,
+                349
+              ],
+              "name": "accept_loop",
+              "signature": "(&self, listener: TcpListener)",
+              "type": "method"
+            },
+            {
+              "docstring": "spawn the accept loop). Returns the bind error if the listener cannot open on loopback.",
+              "lines": [
+                355,
+                358
+              ],
+              "name": "run",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            144,
+            359
+          ],
+          "name": "MirrorServer",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            366,
+            371
+          ],
+          "name": "ServerError",
+          "type": "enum"
+        },
+        {
+          "docstring": "NO fetch context (every name fail-closed 404, a miss is a 503 with zero egress), byte-identical semantics.",
+          "lines": [
+            389,
+            391
+          ],
+          "name": "run",
+          "signature": "(config: ServerConfig, cache: Arc<Mutex<CacheStore>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            403,
+            411
+          ],
+          "name": "FetchCtx",
+          "type": "struct"
+        },
+        {
+          "docstring": "held lock never spans an `.await`; serves are zero-copy (`Arc<[u8]>`, D24). Loopback-only, fail-closed.",
+          "lines": [
+            426,
+            602
+          ],
+          "name": "run_shared",
+          "signature": "(\n    config: ServerConfig,\n    catalog: Catalog,\n    cache: Arc<Mutex<CacheStore>>,\n    observer...",
+          "type": "function"
+        },
+        {
+          "docstring": "without owning the cache by value. Fail-closed: an unknown name is `NotInCatalog`, a miss is `CacheMiss`.",
+          "lines": [
+            607,
+            617
+          ],
+          "name": "serve_shared",
+          "signature": "(catalog: &Catalog, cache: &CacheStore, name: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            656,
+            665
+          ],
+          "name": "ServeBucket",
+          "type": "enum"
+        },
+        {
+          "docstring": "measure \u2014 \"absorb once, serve forever\" is a claim about serves that cost NOTHING.",
+          "lines": [
+            672,
+            679
+          ],
+          "name": "classify_serve",
+          "signature": "(outcome: &ServeOutcome)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            681,
+            696
+          ],
+          "name": "note_serve",
+          "signature": "(outcome: ServeOutcome)",
+          "type": "function"
+        },
+        {
+          "docstring": "Assets served locally, with zero egress.",
+          "lines": [
+            699,
+            701
+          ],
+          "name": "serve_hits",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "Bytes served locally.",
+          "lines": [
+            704,
+            706
+          ],
+          "name": "serve_bytes",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "Authorized-but-uncached requests (the fetch-once leg).",
+          "lines": [
+            709,
+            711
+          ],
+          "name": "serve_misses",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "Requests the signed catalog refused.",
+          "lines": [
+            714,
+            716
+          ],
+          "name": "serve_unauthorized",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "match `is_cdn_host`), so this never mis-splits on an IPv6 colon.",
+          "lines": [
+            723,
+            732
+          ],
+          "name": "host_without_port",
+          "signature": "(host: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "without standing up a socket.",
+          "lines": [
+            743,
+            745
+          ],
+          "name": "is_servable_method",
+          "signature": "(method: &hyper::Method)",
+          "type": "function"
+        },
+        {
+          "docstring": "unauthorized URL is `NotInCatalog`, an authorized-but-uncached one is `CacheMiss` (never unverified bytes).",
+          "lines": [
+            755,
+            757
+          ],
+          "name": "route_host_aware",
+          "signature": "(catalog: &Catalog, cache: &CacheStore, host: &str, path: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "byte-identical (one decision, two surfaces, never a drift).",
+          "lines": [
+            763,
+            809
+          ],
+          "name": "route_host_aware_traced",
+          "signature": "(\n    catalog: &Catalog,\n    cache: &CacheStore,\n    host: &str,\n    path: &str,\n)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                820,
+                845
+              ],
+              "name": "a_promoted_host_absorbs_instead_of_404",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                858,
+                875
+              ],
+              "name": "the_mirror_answers_reads_and_refuses_writes",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                878,
+                885
+              ],
+              "name": "unknown_name_is_not_served_fail_closed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                888,
+                922
+              ],
+              "name": "fingerprinter_url_is_hard_blocked_not_served_not_leaked",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                925,
+                927
+              ],
+              "name": "default_config_is_loopback_ephemeral",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                932,
+                943
+              ],
+              "name": "cdn_url_unmapped_host_is_not_served",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                946,
+                962
+              ],
+              "name": "cdn_url_mapped_but_uncatalogued_is_not_served",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "on-device install path. Replicates the `catalog.rs` test signer (no production key involved).",
+              "lines": [
+                977,
+                1008
+              ],
+              "name": "signed_catalog",
+              "signature": "(name: &str, hash: ContentHash, host: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1019,
+                1050
+              ],
+              "name": "the_serve_ledger_counts_hits_misses_and_refusals_separately",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1056,
+                1090
+              ],
+              "name": "the_serve_ledger_is_actually_wired_to_the_serve_path",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1093,
+                1112
+              ],
+              "name": "cdn_url_served_end_to_end_when_catalogued_and_cached",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1117,
+                1168
+              ],
+              "name": "route_host_aware_serves_by_cdn_host_header_else_by_path",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1171,
+                1186
+              ],
+              "name": "cdn_url_catalogued_but_uncached_is_cache_miss_not_served",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1189,
+                1200
+              ],
+              "name": "cache_miss_surfaces_the_expected_content_hash",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1205,
+                1215
+              ],
+              "name": "request_name_strips_the_single_leading_slash",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1218,
+                1229
+              ],
+              "name": "served_outcome_maps_to_200_octet_stream",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1232,
+                1245
+              ],
+              "name": "leaked_then_served_maps_to_200_octet_stream_like_a_local_hit",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1248,
+                1252
+              ],
+              "name": "not_in_catalog_maps_to_404_fail_closed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1255,
+                1261
+              ],
+              "name": "cache_miss_maps_to_503_not_404",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1264,
+                1289
+              ],
+              "name": "bind_opens_a_loopback_ephemeral_port_and_reads_it_back",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            812,
+            1290
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "tlsca.rs": {
+      "hash": "7611ddfa4810",
+      "indexed_at": "2026-07-26T19:12:58.011963+00:00",
+      "language": "rust",
+      "lines": 434,
+      "mtime_ns": 1785030832879604400,
+      "size": 22083,
+      "symbols": [
+        {
+          "docstring": "outage waiting to happen \u2014 see [`CentauriResolver::leaf_for`].",
+          "lines": [
+            72,
+            75
+          ],
+          "name": "CachedLeaf",
+          "type": "struct"
+        },
+        {
+          "docstring": "sign leaves for hosts the signed catalog watches.",
+          "lines": [
+            79,
+            88
+          ],
+          "name": "DeviceCa",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Mint a fresh device CA. Called once per install (the caller persists the result).",
+              "lines": [
+                92,
+                118
+              ],
+              "name": "mint",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "install with no explanation.",
+              "lines": [
+                124,
+                137
+              ],
+              "name": "from_pem",
+              "signature": "(cert_pem: &str, key_pem: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "The CA certificate as PEM \u2014 what the user installs. PUBLIC material only.",
+              "lines": [
+                140,
+                142
+              ],
+              "name": "cert_pem",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "the UI, and never leaves the device.",
+              "lines": [
+                151,
+                153
+              ],
+              "name": "key_pem_for_private_storage",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "enforces that on every path that reaches here.",
+              "lines": [
+                159,
+                186
+              ],
+              "name": "mint_leaf",
+              "signature": "(&self, host: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            90,
+            187
+          ],
+          "name": "DeviceCa",
+          "type": "impl"
+        },
+        {
+          "docstring": "disagree with the handshake it is answering.",
+          "lines": [
+            195,
+            200
+          ],
+          "name": "CentauriResolver",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Hand-written so no derive can ever print key material.",
+              "lines": [
+                204,
+                208
+              ],
+              "name": "fmt",
+              "signature": "(&self, f: &mut std::fmt::Formatter<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            202,
+            209
+          ],
+          "name": "CentauriResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                212,
+                217
+              ],
+              "name": "new",
+              "signature": "(ca: DeviceCa)",
+              "type": "method"
+            },
+            {
+              "docstring": "exactly the signed catalog's reach and nothing more.",
+              "lines": [
+                223,
+                262
+              ],
+              "name": "leaf_for",
+              "signature": "(&self, host: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            211,
+            263
+          ],
+          "name": "CentauriResolver",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                266,
+                270
+              ],
+              "name": "resolve",
+              "signature": "(&self, hello: ClientHello<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            265,
+            271
+          ],
+          "name": "ResolvesServerCert",
+          "type": "impl"
+        },
+        {
+          "docstring": "advertising h2 we do not speak would break every flow that accepted it.",
+          "lines": [
+            276,
+            282
+          ],
+          "name": "server_config",
+          "signature": "(resolver: Arc<CentauriResolver>)",
+          "type": "function"
+        },
+        {
+          "docstring": "device has no use for organizational fields, and every extra field is another thing to get wrong.",
+          "lines": [
+            286,
+            290
+          ],
+          "name": "distinguished_name",
+          "signature": "(cn: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "needs and keeps the anchor from landing exactly on a boundary.",
+          "lines": [
+            311,
+            315
+          ],
+          "name": "ca_not_before",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "Day-granular counterpart for leaf certificates (see [`ca_not_before`] for the reasoning).",
+          "lines": [
+            318,
+            320
+          ],
+          "name": "leaf_not_before",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "leaks nothing the anchor did not.",
+          "lines": [
+            324,
+            326
+          ],
+          "name": "plus_days",
+          "signature": "(anchor: time::OffsetDateTime, days: i64)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                341,
+                363
+              ],
+              "name": "certificate_validity_carries_no_sub_day_timestamp",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                367,
+                374
+              ],
+              "name": "device_ca_mints_and_exports_public_pem",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                379,
+                389
+              ],
+              "name": "device_ca_round_trips_through_pem",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                396,
+                413
+              ],
+              "name": "mints_only_for_catalog_watched_hosts",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                418,
+                426
+              ],
+              "name": "leaves_are_cached_per_host",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                430,
+                433
+              ],
+              "name": "host_matching_is_case_insensitive",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            329,
+            434
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:38:26.262680+00:00",
+  "version": "1.0"
+}

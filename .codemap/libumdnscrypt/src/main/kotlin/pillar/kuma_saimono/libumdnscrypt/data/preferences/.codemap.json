@@ -1,0 +1,193 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\data\\preferences",
+  "files": {
+    "PreferenceDataSource.kt": {
+      "hash": "f2651965c2a1",
+      "indexed_at": "2026-08-01T03:59:21.422690+00:00",
+      "language": "kotlin",
+      "lines": 25,
+      "mtime_ns": 1785556375556898600,
+      "size": 833,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "getPreference",
+              "signature": "(@PreferenceType type: Int, key: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "setPreference",
+              "signature": "(key: String, value: Any)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            25
+          ],
+          "name": "PreferenceDataSource",
+          "type": "interface"
+        }
+      ]
+    },
+    "PreferenceDataSourceImpl.kt": {
+      "hash": "075915bb8bcb",
+      "indexed_at": "2026-08-01T03:59:21.753720+00:00",
+      "language": "kotlin",
+      "lines": 36,
+      "mtime_ns": 1785556375568899200,
+      "size": 1232,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                28,
+                30
+              ],
+              "name": "getPreference",
+              "signature": "(@PreferenceType type: Int, key: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                32,
+                34
+              ],
+              "name": "setPreference",
+              "signature": "(key: String, value: Any)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            24,
+            36
+          ],
+          "name": "PreferenceDataSourceImpl",
+          "type": "class"
+        }
+      ]
+    },
+    "PreferenceRepositoryImpl.kt": {
+      "hash": "287f88da98b8",
+      "indexed_at": "2026-08-01T03:59:22.052406+00:00",
+      "language": "kotlin",
+      "lines": 98,
+      "mtime_ns": 1785556375579899100,
+      "size": 4680,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                38,
+                52
+              ],
+              "name": "getBoolPreference",
+              "signature": "(key: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                54,
+                62
+              ],
+              "name": "setBoolPreference",
+              "signature": "(key: String, value: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                64,
+                66
+              ],
+              "name": "getIntPreference",
+              "signature": "(key: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                70
+              ],
+              "name": "setIntPreference",
+              "signature": "(key: String, value: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                72,
+                74
+              ],
+              "name": "getFloatPreference",
+              "signature": "(key: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                76,
+                78
+              ],
+              "name": "setFloatPreference",
+              "signature": "(key: String, value: Float)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                80,
+                82
+              ],
+              "name": "getStringPreference",
+              "signature": "(key: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                84,
+                86
+              ],
+              "name": "setStringPreference",
+              "signature": "(key: String, value: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                88,
+                93
+              ],
+              "name": "getStringSetPreference",
+              "signature": "(key: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                95,
+                97
+              ],
+              "name": "setStringSetPreference",
+              "signature": "(key: String, value: Set<String>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            32,
+            98
+          ],
+          "name": "PreferenceRepositoryImpl",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:22.054141+00:00",
+  "version": "1.0"
+}

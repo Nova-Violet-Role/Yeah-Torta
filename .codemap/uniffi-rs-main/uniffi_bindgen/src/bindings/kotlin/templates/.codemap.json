@@ -1,0 +1,1846 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src\\bindings\\kotlin\\templates",
+  "files": {
+    "Async.kt": {
+      "hash": "23852a396ae8",
+      "indexed_at": "2026-07-24T20:35:12.789651+00:00",
+      "language": "kotlin",
+      "lines": 133,
+      "mtime_ns": 1782136568000000000,
+      "size": 5559,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                10,
+                12
+              ],
+              "name": "callback",
+              "signature": "(data: Long, pollResult: Byte)",
+              "type": "method"
+            }
+          ],
+          "docstring": "FFI type for Rust future continuations",
+          "lines": [
+            9,
+            13
+          ],
+          "name": "uniffiRustFutureContinuationCallbackImpl",
+          "type": "class"
+        },
+        {
+          "lines": [
+            15,
+            40
+          ],
+          "name": "uniffiRustCallAsync",
+          "signature": "(\n    rustFuture: Long,\n    pollFunc: (Long, UniffiRustFutureContinuationCallback, Long) -> Unit,...",
+          "type": "function"
+        }
+      ]
+    },
+    "BooleanHelper.kt": {
+      "hash": "ea8acfb2f20c",
+      "indexed_at": "2026-07-24T20:35:12.790506+00:00",
+      "language": "kotlin",
+      "lines": 22,
+      "mtime_ns": 1782136568000000000,
+      "size": 519,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                7
+              ],
+              "name": "lift",
+              "signature": "(value: Byte)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                11
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "lower",
+              "signature": "(value: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "allocationSize",
+              "signature": "(value: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "write",
+              "signature": "(value: Boolean, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            22
+          ],
+          "name": "FfiConverterBoolean",
+          "type": "class"
+        }
+      ]
+    },
+    "ByteArrayHelper.kt": {
+      "hash": "34787b1f40e9",
+      "indexed_at": "2026-07-24T20:35:12.791324+00:00",
+      "language": "kotlin",
+      "lines": 18,
+      "mtime_ns": 1782136568000000000,
+      "size": 497,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                10
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11,
+                13
+              ],
+              "name": "allocationSize",
+              "signature": "(value: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                14,
+                17
+              ],
+              "name": "write",
+              "signature": "(value: ByteArray, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            18
+          ],
+          "name": "FfiConverterByteArray",
+          "type": "class"
+        }
+      ]
+    },
+    "CallbackInterfaceImpl.kt": {
+      "hash": "4abc0b9103ff",
+      "indexed_at": "2026-07-24T20:35:12.792199+00:00",
+      "language": "kotlin",
+      "lines": 117,
+      "mtime_ns": 1782136568000000000,
+      "size": 4959,
+      "symbols": []
+    },
+    "CallbackInterfaceRuntime.kt": {
+      "hash": "667541abbc6b",
+      "indexed_at": "2026-07-24T20:35:12.793114+00:00",
+      "language": "kotlin",
+      "lines": 32,
+      "mtime_ns": 1782136568000000000,
+      "size": 1052,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                15,
+                17
+              ],
+              "name": "drop",
+              "signature": "(handle: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "lift",
+              "signature": "(value: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "lower",
+              "signature": "(value: CallbackInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "allocationSize",
+              "signature": "(value: CallbackInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                31
+              ],
+              "name": "write",
+              "signature": "(value: CallbackInterface, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            12,
+            32
+          ],
+          "name": "FfiConverterCallbackInterface",
+          "type": "class"
+        }
+      ]
+    },
+    "CallbackInterfaceTemplate.kt": {
+      "hash": "9d378a761294",
+      "indexed_at": "2026-07-24T20:35:12.794020+00:00",
+      "language": "kotlin",
+      "lines": 17,
+      "mtime_ns": 1782136568000000000,
+      "size": 608,
+      "symbols": []
+    },
+    "CustomTypeTemplate.kt": {
+      "hash": "329c5e950971",
+      "indexed_at": "2026-07-24T20:35:12.795219+00:00",
+      "language": "kotlin",
+      "lines": 58,
+      "mtime_ns": 1782136568000000000,
+      "size": 2019,
+      "symbols": []
+    },
+    "DurationHelper.kt": {
+      "hash": "39b6149bbd87",
+      "indexed_at": "2026-07-24T20:35:12.796125+00:00",
+      "language": "kotlin",
+      "lines": 39,
+      "mtime_ns": 1782136568000000000,
+      "size": 1790,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                17
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "docstring": "8 bytes for seconds, 4 bytes for nanoseconds",
+              "lines": [
+                20,
+                20
+              ],
+              "name": "allocationSize",
+              "signature": "(value: java.time.Duration)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                22,
+                38
+              ],
+              "name": "write",
+              "signature": "(value: java.time.Duration, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            39
+          ],
+          "name": "FfiConverterDuration",
+          "type": "class"
+        }
+      ]
+    },
+    "EnumTemplate.kt": {
+      "hash": "4b790a4b10b9",
+      "indexed_at": "2026-07-24T20:35:12.796874+00:00",
+      "language": "kotlin",
+      "lines": 174,
+      "mtime_ns": 1782136568000000000,
+      "size": 6489,
+      "symbols": []
+    },
+    "ErrorTemplate.kt": {
+      "hash": "9fabcb54ce1f",
+      "indexed_at": "2026-07-24T20:35:12.797552+00:00",
+      "language": "kotlin",
+      "lines": 130,
+      "mtime_ns": 1782136568000000000,
+      "size": 5566,
+      "symbols": []
+    },
+    "ExternalTypeTemplate.kt": {
+      "hash": "640fcf3d9963",
+      "indexed_at": "2026-07-24T20:35:12.798556+00:00",
+      "language": "kotlin",
+      "lines": 26,
+      "mtime_ns": 1782136568000000000,
+      "size": 1205,
+      "symbols": []
+    },
+    "FfiConverterTemplate.kt": {
+      "hash": "73c2f68c04ef",
+      "indexed_at": "2026-07-24T20:35:12.799810+00:00",
+      "language": "kotlin",
+      "lines": 79,
+      "mtime_ns": 1782136568000000000,
+      "size": 2949,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "Convert an FFI type to a Kotlin type",
+              "lines": [
+                11,
+                11
+              ],
+              "name": "lift",
+              "signature": "(value: FfiType)",
+              "type": "method"
+            },
+            {
+              "docstring": "Convert an Kotlin type to an FFI type",
+              "lines": [
+                14,
+                14
+              ],
+              "name": "lower",
+              "signature": "(value: KotlinType)",
+              "type": "method"
+            },
+            {
+              "docstring": "Read a Kotlin type from a `ByteBuffer`",
+              "lines": [
+                17,
+                17
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "docstring": "because the `RustBuffer` is short-lived.",
+              "lines": [
+                27,
+                27
+              ],
+              "name": "allocationSize",
+              "signature": "(value: KotlinType)",
+              "type": "method"
+            },
+            {
+              "docstring": "Write a Kotlin type to a `ByteBuffer`",
+              "lines": [
+                30,
+                30
+              ],
+              "name": "write",
+              "signature": "(value: KotlinType, buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "docstring": "normal FFI type.",
+              "lines": [
+                38,
+                51
+              ],
+              "name": "lowerIntoRustBuffer",
+              "signature": "(value: KotlinType)",
+              "type": "method"
+            },
+            {
+              "docstring": "It's currently only used by the `FfiConverterRustBuffer` class below.",
+              "lines": [
+                57,
+                68
+              ],
+              "name": "liftFromRustBuffer",
+              "signature": "(rbuf: RustBuffer.ByValue)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            9,
+            69
+          ],
+          "name": "FfiConverter",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                77,
+                77
+              ],
+              "name": "lift",
+              "signature": "(value: RustBuffer.ByValue)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                78,
+                78
+              ],
+              "name": "lower",
+              "signature": "(value: KotlinType)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            76,
+            79
+          ],
+          "name": "FfiConverterRustBuffer",
+          "type": "interface"
+        }
+      ]
+    },
+    "Float32Helper.kt": {
+      "hash": "889d1b78e2fa",
+      "indexed_at": "2026-07-24T20:35:12.800607+00:00",
+      "language": "kotlin",
+      "lines": 22,
+      "mtime_ns": 1782136568000000000,
+      "size": 460,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                7
+              ],
+              "name": "lift",
+              "signature": "(value: Float)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                11
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "lower",
+              "signature": "(value: Float)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "allocationSize",
+              "signature": "(value: Float)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "write",
+              "signature": "(value: Float, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            22
+          ],
+          "name": "FfiConverterFloat",
+          "type": "class"
+        }
+      ]
+    },
+    "Float64Helper.kt": {
+      "hash": "29752b413a7e",
+      "indexed_at": "2026-07-24T20:35:12.801355+00:00",
+      "language": "kotlin",
+      "lines": 22,
+      "mtime_ns": 1782136568000000000,
+      "size": 472,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                7
+              ],
+              "name": "lift",
+              "signature": "(value: Double)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                11
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "lower",
+              "signature": "(value: Double)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "allocationSize",
+              "signature": "(value: Double)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "write",
+              "signature": "(value: Double, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            22
+          ],
+          "name": "FfiConverterDouble",
+          "type": "class"
+        }
+      ]
+    },
+    "HandleMap.kt": {
+      "hash": "4fd1b70b0683",
+      "indexed_at": "2026-07-24T20:35:12.802230+00:00",
+      "language": "kotlin",
+      "lines": 39,
+      "mtime_ns": 1782136568000000000,
+      "size": 1428,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "Insert a new object into the handle map and get a handle for it",
+              "lines": [
+                18,
+                22
+              ],
+              "name": "insert",
+              "signature": "(obj: T)",
+              "type": "method"
+            },
+            {
+              "docstring": "Clone a handle, creating a new one",
+              "lines": [
+                25,
+                28
+              ],
+              "name": "clone",
+              "signature": "(handle: Long)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get an object from the handle map",
+              "lines": [
+                31,
+                33
+              ],
+              "name": "get",
+              "signature": "(handle: Long)",
+              "type": "method"
+            },
+            {
+              "docstring": "Remove an entry from the handlemap and get the Kotlin object back",
+              "lines": [
+                36,
+                38
+              ],
+              "name": "remove",
+              "signature": "(handle: Long)",
+              "type": "method"
+            }
+          ],
+          "docstring": "This is used pass an opaque 64-bit handle representing a foreign object to the Rust code.",
+          "lines": [
+            9,
+            39
+          ],
+          "name": "UniffiHandleMap",
+          "type": "class"
+        }
+      ]
+    },
+    "Helpers.kt": {
+      "hash": "5c80c42383db",
+      "indexed_at": "2026-07-24T20:35:12.803470+00:00",
+      "language": "kotlin",
+      "lines": 129,
+      "mtime_ns": 1782136568000000000,
+      "size": 4592,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                13
+              ],
+              "name": "ByValue",
+              "type": "class"
+            },
+            {
+              "lines": [
+                15,
+                17
+              ],
+              "name": "isSuccess",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "isError",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                25
+              ],
+              "name": "isPanic",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            8,
+            35
+          ],
+          "name": "UniffiRustCallStatus",
+          "type": "class"
+        },
+        {
+          "lines": [
+            37,
+            37
+          ],
+          "name": "InternalException",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                45
+              ],
+              "name": "lift",
+              "signature": "(error_buf: RustBuffer.ByValue)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            44,
+            46
+          ],
+          "name": "UniffiRustCallStatusErrorHandler",
+          "type": "interface"
+        },
+        {
+          "docstring": "Call a rust function that returns a Result<>.  Pass in the Error class companion that corresponds to the Err",
+          "lines": [
+            53,
+            58
+          ],
+          "name": "uniffiRustCallWithError",
+          "signature": "(errorHandler: UniffiRustCallStatusErrorHandler<E>, callback: (UniffiRustCallStatus) -> U)",
+          "type": "function"
+        }
+      ]
+    },
+    "Int16Helper.kt": {
+      "hash": "bda5ce2058e0",
+      "indexed_at": "2026-07-24T20:35:12.804207+00:00",
+      "language": "kotlin",
+      "lines": 22,
+      "mtime_ns": 1782136568000000000,
+      "size": 460,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                7
+              ],
+              "name": "lift",
+              "signature": "(value: Short)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                11
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "lower",
+              "signature": "(value: Short)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "allocationSize",
+              "signature": "(value: Short)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "write",
+              "signature": "(value: Short, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            22
+          ],
+          "name": "FfiConverterShort",
+          "type": "class"
+        }
+      ]
+    },
+    "Int32Helper.kt": {
+      "hash": "1dfcf9d9d99d",
+      "indexed_at": "2026-07-24T20:35:12.804943+00:00",
+      "language": "kotlin",
+      "lines": 22,
+      "mtime_ns": 1782136568000000000,
+      "size": 436,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                7
+              ],
+              "name": "lift",
+              "signature": "(value: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                11
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "lower",
+              "signature": "(value: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "allocationSize",
+              "signature": "(value: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "write",
+              "signature": "(value: Int, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            22
+          ],
+          "name": "FfiConverterInt",
+          "type": "class"
+        }
+      ]
+    },
+    "Int64Helper.kt": {
+      "hash": "5cc035397ee0",
+      "indexed_at": "2026-07-24T20:35:12.805673+00:00",
+      "language": "kotlin",
+      "lines": 22,
+      "mtime_ns": 1782136568000000000,
+      "size": 448,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                7
+              ],
+              "name": "lift",
+              "signature": "(value: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                11
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "lower",
+              "signature": "(value: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "allocationSize",
+              "signature": "(value: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "write",
+              "signature": "(value: Long, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            22
+          ],
+          "name": "FfiConverterLong",
+          "type": "class"
+        }
+      ]
+    },
+    "Int8Helper.kt": {
+      "hash": "446f5e0324f7",
+      "indexed_at": "2026-07-24T20:35:12.806403+00:00",
+      "language": "kotlin",
+      "lines": 22,
+      "mtime_ns": 1782136568000000000,
+      "size": 440,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                7
+              ],
+              "name": "lift",
+              "signature": "(value: Byte)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                11
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "lower",
+              "signature": "(value: Byte)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "allocationSize",
+              "signature": "(value: Byte)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "write",
+              "signature": "(value: Byte, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            22
+          ],
+          "name": "FfiConverterByte",
+          "type": "class"
+        }
+      ]
+    },
+    "Interface.kt": {
+      "hash": "e9040e4b8427",
+      "indexed_at": "2026-07-24T20:35:12.807095+00:00",
+      "language": "kotlin",
+      "lines": 14,
+      "mtime_ns": 1782136568000000000,
+      "size": 516,
+      "symbols": []
+    },
+    "MapTemplate.kt": {
+      "hash": "c6b0de174393",
+      "indexed_at": "2026-07-24T20:35:12.808536+00:00",
+      "language": "kotlin",
+      "lines": 38,
+      "mtime_ns": 1782136568000000000,
+      "size": 1502,
+      "symbols": []
+    },
+    "NamespaceLibraryTemplate.kt": {
+      "hash": "329db758e8e8",
+      "indexed_at": "2026-07-24T20:35:12.810415+00:00",
+      "language": "kotlin",
+      "lines": 138,
+      "mtime_ns": 1782136568000000000,
+      "size": 5675,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            8
+          ],
+          "name": "findLibraryName",
+          "signature": "(componentName: String)",
+          "type": "function"
+        }
+      ]
+    },
+    "ObjectCleanerHelper.kt": {
+      "hash": "e11c78fd70ed",
+      "indexed_at": "2026-07-24T20:35:12.811266+00:00",
+      "language": "kotlin",
+      "lines": 48,
+      "mtime_ns": 1782136568000000000,
+      "size": 1551,
+      "symbols": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "lines": [
+                    14,
+                    14
+                  ],
+                  "name": "clean",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                13,
+                15
+              ],
+              "name": "Cleanable",
+              "type": "interface"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "register",
+              "signature": "(value: Any, cleanUpTask: Runnable)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            12,
+            20
+          ],
+          "name": "UniffiCleaner",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                26,
+                27
+              ],
+              "name": "register",
+              "signature": "(value: Any, cleanUpTask: Runnable)",
+              "type": "method"
+            }
+          ],
+          "docstring": "The fallback Jna cleaner, which is available for both Android, and the JVM.",
+          "lines": [
+            23,
+            28
+          ],
+          "name": "UniffiJnaCleaner",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                33,
+                33
+              ],
+              "name": "clean",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            30,
+            34
+          ],
+          "name": "UniffiJnaCleanable",
+          "type": "class"
+        }
+      ]
+    },
+    "ObjectCleanerHelperAndroid.kt": {
+      "hash": "049e1e32a23b",
+      "indexed_at": "2026-07-24T20:35:12.812165+00:00",
+      "language": "kotlin",
+      "lines": 26,
+      "mtime_ns": 1782136568000000000,
+      "size": 993,
+      "symbols": [
+        {
+          "lines": [
+            4,
+            9
+          ],
+          "name": "create",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                17,
+                18
+              ],
+              "name": "register",
+              "signature": "(value: Any, cleanUpTask: Runnable)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Some API Level 33 OSes do not support using it, so we require API Level 34.",
+          "lines": [
+            13,
+            19
+          ],
+          "name": "AndroidSystemCleaner",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "clean",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            26
+          ],
+          "name": "AndroidSystemCleanable",
+          "type": "class"
+        }
+      ]
+    },
+    "ObjectCleanerHelperJvm.kt": {
+      "hash": "b6287f72afdb",
+      "indexed_at": "2026-07-24T20:35:12.812970+00:00",
+      "language": "kotlin",
+      "lines": 25,
+      "mtime_ns": 1782136568000000000,
+      "size": 986,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            12
+          ],
+          "name": "create",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                17,
+                18
+              ],
+              "name": "register",
+              "signature": "(value: Any, cleanUpTask: Runnable)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            14,
+            19
+          ],
+          "name": "JavaLangRefCleaner",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "clean",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            25
+          ],
+          "name": "JavaLangRefCleanable",
+          "type": "class"
+        }
+      ]
+    },
+    "ObjectTemplate.kt": {
+      "hash": "a248edc696c8",
+      "indexed_at": "2026-07-24T20:35:12.814143+00:00",
+      "language": "kotlin",
+      "lines": 331,
+      "mtime_ns": 1782136568000000000,
+      "size": 14020,
+      "symbols": []
+    },
+    "OptionalTemplate.kt": {
+      "hash": "4484e8ac408b",
+      "indexed_at": "2026-07-24T20:35:12.814799+00:00",
+      "language": "kotlin",
+      "lines": 30,
+      "mtime_ns": 1782136568000000000,
+      "size": 813,
+      "symbols": []
+    },
+    "RecordTemplate.kt": {
+      "hash": "d538c644e247",
+      "indexed_at": "2026-07-24T20:35:12.819042+00:00",
+      "language": "kotlin",
+      "lines": 75,
+      "mtime_ns": 1782136568000000000,
+      "size": 2578,
+      "symbols": []
+    },
+    "RustBufferTemplate.kt": {
+      "hash": "139beabe7644",
+      "indexed_at": "2026-07-24T20:35:12.820612+00:00",
+      "language": "kotlin",
+      "lines": 104,
+      "mtime_ns": 1782136568000000000,
+      "size": 4702,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "ByValue",
+              "type": "class"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "ByReference",
+              "type": "class"
+            },
+            {
+              "lines": [
+                19,
+                23
+              ],
+              "name": "setValue",
+              "signature": "(other: RustBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                48,
+                52
+              ],
+              "name": "asByteBuffer",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            8,
+            53
+          ],
+          "name": "RustBuffer",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                66,
+                66
+              ],
+              "name": "ByValue",
+              "type": "class"
+            }
+          ],
+          "docstring": "completeness.",
+          "lines": [
+            61,
+            67
+          ],
+          "name": "ForeignBytes",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                82,
+                91
+              ],
+              "name": "lower",
+              "signature": "(value: java.nio.ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                94
+              ],
+              "name": "lift",
+              "signature": "(value: ForeignBytes.ByValue)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                96,
+                97
+              ],
+              "name": "read",
+              "signature": "(buf: java.nio.ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                99,
+                100
+              ],
+              "name": "write",
+              "signature": "(value: java.nio.ByteBuffer, buf: java.nio.ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                103
+              ],
+              "name": "allocationSize",
+              "signature": "(value: java.nio.ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "docstring": "the FFI call; the Rust side treats it as a borrow.",
+          "lines": [
+            81,
+            104
+          ],
+          "name": "FfiConverterByRefBytes",
+          "type": "class"
+        }
+      ]
+    },
+    "SequenceTemplate.kt": {
+      "hash": "c7c5105146ae",
+      "indexed_at": "2026-07-24T20:35:12.821264+00:00",
+      "language": "kotlin",
+      "lines": 26,
+      "mtime_ns": 1782136568000000000,
+      "size": 836,
+      "symbols": []
+    },
+    "SetTemplate.kt": {
+      "hash": "a45fbf234651",
+      "indexed_at": "2026-07-24T20:35:12.821913+00:00",
+      "language": "kotlin",
+      "lines": 28,
+      "mtime_ns": 1782136568000000000,
+      "size": 889,
+      "symbols": []
+    },
+    "StringHelper.kt": {
+      "hash": "3c06f9c8170c",
+      "indexed_at": "2026-07-24T20:35:12.822890+00:00",
+      "language": "kotlin",
+      "lines": 56,
+      "mtime_ns": 1782136568000000000,
+      "size": 2067,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "store our length and avoid writing it out to the buffer.",
+              "lines": [
+                8,
+                16
+              ],
+              "name": "lift",
+              "signature": "(value: RustBuffer.ByValue)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                18,
+                23
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                31
+              ],
+              "name": "toUtf8",
+              "signature": "(value: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                33,
+                40
+              ],
+              "name": "lower",
+              "signature": "(value: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "enough.",
+              "lines": [
+                45,
+                49
+              ],
+              "name": "allocationSize",
+              "signature": "(value: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                51,
+                55
+              ],
+              "name": "write",
+              "signature": "(value: String, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            56
+          ],
+          "name": "FfiConverterString",
+          "type": "class"
+        }
+      ]
+    },
+    "TimestampHelper.kt": {
+      "hash": "de7955d89d7d",
+      "indexed_at": "2026-07-24T20:35:12.823840+00:00",
+      "language": "kotlin",
+      "lines": 41,
+      "mtime_ns": 1782136568000000000,
+      "size": 1707,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                17
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "docstring": "8 bytes for seconds, 4 bytes for nanoseconds",
+              "lines": [
+                20,
+                20
+              ],
+              "name": "allocationSize",
+              "signature": "(value: java.time.Instant)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                22,
+                40
+              ],
+              "name": "write",
+              "signature": "(value: java.time.Instant, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            41
+          ],
+          "name": "FfiConverterTimestamp",
+          "type": "class"
+        }
+      ]
+    },
+    "TopLevelFunctionTemplate.kt": {
+      "hash": "b9c6be5e346a",
+      "indexed_at": "2026-07-24T20:35:12.824440+00:00",
+      "language": "kotlin",
+      "lines": 1,
+      "mtime_ns": 1782136568000000000,
+      "size": 52,
+      "symbols": []
+    },
+    "Types.kt": {
+      "hash": "ad8a852b59be",
+      "indexed_at": "2026-07-24T20:35:12.825211+00:00",
+      "language": "kotlin",
+      "lines": 204,
+      "mtime_ns": 1782136568000000000,
+      "size": 5877,
+      "symbols": []
+    },
+    "UInt16Helper.kt": {
+      "hash": "5e3490784fc6",
+      "indexed_at": "2026-07-24T20:35:12.825982+00:00",
+      "language": "kotlin",
+      "lines": 26,
+      "mtime_ns": 1782136568000000000,
+      "size": 578,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                7
+              ],
+              "name": "lift",
+              "signature": "(value: Short)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                11
+              ],
+              "name": "lift",
+              "signature": "(value: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                19
+              ],
+              "name": "lower",
+              "signature": "(value: UShort)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "allocationSize",
+              "signature": "(value: UShort)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                25
+              ],
+              "name": "write",
+              "signature": "(value: UShort, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            26
+          ],
+          "name": "FfiConverterUShort",
+          "type": "class"
+        }
+      ]
+    },
+    "UInt32Helper.kt": {
+      "hash": "e5155f5f3aa0",
+      "indexed_at": "2026-07-24T20:35:12.826731+00:00",
+      "language": "kotlin",
+      "lines": 22,
+      "mtime_ns": 1782136568000000000,
+      "size": 474,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                7
+              ],
+              "name": "lift",
+              "signature": "(value: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                11
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "lower",
+              "signature": "(value: UInt)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "allocationSize",
+              "signature": "(value: UInt)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "write",
+              "signature": "(value: UInt, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            22
+          ],
+          "name": "FfiConverterUInt",
+          "type": "class"
+        }
+      ]
+    },
+    "UInt64Helper.kt": {
+      "hash": "a8f65247d403",
+      "indexed_at": "2026-07-24T20:35:12.827482+00:00",
+      "language": "kotlin",
+      "lines": 22,
+      "mtime_ns": 1782136568000000000,
+      "size": 489,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                7
+              ],
+              "name": "lift",
+              "signature": "(value: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                11
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "lower",
+              "signature": "(value: ULong)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "allocationSize",
+              "signature": "(value: ULong)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "write",
+              "signature": "(value: ULong, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            22
+          ],
+          "name": "FfiConverterULong",
+          "type": "class"
+        }
+      ]
+    },
+    "UInt8Helper.kt": {
+      "hash": "b260e330430e",
+      "indexed_at": "2026-07-24T20:35:12.828266+00:00",
+      "language": "kotlin",
+      "lines": 26,
+      "mtime_ns": 1782136568000000000,
+      "size": 553,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                7
+              ],
+              "name": "lift",
+              "signature": "(value: Byte)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                11
+              ],
+              "name": "lift",
+              "signature": "(value: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "read",
+              "signature": "(buf: ByteBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                19
+              ],
+              "name": "lower",
+              "signature": "(value: UByte)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "allocationSize",
+              "signature": "(value: UByte)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                25
+              ],
+              "name": "write",
+              "signature": "(value: UByte, buf: ByteBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            26
+          ],
+          "name": "FfiConverterUByte",
+          "type": "class"
+        }
+      ]
+    },
+    "macros.kt": {
+      "hash": "6a518ca554c5",
+      "indexed_at": "2026-07-24T20:35:12.807849+00:00",
+      "language": "kotlin",
+      "lines": 215,
+      "mtime_ns": 1782136568000000000,
+      "size": 7380,
+      "symbols": []
+    },
+    "wrapper.kt": {
+      "hash": "290f22eeb2b7",
+      "indexed_at": "2026-07-24T20:35:12.829179+00:00",
+      "language": "kotlin",
+      "lines": 61,
+      "mtime_ns": 1782136568000000000,
+      "size": 1960,
+      "symbols": []
+    }
+  },
+  "generated_at": "2026-08-01T02:52:28.888765+00:00",
+  "version": "1.0"
+}

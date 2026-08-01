@@ -1,0 +1,172 @@
+{
+  "directory": "android-filepicker\\filepicker\\src\\main\\java\\com\\github\\angads25\\filepicker\\utils",
+  "files": {
+    "ExtensionFilter.java": {
+      "hash": "d74d248cf23c",
+      "indexed_at": "2026-07-24T20:35:09.782879+00:00",
+      "language": "java",
+      "lines": 74,
+      "mtime_ns": 1782501335878875400,
+      "size": 2356,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                38,
+                45
+              ],
+              "name": "ExtensionFilter",
+              "signature": "(DialogProperties properties)",
+              "type": "method"
+            },
+            {
+              "docstring": "Function to filter files based on defined rules.",
+              "lines": [
+                50,
+                73
+              ],
+              "name": "accept",
+              "signature": "(File file)",
+              "type": "method"
+            }
+          ],
+          "docstring": "/*  Class to filter the list of files.\n */",
+          "lines": [
+            34,
+            74
+          ],
+          "name": "ExtensionFilter",
+          "type": "class"
+        }
+      ]
+    },
+    "RecyclerViewTouchHandler.java": {
+      "hash": "d7d5df90fecd",
+      "indexed_at": "2026-07-24T20:35:09.784091+00:00",
+      "language": "java",
+      "lines": 104,
+      "mtime_ns": 1782501335879875500,
+      "size": 3628,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                46,
+                64
+              ],
+              "name": "RecyclerViewTouchHandler",
+              "signature": "(Context context, RecyclerView recyclerView)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                66,
+                89
+              ],
+              "name": "onInterceptTouchEvent",
+              "signature": "(@NonNull RecyclerView rv, @NonNull MotionEvent e)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                92
+              ],
+              "name": "onTouchEvent",
+              "signature": "(@NonNull RecyclerView rv, @NonNull MotionEvent e)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                94,
+                95
+              ],
+              "name": "onRequestDisallowInterceptTouchEvent",
+              "signature": "(boolean disallowIntercept)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                97,
+                99
+              ],
+              "name": "setOnClickListener",
+              "signature": "(OnItemClickListener clickListener)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                101,
+                103
+              ],
+              "name": "setOnlongClickListener",
+              "signature": "(OnItemLongClickListener onlongClickListener)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            38,
+            104
+          ],
+          "name": "RecyclerViewTouchHandler",
+          "type": "class"
+        }
+      ]
+    },
+    "Utility.java": {
+      "hash": "bd74e0487348",
+      "indexed_at": "2026-07-24T20:35:09.785222+00:00",
+      "language": "java",
+      "lines": 114,
+      "mtime_ns": 1782501335879875500,
+      "size": 4451,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "Post Lollipop Devices require permissions on Runtime (Risky Ones), even though it has been specified in the uses-permission tag of manifest. checkStor",
+              "lines": [
+                41,
+                52
+              ],
+              "name": "checkStorageAccessPermissions",
+              "signature": "(Context context)",
+              "type": "method"
+            },
+            {
+              "docstring": "Prepares the list of Files and Folders inside 'inter' Directory. The list can be filtered through extensions. 'filter' reference is the FileFilter. A",
+              "lines": [
+                68,
+                96
+              ],
+              "name": "prepareFileListEntries",
+              "signature": "(ArrayList<FileListItem> internalList, File inter, ExtensionFilter filter)",
+              "type": "method"
+            },
+            {
+              "docstring": "Method checks whether the Support Library has been imported by application or not. dependency or not.",
+              "lines": [
+                105,
+                113
+              ],
+              "name": "hasSupportLibraryInClasspath",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "<p> Created by Angad Singh on 11-07-2016. </p>",
+          "lines": [
+            33,
+            114
+          ],
+          "name": "Utility",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.312066+00:00",
+  "version": "1.0"
+}

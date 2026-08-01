@@ -1,0 +1,490 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\iptables",
+  "files": {
+    "IptablesConstants.kt": {
+      "hash": "57d52ef84258",
+      "indexed_at": "2026-08-01T04:00:05.462110+00:00",
+      "language": "kotlin",
+      "lines": 29,
+      "mtime_ns": 1785556377339900700,
+      "size": 1139,
+      "symbols": [
+        {
+          "lines": [
+            19,
+            29
+          ],
+          "name": "IptablesConstants",
+          "type": "class"
+        }
+      ]
+    },
+    "IptablesReceiver.kt": {
+      "hash": "30b7397f615f",
+      "indexed_at": "2026-08-01T04:00:05.746889+00:00",
+      "language": "kotlin",
+      "lines": 109,
+      "mtime_ns": 1785556377351900200,
+      "size": 4069,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                108
+              ],
+              "name": "onReceive",
+              "signature": "(context: Context?, intent: Intent?)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            37,
+            109
+          ],
+          "name": "IptablesReceiver",
+          "type": "class"
+        }
+      ]
+    },
+    "IptablesRules.kt": {
+      "hash": "79fd4a1ed5ce",
+      "indexed_at": "2026-08-01T04:00:06.038682+00:00",
+      "language": "kotlin",
+      "lines": 38,
+      "mtime_ns": 1785556377363899700,
+      "size": 1050,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                22,
+                25
+              ],
+              "name": "configureIptables",
+              "signature": "(\n        dnsCryptState: ModuleState,\n        firewallState: ModuleState\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "fastUpdate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                29
+              ],
+              "name": "refreshFixTTLRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                31,
+                31
+              ],
+              "name": "clearAll",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                33,
+                33
+              ],
+              "name": "sendToRootExecService",
+              "signature": "(commands: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                35,
+                35
+              ],
+              "name": "unregisterReceiver",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                37
+              ],
+              "name": "isLastIptablesCommandsReturnError",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            38
+          ],
+          "name": "IptablesRules",
+          "type": "interface"
+        }
+      ]
+    },
+    "IptablesRulesSender.kt": {
+      "hash": "6666181cb002",
+      "indexed_at": "2026-08-01T04:00:06.331988+00:00",
+      "language": "kotlin",
+      "lines": 89,
+      "mtime_ns": 1785556377375898300,
+      "size": 2833,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                49,
+                61
+              ],
+              "name": "registerReceiver",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                63,
+                71
+              ],
+              "name": "unregisterReceiver",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                74,
+                80
+              ],
+              "name": "isLastIptablesCommandsReturnError",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                82,
+                84
+              ],
+              "name": "sendToRootExecService",
+              "signature": "(commands: List<String>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            27,
+            89
+          ],
+          "name": "IptablesRulesSender",
+          "type": "class"
+        }
+      ]
+    },
+    "IptablesUtils.kt": {
+      "hash": "2ec4f03127ad",
+      "indexed_at": "2026-08-01T04:00:06.620685+00:00",
+      "language": "kotlin",
+      "lines": 30,
+      "mtime_ns": 1785556377387899300,
+      "size": 1056,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                29
+              ],
+              "name": "groupToRanges",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            30
+          ],
+          "name": "IptablesUtils",
+          "type": "class"
+        }
+      ]
+    },
+    "KillSwitchNotification.kt": {
+      "hash": "51985b7cf1fa",
+      "indexed_at": "2026-08-01T04:00:06.926482+00:00",
+      "language": "kotlin",
+      "lines": 156,
+      "mtime_ns": 1785556377399899700,
+      "size": 5929,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                48,
+                85
+              ],
+              "name": "send",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                87,
+                89
+              ],
+              "name": "cancel",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                112
+              ],
+              "name": "getContentIntent",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                114,
+                141
+              ],
+              "name": "getIconResource",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                148,
+                155
+              ],
+              "name": "getBrandColor",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            41,
+            156
+          ],
+          "name": "KillSwitchNotification",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesIptablesRules.kt": {
+      "hash": "493295b88190",
+      "indexed_at": "2026-08-01T04:00:07.223540+00:00",
+      "language": "kotlin",
+      "lines": 678,
+      "mtime_ns": 1785556377412901100,
+      "size": 37043,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                98,
+                367
+              ],
+              "name": "configureIptables",
+              "signature": "(\n        dnsCryptState: ModuleState,\n        firewallState: ModuleState\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                369,
+                399
+              ],
+              "name": "getBlockingRules",
+              "signature": "(appUID: String, blockHOTSPOT: String, unblockHOTSPOT: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                401,
+                449
+              ],
+              "name": "fastUpdate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                451,
+                494
+              ],
+              "name": "clearAll",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                496,
+                512
+              ],
+              "name": "refreshFixTTLRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                514,
+                520
+              ],
+              "name": "removeRedundantSymbols",
+              "signature": "(stringBuilder: StringBuilder)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                522,
+                551
+              ],
+              "name": "getBypassLanRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                553,
+                566
+              ],
+              "name": "getCriticalUidsAllowedRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                568,
+                572
+              ],
+              "name": "showKillSwitchNotification",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                574,
+                581
+              ],
+              "name": "cancelKillSwitchNotificationIfNeeded",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                583,
+                604
+              ],
+              "name": "enableInternetIfRequired",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            72,
+            678
+          ],
+          "name": "ModulesIptablesRules",
+          "type": "class"
+        }
+      ]
+    },
+    "Tethering.kt": {
+      "hash": "d844523ab3eb",
+      "indexed_at": "2026-08-01T04:00:07.510292+00:00",
+      "language": "kotlin",
+      "lines": 426,
+      "mtime_ns": 1785556377424900700,
+      "size": 23603,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                61,
+                212
+              ],
+              "name": "activateTethering",
+              "signature": "(privacyMode: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                214,
+                249
+              ],
+              "name": "fastUpdate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                251,
+                263
+              ],
+              "name": "setInterfaceNames",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                265,
+                337
+              ],
+              "name": "fixTTLCommands",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                339,
+                358
+              ],
+              "name": "unfixTTLCommands",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                360,
+                389
+              ],
+              "name": "cleanupCommands",
+              "signature": "(commands: MutableList<String>)",
+              "type": "method"
+            },
+            {
+              "docstring": "Should be called after setInterfaceNames()",
+              "lines": [
+                392,
+                394
+              ],
+              "name": "isTetheringActive",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            41,
+            426
+          ],
+          "name": "Tethering",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:07.512160+00:00",
+  "version": "1.0"
+}

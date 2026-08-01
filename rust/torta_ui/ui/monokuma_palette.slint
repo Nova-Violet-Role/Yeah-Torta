@@ -1,0 +1,62 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// ============================================================================
+//  monokuma_palette.slint — THE MONOKUMA JUDGE-MOTIF PALETTE  (R4 Warden, slice 10)
+//  ⬜ Soleil facet · SLINT/Rust color set — NO XML (the no-XML law).
+// ============================================================================
+//
+// The Warden's judge-scene colors, centralized as ONE SLINT global. The R4
+// Warden IS the courtroom, and Monokuma (the Danganronpa judge-bear) is split
+// black/white down the middle with a single jagged RED eye — and that split is
+// exactly a firewall's verdict language:
+//
+//   • the BLACK half → the courtroom void: the dashboard's structural panels
+//   • the WHITE half → the bone-bright text struck against the dark
+//   • the RED eye    → the ruling: DENY / BLOCK / RISK / FAIL-CLOSED (guilty)
+//   • green & amber  → the lesser verdicts: ALLOW (not-guilty) / CAUTION
+//
+// This is the SLINT/Rust replacement for the would-be `colors_monokuma.xml`
+// (the no-XML law). It REPLACES the inline `mono-*` properties warden.slint
+// carried + every scattered magic hex — the single source of truth, imported by
+// warden.slint (slice 8) AND warden_settings.slint (slice 9).
+//
+// USAGE — a SLINT global is a shared singleton of read-only constants:
+//   import { Monokuma } from "monokuma_palette.slint";
+//   background: Monokuma.night;   color: Monokuma.bone;   accent: Monokuma.risk;
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the
+// Android cross-compile spike #69; the palette is host-side constants, no device
+// claim. Compiled via build.rs (main.slint → warden.slint → here, the import graph).
+// ============================================================================
+
+export global Monokuma {
+    // ── The BLACK half — Monokuma's dark side: the courtroom void, as a panel
+    //    scale (deepest → faintest). Five steps so a card lifts off the window
+    //    and a tile lifts off the card by ground alone, not by border. ─────────
+    out property <color> night: #0c0c0c;   // the deepest black — the dashboard Window ground
+    out property <color> pitch: #141414;   // one step up — the per-app matrix rows
+    out property <color> coal:  #161616;   // the Trust-crown card panel
+    out property <color> slate: #181818;   // the metric (StatTile) panels
+    out property <color> iron:  #2a2a2a;   // hairline borders / rules on the dark
+
+    // ── The WHITE half — the bone-bright strike + the muted speech, as a
+    //    legibility scale (brightest → faintest-still-legible). ────────────────
+    out property <color> bone: #f4f4f4;    // primary text — the white half / the bright values
+    out property <color> ash:  #8c8c8c;    // secondary text — labels, the muted voice
+    out property <color> dim:  #6f6f6f;    // tertiary text — section titles, the faintest read
+
+    // ── The RED EYE & the verdict accents — the judge's ruling. ──────────────
+    out property <color> risk:    #d83a2c; // THE EYE — DENY / BLOCK / RISK / fail-closed (guilty)
+    out property <color> wound:   #c0392b; // the deeper blood-red — alert-banner FILL (≠ the accent stroke)
+    out property <color> caution: #f39c12; // amber — CAUTION / review / objection
+    out property <color> safe:    #2ecc71; // green — ALLOW / SAFE / not-guilty
+    out property <color> strike:  white;   // the gavel-white text struck on a filled alert banner
+
+    // ── #33 CHROME & BRILLIANT (Socio directive 2026-07-22) — the polished-metal court:
+    //    mirror surfaces, specular glints, brushed-steel falloff. More CHROME, less murk. ──
+    out property <color> chrome:    #e8eaed; // polished steel — the brilliant surface base
+    out property <color> chrome-hi: #ffffff; // specular hot-spot — the mirror glint
+    out property <color> chrome-lo: #9aa0a6; // brushed-metal shadow — the cool falloff
+}

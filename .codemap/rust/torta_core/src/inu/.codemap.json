@@ -1,0 +1,963 @@
+{
+  "directory": "rust\\torta_core\\src\\inu",
+  "files": {
+    "log.rs": {
+      "hash": "c7fba45fc31e",
+      "indexed_at": "2026-07-26T19:12:57.908027+00:00",
+      "language": "rust",
+      "lines": 173,
+      "mtime_ns": 1785030832690604900,
+      "size": 7602,
+      "symbols": [
+        {
+          "docstring": "(space, tab, CR, LF) becomes `_`; an empty token becomes `-`. Keeps the line greppable + one-record.",
+          "lines": [
+            41,
+            49
+          ],
+          "name": "sanitize_token",
+          "signature": "(s: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "already holds; the file is device-local + bounded (the #133 ring) \u2014 never network-exported.",
+          "lines": [
+            60,
+            67
+          ],
+          "name": "format_inu_line",
+          "signature": "(now_ms: i64, event: &str, provider: InuProvider, detail: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "no-op).",
+          "lines": [
+            74,
+            86
+          ],
+          "name": "append_inu_event",
+          "signature": "(\n    path: &Path,\n    now_ms: i64,\n    event: &str,\n    provider: InuProvider,\n    detail: &str,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "[`append_inu_event`]).",
+          "lines": [
+            94,
+            97
+          ],
+          "name": "append_provider_switch",
+          "signature": "(path: &Path, now_ms: i64, from: InuProvider, to: InuProvider)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                104,
+                118
+              ],
+              "name": "format_is_deterministic_and_greppable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                129
+              ],
+              "name": "tokens_are_sanitized_no_torn_schema",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                132,
+                155
+              ],
+              "name": "round_trips_through_log_tier",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                158,
+                172
+              ],
+              "name": "provider_switch_line_names_from_and_to",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            100,
+            173
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "mod.rs": {
+      "hash": "f7906008b353",
+      "indexed_at": "2026-07-29T00:46:23.712229+00:00",
+      "language": "rust",
+      "lines": 1088,
+      "mtime_ns": 1785284654559338300,
+      "size": 49098,
+      "symbols": [
+        {
+          "lines": [
+            51,
+            51
+          ],
+          "name": "log",
+          "type": "module"
+        },
+        {
+          "lines": [
+            52,
+            52
+          ],
+          "name": "object",
+          "type": "module"
+        },
+        {
+          "lines": [
+            81,
+            94
+          ],
+          "name": "InuElevationStatus",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Not called from lib code yet (the Kotlin/SLINT executors + tests read it) \u2014 asserted in tests.",
+              "lines": [
+                99,
+                101
+              ],
+              "name": "code",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Stable `u8` for the durable blob (a FORMAT CONTRACT \u2014 never renumber).",
+              "lines": [
+                104,
+                106
+              ],
+              "name": "to_u8",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "(fail-safe \u2014 never an over-claim of elevation).",
+              "lines": [
+                110,
+                119
+              ],
+              "name": "from_u8",
+              "signature": "(b: u8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            96,
+            120
+          ],
+          "name": "InuElevationStatus",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            135,
+            145
+          ],
+          "name": "InuProvider",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "SLINT executors + tests read it) \u2014 the documented-contract surface, asserted in tests.",
+              "lines": [
+                150,
+                152
+              ],
+              "name": "code",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "(`ProviderId.displayId`: \"shizuku\" / \"self-adb\"; \"stub\" for the inert backend; \"none\" unelevated).",
+              "lines": [
+                156,
+                163
+              ],
+              "name": "key",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Kotlin-mapping contract (`ProviderId.displayId` \u2192 this enum); tested, not yet called from lib code.",
+              "lines": [
+                167,
+                174
+              ],
+              "name": "from_key",
+              "signature": "(s: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Stable `u8` for the durable blob (a FORMAT CONTRACT \u2014 never renumber).",
+              "lines": [
+                177,
+                179
+              ],
+              "name": "to_u8",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Decode the durable byte; an unknown/forward ordinal maps to [`None`](Self::None) (fail-safe).",
+              "lines": [
+                182,
+                189
+              ],
+              "name": "from_u8",
+              "signature": "(b: u8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            147,
+            190
+          ],
+          "name": "InuProvider",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            199,
+            204
+          ],
+          "name": "InuBootDurability",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "SLINT executors + tests read it) \u2014 the documented-contract surface, asserted in tests.",
+              "lines": [
+                209,
+                211
+              ],
+              "name": "code",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            206,
+            212
+          ],
+          "name": "InuBootDurability",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            221,
+            252
+          ],
+          "name": "InuPowerId",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "SLINT executors + tests read it) \u2014 the documented-contract surface, asserted in tests.",
+              "lines": [
+                257,
+                259
+              ],
+              "name": "code",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "framing key. NEVER change these strings (the on-disk + cross-language contract).",
+              "lines": [
+                263,
+                287
+              ],
+              "name": "key",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "the `PowerStateCodec.decode` `mapNotNull` fail-safe, `GrantEngine.kt:182`).",
+              "lines": [
+                291,
+                316
+              ],
+              "name": "from_key",
+              "signature": "(s: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            254,
+            317
+          ],
+          "name": "InuPowerId",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            329,
+            346
+          ],
+          "name": "InuEvent",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "on-disk + cross-language log contract; a debug tailer greps these). `ProviderSwitch` \u2192 `SWITCH`.",
+              "lines": [
+                351,
+                361
+              ],
+              "name": "label",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            348,
+            362
+          ],
+          "name": "InuEvent",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            374,
+            386
+          ],
+          "name": "InuPowerFlag",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            393,
+            418
+          ],
+          "name": "InuState",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "[`rehydrate`]: crate::inu::object::InuStore::rehydrate",
+              "lines": [
+                432,
+                443
+              ],
+              "name": "cold",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "[`InuStore::persist`](object::InuStore::persist) before encoding.",
+              "lines": [
+                448,
+                451
+              ],
+              "name": "normalized",
+              "signature": "(mut self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            420,
+            452
+          ],
+          "name": "InuState",
+          "type": "impl"
+        },
+        {
+          "docstring": "An all-undesired or empty set is NOT protected (nothing is being enforced).",
+          "lines": [
+            456,
+            467
+          ],
+          "name": "compute_fully_protected",
+          "signature": "(powers: &[InuPowerFlag])",
+          "type": "function"
+        },
+        {
+          "docstring": "(\u2248400 B for the full set) \u2014 far under the durable tier's 256 KiB ceiling.",
+          "lines": [
+            486,
+            521
+          ],
+          "name": "encode_state",
+          "signature": "(state: &InuState)",
+          "type": "function"
+        },
+        {
+          "docstring": "`mapNotNull` fail-safe). `fully_protected` is recomputed from the admitted powers.",
+          "lines": [
+            528,
+            590
+          ],
+          "name": "decode_state",
+          "signature": "(payload: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "Append a `u16`-length-prefixed UTF-8 string (a byte string over `u16::MAX` is truncated to the bound).",
+          "lines": [
+            595,
+            600
+          ],
+          "name": "put_str",
+          "signature": "(buf: &mut Vec<u8>, s: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "Read a `u16`-length-prefixed UTF-8 string off the cursor, advancing it; `None` on truncation.",
+          "lines": [
+            603,
+            611
+          ],
+          "name": "read_str",
+          "signature": "(cur: &mut &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "Read one byte off the cursor, advancing it; `None` if empty.",
+          "lines": [
+            614,
+            618
+          ],
+          "name": "take_one",
+          "signature": "(cur: &mut &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "Read a big-endian `u16` off the cursor, advancing it; `None` if fewer than 2 bytes remain.",
+          "lines": [
+            621,
+            628
+          ],
+          "name": "read_u16_be",
+          "signature": "(cur: &mut &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "Read a big-endian `u32` off the cursor, advancing it; `None` if fewer than 4 bytes remain.",
+          "lines": [
+            631,
+            638
+          ],
+          "name": "read_u32_be",
+          "signature": "(cur: &mut &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "Read a big-endian `i64` off the cursor, advancing it; `None` if fewer than 8 bytes remain.",
+          "lines": [
+            641,
+            649
+          ],
+          "name": "read_i64_be",
+          "signature": "(cur: &mut &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            656,
+            661
+          ],
+          "name": "InuNotice",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            668,
+            673
+          ],
+          "name": "inu_rearm_notice",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                679,
+                693
+              ],
+              "name": "flag",
+              "signature": "(\r\n        id: InuPowerId,\r\n        desired: bool,\r\n        lr: bool,\r\n        d: InuBootDurabili...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                695,
+                749
+              ],
+              "name": "sample_full",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                754,
+                767
+              ],
+              "name": "encode_decode_round_trips_the_full_state",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                770,
+                787
+              ],
+              "name": "empty_powers_round_trips",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                793,
+                804
+              ],
+              "name": "boot_reapply_bit_is_additive_default_false",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                807,
+                831
+              ],
+              "name": "single_power_and_flags_round_trip",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                836,
+                880
+              ],
+              "name": "fully_protected_requires_at_least_one_desired_all_held",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                885,
+                887
+              ],
+              "name": "empty_payload_decodes_cold",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                890,
+                898
+              ],
+              "name": "wrong_version_decodes_cold",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                901,
+                905
+              ],
+              "name": "truncated_header_decodes_cold",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                908,
+                921
+              ],
+              "name": "truncated_power_tail_keeps_what_parsed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                924,
+                932
+              ],
+              "name": "unknown_provider_and_status_bytes_map_to_inert_defaults",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                935,
+                969
+              ],
+              "name": "unknown_power_key_is_skipped_not_torn",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                974,
+                1032
+              ],
+              "name": "power_id_key_round_trips_all_twenty_one",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1035,
+                1047
+              ],
+              "name": "power_id_amplification_ordinals_are_stable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1050,
+                1061
+              ],
+              "name": "enum_ordinals_are_stable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1064,
+                1074
+              ],
+              "name": "provider_key_round_trips",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1077,
+                1087
+              ],
+              "name": "event_labels_are_canonical",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            676,
+            1088
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "object.rs": {
+      "hash": "858133c09eb6",
+      "indexed_at": "2026-07-28T05:15:18.984011+00:00",
+      "language": "rust",
+      "lines": 523,
+      "mtime_ns": 1785097591012200100,
+      "size": 24156,
+      "symbols": [
+        {
+          "lines": [
+            55,
+            60
+          ],
+          "name": "InuStore",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                69,
+                78
+              ],
+              "name": "new",
+              "signature": "(durable_dir: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "ONCE at boot. Panic-firewalled \u2192 cold.",
+              "lines": [
+                84,
+                96
+              ],
+              "name": "rehydrate",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "RAM tier still updates so the dashboard is correct even when the durable copy could not be written).",
+              "lines": [
+                104,
+                114
+              ],
+              "name": "persist",
+              "signature": "(&self, state: InuState)",
+              "type": "method"
+            },
+            {
+              "docstring": "path, F16). Panic/poison \u2192 [`InuState::cold`] (honest \"off\").",
+              "lines": [
+                118,
+                124
+              ],
+              "name": "snapshot",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "last read back held. NO disk IO. Panic/poison \u2192 `false` (never a false \"protected\").",
+              "lines": [
+                129,
+                135
+              ],
+              "name": "is_protected",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "resolvable) is a silent no-op. Panic \u2192 no-op.",
+              "lines": [
+                144,
+                149
+              ],
+              "name": "log_event",
+              "signature": "(&self, event: InuEvent, provider: InuProvider, detail: String, now_ms: i64)",
+              "type": "method"
+            },
+            {
+              "docstring": "Panic \u2192 no-op.",
+              "lines": [
+                156,
+                161
+              ],
+              "name": "log_provider_switch",
+              "signature": "(&self, from: InuProvider, to: InuProvider, now_ms: i64)",
+              "type": "method"
+            },
+            {
+              "docstring": "[`crate::log_tier`] tailer \u2014 the dashboard's \"recent events\" surface. Panic/IO \u2192 `\"\"`.",
+              "lines": [
+                165,
+                173
+              ],
+              "name": "tail_log",
+              "signature": "(&self, max_lines: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "absent/unreadable. Panic \u2192 `-1`.",
+              "lines": [
+                177,
+                182
+              ],
+              "name": "log_stale_secs",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "never a surprise boot elevation).",
+              "lines": [
+                188,
+                194
+              ],
+              "name": "boot_reapply",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "reject/panic (RAM still updates \u2014 best-effort durability, the persist contract).",
+              "lines": [
+                200,
+                210
+              ],
+              "name": "set_boot_reapply",
+              "signature": "(&self, on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "Panic \u2192 no-op.",
+              "lines": [
+                215,
+                222
+              ],
+              "name": "clear",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            63,
+            223
+          ],
+          "name": "InuStore",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "for Inu with the same shape instead of a second approximation.",
+              "lines": [
+                240,
+                250
+              ],
+              "name": "rehydrate_exists",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "docstring": "uses for exactly this problem: [`crate::resolver::rotation::RotationState::rehydrate_opt`].",
+          "lines": [
+            228,
+            251
+          ],
+          "name": "InuStore",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "pattern). Not a UniFFI export \u2014 an internal path helper.",
+              "lines": [
+                257,
+                259
+              ],
+              "name": "query_inu_log_path",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            253,
+            260
+          ],
+          "name": "InuStore",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "A unique-per-test temp dir (process-unique counter + tag \u2192 collision-free; no rng dep).",
+              "lines": [
+                268,
+                276
+              ],
+              "name": "temp_dir",
+              "signature": "(tag: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                278,
+                304
+              ],
+              "name": "a_state",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                309,
+                339
+              ],
+              "name": "persist_then_a_fresh_store_rehydrates_the_same_state",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                342,
+                370
+              ],
+              "name": "rehydrate_exists_separates_absent_from_persisted_cold",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                373,
+                386
+              ],
+              "name": "cold_rehydrate_on_absent_record",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                391,
+                402
+              ],
+              "name": "set_boot_reapply_writes_through_and_survives_reopen",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                405,
+                431
+              ],
+              "name": "persist_normalizes_fully_protected",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                434,
+                448
+              ],
+              "name": "clear_forgets_the_state",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                453,
+                505
+              ],
+              "name": "log_event_round_trips_through_the_pillar_log",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                508,
+                522
+              ],
+              "name": "snapshot_does_not_write_disk",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            263,
+            523
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-29T00:46:23.713770+00:00",
+  "version": "1.0"
+}

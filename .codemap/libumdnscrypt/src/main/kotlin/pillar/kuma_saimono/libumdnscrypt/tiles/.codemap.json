@@ -1,0 +1,446 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\tiles",
+  "files": {
+    "BaseTileService.kt": {
+      "hash": "b3691ec60685",
+      "indexed_at": "2026-08-01T04:00:27.484470+00:00",
+      "language": "kotlin",
+      "lines": 63,
+      "mtime_ns": 1785556378231900000,
+      "size": 1736,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                32,
+                35
+              ],
+              "name": "onCreate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                39
+              ],
+              "name": "onStartListening",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                41,
+                43
+              ],
+              "name": "onDestroy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                45,
+                47
+              ],
+              "name": "onClick",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                51
+              ],
+              "name": "onTileRemoved",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            26,
+            63
+          ],
+          "name": "BaseTileService",
+          "type": "class"
+        }
+      ]
+    },
+    "DNSCryptTileService.kt": {
+      "hash": "795bb51a5bcc",
+      "indexed_at": "2026-08-01T04:00:27.793893+00:00",
+      "language": "kotlin",
+      "lines": 58,
+      "mtime_ns": 1785556378244901100,
+      "size": 1606,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                29,
+                32
+              ],
+              "name": "onCreate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                34,
+                39
+              ],
+              "name": "onStartListening",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                41,
+                45
+              ],
+              "name": "onStopListening",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                47,
+                50
+              ],
+              "name": "onDestroy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                52,
+                57
+              ],
+              "name": "onClick",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            58
+          ],
+          "name": "DNSCryptTileService",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesControlTileManager.kt": {
+      "hash": "fa58b8822418",
+      "indexed_at": "2026-08-01T04:00:28.101607+00:00",
+      "language": "kotlin",
+      "lines": 326,
+      "mtime_ns": 1785556378257902300,
+      "size": 11250,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                78,
+                90
+              ],
+              "name": "startUpdatingState",
+              "signature": "(tile: Tile, manageTask: ManageTask)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                92,
+                95
+              ],
+              "name": "stopUpdatingState",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                97,
+                116
+              ],
+              "name": "updateTile",
+              "signature": "(manageTask: ManageTask)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                118,
+                148
+              ],
+              "name": "updateDnsCryptTileLabel",
+              "signature": "(moduleState: ModuleState)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                150,
+                165
+              ],
+              "name": "updateTileIconState",
+              "signature": "(moduleState: ModuleState)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                167,
+                194
+              ],
+              "name": "manageModule",
+              "signature": "(tile: Tile, manageTask: ManageTask)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                196,
+                220
+              ],
+              "name": "initActionsInCaseOfFirstStart",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                222,
+                226
+              ],
+              "name": "resetModulesSavedState",
+              "signature": "(preferences: PreferenceRepository)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                228,
+                246
+              ],
+              "name": "manageDnsCrypt",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                248,
+                252
+              ],
+              "name": "runDNSCrypt",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                254,
+                257
+              ],
+              "name": "stopDNSCrypt",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                259,
+                276
+              ],
+              "name": "startVpnServiceIfRequired",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                278,
+                283
+              ],
+              "name": "isStartingNotAllowed",
+              "signature": "(moduleState: ModuleState)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                285,
+                291
+              ],
+              "name": "allowSystemDNS",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                293,
+                295
+              ],
+              "name": "showInterfaceLockedToast",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                297,
+                299
+              ],
+              "name": "showPleaseWaitToast",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                301,
+                303
+              ],
+              "name": "showToast",
+              "signature": "(message: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                305,
+                315
+              ],
+              "name": "refreshModuleInterfaceIfAppLaunched",
+              "signature": "(\n        moduleMark: Int,\n        moduleKeyWord: String,\n        binaryPath: String\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                317,
+                319
+              ],
+              "name": "ManageTask",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            56,
+            326
+          ],
+          "name": "ModulesControlTileManager",
+          "type": "class"
+        }
+      ]
+    },
+    "TilesLimiter.kt": {
+      "hash": "678dbd1a20c5",
+      "indexed_at": "2026-08-01T04:00:28.416983+00:00",
+      "language": "kotlin",
+      "lines": 189,
+      "mtime_ns": 1785556378270901000,
+      "size": 6931,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                64,
+                67
+              ],
+              "name": "listenTile",
+              "signature": "(service: T)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                69,
+                75
+              ],
+              "name": "unlistenTile",
+              "signature": "(service: T)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                100
+              ],
+              "name": "checkActiveTilesCount",
+              "signature": "(service: TileService)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                111
+              ],
+              "name": "applyAppTheme",
+              "signature": "(service: TileService)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                118
+              ],
+              "name": "checkModulesNotInstalled",
+              "signature": "(service: TileService)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                120,
+                122
+              ],
+              "name": "reset",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                124,
+                133
+              ],
+              "name": "getWarningDialog",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                135,
+                141
+              ],
+              "name": "showDialog",
+              "signature": "(service: TileService, dialog: Dialog)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                143,
+                152
+              ],
+              "name": "getDonateDialogForLite",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                154,
+                163
+              ],
+              "name": "getDonateDialogForGp",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                165,
+                174
+              ],
+              "name": "tryStartMainActivity",
+              "signature": "(context: Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            47,
+            189
+          ],
+          "name": "TilesLimiter",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:28.418506+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,120 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\regressions\\wrong-lower-check\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "b966c4ffd8a0",
+      "indexed_at": "2026-07-24T20:35:12.651300+00:00",
+      "language": "rust",
+      "lines": 21,
+      "mtime_ns": 1782136568000000000,
+      "size": 478,
+      "symbols": [
+        {
+          "docstring": "/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file,",
+          "lines": [
+            5,
+            7
+          ],
+          "name": "optional_string",
+          "signature": "(s: Option<String>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            9,
+            9
+          ],
+          "name": "Klass",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                12,
+                14
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                16,
+                18
+              ],
+              "name": "optional_string",
+              "signature": "(&self, value: Option<String>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            11,
+            19
+          ],
+          "name": "Klass",
+          "type": "impl"
+        }
+      ]
+    },
+    "test.udl": {
+      "hash": "fe249e2af018",
+      "indexed_at": "2026-07-24T20:35:12.651882+00:00",
+      "language": "udl",
+      "lines": 11,
+      "mtime_ns": 1782136568000000000,
+      "size": 344,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "optional_string",
+              "signature": "(optional string? s = null) : string?",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            4,
+            6
+          ],
+          "name": "regression_test_wrong_lower_check",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                10,
+                10
+              ],
+              "name": "optional_string",
+              "signature": "(optional string? value = null) : string?",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            8,
+            11
+          ],
+          "name": "Klass",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.727607+00:00",
+  "version": "1.0"
+}

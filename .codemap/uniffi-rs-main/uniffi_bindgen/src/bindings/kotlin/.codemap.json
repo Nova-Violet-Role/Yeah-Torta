@@ -1,0 +1,129 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src\\bindings\\kotlin",
+  "files": {
+    "mod.rs": {
+      "hash": "538a219a6588",
+      "indexed_at": "2026-07-24T20:35:12.773130+00:00",
+      "language": "rust",
+      "lines": 144,
+      "mtime_ns": 1782136568000000000,
+      "size": 4952,
+      "symbols": [
+        {
+          "lines": [
+            16,
+            16
+          ],
+          "name": "gen_kotlin",
+          "type": "module"
+        },
+        {
+          "lines": [
+            19,
+            19
+          ],
+          "name": "test",
+          "type": "module"
+        },
+        {
+          "docstring": "Generate Kotlin bindings",
+          "lines": [
+            22,
+            78
+          ],
+          "name": "generate",
+          "signature": "(loader: &BindgenLoader, options: GenerateOptions)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            80,
+            83
+          ],
+          "name": "full_bindings_path",
+          "signature": "(config: &Config, out_dir: &Utf8Path)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            85,
+            104
+          ],
+          "name": "parse_config",
+          "signature": "(\n    ci: &ComponentInterface,\n    root_toml: toml::Value,\n    cdylib: Option<String>,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "A helper for renaming items.",
+          "lines": [
+            107,
+            144
+          ],
+          "name": "apply_renames",
+          "signature": "(components: &mut Vec<Component<Config>>)",
+          "type": "function"
+        }
+      ]
+    },
+    "test.rs": {
+      "hash": "0915a315c08a",
+      "indexed_at": "2026-07-24T20:35:12.774188+00:00",
+      "language": "rust",
+      "lines": 131,
+      "mtime_ns": 1782136568000000000,
+      "size": 4099,
+      "symbols": [
+        {
+          "docstring": "Run Kotlin tests for a UniFFI test fixture",
+          "lines": [
+            16,
+            24
+          ],
+          "name": "run_test",
+          "signature": "(tmp_dir: &str, fixture_name: &str, script_file: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "This function will set things up so that the script can import the UniFFI bindings for a crate",
+          "lines": [
+            29,
+            74
+          ],
+          "name": "run_script",
+          "signature": "(\n    tmp_dir: &str,\n    crate_name: &str,\n    script_file: &str,\n    args: Vec<String>,\n    opti...",
+          "type": "function"
+        },
+        {
+          "docstring": "command-line tools to compile them into a .jar file.",
+          "lines": [
+            78,
+            112
+          ],
+          "name": "build_jar",
+          "signature": "(\n    crate_name: &str,\n    out_dir: &Utf8Path,\n    options: &RunScriptOptions,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            114,
+            120
+          ],
+          "name": "kotlinc_command",
+          "signature": "(options: &RunScriptOptions)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            122,
+            131
+          ],
+          "name": "calc_classpath",
+          "signature": "(extra_paths: Vec<&Utf8Path>)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.755927+00:00",
+  "version": "1.0"
+}

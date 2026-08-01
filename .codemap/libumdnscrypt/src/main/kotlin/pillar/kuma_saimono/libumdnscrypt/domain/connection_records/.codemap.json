@@ -1,0 +1,498 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\domain\\connection_records",
+  "files": {
+    "ConnectionRecordsConverter.kt": {
+      "hash": "6aabe5e99504",
+      "indexed_at": "2026-08-01T03:59:51.784536+00:00",
+      "language": "kotlin",
+      "lines": 475,
+      "mtime_ns": 1785556376784901800,
+      "size": 17348,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                103,
+                114
+              ],
+              "name": "convertRecords",
+              "signature": "(rawRecords: List<ConnectionData>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                116,
+                121
+              ],
+              "name": "addRecord",
+              "signature": "(rawRecord: ConnectionData)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                123,
+                219
+              ],
+              "name": "addDnsRecord",
+              "signature": "(processedDnsRecord: DnsRecord)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                221,
+                249
+              ],
+              "name": "getDnsLogEntry",
+              "signature": "(dnsRecord: DnsRecord)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                251,
+                256
+              ],
+              "name": "addDnsRecordBlocked",
+              "signature": "(dnsRecord: DnsRecord, logEntry: DnsLogEntry)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                258,
+                265
+              ],
+              "name": "isDnsBlocked",
+              "signature": "(dnsRecord: DnsRecord)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                267,
+                270
+              ],
+              "name": "isDnsBlockedByIPv6",
+              "signature": "(dnsRecord: DnsRecord)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                272,
+                322
+              ],
+              "name": "addPacketRecord",
+              "signature": "(packetRecord: PacketRecord)",
+              "type": "method"
+            },
+            {
+              "docstring": "the Garmatin firewall; the Warden is the sovereign firewall now.",
+              "lines": [
+                328,
+                329
+              ],
+              "name": "isUidBlocked",
+              "signature": "(packetRecord: PacketRecord)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                331,
+                332
+              ],
+              "name": "isRootMode",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                334,
+                335
+              ],
+              "name": "isPointerRecord",
+              "signature": "(dnsQueryRawRecord: DnsRecord)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                337,
+                341
+              ],
+              "name": "makeReverseLookup",
+              "signature": "(ip: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                343,
+                380
+              ],
+              "name": "startReverseLookupQueue",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                382,
+                391
+              ],
+              "name": "onStop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                393,
+                393
+              ],
+              "name": "isFirewallEnabled",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                395,
+                395
+              ],
+              "name": "isBlockIPv6",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                397,
+                397
+              ],
+              "name": "isMeteredNetwork",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                429,
+                435
+              ],
+              "name": "registerIptablesReceiver",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                437,
+                442
+              ],
+              "name": "updateVars",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                444,
+                454
+              ],
+              "name": "unregisterIptablesReceiver",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    460,
+                    469
+                  ],
+                  "name": "equals",
+                  "signature": "(other: Any?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    471,
+                    473
+                  ],
+                  "name": "hashCode",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                456,
+                474
+              ],
+              "name": "IpToTime",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            58,
+            475
+          ],
+          "name": "ConnectionRecordsConverter",
+          "type": "class"
+        }
+      ]
+    },
+    "ConnectionRecordsInteractor.kt": {
+      "hash": "196d1618bd81",
+      "indexed_at": "2026-08-01T03:59:52.120969+00:00",
+      "language": "kotlin",
+      "lines": 132,
+      "mtime_ns": 1785556376796898800,
+      "size": 4469,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                47
+              ],
+              "name": "addListener",
+              "signature": "(listener: T?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                52
+              ],
+              "name": "removeListener",
+              "signature": "(listener: T?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                54,
+                56
+              ],
+              "name": "hasAnyListener",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                58,
+                64
+              ],
+              "name": "convertRecords",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                66,
+                68
+              ],
+              "name": "clearConnectionRecords",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                70,
+                75
+              ],
+              "name": "stopConverter",
+              "signature": "(forceStop: Boolean = false)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                128
+              ],
+              "name": "convert",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                130,
+                131
+              ],
+              "name": "isRealTimeLogsDisabled",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            33,
+            132
+          ],
+          "name": "ConnectionRecordsInteractor",
+          "type": "class"
+        }
+      ]
+    },
+    "ConnectionRecordsInteractorInterface.kt": {
+      "hash": "1a2caee6f08d",
+      "indexed_at": "2026-08-01T03:59:52.444473+00:00",
+      "language": "kotlin",
+      "lines": 23,
+      "mtime_ns": 1785556376808899800,
+      "size": 953,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "addOnConnectionRecordsUpdatedListener",
+              "signature": "(onConnectionRecordsUpdatedListener: T)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "removeOnConnectionRecordsUpdatedListener",
+              "signature": "(onConnectionRecordsUpdatedListener: T)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "clearConnectionRecords",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            23
+          ],
+          "name": "ConnectionRecordsInteractorInterface",
+          "type": "interface"
+        }
+      ]
+    },
+    "ConnectionRecordsParser.kt": {
+      "hash": "f5bb63885cf1",
+      "indexed_at": "2026-08-01T03:59:52.738871+00:00",
+      "language": "kotlin",
+      "lines": 205,
+      "mtime_ns": 1785556376819899000,
+      "size": 8216,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                76,
+                200
+              ],
+              "name": "formatLines",
+              "signature": "(connectionRecords: List<ConnectionLogEntry>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                202,
+                204
+              ],
+              "name": "getHexFromColors",
+              "signature": "(\n        @ColorRes colorRes: Int\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            42,
+            205
+          ],
+          "name": "ConnectionRecordsParser",
+          "type": "class"
+        }
+      ]
+    },
+    "ConnectionRecordsRepository.kt": {
+      "hash": "46f8b20c21c5",
+      "indexed_at": "2026-08-01T03:59:53.027930+00:00",
+      "language": "kotlin",
+      "lines": 25,
+      "mtime_ns": 1785556376832900500,
+      "size": 887,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "getRawConnectionRecords",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "clearConnectionRawRecords",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "connectionRawRecordsNoMoreRequired",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            25
+          ],
+          "name": "ConnectionRecordsRepository",
+          "type": "interface"
+        }
+      ]
+    },
+    "OnConnectionRecordsUpdatedListener.kt": {
+      "hash": "805ff8bcf18d",
+      "indexed_at": "2026-08-01T03:59:54.174626+00:00",
+      "language": "kotlin",
+      "lines": 22,
+      "mtime_ns": 1785556376844902000,
+      "size": 755,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "onConnectionRecordsUpdated",
+              "signature": "(connectionRecords: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "isActive",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            22
+          ],
+          "name": "OnConnectionRecordsUpdatedListener",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:54.175986+00:00",
+  "version": "1.0"
+}

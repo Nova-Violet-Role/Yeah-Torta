@@ -1,0 +1,111 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// JesdictArt — the flying "THX to JESDICT" ANIMATED CALLIGRAPHY (scene #2 of the forge, task #24/#32).
+// The DNSCrypt pillar's gratitude stroke: the words write themselves left→right (a pen-trace
+// reveal — a clip sweep standing in for SVG dash-offset, which Slint has no primitive for),
+// a star rides the pen tip, spark dust trails it, and the finished line holds then fades.
+//
+// DETERMINISTIC BAKE LAW (the CakeArt pattern): every value derives from `tick-ms` — the forge
+// sweeps it per frame (forge-anim), the app binds animation-tick() at runtime. No randomness.
+//
+// COLOR PARITY: hexes mirror rust/torta_ui/ui/dnscrypt_palette.slint (Candle) — the forge is a
+// detached workspace and cannot import torta_ui slint files:
+//   pig #f28aa2 · candle-gold #e7ad42 · flame #f5c76a · star-core #fff3c4 · wax ground #100e09
+
+component JesdictArt inherits Rectangle {
+    in property <bool> animated: false;
+    in property <float> tick-ms: 0;
+    background: transparent;
+
+    // ── the loop clock: 3000ms — write 0→62%, hold 62→86%, fade 86→100% ──
+    property <float> t: root.animated ? Math.mod(root.tick-ms, 3000) / 3000 : 0.62;
+    property <float> write: Math.min(root.t / 0.62, 1.0);                    // 0..1 pen progress
+    property <float> fade: root.t > 0.86 ? 1.0 - (root.t - 0.86) / 0.14 : 1.0;
+    // the star's ride position — stays on-canvas so the liftoff is visible
+    property <length> pen-x: root.width * 0.06 + root.width * 0.86 * root.write;
+    // the reveal frontier — sweeps PAST the right edge (1.06·width at write=1) so the
+    // final glyph fully uncovers; previously it stalled at 0.94·width and clipped the "T"
+    property <length> clip-w: root.width * 0.06 + root.width * 1.00 * root.write;
+
+    opacity: root.fade;
+
+    // ── the revealed calligraphy (clipped at the pen frontier) ──
+    Rectangle {
+        x: 0; y: 0;
+        width: root.clip-w;
+        height: root.height;
+        clip: true;
+
+        // THX — the shout, flame-gold
+        Text {
+            x: root.width * 0.06; y: root.height * 0.10;
+            text: "THX";
+            color: #e7ad42;
+            font-size: root.height * 0.26;
+            font-weight: 900;
+            font-italic: true;
+        }
+        // to — the small breath, pig-pink
+        Text {
+            x: root.width * 0.52; y: root.height * 0.24;
+            text: "to";
+            color: #f28aa2;
+            font-size: root.height * 0.13;
+            font-weight: 700;
+            font-italic: true;
+        }
+        // JESDICT — the dedication line, pig-pink
+        Text {
+            x: root.width * 0.06; y: root.height * 0.44;
+            text: "JESDICT";
+            color: #f28aa2;
+            font-size: root.height * 0.19;   // 0.21 overran the right safe-area at weight-900 italic
+            font-weight: 900;
+            font-italic: true;
+        }
+        // the calligraphic swash under the dedication — the flourish the pen leaves last
+        Path {
+            width: 100%; height: 100%;
+            viewbox-width: 108; viewbox-height: 108;
+            commands: "M 8 82 C 28 74, 48 92, 68 80 S 92 72, 98 64 M 94 68 c 6 -2 7 -8 1 -9 c -5 -1 -5 7 3 9";
+            stroke: #f5c76a;
+            stroke-width: root.height * 0.018;
+            fill: transparent;
+        }
+    }
+
+    // ── the pen-tip star (rides the frontier while writing, lifts off at the hold) ──
+    Path {
+        x: root.pen-x - self.width / 2;
+        y: root.height * (0.42 + 0.06 * Math.sin(root.write * 720deg)) - self.height / 2
+           - (root.write >= 1.0 ? root.height * 0.30 * Math.min((root.t - 0.62) / 0.24, 1.0) : 0);
+        width: root.height * 0.16;
+        height: root.height * 0.16;
+        viewbox-width: 12; viewbox-height: 12;
+        commands: "M 6 0 L 7.8 4.2 L 12 6 L 7.8 7.8 L 6 12 L 4.2 7.8 L 0 6 L 4.2 4.2 Z";
+        fill: #fff3c4;
+        // twinkle: breathing opacity while writing (no Path rotation in Slint 1.17)
+        opacity: root.write < 1.0
+            ? 0.75 + 0.20 * Math.sin(root.tick-ms * 1.8deg)
+            : Math.max(0.95 - (root.t - 0.62) * 2.5, 0);
+    }
+    // ── spark dust trailing the pen (two embers, gold→pink, fading with distance) ──
+    Rectangle {
+        x: root.pen-x - root.width * 0.05; y: root.height * 0.40;
+        width: root.height * 0.035; height: self.width;
+        border-radius: self.width / 2;
+        background: #e7ad42;
+        opacity: root.write < 1.0 ? 0.55 : 0;
+    }
+    Rectangle {
+        x: root.pen-x - root.width * 0.10; y: root.height * 0.48;
+        width: root.height * 0.022; height: self.width;
+        border-radius: self.width / 2;
+        background: #f28aa2;
+        opacity: root.write < 1.0 ? 0.35 : 0;
+    }
+}
+
+export { JesdictArt }

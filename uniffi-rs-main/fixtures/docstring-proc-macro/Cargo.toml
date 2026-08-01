@@ -1,0 +1,27 @@
+[package]
+name = "uniffi-fixture-docstring-proc-macro"
+version = "0.22.0"
+edition = "2021"
+license = "MPL-2.0"
+publish = false
+
+[lib]
+name = "uniffi_fixture_docstring_proc_macro"
+crate-type = ["lib", "cdylib"]
+
+[dependencies]
+cargo_metadata = "0.23.1"
+thiserror = "2"
+uniffi = { path = "../../uniffi" }
+
+[build-dependencies]
+uniffi = { path = "../../uniffi", features = ["build"] }
+
+[dev-dependencies]
+glob = "0.3"
+uniffi = { path = "../../uniffi", features = ["bindgen-tests"] }
+uniffi_bindgen = { path = "../../uniffi_bindgen" }
+uniffi_testing = { path = "../../uniffi_testing" }
+
+[features]
+ffi-trace = ["uniffi/ffi-trace"]

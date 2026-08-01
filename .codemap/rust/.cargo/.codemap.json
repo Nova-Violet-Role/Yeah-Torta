@@ -1,0 +1,335 @@
+{
+  "directory": "rust\\.cargo",
+  "files": {
+    "config.toml": {
+      "hash": "78c8343a6ba5",
+      "indexed_at": "2026-08-01T04:01:07.405361+00:00",
+      "language": "toml",
+      "lines": 67,
+      "mtime_ns": 1785556379677902300,
+      "size": 4767,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "target-dir",
+              "type": "key"
+            }
+          ],
+          "docstring": "All four crates share ONE target dir on D: (218GB free) \u2014 C: was choked to <1GB by 92GB of per-crate target/ dirs. Shared dir also dedupes the SLINT +",
+          "lines": [
+            16,
+            18
+          ],
+          "name": "build",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "ANDROID_HOME",
+              "type": "key"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "ANDROID_SDK_ROOT",
+              "type": "key"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "ANDROID_JAR",
+              "type": "key"
+            },
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "ANDROID_PLATFORM",
+              "type": "key"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "ANDROID_D8_JAR",
+              "type": "key"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "ANDROID_BUILD_TOOLS_VERSION",
+              "type": "key"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "ANDROID_NDK_HOME",
+              "type": "key"
+            },
+            {
+              "lines": [
+                29,
+                29
+              ],
+              "name": "ANDROID_NDK_ROOT",
+              "type": "key"
+            },
+            {
+              "lines": [
+                30,
+                30
+              ],
+              "name": "JAVA_HOME",
+              "type": "key"
+            },
+            {
+              "lines": [
+                36,
+                36
+              ],
+              "name": "CC_aarch64_linux_android",
+              "type": "key"
+            },
+            {
+              "lines": [
+                37,
+                37
+              ],
+              "name": "CXX_aarch64_linux_android",
+              "type": "key"
+            },
+            {
+              "lines": [
+                38,
+                38
+              ],
+              "name": "AR_aarch64_linux_android",
+              "type": "key"
+            },
+            {
+              "lines": [
+                39,
+                39
+              ],
+              "name": "CC_armv7_linux_androideabi",
+              "type": "key"
+            },
+            {
+              "lines": [
+                40,
+                40
+              ],
+              "name": "CXX_armv7_linux_androideabi",
+              "type": "key"
+            },
+            {
+              "lines": [
+                41,
+                41
+              ],
+              "name": "AR_armv7_linux_androideabi",
+              "type": "key"
+            },
+            {
+              "lines": [
+                42,
+                42
+              ],
+              "name": "CC_i686_linux_android",
+              "type": "key"
+            },
+            {
+              "lines": [
+                43,
+                43
+              ],
+              "name": "CXX_i686_linux_android",
+              "type": "key"
+            },
+            {
+              "lines": [
+                44,
+                44
+              ],
+              "name": "AR_i686_linux_android",
+              "type": "key"
+            },
+            {
+              "lines": [
+                45,
+                45
+              ],
+              "name": "CC_x86_64_linux_android",
+              "type": "key"
+            },
+            {
+              "lines": [
+                46,
+                46
+              ],
+              "name": "CXX_x86_64_linux_android",
+              "type": "key"
+            },
+            {
+              "lines": [
+                47,
+                47
+              ],
+              "name": "AR_x86_64_linux_android",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            19,
+            50
+          ],
+          "name": "env",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                52,
+                52
+              ],
+              "name": "linker",
+              "type": "key"
+            },
+            {
+              "lines": [
+                53,
+                53
+              ],
+              "name": "ar",
+              "type": "key"
+            },
+            {
+              "lines": [
+                54,
+                54
+              ],
+              "name": "rustflags",
+              "type": "key"
+            }
+          ],
+          "docstring": "16 KB page-size alignment on 64-bit ABIs: required for Android 15+/16/17 devices with 16K pages; NDK r23 does not emit this by default.",
+          "lines": [
+            51,
+            55
+          ],
+          "name": "target.aarch64-linux-android",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                57,
+                57
+              ],
+              "name": "linker",
+              "type": "key"
+            },
+            {
+              "lines": [
+                58,
+                58
+              ],
+              "name": "ar",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            56,
+            59
+          ],
+          "name": "target.armv7-linux-androideabi",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                61,
+                61
+              ],
+              "name": "linker",
+              "type": "key"
+            },
+            {
+              "lines": [
+                62,
+                62
+              ],
+              "name": "ar",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            60,
+            63
+          ],
+          "name": "target.i686-linux-android",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                65,
+                65
+              ],
+              "name": "linker",
+              "type": "key"
+            },
+            {
+              "lines": [
+                66,
+                66
+              ],
+              "name": "ar",
+              "type": "key"
+            },
+            {
+              "lines": [
+                67,
+                67
+              ],
+              "name": "rustflags",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            64,
+            68
+          ],
+          "name": "target.x86_64-linux-android",
+          "type": "table"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:01:07.407191+00:00",
+  "version": "1.0"
+}

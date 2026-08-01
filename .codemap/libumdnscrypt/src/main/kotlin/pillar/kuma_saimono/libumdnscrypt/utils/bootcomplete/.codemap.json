@@ -1,0 +1,135 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\utils\\bootcomplete",
+  "files": {
+    "BootCompleteManager.kt": {
+      "hash": "a9d96cbe217a",
+      "indexed_at": "2026-08-01T04:00:32.039405+00:00",
+      "language": "kotlin",
+      "lines": 382,
+      "mtime_ns": 1785556378443899800,
+      "size": 15988,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                79,
+                203
+              ],
+              "name": "performAction",
+              "signature": "(context: Context, intent: Intent)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                210,
+                221
+              ],
+              "name": "parseAutostartDelayMs",
+              "signature": "(defaultPreferences: SharedPreferences)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                227,
+                265
+              ],
+              "name": "armModulesOnBoot",
+              "signature": "(\n        autoStartDNSCrypt: Boolean,\n        autoStartFirewall: Boolean,\n        mode: Operation...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                267,
+                277
+              ],
+              "name": "broadcastDNSCryptState",
+              "signature": "(autoStartDNSCrypt: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                279,
+                282
+              ],
+              "name": "broadcastControlDisabled",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                284,
+                300
+              ],
+              "name": "startHOTSPOT",
+              "signature": "(preferences: PreferenceRepository)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                302,
+                329
+              ],
+              "name": "startStopRestartModules",
+              "signature": "(\n        autoStartDNSCrypt: Boolean,\n        autoStartFirewall: Boolean\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                331,
+                333
+              ],
+              "name": "saveModulesStateRunning",
+              "signature": "(saveDNSCryptRunning: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                335,
+                340
+              ],
+              "name": "resetModulesSavedState",
+              "signature": "(preferences: PreferenceRepository)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                342,
+                344
+              ],
+              "name": "runDNSCrypt",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                346,
+                348
+              ],
+              "name": "stopDNSCrypt",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                350,
+                373
+              ],
+              "name": "stopServicesForeground",
+              "signature": "(context: Context, mode: OperationMode, fixTTL: Boolean)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            64,
+            382
+          ],
+          "name": "BootCompleteManager",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:32.041380+00:00",
+  "version": "1.0"
+}

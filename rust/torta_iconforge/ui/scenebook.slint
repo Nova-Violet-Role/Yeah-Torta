@@ -1,0 +1,585 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The SCENE BOOK (#32) — the IconForge EVOLVING MECHANISM's art shelf: ONE component per pillar
+// scene, each with its OWN landscape + its OWN animation grammar (the anti-slop law: no two scenes
+// share a treatment — heat is not starlight is not rain).
+//
+// RECURRENCE CONTRACT (the whole point of #32):
+//   adding a scene = ONE component here + ONE registry row in icon.slint + ONE entry in the
+//   SCENES const (src/main.rs). Nothing else moves.
+//
+// DETERMINISTIC BAKE LAW (the jesdict.slint canon): every motion derives from `tick-ms` ONLY —
+// the forge sweeps tick-ms per baked frame; at runtime #17 binds it to animation-tick(). No
+// randomness, no wall clock: same tick-ms -> same pixels, forever. Each art carries a `t`
+// (normalized loop phase) and a hand-picked RESTING pose for the static icon (tick-ms=0).
+//
+// COLOR PARITY LAW: the forge is a detached workspace and cannot import torta_ui slint files, so
+// every hex below MIRRORS its pillar palette (verified against the palette files on disk):
+//   Beast    (beast_palette.slint):      abyss #0d0b08 · pit #14110c · hairline #33291c · flow #ffb454 · hot #ff6b3d · backoff #f5a623
+//   Centauri (centauri_palette.slint):   void #0a0e14 · abyss #0f141c · stellar #28c8d8 · crown #2ee6a6 · starlight #eaf2ff
+//   Inu      (inu_palette.slint):        den #12100c · burrow #1a1610 · straw #262019 · collar #34b3a4 · tag #f0b429 · cream #f6f0e6
+//   Masque   (masksolver_palette.slint): veil-void #0b0912 · veil #16122a · mask #a78bfa · cache #4fc3f7 · moon #f1ecfb
+//   Wheel    (rotation_palette.slint):   orbit-void #0a0c14 · panel #161a29 · hairline #2c3242 · spoke #5e8bff · turn #4ade80 · warm #f5b445
+//   Monokuma (monokuma_palette.slint):   night #0c0c0c · pitch #141414 · iron #2a2a2a · bone #f4f4f4 · risk #d83a2c · safe #2ecc71
+//   Underground (underground_dashboard.slint): phosphor #2fe26a · deep-green #1a7a3c (ground = Monokuma night)
+
+// ── BEAST — "THE OVEN MOUTH" · HEAT grammar: hearth breath, dark iron arch, molten floor seam,
+//    three embers rising on staggered thirds. Loop: 4200ms. Rest: t=0.35 (warm glow, mid-ember).
+export component BeastOvenArt inherits Rectangle {
+    in property <bool> animated: false;
+    in property <float> tick-ms: 0;
+    background: transparent;
+    clip: true;
+    property <float> t: root.animated ? Math.mod(root.tick-ms, 4200) / 4200 : 0.35;
+    property <color> hot: #ff6b3d;       // Beast.hot
+    property <color> flow: #ffb454;      // Beast.flow
+    property <color> backoff: #f5a623;   // Beast.backoff
+    property <color> pit: #14110c;       // Beast.pit
+    property <color> hairline: #33291c;  // Beast.hairline
+
+    // the hearth glow — the floor breathes heat.
+    Rectangle {
+        y: root.height * 0.60; height: root.height * 0.40; width: 100%;
+        background: @linear-gradient(0deg,
+            root.hot.with-alpha(0.28 + 0.10 * sin(360deg * root.t)) 0%,
+            root.flow.with-alpha(0.10) 55%,
+            transparent 100%);
+    }
+    // the oven arch — the dark iron mouth, hairline rim at the crown.
+    Rectangle {
+        x: root.width * 0.22; y: root.height * 0.30;
+        width: root.width * 0.56; height: root.height * 0.70;
+        background: root.pit;
+        border-width: 2px; border-color: root.hairline;
+        border-radius: root.width * 0.28;
+    }
+    Rectangle {  // square the arch base (the radius reads only at the crown)
+        x: root.width * 0.22; y: root.height * 0.68;
+        width: root.width * 0.56; height: root.height * 0.32;
+        background: root.pit;
+    }
+    // the mouth glow — the fire seen through the arch.
+    Rectangle {
+        x: root.width * 0.30; y: root.height * 0.50;
+        width: root.width * 0.40; height: root.height * 0.46;
+        background: @linear-gradient(0deg,
+            root.hot.with-alpha(0.55 + 0.15 * sin(360deg * root.t)) 0%,
+            root.flow.with-alpha(0.22) 60%,
+            transparent 100%);
+        border-radius: root.width * 0.16;
+    }
+    // the molten seam at the floor.
+    Rectangle {
+        y: root.height - root.height * 0.03; height: root.height * 0.03; width: 100%;
+        background: @linear-gradient(90deg,
+            transparent 0%,
+            root.flow.with-alpha(0.55 + 0.25 * sin(360deg * root.t)) 50%,
+            transparent 100%);
+    }
+    // three embers rising on staggered thirds — each fades as it climbs, wobbling on a double beat.
+    Rectangle {
+        property <float> p: Math.mod(root.t + 0.00, 1);
+        x: root.width * (0.32 + 0.03 * sin(720deg * self.p));
+        y: root.height * (0.90 - 0.72 * self.p);
+        width: root.width * 0.050; height: self.width; border-radius: self.width / 2;
+        background: root.hot; opacity: (1 - self.p) * 0.85;
+    }
+    Rectangle {
+        property <float> p: Math.mod(root.t + 0.33, 1);
+        x: root.width * (0.52 + 0.03 * sin(720deg * self.p));
+        y: root.height * (0.90 - 0.72 * self.p);
+        width: root.width * 0.040; height: self.width; border-radius: self.width / 2;
+        background: root.flow; opacity: (1 - self.p) * 0.80;
+    }
+    Rectangle {
+        property <float> p: Math.mod(root.t + 0.66, 1);
+        x: root.width * (0.64 + 0.03 * sin(720deg * self.p));
+        y: root.height * (0.90 - 0.72 * self.p);
+        width: root.width * 0.034; height: self.width; border-radius: self.width / 2;
+        background: root.backoff; opacity: (1 - self.p) * 0.70;
+    }
+}
+
+// ── CENTAURI — "THE NIGHT SKY" · STARFIELD grammar: aurora crown, a dark ridge horizon, four
+//    phase-offset twinkles, one comet crossing per loop. Loop: 6000ms. Rest: t=0.30 (comet 1/3 in).
+export component CentauriSkyArt inherits Rectangle {
+    in property <bool> animated: false;
+    in property <float> tick-ms: 0;
+    background: transparent;
+    clip: true;
+    property <float> t: root.animated ? Math.mod(root.tick-ms, 6000) / 6000 : 0.30;
+    property <color> stellar: #28c8d8;    // Centauri.stellar
+    property <color> crown: #2ee6a6;      // Centauri.crown
+    property <color> starlight: #eaf2ff;  // Centauri.starlight
+    property <color> abyss: #0f141c;      // Centauri.abyss
+    property <float> comet-x: -0.15 + 1.30 * root.t;
+    property <float> comet-y: 0.16 + 0.12 * root.t;
+
+    // the aurora — a slow curtain breathing across the crown of the sky.
+    Rectangle {
+        y: 0; height: root.height * 0.34; width: 100%;
+        background: @linear-gradient(180deg,
+            root.stellar.with-alpha(0.14 + 0.06 * sin(360deg * root.t)) 0%,
+            root.crown.with-alpha(0.07) 60%,
+            transparent 100%);
+    }
+    // the ridge horizon — a dark silhouette grounding the sky.
+    Rectangle {
+        y: root.height * 0.82; height: root.height * 0.18; width: 100%;
+        background: @linear-gradient(0deg, root.abyss.with-alpha(0.95) 0%, transparent 100%);
+    }
+    // four twinkles — phase-offset, different periods: never in step.
+    Rectangle {
+        x: root.width * 0.18; y: root.height * 0.14;
+        width: root.width * 0.030; height: self.width; border-radius: self.width / 2;
+        background: root.starlight;
+        opacity: 0.20 + 0.60 * Math.abs(sin(360deg * (root.t * 2 + 0.00)));
+    }
+    Rectangle {
+        x: root.width * 0.66; y: root.height * 0.10;
+        width: root.width * 0.022; height: self.width; border-radius: self.width / 2;
+        background: root.starlight;
+        opacity: 0.20 + 0.60 * Math.abs(sin(360deg * (root.t * 3 + 0.25)));
+    }
+    Rectangle {
+        x: root.width * 0.84; y: root.height * 0.30;
+        width: root.width * 0.026; height: self.width; border-radius: self.width / 2;
+        background: root.crown;
+        opacity: 0.20 + 0.60 * Math.abs(sin(360deg * (root.t * 2 + 0.50)));
+    }
+    Rectangle {
+        x: root.width * 0.38; y: root.height * 0.26;
+        width: root.width * 0.018; height: self.width; border-radius: self.width / 2;
+        background: root.stellar;
+        opacity: 0.20 + 0.60 * Math.abs(sin(360deg * (root.t * 4 + 0.75)));
+    }
+    // the comet — tail first (a starlight streak), then the head; fades at both edges of the loop.
+    Rectangle {
+        x: root.width * root.comet-x - root.width * 0.16;
+        y: root.height * root.comet-y + root.width * 0.006;
+        width: root.width * 0.16; height: root.width * 0.014;
+        border-radius: self.height / 2;
+        background: @linear-gradient(90deg, transparent 0%, root.starlight.with-alpha(0.55) 100%);
+        opacity: sin(180deg * root.t);
+    }
+    Rectangle {
+        x: root.width * root.comet-x; y: root.height * root.comet-y;
+        width: root.width * 0.026; height: self.width; border-radius: self.width / 2;
+        background: root.starlight;
+        opacity: sin(180deg * root.t);
+    }
+}
+
+// ── INU — "THE DEN" · WARM-BURROW grammar: two den mounds, the collar arc over the door, a gold
+//    tag swinging like a pendulum, a cream paw-trail pulsing in sequence. Loop: 3600ms. Rest: t=0.25
+//    (tag at full right swing — the happy pose).
+export component InuDenArt inherits Rectangle {
+    in property <bool> animated: false;
+    in property <float> tick-ms: 0;
+    background: transparent;
+    clip: true;
+    property <float> t: root.animated ? Math.mod(root.tick-ms, 3600) / 3600 : 0.25;
+    property <color> burrow: #1a1610;  // Inu.burrow
+    property <color> straw: #262019;   // Inu.straw
+    property <color> collar: #34b3a4;  // Inu.collar
+    property <color> tag: #f0b429;     // Inu.tag
+    property <color> cream: #f6f0e6;   // Inu.cream
+    property <angle> swing: 35deg * sin(360deg * root.t);
+
+    // the den mounds — back mound, then the straw mound in front.
+    Rectangle {
+        x: -root.width * 0.10; y: root.height * 0.68;
+        width: root.width * 0.78; height: root.height * 0.50;
+        background: root.burrow; border-radius: root.width * 0.24;
+    }
+    Rectangle {
+        x: root.width * 0.42; y: root.height * 0.76;
+        width: root.width * 0.68; height: root.height * 0.46;
+        background: root.straw; border-radius: root.width * 0.22;
+    }
+    // the collar arc — the teal half-ring hung over the den door.
+    Path {
+        width: 100%; height: 100%;
+        viewbox-x: 0; viewbox-y: 0; viewbox-width: 108; viewbox-height: 108;
+        commands: "M22,58 A32,32 0 1 1 86,58";
+        stroke: root.collar;
+        stroke-width: root.width * 3.4 / 108;
+    }
+    // the tag — a gold disc swinging under the collar (a true pendulum: x=L·sin θ, y=L·cos θ).
+    Rectangle {
+        x: root.width * 0.5 + root.width * 0.14 * sin(root.swing) - self.width / 2;
+        y: root.height * 0.54 + root.width * 0.14 * cos(root.swing) - self.width / 2;
+        width: root.width * 0.085; height: self.width; border-radius: self.width / 2;
+        background: root.tag;
+        border-width: 1px; border-color: root.cream.with-alpha(0.55);
+    }
+    // the paw trail — three cream pads pulsing in walking order up the left slope.
+    Rectangle {
+        x: root.width * 0.10; y: root.height * 0.60;
+        width: root.width * 0.045; height: self.width; border-radius: self.width / 2;
+        background: root.cream;
+        opacity: 0.12 + 0.48 * Math.max(0, sin(360deg * (root.t + 0.00)));
+    }
+    Rectangle {
+        x: root.width * 0.19; y: root.height * 0.48;
+        width: root.width * 0.045; height: self.width; border-radius: self.width / 2;
+        background: root.cream;
+        opacity: 0.12 + 0.48 * Math.max(0, sin(360deg * (root.t - 0.18)));
+    }
+    Rectangle {
+        x: root.width * 0.28; y: root.height * 0.36;
+        width: root.width * 0.045; height: self.width; border-radius: self.width / 2;
+        background: root.cream;
+        opacity: 0.12 + 0.48 * Math.max(0, sin(360deg * (root.t - 0.36)));
+    }
+}
+
+// ── MASQUE — "THE MASQUERADE" · PHANTOM grammar: velvet curtains at the wings, a domino mask
+//    fading like a ghost, one moon-sheen sweep per loop, a cyan cache glint on the double beat.
+//    Loop: 5000ms. Rest: t=0.32 (mask well-formed, sheen mid-face).
+export component MasqueVeilArt inherits Rectangle {
+    in property <bool> animated: false;
+    in property <float> tick-ms: 0;
+    background: transparent;
+    clip: true;
+    property <float> t: root.animated ? Math.mod(root.tick-ms, 5000) / 5000 : 0.32;
+    property <color> veil: #16122a;       // Masque.veil
+    property <color> veil-void: #0b0912;  // Masque.veil-void
+    property <color> mask: #a78bfa;       // Masque.mask
+    property <color> cache: #4fc3f7;      // Masque.cache
+    property <color> moon: #f1ecfb;       // Masque.moon
+
+    // the curtains — velvet falling in at both wings.
+    Rectangle {
+        x: 0; width: root.width * 0.22; height: 100%;
+        background: @linear-gradient(90deg, root.veil.with-alpha(0.85) 0%, transparent 100%);
+    }
+    Rectangle {
+        x: root.width * 0.78; width: root.width * 0.22; height: 100%;
+        background: @linear-gradient(270deg, root.veil.with-alpha(0.85) 0%, transparent 100%);
+    }
+    // the domino mask — the phantom: it never fully arrives, never fully leaves.
+    Rectangle {
+        width: 100%; height: 100%;
+        opacity: 0.40 + 0.30 * sin(360deg * root.t);
+        Path {
+            width: 100%; height: 100%;
+            viewbox-x: 0; viewbox-y: 0; viewbox-width: 108; viewbox-height: 108;
+            commands: "M14,44 Q54,20 94,44 Q90,66 70,68 Q60,66 54,58 Q48,66 38,68 Q18,66 14,44 Z";
+            fill: root.mask;
+        }
+        Path {  // left eye
+            width: 100%; height: 100%;
+            viewbox-x: 0; viewbox-y: 0; viewbox-width: 108; viewbox-height: 108;
+            commands: "M38,48 m-6,0 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0";
+            fill: root.veil-void;
+        }
+        Path {  // right eye
+            width: 100%; height: 100%;
+            viewbox-x: 0; viewbox-y: 0; viewbox-width: 108; viewbox-height: 108;
+            commands: "M70,48 m-6,0 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0";
+            fill: root.veil-void;
+        }
+    }
+    // the moon sheen — one silk sweep across the face per loop.
+    Rectangle {
+        x: root.width * (-0.25 + 1.50 * root.t); width: root.width * 0.22; height: 100%;
+        background: @linear-gradient(90deg,
+            transparent 0%, root.moon.with-alpha(0.13) 50%, transparent 100%);
+    }
+    // the cache glint — a cyan spark at the mask's cheek, twice per loop.
+    Rectangle {
+        x: root.width * 0.68; y: root.height * 0.40;
+        width: root.width * 0.030; height: self.width; border-radius: self.width / 2;
+        background: root.cache;
+        opacity: Math.max(0, sin(360deg * root.t * 2)) * 0.60;
+    }
+}
+
+// ── WHEEL — "THE ORBIT" · MACHINE grammar: a hub, two rings, four warm cardinal ticks, one
+//    satellite completing exactly one revolution per loop with a green velocity trail.
+//    Loop: 4000ms = one revolution. Rest: t=0.125 (satellite at 45°).
+export component WheelOrbitArt inherits Rectangle {
+    in property <bool> animated: false;
+    in property <float> tick-ms: 0;
+    background: transparent;
+    clip: true;
+    property <float> t: root.animated ? Math.mod(root.tick-ms, 4000) / 4000 : 0.125;
+    property <color> spoke: #5e8bff;     // Wheel.spoke
+    property <color> turn: #4ade80;      // Wheel.turn
+    property <color> warm: #f5b445;      // Wheel.warm
+    property <color> panel: #161a29;     // Wheel.panel
+    property <color> hairline: #2c3242;  // Wheel.hairline
+    property <angle> a: 360deg * root.t;
+
+    // the outer ring — the orbit track.
+    Rectangle {
+        x: root.width * 0.08; y: root.height * 0.08;
+        width: root.width * 0.84; height: root.height * 0.84;
+        border-radius: self.width / 2; background: transparent;
+        border-width: root.width * 0.012; border-color: root.hairline;
+    }
+    // the inner ring — the second track, spoke-tinted.
+    Rectangle {
+        x: root.width * 0.24; y: root.height * 0.24;
+        width: root.width * 0.52; height: root.height * 0.52;
+        border-radius: self.width / 2; background: transparent;
+        border-width: root.width * 0.008; border-color: root.spoke.with-alpha(0.35);
+    }
+    // the hub.
+    Rectangle {
+        x: root.width * 0.40; y: root.height * 0.40;
+        width: root.width * 0.20; height: root.height * 0.20;
+        border-radius: self.width / 2; background: root.panel;
+        border-width: root.width * 0.010; border-color: root.spoke.with-alpha(0.60);
+    }
+    // four warm cardinal ticks on the outer track (static — the dial face).
+    Rectangle { x: root.width * 0.5 - self.width / 2; y: root.height * 0.055; width: root.width * 0.030; height: root.width * 0.050; border-radius: self.width / 2; background: root.warm.with-alpha(0.40); }
+    Rectangle { x: root.width * 0.5 - self.width / 2; y: root.height * 0.895; width: root.width * 0.030; height: root.width * 0.050; border-radius: self.width / 2; background: root.warm.with-alpha(0.40); }
+    Rectangle { x: root.width * 0.055; y: root.height * 0.5 - self.height / 2; width: root.width * 0.050; height: root.width * 0.030; border-radius: self.height / 2; background: root.warm.with-alpha(0.40); }
+    Rectangle { x: root.width * 0.895; y: root.height * 0.5 - self.height / 2; width: root.width * 0.050; height: root.width * 0.030; border-radius: self.height / 2; background: root.warm.with-alpha(0.40); }
+    // the velocity trail — two green echoes chasing the satellite.
+    Rectangle {
+        property <angle> b: 360deg * Math.mod(root.t - 0.10, 1);
+        x: root.width * 0.5 + root.width * 0.42 * cos(self.b) - self.width / 2;
+        y: root.height * 0.5 + root.width * 0.42 * sin(self.b) - self.width / 2;
+        width: root.width * 0.030; height: self.width; border-radius: self.width / 2;
+        background: root.turn; opacity: 0.25;
+    }
+    Rectangle {
+        property <angle> b: 360deg * Math.mod(root.t - 0.05, 1);
+        x: root.width * 0.5 + root.width * 0.42 * cos(self.b) - self.width / 2;
+        y: root.height * 0.5 + root.width * 0.42 * sin(self.b) - self.width / 2;
+        width: root.width * 0.040; height: self.width; border-radius: self.width / 2;
+        background: root.turn; opacity: 0.50;
+    }
+    // the satellite — one revolution per loop, exactly.
+    Rectangle {
+        x: root.width * 0.5 + root.width * 0.42 * cos(root.a) - self.width / 2;
+        y: root.height * 0.5 + root.width * 0.42 * sin(root.a) - self.width / 2;
+        width: root.width * 0.055; height: self.width; border-radius: self.width / 2;
+        background: root.spoke;
+        border-width: 1px; border-color: #eef1f8;
+    }
+}
+
+// ── WARDEN — "THE COURTROOM" · DUALITY grammar: the Monokuma split (pitch left, bone right), the
+//    scale beam, and the verdict strobe — the green O and the red X trading judgment on opposite
+//    half-beats. Loop: 2400ms. Rest: t=0.20 (X lit — the courtroom never sleeps).
+export component WardenCourtArt inherits Rectangle {
+    in property <bool> animated: false;
+    in property <float> tick-ms: 0;
+    background: transparent;
+    clip: true;
+    property <float> t: root.animated ? Math.mod(root.tick-ms, 2400) / 2400 : 0.20;
+    property <color> pitch: #141414;  // Monokuma.pitch
+    property <color> iron: #2a2a2a;   // Monokuma.iron
+    property <color> bone: #f4f4f4;   // Monokuma.bone
+    property <color> risk: #d83a2c;   // Monokuma.risk
+    property <color> safe: #2ecc71;   // Monokuma.safe
+    property <float> verdict: sin(360deg * root.t);
+
+    // the duality split.
+    Rectangle { x: 0; width: root.width * 0.5; height: 100%; background: root.pitch; }
+    Rectangle { x: root.width * 0.5; width: root.width * 0.5; height: 100%; background: root.bone.with-alpha(0.92); }
+    // the seam + the scale beam.
+    Rectangle { x: root.width * 0.5 - 1px; width: 2px; height: 100%; background: root.iron; }
+    Rectangle {
+        x: root.width * 0.20; y: root.height * 0.10;
+        width: root.width * 0.60; height: root.height * 0.020;
+        border-radius: self.height / 2; background: root.iron;
+    }
+    // the O — mercy, on the pitch side; lit on the negative half-beat.
+    Rectangle {
+        x: root.width * 0.13; y: root.height * 0.50 - self.height / 2;
+        width: root.width * 0.24; height: self.width;
+        border-radius: self.width / 2; background: transparent;
+        border-width: root.width * 0.022; border-color: root.safe;
+        opacity: 0.30 + 0.65 * Math.max(0, -root.verdict);
+    }
+    // the X — judgment, struck on the bone side; lit on the positive half-beat.
+    Path {
+        x: root.width * 0.5; width: root.width * 0.5; height: 100%;
+        viewbox-x: 0; viewbox-y: 0; viewbox-width: 108; viewbox-height: 108;
+        commands: "M34,40 L74,68";
+        stroke: root.risk;
+        stroke-width: root.width * 0.5 * 5 / 108;
+        opacity: 0.30 + 0.65 * Math.max(0, root.verdict);
+    }
+    Path {
+        x: root.width * 0.5; width: root.width * 0.5; height: 100%;
+        viewbox-x: 0; viewbox-y: 0; viewbox-width: 108; viewbox-height: 108;
+        commands: "M74,40 L34,68";
+        stroke: root.risk;
+        stroke-width: root.width * 0.5 * 5 / 108;
+        opacity: 0.30 + 0.65 * Math.max(0, root.verdict);
+    }
+}
+
+// ── UNDERGROUND — "THE TERMINAL RAIN" · MATRIX grammar: five phosphor columns falling at fixed
+//    offsets (deterministic — offsets ARE the randomness), a phosphor haze rising from the floor.
+//    Loop: 2000ms. Rest: t=0.55 (columns mid-fall, staggered).
+export component UndergroundRainArt inherits Rectangle {
+    in property <bool> animated: false;
+    in property <float> tick-ms: 0;
+    background: transparent;
+    clip: true;
+    property <float> t: root.animated ? Math.mod(root.tick-ms, 2000) / 2000 : 0.55;
+    property <color> phosphor: #2fe26a;  // the Underground green (underground_dashboard.slint)
+    property <color> deep: #1a7a3c;      // the deep trace green
+
+    // the floor haze.
+    Rectangle {
+        y: root.height * 0.75; height: root.height * 0.25; width: 100%;
+        background: @linear-gradient(0deg, root.phosphor.with-alpha(0.08) 0%, transparent 100%);
+    }
+    // five rain columns — head bright, trace fading up; offsets/heights per column, never in step.
+    Rectangle {
+        x: root.width * 0.10; width: root.width * 0.030;
+        height: root.height * 0.35;
+        y: root.height * (Math.mod(root.t + 0.00, 1) * 1.5 - 0.55);
+        border-radius: self.width / 2;
+        background: @linear-gradient(180deg, transparent 0%, root.deep.with-alpha(0.45) 55%, root.phosphor.with-alpha(0.95) 100%);
+    }
+    Rectangle {
+        x: root.width * 0.28; width: root.width * 0.030;
+        height: root.height * 0.50;
+        y: root.height * (Math.mod(root.t + 0.37, 1) * 1.5 - 0.55);
+        border-radius: self.width / 2;
+        background: @linear-gradient(180deg, transparent 0%, root.deep.with-alpha(0.45) 55%, root.phosphor.with-alpha(0.95) 100%);
+    }
+    Rectangle {
+        x: root.width * 0.48; width: root.width * 0.030;
+        height: root.height * 0.42;
+        y: root.height * (Math.mod(root.t + 0.61, 1) * 1.5 - 0.55);
+        border-radius: self.width / 2;
+        background: @linear-gradient(180deg, transparent 0%, root.deep.with-alpha(0.45) 55%, root.phosphor.with-alpha(0.95) 100%);
+    }
+    Rectangle {
+        x: root.width * 0.66; width: root.width * 0.030;
+        height: root.height * 0.55;
+        y: root.height * (Math.mod(root.t + 0.13, 1) * 1.5 - 0.55);
+        border-radius: self.width / 2;
+        background: @linear-gradient(180deg, transparent 0%, root.deep.with-alpha(0.45) 55%, root.phosphor.with-alpha(0.95) 100%);
+    }
+    Rectangle {
+        x: root.width * 0.84; width: root.width * 0.030;
+        height: root.height * 0.38;
+        y: root.height * (Math.mod(root.t + 0.82, 1) * 1.5 - 0.55);
+        border-radius: self.width / 2;
+        background: @linear-gradient(180deg, transparent 0%, root.deep.with-alpha(0.45) 55%, root.phosphor.with-alpha(0.95) 100%);
+    }
+}
+
+// ── DANGO-DAIKAZOKU — "THE DESSERT FAMILY" · KAWAII-BOB grammar: a tilted three-dango skewer
+//    breathing a squash-bob, phase-staggered blinks, four twinkling star diamonds, and two family
+//    blobs watching from the floor. Pastels MIRROR the Beast dessert ambient (beast.slint
+//    CakeBurst / dango-tower): sakura #f6c6d0 · cream #f4efe6 · matcha #c9d4ae · stick #e0b28d ·
+//    bean #6b4f3f. Loop: 4800ms. Rest: t=0.22 (mid-bob, eyes open, sparkles half-lit).
+export component DangoDaikazokuArt inherits Rectangle {
+    in property <bool> animated: false;
+    in property <float> tick-ms: 0;
+    background: transparent;
+    clip: true;
+    property <float> t: root.animated ? Math.mod(root.tick-ms, 4800) / 4800 : 0.22;
+    property <color> sakura: #f6c6d0;
+    property <color> cream:  #f4efe6;
+    property <color> matcha: #c9d4ae;
+    property <color> stick:  #e0b28d;
+    property <color> bean:   #6b4f3f;
+    property <bool> blink: Math.mod(root.t * 3, 1) > 0.88;
+
+    // four 4-point stars — crossed bars (reads as a twinkle at any size), staggered quarters
+    for s in 4 : Rectangle {
+        x: root.width * (0.12 + 0.76 * Math.mod(s * 0.31 + 0.07, 1)) - self.width / 2;
+        y: root.height * (0.10 + 0.62 * Math.mod(s * 0.47 + 0.13, 1)) - self.height / 2;
+        width: root.width * 0.055; height: self.width;
+        background: transparent;
+        property <float> tw: 0.35 + 0.65 * Math.abs(sin(360deg * root.t + s * 90deg));
+        Rectangle {     // vertical ray
+            x: parent.width / 2 - parent.width * 0.09;
+            width: parent.width * 0.18; height: parent.height;
+            border-radius: self.width / 2;
+            background: #ffffff.with-alpha(parent.tw);
+        }
+        Rectangle {     // horizontal ray
+            y: parent.height / 2 - parent.height * 0.09;
+            height: parent.height * 0.18; width: parent.width;
+            border-radius: self.height / 2;
+            background: #ffffff.with-alpha(parent.tw);
+        }
+    }
+
+    skewer := Rectangle {   // the rocking skewer — rotation below the root (the wheel law)
+        width: 100%; height: 100%;
+        background: transparent;
+        transform-rotation: -16deg + 5deg * sin(360deg * root.t);
+
+        Rectangle {         // the stick
+            x: root.width * 0.485; y: root.height * 0.30;
+            width: root.width * 0.03; height: root.height * 0.52;
+            border-radius: self.width / 2;
+            background: root.stick;
+        }
+        // three dango — sakura / cream / matcha, squash-bobbing on staggered thirds
+        for d in 3 : Rectangle {
+            property <float> bob: sin(360deg * root.t + d * 120deg);
+            x: root.width / 2 - self.width / 2;
+            y: root.height * (0.12 + d * 0.17) + root.height * 0.008 * self.bob;
+            width: root.width * (0.26 - d * 0.005);
+            height: self.width * (1 - 0.03 * self.bob);
+            border-radius: self.height / 2;
+            background: d == 0 ? root.sakura : d == 1 ? root.cream : root.matcha;
+            border-width: 2px; border-color: #ffffff;
+            Rectangle {     // the gloss
+                x: parent.width * 0.18; y: parent.height * 0.14;
+                width: parent.width * 0.16; height: parent.height * 0.09;
+                border-radius: self.height / 2;
+                background: #ffffff.with-alpha(0.85);
+            }
+            Rectangle {     // left eye — collapses on the blink beat
+                x: parent.width * 0.30; y: parent.height * 0.46;
+                width: parent.width * 0.05;
+                height: parent.height * (root.blink ? 0.012 : 0.10);
+                border-radius: self.width / 2;
+                background: root.bean;
+            }
+            Rectangle {     // right eye
+                x: parent.width * 0.62; y: parent.height * 0.46;
+                width: parent.width * 0.05;
+                height: parent.height * (root.blink ? 0.012 : 0.10);
+                border-radius: self.width / 2;
+                background: root.bean;
+            }
+            Rectangle {     // the smile
+                x: parent.width * 0.44; y: parent.height * 0.60;
+                width: parent.width * 0.10; height: parent.height * 0.035;
+                border-radius: self.height / 2;
+                background: root.bean;
+            }
+        }
+    }
+
+    // the family — two blobs watching from the floor, bobbing on opposite beats
+    for b in 2 : Rectangle {
+        x: root.width * (b == 0 ? 0.10 : 0.72);
+        y: root.height * 0.80 - root.height * 0.012 * sin(360deg * root.t + b * 180deg);
+        width: root.width * 0.18; height: root.width * 0.15;
+        border-radius: self.height * 0.48;
+        background: b == 0 ? #bfe3f2 : #f8d8a8;   // dango-family blue · orange
+        Rectangle {
+            x: parent.width * 0.34; y: parent.height * 0.28;
+            width: parent.width * 0.035; height: parent.height * 0.30;
+            border-radius: self.width / 2;
+            background: #6b4f3f;
+        }
+        Rectangle {
+            x: parent.width * 0.58; y: parent.height * 0.28;
+            width: parent.width * 0.035; height: parent.height * 0.30;
+            border-radius: self.width / 2;
+            background: #6b4f3f;
+        }
+    }
+}

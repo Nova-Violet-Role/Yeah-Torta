@@ -1,0 +1,23 @@
+[package]
+name = "uniffi-fixture-ext-types-lib-one"
+edition = "2021"
+version = "0.22.0"
+license = "MPL-2.0"
+publish = false
+
+[lib]
+crate-type = ["lib", "cdylib"]
+# Note the crate name is different from the namespace used by this crate.
+name = "uniffi_one"
+
+[dependencies]
+anyhow = "1"
+bytes = "1.11"
+thiserror = "2"
+uniffi = { workspace = true }
+
+[build-dependencies]
+uniffi = { workspace = true, features = ["build"] }
+
+[features]
+ffi-trace = ["uniffi/ffi-trace"]

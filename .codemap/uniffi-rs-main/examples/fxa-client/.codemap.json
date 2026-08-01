@@ -1,0 +1,574 @@
+{
+  "directory": "uniffi-rs-main\\examples\\fxa-client",
+  "files": {
+    "fxa-client.udl": {
+      "hash": "2c20ad7a6e24",
+      "indexed_at": "2026-07-24T20:35:12.313950+00:00",
+      "language": "udl",
+      "lines": 134,
+      "mtime_ns": 1782136568000000000,
+      "size": 3772,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            3
+          ],
+          "name": "DeviceCapability",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            5,
+            8
+          ],
+          "name": "DeviceType",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            10,
+            12
+          ],
+          "name": "IncomingDeviceCommandType",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            14,
+            21
+          ],
+          "name": "AccountEventType",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "uid",
+              "signature": "string",
+              "type": "field"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "email",
+              "signature": "string",
+              "type": "field"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "display_name",
+              "signature": "string",
+              "type": "field"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "avatar",
+              "signature": "string",
+              "type": "field"
+            },
+            {
+              "lines": [
+                29,
+                29
+              ],
+              "name": "avatar_default",
+              "signature": "boolean",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            23,
+            30
+          ],
+          "name": "ProfileInfo",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                35,
+                35
+              ],
+              "name": "key",
+              "signature": "ScopedKey",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            32,
+            37
+          ],
+          "name": "AccessTokenInfo",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            39,
+            44
+          ],
+          "name": "ScopedKey",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            46,
+            48
+          ],
+          "name": "IntrospectInfo",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                55,
+                55
+              ],
+              "name": "last_access_time",
+              "signature": "uint64",
+              "type": "field"
+            },
+            {
+              "lines": [
+                56,
+                56
+              ],
+              "name": "push_subscription",
+              "signature": "PushSubscription",
+              "type": "field"
+            },
+            {
+              "lines": [
+                58,
+                58
+              ],
+              "name": "capabilities",
+              "signature": "sequence<DeviceCapability>",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            50,
+            59
+          ],
+          "name": "DeviceInfo",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            61,
+            64
+          ],
+          "name": "TabHistoryEntry",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                67,
+                67
+              ],
+              "name": "from",
+              "signature": "DeviceInfo",
+              "type": "field"
+            },
+            {
+              "lines": [
+                68,
+                68
+              ],
+              "name": "entries",
+              "signature": "sequence<TabHistoryEntry>",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            66,
+            69
+          ],
+          "name": "SendTabData",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                72,
+                72
+              ],
+              "name": "type",
+              "signature": "IncomingDeviceCommandType",
+              "type": "field"
+            },
+            {
+              "lines": [
+                73,
+                73
+              ],
+              "name": "data",
+              "signature": "SendTabData",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            71,
+            74
+          ],
+          "name": "IncomingDeviceCommand",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                77,
+                77
+              ],
+              "name": "name",
+              "signature": "string",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            76,
+            78
+          ],
+          "name": "DeviceConnectedData",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            80,
+            83
+          ],
+          "name": "DeviceDisconnectedData",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                86,
+                86
+              ],
+              "name": "type",
+              "signature": "AccountEventType",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            85,
+            89
+          ],
+          "name": "AccountEvent",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            91,
+            93
+          ],
+          "name": "MigrationState",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                96,
+                96
+              ],
+              "name": "constructor",
+              "signature": "(string content_url, string client_id, string redirect_uri, optional string token_server_url_over...",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                98,
+                98
+              ],
+              "name": "toJSON",
+              "signature": "() : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                100
+              ],
+              "name": "getPairingAuthorityURL",
+              "signature": "() : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                101,
+                101
+              ],
+              "name": "getTokenServerEndpointURL",
+              "signature": "() : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                102
+              ],
+              "name": "getConnectionSuccessURL",
+              "signature": "() : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                103
+              ],
+              "name": "getManageAccountURL",
+              "signature": "() : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                104,
+                104
+              ],
+              "name": "getManageDevicesURL",
+              "signature": "() : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                106,
+                106
+              ],
+              "name": "beginOAuthFlow",
+              "signature": "(sequence<string> scopes) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                107,
+                107
+              ],
+              "name": "beginPairingFlow",
+              "signature": "(string pairingUrl, sequence<string> scopes) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                108
+              ],
+              "name": "completeOAuthFlow",
+              "signature": "(string code, string state) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                109,
+                109
+              ],
+              "name": "disconnect",
+              "signature": "() : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                111
+              ],
+              "name": "checkAuthorizationStatus",
+              "signature": "() : IntrospectInfo",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                112
+              ],
+              "name": "getAccessToken",
+              "signature": "(string scope, optional u32 ttl) : AccessTokenInfo",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                113
+              ],
+              "name": "getSessionToken",
+              "signature": "() : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                114,
+                114
+              ],
+              "name": "getCurrentDeviceId",
+              "signature": "() : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                115,
+                115
+              ],
+              "name": "authorizeOAuthCode",
+              "signature": "(string client_id, sequence<string> scopes, string state, optional string access_type = \"\") : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                116,
+                116
+              ],
+              "name": "clearAccessTokenCache",
+              "signature": "() : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                118,
+                118
+              ],
+              "name": "copyFromSessionToken",
+              "signature": "(string sessionToken, string kSync, string kXCS) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                119,
+                119
+              ],
+              "name": "migrateFromSessionToken",
+              "signature": "(string sessionToken, string kSync, string kXCS) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                120,
+                120
+              ],
+              "name": "retryMigrateFromSessionToken",
+              "signature": "() : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                121
+              ],
+              "name": "isInMigrationState",
+              "signature": "() : MigrationState",
+              "type": "method"
+            },
+            {
+              "lines": [
+                123,
+                123
+              ],
+              "name": "getProfile",
+              "signature": "(optional boolean ignoreCache=false) : ProfileInfo",
+              "type": "method"
+            },
+            {
+              "lines": [
+                125,
+                125
+              ],
+              "name": "initializeDevice",
+              "signature": "(string name, DeviceType type, sequence<DeviceCapability> supportedCapabilities) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                126,
+                126
+              ],
+              "name": "ensureCapabilities",
+              "signature": "(sequence<DeviceCapability> supportedCapabilities) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                127,
+                127
+              ],
+              "name": "setDevicePushSubscription",
+              "signature": "(string endpoint, string publicKey, string authKey) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                128,
+                128
+              ],
+              "name": "setDeviceDisplayName",
+              "signature": "(string display_name) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                129,
+                129
+              ],
+              "name": "getDevices",
+              "signature": "(optional boolean ignoreCache = false) : sequence<DeviceInfo>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                130,
+                130
+              ],
+              "name": "handlePushMessage",
+              "signature": "(string payload) : sequence<AccountEvent>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                132,
+                132
+              ],
+              "name": "pollDeviceCommands",
+              "signature": "() : sequence<IncomingDeviceCommand>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                133,
+                133
+              ],
+              "name": "sendSingleTab",
+              "signature": "(string target_device_id, string title, string url) : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            95,
+            134
+          ],
+          "name": "FirefoxAccount",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T02:52:28.867437+00:00",
+  "version": "1.0"
+}

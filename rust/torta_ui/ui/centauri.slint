@@ -1,0 +1,774 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT Centauri dashboard — slice 8 of the Centauri offline-CDN overhaul (the 🩸 Carnage facet).
+//
+// This is the rust-native (SLINT, NO XML / NO Java / NO Compose) one-glance Centauri surface — THE
+// CONSTELLATION. It renders a `CentauriSnapshot` (torta_core `mirror::object::CentauriSnapshot`,
+// object.rs:346) the HOST sets: the content-addressed cache (libraries / bytes / capacity / full), the
+// loopback serve lifecycle (`CentauriServeState` ordinal), the catalog state, and — the CROWN — the
+// privacy witness counters (`served_locally` / `served_bytes` / `cdn_fetches` /
+// `exact_serves` / `fallback_serves`) so "the CDN saw ≤ 1 / saw 0" is WITNESSABLE (Chroma F2), not asserted.
+// The cloaked CDN-host set (torta_core `centauri_cdn_hosts()`, lib.rs:1568) is the watch-list the DNS plane
+// sinkholes to `127.0.0.1`; the recent-serve ring (`CentauriServeRecord`, object.rs:444) is the live feed.
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android cross-compile spike #69.
+// SLINT can't read a Rust struct directly; the host (Kotlin SurfaceView bridge / the slint-viewer preview /
+// the lib.rs proof test) constructs `CentauriDashboard`, pulls a live `CentauriSnapshot` via the UniFFI
+// Object, and pushes each field onto the `in-out` inputs. Every number is a REAL engine read — never faked.
+//
+// 🩸 THE HIDDEN-FAULT HUNT (the facet's load-bearing job): an offline CDN's worst SILENT failures are not
+// loud crashes — they are the ways the constellation lies. THE BLACKHOLE: the mirror is serving but the
+// signed catalog is EMPTY (`catalog_assets == 0`) → every cloaked CDN host resolves to `127.0.0.1`, then
+// 404s — the user is stranded OFF the real CDN AND served nothing, WORSE than a leak (Chroma F9). The
+// dashboard derives + surfaces this (the `out property` flags below) as an alert banner, plus the
+// fallback-dominant SRI risk (F3) and the cache-saturated fail-closed stall. (The CROWN is always-on
+// LeakOnMiss — the growing-encyclopedia engine — so there is no strict mode and no strict-leak to hunt.)
+//
+// NOTE: slint uses `:` for property bindings (not `=`); `\{expr}` is string interpolation; `out property`
+// values are derived + host-readable (the proof test asserts the hidden-fault derivations fire).
+
+import { VerticalBox, HorizontalBox } from "std-widgets.slint";
+// The Centauri stellar palette (slice 10) — the single source of truth for the
+// constellation colors. Shared with centauri_settings.slint (slice 9). NO XML.
+import { Centauri } from "centauri_palette.slint";
+import { ThemeBook, MotifWash } from "theme_tokens.slint";
+
+// One recent-serve feed row — the host fills this from the live `Centauri::recent_serves(n)` ring
+// (`CentauriServeRecord`, object.rs:444). `outcome` = the CROWN verdict label (LOCAL / LEAK / BLOCK / MISS /
+// FAIL), `sub` = the substitution label (exact / newer / older). This is the constellation's live feed.
+export struct ServeRow {
+    host: string,
+    asset: string,
+    outcome: string,
+    sub: string,
+    bytes: int,
+}
+
+// A compact metric tile (local, non-exported). `tint` colors the value + lifts a privacy-critical number at
+// a glance (the crown green for a 0-egress win, the breach red for a leak).
+component StatTile inherits Rectangle {
+    in property <string> label;
+    in property <string> value;
+    in property <color> tint: Centauri.starlight;
+    min-width: 70px;
+    min-height: 52px;
+    border-radius: 8px;
+    background: @linear-gradient(180deg, Centauri.panel.with-alpha(0.64) 0%, Centauri.abyss.with-alpha(0.40) 100%);
+    border-width: 1px;
+    border-color: Centauri.hairline;
+    VerticalLayout {
+        padding: 8px;
+        spacing: 2px;
+        Text {
+            text: root.value;
+            color: root.tint;
+            font-size: 19px;
+            font-weight: 800;
+        }
+        Text {
+            text: root.label;
+            color: Centauri.haze;
+            font-size: 10px;
+            // The tile is min-width 70px but sits in a 3-up row, so in a narrow column the longest
+            // label sets the row's demand and gets truncated instead of wrapping. Measured on the
+            // AVD with the nav rail open: "CDN fetched" rendered as "CDN fetchec", which reads as a
+            // typo rather than as clipping -- the failure mode that gets reported as a spelling bug
+            // and "fixed" by shortening the label instead of fixing the layout.
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A hidden-fault alert banner (local). Only instantiated (via a guarding `if`) when its fault is live, so an
+// inactive alert occupies ZERO layout space — the stack collapses to exactly the live faults.
+component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: Centauri.wound;
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: Centauri.strike;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: Centauri.strike;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// ★ #65 — the CA trust call-to-action. Unlike AlertBanner this one is TAPPABLE: it is the only
+// obstacle between an armed HTTPS serve leg and a working offline CDN, so it must offer the fix
+// rather than merely report the problem. The OS shows its own confirmation sheet after the tap —
+// nothing is trusted without the user saying so.
+component CaTrustBanner inherits Rectangle {
+    in property <string> message;
+    in property <string> action-label: "INSTALL THE CENTAURI CA";
+    // Lapis, not amber: this banner INSTRUCTS, it does not report a fault. Amber is spoken for by the
+    // version-fallback verdict, and reusing it here would read as "Centauri is degraded" when the only
+    // thing missing is a trust decision that is the user's to make.
+    in property <color> accent: Centauri.lapis;
+    callback tapped();
+    border-radius: 6px;
+    background: root.accent;
+    border-width: 1px;
+    border-color: Centauri.lapis-edge;
+    VerticalLayout {
+        padding: 8px;
+        spacing: 6px;
+        HorizontalLayout {
+            spacing: 8px;
+            Text {
+                text: "[!]";
+                color: Centauri.strike;
+                font-size: 14px;
+                font-weight: 900;
+                vertical-alignment: center;
+            }
+            Text {
+                text: root.message;
+                color: Centauri.strike;
+                font-size: 11px;
+                font-weight: 700;
+                wrap: word-wrap;
+            }
+        }
+        Rectangle {
+            height: 34px;
+            border-radius: 5px;
+            border-width: 1px;
+            border-color: Centauri.strike;
+            background: tap.pressed ? Centauri.strike.transparentize(0.75) : transparent;
+            Text {
+                text: root.action-label;
+                color: Centauri.strike;
+                font-size: 11px;
+                font-weight: 900;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+            tap := TouchArea {
+                clicked => { root.tapped(); }
+            }
+        }
+    }
+}
+
+// A section title (local).
+component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: Centauri.dim;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+// THE EMBEDDABLE CENTAURI SURFACE (SLINT substitution · 2-FEED-Centauri) — inherits Rectangle so it
+// mounts as an IN-SHELL pane (the single-surface law: on-device the last-constructed Window owns the
+// one android surface, so pillar dashboards can never be shown as separate Windows — they embed as
+// panes, exactly like DnscryptSection/GeneralSection). The host (torta_ui android_main) feeds this
+// pane a live `CentauriSnapshot` field-for-field; the shell forwards its inputs as `<=>` aliases and
+// re-pushes them while the centauri-dash overlay is shown. The standalone CentauriDashboard Window
+// below wraps THIS pane (one surface, two mounts — the proof test + the slint-viewer preview).
+export component CentauriPane inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.centauri; width: 100%; height: 100%; }
+    // ── THE NIGHT SKY — Centauri-only scenery: an aurora crown over the void + three phase-offset
+    // twinkling stars (each breathes on its own period; nothing blinks in lockstep).
+    Rectangle {
+        y: 0;
+        height: parent.height * 0.22;
+        width: 100%;
+        background: @linear-gradient(180deg, Centauri.stellar.with-alpha(0.10) 0%, Centauri.crown.with-alpha(0.04) 55%, transparent 100%);
+    }
+    Rectangle { x: parent.width * 0.16; y: parent.height * 0.08; width: 3px; height: 3px; border-radius: 1.5px; background: Centauri.starlight; opacity: 0.25 + 0.22 * Math.sin(360deg * (animation-tick() / 3.1s)); }
+    Rectangle { x: parent.width * 0.52; y: parent.height * 0.05; width: 2px; height: 2px; border-radius: 1px; background: Centauri.starlight; opacity: 0.30 + 0.25 * Math.sin(360deg * (animation-tick() / 4.7s)); }
+    Rectangle { x: parent.width * 0.83; y: parent.height * 0.12; width: 3px; height: 3px; border-radius: 1.5px; background: Centauri.crown; opacity: 0.22 + 0.20 * Math.sin(360deg * (animation-tick() / 5.9s)); }
+    // #36 the deep field — eight more stars, each on its own clock (integer-seeded spread;
+    // no two share a period, so the sky never blinks in lockstep)
+    for s in 8 : Rectangle {
+        x: parent.width * Math.mod(0.07 + s * 0.1237, 1.0);
+        y: parent.height * (0.02 + Math.mod(s * 0.0531, 0.16));
+        width: 2px; height: 2px; border-radius: 1px;
+        background: Centauri.starlight;
+        opacity: 0.10 + 0.18 * Math.abs(sin(360deg * Math.mod(animation-tick() / (3.7s + s * 0.6s), 1.0)));
+    }
+    // #36b THE GALAXY WHEEL — the whole CENTAURI constellation animating like a galaxy in motion:
+    // two spiral arms in differential rotation (inner stars lap the outer — real galaxies shear,
+    // so does this one), inclined so the wheel reads as a disc, hung over the crown band. THE
+    // LIVE-WIRING LAW MADE VISIBLE [[centauri-dashboard-cold-spike-gap]]: the stars ARE the cached
+    // catalog — catalog-assets feeds the arms, served-locally feeds the core. A cold STOPPED/SAW-0
+    // Centauri shows a faint dead wheel; an armed serving Centauri burns. Never decoration.
+    property <float> galaxy-live: Math.min(1.0, 0.30 + (root.catalog-assets > 0 ? 0.40 : 0.0) + (root.served-locally > 0 ? 0.30 : 0.0));
+    Rectangle { // the nebula smear the wheel rides on — one soft inclined pool behind the arms
+        x: root.width * 0.20; y: root.height * 0.09 - root.width * 0.115;
+        width: root.width * 0.60; height: root.width * 0.23; border-radius: root.width * 0.115;
+        background: Centauri.nebula.with-alpha(0.05 + 0.07 * root.galaxy-live);
+    }
+    for si in 6: Rectangle { // arm A — six catalog stars riding the spiral out of the core
+        x: root.width * 0.50 + root.width * (0.055 + si * 0.045) * Math.cos(si * 34deg + 360deg * (animation-tick() / (23s + si * 6s))) - 1.5px;
+        y: root.height * 0.09 + root.width * (0.021 + si * 0.017) * Math.sin(si * 34deg + 360deg * (animation-tick() / (23s + si * 6s))) - 1.5px;
+        width: 3px; height: 3px; border-radius: 1.5px; background: Centauri.starlight;
+        opacity: root.galaxy-live * (0.85 - si * 0.09);
+    }
+    for si in 6: Rectangle { // arm B — the opposing arm, half a turn across the core
+        x: root.width * 0.50 + root.width * (0.055 + si * 0.045) * Math.cos(180deg + si * 34deg + 360deg * (animation-tick() / (23s + si * 6s))) - 1.5px;
+        y: root.height * 0.09 + root.width * (0.021 + si * 0.017) * Math.sin(180deg + si * 34deg + 360deg * (animation-tick() / (23s + si * 6s))) - 1.5px;
+        width: 3px; height: 3px; border-radius: 1.5px; background: Centauri.crown;
+        opacity: root.galaxy-live * (0.80 - si * 0.09);
+    }
+    Rectangle { // the galactic core — halo breathes, served-locally burns it bright
+        x: root.width * 0.50 - 14px; y: root.height * 0.09 - 14px; width: 28px; height: 28px; border-radius: 14px;
+        background: Centauri.crown.with-alpha(0.08 + 0.22 * root.galaxy-live + 0.05 * Math.sin(360deg * (animation-tick() / 6.3s)));
+    }
+    Rectangle { // the core's heart — the white-hot cache heart of the wheel
+        x: root.width * 0.50 - 5px; y: root.height * 0.09 - 5px; width: 10px; height: 10px; border-radius: 5px;
+        background: Centauri.starlight.with-alpha(0.22 + 0.58 * root.galaxy-live);
+    }
+    // #36c MILK NEXUS — the on-touch idiom: tap the sky and the galaxy answers with a milk-white
+    // galactic-spiral bloom — six petals ride a widening spiral out of the core while the heart
+    // flashes, then the milk settles. Toggle-armed (the same on-touch law as the Underground
+    // waterfall): tap blooms out, tap again re-winds — a breathing gesture, never a one-shot.
+    in-out property <bool> nexus-armed: false;
+    property <float> nexus-p: root.nexus-armed ? 1.0 : 0.0;
+    animate nexus-p { duration: 1600ms; easing: ease-out; }
+    for k in 6: Rectangle { // the six milk petals — spiral out with spin as the bloom opens
+        x: root.width * 0.50 + root.width * 0.30 * root.nexus-p * Math.cos(k * 60deg + 300deg * root.nexus-p) - 3px;
+        y: root.height * 0.09 + root.width * 0.114 * root.nexus-p * Math.sin(k * 60deg + 300deg * root.nexus-p) - 3px;
+        width: 6px; height: 6px; border-radius: 3px; background: #ffffff;
+        opacity: root.nexus-p * (1.0 - root.nexus-p) * 3.2;
+    }
+    Rectangle { // the nexus flash — the heart goes milk-white at mid-bloom
+        x: root.width * 0.50 - 9px; y: root.height * 0.09 - 9px; width: 18px; height: 18px; border-radius: 9px;
+        background: #ffffff; opacity: root.nexus-p * (1.0 - root.nexus-p) * 2.6;
+    }
+    TouchArea { // the sky is the trigger — the crown band answers the finger
+        x: 0; y: 0; width: root.width; height: root.height * 0.18;
+        clicked => { root.nexus-armed = !root.nexus-armed; }
+    }
+    // #36 the shooting star — one silver stitch across the crown, then a long patience
+    Rectangle {
+        property <float> p: Math.mod(animation-tick() / 9.3s, 1.0);
+        x: parent.width * (0.88 - 0.45 * Math.min(self.p, 0.12) / 0.12);
+        y: parent.height * (0.03 + 0.09 * Math.min(self.p, 0.12) / 0.12);
+        width: 44px; height: 1.5px;
+        transform-rotation: 11deg;
+        opacity: self.p < 0.12 ? 0.55 * (1 - self.p / 0.12) : 0;
+        background: @linear-gradient(90deg, transparent 0%, Centauri.starlight 100%);
+    }
+    // #36 the CENTAUR himself — five anchor stars + the drawn figure, breathing as one
+    Rectangle {
+        x: parent.width * 0.62; y: parent.height * 0.04;
+        width: parent.width * 0.24; height: parent.height * 0.14;
+        background: transparent;
+        opacity: 0.16 + 0.08 * Math.sin(360deg * Math.mod(animation-tick() / 12.7s, 1.0));
+        Rectangle { x: 0; y: parent.height * 0.70; width: 3px; height: 3px; border-radius: 1.5px; background: Centauri.crown; }
+        Rectangle { x: parent.width * 0.26; y: parent.height * 0.42; width: 3px; height: 3px; border-radius: 1.5px; background: Centauri.crown; }
+        Rectangle { x: parent.width * 0.52; y: parent.height * 0.55; width: 3px; height: 3px; border-radius: 1.5px; background: Centauri.crown; }
+        Rectangle { x: parent.width * 0.76; y: parent.height * 0.22; width: 3px; height: 3px; border-radius: 1.5px; background: Centauri.crown; }
+        Rectangle { x: parent.width * 0.98 - 3px; y: parent.height * 0.48; width: 3px; height: 3px; border-radius: 1.5px; background: Centauri.crown; }
+        Rectangle { x: 2px; y: parent.height * 0.58; width: parent.width * 0.26; height: 1px; transform-rotation: -18deg; background: Centauri.crown.with-alpha(0.5); }
+        Rectangle { x: parent.width * 0.28; y: parent.height * 0.50; width: parent.width * 0.26; height: 1px; transform-rotation: 9deg; background: Centauri.crown.with-alpha(0.5); }
+        Rectangle { x: parent.width * 0.54; y: parent.height * 0.40; width: parent.width * 0.26; height: 1px; transform-rotation: -22deg; background: Centauri.crown.with-alpha(0.5); }
+        Rectangle { x: parent.width * 0.78; y: parent.height * 0.36; width: parent.width * 0.22; height: 1px; transform-rotation: 18deg; background: Centauri.crown.with-alpha(0.5); }
+    }
+    background: Centauri.void.with-alpha(0.40);
+
+    // ===== CentauriSnapshot inputs (host sets each from `Centauri::snapshot()`, object.rs:346) =====
+    // ---- the content-addressed cache ----
+    in-out property <int> libraries: 0;                 // snapshot.libraries (cached assets)
+    in-out property <int> cache-bytes: 0;               // snapshot.bytes (the cache SIZE on device)
+    in-out property <bool> cache-full: false;           // snapshot.full (bounded store saturated)
+    in-out property <int> capacity: 0;                  // snapshot.capacity (the fail-closed ceiling)
+    // ---- the loopback serve lifecycle ----
+    in-out property <int> serve-port: 0;                // snapshot.serve_port (127.0.0.1:<port>)
+    in-out property <int> serve-state: 0;               // snapshot.serve_state ordinal: 0 Stopped·1 Starting·2 Serving·3 Failed
+    // ---- catalog + rehydrate ----
+    in-out property <int> catalog-assets: 0;            // snapshot.catalog_assets (signed-catalog authorized count)
+    // ★ #22 slice 2 — the TCAT v2 freshness age label ("just now"/"3m ago"/…), "—" = epoch unknown
+    // (v1-era catalog / none installed). Rust renders the age (slint has no clock); NEVER shows 1970.
+    in-out property <string> catalog-freshness: "—";
+    in-out property <int> catalog-installs-attempted: 0;
+    in-out property <int> catalog-installs-verified: 0;
+    in-out property <int> resolve-queries: 0;           // snapshot.resolve_queries
+    in-out property <int> resolve-hits: 0;              // snapshot.resolve_hits
+    in-out property <int> rehydrates-attempted: 0;
+    in-out property <int> rehydrates-verified: 0;
+    // ---- slice 5 (the CROWN witness counters) — the CROWN is always-on LeakOnMiss (no cache_mode/strict) ----
+    in-out property <int> served-locally: 0;            // snapshot.served_locally (0-egress local hits — THE CROWN)
+    in-out property <int> served-bytes: 0;              // snapshot.served_bytes (bytes that never left the device)
+    in-out property <int> cdn-fetches: 0;               // snapshot.cdn_fetches (leaked EXACTLY once — the ≤1 proof)
+    in-out property <int> exact-serves: 0;              // snapshot.exact_serves (SRI-safe exact-version serves)
+    in-out property <int> fallback-serves: 0;           // snapshot.fallback_serves (version-substituted — F3 risk)
+
+    // ===== the cloaked CDN-host watch-list (host fills from `centauri_cdn_hosts()`, lib.rs:1568) =====
+    in-out property <[string]> cdn-hosts: [
+        "cdnjs.cloudflare.com", "ajax.googleapis.com", "code.jquery.com",
+        "stackpath.bootstrapcdn.com", "use.fontawesome.com",
+    ];
+    // The TRUE watch-list size (the host pushes `centauri_cdn_hosts().len()`); the panel renders only
+    // the first few rows, so this drives an honest "(N watched)" count instead of the displayed length.
+    in-out property <int> cdn-hosts-total: 5;
+    // ★ #16 — hosts currently NOT cloaked because their client refused our leaf (usually: the device CA
+    // is not installed yet). Honest counterpart to the watched/discovered pair; clears on TLS re-arm.
+    in-out property <int> tls-distrust: 0;
+    in-out property <int> absorb-count: 0;
+    in-out property <int> promoted-cloak-count: 0;
+    // CP-Centauri-Discovery — the LIVING half: distinct content-delivery hosts DISCOVERED on the
+    // datapath past the static corpus (`centauri_discovery::count()`), and the cumulative cdn-shaped
+    // observation volume. The catalog GROWS with the user — the "· M discovered" second half.
+    in-out property <int> discovered-total: 0;
+    in-out property <int> discovered-observed: 0;
+    // The living ROSTER itself — the discovered hostnames (bounded pipe-line from
+    // `centauri_discovery::discovered_line`, split host-side into a `[string]` model). Rendered
+    // under the static corpus with the ✦ glyph so the grown half reads apart from the curated ★ rows.
+    in-out property <[string]> discovered-hosts: [];
+
+    // ===== the recent-serve constellation feed (host fills from `Centauri::recent_serves(n)`) =====
+    in-out property <[ServeRow]> recent-serves: [
+        { host: "cdnjs.cloudflare.com", asset: "jquery/3.7.1/jquery.min.js", outcome: "LOCAL", sub: "exact", bytes: 87533 },
+        { host: "ajax.googleapis.com", asset: "jquery/3.7.1/jquery.min.js", outcome: "LEAK", sub: "newer", bytes: 87533 },
+        { host: "use.fontawesome.com", asset: "fontawesome/6.5.1/all.min.css", outcome: "LOCAL", sub: "exact", bytes: 70234 },
+    ];
+
+    // ===== 🩸 THE HIDDEN-FAULT HUNT — derived, host-readable (the proof test asserts these fire) =====
+    // The serve-state label (decode the ordinal — the host pushes the `CentauriServeState::code()`).
+    out property <string> serve-state-label: root.serve-state == 2 ? "SERVING"
+        : (root.serve-state == 1 ? "STARTING" : (root.serve-state == 3 ? "FAILED" : "STOPPED"));
+    // The CROWN cache-mode identity — invariant LeakOnMiss (the growing-encyclopedia engine, no toggle).
+    out property <string> cache-mode-label: "LEAK-ON-MISS (≤1/asset)";
+    // Successful byte-serves split by SRI safety (every successful serve is exact OR fallback).
+    out property <int> successful-serves: root.exact-serves + root.fallback-serves;
+
+    // THE CROWN achieved: served from the device with the CDN touched ZERO times.
+    out property <bool> cdn-saw-zero: root.served-locally > 0 && root.cdn-fetches == 0;
+    // (1) THE BLACKHOLE — the mirror is serving but the signed catalog is EMPTY → cloaked hosts 404.
+    out property <bool> blackhole-risk: root.serve-state == 2 && root.catalog-assets == 0;
+    // (2) FALLBACK-DOMINANT — most serves were version-substituted → SRI-pinned consumers decline (F3).
+    out property <bool> fallback-dominant: root.fallback-serves > 0
+        && root.fallback-serves * 2 > root.successful-serves;
+    // (3) CACHE-SATURATED — the bounded store is full → new self-fills fail-closed (StoreFull) → stall.
+    out property <bool> cache-saturated: root.cache-full;
+    // Master: ANY hidden fault surfaced.
+    out property <bool> hidden-fault-any: root.blackhole-risk
+        || root.fallback-dominant || root.cache-saturated;
+
+    // THE CROWN headline — the constellation's one-glance verdict (state machine, breach beats win).
+    out property <string> crown-headline: root.blackhole-risk ? "BLACKHOLE"
+        : (root.cdn-saw-zero ? "CDN SAW 0"
+        : (root.served-locally > 0 ? "≤1 PER ASSET" : "DORMANT"));
+    out property <color> crown-color: root.blackhole-risk ? Centauri.breach
+        : (root.cdn-saw-zero ? Centauri.crown
+        : (root.served-locally > 0 ? Centauri.stellar : Centauri.dim));
+
+    // ★ #65 — CA trust, the gate on the whole HTTPS serve leg. `ca-minted` says a CA exists to install;
+    // `ca-trusted` says the OS actually honours it. Both false-by-default so a JNI fault shows the prompt
+    // rather than silently claiming a privacy guarantee the device is not delivering.
+    in-out property <bool> ca-minted: false;
+    in-out property <bool> ca-trusted: false;
+    callback install-ca();
+    // ★ #22 — hand every TLS-refused host back to the cloak. The refusal ledger is permanent by design
+    // (see the `untrusted` tile), which without this leaves a reinstall as the user's only escape.
+    callback retrust-hosts();
+
+    callback close-dashboard();
+
+    VerticalBox {
+        padding: 14px;
+        spacing: 12px;
+
+        // ---- Header ----
+        HorizontalBox {
+            spacing: 8px;
+            VerticalLayout {
+                Text {
+                    text: "CENTAURI";
+                    color: Centauri.starlight;
+                    font-size: 24px;
+                    font-weight: 900;
+                }
+                Text {
+                    text: "the offline-CDN constellation";
+                    color: Centauri.haze;
+                    font-size: 11px;
+                    // Unwrapped, this subtitle sets the header's minimum width and pushes the
+                    // serve-state column off the right edge whenever the pane is narrower than
+                    // full screen. Measured on the AVD with the nav rail open: "SERVING" rendered
+                    // as "SERVIN" and the loopback address as "127.0.0.1:4242" with its last digit
+                    // cut -- a bind PORT that reads as a different port is worse than no port at
+                    // all, because it looks like an answer.
+                    wrap: word-wrap;
+                }
+            }
+            Rectangle { }  // spacer
+            VerticalLayout {
+                alignment: center;
+                Text {
+                    text: root.serve-state-label;
+                    color: root.serve-state == 2 ? Centauri.crown
+                        : (root.serve-state == 3 ? Centauri.breach : Centauri.haze);
+                    font-size: 12px;
+                    font-weight: 800;
+                    horizontal-alignment: right;
+                }
+                Text {
+                    text: root.serve-port > 0 ? "127.0.0.1:\{root.serve-port}" : "(no loopback)";
+                    color: Centauri.haze;
+                    font-size: 10px;
+                    horizontal-alignment: right;
+                }
+            }
+        }
+
+        // ---- THE CROWN card — the constellation's headline verdict + the ≤1 / 0 witness ----
+        Rectangle {
+            border-radius: 10px;
+            background: @linear-gradient(200deg, Centauri.nebula.with-alpha(0.60) 0%, Centauri.void.with-alpha(0.35) 100%);
+            border-width: 1px;
+            border-color: root.crown-color;
+            VerticalLayout {
+                padding: 12px;
+                spacing: 6px;
+                HorizontalLayout {
+                    spacing: 8px;
+                    VerticalLayout {
+                        Text {
+                            text: "THE CDN SAW";
+                            color: Centauri.haze;
+                            font-size: 11px;
+                            font-weight: 700;
+                        }
+                        Text {
+                            text: "\{root.cdn-fetches}";
+                            color: root.crown-color;
+                            font-size: 40px;
+                            font-weight: 900;
+                        }
+                        Text {
+                            text: "request(s) — \{root.served-locally} served from your device";
+                            color: Centauri.haze;
+                            font-size: 10px;
+                            // THIS is the line that starves the right-hand column, not the labels
+                            // in it. Wrapping only the right column was not enough -- the crown
+                            // headline still clipped -- because an unwrapped long line on the LEFT
+                            // sets the row's minimum width and leaves nothing to give. Fix the
+                            // greedy side, not just the victim.
+                            wrap: word-wrap;
+                        }
+                    }
+                    Rectangle { }  // spacer
+                    VerticalLayout {
+                        alignment: start;
+                        Text {
+                            text: root.crown-headline;
+                            color: root.crown-color;
+                            font-size: 16px;
+                            font-weight: 900;
+                            horizontal-alignment: right;
+                            // The crown headline is the pane's verdict line (DORMANT / THE CROWN /
+                            // LEAKING). Clipped to "DOR" it says nothing, and at 16px/900 it is the
+                            // first thing the eye lands on.
+                            wrap: word-wrap;
+                        }
+                        Text {
+                            text: root.cache-mode-label;
+                            color: Centauri.haze;
+                            font-size: 10px;
+                            horizontal-alignment: right;
+                            // The third of the same clipping in this one pane: rendered as
+                            // "LEAK-ON" with "-MISS (<=1/asset)" cut. That is the CACHE MODE, and
+                            // the truncated form reads like a different, stricter policy than the
+                            // one actually running -- the label loses exactly the qualifier that
+                            // makes it honest.
+                            wrap: word-wrap;
+                        }
+                    }
+                }
+            }
+        }
+
+        // ---- 🩸 The hidden-fault alert stack (each banner exists ONLY while its fault is live) ----
+        if root.blackhole-risk : AlertBanner {
+            accent: Centauri.breach;
+            message: "BLACKHOLE -> the mirror is armed but the signed catalog is EMPTY. Every cloaked CDN host 404s — stranded off the real CDN AND served nothing. Install a catalog before arming.";
+        }
+        if root.fallback-dominant : AlertBanner {
+            accent: Centauri.caution;
+            message: "FALLBACK-DOMINANT -> \{root.fallback-serves}/\{root.successful-serves} serves were version-substituted. An SRI-pinned consumer will reject these.";
+        }
+        if root.cache-saturated : AlertBanner {
+            accent: Centauri.caution;
+            message: "CACHE FULL -> the bounded store hit capacity (\{root.capacity}). New self-fills fail-closed; evict or raise the ceiling.";
+        }
+
+        // ★ #65 — the HTTPS leg is armed but the OS does not trust our CA yet, so every browser rejects
+        // the minted leaf and the asset is fetched from the real CDN instead of served from this device.
+        // Shown only once a CA actually exists to install.
+        if root.ca-minted && !root.ca-trusted : CaTrustBanner {
+            accent: Centauri.lapis;
+            message: "HTTPS ASSETS ARE NOT BEING SERVED LOCALLY YET.\n\nHOW IT WORKS: the tunnel already carries every app's traffic to Centauri. To ANSWER an https request from this device instead of the CDN, Centauri must present a certificate for that CDN's name — so it minted its own CA, which never leaves this phone and signs nothing else. Until the system trusts that CA, the handshake is refused and the CDN is fetched over the network instead.\n\nTHE CERTIFICATE IS SAVED IN YOUR DOWNLOADS as centauri-ca.crt. Android 11+ accepts a CA only from Settings, never from an app.\n\nTAP BELOW, THEN: Encryption & credentials -> Install a certificate -> CA certificate -> pick centauri-ca.crt. It must be installed as a CA certificate — 'VPN & app user certificate' is a different thing and will not work.\n\nA screen lock is required by Android before it will accept any CA.";
+            action-label: "OPEN SETTINGS -> INSTALL THE CENTAURI CA";
+            tapped => { root.install-ca(); }
+        }
+
+        // ★ #22 — hosts whose client REFUSED our leaf are un-cloaked FOREVER, on purpose: re-cloaking one
+        // on the next boot would break that app all over again. But permanence without an exit is a trap,
+        // so the refusal is only shown alongside the way out of it. Re-trusting is the honest offer —
+        // whatever made the client refuse (a stale CA, a pinned app) may since have been fixed.
+        if root.tls-distrust > 0 : CaTrustBanner {
+            accent: Centauri.caution;
+            message: "\{root.tls-distrust} HOST(S) REFUSED CENTAURI'S CERTIFICATE.\n\nWHAT HAPPENED: an app or browser rejected the leaf Centauri minted for that CDN, so Centauri stopped cloaking it — the host now goes straight to the real CDN. That is deliberate: those apps keep working, at the cost of no longer being served from your device.\n\nWHY IT STICKS: the refusal is remembered across restarts, so a host that broke once is never quietly re-broken on the next boot.\n\nRE-TRUST IF SOMETHING CHANGED — most often installing the Centauri CA, which fixes the commonest cause. Apps that PIN their certificate (banking, TikTok, Instagram) will simply refuse again, and will be recorded again.";
+            action-label: "RE-TRUST \{root.tls-distrust} REFUSED HOST(S)";
+            tapped => { root.retrust-hosts(); }
+        }
+
+        // ---- The CROWN witness tiles (the ≤1 / 0 privacy proof, made of REAL counters) ----
+        SectionTitle { text: "PRIVACY WITNESS"; }
+        // THREE per row, never five. With the ||| rail open in PORTRAIT the content column is
+        // ~264 logical px, while a five-tile HorizontalBox demands 5×70 + 4×8 = 382px — it
+        // overflowed and the last two tiles were CLIPPED OFF-SCREEN. A phone user therefore never
+        // saw `cloaked` or `local bytes` at all, and a clipped tile is indistinguishable from a
+        // dead one (it cost two debugging sessions chasing wiring that was already correct).
+        // 3×70 + 2×8 = 226px fits, and the grid keeps every metric on screen at any width.
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile {
+                    label: "served local";
+                    value: "\{root.served-locally}";
+                    tint: root.served-locally > 0 ? Centauri.crown : Centauri.starlight;
+                }
+                StatTile {
+                    label: "CDN fetched";
+                    value: "\{root.cdn-fetches}";
+                    tint: root.cdn-fetches > 0 ? Centauri.caution : Centauri.crown;
+                }
+                StatTile {
+                    label: "absorbed";
+                    value: "\{root.absorb-count}";
+                    tint: root.absorb-count > 0 ? Centauri.crown : Centauri.starlight;
+                }
+            }
+            Row {
+                StatTile {
+                    label: "cloaked";
+                    value: "\{root.promoted-cloak-count}";
+                    tint: root.promoted-cloak-count > 0 ? Centauri.crown : Centauri.starlight;
+                }
+                StatTile {
+                    label: "local bytes";
+                    value: "\{root.served-bytes}";
+                    tint: root.served-bytes > 0 ? Centauri.crown : Centauri.haze;
+                }
+            }
+        }
+
+        // ---- The content-addressed cache tiles ----
+        SectionTitle { text: "CONTENT-ADDRESSED CACHE"; }
+        // Same 3-per-row law as PRIVACY WITNESS above — five tiles overflow the portrait column.
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile { label: "libraries"; value: "\{root.libraries}"; tint: Centauri.stellar; }
+                StatTile { label: "bytes"; value: "\{root.cache-bytes}"; tint: Centauri.starlight; }
+                StatTile {
+                    label: "capacity";
+                    value: "\{root.capacity}";
+                    tint: root.cache-full ? Centauri.breach : Centauri.haze;
+                }
+            }
+            Row {
+                StatTile {
+                    label: "catalog";
+                    value: "\{root.catalog-assets}";
+                    tint: root.catalog-assets == 0 ? Centauri.caution : Centauri.stellar;
+                }
+                // ★ #22 slice 2 — the TCAT v2 catalog-freshness tile ("—" until a v2 epoch lands).
+                StatTile {
+                    label: "signed";
+                    value: root.catalog-freshness;
+                    tint: root.catalog-freshness == "—" ? Centauri.haze : Centauri.stellar;
+                }
+            }
+        }
+
+        // ---- Serve quality — the SRI-safe exact-vs-fallback split (F3 honesty) ----
+        SectionTitle { text: "SERVE QUALITY (SRI SPLIT)"; }
+        // ★ #21 slice 2 — `untrusted` moved here from the CLOAKED CDN HOSTS title. As a suffix it was
+        // invisible in the case that matters: with the burger rail open the title truncates at
+        // "(43 watched · 11 disc…", so the one number proving a client refused our leaf never reached the
+        // user. Four tiles need 4·70 + 3·8 = 304px against the ~268px the open rail leaves, so 2+2 —
+        // the StatTile min-width is 70px (centauri.slint:47) and a HorizontalBox would clip.
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile { label: "exact"; value: "\{root.exact-serves}"; tint: Centauri.crown; }
+                StatTile {
+                    label: "fallback";
+                    value: "\{root.fallback-serves}";
+                    tint: root.fallback-dominant ? Centauri.caution : Centauri.haze;
+                }
+            }
+            Row {
+                StatTile { label: "resolve hits"; value: "\{root.resolve-hits}"; tint: Centauri.haze; }
+                // A refusal is a host we can never serve locally again until the user re-trusts, so it
+                // reads as caution rather than as a neutral count.
+                StatTile {
+                    label: "untrusted";
+                    value: "\{root.tls-distrust}";
+                    tint: root.tls-distrust > 0 ? Centauri.caution : Centauri.haze;
+                }
+            }
+        }
+
+        // ---- The cloaked CDN-host watch-list (the DNS plane sinkholes these to 127.0.0.1) ----
+        // "N watched" = the static curated corpus; "· M discovered" = the LIVING half grown from the
+        // user's own navigation (CP-Centauri-Discovery). M>0 proves the encyclopedia is a living thing.
+        // The `untrusted` count used to ride here as a third clause and was truncated away whenever the
+        // rail was open — it now has its own tile under SERVE QUALITY (★ #21 slice 2).
+        SectionTitle { text: "CLOAKED CDN HOSTS  (\{root.cdn-hosts-total} watched · \{root.discovered-total} discovered)"; }
+        Rectangle {
+            border-radius: 8px;
+            background: @linear-gradient(200deg, Centauri.nebula.with-alpha(0.60) 0%, Centauri.void.with-alpha(0.35) 100%);
+            border-width: 1px;
+            border-color: Centauri.hairline;
+            VerticalLayout {
+                padding: 8px;
+                spacing: 3px;
+                for host in root.cdn-hosts : Text {
+                    text: "★ \{host}";
+                    color: Centauri.stellar;
+                    font-size: 11px;
+                    overflow: elide;
+                }
+                // The LIVING half — hosts the user's own navigation grew past the corpus.
+                for host in root.discovered-hosts : Text {
+                    text: "✦ \{host}";
+                    color: Centauri.crown;
+                    font-size: 11px;
+                    overflow: elide;
+                }
+            }
+        }
+
+        // ---- The recent-serve constellation feed ----
+        SectionTitle { text: "RECENT SERVES"; }
+        VerticalLayout {
+            spacing: 4px;
+            for serve in root.recent-serves : Rectangle {
+                background: Centauri.abyss.with-alpha(0.48);
+                border-radius: 6px;
+                HorizontalLayout {
+                    padding: 6px;
+                    spacing: 8px;
+                    Text {
+                        text: serve.outcome;
+                        color: serve.outcome == "LOCAL" ? Centauri.crown
+                            : (serve.outcome == "LEAK" ? Centauri.caution
+                            : (serve.outcome == "BLOCK" ? Centauri.stellar : Centauri.breach));
+                        font-size: 11px;
+                        font-weight: 800;
+                        width: 46px;
+                    }
+                    Text {
+                        text: serve.asset;
+                        color: Centauri.starlight;
+                        font-size: 11px;
+                        overflow: elide;
+                    }
+                    Rectangle { }  // spacer
+                    Text {
+                        // A non-serve miss carries no substitution verdict (empty token from the bridge):
+                        // render an explicit muted em-dash, never a phantom "exact" beside a MISS/404.
+                        text: serve.sub == "" ? "—" : serve.sub;
+                        color: serve.sub == "" ? Centauri.haze
+                            : (serve.sub == "exact" ? Centauri.crown
+                            : (serve.sub == "older" ? Centauri.breach : Centauri.caution));
+                        font-size: 10px;
+                    }
+                }
+            }
+        }
+
+        Rectangle { }  // tail spacer
+    }
+}
+
+// The standalone Window — the lib.rs proof test (`CentauriDashboard::new()`) + the slint-viewer
+// host-preview. Since the SLINT substitution it is a THIN WRAPPER: the visual surface lives in
+// CentauriPane (inherits Rectangle — the embeddable primitive the shell mounts on-device), and this
+// Window forwards every host-fed input + every derived out through byte-equal `<=>` aliases so the
+// test + the preview drive the SAME pane the shell embeds (one surface, two mounts — the same law
+// DnscryptSection/AdvancedBurger follow).
+export component CentauriDashboard inherits Window {
+    title: "Yeah! Tortä — Centauri";
+    preferred-width: 420px;
+    preferred-height: 960px;
+    background: Centauri.void.with-alpha(0.40);
+
+    // ---- host-fed inputs (byte-equal forwarding to the pane) ----
+    in-out property <int> libraries <=> pane.libraries;
+    in-out property <int> cache-bytes <=> pane.cache-bytes;
+    in-out property <bool> cache-full <=> pane.cache-full;
+    in-out property <int> capacity <=> pane.capacity;
+    in-out property <int> serve-port <=> pane.serve-port;
+    in-out property <int> serve-state <=> pane.serve-state;
+    in-out property <int> catalog-assets <=> pane.catalog-assets;
+    in-out property <string> catalog-freshness <=> pane.catalog-freshness; // ★ #22 slice 2
+    in-out property <int> catalog-installs-attempted <=> pane.catalog-installs-attempted;
+    in-out property <int> catalog-installs-verified <=> pane.catalog-installs-verified;
+    in-out property <int> resolve-queries <=> pane.resolve-queries;
+    in-out property <int> resolve-hits <=> pane.resolve-hits;
+    in-out property <int> rehydrates-attempted <=> pane.rehydrates-attempted;
+    in-out property <int> rehydrates-verified <=> pane.rehydrates-verified;
+    in-out property <int> served-locally <=> pane.served-locally;
+    in-out property <int> served-bytes <=> pane.served-bytes;
+    in-out property <int> cdn-fetches <=> pane.cdn-fetches;
+    in-out property <int> exact-serves <=> pane.exact-serves;
+    in-out property <int> fallback-serves <=> pane.fallback-serves;
+    in-out property <[string]> cdn-hosts <=> pane.cdn-hosts;
+    in-out property <int> cdn-hosts-total <=> pane.cdn-hosts-total;
+    in-out property <int> tls-distrust <=> pane.tls-distrust;
+    in-out property <int> absorb-count <=> pane.absorb-count;
+    in-out property <int> promoted-cloak-count <=> pane.promoted-cloak-count;
+    // CP-Centauri-Discovery — the living-watch-list totals forwarded to the host feed (set_discovered_*).
+    in-out property <int> discovered-total <=> pane.discovered-total;
+    in-out property <int> discovered-observed <=> pane.discovered-observed;
+    in-out property <[string]> discovered-hosts <=> pane.discovered-hosts;
+    in-out property <[ServeRow]> recent-serves <=> pane.recent-serves;
+
+    // ---- derived outs (the hidden-fault hunt — forwarded so the proof test asserts them) ----
+    out property <string> serve-state-label <=> pane.serve-state-label;
+    out property <string> cache-mode-label <=> pane.cache-mode-label;
+    out property <int> successful-serves <=> pane.successful-serves;
+    out property <bool> cdn-saw-zero <=> pane.cdn-saw-zero;
+    out property <bool> blackhole-risk <=> pane.blackhole-risk;
+    out property <bool> fallback-dominant <=> pane.fallback-dominant;
+    out property <bool> cache-saturated <=> pane.cache-saturated;
+    out property <bool> hidden-fault-any <=> pane.hidden-fault-any;
+    out property <string> crown-headline <=> pane.crown-headline;
+    out property <color> crown-color <=> pane.crown-color;
+
+    in-out property <bool> ca-minted <=> pane.ca-minted;
+    in-out property <bool> ca-trusted <=> pane.ca-trusted;
+    callback install-ca <=> pane.install-ca;
+    callback retrust-hosts <=> pane.retrust-hosts;
+
+    callback close-dashboard <=> pane.close-dashboard;
+
+    pane := CentauriPane { }
+}

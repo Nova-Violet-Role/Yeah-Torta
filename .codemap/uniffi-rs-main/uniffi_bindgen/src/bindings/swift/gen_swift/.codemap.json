@@ -1,0 +1,1736 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src\\bindings\\swift\\gen_swift",
+  "files": {
+    "callback_interface.rs": {
+      "hash": "1a2b56d16db8",
+      "indexed_at": "2026-07-24T20:35:12.918573+00:00",
+      "language": "rust",
+      "lines": 30,
+      "mtime_ns": 1782136568000000000,
+      "size": 775,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            10
+          ],
+          "name": "CallbackInterfaceCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "new",
+              "signature": "(name: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            12,
+            16
+          ],
+          "name": "CallbackInterfaceCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "type_label",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                25
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                27,
+                29
+              ],
+              "name": "initialization_fn",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            18,
+            30
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        }
+      ]
+    },
+    "compounds.rs": {
+      "hash": "5133ad27ff6e",
+      "indexed_at": "2026-07-24T20:35:12.920054+00:00",
+      "language": "rust",
+      "lines": 153,
+      "mtime_ns": 1782136568000000000,
+      "size": 3852,
+      "symbols": [
+        {
+          "lines": [
+            13,
+            15
+          ],
+          "name": "OptionalCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                18,
+                20
+              ],
+              "name": "new",
+              "signature": "(inner: Type)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            17,
+            21
+          ],
+          "name": "OptionalCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                26
+              ],
+              "name": "type_label",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                33
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                35,
+                43
+              ],
+              "name": "default",
+              "signature": "(&self, default: &DefaultValue)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            44
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            47,
+            49
+          ],
+          "name": "SequenceCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                52,
+                54
+              ],
+              "name": "new",
+              "signature": "(inner: Type)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            51,
+            55
+          ],
+          "name": "SequenceCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                58,
+                63
+              ],
+              "name": "type_label",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                65,
+                70
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                72,
+                79
+              ],
+              "name": "default",
+              "signature": "(&self, default: &DefaultValue)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            57,
+            80
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            83,
+            86
+          ],
+          "name": "MapCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                89,
+                91
+              ],
+              "name": "new",
+              "signature": "(key: Type, value: Type)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            88,
+            92
+          ],
+          "name": "MapCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                95,
+                101
+              ],
+              "name": "type_label",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                109
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                116
+              ],
+              "name": "default",
+              "signature": "(&self, default: &DefaultValue)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            94,
+            117
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            120,
+            122
+          ],
+          "name": "SetCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                125,
+                127
+              ],
+              "name": "new",
+              "signature": "(inner: Type)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            124,
+            128
+          ],
+          "name": "SetCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                131,
+                136
+              ],
+              "name": "type_label",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                138,
+                143
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                145,
+                152
+              ],
+              "name": "default",
+              "signature": "(&self, default: &DefaultValue)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            130,
+            153
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        }
+      ]
+    },
+    "custom.rs": {
+      "hash": "aac251243684",
+      "indexed_at": "2026-07-24T20:35:12.920898+00:00",
+      "language": "rust",
+      "lines": 33,
+      "mtime_ns": 1782136568000000000,
+      "size": 922,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            11
+          ],
+          "name": "CustomCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                16
+              ],
+              "name": "new",
+              "signature": "(name: String, builtin: Box<dyn CodeType>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            13,
+            17
+          ],
+          "name": "CustomCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                22
+              ],
+              "name": "type_label",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                26
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                32
+              ],
+              "name": "default",
+              "signature": "(&self, default: &crate::interface::DefaultValue)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            33
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        }
+      ]
+    },
+    "enum_.rs": {
+      "hash": "92e50ddbb1bc",
+      "indexed_at": "2026-07-24T20:35:12.921681+00:00",
+      "language": "rust",
+      "lines": 39,
+      "mtime_ns": 1782136568000000000,
+      "size": 977,
+      "symbols": [
+        {
+          "lines": [
+            13,
+            15
+          ],
+          "name": "EnumCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                18,
+                20
+              ],
+              "name": "new",
+              "signature": "(id: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            17,
+            21
+          ],
+          "name": "EnumCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                26
+              ],
+              "name": "type_label",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                30
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                32,
+                38
+              ],
+              "name": "default",
+              "signature": "(&self, default: &DefaultValue)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            39
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        }
+      ]
+    },
+    "miscellany.rs": {
+      "hash": "7fc2444596d7",
+      "indexed_at": "2026-07-24T20:35:12.922407+00:00",
+      "language": "rust",
+      "lines": 31,
+      "mtime_ns": 1782136568000000000,
+      "size": 690,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "TimestampCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                11,
+                13
+              ],
+              "name": "type_label",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                15,
+                17
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            18
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            21,
+            21
+          ],
+          "name": "DurationCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                26
+              ],
+              "name": "type_label",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                30
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            31
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        }
+      ]
+    },
+    "mod.rs": {
+      "hash": "2893532f8a4a",
+      "indexed_at": "2026-07-24T20:35:12.928053+00:00",
+      "language": "rust",
+      "lines": 1194,
+      "mtime_ns": 1782136568000000000,
+      "size": 42512,
+      "symbols": [
+        {
+          "lines": [
+            21,
+            21
+          ],
+          "name": "callback_interface",
+          "type": "module"
+        },
+        {
+          "lines": [
+            22,
+            22
+          ],
+          "name": "compounds",
+          "type": "module"
+        },
+        {
+          "lines": [
+            23,
+            23
+          ],
+          "name": "custom",
+          "type": "module"
+        },
+        {
+          "lines": [
+            24,
+            24
+          ],
+          "name": "enum_",
+          "type": "module"
+        },
+        {
+          "lines": [
+            25,
+            25
+          ],
+          "name": "miscellany",
+          "type": "module"
+        },
+        {
+          "lines": [
+            26,
+            26
+          ],
+          "name": "object",
+          "type": "module"
+        },
+        {
+          "lines": [
+            27,
+            27
+          ],
+          "name": "primitives",
+          "type": "module"
+        },
+        {
+          "lines": [
+            28,
+            28
+          ],
+          "name": "record",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "docstring": "with this type only.",
+              "lines": [
+                41,
+                43
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "default for named types is to assume a ctor exists.",
+              "lines": [
+                46,
+                51
+              ],
+              "name": "default",
+              "signature": "(&self, default: &DefaultValue)",
+              "type": "method"
+            },
+            {
+              "docstring": "This is the object that contains the lower, write, lift, and read methods for this type.",
+              "lines": [
+                56,
+                58
+              ],
+              "name": "ffi_converter_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Function to run at startup",
+              "lines": [
+                61,
+                63
+              ],
+              "name": "initialization_fn",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "docstring": "A trait tor the implementation.",
+          "lines": [
+            31,
+            64
+          ],
+          "name": "CodeType",
+          "type": "trait"
+        },
+        {
+          "docstring": "Quote a name for use in a context where keywords must be quoted",
+          "lines": [
+            137,
+            143
+          ],
+          "name": "quote_general_keyword",
+          "signature": "(nm: String)",
+          "type": "function"
+        },
+        {
+          "docstring": "Quote a name for use in arg context where fewer keywords must be quoted",
+          "lines": [
+            154,
+            160
+          ],
+          "name": "quote_arg_keyword",
+          "signature": "(nm: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            167,
+            189
+          ],
+          "name": "Config",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            193,
+            200
+          ],
+          "name": "CustomTypeConfig",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                204,
+                211
+              ],
+              "name": "lift",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                212,
+                219
+              ],
+              "name": "lower",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            }
+          ],
+          "docstring": "functions replace literal \"{}\" in strings with a specified value.",
+          "lines": [
+            203,
+            220
+          ],
+          "name": "CustomTypeConfig",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Panics if the module name hasn't been configured.",
+              "lines": [
+                225,
+                230
+              ],
+              "name": "module_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The name of the lower-level C module containing the FFI declarations.",
+              "lines": [
+                233,
+                238
+              ],
+              "name": "ffi_module_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The filename stem for the lower-level C module containing the FFI declarations.",
+              "lines": [
+                241,
+                246
+              ],
+              "name": "ffi_module_filename",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The name of the `.modulemap` file for the lower-level C module with FFI declarations.",
+              "lines": [
+                249,
+                251
+              ],
+              "name": "modulemap_filename",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The name of the `.h` file for the lower-level C module with FFI declarations.",
+              "lines": [
+                254,
+                256
+              ],
+              "name": "header_filename",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Whether to generate a `.modulemap` file for the lower-level C module with FFI declarations.",
+              "lines": [
+                259,
+                261
+              ],
+              "name": "generate_module_map",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Whether to omit argument labels in Swift function definitions.",
+              "lines": [
+                264,
+                266
+              ],
+              "name": "omit_argument_labels",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Whether to generate immutable records (`let` instead of `var`)",
+              "lines": [
+                269,
+                271
+              ],
+              "name": "generate_immutable_records",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "and the record is not listed in `mutable_records`.",
+              "lines": [
+                276,
+                278
+              ],
+              "name": "is_record_immutable",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Whether to make generated error types conform to `LocalizedError`. Default: false.",
+              "lines": [
+                281,
+                283
+              ],
+              "name": "omit_localized_error_conformance",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Whether to make simple generated enum and error types conform to `CaseIterable`. Default: false.",
+              "lines": [
+                286,
+                288
+              ],
+              "name": "generate_case_iterable_conformance",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Whether to make generated records, enums and errors conform to `Codable`. Default: false.",
+              "lines": [
+                291,
+                293
+              ],
+              "name": "generate_codable_conformance",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "usually as part of an `xcframework`.",
+              "lines": [
+                297,
+                299
+              ],
+              "name": "link_frameworks",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "This isn't the most efficient way to do this, but it should be fast enough.",
+              "lines": [
+                304,
+                308
+              ],
+              "name": "record_has_conformances",
+              "signature": "(&self, rec: &Record, contains_object_references: &bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "Programmatically generate the conformances for Record",
+              "lines": [
+                311,
+                347
+              ],
+              "name": "conformance_list_for_record",
+              "signature": "(\n        &self,\n        rec: &Record,\n        contains_object_references: &bool,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "This isn't the most efficient way to do this, but it should be fast enough.",
+              "lines": [
+                352,
+                356
+              ],
+              "name": "enum_has_conformances",
+              "signature": "(&self, e: &Enum, contains_object_references: &bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "Programmatically generate the conformances for an Enum",
+              "lines": [
+                359,
+                395
+              ],
+              "name": "conformance_list_for_enum",
+              "signature": "(&self, e: &Enum, contains_object_references: &bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "This isn't the most efficient way to do this, but it should be fast enough.",
+              "lines": [
+                400,
+                408
+              ],
+              "name": "error_has_additional_conformances",
+              "signature": "(\n        &self,\n        e: &Enum,\n        contains_object_references: &bool,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "Programmatically generate the additional conformances for an Error (aside from the default `Swift.Error`)",
+              "lines": [
+                411,
+                448
+              ],
+              "name": "additional_conformance_list_for_error",
+              "signature": "(\n        &self,\n        e: &Enum,\n        contains_object_references: &bool,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "Programmatically generate the conformances for an Object",
+              "lines": [
+                451,
+                485
+              ],
+              "name": "conformance_list_for_object",
+              "signature": "(&self, o: &Object, is_error: &bool)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            222,
+            486
+          ],
+          "name": "Config",
+          "type": "impl"
+        },
+        {
+          "docstring": "whether is has a \"callback interface\".",
+          "lines": [
+            491,
+            518
+          ],
+          "name": "trait_protocol_name",
+          "signature": "(ci: &ComponentInterface, trait_ty: &Type)",
+          "type": "function"
+        },
+        {
+          "docstring": "Generate UniFFI component bindings for Swift, as strings in memory.",
+          "lines": [
+            521,
+            542
+          ],
+          "name": "generate_bindings",
+          "signature": "(config: &Config, ci: &ComponentInterface)",
+          "type": "function"
+        },
+        {
+          "docstring": "Generate the bridging header for a component",
+          "lines": [
+            545,
+            549
+          ],
+          "name": "generate_header",
+          "signature": "(config: &Config, ci: &ComponentInterface)",
+          "type": "function"
+        },
+        {
+          "docstring": "Generate the swift source for a component",
+          "lines": [
+            552,
+            556
+          ],
+          "name": "generate_swift",
+          "signature": "(config: &Config, ci: &ComponentInterface)",
+          "type": "function"
+        },
+        {
+          "docstring": "Generate the modulemap for a set of components",
+          "lines": [
+            559,
+            573
+          ],
+          "name": "generate_modulemap",
+          "signature": "(\n    module_name: String,\n    header_filenames: Vec<String>,\n    xcframework: bool,\n    link_fra...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            581,
+            586
+          ],
+          "name": "TypeRenderer",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                589,
+                595
+              ],
+              "name": "new",
+              "signature": "(config: &'a Config, ci: &'a ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "docstring": "Returns an empty string so that it can be used inside an askama `{{ }}` block.",
+              "lines": [
+                605,
+                608
+              ],
+              "name": "add_import",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            588,
+            609
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            618,
+            621
+          ],
+          "name": "BridgingHeader",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                624,
+                629
+              ],
+              "name": "new",
+              "signature": "(config: &'config Config, ci: &'ci ComponentInterface)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            623,
+            630
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            640,
+            645
+          ],
+          "name": "ModuleMap",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                648,
+                655
+              ],
+              "name": "new_for_single_component",
+              "signature": "(config: &Config, _ci: &ComponentInterface)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            647,
+            656
+          ],
+          "name": "ModuleMap",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            660,
+            666
+          ],
+          "name": "SwiftWrapper",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                668,
+                682
+              ],
+              "name": "new",
+              "signature": "(config: Config, ci: &'a ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                684,
+                686
+              ],
+              "name": "imports",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                688,
+                712
+              ],
+              "name": "initialization_fns",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            667,
+            713
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            716,
+            716
+          ],
+          "name": "SwiftCodeOracle",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                727,
+                769
+              ],
+              "name": "create_code_type",
+              "signature": "(&self, type_: Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                771,
+                773
+              ],
+              "name": "find",
+              "signature": "(&self, type_: &Type)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the idiomatic Swift rendering of a class name (for enums, records, errors, etc).",
+              "lines": [
+                776,
+                778
+              ],
+              "name": "class_name",
+              "signature": "(&self, nm: S)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the idiomatic Swift rendering of a function name.",
+              "lines": [
+                781,
+                783
+              ],
+              "name": "fn_name",
+              "signature": "(&self, nm: S)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the idiomatic Swift rendering of a variable name.",
+              "lines": [
+                786,
+                788
+              ],
+              "name": "var_name",
+              "signature": "(&self, nm: S)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the idiomatic Swift rendering of an individual enum variant.",
+              "lines": [
+                791,
+                793
+              ],
+              "name": "enum_variant_name",
+              "signature": "(&self, nm: S)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the idiomatic Swift rendering of an FFI callback function name",
+              "lines": [
+                796,
+                798
+              ],
+              "name": "ffi_callback_name",
+              "signature": "(&self, nm: S)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the idiomatic Swift rendering of an FFI struct name",
+              "lines": [
+                801,
+                803
+              ],
+              "name": "ffi_struct_name",
+              "signature": "(&self, nm: S)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the idiomatic Swift rendering of an if guard name",
+              "lines": [
+                806,
+                808
+              ],
+              "name": "if_guard_name",
+              "signature": "(&self, nm: S)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                810,
+                839
+              ],
+              "name": "ffi_type_label",
+              "signature": "(&self, ffi_type: &FfiType)",
+              "type": "method"
+            },
+            {
+              "docstring": "Used to set a default return value when returning an error",
+              "lines": [
+                844,
+                863
+              ],
+              "name": "ffi_default_value",
+              "signature": "(&self, return_type: Option<&FfiType>)",
+              "type": "method"
+            },
+            {
+              "docstring": "only lowers the concrete class.",
+              "lines": [
+                873,
+                881
+              ],
+              "name": "object_names",
+              "signature": "(&self, obj: &Object)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            718,
+            882
+          ],
+          "name": "SwiftCodeOracle",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                888,
+                890
+              ],
+              "name": "oracle",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                893,
+                898
+              ],
+              "name": "type_name",
+              "signature": "(\n        as_type: &impl AsType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                901,
+                909
+              ],
+              "name": "return_type_name",
+              "signature": "(\n        as_type: Option<&impl AsType>,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                912,
+                917
+              ],
+              "name": "canonical_name",
+              "signature": "(\n        as_type: &impl AsType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                920,
+                925
+              ],
+              "name": "ffi_converter_name",
+              "signature": "(\n        as_type: &impl AsType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                928,
+                938
+              ],
+              "name": "ffi_error_converter_name",
+              "signature": "(\n        as_type: &impl AsType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                941,
+                946
+              ],
+              "name": "ffi_type",
+              "signature": "(\n        type_: &impl AsType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                952,
+                962
+              ],
+              "name": "lower_fn",
+              "signature": "(\n        as_type: &impl AsType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                965,
+                972
+              ],
+              "name": "write_fn",
+              "signature": "(\n        as_type: &impl AsType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                976,
+                983
+              ],
+              "name": "lift_fn",
+              "signature": "(as_type: &impl AsType, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                986,
+                990
+              ],
+              "name": "read_fn",
+              "signature": "(as_type: &impl AsType, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                993,
+                1002
+              ],
+              "name": "default_swift",
+              "signature": "(\n        default: &DefaultValue,\n        _: &dyn askama::Values,\n        as_type: &T,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1006,
+                1017
+              ],
+              "name": "variant_discr_literal",
+              "signature": "(\n        e: &Enum,\n        _: &dyn askama::Values,\n        index: &usize,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1021,
+                1026
+              ],
+              "name": "ffi_type_name",
+              "signature": "(\n        ffi_type: &FfiType,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1029,
+                1034
+              ],
+              "name": "ffi_default_value",
+              "signature": "(\n        return_type: Option<FfiType>,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1039,
+                1044
+              ],
+              "name": "header_ffi_type_name",
+              "signature": "(\n        ffi_type: &FfiType,\n        _values: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1046,
+                1074
+              ],
+              "name": "header_ffi_type_name_inner",
+              "signature": "(ffi_type: &FfiType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1078,
+                1080
+              ],
+              "name": "class_name",
+              "signature": "(nm: &str, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1084,
+                1086
+              ],
+              "name": "fn_name",
+              "signature": "(nm: &str, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1090,
+                1092
+              ],
+              "name": "var_name",
+              "signature": "(nm: &str, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1101,
+                1106
+              ],
+              "name": "is_borrowed_bytes",
+              "signature": "(\n        arg: &Argument,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1115,
+                1128
+              ],
+              "name": "arg_expr",
+              "signature": "(arg: &Argument, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1133,
+                1135
+              ],
+              "name": "arg_name",
+              "signature": "(nm: &str, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1139,
+                1144
+              ],
+              "name": "enum_variant_swift_quoted",
+              "signature": "(\n        nm: &str,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1148,
+                1153
+              ],
+              "name": "error_variant_swift_quoted",
+              "signature": "(\n        nm: &str,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1157,
+                1159
+              ],
+              "name": "ffi_callback_name",
+              "signature": "(nm: &str, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1163,
+                1165
+              ],
+              "name": "ffi_struct_name",
+              "signature": "(nm: &str, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1169,
+                1171
+              ],
+              "name": "if_guard_name",
+              "signature": "(nm: &str, _: &dyn askama::Values)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1175,
+                1185
+              ],
+              "name": "docstring",
+              "signature": "(\n        docstring: &str,\n        _: &dyn askama::Values,\n        spaces: &i32,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1188,
+                1193
+              ],
+              "name": "object_names",
+              "signature": "(\n        obj: &Object,\n        _: &dyn askama::Values,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            884,
+            1194
+          ],
+          "name": "filters",
+          "type": "module"
+        }
+      ]
+    },
+    "object.rs": {
+      "hash": "45a6d6bb053f",
+      "indexed_at": "2026-07-24T20:35:12.928831+00:00",
+      "language": "rust",
+      "lines": 34,
+      "mtime_ns": 1782136568000000000,
+      "size": 861,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            12
+          ],
+          "name": "ObjectCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                15,
+                17
+              ],
+              "name": "new",
+              "signature": "(name: String, imp: ObjectImpl)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            14,
+            18
+          ],
+          "name": "ObjectCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                21,
+                23
+              ],
+              "name": "type_label",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                27
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                33
+              ],
+              "name": "initialization_fn",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            20,
+            34
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        }
+      ]
+    },
+    "primitives.rs": {
+      "hash": "b710e4573055",
+      "indexed_at": "2026-07-24T20:35:12.929897+00:00",
+      "language": "rust",
+      "lines": 98,
+      "mtime_ns": 1782136568000000000,
+      "size": 3575,
+      "symbols": [
+        {
+          "lines": [
+            12,
+            64
+          ],
+          "name": "render_literal",
+          "signature": "(literal: &Literal)",
+          "type": "function"
+        }
+      ]
+    },
+    "record.rs": {
+      "hash": "5ad98ab04a5d",
+      "indexed_at": "2026-07-24T20:35:12.930612+00:00",
+      "language": "rust",
+      "lines": 26,
+      "mtime_ns": 1782136568000000000,
+      "size": 595,
+      "symbols": [
+        {
+          "lines": [
+            8,
+            10
+          ],
+          "name": "RecordCodeType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                15
+              ],
+              "name": "new",
+              "signature": "(id: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            12,
+            16
+          ],
+          "name": "RecordCodeType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "type_label",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                25
+              ],
+              "name": "canonical_name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            18,
+            26
+          ],
+          "name": "CodeType",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.768790+00:00",
+  "version": "1.0"
+}

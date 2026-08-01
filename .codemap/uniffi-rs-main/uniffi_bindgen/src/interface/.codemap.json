@@ -1,0 +1,5033 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_bindgen\\src\\interface",
+  "files": {
+    "callbacks.rs": {
+      "hash": "926bb14d7fc1",
+      "indexed_at": "2026-07-24T20:35:13.039776+00:00",
+      "language": "rust",
+      "lines": 333,
+      "mtime_ns": 1782136568000000000,
+      "size": 11371,
+      "symbols": [
+        {
+          "lines": [
+            46,
+            60
+          ],
+          "name": "CallbackInterface",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                63,
+                65
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                67,
+                69
+              ],
+              "name": "module_path",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                71,
+                73
+              ],
+              "name": "methods",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                75,
+                77
+              ],
+              "name": "ffi_init_callback",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                82
+              ],
+              "name": "derive_ffi_funcs",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "FfiCallbacks to define for our methods.",
+              "lines": [
+                85,
+                87
+              ],
+              "name": "ffi_callbacks",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The VTable FFI type",
+              "lines": [
+                90,
+                92
+              ],
+              "name": "vtable",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "the VTable struct to define.",
+              "lines": [
+                95,
+                97
+              ],
+              "name": "vtable_definition",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Vec of (ffi_callback, method) pairs",
+              "lines": [
+                100,
+                106
+              ],
+              "name": "vtable_methods",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                110
+              ],
+              "name": "iter_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                114
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                116,
+                118
+              ],
+              "name": "has_async_method",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            62,
+            119
+          ],
+          "name": "CallbackInterface",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                122,
+                127
+              ],
+              "name": "as_type",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            121,
+            128
+          ],
+          "name": "AsType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                133,
+                141
+              ],
+              "name": "try_from",
+              "signature": "(meta: uniffi_meta::CallbackInterfaceMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            130,
+            142
+          ],
+          "name": "CallbackInterface",
+          "type": "impl"
+        },
+        {
+          "docstring": "[FfiCallbackFunction] functions for the methods of a callback/trait interface",
+          "lines": [
+            145,
+            151
+          ],
+          "name": "ffi_callbacks",
+          "signature": "(trait_name: &str, methods: &[Method])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            153,
+            193
+          ],
+          "name": "method_ffi_callback",
+          "signature": "(trait_name: &str, method: &Method, index: usize)",
+          "type": "function"
+        },
+        {
+          "docstring": "Result struct to pass to the completion callback for async methods",
+          "lines": [
+            196,
+            214
+          ],
+          "name": "foreign_future_ffi_result_struct",
+          "signature": "(return_ffi_type: Option<FfiType>)",
+          "type": "function"
+        },
+        {
+          "docstring": "Definition for callback functions to complete an async callback interface method",
+          "lines": [
+            217,
+            232
+          ],
+          "name": "ffi_foreign_future_complete",
+          "signature": "(return_ffi_type: Option<FfiType>)",
+          "type": "function"
+        },
+        {
+          "docstring": "methods",
+          "lines": [
+            238,
+            260
+          ],
+          "name": "vtable_struct",
+          "signature": "(trait_name: &str, methods: &[Method])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            262,
+            264
+          ],
+          "name": "method_ffi_callback_name",
+          "signature": "(trait_name: &str, index: usize)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            266,
+            268
+          ],
+          "name": "vtable_name",
+          "signature": "(trait_name: &str)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                275,
+                290
+              ],
+              "name": "test_empty_interface",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                293,
+                315
+              ],
+              "name": "test_multiple_interfaces",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                318,
+                332
+              ],
+              "name": "test_docstring_callback_interface",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            271,
+            333
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "custom_type.rs": {
+      "hash": "0c2fcdaeaea3",
+      "indexed_at": "2026-07-24T20:35:13.040448+00:00",
+      "language": "rust",
+      "lines": 36,
+      "mtime_ns": 1782136568000000000,
+      "size": 1051,
+      "symbols": [
+        {
+          "lines": [
+            13,
+            19
+          ],
+          "name": "CustomType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                22,
+                24
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            25
+          ],
+          "name": "CustomType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                28,
+                35
+              ],
+              "name": "from",
+              "signature": "(meta: uniffi_meta::CustomTypeMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            27,
+            36
+          ],
+          "name": "CustomType",
+          "type": "impl"
+        }
+      ]
+    },
+    "enum_.rs": {
+      "hash": "2d2157fae26d",
+      "indexed_at": "2026-07-24T20:35:13.044765+00:00",
+      "language": "rust",
+      "lines": 862,
+      "mtime_ns": 1782136568000000000,
+      "size": 26443,
+      "symbols": [
+        {
+          "lines": [
+            178,
+            192
+          ],
+          "name": "Enum",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                195,
+                197
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                199,
+                201
+              ],
+              "name": "rename",
+              "signature": "(&mut self, name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                203,
+                205
+              ],
+              "name": "remote",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                207,
+                209
+              ],
+              "name": "variants",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                211,
+                213
+              ],
+              "name": "constructors",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                215,
+                217
+              ],
+              "name": "methods",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "error cases can't exist.",
+              "lines": [
+                227,
+                235
+              ],
+              "name": "variant_discr",
+              "signature": "(&self, variant_index: usize)",
+              "type": "method"
+            },
+            {
+              "docstring": "Iterate over variant discriminants",
+              "lines": [
+                238,
+                258
+              ],
+              "name": "variant_discr_iter",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                260,
+                262
+              ],
+              "name": "variant_discr_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                264,
+                269
+              ],
+              "name": "is_flat",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                271,
+                273
+              ],
+              "name": "is_non_exhaustive",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                275,
+                283
+              ],
+              "name": "iter_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                285,
+                287
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                289,
+                291
+              ],
+              "name": "contains_variant_fields",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                293,
+                295
+              ],
+              "name": "uniffi_trait_methods",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                297,
+                299
+              ],
+              "name": "add_uniffi_trait",
+              "signature": "(&mut self, t: UniffiTrait)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                301,
+                312
+              ],
+              "name": "derive_ffi_funcs",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                314,
+                331
+              ],
+              "name": "iter_ffi_function_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            194,
+            332
+          ],
+          "name": "Enum",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                337,
+                355
+              ],
+              "name": "try_from",
+              "signature": "(meta: uniffi_meta::EnumMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            334,
+            356
+          ],
+          "name": "Enum",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                359,
+                364
+              ],
+              "name": "as_type",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            358,
+            365
+          ],
+          "name": "AsType",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            371,
+            377
+          ],
+          "name": "Variant",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                380,
+                382
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                384,
+                386
+              ],
+              "name": "rename",
+              "signature": "(&mut self, new_name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                388,
+                390
+              ],
+              "name": "fields",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                392,
+                394
+              ],
+              "name": "has_fields",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                396,
+                398
+              ],
+              "name": "has_nameless_fields",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                400,
+                402
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                404,
+                406
+              ],
+              "name": "iter_types",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            379,
+            407
+          ],
+          "name": "Variant",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                412,
+                423
+              ],
+              "name": "try_from",
+              "signature": "(meta: uniffi_meta::VariantMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            409,
+            424
+          ],
+          "name": "Variant",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                432,
+                445
+              ],
+              "name": "test_duplicate_variants",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                448,
+                592
+              ],
+              "name": "test_associated_data",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                596,
+                618
+              ],
+              "name": "test_variants",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                621,
+                635
+              ],
+              "name": "test_duplicate_error_variants",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                638,
+                664
+              ],
+              "name": "test_variant_data",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                667,
+                720
+              ],
+              "name": "test_enum_variant_named_error",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                722,
+                729
+              ],
+              "name": "variant",
+              "signature": "(val: Option<u64>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                731,
+                740
+              ],
+              "name": "check_discrs",
+              "signature": "(e: &mut Enum, vs: Vec<Variant>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                743,
+                789
+              ],
+              "name": "test_variant_values",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                792,
+                806
+              ],
+              "name": "test_docstring_enum",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                809,
+                824
+              ],
+              "name": "test_docstring_enum_variant",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                827,
+                842
+              ],
+              "name": "test_docstring_associated_enum",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                845,
+                861
+              ],
+              "name": "test_docstring_associated_enum_variant",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            427,
+            862
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "exclude.rs": {
+      "hash": "547e271581a5",
+      "indexed_at": "2026-07-24T20:35:13.045718+00:00",
+      "language": "rust",
+      "lines": 79,
+      "mtime_ns": 1782136568000000000,
+      "size": 2867,
+      "symbols": [
+        {
+          "lines": [
+            11,
+            35
+          ],
+          "name": "apply_exclusions",
+          "signature": "(ci: &mut ComponentInterface, exclusions: &[String])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            37,
+            39
+          ],
+          "name": "remove_functions",
+          "signature": "(excludes: &HashSet<&str>, functions: &mut Vec<Function>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            41,
+            67
+          ],
+          "name": "remove_type_definitions",
+          "signature": "(\n    excludes: &HashSet<&str>,\n    items: &mut Vec<T>,\n    types: &mut TypeUniverse,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            69,
+            75
+          ],
+          "name": "remove_constructors",
+          "signature": "(\n    excludes: &HashSet<&str>,\n    type_name: &str,\n    constructors: &mut Vec<Constructor>,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            77,
+            79
+          ],
+          "name": "remove_methods",
+          "signature": "(excludes: &HashSet<&str>, type_name: &str, methods: &mut Vec<Method>)",
+          "type": "function"
+        }
+      ]
+    },
+    "ffi.rs": {
+      "hash": "5775ada75edc",
+      "indexed_at": "2026-07-24T20:35:13.047878+00:00",
+      "language": "rust",
+      "lines": 437,
+      "mtime_ns": 1782136568000000000,
+      "size": 14076,
+      "symbols": [
+        {
+          "lines": [
+            24,
+            62
+          ],
+          "name": "FfiType",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                65,
+                67
+              ],
+              "name": "reference",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                69,
+                71
+              ],
+              "name": "mut_reference",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Unique name for an FFI return type",
+              "lines": [
+                74,
+                93
+              ],
+              "name": "return_type_name",
+              "signature": "(return_type: Option<&FfiType>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            64,
+            94
+          ],
+          "name": "FfiType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                102,
+                160
+              ],
+              "name": "from",
+              "signature": "(t: &Type)",
+              "type": "method"
+            }
+          ],
+          "docstring": "tell what the corresponding Type is that it's being used to represent.",
+          "lines": [
+            101,
+            161
+          ],
+          "name": "FfiType",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            164,
+            167
+          ],
+          "name": "ExternalFfiMetadata",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                170,
+                172
+              ],
+              "name": "crate_name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            169,
+            173
+          ],
+          "name": "ExternalFfiMetadata",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                177,
+                179
+              ],
+              "name": "from",
+              "signature": "(ty: Type)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Needed for rust scaffolding askama template",
+          "lines": [
+            176,
+            180
+          ],
+          "name": "FfiType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                183,
+                185
+              ],
+              "name": "from",
+              "signature": "(ty: &&Type)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            182,
+            186
+          ],
+          "name": "FfiType",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            190,
+            194
+          ],
+          "name": "FfiDefinition",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                197,
+                203
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            196,
+            204
+          ],
+          "name": "FfiDefinition",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            213,
+            222
+          ],
+          "name": "FfiFunction",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                225,
+                236
+              ],
+              "name": "callback_init",
+              "signature": "(module_path: &str, trait_name: &str, vtable_name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                238,
+                240
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                242,
+                244
+              ],
+              "name": "rename",
+              "signature": "(&mut self, new_name: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "`scaffolding-ffi-buffer-fns` feature is enabled.",
+              "lines": [
+                248,
+                250
+              ],
+              "name": "ffi_buffer_fn_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                252,
+                254
+              ],
+              "name": "is_async",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                256,
+                258
+              ],
+              "name": "arguments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                260,
+                262
+              ],
+              "name": "return_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                264,
+                266
+              ],
+              "name": "has_rust_call_status_arg",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                268,
+                270
+              ],
+              "name": "is_object_free_function",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                272,
+                284
+              ],
+              "name": "init",
+              "signature": "(\n        &mut self,\n        return_type: Option<FfiType>,\n        args: impl IntoIterator<Item =...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            224,
+            285
+          ],
+          "name": "FfiFunction",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                288,
+                297
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            287,
+            298
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            304,
+            307
+          ],
+          "name": "FfiArgument",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                310,
+                315
+              ],
+              "name": "new",
+              "signature": "(name: impl Into<String>, type_: FfiType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                317,
+                319
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                321,
+                323
+              ],
+              "name": "rename",
+              "signature": "(&mut self, new_name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                325,
+                327
+              ],
+              "name": "type_",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            309,
+            328
+          ],
+          "name": "FfiArgument",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            334,
+            340
+          ],
+          "name": "FfiCallbackFunction",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                343,
+                345
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                347,
+                349
+              ],
+              "name": "rename",
+              "signature": "(&mut self, new_name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                351,
+                353
+              ],
+              "name": "arguments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                355,
+                357
+              ],
+              "name": "return_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                359,
+                361
+              ],
+              "name": "has_rust_call_status_arg",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            342,
+            362
+          ],
+          "name": "FfiCallbackFunction",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            366,
+            369
+          ],
+          "name": "FfiStruct",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Get the name of this struct",
+              "lines": [
+                373,
+                375
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                377,
+                379
+              ],
+              "name": "rename",
+              "signature": "(&mut self, new_name: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the fields for this struct",
+              "lines": [
+                382,
+                384
+              ],
+              "name": "fields",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            371,
+            385
+          ],
+          "name": "FfiStruct",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            389,
+            392
+          ],
+          "name": "FfiField",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                395,
+                400
+              ],
+              "name": "new",
+              "signature": "(name: impl Into<String>, type_: FfiType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                402,
+                404
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                406,
+                408
+              ],
+              "name": "type_",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                410,
+                412
+              ],
+              "name": "rename",
+              "signature": "(&mut self, name: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            394,
+            413
+          ],
+          "name": "FfiField",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                416,
+                418
+              ],
+              "name": "from",
+              "signature": "(value: FfiFunction)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            415,
+            419
+          ],
+          "name": "FfiDefinition",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                422,
+                424
+              ],
+              "name": "from",
+              "signature": "(value: FfiStruct)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            421,
+            425
+          ],
+          "name": "FfiDefinition",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                428,
+                430
+              ],
+              "name": "from",
+              "signature": "(value: FfiCallbackFunction)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            427,
+            431
+          ],
+          "name": "FfiDefinition",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            434,
+            437
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "function.rs": {
+      "hash": "0a0e3db02779",
+      "indexed_at": "2026-07-24T20:35:13.050733+00:00",
+      "language": "rust",
+      "lines": 495,
+      "mtime_ns": 1782136568000000000,
+      "size": 14132,
+      "symbols": [
+        {
+          "lines": [
+            48,
+            69
+          ],
+          "name": "Function",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                72,
+                74
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "we use the Rust names as input.",
+              "lines": [
+                78,
+                80
+              ],
+              "name": "rename",
+              "signature": "(&mut self, new_name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                82,
+                84
+              ],
+              "name": "is_async",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                86,
+                88
+              ],
+              "name": "arguments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                90,
+                92
+              ],
+              "name": "full_arguments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                94,
+                96
+              ],
+              "name": "return_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                98,
+                100
+              ],
+              "name": "ffi_func",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                104
+              ],
+              "name": "checksum_fn_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                106,
+                108
+              ],
+              "name": "checksum",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                110,
+                112
+              ],
+              "name": "throws",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                114,
+                116
+              ],
+              "name": "throws_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                118,
+                120
+              ],
+              "name": "throws_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                122,
+                129
+              ],
+              "name": "derive_ffi_func",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                131,
+                133
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                135,
+                137
+              ],
+              "name": "checksum_from_metadata",
+              "signature": "(meta: uniffi_meta::FnMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            71,
+            138
+          ],
+          "name": "Function",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                141,
+                149
+              ],
+              "name": "from",
+              "signature": "(meta: uniffi_meta::FnParamMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            140,
+            150
+          ],
+          "name": "Argument",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                153,
+                178
+              ],
+              "name": "from",
+              "signature": "(meta: uniffi_meta::FnMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            152,
+            179
+          ],
+          "name": "Function",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            185,
+            191
+          ],
+          "name": "Argument",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                194,
+                196
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                198,
+                200
+              ],
+              "name": "rename",
+              "signature": "(&mut self, new_name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                202,
+                204
+              ],
+              "name": "by_ref",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "`ForeignBytes` FFI path instead of the owned `RustBuffer` path.",
+              "lines": [
+                208,
+                210
+              ],
+              "name": "is_borrowed_bytes",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                212,
+                214
+              ],
+              "name": "default_value",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                216,
+                218
+              ],
+              "name": "iter_types",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            193,
+            219
+          ],
+          "name": "Argument",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                222,
+                224
+              ],
+              "name": "as_type",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            221,
+            225
+          ],
+          "name": "AsType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                228,
+                238
+              ],
+              "name": "from",
+              "signature": "(a: &Argument)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            227,
+            239
+          ],
+          "name": "FfiArgument",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            243,
+            246
+          ],
+          "name": "ResultType",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Get the `T` parameters for the `FutureCallback<T>` for this ResultType",
+              "lines": [
+                250,
+                255
+              ],
+              "name": "future_callback_param",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            248,
+            256
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                266,
+                268
+              ],
+              "name": "self_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                270,
+                275
+              ],
+              "name": "result_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                277,
+                286
+              ],
+              "name": "iter_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Quick way to get the rust future scaffolding function that corresponds to our return type.",
+              "lines": [
+                293,
+                297
+              ],
+              "name": "ffi_rust_future_poll",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                299,
+                303
+              ],
+              "name": "ffi_rust_future_cancel",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                305,
+                309
+              ],
+              "name": "ffi_rust_future_complete",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                311,
+                315
+              ],
+              "name": "ffi_rust_future_free",
+              "signature": "(&self, ci: &ComponentInterface)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Implemented by function-like types (Function, Method, Constructor)",
+          "lines": [
+            259,
+            316
+          ],
+          "name": "Callable",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                319,
+                321
+              ],
+              "name": "arguments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                323,
+                325
+              ],
+              "name": "return_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                327,
+                329
+              ],
+              "name": "throws_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                331,
+                333
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                335,
+                337
+              ],
+              "name": "is_async",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                339,
+                341
+              ],
+              "name": "ffi_func",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            318,
+            342
+          ],
+          "name": "Callable",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                346,
+                348
+              ],
+              "name": "arguments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                350,
+                352
+              ],
+              "name": "return_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                354,
+                356
+              ],
+              "name": "throws_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                358,
+                360
+              ],
+              "name": "is_async",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                362,
+                364
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                366,
+                368
+              ],
+              "name": "ffi_func",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                370,
+                372
+              ],
+              "name": "self_type",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Needed because Askama likes to add extra refs to variables",
+          "lines": [
+            345,
+            373
+          ],
+          "name": "Callable",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                381,
+                425
+              ],
+              "name": "test_minimal_and_rich_function",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                428,
+                443
+              ],
+              "name": "test_docstring_function",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                446,
+                456
+              ],
+              "name": "byref_bytes_maps_to_foreignbytes",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                459,
+                469
+              ],
+              "name": "owned_bytes_maps_to_rustbuffer",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                472,
+                494
+              ],
+              "name": "test_iter_types",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            376,
+            495
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "mod.rs": {
+      "hash": "b7d58880c11c",
+      "indexed_at": "2026-07-24T20:35:13.059553+00:00",
+      "language": "rust",
+      "lines": 1915,
+      "mtime_ns": 1782136568000000000,
+      "size": 72044,
+      "symbols": [
+        {
+          "lines": [
+            55,
+            55
+          ],
+          "name": "universe",
+          "type": "module"
+        },
+        {
+          "lines": [
+            59,
+            59
+          ],
+          "name": "callbacks",
+          "type": "module"
+        },
+        {
+          "lines": [
+            61,
+            61
+          ],
+          "name": "custom_type",
+          "type": "module"
+        },
+        {
+          "lines": [
+            63,
+            63
+          ],
+          "name": "enum_",
+          "type": "module"
+        },
+        {
+          "lines": [
+            65,
+            65
+          ],
+          "name": "function",
+          "type": "module"
+        },
+        {
+          "lines": [
+            67,
+            67
+          ],
+          "name": "object",
+          "type": "module"
+        },
+        {
+          "lines": [
+            69,
+            69
+          ],
+          "name": "record",
+          "type": "module"
+        },
+        {
+          "lines": [
+            72,
+            72
+          ],
+          "name": "exclude",
+          "type": "module"
+        },
+        {
+          "lines": [
+            74,
+            74
+          ],
+          "name": "rename",
+          "type": "module"
+        },
+        {
+          "lines": [
+            77,
+            77
+          ],
+          "name": "ffi",
+          "type": "module"
+        },
+        {
+          "lines": [
+            78,
+            78
+          ],
+          "name": "visit_mut",
+          "type": "module"
+        },
+        {
+          "lines": [
+            94,
+            116
+          ],
+          "name": "ComponentInterface",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                119,
+                128
+              ],
+              "name": "new",
+              "signature": "(crate_name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Parse a `ComponentInterface` from a string containing a WebIDL definition.",
+              "lines": [
+                131,
+                138
+              ],
+              "name": "from_webidl",
+              "signature": "(idl: &str, module_path: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Public so that external binding generators can use it.",
+              "lines": [
+                142,
+                149
+              ],
+              "name": "from_metadata",
+              "signature": "(group: uniffi_meta::MetadataGroup)",
+              "type": "method"
+            },
+            {
+              "docstring": "Add a metadata group to a `ComponentInterface`.",
+              "lines": [
+                152,
+                172
+              ],
+              "name": "add_metadata",
+              "signature": "(&mut self, group: uniffi_meta::MetadataGroup)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                174,
+                180
+              ],
+              "name": "set_crate_to_namespace_map",
+              "signature": "(&mut self, namespaces: BTreeMap<String, NamespaceMetadata>)",
+              "type": "method"
+            },
+            {
+              "docstring": "a package or module name for the foreign language, etc.",
+              "lines": [
+                186,
+                188
+              ],
+              "name": "namespace",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                190,
+                192
+              ],
+              "name": "namespace_docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The crate this interfaces lives in.",
+              "lines": [
+                195,
+                197
+              ],
+              "name": "crate_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                199,
+                206
+              ],
+              "name": "uniffi_contract_version",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the definitions for every Enum type in the interface.",
+              "lines": [
+                209,
+                211
+              ],
+              "name": "enum_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get an Enum definition by name, or None if no such Enum is defined.",
+              "lines": [
+                214,
+                216
+              ],
+              "name": "get_enum_definition",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the definitions for every Record type in the interface.",
+              "lines": [
+                219,
+                221
+              ],
+              "name": "record_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get a Record definition by name, or None if no such Record is defined.",
+              "lines": [
+                224,
+                226
+              ],
+              "name": "get_record_definition",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get a CustomType definition by name, or None if no such custom type is defined.",
+              "lines": [
+                229,
+                231
+              ],
+              "name": "get_custom_type_definition",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the definitions for every Function in the interface.",
+              "lines": [
+                234,
+                236
+              ],
+              "name": "function_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get a Function definition by name, or None if no such Function is defined.",
+              "lines": [
+                239,
+                242
+              ],
+              "name": "get_function_definition",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Returns `true` if we have any objects in this interface.",
+              "lines": [
+                245,
+                247
+              ],
+              "name": "has_object_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the definitions for every Object type in the interface.",
+              "lines": [
+                250,
+                252
+              ],
+              "name": "object_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get an Object definition by name, or None if no such Object is defined.",
+              "lines": [
+                255,
+                257
+              ],
+              "name": "get_object_definition",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                259,
+                266
+              ],
+              "name": "callback_interface_callback_definitions",
+              "signature": "(\n        &self,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "These are defined by the foreign code and invoked by Rust.",
+              "lines": [
+                271,
+                280
+              ],
+              "name": "callback_interface_vtable_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the definitions for every Callback Interface type in the interface.",
+              "lines": [
+                283,
+                285
+              ],
+              "name": "callback_interface_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get a Callback interface definition by name, or None if no such interface is defined.",
+              "lines": [
+                288,
+                291
+              ],
+              "name": "get_callback_interface_definition",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the definitions for every Callback Interface type in the interface.",
+              "lines": [
+                294,
+                302
+              ],
+              "name": "has_async_callback_interface_definition",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                304,
+                310
+              ],
+              "name": "has_callback_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the definitions for every Method type in the interface.",
+              "lines": [
+                313,
+                326
+              ],
+              "name": "iter_callables",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Rust source.",
+              "lines": [
+                333,
+                351
+              ],
+              "name": "should_generate_error_read",
+              "signature": "(&self, e: &Enum)",
+              "type": "method"
+            },
+            {
+              "docstring": "Iterate over all known local types in the interface.",
+              "lines": [
+                354,
+                356
+              ],
+              "name": "iter_local_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get details about all `Type`s defined in external crates.",
+              "lines": [
+                359,
+                361
+              ],
+              "name": "iter_external_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Keep only the local types in an iterator of types.",
+              "lines": [
+                364,
+                369
+              ],
+              "name": "filter_local_types",
+              "signature": "(\n        &'a self,\n        types: impl Iterator<Item = &'a Type>,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                371,
+                373
+              ],
+              "name": "is_external",
+              "signature": "(&self, t: &Type)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get a specific type",
+              "lines": [
+                376,
+                378
+              ],
+              "name": "get_type",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                380,
+                385
+              ],
+              "name": "namespace_for_type",
+              "signature": "(&self, ty: &Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                387,
+                395
+              ],
+              "name": "namespace_for_module_path",
+              "signature": "(&self, module_path: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "to yield the types that *they* contain.",
+              "lines": [
+                402,
+                404
+              ],
+              "name": "iter_types_in_item",
+              "signature": "(&'a self, item: &'a Type)",
+              "type": "method"
+            },
+            {
+              "docstring": "tightly with the host GC, and hence need to perform manual destruction of objects.",
+              "lines": [
+                410,
+                413
+              ],
+              "name": "item_contains_object_references",
+              "signature": "(&self, item: &Type)",
+              "type": "method"
+            },
+            {
+              "docstring": "Check whether the given item contains any (possibly nested) unsigned types",
+              "lines": [
+                416,
+                419
+              ],
+              "name": "item_contains_unsigned_types",
+              "signature": "(&self, item: &Type)",
+              "type": "method"
+            },
+            {
+              "docstring": "Check whether the interface contains any optional types",
+              "lines": [
+                422,
+                426
+              ],
+              "name": "contains_optional_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Check whether the interface contains any sequence types",
+              "lines": [
+                429,
+                433
+              ],
+              "name": "contains_sequence_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Check whether the interface contains any map types",
+              "lines": [
+                436,
+                440
+              ],
+              "name": "contains_map_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Check whether the interface contains any set types",
+              "lines": [
+                443,
+                447
+              ],
+              "name": "contains_set_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Check whether the interface contains any object types",
+              "lines": [
+                450,
+                454
+              ],
+              "name": "contains_object_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                456,
+                458
+              ],
+              "name": "set_all_component_interfaces",
+              "signature": "(&mut self, all: Vec<ComponentInterface>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                460,
+                462
+              ],
+              "name": "all_component_interfaces",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                464,
+                468
+              ],
+              "name": "find_component_interface",
+              "signature": "(&self, module_path: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "namespace for types - each type has its own `module_path` which is used for them.",
+              "lines": [
+                472,
+                474
+              ],
+              "name": "ffi_namespace",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "ABI as the scaffolding",
+              "lines": [
+                479,
+                488
+              ],
+              "name": "ffi_uniffi_contract_version",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "complex data types across the FFI.",
+              "lines": [
+                493,
+                505
+              ],
+              "name": "ffi_rustbuffer_alloc",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "complex data types across the FFI.",
+              "lines": [
+                510,
+                522
+              ],
+              "name": "ffi_rustbuffer_from_bytes",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "complex data types returned across the FFI.",
+              "lines": [
+                527,
+                539
+              ],
+              "name": "ffi_rustbuffer_free",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "complex data types across the FFI.",
+              "lines": [
+                544,
+                562
+              ],
+              "name": "ffi_rustbuffer_reserve",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Builtin FFI function to poll a Rust future.",
+              "lines": [
+                565,
+                587
+              ],
+              "name": "ffi_rust_future_poll",
+              "signature": "(&self, return_ffi_type: Option<FfiType>)",
+              "type": "method"
+            },
+            {
+              "docstring": "We generate one of these for each FFI return type.",
+              "lines": [
+                592,
+                604
+              ],
+              "name": "ffi_rust_future_complete",
+              "signature": "(&self, return_ffi_type: Option<FfiType>)",
+              "type": "method"
+            },
+            {
+              "docstring": "Builtin FFI function for cancelling a Rust Future",
+              "lines": [
+                607,
+                619
+              ],
+              "name": "ffi_rust_future_cancel",
+              "signature": "(&self, return_ffi_type: Option<FfiType>)",
+              "type": "method"
+            },
+            {
+              "docstring": "Builtin FFI function for freeing a Rust Future",
+              "lines": [
+                622,
+                634
+              ],
+              "name": "ffi_rust_future_free",
+              "signature": "(&self, return_ffi_type: Option<FfiType>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                636,
+                640
+              ],
+              "name": "rust_future_ffi_fn_name",
+              "signature": "(&self, base_name: &str, return_ffi_type: Option<FfiType>)",
+              "type": "method"
+            },
+            {
+              "docstring": "Does this interface contain async functions?",
+              "lines": [
+                643,
+                649
+              ],
+              "name": "has_async_fns",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Iterate over `T` parameters of the `FutureCallback<T>` callbacks in this interface",
+              "lines": [
+                652,
+                658
+              ],
+              "name": "iter_future_callback_params",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Iterate over return/throws types for async functions",
+              "lines": [
+                661,
+                667
+              ],
+              "name": "iter_async_result_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Iterate over all Ffi definitions",
+              "lines": [
+                670,
+                687
+              ],
+              "name": "ffi_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                689,
+                744
+              ],
+              "name": "builtin_ffi_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "along with the builtin FFI helper functions.",
+              "lines": [
+                750,
+                752
+              ],
+              "name": "iter_ffi_function_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                754,
+                758
+              ],
+              "name": "iter_ffi_function_definitions_excluding_integrity_checks",
+              "signature": "(\n        &self,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                760,
+                777
+              ],
+              "name": "iter_ffi_function_definitions_conditionally_include_integrity_checks",
+              "signature": "(\n        &self,\n        include_checksums: bool,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                779,
+                783
+              ],
+              "name": "iter_ffi_function_integrity_checks",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Alternate version of iter_ffi_function_definitions for languages that don't support async",
+              "lines": [
+                786,
+                793
+              ],
+              "name": "iter_ffi_function_definitions_non_async",
+              "signature": "(\n        &self,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "- UniffiTrait methods",
+              "lines": [
+                802,
+                825
+              ],
+              "name": "iter_user_ffi_function_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "List all FFI functions definitions for RustBuffer functionality.",
+              "lines": [
+                828,
+                836
+              ],
+              "name": "iter_rust_buffer_ffi_function_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                838,
+                857
+              ],
+              "name": "all_possible_return_ffi_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "List all FFI functions definitions for async functionality.",
+              "lines": [
+                860,
+                870
+              ],
+              "name": "iter_futures_ffi_function_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Returns a list of (export_symbol_name, checksum) items",
+              "lines": [
+                875,
+                905
+              ],
+              "name": "iter_checksums",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                907,
+                916
+              ],
+              "name": "iter_checksum_ffi_functions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Called by `APIBuilder` impls to add a newly-parsed enum definition to the `ComponentInterface`.",
+              "lines": [
+                921,
+                938
+              ],
+              "name": "add_enum_definition",
+              "signature": "(&mut self, defn: Enum)",
+              "type": "method"
+            },
+            {
+              "docstring": "Adds a newly-parsed record definition to the `ComponentInterface`.",
+              "lines": [
+                941,
+                951
+              ],
+              "name": "add_record_definition",
+              "signature": "(&mut self, defn: Record)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                953,
+                970
+              ],
+              "name": "add_custom_type_definition",
+              "signature": "(&mut self, defn: CustomType)",
+              "type": "method"
+            },
+            {
+              "docstring": "Called by `APIBuilder` impls to add a newly-parsed function definition to the `ComponentInterface`.",
+              "lines": [
+                973,
+                990
+              ],
+              "name": "add_function_definition",
+              "signature": "(&mut self, defn: Function)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                992,
+                1024
+              ],
+              "name": "add_constructor_meta",
+              "signature": "(&mut self, meta: ConstructorMetadata)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1026,
+                1060
+              ],
+              "name": "add_method_meta",
+              "signature": "(&mut self, meta: MethodMetadata)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1062,
+                1085
+              ],
+              "name": "add_uniffitrait_meta",
+              "signature": "(&mut self, meta: UniffiTraitMetadata)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1087,
+                1089
+              ],
+              "name": "add_object_meta",
+              "signature": "(&mut self, meta: ObjectMetadata)",
+              "type": "method"
+            },
+            {
+              "docstring": "Called by `APIBuilder` impls to add a newly-parsed object definition to the `ComponentInterface`.",
+              "lines": [
+                1092,
+                1100
+              ],
+              "name": "add_object_definition",
+              "signature": "(&mut self, defn: Object)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1102,
+                1108
+              ],
+              "name": "is_name_used_as_error",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Called by `APIBuilder` impls to add a newly-parsed callback interface definition to the `ComponentInterface`.",
+              "lines": [
+                1111,
+                1122
+              ],
+              "name": "add_callback_interface_definition",
+              "signature": "(\n        &mut self,\n        defn: CallbackInterface,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1124,
+                1157
+              ],
+              "name": "add_trait_method_meta",
+              "signature": "(&mut self, meta: TraitMethodMetadata)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1159,
+                1175
+              ],
+              "name": "add_object_trait_impl",
+              "signature": "(\n        &mut self,\n        trait_impl: ObjectTraitImplMetadata,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "the entire interface.",
+              "lines": [
+                1182,
+                1195
+              ],
+              "name": "check_consistency",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "the resulting set will be missing some entries.",
+              "lines": [
+                1201,
+                1218
+              ],
+              "name": "derive_ffi_funcs",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Detect recursive enums and records using a depth-first search for cycles.",
+              "lines": [
+                1221,
+                1225
+              ],
+              "name": "infer_recursive_types",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Whether the named type participates in a recursive type cycle.",
+              "lines": [
+                1228,
+                1230
+              ],
+              "name": "is_recursive",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "(unwrapping `Optional`/`Sequence`/`Map` wrappers).",
+              "lines": [
+                1237,
+                1256
+              ],
+              "name": "type_dep_graph",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            118,
+            1257
+          ],
+          "name": "ComponentInterface",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            1259,
+            1261
+          ],
+          "name": "get_object",
+          "signature": "(objects: &'a mut [Object], name: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1263,
+            1268
+          ],
+          "name": "get_callback_interface",
+          "signature": "(\n    callback_interfaces: &'a mut [CallbackInterface],\n    name: &str,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "is not actually recursive...)",
+          "lines": [
+            1286,
+            1295
+          ],
+          "name": "RecursiveTypeIterator",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Allocate a new `RecursiveTypeIterator` over the given item.",
+              "lines": [
+                1299,
+                1307
+              ],
+              "name": "new",
+              "signature": "(ci: &'a ComponentInterface, item: &'a Type)",
+              "type": "method"
+            },
+            {
+              "docstring": "Add a new type to the queue of pending types, if not previously seen.",
+              "lines": [
+                1310,
+                1331
+              ],
+              "name": "add_pending_type",
+              "signature": "(&mut self, type_: &'a Type)",
+              "type": "method"
+            },
+            {
+              "docstring": "Find the component interface with the type definitions for the given module.",
+              "lines": [
+                1334,
+                1338
+              ],
+              "name": "find_ci_for",
+              "signature": "(&self, module_path: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "The return value will be the first item from the new iterator.",
+              "lines": [
+                1345,
+                1389
+              ],
+              "name": "advance_to_next_type",
+              "signature": "(&mut self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1297,
+            1390
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1394,
+                1401
+              ],
+              "name": "next",
+              "signature": "(&mut self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1392,
+            1402
+          ],
+          "name": "Iterator",
+          "type": "impl"
+        },
+        {
+          "docstring": "Helpers for functions/methods/constructors which all have the same \"throws\" semantics.",
+          "lines": [
+            1405,
+            1417
+          ],
+          "name": "throws_name",
+          "signature": "(throws: &Option<Type>)",
+          "type": "function"
+        },
+        {
+          "docstring": "as-is rather than recursed into, because they are nodes in their own right.",
+          "lines": [
+            1424,
+            1441
+          ],
+          "name": "type_names_in_type",
+          "signature": "(ty: &Type)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1451,
+                1547
+              ],
+              "name": "test_duplicate_type_names_are_an_error",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1550,
+                1564
+              ],
+              "name": "test_contains_optional_types",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1567,
+                1584
+              ],
+              "name": "test_contains_sequence_types",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1587,
+                1606
+              ],
+              "name": "test_contains_map_types",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1609,
+                1622
+              ],
+              "name": "test_no_infinite_recursion_when_walking_types",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1625,
+                1644
+              ],
+              "name": "test_correct_recursion_when_walking_types",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1647,
+                1654
+              ],
+              "name": "test_docstring_namespace",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1657,
+                1665
+              ],
+              "name": "test_multiline_docstring",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1668,
+                1712
+              ],
+              "name": "test_names",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1715,
+                1721
+              ],
+              "name": "test_namespaces",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1724,
+                1737
+              ],
+              "name": "dep_graph_no_deps",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1740,
+                1754
+              ],
+              "name": "dep_graph_self_referential",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1757,
+                1774
+              ],
+              "name": "dep_graph_deduplicates_repeated_dep",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1777,
+                1792
+              ],
+              "name": "dep_graph_optional_field_propagates_dep",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1795,
+                1810
+              ],
+              "name": "dep_graph_sequence_field_propagates_dep",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1813,
+                1828
+              ],
+              "name": "dep_graph_map_value_propagates_dep",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1831,
+                1846
+              ],
+              "name": "dep_graph_primitive_fields_have_no_deps",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1849,
+                1869
+              ],
+              "name": "dep_graph_interface_field_has_no_dep",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1872,
+                1894
+              ],
+              "name": "test_custom_type_docstring_upgrade",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1897,
+                1914
+              ],
+              "name": "test_custom_type_conflicting_builtin_is_error",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1444,
+            1915
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "object.rs": {
+      "hash": "0f5604465e36",
+      "indexed_at": "2026-07-24T20:35:13.064360+00:00",
+      "language": "rust",
+      "lines": 1014,
+      "mtime_ns": 1782136568000000000,
+      "size": 32564,
+      "symbols": [
+        {
+          "lines": [
+            83,
+            116
+          ],
+          "name": "Object",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                119,
+                121
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                123,
+                125
+              ],
+              "name": "rename",
+              "signature": "(&mut self, new_name: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "this would also include them.",
+              "lines": [
+                130,
+                132
+              ],
+              "name": "rust_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                134,
+                136
+              ],
+              "name": "imp",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                138,
+                140
+              ],
+              "name": "remote",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                142,
+                144
+              ],
+              "name": "is_trait_interface",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                146,
+                148
+              ],
+              "name": "has_callback_interface",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                150,
+                152
+              ],
+              "name": "has_async_method",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                154,
+                156
+              ],
+              "name": "constructors",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                158,
+                162
+              ],
+              "name": "primary_constructor",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                164,
+                169
+              ],
+              "name": "alternate_constructors",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                171,
+                173
+              ],
+              "name": "methods",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                175,
+                181
+              ],
+              "name": "get_method",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                183,
+                185
+              ],
+              "name": "uniffi_traits",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                187,
+                189
+              ],
+              "name": "uniffi_trait_methods",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                191,
+                193
+              ],
+              "name": "trait_impls",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "used by bindings for renaming.",
+              "lines": [
+                196,
+                198
+              ],
+              "name": "trait_impls_mut",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                200,
+                202
+              ],
+              "name": "ffi_object_clone",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                204,
+                206
+              ],
+              "name": "ffi_object_free",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                208,
+                212
+              ],
+              "name": "ffi_init_callback",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                214,
+                216
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                218,
+                236
+              ],
+              "name": "iter_ffi_function_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                238,
+                271
+              ],
+              "name": "derive_ffi_funcs",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "For trait interfaces, FfiCallbacks to define for our methods, otherwise an empty vec.",
+              "lines": [
+                274,
+                280
+              ],
+              "name": "ffi_callbacks",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "For trait interfaces, the VTable FFI type",
+              "lines": [
+                283,
+                286
+              ],
+              "name": "vtable",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "For trait interfaces, the VTable struct to define.  Otherwise None.",
+              "lines": [
+                289,
+                292
+              ],
+              "name": "vtable_definition",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Vec of (ffi_callback_name, method) pairs",
+              "lines": [
+                295,
+                306
+              ],
+              "name": "vtable_methods",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                308,
+                317
+              ],
+              "name": "iter_types",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            118,
+            318
+          ],
+          "name": "Object",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                321,
+                327
+              ],
+              "name": "as_type",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            320,
+            328
+          ],
+          "name": "AsType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                331,
+                354
+              ],
+              "name": "from",
+              "signature": "(meta: uniffi_meta::ObjectMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            330,
+            355
+          ],
+          "name": "Object",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            362,
+            385
+          ],
+          "name": "Constructor",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                388,
+                390
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                392,
+                394
+              ],
+              "name": "rename",
+              "signature": "(&mut self, new_name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                396,
+                398
+              ],
+              "name": "is_async",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                400,
+                402
+              ],
+              "name": "object_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                404,
+                406
+              ],
+              "name": "arguments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                408,
+                410
+              ],
+              "name": "full_arguments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                412,
+                414
+              ],
+              "name": "ffi_func",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                416,
+                418
+              ],
+              "name": "checksum_fn_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                420,
+                422
+              ],
+              "name": "checksum",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                424,
+                426
+              ],
+              "name": "throws",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                428,
+                430
+              ],
+              "name": "throws_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                432,
+                434
+              ],
+              "name": "throws_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                436,
+                438
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                440,
+                442
+              ],
+              "name": "is_primary_constructor",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                444,
+                448
+              ],
+              "name": "derive_ffi_func",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                450,
+                452
+              ],
+              "name": "checksum_from_metadata",
+              "signature": "(meta: uniffi_meta::ConstructorMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            387,
+            453
+          ],
+          "name": "Constructor",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                456,
+                484
+              ],
+              "name": "from",
+              "signature": "(meta: uniffi_meta::ConstructorMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            455,
+            485
+          ],
+          "name": "Constructor",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            492,
+            517
+          ],
+          "name": "Method",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                520,
+                522
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                524,
+                526
+              ],
+              "name": "rename",
+              "signature": "(&mut self, new_name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                528,
+                530
+              ],
+              "name": "is_async",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                532,
+                534
+              ],
+              "name": "object_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                536,
+                538
+              ],
+              "name": "arguments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "hence `arguments` and `full_arguments` are different.",
+              "lines": [
+                542,
+                553
+              ],
+              "name": "full_arguments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                555,
+                557
+              ],
+              "name": "return_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                559,
+                561
+              ],
+              "name": "ffi_func",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                563,
+                565
+              ],
+              "name": "checksum_fn_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                567,
+                569
+              ],
+              "name": "checksum",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                571,
+                573
+              ],
+              "name": "throws",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                575,
+                577
+              ],
+              "name": "throws_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                579,
+                581
+              ],
+              "name": "throws_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                583,
+                585
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                587,
+                589
+              ],
+              "name": "takes_self_by_arc",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                591,
+                598
+              ],
+              "name": "derive_ffi_func",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "For async callback interface methods, the FFI struct to pass to the completion function.",
+              "lines": [
+                601,
+                603
+              ],
+              "name": "foreign_future_ffi_result_struct",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "construct from metadata - like `From<>` but with extra args",
+              "lines": [
+                606,
+                630
+              ],
+              "name": "from_metadata",
+              "signature": "(meta: uniffi_meta::MethodMetadata, receiver: Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                632,
+                635
+              ],
+              "name": "checksum_from_metadata",
+              "signature": "(meta: uniffi_meta::MethodMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            519,
+            636
+          ],
+          "name": "Method",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            641,
+            647
+          ],
+          "name": "UniffiTrait",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                650,
+                662
+              ],
+              "name": "iter_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                664,
+                678
+              ],
+              "name": "derive_ffi_func",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "construct from metadata - like `From<>` but with extra args",
+              "lines": [
+                681,
+                700
+              ],
+              "name": "from_metadata",
+              "signature": "(meta: uniffi_meta::UniffiTraitMetadata, receiver: Type)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            649,
+            701
+          ],
+          "name": "UniffiTrait",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            705,
+            712
+          ],
+          "name": "UniffiTraitMethods",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                715,
+                730
+              ],
+              "name": "new",
+              "signature": "(uniffi_traits: &[UniffiTrait])",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            714,
+            731
+          ],
+          "name": "UniffiTraitMethods",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                734,
+                736
+              ],
+              "name": "arguments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                738,
+                740
+              ],
+              "name": "return_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                742,
+                744
+              ],
+              "name": "throws_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                746,
+                748
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                750,
+                752
+              ],
+              "name": "is_async",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                754,
+                756
+              ],
+              "name": "ffi_func",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            733,
+            757
+          ],
+          "name": "Callable",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                760,
+                762
+              ],
+              "name": "arguments",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                764,
+                766
+              ],
+              "name": "return_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                768,
+                770
+              ],
+              "name": "throws_type",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                772,
+                774
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                776,
+                778
+              ],
+              "name": "is_async",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                780,
+                782
+              ],
+              "name": "ffi_func",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                784,
+                786
+              ],
+              "name": "self_type",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            759,
+            787
+          ],
+          "name": "Callable",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                795,
+                822
+              ],
+              "name": "test_that_all_argument_and_return_types_become_known",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                825,
+                852
+              ],
+              "name": "test_alternate_constructors",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                855,
+                882
+              ],
+              "name": "test_the_name_new_identifies_the_primary_constructor",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                885,
+                898
+              ],
+              "name": "test_the_name_new_is_reserved_for_constructors",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                901,
+                922
+              ],
+              "name": "test_duplicate_primary_constructors_not_allowed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                925,
+                939
+              ],
+              "name": "test_trait_attribute",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                942,
+                955
+              ],
+              "name": "test_trait_constructors_not_allowed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                958,
+                972
+              ],
+              "name": "test_docstring_object",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                975,
+                993
+              ],
+              "name": "test_docstring_constructor",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                996,
+                1013
+              ],
+              "name": "test_docstring_method",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            790,
+            1014
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "record.rs": {
+      "hash": "414a4b2f996b",
+      "indexed_at": "2026-07-24T20:35:13.066508+00:00",
+      "language": "rust",
+      "lines": 364,
+      "mtime_ns": 1782136568000000000,
+      "size": 11033,
+      "symbols": [
+        {
+          "lines": [
+            62,
+            72
+          ],
+          "name": "Record",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                75,
+                77
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                81
+              ],
+              "name": "rename",
+              "signature": "(&mut self, name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                83,
+                85
+              ],
+              "name": "remote",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                87,
+                89
+              ],
+              "name": "fields",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                91,
+                93
+              ],
+              "name": "constructors",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                95,
+                97
+              ],
+              "name": "methods",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                99,
+                101
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                111
+              ],
+              "name": "iter_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                115
+              ],
+              "name": "has_fields",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                117,
+                119
+              ],
+              "name": "uniffi_trait_methods",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                123
+              ],
+              "name": "add_uniffi_trait",
+              "signature": "(&mut self, t: UniffiTrait)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                125,
+                136
+              ],
+              "name": "derive_ffi_funcs",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                138,
+                155
+              ],
+              "name": "iter_ffi_function_definitions",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            74,
+            156
+          ],
+          "name": "Record",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                159,
+                164
+              ],
+              "name": "as_type",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            158,
+            165
+          ],
+          "name": "AsType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                170,
+                185
+              ],
+              "name": "try_from",
+              "signature": "(meta: uniffi_meta::RecordMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            167,
+            186
+          ],
+          "name": "Record",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            190,
+            196
+          ],
+          "name": "Field",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                199,
+                201
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                203,
+                205
+              ],
+              "name": "rename",
+              "signature": "(&mut self, name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                207,
+                209
+              ],
+              "name": "default_value",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                211,
+                213
+              ],
+              "name": "docstring",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                215,
+                217
+              ],
+              "name": "iter_types",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            198,
+            218
+          ],
+          "name": "Field",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                221,
+                223
+              ],
+              "name": "as_type",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            220,
+            224
+          ],
+          "name": "AsType",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                229,
+                239
+              ],
+              "name": "try_from",
+              "signature": "(meta: uniffi_meta::FieldMetadata)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            226,
+            240
+          ],
+          "name": "Field",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                249,
+                300
+              ],
+              "name": "test_multiple_record_types",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                303,
+                328
+              ],
+              "name": "test_that_all_field_types_become_known",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                331,
+                345
+              ],
+              "name": "test_docstring_record",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                348,
+                363
+              ],
+              "name": "test_docstring_record_field",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            243,
+            364
+          ],
+          "name": "test",
+          "type": "module"
+        }
+      ]
+    },
+    "rename.rs": {
+      "hash": "9d273ec02e89",
+      "indexed_at": "2026-07-24T20:35:13.068848+00:00",
+      "language": "rust",
+      "lines": 339,
+      "mtime_ns": 1782136568000000000,
+      "size": 12243,
+      "symbols": [
+        {
+          "lines": [
+            12,
+            18
+          ],
+          "name": "rename",
+          "signature": "(ci: &mut ComponentInterface, renames: &HashMap<String, toml::Table>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            20,
+            23
+          ],
+          "name": "TomlRenamer",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                26,
+                33
+              ],
+              "name": "new_name",
+              "signature": "(&self, module_path: &str, name: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            25,
+            34
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                37,
+                51
+              ],
+              "name": "visit_record",
+              "signature": "(&self, record: &mut Record)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                53,
+                58
+              ],
+              "name": "visit_object",
+              "signature": "(&self, object: &mut Object)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                60,
+                65
+              ],
+              "name": "visit_callback_interface",
+              "signature": "(&self, iface: &mut CallbackInterface)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                67,
+                88
+              ],
+              "name": "visit_enum",
+              "signature": "(&self, _is_error: bool, enum_: &mut Enum)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                90,
+                101
+              ],
+              "name": "visit_type",
+              "signature": "(&self, type_: &mut Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                116
+              ],
+              "name": "visit_method",
+              "signature": "(&self, object_name: &str, method: &mut Method)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                118,
+                130
+              ],
+              "name": "visit_constructor",
+              "signature": "(&self, object_name: &str, constructor: &mut Constructor)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                132,
+                144
+              ],
+              "name": "visit_function",
+              "signature": "(&self, function: &mut Function)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                146,
+                150
+              ],
+              "name": "visit_error_name",
+              "signature": "(&self, name: &mut String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            36,
+            151
+          ],
+          "name": "VisitMut",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                162,
+                259
+              ],
+              "name": "create_test_ci",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                262,
+                300
+              ],
+              "name": "test_dot_notation_renaming",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                303,
+                338
+              ],
+              "name": "test_callback_interface_renaming",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            154,
+            339
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "universe.rs": {
+      "hash": "0453403c7162",
+      "indexed_at": "2026-07-24T20:35:13.070301+00:00",
+      "language": "rust",
+      "lines": 204,
+      "mtime_ns": 1782136568000000000,
+      "size": 7454,
+      "symbols": [
+        {
+          "lines": [
+            25,
+            34
+          ],
+          "name": "TypeUniverse",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                37,
+                42
+              ],
+              "name": "new",
+              "signature": "(namespace: NamespaceMetadata)",
+              "type": "method"
+            },
+            {
+              "docstring": "Add the definition of a named [Type].",
+              "lines": [
+                45,
+                61
+              ],
+              "name": "add_type_definition",
+              "signature": "(&mut self, name: &str, type_: &Type)",
+              "type": "method"
+            },
+            {
+              "docstring": "Get the [Type] corresponding to a given name, if any.",
+              "lines": [
+                64,
+                66
+              ],
+              "name": "get_type_definition",
+              "signature": "(&self, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Add a [Type] to the set of all types seen in the component interface.",
+              "lines": [
+                69,
+                84
+              ],
+              "name": "add_known_type",
+              "signature": "(&mut self, type_: &Type)",
+              "type": "method"
+            },
+            {
+              "docstring": "Add many [`Type`]s...",
+              "lines": [
+                87,
+                93
+              ],
+              "name": "add_known_types",
+              "signature": "(&mut self, types: TypeIterator<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                95,
+                99
+              ],
+              "name": "is_external",
+              "signature": "(&self, t: &Type)",
+              "type": "method"
+            },
+            {
+              "docstring": "Check if a [Type] is present",
+              "lines": [
+                103,
+                105
+              ],
+              "name": "contains",
+              "signature": "(&self, type_: &Type)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                107,
+                109
+              ],
+              "name": "iter_local_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                113
+              ],
+              "name": "iter_external_types",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Keep only the local types in an iterator of types.",
+              "lines": [
+                116,
+                121
+              ],
+              "name": "filter_local_types",
+              "signature": "(\n        &'a self,\n        types: impl Iterator<Item = &'a Type>,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            36,
+            122
+          ],
+          "name": "TypeUniverse",
+          "type": "impl"
+        },
+        {
+          "docstring": "To avoid issues like #2728, we normalize the module path to only include the crate name.",
+          "lines": [
+            129,
+            194
+          ],
+          "name": "normalize_type_module_path",
+          "signature": "(ty: &Type)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            196,
+            198
+          ],
+          "name": "normalize_module_path",
+          "signature": "(module_path: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            201,
+            204
+          ],
+          "name": "test_type_universe",
+          "type": "module"
+        }
+      ]
+    },
+    "visit_mut.rs": {
+      "hash": "a5798968c275",
+      "indexed_at": "2026-07-24T20:35:13.071436+00:00",
+      "language": "rust",
+      "lines": 159,
+      "mtime_ns": 1782136568000000000,
+      "size": 5859,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "to alter the functions, enums etc. to its own naming conventions.",
+              "lines": [
+                18,
+                158
+              ],
+              "name": "visit_mut",
+              "signature": "(&mut self, visitor: &V)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            10,
+            159
+          ],
+          "name": "ComponentInterface",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.773296+00:00",
+  "version": "1.0"
+}

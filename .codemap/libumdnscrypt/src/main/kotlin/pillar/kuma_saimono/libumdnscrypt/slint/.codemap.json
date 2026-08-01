@@ -1,0 +1,1378 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\slint",
+  "files": {
+    "SlintSurfaceLifecycle.kt": {
+      "hash": "fda9fc75a159",
+      "indexed_at": "2026-08-01T04:00:25.525064+00:00",
+      "language": "kotlin",
+      "lines": 132,
+      "mtime_ns": 1785556378152899400,
+      "size": 6821,
+      "symbols": [
+        {
+          "lines": [
+            34,
+            34
+          ],
+          "name": "SlintAppDataDir",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                79,
+                85
+              ],
+              "name": "onSurfaceCreated",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                108
+              ],
+              "name": "ensureFeedRoots",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                115,
+                117
+              ],
+              "name": "onSurfaceDestroyed",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            67,
+            132
+          ],
+          "name": "SlintSurfaceLifecycle",
+          "type": "class"
+        }
+      ]
+    },
+    "SlintUiComponent.kt": {
+      "hash": "f53a2b2d2c3b",
+      "indexed_at": "2026-08-01T04:00:25.861106+00:00",
+      "language": "kotlin",
+      "lines": 109,
+      "mtime_ns": 1785556378163899100,
+      "size": 4976,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                87,
+                88
+              ],
+              "name": "slintAppDataDir",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            48,
+            93
+          ],
+          "name": "SlintUiComponent",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                103,
+                108
+              ],
+              "name": "launch",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            100,
+            109
+          ],
+          "name": "SlintSpikeLauncher",
+          "type": "class"
+        }
+      ]
+    },
+    "TortaPillarBridge.kt": {
+      "hash": "4079dd03a215",
+      "indexed_at": "2026-08-01T04:00:26.211745+00:00",
+      "language": "kotlin",
+      "lines": 2661,
+      "mtime_ns": 1785556378177902000,
+      "size": 134481,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                122,
+                148
+              ],
+              "name": "rotateResolversNow",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                155,
+                168
+              ],
+              "name": "setRotationEnabled",
+              "signature": "(enable: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                174,
+                184
+              ],
+              "name": "rotationEnabled",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                191,
+                205
+              ],
+              "name": "setRotationCadence",
+              "signature": "(minutes: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                211,
+                222
+              ],
+              "name": "rotationCadence",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                230,
+                244
+              ],
+              "name": "setRotationMaxServers",
+              "signature": "(count: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                247,
+                258
+              ],
+              "name": "rotationMaxServers",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                265,
+                279
+              ],
+              "name": "setRotationMaxRelays",
+              "signature": "(count: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                282,
+                293
+              ],
+              "name": "rotationMaxRelays",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                305,
+                318
+              ],
+              "name": "setTunnelOnlyKillSwitch",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                321,
+                331
+              ],
+              "name": "tunnelOnlyKillSwitch",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                338,
+                348
+              ],
+              "name": "solverEnabled",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                354,
+                364
+              ],
+              "name": "wardenArmedPreference",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                380,
+                400
+              ],
+              "name": "setNetstackForwarder",
+              "signature": "(enable: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                406,
+                417
+              ],
+              "name": "netstackForwarderArmed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                442,
+                453
+              ],
+              "name": "liveResolverStats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                467,
+                491
+              ],
+              "name": "liveWardenStats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                501,
+                520
+              ],
+              "name": "liveMirrorStatus",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                536,
+                593
+              ],
+              "name": "liveCentauriStats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                606,
+                647
+              ],
+              "name": "liveCentauriServes",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                661,
+                704
+              ],
+              "name": "liveRotationState",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                713,
+                789
+              ],
+              "name": "liveForwarderStats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                813,
+                836
+              ],
+              "name": "liveForwarderDocket",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                849,
+                876
+              ],
+              "name": "liveUndergroundStats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                888,
+                903
+              ],
+              "name": "undergroundEventsFlow",
+              "signature": "(pollMs: Long = 500L)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                912,
+                921
+              ],
+              "name": "liveUndergroundEvents",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                928,
+                936
+              ],
+              "name": "resetUndergroundReputation",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                940,
+                943
+              ],
+              "name": "undergroundScoringFile",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                950,
+                958
+              ],
+              "name": "undergroundScoringToml",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                965,
+                981
+              ],
+              "name": "setUndergroundScoringToml",
+              "signature": "(text: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                994,
+                1051
+              ],
+              "name": "liveBeastStats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1066,
+                1092
+              ],
+              "name": "stageBeastConfig",
+              "signature": "(\n        yeah: Int,\n        cake: Int,\n        preset: Int,\n        cycleMs: Int,\n        maxWin...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1101,
+                1135
+              ],
+              "name": "applyBeastConfig",
+              "signature": "(\n        yeah: Int,\n        cake: Int,\n        cycleMs: Int,\n        maxWindow: Int,\n        fre...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1143,
+                1164
+              ],
+              "name": "stagedBeastConfig",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1183,
+                1199
+              ],
+              "name": "stagedInuConfig",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1202,
+                1214
+              ],
+              "name": "inuBootReapply",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1223,
+                1247
+              ],
+              "name": "inuAlwaysOn",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1250,
+                1260
+              ],
+              "name": "inuProviderPref",
+              "signature": "(pref: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1270,
+                1283
+              ],
+              "name": "bootAutostartConfig",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1290,
+                1300
+              ],
+              "name": "setBootAutostart",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1307,
+                1317
+              ],
+              "name": "setBootAutostartDelay",
+              "signature": "(secs: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1324,
+                1340
+              ],
+              "name": "inuExpertToggled",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1348,
+                1359
+              ],
+              "name": "inuPairNow",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1366,
+                1401
+              ],
+              "name": "inuUnpair",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1409,
+                1426
+              ],
+              "name": "inuPowerToggled",
+              "signature": "(id: String, desired: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1434,
+                1456
+              ],
+              "name": "inuManualPair",
+              "signature": "(host: String, port: String, code: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1468,
+                1476
+              ],
+              "name": "setUndergroundVerdict",
+              "signature": "(host: String, code: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1492,
+                1504
+              ],
+              "name": "appForUid",
+              "signature": "(uid: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1525,
+                1544
+              ],
+              "name": "liveWardenFlows",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1559,
+                1570
+              ],
+              "name": "wardenArmed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1583,
+                1599
+              ],
+              "name": "setWardenArmed",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1614,
+                1653
+              ],
+              "name": "liveWardenMatrix",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1662,
+                1695
+              ],
+              "name": "setWardenAppMode",
+              "signature": "(uid: Int, mode: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1716,
+                1757
+              ],
+              "name": "liveWardenAppFlows",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1768,
+                1786
+              ],
+              "name": "liveWardenAppDests",
+              "signature": "(uid: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1794,
+                1803
+              ],
+              "name": "wardenBlockIp",
+              "signature": "(uid: Int, cidr: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1810,
+                1820
+              ],
+              "name": "wardenSetGeoBlocks",
+              "signature": "(csv: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1824,
+                1833
+              ],
+              "name": "wardenGeoBlocks",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1840,
+                1846
+              ],
+              "name": "composeNetClass",
+              "signature": "(blockWifi: Boolean, blockMobile: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1848,
+                1849
+              ],
+              "name": "blocksWifi",
+              "signature": "(m: WardenNetClass)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1851,
+                1852
+              ],
+              "name": "blocksMobile",
+              "signature": "(m: WardenNetClass)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1861,
+                1892
+              ],
+              "name": "setAppNetAxis",
+              "signature": "(uid: Int, axisWifi: Boolean, on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1896,
+                1899
+              ],
+              "name": "wardenSetAppBlockWifi",
+              "signature": "(uid: Int, on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1903,
+                1906
+              ],
+              "name": "wardenSetAppBlockMobile",
+              "signature": "(uid: Int, on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1914,
+                1935
+              ],
+              "name": "wardenUniversalToggles",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1943,
+                1973
+              ],
+              "name": "setWardenUniversalToggle",
+              "signature": "(key: String, on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2009,
+                2033
+              ],
+              "name": "writeWardenAppRow",
+              "signature": "(\n        uid: Int,\n        mode: WardenAppMode,\n        metered: WardenNetClass,\n        tempAll...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2039,
+                2051
+              ],
+              "name": "setWardenFailClosed",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2059,
+                2083
+              ],
+              "name": "cycleWardenAppMode",
+              "signature": "(uid: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2089,
+                2113
+              ],
+              "name": "cycleWardenAppMetered",
+              "signature": "(uid: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2120,
+                2148
+              ],
+              "name": "toggleWardenAppPause",
+              "signature": "(uid: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2155,
+                2175
+              ],
+              "name": "addWardenDomainRule",
+              "signature": "(text: String, wildcard: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2186,
+                2198
+              ],
+              "name": "addWardenCidrRule",
+              "signature": "(text: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2211,
+                2246
+              ],
+              "name": "liveWardenRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2256,
+                2287
+              ],
+              "name": "removeWardenRule",
+              "signature": "(idx: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2301,
+                2310
+              ],
+              "name": "setCentauriCloak",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2329,
+                2337
+              ],
+              "name": "putBoolPref",
+              "signature": "(key: String, v: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2340,
+                2348
+              ],
+              "name": "putIntPref",
+              "signature": "(key: String, v: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2351,
+                2361
+              ],
+              "name": "setResolverSolveLadder",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2364,
+                2374
+              ],
+              "name": "setResolverAllServers",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2377,
+                2387
+              ],
+              "name": "setResolverRebindEnforce",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2390,
+                2400
+              ],
+              "name": "setResolverBogusPriv",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2403,
+                2413
+              ],
+              "name": "setResolverProxyDnssec",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2416,
+                2426
+              ],
+              "name": "setResolverNeverForward",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2429,
+                2439
+              ],
+              "name": "setResolverCacheRr",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2442,
+                2452
+              ],
+              "name": "setResolverCacheCap",
+              "signature": "(cap: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2455,
+                2465
+              ],
+              "name": "setResolverQueryTimeout",
+              "signature": "(ms: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2468,
+                2478
+              ],
+              "name": "setResolverServeStale",
+              "signature": "(secs: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2481,
+                2491
+              ],
+              "name": "setResolverTtlFloor",
+              "signature": "(secs: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2494,
+                2504
+              ],
+              "name": "setResolverTtlCeiling",
+              "signature": "(secs: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2511,
+                2529
+              ],
+              "name": "cycleCentauriSeedPolicy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2538,
+                2555
+              ],
+              "name": "centauriWarmUpNow",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2564,
+                2573
+              ],
+              "name": "centauriCaTrusted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2576,
+                2590
+              ],
+              "name": "centauriCaMinted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2598,
+                2607
+              ],
+              "name": "centauriCaInstall",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2620,
+                2629
+              ],
+              "name": "centauriTlsRetrust",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2635,
+                2644
+              ],
+              "name": "centauriCloakArmed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2650,
+                2660
+              ],
+              "name": "centauriSeedPolicy",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            86,
+            2661
+          ],
+          "name": "TortaPillarBridge",
+          "type": "class"
+        }
+      ]
+    },
+    "TortaSlintActivity.kt": {
+      "hash": "f9e4c2718867",
+      "indexed_at": "2026-08-01T04:00:26.528639+00:00",
+      "language": "kotlin",
+      "lines": 336,
+      "mtime_ns": 1785556378191901200,
+      "size": 17510,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                77,
+                86
+              ],
+              "name": "onCreate",
+              "signature": "(savedInstanceState: Bundle?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                121,
+                129
+              ],
+              "name": "bindWardenPostureBeforeAnySurfaceReads",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                131,
+                136
+              ],
+              "name": "onResume",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                138,
+                146
+              ],
+              "name": "onDestroy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                158,
+                171
+              ],
+              "name": "prepareVpnConsent",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                173,
+                180
+              ],
+              "name": "onActivityResult",
+              "signature": "(requestCode: Int, resultCode: Int, data: Intent?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                191,
+                204
+              ],
+              "name": "ensureNotificationPermission",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                206,
+                218
+              ],
+              "name": "onRequestPermissionsResult",
+              "signature": "(\n        requestCode: Int,\n        permissions: Array<out String>,\n        grantResults: IntArra...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                228,
+                239
+              ],
+              "name": "repostInuNotificationIfWanted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                245,
+                259
+              ],
+              "name": "startVpnFromConsent",
+              "signature": "(resultCode: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                267,
+                281
+              ],
+              "name": "hostBrowserRoleRequest",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            62,
+            336
+          ],
+          "name": "TortaSlintActivity",
+          "type": "class"
+        }
+      ]
+    },
+    "TortaSlintBridge.kt": {
+      "hash": "2884eda12a06",
+      "indexed_at": "2026-08-01T04:00:26.847020+00:00",
+      "language": "kotlin",
+      "lines": 454,
+      "mtime_ns": 1785556378204903500,
+      "size": 21957,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                78,
+                104
+              ],
+              "name": "setDnsCryptEnabled",
+              "signature": "(enable: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                110,
+                128
+              ],
+              "name": "dnsCryptStateCode",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                146,
+                155
+              ],
+              "name": "engineTunnelUp",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                166,
+                179
+              ],
+              "name": "openDonate",
+              "signature": "(url: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                193,
+                238
+              ],
+              "name": "carbonFetch",
+              "signature": "(url: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                240,
+                240
+              ],
+              "name": "carbonPageSeq",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                242,
+                242
+              ],
+              "name": "carbonPageStatus",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                244,
+                244
+              ],
+              "name": "carbonPageUrl",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                246,
+                246
+              ],
+              "name": "carbonPageBody",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                254,
+                268
+              ],
+              "name": "browserRoleHeld",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                277,
+                296
+              ],
+              "name": "requestBrowserRole",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                303,
+                318
+              ],
+              "name": "ensureOperationMode",
+              "signature": "(context: Context, modulesStatus: ModulesStatus)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                324,
+                332
+              ],
+              "name": "allowSystemDNS",
+              "signature": "(context: Context, modulesStatus: ModulesStatus)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                341,
+                372
+              ],
+              "name": "startVpnServiceIfConsented",
+              "signature": "(context: Context, modulesStatus: ModulesStatus)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                395,
+                426
+              ],
+              "name": "trafficSnapshot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                429,
+                446
+              ],
+              "name": "pushIntoLiveNotification",
+              "signature": "(context: Context, dlBps: Long, ulBps: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                448,
+                453
+              ],
+              "name": "formatBps",
+              "signature": "(bps: Long)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            61,
+            454
+          ],
+          "name": "TortaSlintBridge",
+          "type": "class"
+        }
+      ]
+    },
+    "UndergroundViewModel.kt": {
+      "hash": "ae3f118e9488",
+      "indexed_at": "2026-08-01T04:00:27.170878+00:00",
+      "language": "kotlin",
+      "lines": 53,
+      "mtime_ns": 1785556378217900500,
+      "size": 2618,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                37,
+                37
+              ],
+              "name": "snapshot",
+              "signature": "(topN: UInt = 12u)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                40,
+                40
+              ],
+              "name": "events",
+              "signature": "(pollMs: Long = 500L)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                43,
+                43
+              ],
+              "name": "setVerdict",
+              "signature": "(host: String, code: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                46,
+                46
+              ],
+              "name": "scoringToml",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                49
+              ],
+              "name": "saveScoringToml",
+              "signature": "(text: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                52,
+                52
+              ],
+              "name": "resetReputation",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            33,
+            53
+          ],
+          "name": "UndergroundViewModel",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:27.172826+00:00",
+  "version": "1.0"
+}

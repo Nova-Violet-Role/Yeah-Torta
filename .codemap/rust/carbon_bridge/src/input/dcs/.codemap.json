@@ -1,0 +1,241 @@
+{
+  "directory": "rust\\carbon_bridge\\src\\input\\dcs",
+  "files": {
+    "control_flow.rs": {
+      "hash": "f9841fc115f7",
+      "indexed_at": "2026-07-26T19:12:57.746289+00:00",
+      "language": "rust",
+      "lines": 32,
+      "mtime_ns": 1785030832092605100,
+      "size": 702,
+      "symbols": []
+    },
+    "parser.rs": {
+      "hash": "da30d9143a16",
+      "indexed_at": "2026-07-26T19:12:57.746819+00:00",
+      "language": "rust",
+      "lines": 49,
+      "mtime_ns": 1785030832102604400,
+      "size": 1192,
+      "symbols": [
+        {
+          "lines": [
+            12,
+            18
+          ],
+          "name": "Sequence",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            21,
+            23
+          ],
+          "name": "DeviceControl",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                26,
+                28
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                30,
+                48
+              ],
+              "name": "parse",
+              "signature": "(&mut self, key: u8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            25,
+            49
+          ],
+          "name": "DeviceControl",
+          "type": "impl"
+        }
+      ]
+    },
+    "resource.rs": {
+      "hash": "f03fd2281283",
+      "indexed_at": "2026-07-26T19:12:57.747709+00:00",
+      "language": "rust",
+      "lines": 104,
+      "mtime_ns": 1785030832112604400,
+      "size": 2537,
+      "symbols": [
+        {
+          "lines": [
+            13,
+            18
+          ],
+          "name": "Sequence",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            21,
+            26
+          ],
+          "name": "ResourceParser",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                29,
+                36
+              ],
+              "name": "new",
+              "signature": "(code: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                38,
+                59
+              ],
+              "name": "parse",
+              "signature": "(&mut self, key: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                61,
+                69
+              ],
+              "name": "push_char",
+              "signature": "(&mut self, key: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                71,
+                84
+              ],
+              "name": "parse_event",
+              "signature": "(&self, key: u8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            28,
+            85
+          ],
+          "name": "ResourceParser",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            87,
+            104
+          ],
+          "name": "read_hex_string",
+          "signature": "(str: &[u8])",
+          "type": "function"
+        }
+      ]
+    },
+    "status.rs": {
+      "hash": "8b7d2197196d",
+      "indexed_at": "2026-07-26T19:12:57.748674+00:00",
+      "language": "rust",
+      "lines": 103,
+      "mtime_ns": 1785030832123604200,
+      "size": 2445,
+      "symbols": [
+        {
+          "lines": [
+            13,
+            18
+          ],
+          "name": "Sequence",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            21,
+            27
+          ],
+          "name": "StatusParser",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                30,
+                36
+              ],
+              "name": "new",
+              "signature": "(code: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                38,
+                55
+              ],
+              "name": "parse",
+              "signature": "(&mut self, key: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                57,
+                63
+              ],
+              "name": "terminate",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                65,
+                69
+              ],
+              "name": "push_char",
+              "signature": "(&mut self, key: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                71,
+                77
+              ],
+              "name": "push_value",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                102
+              ],
+              "name": "parse_event",
+              "signature": "(&self, key: u8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            29,
+            103
+          ],
+          "name": "StatusParser",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-26T19:12:58.605931+00:00",
+  "version": "1.0"
+}

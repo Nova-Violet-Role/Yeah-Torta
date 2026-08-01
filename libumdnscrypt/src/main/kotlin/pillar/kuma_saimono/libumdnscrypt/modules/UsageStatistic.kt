@@ -1,0 +1,290 @@
+/*
+    SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+
+    Yeah! Tortä
+    Copyright 2026 Saimonokuma
+
+    This file is part of Yeah! Tortä, dual-licensed at your option under
+    EITHER the GNU Affero General Public License, version 3 or later (see
+    agpl-3.0.md), OR the European Union Public Licence, version 1.2 or later
+    (see EUPL-LICENSE.txt).
+
+    Distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+    PARTICULAR PURPOSE.
+ */
+
+@file:JvmName("UsageStatistics")
+
+package pillar.kuma_saimono.libumdnscrypt.modules
+
+import android.content.Context
+import android.net.TrafficStats
+import android.os.Process
+import pillar.kuma_saimono.libumdnscrypt.App
+import pillar.kuma_saimono.libumdnscrypt.R
+import pillar.kuma_saimono.libumdnscrypt.domain.connection_checker.ConnectionCheckerInteractor
+import pillar.kuma_saimono.libumdnscrypt.settings.PathVars
+import pillar.kuma_saimono.libumdnscrypt.utils.enums.ModuleState
+import pillar.kuma_saimono.libumdnscrypt.utils.enums.OperationMode
+import pillar.kuma_saimono.libumdnscrypt.utils.logger.Logger.loge
+import java.text.CharacterIterator
+import java.text.StringCharacterIterator
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.ScheduledFuture
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
+import javax.inject.Inject
+import kotlin.math.abs
+import kotlin.math.roundToInt
+
+@Volatile var savedTitle = ""
+@Volatile var savedMessage = ""
+@Volatile var startTime = 0L
+
+private const val NOTIFICATION_UPDATE_SHORT_PERIOD_SEC = 3
+private const val NOTIFICATION_UPDATE_LONG_PERIOD_SEC = 5
+
+class UsageStatistic(private val context: Context) {
+
+    @Inject
+    lateinit var connectionCheckerInteractor: dagger.Lazy<ConnectionCheckerInteractor>
+    @Inject
+    lateinit var pathVars: PathVars
+
+    @Volatile var serviceNotification: ModulesServiceNotificationManager? = null
+
+    @Volatile private var timer: ScheduledExecutorService? = null
+    private val modulesStatus = ModulesStatus.getInstance()
+
+    private val updating = AtomicBoolean(false)
+
+    @Volatile private var task: ScheduledFuture<*>? = null
+    @Volatile private var updatePeriod = 0
+    @Volatile private var counter = 0
+
+    @Volatile private var savedMode = OperationMode.UNDEFINED
+    @Volatile private var startRX = 0L
+    @Volatile private var startTX = 0L
+    @Volatile private var savedTime = 0L
+    @Volatile private var savedRX = 0L
+    @Volatile private var savedTX = 0L
+
+    init {
+        initModulesLogsTimer()
+        startTime = System.currentTimeMillis()
+        App.instance.daggerComponent.inject(this)
+    }
+
+    private val uid = pathVars.appUid
+
+    @JvmOverloads
+    fun startUpdate(period: Int = NOTIFICATION_UPDATE_SHORT_PERIOD_SEC) {
+        tryStartUpdate(period)
+    }
+
+    private fun tryStartUpdate(period: Int) {
+        try {
+            if (period == updatePeriod && task?.isDone == false) {
+                return
+            }
+
+            updatePeriod = period
+
+            initModulesLogsTimer()
+
+            if (task != null && task?.isCancelled == false) {
+                task?.cancel(false)
+            }
+
+            task = timer?.scheduleWithFixedDelay({
+                if (updating.compareAndSet(false, true)) {
+                    tryUpdate()
+                }
+            }, 1, period.toLong(), TimeUnit.SECONDS)
+        } catch (e: Exception) {
+            loge("UsageStatistic tryStartUpdate", e)
+        }
+    }
+
+    private fun tryUpdate() {
+        try {
+
+            val currentTime = System.currentTimeMillis()
+
+            val title = getTitle()
+
+            val message = getMessage(currentTime)
+
+            if (modulesStatus.isDeviceInteractive
+                && (title != savedTitle || message != savedMessage)) {
+                serviceNotification?.updateNotification(context, title, message, startTime)
+                savedTitle = title
+                savedMessage = message
+            }
+
+            if (counter > 100) {
+                startUpdate(NOTIFICATION_UPDATE_LONG_PERIOD_SEC)
+                counter = -1
+            } else if (counter >= 0) {
+                counter++
+            }
+        } catch (exception: Exception) {
+            loge("UsageStatistics", exception)
+        } finally {
+            updating.compareAndSet(true, false)
+        }
+    }
+
+    fun stopUpdate() {
+        tryStopUpdate()
+    }
+
+    private fun tryStopUpdate() {
+        try {
+            if (timer != null && timer?.isShutdown == false) {
+                timer?.shutdown()
+            }
+
+            startRX = 0
+            startTX = 0
+
+            savedTitle = ""
+            savedMessage = ""
+        } catch (e: Exception) {
+            loge("UsageStatistic tryStopUpdate", e)
+        }
+    }
+
+    @Synchronized
+    fun getTitle(): String {
+        var title = ""
+
+        if (modulesStatus.dnsCryptState == ModuleState.RUNNING
+            || modulesStatus.dnsCryptState == ModuleState.RESTARTING) {
+            title += " & DNSCRYPT"
+        }
+
+        if (title.isEmpty()) {
+            title = uniffi.torta_core.tortaText("app_name")
+        }
+
+        return title.removePrefix(" & ")
+    }
+
+    @Synchronized
+    fun getMessage(currentTime: Long): String =
+        tryGetMessage(currentTime)
+
+    private fun tryGetMessage(currentTime: Long): String {
+        return try {
+            if (uid == Process.INVALID_UID) {
+                return uniffi.torta_core.tortaText("notification_text")
+            }
+
+            val mode = modulesStatus.mode ?: return uniffi.torta_core.tortaText("notification_text")
+
+            if (savedMode != mode) {
+                savedMode = mode
+
+                startRX = TrafficStats.getTotalRxBytes() - TrafficStats.getUidRxBytes(uid)
+                startTX = TrafficStats.getTotalTxBytes() - TrafficStats.getUidTxBytes(uid)
+            }
+
+            val timePeriod = (currentTime - savedTime) / 1000L
+            val currentRX =
+                TrafficStats.getTotalRxBytes() - TrafficStats.getUidRxBytes(uid) - startRX
+            val currentTX =
+                TrafficStats.getTotalTxBytes() - TrafficStats.getUidTxBytes(uid) - startTX
+
+            val connectionChecker = connectionCheckerInteractor.get()
+            val message = if ((mode == OperationMode.VPN_MODE
+                        || mode == OperationMode.ROOT_MODE && !modulesStatus.isUseModulesWithRoot)
+                && !connectionChecker.getInternetConnectionResult()
+            ) {
+                if (connectionChecker.getNetworkConnectionResult()) {
+                    uniffi.torta_core.tortaText("notification_connecting")
+                } else {
+                    uniffi.torta_core.tortaText("notification_waiting_network")
+                }
+            } else {
+                "▼ ${
+                    getReadableSpeedString(
+                        currentRX - savedRX,
+                        timePeriod
+                    )
+                } ${humanReadableByteCountBin(currentRX)}  " +
+                        "▲ ${
+                            getReadableSpeedString(
+                                currentTX - savedTX,
+                                timePeriod
+                            )
+                        } ${humanReadableByteCountBin(currentTX)}"
+            }
+
+            savedRX = currentRX
+            savedTX = currentTX
+            savedTime = currentTime
+
+            message
+
+        } catch (e: Exception) {
+            loge("UsageStatistic tryGetMessage", e)
+            ""
+        }
+    }
+
+    fun isStatisticAllowed(): Boolean =
+        try {
+            TrafficStats.getTotalRxBytes() != TrafficStats.UNSUPPORTED.toLong()
+                    && TrafficStats.getTotalTxBytes() != TrafficStats.UNSUPPORTED.toLong()
+        } catch (e: Exception) {
+            loge("UsageStatistic isStatisticAllowed", e)
+            false
+        }
+
+
+    private fun initModulesLogsTimer() {
+        if (timer == null || timer?.isShutdown == true) {
+            timer = Executors.newSingleThreadScheduledExecutor()
+        }
+    }
+
+    private fun getReadableSpeedString(fileSizeInBytes: Long, timePeriod: Long): String {
+
+        var i = 0
+        val byteUnits = arrayListOf("b/s", " kb/s", " Mb/s", " Tb/s", " Pb/s", " Eb/s", " Zb/s", " Yb/s")
+
+        if (timePeriod == 0L || fileSizeInBytes < 0) {
+            return "0 ${byteUnits[i]}"
+        }
+
+        var fileSize = fileSizeInBytes.toDouble() * 8.0
+
+        while (fileSize / timePeriod > 1000.0) {
+            fileSize /= 1000.0
+            i++
+        }
+
+        return "${(fileSize / timePeriod).roundToInt()} ${byteUnits[i]}"
+    }
+
+    private fun humanReadableByteCountBin(bytes: Long): String {
+        val absB = if (bytes == Long.MIN_VALUE) Long.MAX_VALUE else abs(bytes)
+        if (absB < 1024) {
+            return "$bytes B"
+        }
+        var value = absB
+        val ci: CharacterIterator = StringCharacterIterator("KMGTPE")
+        var i = 40
+        while (i >= 0 && absB > 0xfffccccccccccccL shr i) {
+            value = value shr 10
+            ci.next()
+            i -= 10
+        }
+        value *= java.lang.Long.signum(bytes).toLong()
+        return String.format("%.1f %ciB", value / 1024.0, ci.current())
+    }
+
+}

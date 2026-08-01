@@ -1,0 +1,237 @@
+{
+  "directory": "uniffi-rs-main\\examples\\sprites\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "d7984c0c1001",
+      "indexed_at": "2026-07-24T20:35:12.344482+00:00",
+      "language": "rust",
+      "lines": 65,
+      "mtime_ns": 1782136568000000000,
+      "size": 1816,
+      "symbols": [
+        {
+          "lines": [
+            9,
+            12
+          ],
+          "name": "Point",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            17,
+            20
+          ],
+          "name": "Vector",
+          "type": "struct"
+        },
+        {
+          "docstring": "Move from the given Point, according to the given Vector.",
+          "lines": [
+            23,
+            28
+          ],
+          "name": "translate",
+          "signature": "(p: &Point, v: Vector)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            33,
+            36
+          ],
+          "name": "Sprite",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                39,
+                43
+              ],
+              "name": "new",
+              "signature": "(initial_position: Option<Point>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                45,
+                49
+              ],
+              "name": "new_relative_to",
+              "signature": "(reference: Point, direction: Vector)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                51,
+                53
+              ],
+              "name": "get_position",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                55,
+                57
+              ],
+              "name": "move_to",
+              "signature": "(&self, position: Point)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                59,
+                62
+              ],
+              "name": "move_by",
+              "signature": "(&self, direction: Vector)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            38,
+            63
+          ],
+          "name": "Sprite",
+          "type": "impl"
+        }
+      ]
+    },
+    "sprites.udl": {
+      "hash": "bfd35f04ba05",
+      "indexed_at": "2026-07-24T20:35:12.345057+00:00",
+      "language": "udl",
+      "lines": 22,
+      "mtime_ns": 1782136568000000000,
+      "size": 408,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "translate",
+              "signature": "([ByRef] Point position, Vector direction) : Point",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2,
+            4
+          ],
+          "name": "sprites",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                7
+              ],
+              "name": "x",
+              "signature": "double",
+              "type": "field"
+            },
+            {
+              "lines": [
+                8,
+                8
+              ],
+              "name": "y",
+              "signature": "double",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            6,
+            9
+          ],
+          "name": "Point",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                12,
+                12
+              ],
+              "name": "dx",
+              "signature": "double",
+              "type": "field"
+            },
+            {
+              "lines": [
+                13,
+                13
+              ],
+              "name": "dy",
+              "signature": "double",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            11,
+            14
+          ],
+          "name": "Vector",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "constructor",
+              "signature": "(Point? initial_position)",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                19,
+                19
+              ],
+              "name": "get_position",
+              "signature": "() : Point",
+              "type": "method"
+            },
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "move_to",
+              "signature": "(Point position) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "move_by",
+              "signature": "(Vector direction) : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            16,
+            22
+          ],
+          "name": "Sprite",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.656137+00:00",
+  "version": "1.0"
+}

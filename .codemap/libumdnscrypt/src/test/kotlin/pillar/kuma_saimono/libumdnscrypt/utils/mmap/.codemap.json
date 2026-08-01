@@ -1,0 +1,130 @@
+{
+  "directory": "libumdnscrypt\\src\\test\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\utils\\mmap",
+  "files": {
+    "MmapTailTest.kt": {
+      "hash": "a69f7c93fc9b",
+      "indexed_at": "2026-08-01T04:01:06.131160+00:00",
+      "language": "kotlin",
+      "lines": 145,
+      "mtime_ns": 1785556379640900000,
+      "size": 6959,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                34,
+                35
+              ],
+              "name": "temp",
+              "signature": "(content: ByteArray)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                38
+              ],
+              "name": "lines",
+              "signature": "(n: Int, width: Int = 90)",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2500\u2500 byte identity \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+              "lines": [
+                42,
+                54
+              ],
+              "name": "`tailWindow returns byte-identical suffix to a stream read (window smaller than file)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                63
+              ],
+              "name": "`tailWindow covers the whole file when the window is larger`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                65,
+                72
+              ],
+              "name": "`tailWindow on an empty file is an empty tail - on a missing file null`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2500\u2500 tailLines semantics (BufferedReader parity) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+              "lines": [
+                76,
+                83
+              ],
+              "name": "`tailLines equals BufferedReader lines when the window covers the file`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                85,
+                97
+              ],
+              "name": "`tailLines drops the torn head line on a mid-file window and matches the stream tail`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                99,
+                107
+              ],
+              "name": "`tailLines refuses a mid-file window that cannot rule out head lines (caller falls back)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                109,
+                113
+              ],
+              "name": "`tailLines has no phantom empty entry from the trailing newline`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2500\u2500 the PillarLog trim equivalence (the exact consumer arithmetic) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+              "lines": [
+                117,
+                126
+              ],
+              "name": "`trim suffix via tailWindow equals the whole-file readBytes suffix the old trim used`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2500\u2500 repeated-cycle stability + the honest micro-measure \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
+              "lines": [
+                130,
+                144
+              ],
+              "name": "`1000 map-release cycles stay stable and mmap tail beats whole-file scan on a big log`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            32,
+            145
+          ],
+          "name": "MmapTailTest",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:01:06.133104+00:00",
+  "version": "1.0"
+}

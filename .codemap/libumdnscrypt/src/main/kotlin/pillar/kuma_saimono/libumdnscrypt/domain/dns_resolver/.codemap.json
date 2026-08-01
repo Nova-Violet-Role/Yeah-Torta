@@ -1,0 +1,184 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\domain\\dns_resolver",
+  "files": {
+    "DnsInteractor.kt": {
+      "hash": "4264f5332f5d",
+      "indexed_at": "2026-08-01T03:59:54.459712+00:00",
+      "language": "kotlin",
+      "lines": 44,
+      "mtime_ns": 1785556376892899000,
+      "size": 1295,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                28
+              ],
+              "name": "resolveDomain",
+              "signature": "(\n        domain: String,\n        includeIPv6: Boolean,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                30,
+                34
+              ],
+              "name": "resolveDomain",
+              "signature": "(\n        domain: String,\n        includeIPv6: Boolean,\n        timeout: Int\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                36,
+                36
+              ],
+              "name": "reverseResolve",
+              "signature": "(ip: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                38,
+                43
+              ],
+              "name": "resolveDomainOrIp",
+              "signature": "(\n        domainIps: Set<DomainIpEntity>,\n        includeIPv6: Boolean,\n        timeout: Int = Re...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            44
+          ],
+          "name": "DnsInteractor",
+          "type": "interface"
+        }
+      ]
+    },
+    "DnsInteractorImpl.kt": {
+      "hash": "ca97c5760675",
+      "indexed_at": "2026-08-01T03:59:54.740749+00:00",
+      "language": "kotlin",
+      "lines": 168,
+      "mtime_ns": 1785556376904900000,
+      "size": 6613,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                47,
+                48
+              ],
+              "name": "resolveDomain",
+              "signature": "(domain: String, includeIPv6: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                65
+              ],
+              "name": "resolveDomain",
+              "signature": "(domain: String, includeIPv6: Boolean, timeout: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                67,
+                82
+              ],
+              "name": "reverseResolve",
+              "signature": "(ip: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                84,
+                149
+              ],
+              "name": "resolveDomainOrIp",
+              "signature": "(\n        domainIps: Set<DomainIpEntity>,\n        includeIPv6: Boolean,\n        timeout: Int\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                151,
+                167
+              ],
+              "name": "resolveDomainOrIp",
+              "signature": "(\n        domainIp: DomainIpEntity,\n        includeIPv6: Boolean,\n        timeout: Int\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            38,
+            168
+          ],
+          "name": "DnsInteractorImpl",
+          "type": "class"
+        }
+      ]
+    },
+    "DnsRepository.kt": {
+      "hash": "a820bd261a92",
+      "indexed_at": "2026-08-01T03:59:55.026002+00:00",
+      "language": "kotlin",
+      "lines": 24,
+      "mtime_ns": 1785556376916900800,
+      "size": 972,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "resolveDomainUDP",
+              "signature": "(domain: String, includeIPv6: Boolean, port: Int, timeout: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "resolveDomainDOH",
+              "signature": "(domain: String, includeIPv6: Boolean, timeout: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "reverseResolveDomainUDP",
+              "signature": "(ip: String, port: Int, timeout: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "reverseResolveDomainDOH",
+              "signature": "(ip: String, timeout: Int)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            24
+          ],
+          "name": "DnsRepository",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:55.027357+00:00",
+  "version": "1.0"
+}

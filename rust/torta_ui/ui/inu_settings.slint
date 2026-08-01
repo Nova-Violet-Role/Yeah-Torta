@@ -1,0 +1,655 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT Wire Cake Inu ||| SETTINGS section — slice 9 of the Inu pillar (the 🎷 Violet facet).
+//
+// This is the rust-native (SLINT, NO XML / NO Java / NO Compose) Inu settings surface reached from the |||
+// triple-burger. It REPLACES the interactive half of the legacy `activity_wireless_debug.xml` (the 4-step
+// pair wizard + the Expert grant panel + the `WdStep*` styles) — zero Garmatin XML survives. It reads + writes
+// the live elevation stack through the host: SLINT can't mutate a Rust/Kotlin object directly, so the user's
+// edits surface as typed CALLBACKS the host wires to the real destinations (the ElevationManager / the
+// per-power GrantEngine / the InuState DurableTier / the boot-reapply policy):
+//   - `pair-now` / `unpair`   -> the ADB pair + elevate flow / clear the persisted key-cert pair
+//   - `power-toggled`         -> GrantEngine set/revert the power (PowerState.desired) — "protect / stop protecting"
+//   - `boot-reapply-toggled`  -> arm the live BootComplete re-establish branch (the Genesis #1 gap closer)
+//   - `always-on-toggled`     -> the Shizuku-studied always-on foreground pairing notification
+//   - `provider-pref-cycled`  -> the elevation-path preference (Auto / Shizuku / Self-ADB)
+//   - `manual-pair`           -> the raw ADB host:port + 6-digit code (behind Expert)
+// The host pushes the CURRENT state onto the `in-out` inputs; the user's intents flow back out as callbacks;
+// the host owns the truth (one-way data flow — the live elevation engine is the single source).
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android cross-compile spike #69.
+//
+// 🎷 THE DECISION-POINT GUARD (the Violet facet's load-bearing job — warn WHERE the choice is MADE, not after
+// it silently fails, like the dashboard): protecting a power while not paired (it can't take effect), turning
+// on a drift-prone power while boot re-apply is OFF (it vanishes on the next reboot), and unpairing while
+// powers are held (you orphan the enforcement, no clean revert) — each reads as a colored banner at the moment
+// of the choice, with the live witness beside the control (feedback-simple-ux: the simple one-tap controls up
+// top, the raw ADB knobs behind the Expert reveal; the Inu (dog) motif playful, never intimidating).
+//
+// NOTE: slint uses `:` for property bindings (not `=`); `\{expr}` is string interpolation; `out property`
+// values are derived + host-readable (the proof test asserts the guard derivations fire); interactive controls
+// are built on the core `TouchArea` (zero std-widget-style dependency) + the proven `Button` / `LineEdit`.
+
+import { VerticalBox, HorizontalBox, Button, LineEdit } from "std-widgets.slint";
+// The loyal-hound / collar-tag palette (slice 10) — the single source of truth, shared with inu.slint. NO XML.
+import { Inu } from "inu_palette.slint";
+import { ThemeBook, MotifWash, UpperMoonChip } from "theme_tokens.slint";
+
+// ===========================================================================================
+// Exported row struct — the host fills this model from the live per-power grant map (the InuState Record /
+// the PowerCatalogue × the GrantEngine PowerState). Distinct from inu.slint's read-only `PowerRow` (this one
+// carries the editable `desired` intent + the `hint`).
+// ===========================================================================================
+export struct PowerToggleRow {
+    id: string,
+    label: string,
+    hint: string,
+    tier: string,
+    desired: bool,     // the user's intent (GrantEngine PowerState.desired) — the toggle drives this
+    held: bool,        // whether it is actually granted + verified live
+    drift-prone: bool, // it drifts off across reboot unless boot-reapply re-arms it
+}
+
+// ===========================================================================================
+// Local controls (TouchArea-built — zero std-widget-style dependency; the host build proves them green).
+// ===========================================================================================
+
+// A pill toggle. Visual reads the host-owned `on`; a tap fires `toggled(!on)` so the host updates state + calls
+// the real setter (one-way to the engine, the single source of truth).
+component ToggleSwitch inherits Rectangle {
+    in property <bool> on: false;
+    in property <color> on-color: Inu.goodboy;
+    callback toggled(bool);
+    width: 42px;
+    height: 24px;
+    border-radius: 12px;
+    background: root.on ? root.on-color : Inu.track;
+    animate background { duration: 120ms; }
+    Rectangle {
+        width: 18px;
+        height: 18px;
+        border-radius: 9px;
+        background: white;
+        x: root.on ? parent.width - self.width - 3px : 3px;
+        y: (parent.height - self.height) / 2;
+        animate x { duration: 120ms; }
+    }
+    TouchArea {
+        clicked => {
+            root.toggled(!root.on);
+        }
+    }
+}
+
+// A section title.
+component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: Inu.dim;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+// A row card shell.
+component RowCard inherits Rectangle {
+    background: @linear-gradient(90deg, Inu.burrow.with-alpha(0.58) 0%, Inu.den.with-alpha(0.32) 100%);
+    border-radius: 6px;
+}
+
+// A decision-point alert banner (local) — instantiated via a guarding `if`, so an inactive warning occupies
+// ZERO layout space. The danger reads colored, at the moment the choice is made.
+component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: Inu.wound;
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: Inu.strike;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: Inu.strike;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A "chip" whose tap cycles a value (the host advances the choice + calls the setter). Simpler for a non-geek
+// than a raw combo of enum names (the feedback-simple-ux law).
+component CycleChip inherits Rectangle {
+    in property <string> text;
+    in property <color> tint: Inu.cream;
+    callback cycled();
+    min-width: 92px;
+    height: 26px;
+    border-radius: 6px;
+    background: @linear-gradient(0deg, Inu.straw.with-alpha(0.60) 0%, Inu.kennel.with-alpha(0.38) 100%);
+    border-width: 1px;
+    border-color: Inu.leash;
+    HorizontalLayout {
+        alignment: center;
+        Text {
+            text: root.text;
+            color: root.tint;
+            font-size: 11px;
+            font-weight: 700;
+            vertical-alignment: center;
+        }
+    }
+    TouchArea {
+        clicked => {
+            root.cycled();
+        }
+    }
+}
+
+// The embeddable Inu SETTINGS pane — inherits Rectangle so it mounts on the single Android surface as a |||
+// overlay section (the "inu-settings" section in home_shell.slint), exactly like BeastSettingsPane. The
+// standalone `InuSettings inherits Window` (below) is the host-preview forwarder.
+export component InuSettingsPane inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.inu; width: 100%; height: 100%; }
+    // ===== "THE DEN" settings signature — the collar glint at the crown (calm teal). =====
+    Rectangle { y: 0; height: 2px; width: 100%; background: @linear-gradient(90deg, transparent 0%, Inu.collar.with-alpha(0.45) 50%, transparent 100%); }
+    background: Inu.den.with-alpha(0.42);
+
+    // ===== STATE (host pushes from the live InuState + the Kotlin elevation status) =====
+    in-out property <bool> demo-posture: false;      // this pane is showing the SEEDED spike, not the user's record
+    in-out property <bool> configured: false;        // the pillar is armed (the Inu / wireless-debug is enabled)
+    in-out property <bool> paired: false;            // the ADB pair handshake completed (key/cert persisted)
+    in-out property <string> paired-label: "not paired yet";  // host pre-formatted ("paired 3d ago")
+    in-out property <int> active-provider: 0;        // 0 NONE · 1 SHIZUKU · 2 SELF-ADB · 3 STUB (demo)
+    in-out property <int> elevation-status: 0;       // 0 RESTING · 1 FETCHING · 2 ELEVATED · 3 ERROR
+    in-out property <bool> always-on: false;         // the always-on foreground pairing notification (Shizuku-studied)
+    in-out property <bool> boot-reapply-armed: false;// re-establish elevation silently at boot (the Genesis #1 gap)
+    in-out property <int> provider-pref: 0;          // 0 AUTO · 1 SHIZUKU · 2 SELF-ADB (the elevation-path preference)
+    in-out property <bool> expert-open: false;       // reveal the raw ADB pair knobs (the WIRELESS_DEBUG_EXPERT pref)
+    in-out property <int> powers-held: 0;            // count of powers granted + verified live (host-folded)
+
+    // ===== The per-power toggle list (host fills from the InuState grant map; sample defaults for preview) =====
+    in-out property <[PowerToggleRow]> powers: [
+        { id: "battery-unrestricted", label: "Ignore battery limits", hint: "let the engine keep running in Doze", tier: "basic", desired: true, held: true, drift-prone: false },
+        { id: "usage-stats", label: "See app usage", hint: "per-app network attribution", tier: "standard", desired: true, held: true, drift-prone: false },
+        { id: "write-secure-settings", label: "Tune secure settings", hint: "private-DNS + advanced knobs", tier: "deep", desired: false, held: false, drift-prone: true },
+    ];
+
+    // ===== The manual-pair draft (Expert only — the raw ADB host:port + 6-digit code) =====
+    in-out property <string> draft-host: "127.0.0.1";  // loopback self-ADB is the default (ours, no companion)
+    in-out property <string> draft-port: "";
+    in-out property <string> draft-code: "";
+
+    // ===== Host-pushed summary scalars (slint can't aggregate a model in an expression, so the host folds the
+    //       live list + pushes these — the warden-settings scalar pattern) =====
+    in-out property <int> desired-count: 2;        // powers the user wants protected (desired == true)
+    in-out property <int> drift-desired-count: 0;  // desired powers that are drift-prone (the reboot-loss risk)
+
+    // ===== 🎷 THE DECISION-POINT GUARD — derived, host-readable (the proof test asserts these fire) =====
+    // (1) PROTECT WITHOUT PAIR — a power is wanted protected but the hound is not paired: it cannot take effect
+    //     until you Pair. Actionable — warn at the toggle tap, not after nothing happens.
+    out property <bool> warn-grant-no-pair: root.desired-count > 0 && !root.paired;
+    // (2) DRIFT WON'T SURVIVE — a drift-prone power is wanted protected but boot re-apply is OFF: it vanishes on
+    //     the next reboot. Actionable — warn where "Keep after reboot" is the fix.
+    out property <bool> warn-drift-no-boot: root.drift-desired-count > 0 && !root.boot-reapply-armed;
+    // (3) UNPAIR ORPHANS HELD (informational) — unpairing while powers are held loses the clean revert path; the
+    //     powers stay enforced on-device with no in-app disable. A chosen state, surfaced, not a red alarm.
+    out property <bool> note-unpair-held: root.paired && root.powers-held > 0;
+    // (4) DEMO STUB (informational) — the active provider is a placeholder; nothing truly elevates.
+    out property <bool> note-stub-active: root.active-provider == 3;
+    // (5) DORMANT (informational) — the engine is not armed → the controls STAGE for the next start.
+    out property <bool> note-dormant: !root.configured;
+    // Master of the ACTIONABLE dangers (the notes are chosen/soft states, excluded — like the rotation/mask
+    // settings: informational, they do not raise warn-any).
+    out property <bool> warn-any: root.warn-grant-no-pair || root.warn-drift-no-boot;
+
+    // The elevation-path preference plain-words decode (never the raw enum name — feedback-simple-ux).
+    out property <string> provider-pref-label: root.provider-pref == 1 ? "Shizuku"
+        : (root.provider-pref == 2 ? "Self-ADB" : "Auto (best available)");
+    // The active-path plain-words decode.
+    out property <string> active-provider-label: root.active-provider == 1 ? "Shizuku"
+        : (root.active-provider == 2 ? "Self-ADB"
+        : (root.active-provider == 3 ? "demo stub" : "none"));
+
+    // The plain-words posture summary (the Violet felt-truth: tell the non-geek what their knobs MEAN).
+    out property <string> posture-line:
+        !root.configured ? "not armed — the controls stage for the next start"
+        : (root.paired
+            ? "PAIRED · elevating via \{root.active-provider-label} · \{root.powers-held} power(s) held"
+            : "not paired yet — tap Pair to let the hound in");
+
+    // ===== The user's edit intents — the host wires each to its real destination (see the header) =====
+    callback pair-now();                       // -> the ADB pair + elevate flow
+    callback unpair();                         // -> clear the persisted pair (key/cert) + drop elevation
+    callback power-toggled(string, bool);      // id, desired -> GrantEngine set/revert (PowerState.desired)
+    callback boot-reapply-toggled(bool);       // -> arm the live BootComplete re-establish branch
+    callback always-on-toggled(bool);          // -> the always-on foreground pairing notification
+    callback provider-pref-cycled();           // -> cycle Auto / Shizuku / Self-ADB
+    callback manual-pair(string, string, string);  // host, port, code (Expert raw knobs; host parses the port)
+    callback expert-toggled(bool);             // -> reveal the raw ADB pair knobs (WIRELESS_DEBUG_EXPERT)
+    callback close-settings();
+
+    VerticalBox {
+        padding: 14px;
+        spacing: 12px;
+
+        // ---- Header + the plain-words posture summary ----
+        HorizontalBox {
+            spacing: 8px;
+            VerticalLayout {
+                Text {
+                    text: "WIRE CAKE INU  |||";
+                    color: Inu.collar;
+                    font-size: 22px;
+                    font-weight: 900;
+                }
+                Text {
+                    text: "elevation settings — pair · protect · keep";
+                    color: Inu.fur;
+                    font-size: 11px;
+                }
+            }
+            Rectangle { }  // spacer
+            Text {
+                text: root.paired ? "PAIRED" : (root.configured ? "NOT PAIRED" : "OFF");
+                color: root.paired ? Inu.goodboy : (root.configured ? Inu.fur : Inu.dim);
+                font-size: 11px;
+                font-weight: 800;
+                vertical-alignment: center;
+                horizontal-alignment: right;
+            }
+        }
+        RowCard {
+            HorizontalLayout {
+                padding: 8px;
+                Text {
+                    text: root.posture-line;
+                    color: Inu.fur;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+            }
+        }
+
+        // ---- 🎷 The decision-point guard banners (each exists ONLY while its danger/note is live) ----
+        // FIRST in the stack, for the reason inu.slint:481 gives on the dashboard: every banner below
+        // reports a fault in the posture, and this one says the posture is not yours at all — which
+        // changes how to read all of them. #97 marked the dashboard and MISSED this pane, which kept
+        // showing "PAIRED · 3 power(s) held · paired 3d ago" (fabricated by seed_inu_spike_posture)
+        // as though it were the phone's own state. That is worse here than on the dashboard: this is
+        // the surface offering Unpair and Re-pair, so the unmarked demo invited the user to act on it.
+        if root.demo-posture : AlertBanner {
+            accent: Inu.caution;
+            message: "DEMO POSTURE -> no elevation record exists on this device yet, so this pane is showing a SEEDED example of the rail, not your phone. The pair age, the provider and the held powers below are illustrative, and the controls act on nothing until you Pair.";
+        }
+        if root.warn-grant-no-pair : AlertBanner {
+            accent: Inu.wound;
+            message: "PROTECT WITHOUT PAIR -> you asked to protect \{root.desired-count} power(s), but the hound is not paired. Nothing takes effect until you Pair. Tap Pair below.";
+        }
+        if root.warn-drift-no-boot : AlertBanner {
+            accent: Inu.caution;
+            message: "WON'T SURVIVE REBOOT -> \{root.drift-desired-count} protected power(s) drift off on restart, and 'Keep after reboot' is OFF. Turn it on so the hound re-fetches them at boot.";
+        }
+        if root.note-unpair-held : AlertBanner {
+            accent: Inu.leash;
+            message: "\{root.powers-held} power(s) held -> unpairing now leaves them enforced with no clean in-app revert. Stop protecting them first, then unpair. (a heads-up, not a fault.)";
+        }
+        if root.note-dormant : AlertBanner {
+            accent: Inu.leash;
+            message: "Engine not armed yet — these controls STAGE and take effect on the next start.";
+        }
+
+        // ---- PAIR: the friendly one-tap control (the raw host:port knobs are behind Expert, below) ----
+        SectionTitle { text: "PAIR  (\{root.paired-label})"; }
+        RowCard {
+            VerticalLayout {
+                padding: 10px;
+                spacing: 8px;
+                Text {
+                    text: root.paired
+                        ? "The hound is paired over loopback self-ADB — no companion app, no root. Unpair to forget the key."
+                        : "One tap pairs the hound over loopback self-ADB (no companion app, no root). It fetches you privileged access on this device.";
+                    color: Inu.fur;
+                    font-size: 10px;
+                    wrap: word-wrap;
+                }
+                HorizontalLayout {
+                    spacing: 8px;
+                    Button {
+                        text: root.paired ? "Re-pair" : "Pair now";
+                        clicked => {
+                            root.pair-now();
+                        }
+                    }
+                    Button {
+                        text: "Unpair";
+                        enabled: root.paired;
+                        clicked => {
+                            root.unpair();
+                        }
+                    }
+                    Rectangle { }  // spacer
+                    Text {
+                        text: "via \{root.active-provider-label}";
+                        color: root.note-stub-active ? Inu.caution : (root.paired ? Inu.goodboy : Inu.dim);
+                        font-size: 11px;
+                        font-weight: 800;
+                        vertical-alignment: center;
+                    }
+                }
+            }
+        }
+
+        // ---- KEEP + ALWAYS-ON: the two durability switches (survive reboot · always-on notification) ----
+        SectionTitle { text: "KEEP THE HOUND ON DUTY"; }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    Text {
+                        text: "Keep after reboot";
+                        color: Inu.cream;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "Silently re-fetch elevation at boot so drift-prone powers survive a restart (no re-pairing).";
+                        color: Inu.fur;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+                ToggleSwitch {
+                    on: root.boot-reapply-armed;
+                    on-color: root.warn-drift-no-boot ? Inu.caution : Inu.goodboy;
+                    toggled(v) => {
+                        root.boot-reapply-armed = v;
+                        root.boot-reapply-toggled(v);
+                    }
+                }
+            }
+        }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    Text {
+                        text: "Always-on notification";
+                        color: Inu.cream;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "A quiet ongoing notice so the hound stays ready to re-pair fast (Shizuku-style, in the shade).";
+                        color: Inu.fur;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+                ToggleSwitch {
+                    on: root.always-on;
+                    on-color: Inu.collar;
+                    toggled(v) => {
+                        root.always-on = v;
+                        root.always-on-toggled(v);
+                    }
+                }
+            }
+        }
+
+        // ---- ELEVATION PATH: the preference (Auto / Shizuku / Self-ADB) ----
+        SectionTitle { text: "ELEVATION PATH  (preference)"; }
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    Text {
+                        text: "Preferred path";
+                        color: Inu.cream;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "Auto picks the best available. Shizuku uses the deepened binder path; Self-ADB is our own no-root loopback.";
+                        color: Inu.fur;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+                CycleChip {
+                    text: root.provider-pref-label;
+                    tint: root.provider-pref == 0 ? Inu.cream : Inu.collar;
+                    cycled => {
+                        root.provider-pref-cycled();
+                    }
+                }
+            }
+        }
+
+        // ---- PROTECTED POWERS: the per-power protect toggles (simple; the raw shell stays out of reach) ----
+        SectionTitle { text: "PROTECTED POWERS  (protect / stop)"; }
+        VerticalLayout {
+            spacing: 4px;
+            for p in root.powers : RowCard {
+                HorizontalLayout {
+                    padding: 8px;
+                    spacing: 10px;
+                    VerticalLayout {
+                        horizontal-stretch: 1;
+                        Text {
+                            text: p.label;
+                            color: Inu.cream;
+                            font-size: 12px;
+                            font-weight: 700;
+                        }
+                        Text {
+                            text: p.hint;
+                            color: Inu.fur;
+                            font-size: 10px;
+                            wrap: word-wrap;
+                        }
+                        HorizontalLayout {
+                            spacing: 6px;
+                            Text {
+                                text: p.tier;
+                                color: Inu.dim;
+                                font-size: 9px;
+                                font-weight: 700;
+                            }
+                            Text {
+                                text: p.desired && !p.held ? "waiting to pair" : (p.held ? "held" : "off");
+                                color: p.held ? Inu.goodboy : (p.desired ? Inu.caution : Inu.dim);
+                                font-size: 9px;
+                                font-weight: 700;
+                            }
+                            if p.drift-prone : Text {
+                                text: root.boot-reapply-armed ? "kept after reboot" : "drifts on reboot";
+                                color: root.boot-reapply-armed ? Inu.goodboy : Inu.caution;
+                                font-size: 9px;
+                                font-weight: 700;
+                            }
+                        }
+                    }
+                    ToggleSwitch {
+                        on: p.desired;
+                        on-color: p.drift-prone && !root.boot-reapply-armed ? Inu.caution : Inu.goodboy;
+                        toggled(v) => {
+                            root.power-toggled(p.id, v);
+                        }
+                    }
+                }
+            }
+        }
+
+        // ---- EXPERT: the raw ADB pair knobs behind a reveal (mirrors WIRELESS_DEBUG_EXPERT; feedback-simple-ux) ----
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    Text {
+                        text: "Expert: manual ADB pair";
+                        color: Inu.cream;
+                        font-size: 13px;
+                        font-weight: 700;
+                    }
+                    Text {
+                        text: "Reveal the raw host, port, and 6-digit code for a manual pair. Most people never need this — one-tap Pair is enough.";
+                        color: Inu.fur;
+                        font-size: 10px;
+                        wrap: word-wrap;
+                    }
+                }
+                ToggleSwitch {
+                    on: root.expert-open;
+                    on-color: Inu.collar;
+                    toggled(v) => {
+                        root.expert-open = v;
+                        root.expert-toggled(v);
+                    }
+                }
+            }
+        }
+        if root.expert-open : RowCard {
+            VerticalLayout {
+                padding: 10px;
+                spacing: 8px;
+                Text {
+                    text: "Manual pair — advanced. Loopback (127.0.0.1) is the default self-ADB host.";
+                    color: Inu.caution;
+                    font-size: 10px;
+                    font-weight: 700;
+                    wrap: word-wrap;
+                }
+                HorizontalLayout {
+                    spacing: 6px;
+                    LineEdit {
+                        placeholder-text: "host (127.0.0.1)";
+                        text <=> root.draft-host;
+                        horizontal-stretch: 2;
+                    }
+                    LineEdit {
+                        placeholder-text: "port";
+                        text <=> root.draft-port;
+                        horizontal-stretch: 1;
+                    }
+                }
+                HorizontalLayout {
+                    spacing: 6px;
+                    LineEdit {
+                        placeholder-text: "6-digit code";
+                        text <=> root.draft-code;
+                        horizontal-stretch: 1;
+                    }
+                    Button {
+                        text: "Pair manually";
+                        enabled: root.draft-host != "" && root.draft-port != "" && root.draft-code != "";
+                        clicked => {
+                            root.manual-pair(root.draft-host, root.draft-port, root.draft-code);
+                            root.draft-code = "";
+                        }
+                    }
+                }
+            }
+        }
+
+        // ---- Footer: close ----
+        HorizontalBox {
+            spacing: 8px;
+            Rectangle { }  // spacer
+            Button {
+                text: "Done";
+                clicked => {
+                    root.close-settings();
+                }
+            }
+        }
+
+        Rectangle { }  // tail spacer
+    }
+
+    // ===== #36 THE UPPER MOON SEAL — the dash is the Hashira; the settings pane bears the
+    //       matching demon's rank (the artisan's pots hold the Inu collars). Declared LAST. =====
+    UpperMoonChip {
+        x: parent.width - self.width - 10px;
+        y: 8px;
+        kanji: "上弦・伍";
+        moon-name: "UPPER FIVE — GYOKKO";
+        tint: #4a9ad0;
+    }
+}
+
+// ===========================================================================================
+// The standalone HOST-PREVIEW forwarder — `InuSettings inherits Window` wraps the embeddable
+// `InuSettingsPane` and 2-way-forwards every in-out prop / out read-out / callback (the proven
+// BeastSettings forwarder pattern). The on-device shell mounts the Pane directly; this Window is
+// the desktop-preview + the proof-test constructor (lib.rs InuSettings::new()).
+// ===========================================================================================
+export component InuSettings inherits Window {
+    title: "Yeah! Tortä — Wire Cake Inu  |||";
+    preferred-width: 440px;
+    preferred-height: 1040px;
+    background: Inu.den.with-alpha(0.42);
+
+    // inputs the host pushes (live InuState + the Kotlin elevation prefs)
+    in-out property <bool> demo-posture <=> pane.demo-posture;
+    in-out property <bool> configured <=> pane.configured;
+    in-out property <bool> paired <=> pane.paired;
+    in-out property <string> paired-label <=> pane.paired-label;
+    in-out property <int> active-provider <=> pane.active-provider;
+    in-out property <int> elevation-status <=> pane.elevation-status;
+    in-out property <bool> always-on <=> pane.always-on;
+    in-out property <bool> boot-reapply-armed <=> pane.boot-reapply-armed;
+    in-out property <int> provider-pref <=> pane.provider-pref;
+    in-out property <bool> expert-open <=> pane.expert-open;
+    in-out property <int> powers-held <=> pane.powers-held;
+    in-out property <[PowerToggleRow]> powers <=> pane.powers;
+    in-out property <string> draft-host <=> pane.draft-host;
+    in-out property <string> draft-port <=> pane.draft-port;
+    in-out property <string> draft-code <=> pane.draft-code;
+    in-out property <int> desired-count <=> pane.desired-count;
+    in-out property <int> drift-desired-count <=> pane.drift-desired-count;
+
+    // derived read-outs (the host/proof reads these)
+    out property <bool> warn-grant-no-pair <=> pane.warn-grant-no-pair;
+    out property <bool> warn-drift-no-boot <=> pane.warn-drift-no-boot;
+    out property <bool> note-unpair-held <=> pane.note-unpair-held;
+    out property <bool> note-stub-active <=> pane.note-stub-active;
+    out property <bool> note-dormant <=> pane.note-dormant;
+    out property <bool> warn-any <=> pane.warn-any;
+    out property <string> provider-pref-label <=> pane.provider-pref-label;
+    out property <string> active-provider-label <=> pane.active-provider-label;
+    out property <string> posture-line <=> pane.posture-line;
+
+    // the user's edit intents (the host wires each to its destination)
+    callback pair-now <=> pane.pair-now;
+    callback unpair <=> pane.unpair;
+    callback power-toggled <=> pane.power-toggled;
+    callback boot-reapply-toggled <=> pane.boot-reapply-toggled;
+    callback always-on-toggled <=> pane.always-on-toggled;
+    callback provider-pref-cycled <=> pane.provider-pref-cycled;
+    callback manual-pair <=> pane.manual-pair;
+    callback expert-toggled <=> pane.expert-toggled;
+    callback close-settings <=> pane.close-settings;
+
+    pane := InuSettingsPane { }
+}

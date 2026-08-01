@@ -1,0 +1,1809 @@
+{
+  "directory": "rust\\torta_core\\src\\tunnel",
+  "files": {
+    "mod.rs": {
+      "hash": "96a0dade1120",
+      "indexed_at": "2026-07-31T19:08:57.919913+00:00",
+      "language": "rust",
+      "lines": 2240,
+      "mtime_ns": 1785514054716467100,
+      "size": 119074,
+      "symbols": [
+        {
+          "docstring": "! fd primitives (`dup`, `from_raw_fd`, `read`, `write`, `poll`) \u2014 every block has a SAFETY note.",
+          "lines": [
+            68,
+            68
+          ],
+          "name": "parse",
+          "type": "module"
+        },
+        {
+          "lines": [
+            69,
+            69
+          ],
+          "name": "synth",
+          "type": "module"
+        },
+        {
+          "lines": [
+            70,
+            70
+          ],
+          "name": "warden",
+          "type": "module"
+        },
+        {
+          "lines": [
+            106,
+            109
+          ],
+          "name": "ProtectCallback",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            121,
+            126
+          ],
+          "name": "UidResolver",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            155,
+            164
+          ],
+          "name": "DialFailure",
+          "type": "enum"
+        },
+        {
+          "docstring": "for (`upstream.rs` is UNIX-ONLY by its own module doc).",
+          "lines": [
+            177,
+            186
+          ],
+          "name": "classify_dial_failure",
+          "signature": "(raw_errno: Option<i32>)",
+          "type": "function"
+        },
+        {
+          "docstring": "`clamp_is_monotone`, `no_input_can_reach_the_link_mtu`.",
+          "lines": [
+            224,
+            232
+          ],
+          "name": "clamp_tun_mtu",
+          "signature": "(requested: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            234,
+            240
+          ],
+          "name": "sanitize_blocked_rcode",
+          "signature": "(requested: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            245,
+            256
+          ],
+          "name": "TunnelConfig",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                259,
+                266
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            258,
+            267
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            272,
+            292
+          ],
+          "name": "TunnelStats",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            298,
+            310
+          ],
+          "name": "TunnelSnapshot",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            325,
+            449
+          ],
+          "name": "ForwarderStats",
+          "type": "struct"
+        },
+        {
+          "docstring": "ONE live flow's mutable state, shared between its forwarder task and the docket reader.",
+          "lines": [
+            481,
+            508
+          ],
+          "name": "FlowLive",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "as a measured instant round trip).",
+              "lines": [
+                513,
+                526
+              ],
+              "name": "new",
+              "signature": "(key: i64, proto: i32, tin: i32, paced: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "Read this row into its wire twin.",
+              "lines": [
+                529,
+                542
+              ],
+              "name": "row",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            510,
+            543
+          ],
+          "name": "FlowLive",
+          "type": "impl"
+        },
+        {
+          "docstring": "Proved for ALL inputs in `D:/Lean/proofs/Proofs/RttDisplay.lean`.",
+          "lines": [
+            585,
+            595
+          ],
+          "name": "rtt_display_ms",
+          "signature": "(raw_ms: f64)",
+          "type": "function"
+        },
+        {
+          "docstring": "forwarding regardless (telemetry NEVER gates the datapath), the flow simply goes unlisted.",
+          "lines": [
+            603,
+            612
+          ],
+          "name": "docket_register",
+          "signature": "(row: &Arc<FlowLive>)",
+          "type": "function"
+        },
+        {
+          "docstring": "hash, and removing \"a row with this key\" could retire the wrong one.",
+          "lines": [
+            616,
+            620
+          ],
+          "name": "docket_release",
+          "signature": "(row: &Arc<FlowLive>)",
+          "type": "function"
+        },
+        {
+          "docstring": "Enumerate every live flow. Wait-free for the datapath (the tasks never block on this lock).",
+          "lines": [
+            623,
+            628
+          ],
+          "name": "docket_rows",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            633,
+            654
+          ],
+          "name": "ForwarderFlowRow",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "controller-side state, not forwarder-side).",
+              "lines": [
+                660,
+                697
+              ],
+              "name": "snapshot_with",
+              "signature": "(&self, armed: bool)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            656,
+            698
+          ],
+          "name": "ForwarderStats",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            705,
+            770
+          ],
+          "name": "ForwarderSnapshot",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            778,
+            798
+          ],
+          "name": "TunnelController",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "resolver's transport layer so the upstream sockets call `protect_fd` before connect/sendto.",
+              "lines": [
+                806,
+                808
+              ],
+              "name": "set_protect_callback",
+              "signature": "(&self, cb: Arc<dyn ProtectCallback>)",
+              "type": "method"
+            },
+            {
+              "docstring": "the resolver). `None` when no Kotlin callback is wired yet.",
+              "lines": [
+                812,
+                814
+              ],
+              "name": "protect_callback",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Build the inner state (shared by the constructor + `Default`).",
+              "lines": [
+                817,
+                826
+              ],
+              "name": "build",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "(start/stop/snapshot/is_running + the constructor). The Beast `attach_sink`/sink-arc precedent.",
+          "lines": [
+            803,
+            827
+          ],
+          "name": "TunnelController",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                842,
+                844
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                856,
+                895
+              ],
+              "name": "start",
+              "signature": "(\n        &self,\n        tun_fd: i32,\n        mtu: i32,\n        virtual_dns_ip: String,\n        b...",
+              "type": "method"
+            },
+            {
+              "docstring": "original `tun_fd` int (Kotlin-side) is untouched (R1 \u2014 neither side closes the original).",
+              "lines": [
+                899,
+                904
+              ],
+              "name": "stop",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "(task 1B); `port`-equivalent `running` flag is `true` while the loop thread is alive.",
+              "lines": [
+                908,
+                919
+              ],
+              "name": "snapshot",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "`true` while the loop thread is running.",
+              "lines": [
+                922,
+                924
+              ],
+              "name": "is_running",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                933,
+                936
+              ],
+              "name": "set_netstack",
+              "signature": "(&self, on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "a base (non-netstack) `.so` \u2014 the gate fail-safes to pass: the Warden can only ADD a block.",
+              "lines": [
+                943,
+                945
+              ],
+              "name": "set_uid_resolver",
+              "signature": "(&self, resolver: Arc<dyn UidResolver>)",
+              "type": "method"
+            },
+            {
+              "docstring": "renders DORMANT instead of fabricating motion.",
+              "lines": [
+                951,
+                957
+              ],
+              "name": "forwarder_snapshot",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "`forwarder_snapshot().active_flows` to render \"N of M\" rather than implying completeness.",
+              "lines": [
+                969,
+                971
+              ],
+              "name": "forwarder_flow_docket",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            837,
+            972
+          ],
+          "name": "TunnelController",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                975,
+                977
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            974,
+            978
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "the loop thread was spawned.",
+              "lines": [
+                1002,
+                1076
+              ],
+              "name": "start_unix",
+              "signature": "(&self, tun_fd: i32, cfg: TunnelConfig)",
+              "type": "method"
+            },
+            {
+              "docstring": "(Kotlin-side) is untouched. Private: the UniFFI-facing [`Self::stop`] dispatches here.",
+              "lines": [
+                1081,
+                1088
+              ],
+              "name": "stop_unix",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            991,
+            1089
+          ],
+          "name": "TunnelController",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            1104,
+            1106
+          ],
+          "name": "netstack_enabled",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1111,
+            1113
+          ],
+          "name": "set_netstack_enabled",
+          "signature": "(on: bool)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1122,
+            1217
+          ],
+          "name": "spawn_netstack_forwarder",
+          "signature": "(\n    tun_mtu: usize,\n    owned: std::os::unix::io::OwnedFd,\n    protect: Option<Arc<dyn ProtectC...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            1222,
+            1307
+          ],
+          "name": "run_loop",
+          "signature": "(\n    owned: std::os::unix::io::OwnedFd,\n    cfg: TunnelConfig,\n    running: Arc<AtomicBool>,\n   ...",
+          "type": "function"
+        },
+        {
+          "docstring": "DENY; or a parse failure). This is the cross-platform core the loop thread calls.",
+          "lines": [
+            1316,
+            1462
+          ],
+          "name": "handle_packet",
+          "signature": "(pkt: &[u8], cfg: &TunnelConfig, stats: &TunnelStats)",
+          "type": "function"
+        },
+        {
+          "docstring": "Is `dns_payload` a standard query (qr==0, opcode==0, qdcount>0)? The udp.c:412 gate.",
+          "lines": [
+            1465,
+            1474
+          ],
+          "name": "is_standard_query",
+          "signature": "(dns_payload: &[u8])",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1484,
+                1506
+              ],
+              "name": "build_v4_udp_dns",
+              "signature": "(\n        src_ip: [u8; 4],\n        dst_ip: [u8; 4],\n        sport: u16,\n        dport: u16,\n     ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1508,
+                1516
+              ],
+              "name": "example_dns_query",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1519,
+                1526
+              ],
+              "name": "standard_query_classifier",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1529,
+                1535
+              ],
+              "name": "handle_packet_drops_malformed_ip",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1538,
+                1558
+              ],
+              "name": "handle_packet_servfails_when_resolver_unconfigured",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1561,
+                1573
+              ],
+              "name": "handle_packet_short_circuits_when_fwd53_off",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1576,
+                1589
+              ],
+              "name": "handle_packet_skips_lan_suffix_when_bypass_lan",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1592,
+                1598
+              ],
+              "name": "controller_constructs_idle",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "A no-op ProtectCallback for the trait surface (1E wires the real Kotlin impl).",
+              "lines": [
+                1601,
+                1601
+              ],
+              "name": "NoopProtect",
+              "type": "struct"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    1603,
+                    1605
+                  ],
+                  "name": "protect_fd",
+                  "signature": "(&self, _fd: i32)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                1602,
+                1606
+              ],
+              "name": "ProtectCallback",
+              "type": "impl"
+            },
+            {
+              "lines": [
+                1609,
+                1613
+              ],
+              "name": "protect_callback_installs_and_retrieves",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1618,
+                1628
+              ],
+              "name": "forwarder_snapshot_is_all_zero_and_disarmed_at_birth",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1643,
+                1649
+              ],
+              "name": "docket_scrub",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1652,
+                1686
+              ],
+              "name": "flow_docket_round_trips_one_live_flow_field_for_field",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1689,
+                1698
+              ],
+              "name": "a_fresh_row_reports_rtt_unmeasured_not_zero",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1701,
+                1726
+              ],
+              "name": "docket_refuses_past_cap_and_never_blocks_the_flow",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1729,
+                1746
+              ],
+              "name": "release_retires_by_identity_not_by_colliding_key",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1749,
+                1791
+              ],
+              "name": "forwarder_stats_snapshot_reads_every_counter",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1809,
+                1866
+              ],
+              "name": "transport_miss_never_borrows_the_block_rcode",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1481,
+            1867
+          ],
+          "name": "tests",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1883,
+                1897
+              ],
+              "name": "sixteen_no_longer_folds_onto_noerror",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1902,
+                1914
+              ],
+              "name": "no_input_can_ever_produce_noerror",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1920,
+                1925
+              ],
+              "name": "the_four_bit_stamp_never_alters_a_sanitized_value",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1931,
+                1942
+              ],
+              "name": "every_legal_operator_choice_is_preserved_exactly",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1874,
+            1943
+          ],
+          "name": "blocked_rcode_tests",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1953,
+                1959
+              ],
+              "name": "the_named_errnos_map_exactly",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1964,
+                1966
+              ],
+              "name": "a_failure_with_no_errno_is_still_counted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1976,
+                2020
+              ],
+              "name": "the_shared_buckets_sum_to_both_totals_not_either_alone",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2026,
+                2038
+              ],
+              "name": "udp_protect_refusal_is_its_own_counter_and_not_a_cause_bucket",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2043,
+                2050
+              ],
+              "name": "the_three_causes_stay_distinguishable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2056,
+                2077
+              ],
+              "name": "every_errno_in_range_lands_in_exactly_one_bucket",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2082,
+                2090
+              ],
+              "name": "out_of_range_errnos_still_classify",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1949,
+            2091
+          ],
+          "name": "dial_failure_tests",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                2101,
+                2106
+              ],
+              "name": "a_sub_millisecond_sample_never_reports_zero",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2110,
+                2115
+              ],
+              "name": "an_ordinary_sample_is_passed_through_untouched",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2119,
+                2125
+              ],
+              "name": "a_bad_reading_is_unmeasured_not_fast",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2129,
+                2132
+              ],
+              "name": "an_absurd_magnitude_saturates_and_never_wraps",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2138,
+                2153
+              ],
+              "name": "zero_is_unreachable_and_the_band_holds",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2094,
+            2154
+          ],
+          "name": "rtt_display_law_tests",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                2167,
+                2169
+              ],
+              "name": "the_shipped_defect_is_repaired",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2176,
+                2180
+              ],
+              "name": "the_old_floor_only_guard_would_have_admitted_it",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2185,
+                2191
+              ],
+              "name": "every_input_lands_in_the_window",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2196,
+                2200
+              ],
+              "name": "headroom_is_always_positive",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2205,
+                2209
+              ],
+              "name": "negatives_fold_to_the_floor_instead_of_wrapping",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2213,
+                2219
+              ],
+              "name": "the_clamp_is_idempotent",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2224,
+                2228
+              ],
+              "name": "values_inside_the_window_pass_through_untouched",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                2232,
+                2239
+              ],
+              "name": "the_clamp_is_monotone",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            2157,
+            2240
+          ],
+          "name": "tun_mtu_headroom_tests",
+          "type": "module"
+        }
+      ]
+    },
+    "parse.rs": {
+      "hash": "bb06ad548cf8",
+      "indexed_at": "2026-08-01T00:12:24.797210+00:00",
+      "language": "rust",
+      "lines": 1033,
+      "mtime_ns": 1785543112778491500,
+      "size": 46197,
+      "symbols": [
+        {
+          "lines": [
+            68,
+            86
+          ],
+          "name": "ParsedPacket",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            90,
+            96
+          ],
+          "name": "UdpLayer",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            101,
+            104
+          ],
+          "name": "IpAddrBytes",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "reports the packet shape.",
+              "lines": [
+                110,
+                115
+              ],
+              "name": "is_dns_query",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            106,
+            116
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "docstring": "drop (truncated/oversized \u2014 a classic fuzz edge).",
+          "lines": [
+            131,
+            141
+          ],
+          "name": "parse_ip_udp",
+          "signature": "(pkt: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            143,
+            189
+          ],
+          "name": "parse_v4",
+          "signature": "(pkt: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            191,
+            250
+          ],
+          "name": "parse_v6",
+          "signature": "(pkt: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "header must fit), then the sport/dport read (network order) + the payload slice.",
+          "lines": [
+            254,
+            266
+          ],
+          "name": "parse_udp_layer",
+          "signature": "(pkt: &[u8], l4_off: usize)",
+          "type": "function"
+        },
+        {
+          "docstring": "into the panel). dport sits at tcphdr bytes 2..4, network order \u2014 same slot as udphdr's.",
+          "lines": [
+            272,
+            277
+          ],
+          "name": "parse_tcp_dport",
+          "signature": "(pkt: &[u8], l4_off: usize)",
+          "type": "function"
+        },
+        {
+          "docstring": "else (fragment / hopopt / routing / esp) keeps the walk going.",
+          "lines": [
+            283,
+            288
+          ],
+          "name": "is_upper_layer",
+          "signature": "(proto: u8)",
+          "type": "function"
+        },
+        {
+          "docstring": "bound. `off` starts at `sizeof(struct dns_header)` (12, RFC 1035 \u00a74.1).",
+          "lines": [
+            303,
+            371
+          ],
+          "name": "extract_qname",
+          "signature": "(dns_payload: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "built never emits them), or a chain past [`NAME_SKIP_CAP`].",
+          "lines": [
+            394,
+            414
+          ],
+          "name": "skip_name",
+          "signature": "(payload: &[u8], mut off: usize)",
+          "type": "function"
+        },
+        {
+          "docstring": "non-IN classes are SKIPPED, not errors; an empty address list on a valid reply is `Some`.",
+          "lines": [
+            427,
+            482
+          ],
+          "name": "extract_answer_addrs",
+          "signature": "(dns_payload: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "be intercepted either).",
+          "lines": [
+            494,
+            521
+          ],
+          "name": "matches_lan_suffix",
+          "signature": "(qname: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "RFC 1035 \u00a72.3.3).",
+          "lines": [
+            526,
+            528
+          ],
+          "name": "eq_icase",
+          "signature": "(a: &str, b: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            530,
+            532
+          ],
+          "name": "eq_icase_bytes",
+          "signature": "(a: &[u8], b: &[u8])",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                553,
+                610
+              ],
+              "name": "qname_max_refuses_an_over_long_name_rather_than_truncating_it",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "next, terminating in the literal label `a` -- i.e. exactly `n` pointer follows.",
+              "lines": [
+                619,
+                630
+              ],
+              "name": "qname_pointer_chain",
+              "signature": "(n: usize)",
+              "type": "method"
+            },
+            {
+              "docstring": "name whose label chain runs past the cap must be refused rather than walked forever.",
+              "lines": [
+                635,
+                643
+              ],
+              "name": "label_chain",
+              "signature": "(labels: usize)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                646,
+                657
+              ],
+              "name": "name_skip_cap_is_128_and_the_breach_is_loud",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                660,
+                671
+              ],
+              "name": "qname_pointer_cap_is_25_and_the_breach_is_loud",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                674,
+                683
+              ],
+              "name": "qname_self_referential_pointer_terminates",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Build a minimal IPv4/UDP/DNS packet from scratch (the test scaffolding for the decision tree).",
+              "lines": [
+                687,
+                713
+              ],
+              "name": "build_v4_udp_dns",
+              "signature": "(\n        src_ip: [u8; 4],\n        dst_ip: [u8; 4],\n        sport: u16,\n        dport: u16,\n     ...",
+              "type": "method"
+            },
+            {
+              "docstring": "A minimal DNS query wire for `example.com` A (the dns.c shape, hand-built \u2014 no builder dep).",
+              "lines": [
+                716,
+                725
+              ],
+              "name": "example_dns_query",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "(0xC00C \u2192 the question qname), hand-built like [`example_dns_query`].",
+              "lines": [
+                730,
+                749
+              ],
+              "name": "example_dns_reply",
+              "signature": "(rcode: u8, answers: &[(u16, u16, u32, &[u8])])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                754,
+                762
+              ],
+              "name": "answer_walk_extracts_a_and_aaaa",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                765,
+                773
+              ],
+              "name": "answer_walk_skips_cname_qname_stays_query",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                776,
+                785
+              ],
+              "name": "answer_walk_rejects_query_nxdomain_and_multi_question",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                788,
+                798
+              ],
+              "name": "answer_walk_truncation_is_none_not_partial",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                801,
+                810
+              ],
+              "name": "answer_walk_skips_non_in_class_and_odd_rdlen",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                813,
+                821
+              ],
+              "name": "answer_walk_caps_hostile_ancount",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                824,
+                839
+              ],
+              "name": "answer_walk_inline_owner_and_empty_answer_reply",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                844,
+                848
+              ],
+              "name": "unknown_version_drops",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                851,
+                854
+              ],
+              "name": "v4_too_short_drops",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                857,
+                863
+              ],
+              "name": "v4_ihl_below_minimum_drops",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                866,
+                873
+              ],
+              "name": "v4_tot_len_mismatch_drops",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                876,
+                889
+              ],
+              "name": "v4_udp_dns_parses",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                892,
+                902
+              ],
+              "name": "v4_non_udp_returns_proto_only",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                907,
+                921
+              ],
+              "name": "v4_tcp_dport_parses",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                924,
+                936
+              ],
+              "name": "v4_tcp_truncated_header_yields_no_dport",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                939,
+                952
+              ],
+              "name": "v6_tcp_dport_parses",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                955,
+                977
+              ],
+              "name": "v6_udp_dns_parses",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                980,
+                989
+              ],
+              "name": "udp_too_short_drops",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                992,
+                999
+              ],
+              "name": "qname_extracts_from_real_query",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1002,
+                1010
+              ],
+              "name": "qname_compression_pointer_cap",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1013,
+                1021
+              ],
+              "name": "qname_empty_drops",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1024,
+                1032
+              ],
+              "name": "lan_suffix_matches",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            539,
+            1033
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "synth.rs": {
+      "hash": "3dfe010cc165",
+      "indexed_at": "2026-07-29T06:41:47.802618+00:00",
+      "language": "rust",
+      "lines": 481,
+      "mtime_ns": 1785306263480366700,
+      "size": 22445,
+      "symbols": [
+        {
+          "docstring": "the loop decides which rcode to stamp.",
+          "lines": [
+            66,
+            94
+          ],
+          "name": "synthesize_servfail",
+          "signature": "(query_dns: &[u8], rcode: u8)",
+          "type": "function"
+        },
+        {
+          "docstring": "ANCOUNT/NSCOUNT/ARCOUNT = 0, QDCOUNT = `qdcount`. Bytes 2 + 3 + 6..12 are overwritten.",
+          "lines": [
+            98,
+            112
+          ],
+          "name": "apply_servfail_header",
+          "signature": "(buf: &mut [u8], rcode: u8, qdcount: u16)",
+          "type": "function"
+        },
+        {
+          "docstring": "that case the caller keeps the whole query verbatim (a slightly fat SERVFAIL is still valid).",
+          "lines": [
+            117,
+            128
+          ],
+          "name": "end_of_question",
+          "signature": "(dns: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "compression pointers (a pointer terminates the qname) and the same bounds as [`super::parse`].",
+          "lines": [
+            132,
+            160
+          ],
+          "name": "skip_qname",
+          "signature": "(dns: &[u8], mut off: usize)",
+          "type": "function"
+        },
+        {
+          "docstring": "back to the tun fd.",
+          "lines": [
+            176,
+            182
+          ],
+          "name": "synth_ip_udp_reply",
+          "signature": "(orig: &ParsedPacket<'_>, dns_payload: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            184,
+            232
+          ],
+          "name": "synth_v4_reply",
+          "signature": "(\n    orig_src: [u8; 4],\n    orig_dst: [u8; 4],\n    orig: &ParsedPacket<'_>,\n    dns_payload: &[u...",
+          "type": "function"
+        },
+        {
+          "lines": [
+            234,
+            277
+          ],
+          "name": "synth_v6_reply",
+          "signature": "(\n    orig_src: [u8; 16],\n    orig_dst: [u8; 16],\n    orig: &ParsedPacket<'_>,\n    dns_payload: &...",
+          "type": "function"
+        },
+        {
+          "docstring": "tail byte is padded with a zero low byte (RFC 1071 \u00a73.B).",
+          "lines": [
+            286,
+            297
+          ],
+          "name": "sum_into",
+          "signature": "(mut acc: u32, data: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "Convenience: sum a slice from a fresh accumulator (the `calc_checksum(0, ...)` shape).",
+          "lines": [
+            300,
+            302
+          ],
+          "name": "sum_bytes",
+          "signature": "(data: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "checksum field is never 0xFFFF-special; a zero IP checksum is legitimate only for \"unset\").",
+          "lines": [
+            309,
+            318
+          ],
+          "name": "finalize_checksum",
+          "signature": "(mut acc: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            324,
+            331
+          ],
+          "name": "udp_finalize",
+          "signature": "(acc: u32)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                345,
+                360
+              ],
+              "name": "parsed_v4",
+              "signature": "(src: [u8; 4], dst: [u8; 4], sport: u16, dport: u16)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                362,
+                375
+              ],
+              "name": "parsed_v6",
+              "signature": "(src: [u8; 16], dst: [u8; 16], sport: u16, dport: u16)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                378,
+                392
+              ],
+              "name": "servfail_header_has_qr_set_and_rcode_2",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                395,
+                401
+              ],
+              "name": "servfail_for_short_query_still_returns_a_header",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                404,
+                416
+              ],
+              "name": "v4_reply_swaps_addresses_and_ports",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                419,
+                435
+              ],
+              "name": "v4_reply_ip_checksum_is_valid",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                438,
+                465
+              ],
+              "name": "v4_reply_udp_checksum_is_nonzero_and_valid",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                468,
+                480
+              ],
+              "name": "v6_reply_swaps_addresses_and_has_plen",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            338,
+            481
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "warden.rs": {
+      "hash": "aabc390d73f0",
+      "indexed_at": "2026-07-29T06:41:48.168867+00:00",
+      "language": "rust",
+      "lines": 537,
+      "mtime_ns": 1785306263481364900,
+      "size": 24291,
+      "symbols": [
+        {
+          "lines": [
+            49,
+            56
+          ],
+          "name": "Verdict",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                60,
+                62
+              ],
+              "name": "is_deny",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "fail-safe pass). The panel shows what FLOWED, not which rule engine was awake.",
+              "lines": [
+                68,
+                73
+              ],
+              "name": "bridged",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            58,
+            74
+          ],
+          "name": "Verdict",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                77,
+                83
+              ],
+              "name": "from",
+              "signature": "(raw: i32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            76,
+            84
+          ],
+          "name": "Verdict",
+          "type": "impl"
+        },
+        {
+          "docstring": "so the panel row can say DROPPED instead of a false ALLOW. A denied flow is never `carried`.",
+          "lines": [
+            113,
+            186
+          ],
+          "name": "verdict",
+          "signature": "(\n    uid: i32,\n    ip_version: u8,\n    protocol: u8,\n    daddr: &IpAddrBytes,\n    dport: u16,\n  ...",
+          "type": "function"
+        },
+        {
+          "docstring": "under the object's fail-CLOSED fault posture, exactly like the Java datapath sees it.",
+          "lines": [
+            202,
+            230
+          ],
+          "name": "ask_canonical",
+          "signature": "(\n    uid: i32,\n    daddr: IpAddr,\n    dport: u16,\n    proto: u8,\n    qname: Option<&str>,\n)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                237,
+                242
+              ],
+              "name": "verdict_from_raw",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                245,
+                249
+              ],
+              "name": "is_deny_only_for_zero",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                252,
+                256
+              ],
+              "name": "bridged_maps_abstain_and_allow_to_allow_deny_to_firewall_deny",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                259,
+                283
+              ],
+              "name": "verdict_feeds_the_global_tracker_with_the_bridged_grain",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                286,
+                302
+              ],
+              "name": "verdict_with_carries_false_feeds_an_uncarried_row",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                305,
+                324
+              ],
+              "name": "verdict_abstains_on_unconfigured_singleton",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                327,
+                366
+              ],
+              "name": "verdict_attributes_a_nameless_flow_and_feeds_the_domain",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                369,
+                423
+              ],
+              "name": "attribution_only_deny_dies_on_the_bare_re_ask_but_a_facts_deny_stands",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                433,
+                479
+              ],
+              "name": "canonical_engine_rules_the_tunnel_when_enforced",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                482,
+                536
+              ],
+              "name": "canonical_attribution_only_deny_still_dies_on_the_bare_re_ask",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            233,
+            537
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T00:12:24.798821+00:00",
+  "version": "1.0"
+}

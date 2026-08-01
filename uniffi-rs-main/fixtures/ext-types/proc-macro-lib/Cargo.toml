@@ -1,0 +1,39 @@
+[package]
+name = "uniffi-fixture-ext-types-proc-macro"
+edition = "2021"
+version = "0.22.0"
+license = "MPL-2.0"
+publish = false
+
+[package.metadata.uniffi.testing]
+external-crates = [
+    "uniffi-fixture-ext-types-custom-types",
+    "uniffi-fixture-ext-types-lib-one",
+    "uniffi-example-custom-types",
+]
+
+[lib]
+crate-type = ["lib", "cdylib"]
+name = "uniffi_ext_types_proc_macro_lib"
+
+[dependencies]
+anyhow = "1"
+bytes = "1.11"
+uniffi = { workspace = true }
+
+uniffi-fixture-ext-types-lib-one = {path = "../uniffi-one"}
+uniffi-fixture-ext-types-custom-types = {path = "../custom-types"}
+
+# Reuse one of our examples.
+uniffi-example-custom-types = {path = "../../../examples/custom-types"}
+
+url = "2.2"
+
+[build-dependencies]
+uniffi = { workspace = true, features = ["build"] }
+
+[dev-dependencies]
+uniffi = { workspace = true, features = ["bindgen-tests"] }
+
+[features]
+ffi-trace = ["uniffi/ffi-trace"]

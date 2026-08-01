@@ -1,0 +1,865 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\futures\\src",
+  "files": {
+    "bin.rs": {
+      "hash": "55a5501b6239",
+      "indexed_at": "2026-07-24T20:35:12.536044+00:00",
+      "language": "rust",
+      "lines": 3,
+      "mtime_ns": 1782136568000000000,
+      "size": 48,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            3
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "futures.udl": {
+      "hash": "a690fc4afbbf",
+      "indexed_at": "2026-07-24T20:35:12.536595+00:00",
+      "language": "udl",
+      "lines": 21,
+      "mtime_ns": 1782136568000000000,
+      "size": 323,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "always_ready",
+              "signature": "() : boolean",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1,
+            4
+          ],
+          "name": "futures",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "say_after",
+              "signature": "(u16 ms, string who) : string",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            7,
+            10
+          ],
+          "name": "SayAfterUdlTrait",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                14
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "say_after",
+              "signature": "(u16 ms, string who) : string",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            12,
+            21
+          ],
+          "name": "UdlMegaphone",
+          "type": "interface"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "11bae4ed4f20",
+      "indexed_at": "2026-07-24T20:35:12.539517+00:00",
+      "language": "rust",
+      "lines": 546,
+      "mtime_ns": 1782136568000000000,
+      "size": 14714,
+      "symbols": [
+        {
+          "docstring": "Non-blocking timer future.",
+          "lines": [
+            17,
+            19
+          ],
+          "name": "TimerFuture",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            21,
+            24
+          ],
+          "name": "SharedState",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                29,
+                38
+              ],
+              "name": "poll",
+              "signature": "(self: Pin<&mut Self>, cx: &mut Context<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            26,
+            39
+          ],
+          "name": "Future",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                42,
+                69
+              ],
+              "name": "new",
+              "signature": "(duration: Duration)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            41,
+            70
+          ],
+          "name": "TimerFuture",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            74,
+            76
+          ],
+          "name": "greet",
+          "signature": "(who: String)",
+          "type": "function"
+        },
+        {
+          "docstring": "(This one is defined in the UDL to test UDL support)",
+          "lines": [
+            81,
+            83
+          ],
+          "name": "always_ready",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            86,
+            86
+          ],
+          "name": "void",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            90,
+            94
+          ],
+          "name": "say",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            98,
+            102
+          ],
+          "name": "say_after",
+          "signature": "(ms: u16, who: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            106,
+            110
+          ],
+          "name": "sleep",
+          "signature": "(ms: u16)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            114,
+            116
+          ],
+          "name": "sleep_no_return",
+          "signature": "(ms: u16)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            120,
+            123
+          ],
+          "name": "MyError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            127,
+            133
+          ],
+          "name": "fallible_me",
+          "signature": "(do_fail: bool)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            137,
+            143
+          ],
+          "name": "fallible_struct",
+          "signature": "(do_fail: bool)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            149,
+            151
+          ],
+          "name": "new_megaphone",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            155,
+            157
+          ],
+          "name": "async_new_megaphone",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            161,
+            167
+          ],
+          "name": "async_maybe_new_megaphone",
+          "signature": "(y: bool)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            171,
+            173
+          ],
+          "name": "say_after_with_megaphone",
+          "signature": "(megaphone: Arc<Megaphone>, ms: u16, who: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            177,
+            177
+          ],
+          "name": "Megaphone",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                183,
+                186
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                190,
+                193
+              ],
+              "name": "secondary",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "An async method that yells something after a certain time.",
+              "lines": [
+                196,
+                198
+              ],
+              "name": "say_after",
+              "signature": "(self: Arc<Self>, ms: u16, who: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "An async method without any extra arguments.",
+              "lines": [
+                201,
+                203
+              ],
+              "name": "silence",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "An async method that can throw.",
+              "lines": [
+                206,
+                212
+              ],
+              "name": "fallible_me",
+              "signature": "(self: Arc<Self>, do_fail: bool)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            180,
+            213
+          ],
+          "name": "Megaphone",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "A sync method that yells something immediately.",
+              "lines": [
+                220,
+                222
+              ],
+              "name": "say_now",
+              "signature": "(&self, who: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "Uses tokio's timer functionality.",
+              "lines": [
+                227,
+                229
+              ],
+              "name": "say_after_with_tokio",
+              "signature": "(self: Arc<Self>, ms: u16, who: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            218,
+            230
+          ],
+          "name": "Megaphone",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            235,
+            239
+          ],
+          "name": "say_after_with_tokio",
+          "signature": "(ms: u16, who: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            242,
+            242
+          ],
+          "name": "FallibleMegaphone",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                248,
+                250
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            245,
+            251
+          ],
+          "name": "FallibleMegaphone",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            253,
+            253
+          ],
+          "name": "UdlMegaphone",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                256,
+                258
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                260,
+                262
+              ],
+              "name": "secondary",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                264,
+                266
+              ],
+              "name": "say_after",
+              "signature": "(self: Arc<Self>, ms: u16, who: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            255,
+            267
+          ],
+          "name": "UdlMegaphone",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            270,
+            273
+          ],
+          "name": "MyRecord",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            276,
+            278
+          ],
+          "name": "new_my_record",
+          "signature": "(a: String, b: u32)",
+          "type": "function"
+        },
+        {
+          "docstring": "Non-blocking timer future.",
+          "lines": [
+            281,
+            283
+          ],
+          "name": "BrokenTimerFuture",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                288,
+                297
+              ],
+              "name": "poll",
+              "signature": "(self: Pin<&mut Self>, cx: &mut Context<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            285,
+            298
+          ],
+          "name": "Future",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                301,
+                335
+              ],
+              "name": "new",
+              "signature": "(duration: Duration, fail_after: Duration)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            300,
+            336
+          ],
+          "name": "BrokenTimerFuture",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            340,
+            346
+          ],
+          "name": "broken_sleep",
+          "signature": "(ms: u16, fail_after: u16)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            349,
+            352
+          ],
+          "name": "SharedResourceOptions",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            356,
+            359
+          ],
+          "name": "AsyncError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            362,
+            383
+          ],
+          "name": "use_shared_resource",
+          "signature": "(options: SharedResourceOptions)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            388,
+            390
+          ],
+          "name": "SayAfterTrait",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            395,
+            397
+          ],
+          "name": "SayAfterUdlTrait",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            399,
+            399
+          ],
+          "name": "SayAfterImpl1",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            401,
+            401
+          ],
+          "name": "SayAfterImpl2",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                405,
+                407
+              ],
+              "name": "say_after",
+              "signature": "(&self, ms: u16, who: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            404,
+            408
+          ],
+          "name": "SayAfterTrait",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                412,
+                414
+              ],
+              "name": "say_after",
+              "signature": "(&self, ms: u16, who: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            411,
+            415
+          ],
+          "name": "SayAfterTrait",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            418,
+            420
+          ],
+          "name": "get_say_after_traits",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                424,
+                426
+              ],
+              "name": "say_after",
+              "signature": "(&self, ms: u16, who: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            423,
+            427
+          ],
+          "name": "SayAfterUdlTrait",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                431,
+                433
+              ],
+              "name": "say_after",
+              "signature": "(&self, ms: u16, who: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            430,
+            434
+          ],
+          "name": "SayAfterUdlTrait",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            437,
+            439
+          ],
+          "name": "get_say_after_udl_traits",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            444,
+            446
+          ],
+          "name": "SayAfterTraitTokio",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                450,
+                452
+              ],
+              "name": "say_after",
+              "signature": "(&self, ms: u16, who: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            449,
+            453
+          ],
+          "name": "SayAfterTraitTokio",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                457,
+                459
+              ],
+              "name": "say_after",
+              "signature": "(&self, ms: u16, who: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            456,
+            460
+          ],
+          "name": "SayAfterTraitTokio",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            463,
+            465
+          ],
+          "name": "get_say_after_tokio_traits",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            470,
+            479
+          ],
+          "name": "AsyncParser",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            482,
+            487
+          ],
+          "name": "ParserError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                490,
+                492
+              ],
+              "name": "from",
+              "signature": "(_: uniffi::UnexpectedUniFFICallbackError)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            489,
+            493
+          ],
+          "name": "ParserError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            496,
+            498
+          ],
+          "name": "as_string_using_trait",
+          "signature": "(obj: Arc<dyn AsyncParser>, delay_ms: i32, value: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            501,
+            507
+          ],
+          "name": "try_from_string_using_trait",
+          "signature": "(\n    obj: Arc<dyn AsyncParser>,\n    delay_ms: i32,\n    value: String,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            510,
+            512
+          ],
+          "name": "delay_using_trait",
+          "signature": "(obj: Arc<dyn AsyncParser>, delay_ms: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            515,
+            520
+          ],
+          "name": "try_delay_using_trait",
+          "signature": "(\n    obj: Arc<dyn AsyncParser>,\n    delay_ms: String,\n)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            523,
+            532
+          ],
+          "name": "cancel_delay_using_trait",
+          "signature": "(obj: Arc<dyn AsyncParser>, delay_ms: i32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            536,
+            536
+          ],
+          "name": "TestObject",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                541,
+                543
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            539,
+            544
+          ],
+          "name": "TestObject",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.698182+00:00",
+  "version": "1.0"
+}

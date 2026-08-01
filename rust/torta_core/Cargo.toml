@@ -1,0 +1,303 @@
+# Yeah! Tortä native horsepower core — the Rust .so that P7 (speed) and P9 (Fortress) build on.
+# Cross-compiled to Android via cargo-ndk inside the build image; packaged into jniLibs.
+[package]
+name = "torta_core"
+version = "0.1.0"
+edition = "2021"
+description = "Yeah! Torta native core (Rust): blocklist matcher, resolver, trust — built incrementally."
+license = "EUPL-1.2 OR AGPL-3.0-or-later"
+
+[lib]
+name = "torta_core"
+# cdylib = the Android .so; rlib lets `cargo test` exercise the pure logic on the host target.
+crate-type = ["cdylib", "rlib"]
+
+# catalog_verify_oracle uses `torta_core::mirror`, which is `#[cfg(feature = "mirror")]`. Gate the bin
+# behind the same feature so a default `cargo build` (no features, all targets) does not E0432 on the
+# unconditional `use torta_core::mirror::{...}`. cargo-ndk builds only the cdylib, so the shipped `.so`
+# is unaffected; this only fixes the host all-targets build path.
+[[bin]]
+name = "catalog_verify_oracle"
+required-features = ["mirror"]
+
+# The version-matched UniFFI bindgen (UniFFI 0.31 ships NO standalone CLI). Gated behind `uniffi-cli` so it
+# compiles ONLY when explicitly requested (`--features uniffi-cli`); a default/cargo-ndk build skips it, so
+# clap never enters the shipped cdylib. Run: `cargo run --bin uniffi-bindgen --features uniffi-cli -- ...`.
+[[bin]]
+name = "uniffi-bindgen"
+required-features = ["uniffi-cli"]
+
+[dependencies]
+jni = "0.21"
+
+# ---- #9/#10 UniFFI (Rust->Kotlin bindings; replaces the hand-JNI surface incrementally) ----
+# The proc-macro/runtime ONLY (NO `cli` feature here) — so the shipped cdylib carries the scaffolding but
+# NOT clap. The `uniffi-bindgen` bin below opts INTO `cli` via the `uniffi-cli` feature (off by default), so a
+# cargo-ndk build (default features) keeps the `.so` clap-free — the byte-identical-base discipline. The
+# bindgen runs LIBRARY mode: `cargo run --bin uniffi-bindgen --features uniffi-cli -- generate --library
+# <.so> --language kotlin --out-dir <dir>` (reads the metadata embedded by `setup_scaffolding!` + the
+# `#[uniffi::export]` proc-macros). Migration is INCREMENTAL: the 48 hand-JNI exports stay live until each is
+# ported; UniFFI symbols are additive and do not collide.
+uniffi = "0.31"
+
+# ---- R1.x.4 — typed UniFFI Errors (the full-power Error surface) ----
+# `#[derive(uniffi::Error)]` requires a `Display` + `std::error::Error` impl; thiserror is the idiomatic
+# zero-friction derive (the `#[error("...")]` attribute auto-generates both). Already vendored
+# transitively by uniffi/ring (Cargo.lock: thiserror 2.0.18); declaring it here makes the direct use
+# explicit + version-stable. Used by FortressError / CentauriError / WardenError (the QUARTET's typed
+# failure-reason surface). Beast has NO fallible methods (scope-honest) — no BeastError.
+thiserror = "2"
+
+# ---- K5 - DNSCrypt config Rust-native (the triple-duty DnscryptProxyConfig) ----
+# serde + toml make `DnscryptProxyConfig` (resolver/dnscrypt_config.rs) the typed CONFIG AUTHORITY that
+# also import/exports an upstream `dnscrypt-proxy.toml` as a COMPATIBILITY VIEW (TOML is never the
+# authority - the Rust struct is). serde is the FIRST in the crate (the hand-rolled `parse_upstreams` in
+# resolver/mod.rs deliberately avoided it for 2b to keep the `.so` lean; config is a BASE concern - the
+# namesake app - so these ride the base `.so`). PURE-RUST graph (serde derive macro + toml/toml_edit/winnow),
+# cross-compile-clean Windows->cargo-ndk: `cargo tree | grep -ci aws-lc` MUST stay 0. The precedent for a
+# new base dep is `thiserror` above (added for the typed UniFFI Error surface).
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"
+
+# ---- P7 Wave 2b — DoH (HTTP/2) shadow resolver ----
+# ONE long-lived current-thread tokio runtime (battery: parks when idle, no thread pool on a phone).
+tokio = { version = "1", default-features = false, features = ["rt", "net", "time", "sync", "macros", "io-util"] }
+log = "0.4"
+
+# ---- NETSTACK GENESIS (#144) — the pure-Rust TCP/UDP forwarder that makes DNSCrypt resolve PAGES, not just names.
+# firestack (Go/gVisor) ported to our ARC: ipstack is the tokio-native userspace netstack (verified aws-lc=0,
+# API accept()->IpStackStream::{Tcp,Udp} = the firestack Proxy(conn,src,dst) seam). socket2 opens the upstream
+# socket BEFORE connect so ProtectCallback.protect_fd can escape the tun (the anti-loop keystone; tokio has no
+# pre-connect hook). Gated behind `netstack` (off by default) so the shipped .so stays byte-clean until wired —
+# the same discipline as `mirror`/`quic`. cargo-ndk default build never pulls these.
+ipstack = { version = "0.1", optional = true }
+socket2 = { version = "0.5", optional = true }
+bytes = "1"
+# TLS core — Android-critical: the `ring` provider, NOT aws-lc-rs (cross-compile-safe Windows→cargo-ndk).
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
+ring = "0.17"
+# Android system trust — android::init_with_env() is MANDATORY before any TLS (gated to target_os=android).
+rustls-platform-verifier = "0.7"
+# Static fallback roots + Expert "built-in roots only" — used on the host target where there is no
+# platform verifier wired.
+webpki-roots = "1"
+# DoH transport (HTTP/2, RFC 8484) — the workhorse, hand-wired (NOT reqwest, NOT hickory).
+hyper = { version = "1", features = ["client", "http1", "http2"] }
+hyper-util = { version = "0.1", features = ["client-legacy", "tokio"] }
+hyper-rustls = { version = "0.27", default-features = false, features = ["http2", "ring", "tls12"] }
+http = "1"
+http-body-util = "0.1"
+getrandom = { version = "0.2", features = ["std"] }
+
+# ---- P7 Wave 2c — QUIC transports (DoH3 + DoQ) shadow resolver ----
+# OPTIONAL: gated behind the `quic`/`doh3` features so the base 2b `.so` carries no quinn/h3.
+# REMOVED 2026-07 with the DEPRECATED `quic` / `doh3` features: quinn, h3, h3-quinn. They were the
+# QUIC/HTTP-3 stack behind DoQ and DoH3, both optional and enabled by NO shipped recipe. Dropping
+# them also removes the aws-lc-rs cross-compile hazard those pins existed to steer around.
+
+# ---- MaskSolver oblivious lane — ODoH (RFC 9230) ----
+# OPTIONAL: gated behind `odoh` so the base `.so` carries no HPKE. `odoh-rs` is Cloudflare's
+# pure-RustCrypto ODoH (hpke 0.13 + aes-gcm 0.10 + hkdf 0.12, all X25519 / HKDF-SHA256 / AES-128-GCM)
+# — ZERO aws-lc-rs, the cross-compile gate for cargo-ndk. hpke rides `x25519-dalek` (already a BASE dep
+# above) + `sha2` (already base); the per-query client CSPRNG rides `getrandom` (already base) via
+# `odoh.rs`'s `OsCsprng`, so NO `rand` crate enters the graph. Verify aws-lc-free with:
+# `cargo tree -e features --features odoh | grep aws-lc` → empty.
+odoh-rs = { version = "1.0.4", optional = true }
+# odoh-rs / hpke 0.13 speak **rand_core 0.9**'s `RngCore`/`CryptoRng` — a DIFFERENT trait version from
+# the dalek stack's `rand_core 0.6` (base dep above). Both live in the graph; this rename lets `odoh.rs`
+# implement the 0.9 traits for its `getrandom`-backed `OsCsprng` without disturbing the 0.6 users.
+# Optional + only in the `odoh` feature → zero base weight.
+rand_core_09 = { package = "rand_core", version = "0.9", optional = true }
+
+# ---- P7 Wave 2d — DNSCrypt v2 client (THE namesake transport) ----
+# DNSCrypt is the namesake transport of this DNSCrypt-only app, so dnscrypt.rs is a BASE transport
+# (NOT feature-gated like the QUIC ones). All crypto here is PURE-RUST (RustCrypto + dalek) — NO
+# aws-lc-rs / ring needed for the DNSCrypt AEAD path, so it cross-compiles cleanly Windows→cargo-ndk.
+# X25519 key agreement; `static_secrets` gives us a reusable client EphemeralSecret/StaticSecret.
+x25519-dalek = { version = "2", features = ["static_secrets"] }
+# NaCl `crypto_secretbox` — the AUTHORITATIVE DNSCrypt AEAD construction for BOTH es-versions.
+# RustCrypto's `crypto_secretbox` is pure-Rust (NO aws-lc / ring) and is the NaCl secretbox cipher:
+# Poly1305 over the CIPHERTEXT ONLY (no RFC-8439 length block, no AAD), Poly1305 key = first 32 bytes
+# of the stream-cipher keystream (block 0), encryption from block 1, and the tag is PREPENDED
+# (tag||ciphertext) — exactly libsodium `crypto_secretbox_*`. It provides es-v2 (XChaCha20Poly1305,
+# the libsodium variant) AND es-v1 (XSalsa20Poly1305), so the seal/open path is ONE consistent
+# NaCl construction for both. The `chacha20` feature turns on the XChaCha20 variant (default features
+# only carry salsa20); it reuses the chacha20/salsa20/poly1305/aead crates already in the graph, so it
+# adds NO new heavy deps and (verified) keeps Cargo.lock aws-lc-free.
+crypto_secretbox = { version = "0.1", features = ["chacha20"] }
+# es-version 2 (the modern default): XChaCha20-Poly1305. KEPT ONLY as the IETF reference cipher the
+# FIX-1 KAT contrasts against (RFC-8439 ciphertext||tag with the length block) — it is NOT on the
+# DNSCrypt datapath, which routes through `crypto_secretbox` above.
+chacha20poly1305 = "0.10"
+# es-version 1 (legacy NaCl crypto_box): XSalsa20-Poly1305 — 24-byte nonce. KEPT as a defensive cross-
+# check; the live es-v1 seal/open also routes through `crypto_secretbox` (one NaCl path).
+# NOTE: the plan pinned `0.10`, which DOES NOT EXIST in the registry; 0.9.1 is the latest/nearest.
+xsalsa20poly1305 = "0.9.1"
+# Verify the resolver-signed cert against the provider Ed25519 pk carried in the stamp (T14).
+ed25519-dalek = "2"
+# CSPRNG seam for the client nonce + ephemeral key (T15: nonce is CSPRNG, NEVER reused). The dalek
+# stack speaks `rand_core` 0.6's `RngCore`/`CryptoRng`; `getrandom` (already in tree) backs OsRng.
+rand_core = "0.6"
+# Fixed-endian reads/writes for the cert + stamp binary layouts (cert ts_start/ts_end, serial, etc.).
+byteorder = "1"
+# DNS Stamps (`sdns://`) — the plan names this crate. NOTE: jedisct1's `dnsstamps` is ENCODE-ONLY
+# (builders for resolver/relay stamps; it has NO `decode`/`from_str`/`TryFrom` for an sdns:// string).
+# So the actual DNSCrypt-stamp DECODE lives in `dnscrypt.rs` (a small self-contained parser of the
+# documented `0x01` binary layout); this dep is kept for the relay/resolver stamp ENCODE side (2d
+# relay scaffold / 2e), exactly as the plan lists it.
+dnsstamps = "0.1"
+
+# ---- P9 Fortress — the eigenform attestation-root digest ----
+# SHA-256 for the eigenform leaf/root hash (`fortress::root`) + the Module D file attestations. ALREADY
+# vendored in the dep graph (Cargo.lock — transitively via the RustCrypto/dalek stack), so naming it as a
+# DIRECT dep adds ZERO `.so` growth; it is the spec's recommended digest (zero new crate). The
+# non-cryptographic FNV-1a in `blocklist.rs` is forgeable and is NEVER used as a leaf/root digest.
+sha2 = "0.10"
+# ---- Integrity-spine HASH: SHA-256 → Blake2b migration (own-crypto charter, slice 4) ----
+# `blake2 = "0.10"` resolves to 0.10.6 (MEASURED from the vendored crate). It is the RustCrypto SIBLING
+# of `sha2 0.10` above: it rides the IDENTICAL `digest 0.10` trait stack already in Cargo.lock
+# (digest 0.10.7 + crypto-common 0.1.7) — so it adds ZERO new trait surface and ZERO aws-lc/ring weight
+# (pure-Rust RustCrypto; its graph is digest+crypto-common+generic-array+typenum, all in-tree).
+# The 32-byte spine type is `blake2::Blake2b<blake2::digest::consts::U32>` (cited blake2-0.10.6/src/lib.rs:135) —
+# the parametrized form that keeps every `[u8;32]` leaf/content-hash/runtime-tier digest byte-width-stable.
+# NOT `Blake2b512` (= Blake2b<U64>, 64 bytes, src/lib.rs:137) and NOT `Blake2b256` (DOES NOT EXIST in 0.10.6).
+# Same `Digest::new/update/finalize`, same `.finalize().into() : [u8;32]` as the sha2 call sites.
+#
+# OPTIONAL + FEATURE-GATED so the BASE cargo-ndk `.so` (no features) stays BYTE-IDENTICAL: the base build
+# never compiles blake2. The spine switch is pulled by the `fortress` feature (the un-gated-today
+# fortress + runtime_tier eigenform/durable spine) and by `mirror` (the off-base Centauri content-address);
+# see the `[features]` notes below. The crate is added WITHOUT `simd`/`simd_asm` (default = ["std"] only),
+# preserving the crate's `#![forbid(unsafe_code)]` posture — the SIMD unsafe path is never enabled.
+blake2 = { version = "0.10", optional = true }
+
+# ★ #66 — the CENTAURI HTTPS SERVE LEG. Centauri's thesis is absorb-once-serve-forever: a watched CDN
+# asset is fetched at most ONE time and is served from the local content-addressed store, privately,
+# every time after. The `:80` hairpin already does this. To do it for `:443` the mirror must ANSWER a
+# browser's TLS handshake as the CDN, which needs (a) a certificate minted on-device per SNI and (b) a
+# server-side TLS acceptor. Only CLIENT-side TLS existed before this (`hyper-rustls`, for our own
+# absorb fetch), hence both deps are new.
+#
+# BOTH are `optional` + pulled only by `mirror`, so a BASE `.so` is byte-identical and never links a
+# certificate generator — the same discipline `blake2` follows above.
+#
+# `rcgen` with default-features OFF: we want ONLY the certificate builder over the `ring` backend we
+# already pin crate-wide (no `aws_lc_rs` — it drags C and breaks the clean cargo-ndk cross-compile),
+# and we sign with `ring`'s ECDSA P-256, matching rustls' `ring` provider exactly.
+# `x509-parser` is what makes `CertificateParams::from_ca_cert_pem` exist — the reload leg, so a user's
+# trust decision survives a restart instead of being re-asked on every launch.
+rcgen = { version = "0.13", default-features = false, features = ["ring", "pem", "x509-parser"], optional = true }
+# `time` is already in the tree as rcgen's own dependency; naming it here is only so we can spell the
+# `OffsetDateTime` type rcgen's validity fields take. No new download.
+time = { version = "0.3", default-features = false, features = ["std"], optional = true }
+# `tokio-rustls` is the server-side acceptor over the SAME `rustls 0.23` + `ring` provider the client
+# leg uses — one TLS stack in the process, never two competing providers.
+tokio-rustls = { version = "0.26", default-features = false, features = ["ring", "tls12"], optional = true }
+
+# ★ PQDNSCrypt (the v2.1.17 absorb, task #2) — X-Wing hybrid post-quantum KEM (X25519 × ML-KEM-768,
+# draft-connolly-cfrg-xwing-kem) for DNSCrypt es-version 0x0003 ("DNSCrypt 2026"). RustCrypto pure-Rust
+# (NO aws-lc / ring / C bindings — cargo-ndk cross-compiles clean): rides `ml-kem` + its OWN
+# `x25519-dalek 3` + `sha3` internally (a SEPARATE crate instance from our base `x25519-dalek 2` above —
+# cargo keeps both majors; the classic es-v1/v2 datapath is untouched). BASE dep (NOT feature-gated):
+# DNSCrypt is the namesake pillar, and a PQ cert must be recognised the moment a resolver publishes one.
+# The client needs ONLY `EncapsulationKey` + `encapsulate_deterministic` (fed 64 fresh CSPRNG bytes per
+# query — the per-query-ephemeral law, PQ edition); `DecapsulationKey` is test-only (loopback resolver).
+x-wing = "0.1.0"
+# ★ PQDNSCrypt key schedule — HKDF-SHA256 binds the X-Wing shared secret to the SIGNED 1320-byte PQ
+# cert (salt = es||client-magic, info = cert-context||ciphertext; upstream pq.go:76-86). Was already a
+# TRANSITIVE dep (hpke's ODoH stack rides it); promoting it to a DIRECT dep pins the same digest-0.10
+# trait stack as `sha2 0.10` above — zero new code in the lockfile's dep tree.
+hkdf = "0.12"
+# NOTE (Forge crew): the Vault (`fortress::vault`) uses `ring::aead` AES-256-GCM (ring 0.17 is already a
+# base dep above — no new crate) + `zeroize` (already vendored, Cargo.lock). The DNS Guardian's IDN
+# homograph leg (`fortress::guardian` C-2) is the ONE genuinely new runtime dep — `idna` (punycode
+# decode) — to be added UNDER a `fortress` feature when (C-2) lands, after GROUND_TRUTHing its transitive
+# graph stays aws-lc-free + cross-compile-clean under cargo-ndk. The SCAFFOLD's `todo!()` bodies pull
+# neither, so the base `.so` stays byte-identical for now.
+
+# ---- ★ E-FIX r5 (R5-Q1) — the query.log feed's LOCAL-time timestamp ----
+# `libc::localtime_r` (bionic/glibc, honours the device TZ + DST) renders the feed row's `[datetime]`
+# in the SAME local civil time the Go query.log writer uses, so interleaved rows never skew hours
+# apart. Unix-target-only: the Android/unix builds ALREADY carry libc transitively (jni/getrandom —
+# zero new vendored weight); the Windows host test target never compiles it (`query_feed.rs` carries
+# a UTC fallback twin, and the formatter itself is offset-injected + exact-byte tested).
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[features]
+# `uniffi-cli` opts the in-crate `uniffi-bindgen` bin into uniffi's `cli` feature (clap + the bindgen CLI).
+# OFF by default → a cargo-ndk / default cdylib build never pulls clap (byte-identical-base). ONLY enabled
+# when running the bindgen: `cargo run --bin uniffi-bindgen --features uniffi-cli -- generate ...`.
+uniffi-cli = ["uniffi/cli"]
+# ---- NETSTACK GENESIS (#144) — the pure-Rust TCP/UDP forwarder ----
+# `netstack` gates the ipstack-based forwarder (`src/forwarder/`) that carries non-DNS traffic OUT of the tun
+# so DNSCrypt resolves PAGES, not just names. OFF by default so `cargo build`/host tests stay byte-clean
+# (zero ipstack/socket2 code); runtime arming stays a user pref (`swNetstackForwarder`, default off).
+# Verified aws-lc=0 (2026-07-05 spike). WIRED + WITNESSED on-device 2026-07-13 (A5 slice-5c).
+# ★ SHIP RECIPE: the engine `.so` MUST build `--features mirror,pure_rust,netstack` — without `netstack`,
+# `set_netstack` is a documented no-op (tunnel/mod.rs) and the tunnel silently runs DNS-only while the
+# Kotlin side logs "forwarder ARMED". Verify a candidate `.so` with: grep -c -a "torta-netstack" <so> → ≥1.
+netstack = ["dep:ipstack", "dep:socket2"]
+# ---- UNIVERSAL pure-Rust (no-Haskell) build ----
+# `pure_rust` swaps every Haskell-dlopen muscle binding for a Rust port (`src/rust_muscles.rs`), so an x86_64
+# (or any) build runs the WHOLE engine with NO libtorta_hs.so / GHC RTS — letting the host x86_64 AVD test the
+# full app (torta-UNIVERSAL-RUST-ONLY-PLAN.md). NO new deps (pure code gating). The SHIPPING arm64 build NEVER
+# passes this feature (cargo ndk -t arm64-v8a --features mirror), so its `.so` compiles ZERO rust_muscles code
+# → byte-identical baseline + keeps dlopen-ing the real Haskell muscles. Completely separate from the arm64
+# Haskell APK — the same additive-feature discipline as `desktop`/`mirror`.
+pure_rust = []
+# ---- MaskSolver oblivious lane — ODoH (RFC 9230) ----
+# `odoh` gates the Oblivious-DoH transport (`src/resolver/odoh.rs`) + its `odoh-rs`/HPKE weight. Same
+# additive discipline as `doh3`/`quic`/`mirror`: a build WITHOUT this feature compiles ZERO odoh-rs and
+# stays byte-identical to the base `.so`. ★ SHIP RECIPE: the engine `.so` MUST build the oblivious lane
+# in — `--features mirror,pure_rust,netstack,odoh` — or the `"odoh"` transport arm is compiled out and a
+# MaskSolver ODoH upstream silently degrades to "unconfigured" (mod.rs `_ => continue`).
+odoh = ["dep:odoh-rs", "dep:rand_core_09"]
+# ---- P9 Centauri Local Mirror (FIX-1) ----
+# `mirror` gates the entire in-app Centauri Local Mirror pillar (`src/mirror/`): the content-addressed
+# cache, the Haskell-signed catalog parser, and the lean Rust loopback micro-HTTP server (the spike-RED
+# runtime, ADR-001 Amendment 1). It carries ALL of the pillar's NEW weight so the BASE `.so` (cargo-ndk
+# WITHOUT this feature) stays BYTE-IDENTICAL — the same discipline as `desktop`/`quic`/`doh3`.
+#
+# It turns ON `hyper`'s `server` + `hyper-util`'s `server`/`server-graceful` features (the base crate is
+# CLIENT-only at the `hyper`/`hyper-util` lines above — FIX-1: the loopback accept loop needs the server
+# half, which the client-only base does NOT pull). Because Cargo features are ADDITIVE and unified, naming
+# `hyper/server` here activates it for the `mirror` build ONLY; a non-`mirror` cargo-ndk run never compiles
+# the server symbols.
+#
+# ⚠️ MANDATORY GROUND_TRUTH after enabling `hyper/server` (FIX-1): the ring-only gate the hyper-rustls
+# CLIENT passes does NOT auto-transfer to the server accept path —
+#     cargo tree --features mirror | grep -ci aws-lc   →  MUST be 0
+# (re-verify the dep graph stays aws-lc-FREE + cargo-ndk-clean before any all-ABI build).
+#
+# It ALSO pulls `dep:blake2` (the integrity-spine migration, charter slice 4): the Centauri content-address
+# (`mirror/cache.rs::content_hash` + the catalog `HASH_ALGO_*` id) switches SHA-256 → Blake2b in LOCKSTEP
+# with the Haskell brain's catalog producer (`Centauri/Catalog.hs`), so the on-device cache key matches the
+# offline-signed catalog pin. Because `mirror` is OFF the base `.so` (no feature → absent), this leg carries
+# NO byte-identical-base cost — the clean half of the spine switch. (The fortress/runtime_tier half is gated
+# by the `fortress` feature above to keep the base byte-identical.)
+mirror = ["hyper/server", "hyper-util/server", "hyper-util/server-graceful", "dep:blake2", "dep:rcgen", "dep:tokio-rustls", "dep:time"]
+
+[dev-dependencies]
+# ★ 2.1.18-absorb — `test-util` unlocks `#[tokio::test(start_paused = true)]` (the VIRTUAL clock)
+# for the warm-setup fail-open test (pool.rs): a 3600-s "hung cert server" and the 2-s deadline
+# advance with ZERO real waiting — deterministic under full suite load (the [[host-hardware-reality]]
+# law: no wall-clock thresholds in tests). Dev-only: feature unification applies this ONLY to test
+# builds — the shipped .so's tokio stays exactly the lean production feature set above.
+tokio = { version = "1", default-features = false, features = ["rt", "net", "time", "sync", "macros", "io-util", "test-util"] }
+
+[lints.rust]
+# `fuzzing` is the cfg cargo-fuzz sets on its target build (fortress/verifier.rs:168 hides the fuzz entry
+# behind `#[cfg(fuzzing)]` so it adds ZERO code to the shipped `.so`). Declare it EXPECTED so a normal
+# `cargo build`/`clippy` does not warn "unexpected cfg" — the honest fix (the cfg IS real, just set by an
+# external tool), never an `#[allow]` papering over it.
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+strip = true  # restored after the K5 UniFFI binding regen (flip to false only to regen bindings)
+# NOTE: panic stays "unwind" (not "abort") on purpose — every JNI entry wraps its body in
+# catch_unwind, so a bug in any future module returns an error to Kotlin instead of killing
+# Yeah! Tortä. For a privacy tool, never let the native core take the whole app down.
+panic = "unwind"

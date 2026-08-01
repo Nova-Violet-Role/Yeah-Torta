@@ -1,0 +1,119 @@
+{
+  "directory": "libumdnscrypt\\src\\test\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\dns_engine\\metrics",
+  "files": {
+    "DnsEngineMetricsFoldTest.kt": {
+      "hash": "5848937a4bd7",
+      "indexed_at": "2026-08-01T04:01:00.099715+00:00",
+      "language": "kotlin",
+      "lines": 148,
+      "mtime_ns": 1785556379498899300,
+      "size": 6773,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "\u2500\u2500 LEGACY byte-identical: the default snapshot adds nothing (the GOVERN/SOLVER-OFF guarantee). \u2500\u2500",
+              "lines": [
+                30,
+                37
+              ],
+              "name": "`default snapshot has an empty per-upstream list (governor absent = today)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                53
+              ],
+              "name": "`default snapshot zeroes every section6 global`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                55,
+                59
+              ],
+              "name": "`default snapshot is not on the probe fallback flag (engine running normally)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                61,
+                70
+              ],
+              "name": "`default Solver snapshot is dormant STEADY with no binding`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                72,
+                84
+              ],
+              "name": "`the original single-upstream fields are untouched by the fold (legacy shape intact)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2500\u2500 The additive DTOs behave (the \u00a76 enrichment is real data, not a stub). \u2500\u2500",
+              "lines": [
+                88,
+                101
+              ],
+              "name": "`a folded per-upstream metric carries the governor view and a guarded success rate`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                106
+              ],
+              "name": "`an upstream metric with zero sends guards its success rate`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                126
+              ],
+              "name": "`a LOCKED Solver snapshot surfaces a shadow binding without claiming a live swap`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                128,
+                138
+              ],
+              "name": "`a fingerprint cache-hit Solver snapshot reuses without a new solve`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                140,
+                147
+              ],
+              "name": "`the shadow governed-vs-wouldhavesent globals carry the would-be pacing divergence`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            26,
+            148
+          ],
+          "name": "DnsEngineMetricsFoldTest",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:01:00.101328+00:00",
+  "version": "1.0"
+}

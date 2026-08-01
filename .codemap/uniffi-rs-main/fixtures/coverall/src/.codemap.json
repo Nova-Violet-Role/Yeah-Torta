@@ -1,0 +1,2507 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\coverall\\src",
+  "files": {
+    "coverall.udl": {
+      "hash": "6918b33a30de",
+      "indexed_at": "2026-07-24T20:35:12.421049+00:00",
+      "language": "udl",
+      "lines": 317,
+      "mtime_ns": 1782136568000000000,
+      "size": 8414,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                2,
+                2
+              ],
+              "name": "create_some_dict",
+              "signature": "() : SimpleDict",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "create_none_dict",
+              "signature": "() : SimpleDict",
+              "type": "method"
+            },
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "get_num_alive",
+              "signature": "() : u64",
+              "type": "method"
+            },
+            {
+              "lines": [
+                7,
+                7
+              ],
+              "name": "get_traits",
+              "signature": "() : sequence<NodeTrait>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "get_maybe_simple_dict",
+              "signature": "(i8 index) : MaybeSimpleDict",
+              "type": "method"
+            },
+            {
+              "lines": [
+                13,
+                13
+              ],
+              "name": "println",
+              "signature": "(string text) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "throw_flat_error",
+              "signature": "() : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                19
+              ],
+              "name": "throw_rich_error_no_variant_data",
+              "signature": "() : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "make_rust_getters",
+              "signature": "() : Getters",
+              "type": "method"
+            },
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "test_getters",
+              "signature": "(Getters g) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "ancestor_names",
+              "signature": "(NodeTrait node) : sequence<string>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "get_string_util_traits",
+              "signature": "() : sequence<StringUtil>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "output_return_only_dict",
+              "signature": "() : ReturnOnlyDict",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                29
+              ],
+              "name": "output_return_only_enum",
+              "signature": "() : ReturnOnlyEnum",
+              "type": "method"
+            },
+            {
+              "lines": [
+                31,
+                31
+              ],
+              "name": "try_input_return_only_dict",
+              "signature": "(ReturnOnlyDict d) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                34,
+                34
+              ],
+              "name": "divide_by_text",
+              "signature": "(f32 value, string value_as_text) : f32",
+              "type": "method"
+            },
+            {
+              "lines": [
+                36,
+                36
+              ],
+              "name": "test_round_trip_through_rust",
+              "signature": "(Getters getters) : Getters",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                37
+              ],
+              "name": "test_round_trip_through_foreign",
+              "signature": "(Getters getters) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                41,
+                41
+              ],
+              "name": "validate_html",
+              "signature": "(string source) : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1,
+            42
+          ],
+          "name": "coverall",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                45
+              ],
+              "name": "text",
+              "signature": "string",
+              "type": "field"
+            },
+            {
+              "lines": [
+                46,
+                46
+              ],
+              "name": "maybe_text",
+              "signature": "string?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                47,
+                47
+              ],
+              "name": "some_bytes",
+              "signature": "bytes",
+              "type": "field"
+            },
+            {
+              "lines": [
+                48,
+                48
+              ],
+              "name": "maybe_some_bytes",
+              "signature": "bytes?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                49,
+                49
+              ],
+              "name": "a_bool",
+              "signature": "boolean",
+              "type": "field"
+            },
+            {
+              "lines": [
+                50,
+                50
+              ],
+              "name": "maybe_a_bool",
+              "signature": "boolean?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                51,
+                51
+              ],
+              "name": "unsigned8",
+              "signature": "u8",
+              "type": "field"
+            },
+            {
+              "lines": [
+                52,
+                52
+              ],
+              "name": "maybe_unsigned8",
+              "signature": "u8?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                53,
+                53
+              ],
+              "name": "unsigned16",
+              "signature": "u16",
+              "type": "field"
+            },
+            {
+              "lines": [
+                54,
+                54
+              ],
+              "name": "maybe_unsigned16",
+              "signature": "u16?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                55,
+                55
+              ],
+              "name": "unsigned64",
+              "signature": "u64",
+              "type": "field"
+            },
+            {
+              "lines": [
+                56,
+                56
+              ],
+              "name": "maybe_unsigned64",
+              "signature": "u64?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                57,
+                57
+              ],
+              "name": "signed8",
+              "signature": "i8",
+              "type": "field"
+            },
+            {
+              "lines": [
+                58,
+                58
+              ],
+              "name": "maybe_signed8",
+              "signature": "i8?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                59,
+                59
+              ],
+              "name": "signed64",
+              "signature": "i64",
+              "type": "field"
+            },
+            {
+              "lines": [
+                60,
+                60
+              ],
+              "name": "maybe_signed64",
+              "signature": "i64?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                61,
+                61
+              ],
+              "name": "float32",
+              "signature": "float",
+              "type": "field"
+            },
+            {
+              "lines": [
+                62,
+                62
+              ],
+              "name": "maybe_float32",
+              "signature": "float?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                63,
+                63
+              ],
+              "name": "float64",
+              "signature": "double",
+              "type": "field"
+            },
+            {
+              "lines": [
+                64,
+                64
+              ],
+              "name": "maybe_float64",
+              "signature": "double?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                65,
+                65
+              ],
+              "name": "coveralls",
+              "signature": "Coveralls?",
+              "type": "field"
+            },
+            {
+              "lines": [
+                66,
+                66
+              ],
+              "name": "coveralls_list",
+              "signature": "sequence<Coveralls?>",
+              "type": "field"
+            },
+            {
+              "lines": [
+                67,
+                67
+              ],
+              "name": "coveralls_map",
+              "signature": "record<string, Coveralls?>",
+              "type": "field"
+            },
+            {
+              "lines": [
+                68,
+                68
+              ],
+              "name": "test_trait",
+              "signature": "NodeTrait?",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            44,
+            69
+          ],
+          "name": "SimpleDict",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                74,
+                74
+              ],
+              "name": "e",
+              "signature": "CoverallFlatError",
+              "type": "field"
+            }
+          ],
+          "docstring": "Create a type that stores `CoverallFlatError` and therefore can only be lowered but not lifted. UniFFI should define a `Lower` implementation but not",
+          "lines": [
+            73,
+            75
+          ],
+          "name": "ReturnOnlyDict",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                80,
+                80
+              ],
+              "name": "One",
+              "signature": "(CoverallFlatError e)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                81,
+                81
+              ],
+              "name": "Two",
+              "signature": "(ReturnOnlyDict d)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                82,
+                82
+              ],
+              "name": "Three",
+              "signature": "(sequence<CoverallFlatError> l)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                83,
+                83
+              ],
+              "name": "Four",
+              "signature": "(record<string, CoverallFlatError> m)",
+              "type": "variant"
+            }
+          ],
+          "lines": [
+            79,
+            84
+          ],
+          "name": "ReturnOnlyEnum",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            86,
+            92
+          ],
+          "name": "DictWithDefaults",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                96,
+                96
+              ],
+              "name": "Yeah",
+              "signature": "(SimpleDict d)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                97,
+                97
+              ],
+              "name": "Nah",
+              "signature": "()",
+              "type": "variant"
+            }
+          ],
+          "lines": [
+            95,
+            98
+          ],
+          "name": "MaybeSimpleDict",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                102,
+                102
+              ],
+              "name": "Obj",
+              "signature": "(Patch p)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                103,
+                103
+              ],
+              "name": "Nah",
+              "signature": "()",
+              "type": "variant"
+            }
+          ],
+          "lines": [
+            101,
+            104
+          ],
+          "name": "MaybeObject",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            114,
+            116
+          ],
+          "name": "CoverallError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            121,
+            123
+          ],
+          "name": "CoverallFlatError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                130,
+                130
+              ],
+              "name": "TooManyPlainVariants",
+              "signature": "()",
+              "type": "variant"
+            }
+          ],
+          "lines": [
+            129,
+            131
+          ],
+          "name": "CoverallRichErrorNoVariantData",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                135,
+                135
+              ],
+              "name": "OsError",
+              "signature": "(i16 code, i16 extended_code)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                136,
+                136
+              ],
+              "name": "PermissionDenied",
+              "signature": "(string reason)",
+              "type": "variant"
+            },
+            {
+              "lines": [
+                137,
+                137
+              ],
+              "name": "UnknownError",
+              "signature": "()",
+              "type": "variant"
+            }
+          ],
+          "lines": [
+            134,
+            138
+          ],
+          "name": "ComplexError",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                141,
+                141
+              ],
+              "name": "constructor",
+              "signature": "(string name)",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                145,
+                145
+              ],
+              "name": "constructor",
+              "signature": "(string name, boolean should_fail)",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                149,
+                149
+              ],
+              "name": "constructor",
+              "signature": "(string message)",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                151,
+                151
+              ],
+              "name": "get_name",
+              "signature": "() : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                154,
+                154
+              ],
+              "name": "maybe_throw",
+              "signature": "(boolean should_throw) : boolean",
+              "type": "method"
+            },
+            {
+              "lines": [
+                159,
+                159
+              ],
+              "name": "maybe_throw_into",
+              "signature": "(boolean should_throw) : boolean",
+              "type": "method"
+            },
+            {
+              "lines": [
+                162,
+                162
+              ],
+              "name": "maybe_throw_complex",
+              "signature": "(i8 input) : boolean",
+              "type": "method"
+            },
+            {
+              "lines": [
+                164,
+                164
+              ],
+              "name": "panic",
+              "signature": "(string message) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                167,
+                167
+              ],
+              "name": "fallible_panic",
+              "signature": "(string message) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                173,
+                173
+              ],
+              "name": "strong_count",
+              "signature": "() : u64",
+              "type": "method"
+            },
+            {
+              "docstring": "Takes an `Arc<Self>` and stores it in `self`, dropping the existing reference. Note you can create circular references by passing `self`.",
+              "lines": [
+                177,
+                177
+              ],
+              "name": "take_other",
+              "signature": "(Coveralls? other) : void",
+              "type": "method"
+            },
+            {
+              "docstring": "Returns what was previously set via `take_other()`, or null.",
+              "lines": [
+                180,
+                180
+              ],
+              "name": "get_other",
+              "signature": "() : Coveralls?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                184,
+                184
+              ],
+              "name": "take_other_fallible",
+              "signature": "() : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                189,
+                189
+              ],
+              "name": "take_other_panic",
+              "signature": "(string message) : void",
+              "type": "method"
+            },
+            {
+              "docstring": "can't name it `clone` as it conflicts with the Clone trait and ours has a different signature",
+              "lines": [
+                192,
+                192
+              ],
+              "name": "clone_me",
+              "signature": "() : Coveralls",
+              "type": "method"
+            },
+            {
+              "docstring": "regression test: using a parameter name that was also used by UniFFI runtime code",
+              "lines": [
+                195,
+                195
+              ],
+              "name": "get_status",
+              "signature": "(string status) : string",
+              "type": "method"
+            },
+            {
+              "docstring": "Simple string->integer dictionary, using the legacy `DOMString` type.",
+              "lines": [
+                198,
+                198
+              ],
+              "name": "get_dict",
+              "signature": "(string key, u64 value) : record<DOMString, u64>",
+              "type": "method"
+            },
+            {
+              "docstring": "Simple string->integer dictionary, using the classic string type",
+              "lines": [
+                201,
+                201
+              ],
+              "name": "get_dict2",
+              "signature": "(string key, u64 value) : record<string, u64>",
+              "type": "method"
+            },
+            {
+              "docstring": "integer->integer dictionary",
+              "lines": [
+                204,
+                204
+              ],
+              "name": "get_dict3",
+              "signature": "(u32 key, u64 value) : record<u32, u64>",
+              "type": "method"
+            },
+            {
+              "docstring": "Adds a new repair at the current time.",
+              "lines": [
+                207,
+                207
+              ],
+              "name": "add_patch",
+              "signature": "(Patch patch) : void",
+              "type": "method"
+            },
+            {
+              "docstring": "Adds a new repair at the specified time.",
+              "lines": [
+                210,
+                210
+              ],
+              "name": "add_repair",
+              "signature": "(Repair repair) : void",
+              "type": "method"
+            },
+            {
+              "docstring": "Returns all repairs made.",
+              "lines": [
+                213,
+                213
+              ],
+              "name": "get_repairs",
+              "signature": "() : sequence<Repair>",
+              "type": "method"
+            },
+            {
+              "docstring": "Reverses the bytes.",
+              "lines": [
+                216,
+                216
+              ],
+              "name": "reverse",
+              "signature": "(bytes value) : bytes",
+              "type": "method"
+            },
+            {
+              "lines": [
+                218,
+                218
+              ],
+              "name": "set_and_get_empty_struct",
+              "signature": "(EmptyStruct empty_struct) : EmptyStruct",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            140,
+            219
+          ],
+          "name": "Coveralls",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                223,
+                223
+              ],
+              "name": "when",
+              "signature": "timestamp",
+              "type": "field"
+            },
+            {
+              "lines": [
+                224,
+                224
+              ],
+              "name": "patch",
+              "signature": "Patch",
+              "type": "field"
+            }
+          ],
+          "docstring": "coveralls keep track of their repairs (an interface in a dict)",
+          "lines": [
+            222,
+            225
+          ],
+          "name": "Repair",
+          "type": "dictionary"
+        },
+        {
+          "docstring": "All coveralls end up with a patch.",
+          "lines": [
+            228,
+            228
+          ],
+          "name": "Color",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                231,
+                231
+              ],
+              "name": "constructor",
+              "signature": "(Color color)",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                233,
+                233
+              ],
+              "name": "get_color",
+              "signature": "() : Color",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            230,
+            234
+          ],
+          "name": "Patch",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                238,
+                238
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                241,
+                241
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            }
+          ],
+          "lines": [
+            236,
+            242
+          ],
+          "name": "FalliblePatch",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                245,
+                245
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                246,
+                246
+              ],
+              "name": "busy_wait",
+              "signature": "(i32 ms) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                247,
+                247
+              ],
+              "name": "increment_if_busy",
+              "signature": "() : i32",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            244,
+            248
+          ],
+          "name": "ThreadsafeCounter",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                255,
+                255
+              ],
+              "name": "get_bool",
+              "signature": "(boolean v, boolean arg2) : boolean",
+              "type": "method"
+            },
+            {
+              "lines": [
+                257,
+                257
+              ],
+              "name": "get_string",
+              "signature": "(string v, boolean arg2) : string",
+              "type": "method"
+            },
+            {
+              "lines": [
+                259,
+                259
+              ],
+              "name": "get_option",
+              "signature": "(string v, boolean arg2) : string?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                260,
+                260
+              ],
+              "name": "get_list",
+              "signature": "(sequence<i32> v, boolean arg2) : sequence<i32>",
+              "type": "method"
+            },
+            {
+              "lines": [
+                261,
+                261
+              ],
+              "name": "get_nothing",
+              "signature": "(string v) : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                262,
+                262
+              ],
+              "name": "round_trip_object",
+              "signature": "(Coveralls coveralls) : Coveralls",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            254,
+            263
+          ],
+          "name": "Getters",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                270,
+                270
+              ],
+              "name": "name",
+              "signature": "() : string",
+              "type": "method"
+            },
+            {
+              "docstring": "Takes an `Arc<Self>` and stores it our parent node, dropping any existing / reference. Note you can create circular references with this.",
+              "lines": [
+                274,
+                274
+              ],
+              "name": "set_parent",
+              "signature": "(NodeTrait? parent) : void",
+              "type": "method"
+            },
+            {
+              "docstring": "Returns what was previously set via `set_parent()`, or null.",
+              "lines": [
+                277,
+                277
+              ],
+              "name": "get_parent",
+              "signature": "() : NodeTrait?",
+              "type": "method"
+            },
+            {
+              "lines": [
+                281,
+                281
+              ],
+              "name": "strong_count",
+              "signature": "() : u64",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            269,
+            282
+          ],
+          "name": "NodeTrait",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                289,
+                289
+              ],
+              "name": "concat",
+              "signature": "([ByRef]string a, [ByRef]string b) : string",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            288,
+            290
+          ],
+          "name": "StringUtil",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                297,
+                297
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "docstring": "Handling optional with a default value",
+              "lines": [
+                300,
+                300
+              ],
+              "name": "compare",
+              "signature": "(optional ISecond? other = null) : boolean",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            296,
+            301
+          ],
+          "name": "IFirst",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                304,
+                304
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "docstring": "Default only",
+              "lines": [
+                307,
+                307
+              ],
+              "name": "compare",
+              "signature": "(IFirst? other) : boolean",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            303,
+            308
+          ],
+          "name": "ISecond",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            310,
+            310
+          ],
+          "name": "EmptyStruct",
+          "type": "dictionary"
+        },
+        {
+          "lines": [
+            315,
+            317
+          ],
+          "name": "HTMLError",
+          "type": "enum"
+        }
+      ]
+    },
+    "ffi_buffer_scaffolding_test.rs": {
+      "hash": "d0bf30aa47cc",
+      "indexed_at": "2026-07-24T20:35:12.421827+00:00",
+      "language": "rust",
+      "lines": 61,
+      "mtime_ns": 1782136568000000000,
+      "size": 3020,
+      "symbols": [
+        {
+          "lines": [
+            18,
+            61
+          ],
+          "name": "test_ffi_buffer_scaffolding",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "074196f7dee4",
+      "indexed_at": "2026-07-24T20:35:12.424917+00:00",
+      "language": "rust",
+      "lines": 664,
+      "mtime_ns": 1782136568000000000,
+      "size": 16955,
+      "symbols": [
+        {
+          "lines": [
+            13,
+            13
+          ],
+          "name": "ffi_buffer_scaffolding_test",
+          "type": "module"
+        },
+        {
+          "lines": [
+            15,
+            15
+          ],
+          "name": "traits",
+          "type": "module"
+        },
+        {
+          "lines": [
+            24,
+            27
+          ],
+          "name": "CoverallError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            30,
+            33
+          ],
+          "name": "CoverallFlatError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            35,
+            37
+          ],
+          "name": "throw_flat_error",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "\"flat\" isn't really the correct terminology here.",
+          "lines": [
+            41,
+            44
+          ],
+          "name": "CoverallMacroError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            47,
+            49
+          ],
+          "name": "throw_macro_error",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            53,
+            56
+          ],
+          "name": "CoverallFlatMacroError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            59,
+            61
+          ],
+          "name": "throw_flat_macro_error",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            64,
+            67
+          ],
+          "name": "CoverallRichErrorNoVariantData",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            69,
+            71
+          ],
+          "name": "throw_rich_error_no_variant_data",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            76,
+            79
+          ],
+          "name": "InternalCoverallError",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                82,
+                86
+              ],
+              "name": "from",
+              "signature": "(err: InternalCoverallError)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            81,
+            87
+          ],
+          "name": "CoverallError",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            90,
+            97
+          ],
+          "name": "ComplexError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            100,
+            107
+          ],
+          "name": "ComplexMacroError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            110,
+            115
+          ],
+          "name": "throw_complex_macro_error",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            120,
+            122
+          ],
+          "name": "OtherError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            125,
+            135
+          ],
+          "name": "RootError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            139,
+            146
+          ],
+          "name": "throw_root_error",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            149,
+            153
+          ],
+          "name": "get_root_error",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            156,
+            160
+          ],
+          "name": "get_complex_error",
+          "signature": "(e: Option<ComplexError>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            163,
+            165
+          ],
+          "name": "get_error_dict",
+          "signature": "(d: Option<ErrorDict>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            168,
+            172
+          ],
+          "name": "ErrorDict",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            175,
+            200
+          ],
+          "name": "SimpleDict",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            202,
+            204
+          ],
+          "name": "ReturnOnlyDict",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            206,
+            219
+          ],
+          "name": "ReturnOnlyEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            221,
+            225
+          ],
+          "name": "output_return_only_dict",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            227,
+            231
+          ],
+          "name": "output_return_only_enum",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            233,
+            238
+          ],
+          "name": "try_input_return_only_dict",
+          "signature": "(_d: ReturnOnlyDict)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            240,
+            245
+          ],
+          "name": "divide_by_text",
+          "signature": "(value: f32, value_as_text: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            248,
+            254
+          ],
+          "name": "DictWithDefaults",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            258,
+            261
+          ],
+          "name": "MaybeSimpleDict",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            263,
+            271
+          ],
+          "name": "get_maybe_simple_dict",
+          "signature": "(index: i8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            274,
+            277
+          ],
+          "name": "MaybeObject",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            280,
+            288
+          ],
+          "name": "get_maybe_object",
+          "signature": "(index: i8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            292,
+            295
+          ],
+          "name": "SimpleFlatEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            298,
+            301
+          ],
+          "name": "SimpleFlatMacroEnum",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            304,
+            312
+          ],
+          "name": "get_simple_flat_macro_enum",
+          "signature": "(index: i8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            314,
+            357
+          ],
+          "name": "create_some_dict",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            359,
+            372
+          ],
+          "name": "create_none_dict",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            374,
+            376
+          ],
+          "name": "get_num_alive",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            381,
+            384
+          ],
+          "name": "println",
+          "signature": "(text: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            387,
+            394
+          ],
+          "name": "Coveralls",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                397,
+                404
+              ],
+              "name": "new",
+              "signature": "(name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                406,
+                412
+              ],
+              "name": "fallible_new",
+              "signature": "(name: String, should_fail: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                414,
+                416
+              ],
+              "name": "fallible_panic",
+              "signature": "(&self, message: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                418,
+                420
+              ],
+              "name": "get_name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                422,
+                424
+              ],
+              "name": "panicking_new",
+              "signature": "(message: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                426,
+                432
+              ],
+              "name": "maybe_throw",
+              "signature": "(&self, should_throw: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                434,
+                440
+              ],
+              "name": "maybe_throw_into",
+              "signature": "(&self, should_throw: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                442,
+                455
+              ],
+              "name": "maybe_throw_complex",
+              "signature": "(&self, input: i8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                457,
+                459
+              ],
+              "name": "panic",
+              "signature": "(&self, message: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                461,
+                463
+              ],
+              "name": "strong_count",
+              "signature": "(self: Arc<Self>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                465,
+                467
+              ],
+              "name": "take_other",
+              "signature": "(&self, other: Option<Arc<Self>>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                469,
+                471
+              ],
+              "name": "get_other",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                473,
+                475
+              ],
+              "name": "take_other_fallible",
+              "signature": "(self: Arc<Self>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                477,
+                479
+              ],
+              "name": "take_other_panic",
+              "signature": "(self: Arc<Self>, message: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                481,
+                490
+              ],
+              "name": "clone_me",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                492,
+                494
+              ],
+              "name": "get_status",
+              "signature": "(&self, status: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                496,
+                500
+              ],
+              "name": "get_dict",
+              "signature": "(&self, key: String, value: u64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                502,
+                506
+              ],
+              "name": "get_dict2",
+              "signature": "(&self, key: String, value: u64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                508,
+                512
+              ],
+              "name": "get_dict3",
+              "signature": "(&self, key: u32, value: u64)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                514,
+                521
+              ],
+              "name": "add_patch",
+              "signature": "(&self, patch: Arc<Patch>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                523,
+                526
+              ],
+              "name": "add_repair",
+              "signature": "(&self, repair: Repair)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                528,
+                531
+              ],
+              "name": "get_repairs",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                533,
+                536
+              ],
+              "name": "reverse",
+              "signature": "(&self, mut value: Vec<u8>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                538,
+                540
+              ],
+              "name": "set_and_get_empty_struct",
+              "signature": "(&self, empty_struct: EmptyStruct)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            396,
+            541
+          ],
+          "name": "Coveralls",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                544,
+                546
+              ],
+              "name": "drop",
+              "signature": "(&mut self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            543,
+            547
+          ],
+          "name": "Drop",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            550,
+            553
+          ],
+          "name": "Repair",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            556,
+            560
+          ],
+          "name": "Color",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            563,
+            565
+          ],
+          "name": "Patch",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                568,
+                570
+              ],
+              "name": "new",
+              "signature": "(color: Color)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                572,
+                574
+              ],
+              "name": "get_color",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            567,
+            575
+          ],
+          "name": "Patch",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            577,
+            577
+          ],
+          "name": "FalliblePatch",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                580,
+                582
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                584,
+                586
+              ],
+              "name": "secondary",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            579,
+            587
+          ],
+          "name": "FalliblePatch",
+          "type": "impl"
+        },
+        {
+          "docstring": "doesn't introduce unexpected locking behaviour between threads.",
+          "lines": [
+            592,
+            595
+          ],
+          "name": "ThreadsafeCounter",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                598,
+                603
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                605,
+                610
+              ],
+              "name": "busy_wait",
+              "signature": "(&self, ms: i32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                612,
+                618
+              ],
+              "name": "increment_if_busy",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            597,
+            619
+          ],
+          "name": "ThreadsafeCounter",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            622,
+            622
+          ],
+          "name": "IFirst",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                625,
+                627
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                629,
+                631
+              ],
+              "name": "compare",
+              "signature": "(&self, _other: Option<Arc<ISecond>>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            624,
+            632
+          ],
+          "name": "IFirst",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            635,
+            635
+          ],
+          "name": "ISecond",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                638,
+                640
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                642,
+                644
+              ],
+              "name": "compare",
+              "signature": "(&self, _other: Option<Arc<IFirst>>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            637,
+            645
+          ],
+          "name": "ISecond",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            647,
+            647
+          ],
+          "name": "EmptyStruct",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            650,
+            653
+          ],
+          "name": "HTMLError",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            655,
+            657
+          ],
+          "name": "validate_html",
+          "signature": "(_source: String)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            660,
+            662
+          ],
+          "name": "async_bool",
+          "signature": "(b: bool)",
+          "type": "function"
+        }
+      ]
+    },
+    "traits.rs": {
+      "hash": "41bd9b3eadab",
+      "indexed_at": "2026-07-24T20:35:12.426849+00:00",
+      "language": "rust",
+      "lines": 293,
+      "mtime_ns": 1782136568000000000,
+      "size": 8281,
+      "symbols": [
+        {
+          "docstring": "namespace functions.",
+          "lines": [
+            9,
+            14
+          ],
+          "name": "get_traits",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                26
+              ],
+              "name": "strong_count",
+              "signature": "(self: Arc<Self>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            17,
+            27
+          ],
+          "name": "NodeTrait",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            29,
+            37
+          ],
+          "name": "ancestor_names",
+          "signature": "(node: Arc<dyn NodeTrait>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            43,
+            50
+          ],
+          "name": "Getters",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            52,
+            54
+          ],
+          "name": "test_round_trip_through_rust",
+          "signature": "(getters: Arc<dyn Getters>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            56,
+            59
+          ],
+          "name": "test_round_trip_through_foreign",
+          "signature": "(getters: Arc<dyn Getters>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            61,
+            61
+          ],
+          "name": "RustGetters",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                64,
+                66
+              ],
+              "name": "get_bool",
+              "signature": "(&self, v: bool, arg2: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                78
+              ],
+              "name": "get_string",
+              "signature": "(&self, v: String, arg2: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                80,
+                97
+              ],
+              "name": "get_option",
+              "signature": "(&self, v: String, arg2: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                99,
+                105
+              ],
+              "name": "get_list",
+              "signature": "(&self, v: Vec<i32>, arg2: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                107,
+                107
+              ],
+              "name": "get_nothing",
+              "signature": "(&self, _v: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                109,
+                111
+              ],
+              "name": "round_trip_object",
+              "signature": "(&self, coveralls: Arc<Coveralls>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            63,
+            112
+          ],
+          "name": "Getters",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            114,
+            116
+          ],
+          "name": "make_rust_getters",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            118,
+            169
+          ],
+          "name": "test_getters",
+          "signature": "(getters: Arc<dyn Getters>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            173,
+            176
+          ],
+          "name": "SimpleNodeImpl",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                179,
+                181
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                183,
+                185
+              ],
+              "name": "set_parent",
+              "signature": "(&self, parent: Option<Arc<dyn NodeTrait>>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                187,
+                189
+              ],
+              "name": "get_parent",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            178,
+            190
+          ],
+          "name": "NodeTrait",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            195,
+            198
+          ],
+          "name": "Node",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                204,
+                212
+              ],
+              "name": "new",
+              "signature": "(name: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                214,
+                216
+              ],
+              "name": "describe_parent",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            202,
+            217
+          ],
+          "name": "Node",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                222,
+                224
+              ],
+              "name": "name",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                226,
+                228
+              ],
+              "name": "set_parent",
+              "signature": "(&self, parent: Option<Arc<dyn NodeTrait>>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                230,
+                232
+              ],
+              "name": "get_parent",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "or the foreign code doesn't know it exists.",
+              "lines": [
+                236,
+                238
+              ],
+              "name": "strong_count",
+              "signature": "(self: Arc<Self>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            221,
+            239
+          ],
+          "name": "NodeTrait",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            242,
+            244
+          ],
+          "name": "StringUtil",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            246,
+            246
+          ],
+          "name": "StringUtilImpl1",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            247,
+            247
+          ],
+          "name": "StringUtilImpl2",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            249,
+            251
+          ],
+          "name": "get_string_util_traits",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                254,
+                256
+              ],
+              "name": "concat",
+              "signature": "(&self, a: &str, b: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            253,
+            257
+          ],
+          "name": "StringUtil",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                260,
+                262
+              ],
+              "name": "concat",
+              "signature": "(&self, a: &str, b: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            259,
+            263
+          ],
+          "name": "StringUtil",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            270,
+            272
+          ],
+          "name": "StringUtilObject",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                277,
+                279
+              ],
+              "name": "new",
+              "signature": "(separator: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            275,
+            280
+          ],
+          "name": "StringUtilObject",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                284,
+                287
+              ],
+              "name": "concat",
+              "signature": "(&self, a: &str, b: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            283,
+            288
+          ],
+          "name": "StringUtil",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            291,
+            293
+          ],
+          "name": "concat_with_string_util",
+          "signature": "(string_util: Arc<dyn StringUtil>, a: &str, b: &str)",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.670253+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,381 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\domain\\log_reader",
+  "files": {
+    "AbstractLogParser.kt": {
+      "hash": "dcd8992644aa",
+      "indexed_at": "2026-08-01T03:59:58.565916+00:00",
+      "language": "kotlin",
+      "lines": 75,
+      "mtime_ns": 1785556377050899800,
+      "size": 3038,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "parseLog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                74
+              ],
+              "name": "formatLines",
+              "signature": "(lines: List<String>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            24,
+            75
+          ],
+          "name": "AbstractLogParser",
+          "type": "class"
+        }
+      ]
+    },
+    "DNSCryptInteractorInterface.kt": {
+      "hash": "3363d399a064",
+      "indexed_at": "2026-08-01T03:59:59.739551+00:00",
+      "language": "kotlin",
+      "lines": 24,
+      "mtime_ns": 1785556377063900500,
+      "size": 965,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "addOnDNSCryptLogUpdatedListener",
+              "signature": "(onDNSCryptLogUpdatedListener: T)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "removeOnDNSCryptLogUpdatedListener",
+              "signature": "(onDNSCryptLogUpdatedListener: T)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            24
+          ],
+          "name": "DNSCryptInteractorInterface",
+          "type": "interface"
+        }
+      ]
+    },
+    "LogDataModel.kt": {
+      "hash": "3aa69fda7fc1",
+      "indexed_at": "2026-08-01T04:00:00.043734+00:00",
+      "language": "kotlin",
+      "lines": 25,
+      "mtime_ns": 1785556377075899500,
+      "size": 817,
+      "symbols": [
+        {
+          "lines": [
+            19,
+            25
+          ],
+          "name": "LogDataModel",
+          "type": "class"
+        }
+      ]
+    },
+    "LogReaderFacade.kt": {
+      "hash": "e738b23c45a6",
+      "indexed_at": "2026-08-01T04:00:00.344843+00:00",
+      "language": "kotlin",
+      "lines": 54,
+      "mtime_ns": 1785556377087900700,
+      "size": 1981,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                30,
+                36
+              ],
+              "name": "parseDNSCryptLog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                38,
+                42
+              ],
+              "name": "convertConnectionRecords",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                44,
+                47
+              ],
+              "name": "isAnyListenerAvailable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                49,
+                53
+              ],
+              "name": "isModulesStateNotChanging",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            24,
+            54
+          ],
+          "name": "LogReaderFacade",
+          "type": "class"
+        }
+      ]
+    },
+    "LogReaderInteractors.kt": {
+      "hash": "3241ad9055f0",
+      "indexed_at": "2026-08-01T04:00:00.664715+00:00",
+      "language": "kotlin",
+      "lines": 63,
+      "mtime_ns": 1785556377099898900,
+      "size": 2700,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                42,
+                45
+              ],
+              "name": "addOnDNSCryptLogUpdatedListener",
+              "signature": "(onDNSCryptLogUpdatedListener: T)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                47,
+                49
+              ],
+              "name": "removeOnDNSCryptLogUpdatedListener",
+              "signature": "(onDNSCryptLogUpdatedListener: T)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                51,
+                54
+              ],
+              "name": "addOnConnectionRecordsUpdatedListener",
+              "signature": "(onConnectionRecordsUpdatedListener: T)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                58
+              ],
+              "name": "removeOnConnectionRecordsUpdatedListener",
+              "signature": "(onConnectionRecordsUpdatedListener: T)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                60,
+                62
+              ],
+              "name": "clearConnectionRecords",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            27,
+            63
+          ],
+          "name": "LogReaderInteractors",
+          "type": "class"
+        }
+      ]
+    },
+    "LogReaderLoop.kt": {
+      "hash": "a0051b3e4e1d",
+      "indexed_at": "2026-08-01T04:00:00.985452+00:00",
+      "language": "kotlin",
+      "lines": 125,
+      "mtime_ns": 1785556377111899500,
+      "size": 3722,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                50,
+                65
+              ],
+              "name": "startLogsParser",
+              "signature": "(period: Long = TIMER_INITIAL_PERIOD)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                67,
+                81
+              ],
+              "name": "startLoop",
+              "signature": "(period: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                83,
+                96
+              ],
+              "name": "stopLogsParser",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                98,
+                124
+              ],
+              "name": "parseLogs",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            33,
+            125
+          ],
+          "name": "LogReaderLoop",
+          "type": "class"
+        }
+      ]
+    },
+    "ModulesLogRepository.kt": {
+      "hash": "9a055d6daf49",
+      "indexed_at": "2026-08-01T04:00:01.276942+00:00",
+      "language": "kotlin",
+      "lines": 24,
+      "mtime_ns": 1785556377123899100,
+      "size": 791,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "getDNSCryptLog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "getTorLog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "getITPDLog",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "getITPDHtmlData",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            24
+          ],
+          "name": "ModulesLogRepository",
+          "type": "interface"
+        }
+      ]
+    },
+    "ScheduledExecutor.kt": {
+      "hash": "34fec70954fa",
+      "indexed_at": "2026-08-01T04:00:01.561011+00:00",
+      "language": "kotlin",
+      "lines": 54,
+      "mtime_ns": 1785556377134898800,
+      "size": 1562,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                29,
+                45
+              ],
+              "name": "execute",
+              "signature": "(execute: () -> Unit)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                47,
+                49
+              ],
+              "name": "stopExecutor",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                51,
+                53
+              ],
+              "name": "isLooping",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            54
+          ],
+          "name": "ScheduledExecutor",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:01.562647+00:00",
+  "version": "1.0"
+}

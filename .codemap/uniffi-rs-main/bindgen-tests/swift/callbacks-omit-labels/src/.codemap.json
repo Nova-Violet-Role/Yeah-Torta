@@ -1,0 +1,154 @@
+{
+  "directory": "uniffi-rs-main\\bindgen-tests\\swift\\callbacks-omit-labels\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "065d93e558f4",
+      "indexed_at": "2026-07-24T20:35:12.144299+00:00",
+      "language": "rust",
+      "lines": 29,
+      "mtime_ns": 1782136568000000000,
+      "size": 694,
+      "symbols": [
+        {
+          "docstring": "/* This Source Code Form is subject to the terms of the Mozilla Public\n * License, v. 2.0. If a copy of the MPL was not distributed with this\n * file,",
+          "lines": [
+            5,
+            7
+          ],
+          "name": "UserModel",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            9,
+            11
+          ],
+          "name": "ClientDelegate",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            14,
+            14
+          ],
+          "name": "Client",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                17,
+                19
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                26
+              ],
+              "name": "friend_request",
+              "signature": "(&self, delegate: Box<dyn ClientDelegate>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            16,
+            27
+          ],
+          "name": "Client",
+          "type": "impl"
+        }
+      ]
+    },
+    "test.udl": {
+      "hash": "ac30978a3f76",
+      "indexed_at": "2026-07-24T20:35:12.144913+00:00",
+      "language": "udl",
+      "lines": 17,
+      "mtime_ns": 1782136568000000000,
+      "size": 356,
+      "symbols": [
+        {
+          "lines": [
+            3,
+            3
+          ],
+          "name": "regression_test_callbacks_omit_labels",
+          "type": "namespace"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                6,
+                6
+              ],
+              "name": "name",
+              "signature": "string",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            5,
+            7
+          ],
+          "name": "UserModel",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                10,
+                10
+              ],
+              "name": "constructor",
+              "signature": "()",
+              "type": "constructor"
+            },
+            {
+              "lines": [
+                12,
+                12
+              ],
+              "name": "friend_request",
+              "signature": "(ClientDelegate delegate) : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            9,
+            13
+          ],
+          "name": "Client",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "did_receive_friend_request",
+              "signature": "(UserModel user) : void",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            15,
+            17
+          ],
+          "name": "ClientDelegate",
+          "type": "callback_interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.591634+00:00",
+  "version": "1.0"
+}

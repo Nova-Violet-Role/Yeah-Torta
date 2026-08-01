@@ -1,0 +1,1001 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT Beast dashboard — the surface overhaul of the flagship Genesis engine (the 🩸 Carnage facet).
+//
+// This is the rust-native (SLINT, NO XML / NO Java / NO Compose) one-glance Beast surface — THE CAKE-FOUNTAIN.
+// It renders a `BeastSnapshot` (torta_core `beast::mod::BeastSnapshot`, mod.rs:128) the HOST sets: the YeAH
+// window brain (cwnd/mode + the canonical backlog/reno/fast/floor + the first-ever UDP-YeAH base-RTT + the
+// live YeahProfile) and the CAKE/CoBALT queue state (per-tin depth + the aggregate AND per-tin BLUE valve +
+// the CoDel/AQM sheds + the DRR++ fairness witness + the live CakeProfile). The Record reaches Kotlin two
+// ways from the ONE `Beast::build_snapshot` reader (mod.rs:348) — PUSHED via `BeastMetricSink::on_metrics`
+// (the callback, no polling, mod.rs:181) OR PULLED via `Beast::snapshot()` (the poll-free read the dashboard
+// polls, mod.rs:296) — so the push and the pull can never drift.
+//
+// HOST-PREVIEW ONLY this wave — the on-device SLINT render is GATED by the Android cross-compile spike #69.
+// SLINT can't read a Rust struct directly; the host (Kotlin SurfaceView bridge / the slint-viewer preview /
+// the lib.rs proof test) constructs `BeastDashboard`, pulls a live `BeastSnapshot`, and pushes each field
+// onto the `in-out` inputs. Every number is a REAL engine read — never a faked count (Chroma F16).
+//
+// 🩸 THE FLOW-FAULT HUNT (the facet's load-bearing job): the Beast is why DNS *feels fast*, and its worst
+// SILENT failures are the ways the flow lies. The dashboard derives + surfaces three from the exposed fields
+// (the `out property` flags below): (1) COLLAPSED WINDOW — the pump is stuck single-probe (cwnd==1) with a
+// backlog piling; (2) BASIN OVERFLOW — a priority tier hit its cap ([4,8,16]); (3) CONGESTED — a CoBALT BLUE
+// valve is open (shedding SERVFAIL-fast, honest, never silent). Plus the informational DORMANT (no traffic
+// yet) + UDP/TCP RTT DIVERGENCE. ⚠️ HONESTY (Chroma F6): the canonical telemetry + the CoBALT cards are GATED
+// on the live profile, so a Legacy brain's inert 0s never read as live metrics.
+//
+// NOTE: slint uses `:` for property bindings (not `=`); `\{expr}` is string interpolation; `out property`
+// values are derived + host-readable (the proof test asserts the flow-fault derivations fire).
+
+import { VerticalBox, HorizontalBox } from "std-widgets.slint";
+// The Beast molten-fountain palette (slice 10) — the single source of truth for the flow-engine colors. NO XML.
+import { Beast } from "beast_palette.slint";
+import { ThemeBook, MotifWash } from "theme_tokens.slint";
+
+// One recent-tick feed row — the host fills this from the tail of `query-beast.log` (beast/log.rs, the #133
+// RAM⊗NAND per-pillar log pattern via `crate::log_tier::log_append`). `mode` = the YeahMode label at the tick,
+// `cwnd` = the window, `shed` = the AQM/CoBALT shed count, `relay` = the host-supplied endpoint name (the
+// engine holds only `endpoint_idx`, so the human relay name is host-supplied — Chroma F5, never Rust-invented).
+export struct BeastTickRow {
+    mode: string,
+    cwnd: int,
+    shed: int,
+    relay: string,
+}
+
+// A compact metric tile (local, non-exported). `tint` colors the value; `muted` dims a card the live profile
+// gates off (so a Legacy/inert 0 reads as "not-applicable", not as a live metric).
+component StatTile inherits Rectangle {
+    in property <string> label;
+    in property <string> value;
+    in property <color> tint: Beast.ink;
+    in property <bool> muted: false;
+    min-width: 70px;
+    min-height: 52px;
+    border-radius: 8px;
+    background: @linear-gradient(0deg, Beast.trough.with-alpha(0.55) 0%, Beast.abyss.with-alpha(0.30) 100%);
+    border-width: 1px;
+    border-color: Beast.hairline;
+    VerticalLayout {
+        padding: 8px;
+        spacing: 2px;
+        Text {
+            text: root.muted ? "—" : root.value;
+            color: root.muted ? Beast.dim : root.tint;
+            font-size: 19px;
+            font-weight: 800;
+        }
+        Text {
+            text: root.label;
+            color: Beast.mist;
+            font-size: 10px;
+        }
+    }
+}
+
+// A flow-fault alert banner (local). Only instantiated (via a guarding `if`) when its fault is live, so an
+// inactive alert occupies ZERO layout space — the stack collapses to exactly the live faults.
+component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: Beast.wound;
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: Beast.strike;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: Beast.strike;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+// A section title (local).
+component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: Beast.dim;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+// THE CAKE-FOUNTAIN basin (local) — a priority tin rendered as a molten fill bar: the query water pours in
+// and fills `depth / cap`; a basin at/over its cap ([4,8,16]) renders as SHED-red (overflowing). This is the
+// flagship one-glance motif — is my DNS flowing, throttled, or congested?
+component Basin inherits Rectangle {
+    in property <string> label;
+    in property <int> depth;
+    in property <int> cap;
+    in property <color> jet: Beast.flow;
+    property <bool> over: root.cap > 0 && root.depth >= root.cap;
+    property <float> frac: root.cap > 0 ? Math.min(1.0, root.depth / (root.cap * 1.0)) : 0.0;
+    height: 32px;
+    border-radius: 7px;
+    background: @linear-gradient(0deg, Beast.trough.with-alpha(0.55) 0%, Beast.abyss.with-alpha(0.30) 100%);
+    border-width: root.over ? 2px : 1px;
+    border-color: root.over ? Beast.shed : Beast.hairline;
+    clip: true;
+    // the molten water jet — the fill.
+    Rectangle {
+        x: 0px;
+        width: parent.width * root.frac;
+        height: parent.height;
+        background: root.over ? Beast.shed : root.jet;
+    }
+    // the label (left) + count (right), positioned over the jet (no layout-in-rect ambiguity).
+    Text {
+        x: 10px;
+        height: parent.height;
+        vertical-alignment: center;
+        text: root.label;
+        color: Beast.ink;
+        font-size: 12px;
+        font-weight: 800;
+    }
+    count := Text {
+        x: parent.width - self.width - 10px;
+        height: parent.height;
+        vertical-alignment: center;
+        text: "\{root.depth}/\{root.cap}";
+        color: root.over ? Beast.strike : Beast.ink;
+        font-size: 12px;
+        font-weight: 700;
+    }
+}
+
+// A per-tin CoBALT BLUE valve (local) — the advanced-depth pressure-relief gauge. `value` is the tin's
+// BLUE drop-probability [0, BLUE_CAP=0.25]; the fill shows the valve fraction (value/max). `live` gates it on
+// the CoBALT profile so a Legacy AQM's inert 0 reads as "—", not a closed valve.
+component Valve inherits Rectangle {
+    in property <string> label;
+    in property <float> value;      // 0 .. vmax
+    in property <float> vmax: 0.25; // VALVE_CAP (torta_core/src/beast/scheduler.rs:58)
+    in property <bool> live: true;
+    property <float> frac: (root.live && root.vmax > 0) ? Math.min(1.0, root.value / root.vmax) : 0.0;
+    property <bool> open: root.live && root.value > 0.0;
+    min-width: 80px;
+    min-height: 46px;
+    border-radius: 8px;
+    background: @linear-gradient(0deg, Beast.trough.with-alpha(0.55) 0%, Beast.abyss.with-alpha(0.30) 100%);
+    border-width: 1px;
+    border-color: root.open ? Beast.shed : Beast.hairline;
+    VerticalLayout {
+        padding: 8px;
+        spacing: 5px;
+        HorizontalLayout {
+            Text {
+                text: root.label;
+                color: Beast.mist;
+                font-size: 10px;
+                vertical-alignment: center;
+            }
+            Rectangle { }
+            Text {
+                text: root.live ? "\{Math.round(root.frac * 100)}%" : "—";
+                color: root.open ? Beast.shed : (root.live ? Beast.mist : Beast.dim);
+                font-size: 11px;
+                font-weight: 800;
+            }
+        }
+        // the valve track + fill.
+        Rectangle {
+            height: 6px;
+            border-radius: 3px;
+            background: @linear-gradient(180deg, Beast.pit.with-alpha(0.62) 0%, Beast.trough.with-alpha(0.38) 100%);
+            clip: true;
+            Rectangle {
+                x: 0px;
+                width: parent.width * root.frac;
+                height: parent.height;
+                border-radius: 3px;
+                background: root.open ? Beast.shed : Beast.flow;
+            }
+        }
+    }
+}
+
+// ── #25(1) SOFT-CAKE TAP-BLOOM — the on-touch effect (the DNSCrypt SparkBurst precedent,
+//    dnscrypt_section.slint:74, re-baked in cake): `fired` jumps, `p` chases it (700ms ease-out),
+//    so k = fired − p is a 1→0 energy envelope; slices + crumbs ride k outward while fading.
+//    Pure property animation — no timers; at rest k = 0 ⇒ opacity 0. ──
+component CakeBurst inherits Rectangle {
+    in-out property <int> fired: 0;
+    in property <length> reach: 34px;
+    property <float> p: root.fired;
+    animate p { duration: 700ms; easing: ease-out; }
+    property <float> k: root.fired - root.p;
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    // 6 slices fanning out — cake/dango alternating (the Dango-Daikazoku family)
+    for d in [{ dx: 1.0, dy: 0.0, g: "🍰" }, { dx: 0.5, dy: 0.87, g: "🍡" }, { dx: -0.5, dy: 0.87, g: "🍰" },
+              { dx: -1.0, dy: 0.0, g: "🍡" }, { dx: -0.5, dy: -0.87, g: "🍰" }, { dx: 0.5, dy: -0.87, g: "🍡" }]: Text {
+        text: d.g;
+        font-size: 13px;
+        opacity: root.k;
+        x: d.dx * root.reach * (1 - root.k) - self.width / 2;
+        y: d.dy * root.reach * (1 - root.k) - self.height / 2;
+        transform-rotation: 90deg * (1 - root.k) * d.dx;
+    }
+    // 8 soft crumbs on the long ring — warming embers, the oven's spray
+    for c in [{ dx: 0.92, dy: 0.38 }, { dx: 0.38, dy: 0.92 }, { dx: -0.38, dy: 0.92 }, { dx: -0.92, dy: 0.38 },
+              { dx: -0.92, dy: -0.38 }, { dx: -0.38, dy: -0.92 }, { dx: 0.38, dy: -0.92 }, { dx: 0.92, dy: -0.38 }]: Rectangle {
+        width: 3px;
+        height: 3px;
+        border-radius: 1.5px;
+        background: Beast.warming;
+        opacity: root.k * 0.85;
+        x: c.dx * root.reach * 1.3 * (1 - root.k) - self.width / 2;
+        y: c.dy * root.reach * 1.3 * (1 - root.k) - self.height / 2;
+    }
+}
+
+// THE EMBEDDABLE PANE (SLINT substitution · 2-FEED-Beast) — the dashboard body as a Rectangle-rooted
+// pane so the shell mounts it IN-SHELL (the G2 idiom: "inherits Rectangle — embeddable from birth"; a
+// Window can never be a child element). THE ANDROID SINGLE-SURFACE LAW (lib.rs android_main): on-device
+// only the LAST-constructed Window owns the surface, so a standalone pillar Window can never render
+// alongside TortaShell. The Window wrapper below re-wraps it for the slint-viewer preview + the
+// main.slint re-export; the on-device host feeds THIS pane (mounted in home_shell.slint via the
+// ||| → PILLARS → BEAST dashboard chip) field-for-field from the live `Beast::snapshot()` Record.
+export component BeastPane inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.beast; width: 100%; height: 100%; }
+    // ── #25(1) THE DESSERT-TOWER — flying cake slices, the Dango-Daikazoku ambient. Band-pitched
+    //    on self.height per the #22 whole-scroll drench law (no %-anchored sparks that stretch thin);
+    //    golden-angle sin scatter keeps every slice unique. Motif rides the theme; 🍡 is the
+    //    pillar-local family glyph (the Clannad resemblance the Theme Bible names). ──
+    property <int> cake-bands: Math.max(3, Math.floor(self.height / 420px) + 1);
+    for i in root.cake-bands : Text {
+        text: Math.sin(i * 137deg) > 0 ? ThemeBook.beast.motif : "🍡";
+        font-size: 15px + 17px * Math.abs(Math.sin(i * 57deg));
+        // FULL COLOR — the no-transparency law: alpha is for foreground covers, never the theme.
+        opacity: 0.88 + 0.12 * Math.abs(Math.sin(360deg * (animation-tick() / 7s) + i * 43deg));
+        x: parent.width * (4% + 80% * Math.abs(Math.sin(i * 73deg))) + 26px * Math.sin(360deg * (animation-tick() / (9s + i * 800ms)) + i * 67deg);
+        y: i * 420px + 40px + 90px * Math.abs(Math.sin(i * 83deg)) + 12px * Math.sin(360deg * (animation-tick() / 5.5s) + i * 71deg);
+        transform-rotation: 18deg * Math.sin(360deg * (animation-tick() / 11s) + i * 61deg);
+    }
+    // ── #25(1b) THE DANGO DAIKAZOKU — the smiling family itself (the Clannad reference): pastel
+    //    blobs with twin bar eyes; blush pairs on the calm ones, an angry pair with deep-pink
+    //    cheeks, a wrinkle-eyed elder, a mustached papa. Drawn FULL COLOR (no theme
+    //    transparency); band-pitched golden-angle scatter; pure animation-tick bobbing;
+    //    zero timers; nothing intercepts input. ──
+    property <int> dango-kin: Math.max(6, root.cake-bands * 2);
+    for i in root.dango-kin : Rectangle {
+        width: 34px + 26px * Math.abs(Math.sin(i * 47deg));      // big leads, little ones follow
+        height: self.width * 0.78;
+        border-radius: self.height * 0.46;
+        background: Math.mod(i, 8) == 0 ? #7fd8c8
+            : Math.mod(i, 8) == 1 ? #f5e6c4
+            : Math.mod(i, 8) == 2 ? #8fbf6f
+            : Math.mod(i, 8) == 3 ? #92b8e8
+            : Math.mod(i, 8) == 4 ? #f3b8c4
+            : Math.mod(i, 8) == 5 ? #f2d24b
+            : Math.mod(i, 8) == 6 ? #c9b8e8
+            : #c95f8e;
+        x: parent.width * (6% + 74% * Math.abs(Math.sin(i * 91deg))) + 20px * Math.sin(360deg * (animation-tick() / (8s + i * 700ms)) + i * 53deg);
+        y: i * 205px + 130px + 70px * Math.abs(Math.sin(i * 37deg)) + 10px * Math.sin(360deg * (animation-tick() / 4.8s) + i * 77deg);
+        transform-rotation: 9deg * Math.sin(360deg * (animation-tick() / 9s) + i * 41deg);
+        // twin bar eyes — the family face (the elder keeps them closed: flat bars)
+        if Math.mod(i, 6) != 4 : Rectangle { x: parent.width * 0.35 - 1.5px; y: parent.height * 0.24; width: 3px; height: parent.height * 0.32; border-radius: 1.5px; background: #303030; }
+        if Math.mod(i, 6) != 4 : Rectangle { x: parent.width * 0.65 - 1.5px; y: parent.height * 0.24; width: 3px; height: parent.height * 0.32; border-radius: 1.5px; background: #303030; }
+        if Math.mod(i, 6) == 4 : Rectangle { x: parent.width * 0.22; y: parent.height * 0.38; width: parent.width * 0.20; height: 3px; border-radius: 1.5px; background: #303030; }
+        if Math.mod(i, 6) == 4 : Rectangle { x: parent.width * 0.58; y: parent.height * 0.38; width: parent.width * 0.20; height: 3px; border-radius: 1.5px; background: #303030; }
+        // the angry pair — slanted brows + deep-pink crosshatch cheeks
+        if Math.mod(i, 6) == 3 : Rectangle { x: parent.width * 0.28; y: parent.height * 0.14; width: parent.width * 0.17; height: 3px; border-radius: 1.5px; background: #303030; transform-rotation: 24deg; }
+        if Math.mod(i, 6) == 3 : Rectangle { x: parent.width * 0.55; y: parent.height * 0.14; width: parent.width * 0.17; height: 3px; border-radius: 1.5px; background: #303030; transform-rotation: -24deg; }
+        if Math.mod(i, 6) == 3 : Rectangle { x: parent.width * 0.14; y: parent.height * 0.54; width: parent.width * 0.14; height: self.width; border-radius: 2px; background: #e0526e; }
+        if Math.mod(i, 6) == 3 : Rectangle { x: parent.width * 0.72; y: parent.height * 0.54; width: parent.width * 0.14; height: self.width; border-radius: 2px; background: #e0526e; }
+        // the papa — the mustache under the eyes
+        if Math.mod(i, 6) == 5 : Rectangle { x: parent.width * 0.5 - self.width / 2; y: parent.height * 0.56; width: parent.width * 0.34; height: parent.height * 0.10; border-radius: self.height / 2; background: #303030; }
+        // the calm blush — soft pink cheek dots
+        if Math.mod(i, 6) == 0 || Math.mod(i, 6) == 2 : Rectangle { x: parent.width * 0.13; y: parent.height * 0.50; width: parent.width * 0.13; height: self.width; border-radius: self.width / 2; background: #f6a0b0; }
+        if Math.mod(i, 6) == 0 || Math.mod(i, 6) == 2 : Rectangle { x: parent.width * 0.74; y: parent.height * 0.50; width: parent.width * 0.13; height: self.width; border-radius: self.width / 2; background: #f6a0b0; }
+    }
+    // ── #25(2) THE CONGESTION-WAVE — the signature visualizer: the live CAKE/YeAH congestion state
+    //    rendered as the bottom flow-horizon. HONEST drivers only (never cosmetic, the felt-truth law):
+    //    amplitude = BLUE valve (blue-prob, [0,0.25]) + LineRate queue memory (q-smooth) + backlog
+    //    (pipeline-depth); tempo = cwnd (1..16 → 3.25s..1.0s beat); color = the crown verdict family
+    //    (shed on CONGESTED/COLLAPSED, caution on OVERFLOW, flow otherwise); DORMANT breathes at the
+    //    0.08 floor so an idle engine reads calm, never dead. ──
+    wave := Rectangle {
+        x: 0;
+        y: parent.height - 72px;
+        width: 100%;
+        height: 72px;
+        background: transparent;
+        property <float> amp: root.dormant ? 0.08
+            : Math.min(1.0, 0.12 + root.blue-prob * 3.2 + root.q-smooth / 18.0 + root.pipeline-depth / 30.0);
+        property <color> tone: (root.congested || root.collapsed-window) ? Beast.shed
+            : (root.basin-overflow ? Beast.caution : Beast.flow);
+        property <duration> beat: 3.4s - root.cwnd * 150ms;
+        for s in 26 : Rectangle {
+            width: Math.max(2px, wave.width / 26 - 3px);
+            x: wave.width * s / 26;
+            height: 8px + (wave.height - 14px) * wave.amp * (0.35 + 0.65 * Math.abs(Math.sin(360deg * (animation-tick() / wave.beat) + s * 27deg)));
+            y: parent.height - self.height;
+            border-radius: 2px;
+            background: wave.tone;
+            opacity: 0.20 + 0.45 * wave.amp;
+        }
+    }
+    // ── #25(1) soft-cake on-touch: tap anywhere on the fountain → cake bloom at the tap point.
+    //    Early sibling ⇒ every real control (later in the tree) still wins its own taps. ──
+    cake-ta := TouchArea {
+        width: 100%;
+        height: 100%;
+        clicked => {
+            cake-bloom.x = self.pressed-x;
+            cake-bloom.y = self.pressed-y;
+            cake-bloom.fired += 1;
+        }
+    }
+    cake-bloom := CakeBurst { x: -100px; y: -100px; reach: 38px; }
+    // ── THE OVEN MOUTH — Beast-only scenery: ember heat-glow breathing up from the pit floor, and the
+    // molten CAKE seam flickering along the very bottom (no other pillar carries heat language).
+    Rectangle {
+        y: parent.height * 0.72;
+        height: parent.height * 0.28;
+        width: 100%;
+        background: @linear-gradient(0deg, Beast.hot.with-alpha(0.10 + 0.06 * Math.sin(360deg * (animation-tick() / 4.5s))) 0%, transparent 100%);
+    }
+    Rectangle {
+        y: parent.height - 2px;
+        height: 2px;
+        width: 100%;
+        background: @linear-gradient(90deg, transparent 0%, Beast.flow.with-alpha(0.55 + 0.25 * Math.sin(360deg * (animation-tick() / 2.8s))) 50%, transparent 100%);
+    }
+    background: Beast.abyss.with-alpha(0.45);
+
+    // ===== BeastSnapshot inputs — YeAH window brain (host sets each from `Beast::snapshot()`, mod.rs:296) =====
+    in-out property <int> cwnd: 8;                      // snapshot.cwnd (the probe-concurrency window 1..16)
+    in-out property <int> window-max: 16;               // snapshot.window_max (MAX_WINDOW, yeah.rs:29)
+    in-out property <string> mode: "YEAH";              // snapshot.mode (YeahMode::label display string)
+    in-out property <bool> slow-start-active: false;    // snapshot.slow_start_active
+    in-out property <float> base-rtt-ms: 24.0;          // snapshot.base_rtt_ms (TCP EWMA base RTT)
+    in-out property <float> rtt-base-floor-ms: 0.0;     // snapshot.rtt_base_floor_ms (canonical decision floor; 0 on Legacy)
+    in-out property <float> q-packets: 0.0;             // snapshot.q_packets (Little's-law backlog; canonical-only)
+    in-out property <int> reno-count: 0;                // snapshot.reno_count (contention counter; canonical-only)
+    in-out property <bool> fast-mode: false;            // snapshot.fast_mode (STCP scalable-increase; canonical-only)
+    in-out property <int> adaptive-timeout-ms: 2000;    // snapshot.adaptive_timeout_ms (read timeout; 2000 pre-sample)
+    in-out property <float> pacing-rate: 0.0;           // snapshot.pacing_rate (probes/sec = cwnd/(base_rtt/1000))
+    in-out property <int> yeah-profile: 1;              // snapshot.yeah_profile ordinal: 0 Legacy·1 Canonical·2 LineRate
+    // ---- UDP (the first-ever UDP YeAH — base_rtt tracked separately, cwnd shared) ----
+    in-out property <float> udp-base-rtt-ms: 0.0;       // snapshot.udp_base_rtt_ms
+    // ---- #3-EXT · the TCP display lane (netstack forwarder dial RTTs — the twin-RTT cure) +
+    //      LineRate per-family telemetry (Rung C) + Soft-cake Mochi memory (Rung B) ----
+    in-out property <float> tcp-base-rtt-ms: 0.0;       // snapshot.tcp_base_rtt_ms (dial SYN→established; 0 until a TCP flow)
+    in-out property <float> tcp-floor-ms: 0.0;          // snapshot.tcp_floor_ms (TCP true-min floor, FLOOR_LEAK law)
+    // ★ #52 THE SHAPED PLANE — the per-flow FlowShaper return leg (steady-state, NOT the dial pair above)
+    in-out property <float> shaped-rtt-ms: 0.0;         // snapshot.shaped_rtt_ms (real flow RTT under load)
+    in-out property <int> shaped-cwnd-last: 0;          // snapshot.shaped_cwnd_last (freshest real window)
+    in-out property <float> shaped-cwnd-mean: 0.0;      // snapshot.shaped_cwnd_mean (arithmetic mean window)
+    in-out property <int> shaped-samples: 0;            // snapshot.shaped_samples (the honesty gate: 0 ⇒ nothing shaped)
+    in-out property <int> shaped-losses: 0;             // snapshot.shaped_losses (YeAH loss reactions on real flows)
+    in-out property <float> udp-floor-ms: 0.0;          // snapshot.udp_floor_ms (LineRate per-family UDP floor)
+    in-out property <float> q-smooth: 0.0;              // snapshot.q_smooth (LineRate EWMA queue memory — the loss rule's input)
+    in-out property <int> zeta-streak: 0;               // snapshot.zeta_streak (consecutive FAST samples toward LR_ZETA)
+    in-out property <int> shed-streak: 0;               // snapshot.shed_streak (consecutive over-threshold toward LR_SHED_CONFIRM)
+    in-out property <int> valve-streak: 0;              // snapshot.valve_streak (Mochi-Dango escalation of the hottest tin)
+    in-out property <int> soft-memory: 0;               // snapshot.soft_memory (Soft-cake CoDel count memory)
+
+    // ===== BeastSnapshot inputs — CAKE / CoBALT queue state =====
+    in-out property <int> pipeline-depth: 0;            // snapshot.pipeline_depth (total queued across tins)
+    in-out property <int> queue-critical: 0;            // snapshot.queue_critical (tin-0 depth)
+    in-out property <int> queue-high: 0;                // snapshot.queue_high     (tin-1 depth)
+    in-out property <int> queue-normal: 0;              // snapshot.queue_normal   (tin-2 depth)
+    in-out property <float> blue-prob: 0.0;             // snapshot.blue_prob (BUSIEST-tin BLUE, max across tins; [0,0.25])
+    in-out property <float> blue-critical: 0.0;         // snapshot.blue_critical (per-tin BLUE valve — advanced-depth)
+    in-out property <float> blue-high: 0.0;             // snapshot.blue_high
+    in-out property <float> blue-normal: 0.0;           // snapshot.blue_normal
+    in-out property <int> cobalt-dropped: 0;            // snapshot.cobalt_dropped (CoDel/CoBALT shed count)
+    in-out property <int> aqm-dropped: 0;               // snapshot.aqm_dropped
+    in-out property <int> drr-sparse-served: 0;         // snapshot.drr_sparse_served (DRR++ new-flow/sparse fairness witness)
+    in-out property <int> overload-sheds: 0;            // ★ #22 slice 3 · snapshot.overload_sheds (Rung E global-overload law — honest zero until the AQM capacity ceiling fires)
+    in-out property <int> cake-profile: 1;              // snapshot.sched_profile ordinal: 0 Legacy·1 Baseline/CoBALT·2 Soft-cake
+
+    // ===== Static architecture facts — the tin caps. Source of truth: TIN_MAX_DEPTH,
+    //       torta_core/src/beast/scheduler.rs:35, enforced at scheduler.rs:947 (a probe whose tin
+    //       still exceeds its cap after a pop is DROPPED). These are Slint DEFAULTS and NO host code
+    //       overrides them, so they ARE hand-copied literals — the earlier comment claimed they were
+    //       "HONEST, never a fabricated literal" and cited a cake.rs that does not exist in the tree.
+    //       Both claims were false. They are now bound mechanically by
+    //       torta_core/src/beast/spec_binding.rs, which fails the test suite on any drift, in either
+    //       direction, against whatever TIN_MAX_DEPTH currently is (never against the literal 4/8/16 —
+    //       a legitimate retune must not turn the spec red). The capacity law these denominators
+    //       realize is proved in D:/Lean/proofs/Proofs/TinCapacity.lean (14 theorems). =====
+    in-out property <int> cap-critical: 4;              // TIN_MAX_DEPTH[0]
+    in-out property <int> cap-high: 8;                  // TIN_MAX_DEPTH[1]
+    in-out property <int> cap-normal: 16;               // TIN_MAX_DEPTH[2]
+
+    // ===== the recent-tick feed (host fills from the tail of query-beast.log; sample default for preview) =====
+    in-out property <[BeastTickRow]> recent-ticks: [
+        { mode: "YEAH", cwnd: 8, shed: 0, relay: "cloudflare" },
+        { mode: "COMPETING", cwnd: 5, shed: 2, relay: "quad9" },
+        { mode: "SLOW-START", cwnd: 2, shed: 0, relay: "cloudflare" },
+    ];
+
+    // ===== profile decode + gates (the honesty fix, Chroma F6 — inert 0s never read as live) =====
+    out property <string> yeah-profile-label: root.yeah-profile == 0 ? "LEGACY"
+        : (root.yeah-profile == 2 ? "LINE-RATE" : "CANONICAL");
+    out property <string> cake-profile-label: root.cake-profile == 2 ? "SOFT-CAKE"
+        : (root.cake-profile == 1 ? "BASELINE" : "LEGACY-AQM");
+    // the canonical telemetry (backlog/reno/fast/floor) is only meaningful under a non-Legacy YeAH brain.
+    out property <bool> canonical-live: root.yeah-profile != 0;
+    // the valve/shed cards are only meaningful under a live Tortä AQM (Baseline/CoBALT or Soft-cake).
+    out property <bool> cobalt-live: root.cake-profile >= 1;
+    // #3-EXT — the Rung-C/Rung-B specific gates: the ZETA/SHED hysteresis + per-family floors only run
+    // under LINE-RATE; the Mochi valve-streak + soft-memory only under SOFT-CAKE (inert 0s never lie).
+    out property <bool> linerate-live: root.yeah-profile == 2;
+    out property <bool> softcake-live: root.cake-profile == 2;
+
+    // the live gear color for the current YeahMode phase.
+    property <color> mode-color: root.mode == "YEAH" ? Beast.thrust
+        : (root.mode == "SLOW-START" ? Beast.warming
+        : (root.mode == "COMPETING" ? Beast.backoff
+        : (root.mode == "RECOVERY" ? Beast.climb : Beast.mist)));
+
+    // ===== 🩸 THE FLOW-FAULT HUNT — derived, host-readable (the proof test asserts these fire) =====
+    // (1) COLLAPSED WINDOW — the pump is stuck single-probe while a backlog piles (DNS crawling).
+    out property <bool> collapsed-window: root.cwnd == 1 && root.pipeline-depth > 0;
+    // (2) BASIN OVERFLOW — a priority tier hit its cap ([4,8,16]) → the basin is spilling.
+    out property <bool> basin-overflow: (root.queue-critical >= root.cap-critical)
+        || (root.queue-high >= root.cap-high)
+        || (root.queue-normal >= root.cap-normal);
+    // (3) CONGESTED — a CoBALT BLUE valve is open (shedding SERVFAIL-fast; honest, never silent).
+    out property <bool> congested: root.cobalt-live && (root.blue-prob > 0.0);
+    // (info) DORMANT — the engine has seen no RTT sample yet (⇔ adaptive_timeout still the 2000ms pre-sample).
+    out property <bool> dormant: root.base-rtt-ms <= 0.0;
+    // #63/#64 (Socio phone report, "Beast TCP metrics dead") — the WHY behind an eternal DORMANT:
+    // with the netstack forwarder pref (`swNetstackForwarder`, OFF-by-default) unarmed, the shipped
+    // DNS-only loop never dials a TCP upstream, so `feed_live_tcp_dial` can NEVER fire and these
+    // lanes stay 0 forever. The shell binds its fwd-armed truth in at the bdash mount (one-way) so
+    // the DORMANT banner names the cure, not just the symptom. Default true ⇒ benign legacy wording.
+    in-out property <bool> fwd-armed: true;
+    // (info) UDP/TCP DIVERGENCE — one base-RTT is ≫ the other (a path asymmetry worth a glance).
+    // #3-EXT — judged on the TRUE per-family lanes (the forwarder's TCP dial EWMA vs the UDP EWMA),
+    // never the old shared estimator that rendered as two identical tiles (the twin-RTT bug).
+    out property <bool> udp-tcp-divergence: (root.tcp-base-rtt-ms > 0.0) && (root.udp-base-rtt-ms > 0.0)
+        && ((root.tcp-base-rtt-ms > root.udp-base-rtt-ms * 2.0) || (root.udp-base-rtt-ms > root.tcp-base-rtt-ms * 2.0));
+    // Master: ANY actionable flow-fault surfaced (DORMANT + DIVERGENCE are informational, not faults).
+    out property <bool> hidden-fault-any: root.collapsed-window || root.basin-overflow || root.congested;
+
+    // THE CROWN headline — the fountain's one-glance verdict (state machine, breach beats the mode).
+    out property <string> crown-headline: root.collapsed-window ? "COLLAPSED"
+        : (root.congested ? "CONGESTED"
+        : (root.basin-overflow ? "OVERFLOW"
+        : (root.dormant ? "DORMANT" : root.mode)));
+    out property <color> crown-color: (root.collapsed-window || root.congested) ? Beast.shed
+        : (root.basin-overflow ? Beast.caution
+        : (root.dormant ? Beast.dim : root.mode-color));
+
+    callback close-dashboard();
+
+    VerticalBox {
+        padding: 14px;
+        spacing: 12px;
+
+        // ---- Header ----
+        HorizontalBox {
+            spacing: 8px;
+            VerticalLayout {
+                Text {
+                    text: "BEAST";
+                    color: Beast.flow;
+                    font-size: 24px;
+                    font-weight: 900;
+                }
+                Text {
+                    text: "the flow engine — Tortä × YeAH TCP/UDP";
+                    color: Beast.mist;
+                    font-size: 11px;
+                }
+            }
+            Rectangle { }  // spacer
+            VerticalLayout {
+                alignment: center;
+                Text {
+                    text: root.mode;
+                    color: root.mode-color;
+                    font-size: 12px;
+                    font-weight: 800;
+                    horizontal-alignment: right;
+                }
+                Text {
+                    text: "\{root.yeah-profile-label} · \{root.cake-profile-label}";
+                    color: Beast.mist;
+                    font-size: 10px;
+                    horizontal-alignment: right;
+                }
+            }
+        }
+
+        // ---- THE CROWN card — the fountain's headline verdict (cwnd gear + pace/RTT) ----
+        Rectangle {
+            border-radius: 10px;
+            background: @linear-gradient(160deg, Beast.panel.with-alpha(0.66) 0%, Beast.pit.with-alpha(0.42) 100%);
+            border-width: 1px;
+            border-color: root.crown-color;
+            VerticalLayout {
+                padding: 12px;
+                spacing: 6px;
+                HorizontalLayout {
+                    spacing: 8px;
+                    VerticalLayout {
+                        Text {
+                            text: "WINDOW (cwnd)";
+                            color: Beast.mist;
+                            font-size: 11px;
+                            font-weight: 700;
+                        }
+                        Text {
+                            text: "\{root.cwnd}/\{root.window-max}";
+                            color: root.crown-color;
+                            font-size: 40px;
+                            font-weight: 900;
+                        }
+                        Text {
+                            text: "~\{Math.round(root.pacing-rate)} probes/sec · RTT \{Math.round(root.base-rtt-ms)}ms";
+                            color: Beast.mist;
+                            font-size: 10px;
+                        }
+                    }
+                    Rectangle { }  // spacer
+                    VerticalLayout {
+                        alignment: start;
+                        Text {
+                            text: root.crown-headline;
+                            color: root.crown-color;
+                            font-size: 16px;
+                            font-weight: 900;
+                            horizontal-alignment: right;
+                        }
+                        Text {
+                            text: root.slow-start-active ? "slow-start" : "steady";
+                            color: root.slow-start-active ? Beast.warming : Beast.mist;
+                            font-size: 10px;
+                            horizontal-alignment: right;
+                        }
+                    }
+                }
+            }
+        }
+
+        // ---- 🩸 The flow-fault alert stack (each banner exists ONLY while its fault is live) ----
+        if root.collapsed-window : AlertBanner {
+            accent: Beast.wound;
+            message: "COLLAPSED WINDOW -> the pump is stuck at cwnd=1 with \{root.pipeline-depth} queued. DNS is crawling single-probe; the window cannot open.";
+        }
+        if root.basin-overflow : AlertBanner {
+            accent: Beast.caution;
+            message: "BASIN OVERFLOW -> a priority tin hit its cap (C \{root.queue-critical}/\{root.cap-critical} · H \{root.queue-high}/\{root.cap-high} · N \{root.queue-normal}/\{root.cap-normal}). The fountain is spilling.";
+        }
+        if root.congested : AlertBanner {
+            accent: Beast.wound;
+            message: "CONGESTED -> a Soft-cake Mochi-Dango valve is open (busiest-tin \{Math.round(root.blue-prob / 0.25 * 100)}%). Queries are shed SERVFAIL-fast to keep the rest flowing — honest, not silent.";
+        }
+        if root.dormant : AlertBanner {
+            accent: Beast.hairline;
+            // #63/#64 — when the forwarder is unarmed, "no sample yet" is a lie of omission: no
+            // sample can EVER arrive. Say so, and point at the switch that fixes it.
+            message: root.fwd-armed
+                ? "DORMANT -> the engine has seen no RTT sample yet. The window + timeout are at their pre-sample defaults."
+                : "DORMANT -> the netstack forwarder is OFF (DNS-only tunnel): no TCP flow can ever feed these lanes. Arm the FORWARDER switch in the ENGINE ROOM, then restart the tunnel.";
+        }
+        if root.udp-tcp-divergence : AlertBanner {
+            accent: Beast.hairline;
+            message: "UDP/TCP RTT DIVERGENCE -> TCP \{Math.round(root.tcp-base-rtt-ms)}ms vs UDP \{Math.round(root.udp-base-rtt-ms)}ms. The two paths differ sharply.";
+        }
+
+        // ---- THE CAKE-FOUNTAIN hero — three priority basins the queries pour through ----
+        SectionTitle { text: "THE CAKE-FOUNTAIN  (per-tin fill)"; }
+        VerticalLayout {
+            spacing: 6px;
+            Basin { label: "CRITICAL"; depth: root.queue-critical; cap: root.cap-critical; jet: Beast.hot; }
+            Basin { label: "HIGH"; depth: root.queue-high; cap: root.cap-high; jet: Beast.warm; }
+            Basin { label: "NORMAL"; depth: root.queue-normal; cap: root.cap-normal; jet: Beast.cool; }
+            Text {
+                text: "\{root.pipeline-depth} total in flight";
+                color: Beast.mist;
+                font-size: 11px;
+                horizontal-alignment: center;
+            }
+        }
+
+        // ---- FLOW tiles (the one-glance pump numbers) ----
+        // TWO per row, never four. With the ||| rail open in PORTRAIT the content column is only
+        // ~268 logical px; a four-tile HorizontalBox demands 4×70 + 3×8 = 304px and OVERFLOWS —
+        // Slint honours `min-width` and pushes the surplus tiles past the viewport edge, where
+        // they are invisible AND unreachable (no scrollbar). A clipped tile is indistinguishable
+        // from a dead one. 2×70 + 8 = 148px fits with room to spare at any width.
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile { label: "pacing/s"; value: "\{Math.round(root.pacing-rate)}"; tint: Beast.flow; }
+                StatTile { label: "cwnd"; value: "\{root.cwnd}"; tint: root.mode-color; }
+            }
+            Row {
+                StatTile { label: "RTT ms"; value: "\{Math.round(root.base-rtt-ms)}"; tint: Beast.ink; }
+                StatTile { label: "timeout"; value: "\{root.adaptive-timeout-ms}"; tint: Beast.mist; }
+            }
+        }
+
+        // ---- ★ THE BIG ONE — "UDP CONGESTION ALGORITHM" branded LOUD (the hand, 2026-07-22):
+        //      the FIRST-EVER UDP-YeAH. Tortä × YeAH TCP/UDP — one window brain, two families. ----
+        Rectangle {
+            height: 66px;
+            border-radius: 12px;
+            background: @linear-gradient(100deg, Beast.flow.with-alpha(0.28) 0%, Beast.thrust.with-alpha(0.20) 55%, Beast.shed.with-alpha(0.24) 100%);
+            border-width: 2px;
+            border-color: Beast.flow;
+            VerticalLayout {
+                alignment: center;
+                spacing: 1px;
+                Text {
+                    text: "UDP CONGESTION ALGORITHM";
+                    color: Beast.flow;
+                    font-size: 22px;
+                    font-weight: 900;
+                    horizontal-alignment: center;
+                    overflow: elide;
+                }
+                Text {
+                    text: "Tortä × YeAH TCP/UDP — the FIRST-EVER UDP-YeAH · live base RTT \{Math.round(root.udp-base-rtt-ms)}ms";
+                    color: Beast.mist;
+                    font-size: 10px;
+                    horizontal-alignment: center;
+                    overflow: elide;
+                }
+            }
+        }
+
+        // ===================== ADVANCED-DEPTH (deeper than main, #113) =====================
+
+        // ---- YeAH brain internals ----
+        SectionTitle { text: "YEAH BRAIN  (\{root.yeah-profile-label})"; }
+        // The dual-RTT line — TCP vs the first-ever UDP-YeAH, side by side.
+        // #3-EXT (twin-RTT cure) — the TCP tile renders the TRUE TCP lane (the netstack forwarder's
+        // dial EWMA), NOT the shared estimator: "—" until a real TCP flow dials, never a twin echo.
+        // TWO per row even though this is only three tiles: Beast's labels ("base RTT (TCP)") are
+        // far wider than the 70px StatTile minimum, so each tile claims ~85px of the ~268px
+        // portrait column and the THIRD tile clipped off-screen. Tile count alone does not decide
+        // the budget — label width does. Measured on the AVD, not assumed.
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile {
+                    label: "base RTT (TCP)";
+                    value: root.tcp-base-rtt-ms > 0.0 ? "\{Math.round(root.tcp-base-rtt-ms)}ms" : "—";
+                    tint: root.udp-tcp-divergence ? Beast.caution : Beast.ink;
+                    muted: root.tcp-base-rtt-ms <= 0.0;
+                }
+                StatTile {
+                    label: "base RTT (UDP)";
+                    value: root.udp-base-rtt-ms > 0.0 ? "\{Math.round(root.udp-base-rtt-ms)}ms" : "0ms";
+                    tint: root.udp-tcp-divergence ? Beast.caution : Beast.ink;
+                }
+            }
+            Row {
+                StatTile {
+                    label: "rtt floor";
+                    // #68 — the SHARED canonical-window floor (`yeah.rs` rtt_base_floor), seeded only by
+                    // Tcp-family samples through `apply_samples`. Under LINE-RATE the live authority is the
+                    // per-family pair below (floor TCP/UDP), so this one legitimately has no sample yet —
+                    // render the house's honest empty-state instead of a bare "0ms" that reads as broken.
+                    value: root.rtt-base-floor-ms > 0.0 ? "\{Math.round(root.rtt-base-floor-ms)}ms" : "—";
+                    tint: Beast.ink;
+                    muted: !root.canonical-live || root.rtt-base-floor-ms <= 0.0;
+                }
+            }
+        }
+        // #3-EXT — the per-family true-min floors (LineRate judges each family against its OWN floor,
+        // yeah.rs apply_linerate) + the LineRate queue memory (q_smooth EWMA — the loss rule's input).
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile {
+                    label: "floor (TCP)";
+                    value: root.tcp-floor-ms > 0.0 ? "\{Math.round(root.tcp-floor-ms)}ms" : "—";
+                    tint: Beast.ink;
+                    muted: root.tcp-floor-ms <= 0.0;
+                }
+                StatTile {
+                    label: "floor (UDP)";
+                    value: root.udp-floor-ms > 0.0 ? "\{Math.round(root.udp-floor-ms)}ms" : "—";
+                    tint: Beast.ink;
+                    muted: !root.linerate-live;
+                }
+            }
+            Row {
+                StatTile {
+                    label: "Q smooth";
+                    value: "\{Math.round(root.q-smooth * 100) / 100.0}";
+                    tint: Beast.ink;
+                    muted: !root.linerate-live;
+                }
+            }
+        }
+        // ★ #52 — THE SHAPED PLANE: what this engine is doing to REAL forwarded traffic.
+        //
+        // Every tile above is either the DNS-probe plane or the forwarder's HANDSHAKE RTT. These are
+        // the per-flow FlowShapers: each real flow carries its own YeAH brain, and this is the
+        // aggregate they converged on. `shaped-samples` is the honesty gate — 0 means no flow has
+        // been shaped yet, which is a different claim from "the window is zero" (#98's law), so the
+        // tiles render "—" rather than a fabricated number.
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile {
+                    label: "rtt (shaped)";
+                    // Steady-state RTT under load — the latency the engine actually reacts to, which
+                    // the dial lane (SYN→established) can never show.
+                    value: root.shaped-samples > 0 && root.shaped-rtt-ms > 0.0
+                        ? "\{Math.round(root.shaped-rtt-ms)}ms" : "—";
+                    tint: Beast.flow;
+                    muted: root.shaped-samples <= 0;
+                }
+                StatTile {
+                    label: "cwnd (shaped)";
+                    value: root.shaped-samples > 0 ? "\{root.shaped-cwnd-last}" : "—";
+                    tint: Beast.thrust;
+                    muted: root.shaped-samples <= 0;
+                }
+            }
+            Row {
+                StatTile {
+                    label: "mean window";
+                    // Near 1 ⇒ the real plane is pinned in slow-start or collapsing; climbing toward
+                    // the ceiling ⇒ it is cruising. One decimal — a mean of 1 and 1.4 differ.
+                    value: root.shaped-samples > 0
+                        ? "\{Math.round(root.shaped-cwnd-mean * 10) / 10.0}" : "—";
+                    tint: Beast.ink;
+                    muted: root.shaped-samples <= 0;
+                }
+                StatTile {
+                    label: "flows shaped";
+                    value: "\{root.shaped-samples}";
+                    tint: Beast.mist;
+                    muted: root.shaped-samples <= 0;
+                }
+            }
+            Row {
+                StatTile {
+                    label: "loss reactions";
+                    // The YeAH window collapses taken on real flows — distinct from the forwarder's
+                    // I/O stall count: this is the ENGINE reacting, not merely an error occurring.
+                    value: "\{root.shaped-losses}";
+                    tint: root.shaped-losses > 0 ? Beast.shed : Beast.mist;
+                    muted: root.shaped-samples <= 0;
+                }
+            }
+        }
+        // #3-EXT — the LineRate hysteresis streaks (ZETA toward LR_ZETA · SHED toward LR_SHED_CONFIRM,
+        // tcp_yeah_vegas.c parity) + the Soft-cake Mochi pair (valve escalation streak · CoDel memory).
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile { label: "ZETA streak"; value: "\{root.zeta-streak}"; tint: Beast.flow; muted: !root.linerate-live; }
+                StatTile { label: "SHED streak"; value: "\{root.shed-streak}"; tint: Beast.shed; muted: !root.linerate-live; }
+            }
+            Row {
+                StatTile { label: "valve streak"; value: "\{root.valve-streak}"; tint: Beast.shed; muted: !root.softcake-live; }
+                StatTile { label: "soft memory"; value: "\{root.soft-memory}"; tint: Beast.mist; muted: !root.softcake-live; }
+            }
+        }
+        // The canonical-brain telemetry (gated — inert under Legacy).
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile { label: "backlog Q"; value: "\{Math.round(root.q-packets)}"; tint: Beast.ink; muted: !root.canonical-live; }
+                StatTile { label: "reno count"; value: "\{root.reno-count}"; tint: Beast.ink; muted: !root.canonical-live; }
+            }
+            Row {
+                StatTile {
+                    label: "fast (STCP)";
+                    value: root.fast-mode ? "ON" : "off";
+                    tint: root.fast-mode ? Beast.thrust : Beast.mist;
+                    muted: !root.canonical-live;
+                }
+            }
+        }
+
+        // ---- Soft-cake AQM internals — the per-tin Mochi-Dango valves (advanced-depth) ----
+        SectionTitle { text: "SOFT-CAKE AQM  (\{root.cake-profile-label}) — per-tin Mochi-Dango valve"; }
+        HorizontalBox {
+            spacing: 8px;
+            Valve { label: "CRITICAL"; value: root.blue-critical; live: root.cobalt-live; }
+            Valve { label: "HIGH"; value: root.blue-high; live: root.cobalt-live; }
+            Valve { label: "NORMAL"; value: root.blue-normal; live: root.cobalt-live; }
+        }
+        // The shed + fairness witnesses.
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile { label: "Sojourn shed"; value: "\{root.cobalt-dropped}"; tint: root.cobalt-dropped > 0 ? Beast.caution : Beast.mist; muted: !root.cobalt-live; }
+                StatTile { label: "AQM drop"; value: "\{root.aqm-dropped}"; tint: root.aqm-dropped > 0 ? Beast.caution : Beast.mist; }
+            }
+            Row {
+                StatTile { label: "Tortä sparse"; value: "\{root.drr-sparse-served}"; tint: Beast.flow; }
+                // ★ #22 slice 3 · Rung E — the 5th sch_cake gap live: heads shed by the SoftCake
+                // global-overload law (cake_drop parity + stalest-head tie-break). Non-zero = the
+                // capacity ceiling FIRED — always caution-tinted when it speaks.
+                StatTile { label: "Overload shed"; value: "\{root.overload-sheds}"; tint: root.overload-sheds > 0 ? Beast.shed : Beast.mist; muted: !root.cobalt-live; }
+            }
+        }
+        // The per-tin depth (the same water as the fountain, as raw counts).
+        GridLayout {
+            spacing: 8px;
+            Row {
+                StatTile { label: "q critical"; value: "\{root.queue-critical}"; tint: root.queue-critical >= root.cap-critical ? Beast.shed : Beast.ink; }
+                StatTile { label: "q high"; value: "\{root.queue-high}"; tint: root.queue-high >= root.cap-high ? Beast.shed : Beast.ink; }
+            }
+            Row {
+                StatTile { label: "q normal"; value: "\{root.queue-normal}"; tint: root.queue-normal >= root.cap-normal ? Beast.shed : Beast.ink; }
+            }
+        }
+
+        // ---- ARCHITECTURE facts (static engine constants — honest as config, not faked as live gauges) ----
+        SectionTitle { text: "ARCHITECTURE"; }
+        Rectangle {
+            border-radius: 8px;
+            background: @linear-gradient(160deg, Beast.panel.with-alpha(0.66) 0%, Beast.pit.with-alpha(0.42) 100%);
+            border-width: 1px;
+            border-color: Beast.hairline;
+            VerticalLayout {
+                padding: 8px;
+                spacing: 3px;
+                Text {
+                    text: "8-way set-associative flows · WRR share 100/50/12";
+                    color: Beast.mist;
+                    font-size: 11px;
+                }
+                Text {
+                    text: "sojourn target 5ms / interval 20ms · tin caps \{root.cap-critical}/\{root.cap-high}/\{root.cap-normal}";
+                    color: Beast.mist;
+                    font-size: 11px;
+                }
+            }
+        }
+
+        // ---- The recent-tick feed (query-beast.log tail) ----
+        SectionTitle { text: "RECENT TICKS  (query-beast.log)"; }
+        VerticalLayout {
+            spacing: 4px;
+            for tick in root.recent-ticks : Rectangle {
+                background: @linear-gradient(180deg, Beast.pit.with-alpha(0.62) 0%, Beast.trough.with-alpha(0.38) 100%);
+                border-radius: 6px;
+                HorizontalLayout {
+                    padding: 6px;
+                    spacing: 8px;
+                    Text {
+                        text: tick.mode;
+                        color: tick.mode == "YEAH" ? Beast.thrust
+                            : (tick.mode == "SLOW-START" ? Beast.warming
+                            : (tick.mode == "COMPETING" ? Beast.backoff
+                            : (tick.mode == "RECOVERY" ? Beast.climb : Beast.mist)));
+                        font-size: 11px;
+                        font-weight: 800;
+                        width: 82px;
+                    }
+                    Text {
+                        text: "cwnd \{tick.cwnd}";
+                        color: Beast.ink;
+                        font-size: 11px;
+                        width: 66px;
+                    }
+                    Text {
+                        text: tick.shed > 0 ? "shed \{tick.shed}" : "shed 0";
+                        color: tick.shed > 0 ? Beast.shed : Beast.mist;
+                        font-size: 11px;
+                    }
+                    Rectangle { }  // spacer
+                    Text {
+                        text: tick.relay;
+                        color: Beast.flow;
+                        font-size: 11px;
+                        overflow: elide;
+                    }
+                }
+            }
+        }
+
+        Rectangle { }  // tail spacer
+    }
+}
+
+// THE FORWARDING WINDOW WRAPPER (SLINT substitution · 2-FEED-Beast) — re-wraps the pane for the
+// slint-viewer preview + the main.slint `BeastDashboard` re-export (a non-Window pane exported from the
+// root generates NO Rust code — the measured slint rule). FORWARDING so the lib.rs proof test constructs
+// THIS Window and drives the pane's real prop + 🩸 flow-fault-derivation surface through the byte-equal
+// `<=>` aliases (one logic surface — the pane; the wrapper is the Window face). On-device the host drives
+// the PANE directly (mounted in home_shell.slint), never this wrapper.
+export component BeastDashboard inherits Window {
+    title: "Yeah! Tortä — Beast";
+    preferred-width: 420px;
+    preferred-height: 1000px;
+
+    // ---- BeastSnapshot inputs (forwarded to the pane) ----
+    in-out property <int> cwnd <=> bp.cwnd;
+    in-out property <int> window-max <=> bp.window-max;
+    in-out property <string> mode <=> bp.mode;
+    in-out property <bool> slow-start-active <=> bp.slow-start-active;
+    in-out property <float> base-rtt-ms <=> bp.base-rtt-ms;
+    in-out property <float> rtt-base-floor-ms <=> bp.rtt-base-floor-ms;
+    in-out property <float> q-packets <=> bp.q-packets;
+    in-out property <int> reno-count <=> bp.reno-count;
+    in-out property <bool> fast-mode <=> bp.fast-mode;
+    in-out property <int> adaptive-timeout-ms <=> bp.adaptive-timeout-ms;
+    in-out property <float> pacing-rate <=> bp.pacing-rate;
+    in-out property <int> yeah-profile <=> bp.yeah-profile;
+    in-out property <float> udp-base-rtt-ms <=> bp.udp-base-rtt-ms;
+    // #3-EXT — TCP display lane + LineRate per-family telemetry + Mochi memory (twin-RTT cure).
+    in-out property <float> tcp-base-rtt-ms <=> bp.tcp-base-rtt-ms;
+    in-out property <float> tcp-floor-ms <=> bp.tcp-floor-ms;
+    // ★ #52 — forward the shaped plane through the wrapper (the #66 law: a property is fed under the
+    // name its PARENT gives it, so an un-forwarded inner property is silently never fed).
+    in-out property <float> shaped-rtt-ms <=> bp.shaped-rtt-ms;
+    in-out property <int> shaped-cwnd-last <=> bp.shaped-cwnd-last;
+    in-out property <float> shaped-cwnd-mean <=> bp.shaped-cwnd-mean;
+    in-out property <int> shaped-samples <=> bp.shaped-samples;
+    in-out property <int> shaped-losses <=> bp.shaped-losses;
+    in-out property <float> udp-floor-ms <=> bp.udp-floor-ms;
+    in-out property <float> q-smooth <=> bp.q-smooth;
+    in-out property <int> zeta-streak <=> bp.zeta-streak;
+    in-out property <int> shed-streak <=> bp.shed-streak;
+    in-out property <int> valve-streak <=> bp.valve-streak;
+    in-out property <int> soft-memory <=> bp.soft-memory;
+    in-out property <int> pipeline-depth <=> bp.pipeline-depth;
+    in-out property <int> queue-critical <=> bp.queue-critical;
+    in-out property <int> queue-high <=> bp.queue-high;
+    in-out property <int> queue-normal <=> bp.queue-normal;
+    in-out property <float> blue-prob <=> bp.blue-prob;
+    in-out property <float> blue-critical <=> bp.blue-critical;
+    in-out property <float> blue-high <=> bp.blue-high;
+    in-out property <float> blue-normal <=> bp.blue-normal;
+    in-out property <int> cobalt-dropped <=> bp.cobalt-dropped;
+    in-out property <int> aqm-dropped <=> bp.aqm-dropped;
+    in-out property <int> drr-sparse-served <=> bp.drr-sparse-served;
+    in-out property <int> overload-sheds <=> bp.overload-sheds;
+    in-out property <int> cake-profile <=> bp.cake-profile;
+    in-out property <int> cap-critical <=> bp.cap-critical;
+    in-out property <int> cap-high <=> bp.cap-high;
+    in-out property <int> cap-normal <=> bp.cap-normal;
+    in-out property <[BeastTickRow]> recent-ticks <=> bp.recent-ticks;
+
+    // ---- derived (profile gates + the 🩸 flow-fault hunt + the crown) ----
+    out property <string> yeah-profile-label <=> bp.yeah-profile-label;
+    out property <string> cake-profile-label <=> bp.cake-profile-label;
+    out property <bool> canonical-live <=> bp.canonical-live;
+    out property <bool> cobalt-live <=> bp.cobalt-live;
+    // #3-EXT — the Rung-C/Rung-B specific gates (LINE-RATE streaks · SOFT-CAKE Mochi memory).
+    out property <bool> linerate-live <=> bp.linerate-live;
+    out property <bool> softcake-live <=> bp.softcake-live;
+    out property <bool> collapsed-window <=> bp.collapsed-window;
+    out property <bool> basin-overflow <=> bp.basin-overflow;
+    out property <bool> congested <=> bp.congested;
+    out property <bool> dormant <=> bp.dormant;
+    // #63/#64 — forward the armed truth through the wrapper so any mount can feed it.
+    in-out property <bool> fwd-armed <=> bp.fwd-armed;
+    out property <bool> udp-tcp-divergence <=> bp.udp-tcp-divergence;
+    out property <bool> hidden-fault-any <=> bp.hidden-fault-any;
+    out property <string> crown-headline <=> bp.crown-headline;
+    out property <color> crown-color <=> bp.crown-color;
+
+    callback close-dashboard <=> bp.close-dashboard;
+
+    bp := BeastPane { }
+}

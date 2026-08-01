@@ -1,0 +1,1213 @@
+{
+  "directory": "rust\\torta_core\\src\\blocklist",
+  "files": {
+    "catalogs.rs": {
+      "hash": "0136a9bc40c0",
+      "indexed_at": "2026-07-29T02:01:19.640340+00:00",
+      "language": "rust",
+      "lines": 388,
+      "mtime_ns": 1785289733729251900,
+      "size": 16953,
+      "symbols": [
+        {
+          "lines": [
+            47,
+            52
+          ],
+          "name": "UndergroundLane",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Human slug \u2014 the registry label AND the FFI selector.",
+              "lines": [
+                63,
+                70
+              ],
+              "name": "slug",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                72,
+                74
+              ],
+              "name": "from_slug",
+              "signature": "(s: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "(the [`crate::read_signed_pair`] naming law, `SIGNED_SIG_SUFFIX = \".sig\"`).",
+              "lines": [
+                78,
+                85
+              ],
+              "name": "catalog_base",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Trust Crown uses for list URLs (one scheme, no collision management).",
+              "lines": [
+                89,
+                96
+              ],
+              "name": "urn",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The lane's stable opaque `source_id` (joins the blocklist `Matcher.sources` bitset).",
+              "lines": [
+                99,
+                101
+              ],
+              "name": "source_id",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                103,
+                110
+              ],
+              "name": "index",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            54,
+            111
+          ],
+          "name": "UndergroundLane",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            116,
+            122
+          ],
+          "name": "LaneIngest",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            126,
+            134
+          ],
+          "name": "LaneIngestFail",
+          "type": "enum"
+        },
+        {
+          "docstring": "4. Record the lane counter \u2014 the genuinely taken ingest is its ONLY writer.",
+          "lines": [
+            156,
+            207
+          ],
+          "name": "ingest_lane_catalog",
+          "signature": "(\n    lane: UndergroundLane,\n    tcat: &[u8],\n    sig: &[u8],\n    pubkey: &[u8],\n    merge: bool,...",
+          "type": "function"
+        },
+        {
+          "docstring": "(an honestly empty lane); a refused signature stays refused \u2014 NOTHING silently degrades.",
+          "lines": [
+            212,
+            227
+          ],
+          "name": "load_lanes_from_dir",
+          "signature": "(\n    dir: &std::path::Path,\n    pubkey: &[u8],\n    now_days: u32,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "Reads the counters [`ingest_lane_catalog`] alone writes \u2014 never derived, never fabricated.",
+          "lines": [
+            231,
+            238
+          ],
+          "name": "lane_counts",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                255,
+                261
+              ],
+              "name": "make_pubkey_blob",
+              "signature": "(pk: &[u8; 32], key_id: &[u8; 8])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                263,
+                270
+              ],
+              "name": "sign_legacy",
+              "signature": "(sk: &SigningKey, key_id: &[u8; 8], bytes: &[u8])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                272,
+                280
+              ],
+              "name": "signed",
+              "signature": "(bytes: &[u8])",
+              "type": "method"
+            },
+            {
+              "docstring": "([`encode_catalog`], the production author), so the byte layout can never drift.",
+              "lines": [
+                284,
+                295
+              ],
+              "name": "lane_catalog",
+              "signature": "(hosts: &[&str])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                298,
+                308
+              ],
+              "name": "slug_and_source_id_are_stable_and_distinct",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                311,
+                333
+              ],
+              "name": "verified_catalog_arms_the_lane_truthfully",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                336,
+                350
+              ],
+              "name": "tampered_signature_fails_closed_and_counts_nothing",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                353,
+                361
+              ],
+              "name": "absent_dir_leaves_every_lane_honestly_empty",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                364,
+                387
+              ],
+              "name": "on_disk_signed_pair_rehydrates_offline",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            241,
+            388
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "github.rs": {
+      "hash": "06f0f4deadaa",
+      "indexed_at": "2026-07-26T19:12:57.882406+00:00",
+      "language": "rust",
+      "lines": 1403,
+      "mtime_ns": 1785030832475604500,
+      "size": 56599,
+      "symbols": [
+        {
+          "lines": [
+            127,
+            134
+          ],
+          "name": "SafetyBand",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            139,
+            154
+          ],
+          "name": "ReasonKind",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            159,
+            164
+          ],
+          "name": "TrustReason",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            169,
+            176
+          ],
+          "name": "BlocklistHit",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            182,
+            191
+          ],
+          "name": "SourceHints",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            195,
+            223
+          ],
+          "name": "SourceSafety",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            230,
+            245
+          ],
+          "name": "GithubTrustError",
+          "type": "enum"
+        },
+        {
+          "docstring": "wins (a host serves one canonical library family in the seed map).",
+          "lines": [
+            254,
+            266
+          ],
+          "name": "cdn_corpus",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "beneath a listed apex). Returns the first colliding `(cdn_host, library)`. Allocation-free.",
+          "lines": [
+            272,
+            285
+          ],
+          "name": "collides",
+          "signature": "(entry: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "no usable host token.",
+          "lines": [
+            294,
+            304
+          ],
+          "name": "extract_host",
+          "signature": "(line: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "(reject a raw IP masquerading as a host). A `*.com`-style wildcard never reaches the rule-set.",
+          "lines": [
+            311,
+            339
+          ],
+          "name": "validate_host",
+          "signature": "(h: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "lines, and inline `#` comments. Bounded at [`MAX_ENTRIES`].",
+          "lines": [
+            344,
+            379
+          ],
+          "name": "parse_entries",
+          "signature": "(raw: &[u8])",
+          "type": "function"
+        },
+        {
+          "docstring": "`overlap / total` expressed as integer permille (0..=1000), so the score is float-free + deterministic.",
+          "lines": [
+            386,
+            391
+          ],
+          "name": "overlap_permille",
+          "signature": "(overlap: u32, total: u32)",
+          "type": "function"
+        },
+        {
+          "docstring": "linear from `STALE_AFTER_DAYS` to its full penalty over `STALE_SPAN_DAYS`. Integer, monotone.",
+          "lines": [
+            395,
+            401
+          ],
+          "name": "stale_penalty",
+          "signature": "(age_days: u32)",
+          "type": "function"
+        },
+        {
+          "docstring": "staleness, curation and signature are bounded modifiers. Returns `(score 0..=100, reasons)`.",
+          "lines": [
+            406,
+            489
+          ],
+          "name": "compute_score",
+          "signature": "(\n    valid: u32,\n    overlap: u32,\n    malformed: u32,\n    hints: &SourceHints,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "Project a 0..=100 score to its [`SafetyBand`].",
+          "lines": [
+            492,
+            500
+          ],
+          "name": "band_for",
+          "signature": "(score: u8)",
+          "type": "function"
+        },
+        {
+          "docstring": "`source_id`s from stable URNs through this SAME hash \u2014 one scheme, no collision management.",
+          "lines": [
+            505,
+            512
+          ],
+          "name": "fnv1a32",
+          "signature": "(s: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "FNV-1a/64 of a URL \u2014 the RAM cache key.",
+          "lines": [
+            515,
+            522
+          ],
+          "name": "fnv1a64",
+          "signature": "(s: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "network, no I/O, fully deterministic. This is what the fixtures exercise.",
+          "lines": [
+            526,
+            570
+          ],
+          "name": "investigate_core",
+          "signature": "(name: &str, url: &str, raw: &[u8], hints: &SourceHints)",
+          "type": "function"
+        },
+        {
+          "docstring": "silently). Safety fail-closes to caution, never to \"safe\".",
+          "lines": [
+            574,
+            597
+          ],
+          "name": "fail_safe_safety",
+          "signature": "(name: &str, url: &str, hints: &SourceHints)",
+          "type": "function"
+        },
+        {
+          "docstring": "===================================================================================================",
+          "lines": [
+            603,
+            608
+          ],
+          "name": "put_str",
+          "signature": "(buf: &mut Vec<u8>, s: &str)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            610,
+            619
+          ],
+          "name": "get_str",
+          "signature": "(buf: &[u8], pos: &mut usize)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            621,
+            625
+          ],
+          "name": "get_u8",
+          "signature": "(buf: &[u8], pos: &mut usize)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            627,
+            633
+          ],
+          "name": "get_u16",
+          "signature": "(buf: &[u8], pos: &mut usize)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            635,
+            641
+          ],
+          "name": "get_u32",
+          "signature": "(buf: &[u8], pos: &mut usize)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            643,
+            650
+          ],
+          "name": "get_u64",
+          "signature": "(buf: &[u8], pos: &mut usize)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            652,
+            658
+          ],
+          "name": "band_to_u8",
+          "signature": "(b: SafetyBand)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            660,
+            666
+          ],
+          "name": "band_from_u8",
+          "signature": "(v: u8)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            668,
+            678
+          ],
+          "name": "kind_to_u8",
+          "signature": "(k: ReasonKind)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            680,
+            690
+          ],
+          "name": "kind_from_u8",
+          "signature": "(v: u8)",
+          "type": "function"
+        },
+        {
+          "docstring": "Serialize the cache (bounded to [`MAX_CACHE_SOURCES`]) into the crown's framed blob.",
+          "lines": [
+            693,
+            731
+          ],
+          "name": "encode_cache",
+          "signature": "(sources: &[SourceSafety])",
+          "type": "function"
+        },
+        {
+          "docstring": "(a cold start), never a torn read or a panic.",
+          "lines": [
+            735,
+            821
+          ],
+          "name": "decode_cache",
+          "signature": "(buf: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            835,
+            841
+          ],
+          "name": "GithubTrustEngine",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                849,
+                865
+              ],
+              "name": "new",
+              "signature": "(durable_dir: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "`sort=stars` surfaces the well-known seeds first.",
+              "lines": [
+                872,
+                888
+              ],
+              "name": "search_query_url",
+              "signature": "(&self, query: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "the live-discovery caller uses per candidate.",
+              "lines": [
+                895,
+                908
+              ],
+              "name": "investigate_bytes",
+              "signature": "(\n        &self,\n        name: String,\n        url: String,\n        raw_list: Vec<u8>,\n        hi...",
+              "type": "method"
+            },
+            {
+              "docstring": "failure / rate-limit / panic. h2-only + https-only (the encrypted-only invariant), 8 MiB capped.",
+              "lines": [
+                916,
+                928
+              ],
+              "name": "fetch_and_investigate",
+              "signature": "(\n        &self,\n        name: String,\n        url: String,\n        hints: SourceHints,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "guaranteed (HashMap). A clone \u2014 the caller never holds the lock.",
+              "lines": [
+                932,
+                937
+              ],
+              "name": "cached",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The cached descriptor for one `url`, if investigated.",
+              "lines": [
+                940,
+                945
+              ],
+              "name": "cached_for",
+              "signature": "(&self, url: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "consent gate (the crown records intent, never auto-arms a Risky source on the user's behalf).",
+              "lines": [
+                951,
+                967
+              ],
+              "name": "arm",
+              "signature": "(&self, url: String, armed: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "Clear the entire cache (RAM + NAND).",
+              "lines": [
+                970,
+                975
+              ],
+              "name": "clear",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The count of cached sources (the dashboard's \"N sources scored\" glance).",
+              "lines": [
+                978,
+                983
+              ],
+              "name": "cached_count",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            844,
+            984
+          ],
+          "name": "GithubTrustEngine",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Insert/replace a scored source in the RAM cache and write the whole cache through to NAND.",
+              "lines": [
+                988,
+                995
+              ],
+              "name": "store",
+              "signature": "(&self, safety: SourceSafety)",
+              "type": "method"
+            },
+            {
+              "docstring": "Encode the RAM cache and write it through to the DurableTier (gentle, atomic, non-failing).",
+              "lines": [
+                998,
+                1005
+              ],
+              "name": "persist",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            986,
+            1006
+          ],
+          "name": "GithubTrustEngine",
+          "type": "impl"
+        },
+        {
+          "docstring": "bytes on a 2xx; `RateLimited` on 403/429; `Network` on any other failure. Network-gated.",
+          "lines": [
+            1012,
+            1094
+          ],
+          "name": "http_get_capped",
+          "signature": "(url: &str)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                1104,
+                1111
+              ],
+              "name": "fresh_hints",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1136,
+                1154
+              ],
+              "name": "fixture_clean_list_scores_safe",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1157,
+                1176
+              ],
+              "name": "fixture_googleapis_seeded_scores_risky",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1179,
+                1199
+              ],
+              "name": "clean_strictly_outscores_poisoned",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1202,
+                1222
+              ],
+              "name": "score_is_deterministic",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1225,
+                1244
+              ],
+              "name": "collides_matches_apex_parent_of_cdn_host",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1247,
+                1271
+              ],
+              "name": "validator_rejects_overbroad_and_malformed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1274,
+                1280
+              ],
+              "name": "parser_counts_malformed_and_dedups",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1283,
+                1301
+              ],
+              "name": "curated_and_signed_nudge_the_score_up",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1304,
+                1322
+              ],
+              "name": "stale_list_scores_no_higher_than_fresh",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1325,
+                1332
+              ],
+              "name": "band_edges_are_exact",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1335,
+                1361
+              ],
+              "name": "cache_round_trips_through_durable_tier",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1364,
+                1371
+              ],
+              "name": "decode_of_garbage_is_empty_not_panic",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1374,
+                1377
+              ],
+              "name": "arming_unknown_source_returns_false",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1380,
+                1390
+              ],
+              "name": "search_query_url_is_unauthenticated_and_encoded",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "A per-test scratch dir under the cargo target tmp (host-only, no network).",
+              "lines": [
+                1393,
+                1402
+              ],
+              "name": "temp_dir",
+              "signature": "(tag: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1101,
+            1403
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    },
+    "trust.rs": {
+      "hash": "6f311f0def8e",
+      "indexed_at": "2026-08-01T00:18:40.770437+00:00",
+      "language": "rust",
+      "lines": 818,
+      "mtime_ns": 1785543492186922400,
+      "size": 37729,
+      "symbols": [
+        {
+          "lines": [
+            46,
+            53
+          ],
+          "name": "bit_to_mask",
+          "signature": "(bit: u32)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            65,
+            84
+          ],
+          "name": "SourceMeta",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "(`signed = false`, `reputation = 0`, ages `0`/unknown). Existing A2 call sites are unchanged.",
+              "lines": [
+                89,
+                99
+              ],
+              "name": "new",
+              "signature": "(id: u32, trust: u8, label: impl Into<Box<str>>)",
+              "type": "method"
+            },
+            {
+              "docstring": "B1 \u2014 set the signature gate (the trust CEILING control). Builder-style, additive.",
+              "lines": [
+                102,
+                105
+              ],
+              "name": "with_signed",
+              "signature": "(mut self, signed: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "B1 \u2014 set the curated reputation 0..=100 (clamped). Builder-style, additive.",
+              "lines": [
+                108,
+                111
+              ],
+              "name": "with_reputation",
+              "signature": "(mut self, reputation: u8)",
+              "type": "method"
+            },
+            {
+              "docstring": "B1 \u2014 set the first/last seen ages in epoch-days (0 = unknown). Builder-style, additive.",
+              "lines": [
+                114,
+                118
+              ],
+              "name": "with_seen",
+              "signature": "(mut self, first_seen_epoch_days: u32, last_seen_epoch_days: u32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            86,
+            119
+          ],
+          "name": "SourceMeta",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            132,
+            147
+          ],
+          "name": "SourceRegistry",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "A fresh registry with [`ANON_SOURCE_ID`] pre-bound to bit 0 (trust 0, label \"anonymous\").",
+              "lines": [
+                151,
+                167
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "[`MAX_SOURCE_BITS`] distinct sources, new ids clamp to [`OVERFLOW_BIT`] (documented cap).",
+              "lines": [
+                171,
+                184
+              ],
+              "name": "bit_for",
+              "signature": "(&mut self, source_id: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "`insert_with_source` ORs into a terminal node.",
+              "lines": [
+                188,
+                190
+              ],
+              "name": "mask_for",
+              "signature": "(&mut self, source_id: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "Record/replace the metadata (trust, label) for a source. Ensures the id also has a bit.",
+              "lines": [
+                193,
+                196
+              ],
+              "name": "register",
+              "signature": "(&mut self, meta: SourceMeta)",
+              "type": "method"
+            },
+            {
+              "docstring": "Look up a source's metadata, if registered.",
+              "lines": [
+                199,
+                201
+              ],
+              "name": "meta",
+              "signature": "(&self, source_id: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "nothing has changed.",
+              "lines": [
+                208,
+                210
+              ],
+              "name": "metas",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "The bit index assigned to `source_id`, if it has been seen.",
+              "lines": [
+                213,
+                215
+              ],
+              "name": "assigned_bit",
+              "signature": "(&self, source_id: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "True if `mask` has the bit for `source_id` set (i.e. that source armed the domain).",
+              "lines": [
+                218,
+                223
+              ],
+              "name": "mask_has_source",
+              "signature": "(&self, mask: SourceMask, source_id: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "How many distinct sources corroborate a mask (popcount).",
+              "lines": [
+                226,
+                228
+              ],
+              "name": "corroboration",
+              "signature": "(mask: SourceMask)",
+              "type": "method"
+            },
+            {
+              "docstring": "callers must fold with an order-independent operation (max, popcount), never index.",
+              "lines": [
+                234,
+                236
+              ],
+              "name": "source_ids",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "docstring": "into `finalize()`'s SET hash \u2014 the dependency is strictly fingerprint \u2192 trust, never the reverse.",
+              "lines": [
+                247,
+                267
+              ],
+              "name": "note_fingerprint",
+              "signature": "(&mut self, source_id: u32, fp: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "The source_ids that produced the list with fingerprint `fp` (the dedup bucket), if any.",
+              "lines": [
+                270,
+                272
+              ],
+              "name": "ids_for_fingerprint",
+              "signature": "(&self, fp: u64)",
+              "type": "method"
+            },
+            {
+              "docstring": "The fingerprint last reported by `source_id`, if noted.",
+              "lines": [
+                275,
+                277
+              ],
+              "name": "fingerprint_of",
+              "signature": "(&self, source_id: u32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            149,
+            278
+          ],
+          "name": "SourceRegistry",
+          "type": "impl"
+        },
+        {
+          "docstring": "100. Within `RECENCY_FULL_DAYS` \u21d2 100; then linear decay to `RECENCY_MIN_PCT`, clamped there.",
+          "lines": [
+            316,
+            332
+          ],
+          "name": "recency_pct",
+          "signature": "(last_seen_epoch_days: u32, now_days: u32)",
+          "type": "function"
+        },
+        {
+          "docstring": "real signature (`SourceMeta::signed`, set by C3/minisign) does.",
+          "lines": [
+            351,
+            384
+          ],
+          "name": "trust_score",
+          "signature": "(\r\n    reg: &SourceRegistry,\r\n    source_id: u32,\r\n    active_mask: SourceMask,\r\n    now_days: u3...",
+          "type": "function"
+        },
+        {
+          "docstring": "re-imports do not inflate corroboration either \u2014 only genuinely distinct sources raise it.",
+          "lines": [
+            393,
+            402
+          ],
+          "name": "list_trust",
+          "signature": "(reg: &SourceRegistry, fp: u64, active_mask: SourceMask, now_days: u32)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                415,
+                456
+              ],
+              "name": "bit_to_mask_never_shifts_out_of_range_for_any_u32",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                461,
+                472
+              ],
+              "name": "anon_is_bit_zero_and_real_sources_never_alias_it",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                475,
+                480
+              ],
+              "name": "mask_for_sets_the_expected_bit",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                483,
+                490
+              ],
+              "name": "corroboration_counts_distinct_sources",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                493,
+                505
+              ],
+              "name": "overflow_clamps_and_never_panics_or_aliases_bit_zero",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                508,
+                515
+              ],
+              "name": "register_stores_trust_and_label",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                524,
+                559
+              ],
+              "name": "identical_fingerprint_sources_collapse_to_one_trust_value",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                564,
+                602
+              ],
+              "name": "overlap_raises_corroboration_and_is_capped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                607,
+                640
+              ],
+              "name": "unsigned_capped_below_any_signed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                645,
+                679
+              ],
+              "name": "trust_monotonic_under_list_growth",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                685,
+                729
+              ],
+              "name": "score_never_perturbs_fingerprint",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                735,
+                817
+              ],
+              "name": "recency_decay_bounded_and_neutral_on_unknown",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            405,
+            818
+          ],
+          "name": "tests",
+          "type": "module"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T00:18:40.772122+00:00",
+  "version": "1.0"
+}

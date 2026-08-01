@@ -1,0 +1,741 @@
+{
+  "directory": "rust\\torta_core\\src\\resolver\\shipped",
+  "files": {
+    "dnscrypt-proxy.toml": {
+      "hash": "e0fe0bb9bf86",
+      "indexed_at": "2026-08-01T04:01:08.819549+00:00",
+      "language": "toml",
+      "lines": 100,
+      "mtime_ns": 1785556379726900400,
+      "size": 4056,
+      "symbols": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "name": "ipv4_servers",
+          "type": "key"
+        },
+        {
+          "lines": [
+            2,
+            2
+          ],
+          "name": "ipv6_servers",
+          "type": "key"
+        },
+        {
+          "lines": [
+            3,
+            3
+          ],
+          "name": "require_dnssec",
+          "type": "key"
+        },
+        {
+          "lines": [
+            4,
+            4
+          ],
+          "name": "require_nolog",
+          "type": "key"
+        },
+        {
+          "lines": [
+            5,
+            5
+          ],
+          "name": "require_nofilter",
+          "type": "key"
+        },
+        {
+          "lines": [
+            6,
+            6
+          ],
+          "name": "block_ipv6",
+          "type": "key"
+        },
+        {
+          "lines": [
+            7,
+            7
+          ],
+          "name": "force_tcp",
+          "type": "key"
+        },
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "server_names",
+          "type": "key"
+        },
+        {
+          "lines": [
+            9,
+            9
+          ],
+          "name": "disabled_server_names",
+          "type": "key"
+        },
+        {
+          "lines": [
+            10,
+            10
+          ],
+          "name": "listen_addresses",
+          "type": "key"
+        },
+        {
+          "lines": [
+            11,
+            11
+          ],
+          "name": "max_clients",
+          "type": "key"
+        },
+        {
+          "lines": [
+            13,
+            13
+          ],
+          "name": "dnscrypt_servers",
+          "type": "key"
+        },
+        {
+          "lines": [
+            14,
+            14
+          ],
+          "name": "doh_servers",
+          "type": "key"
+        },
+        {
+          "lines": [
+            15,
+            15
+          ],
+          "name": "odoh_servers",
+          "type": "key"
+        },
+        {
+          "lines": [
+            16,
+            16
+          ],
+          "name": "timeout",
+          "type": "key"
+        },
+        {
+          "lines": [
+            17,
+            17
+          ],
+          "name": "keepalive",
+          "type": "key"
+        },
+        {
+          "lines": [
+            18,
+            18
+          ],
+          "name": "netprobe_timeout",
+          "type": "key"
+        },
+        {
+          "lines": [
+            19,
+            19
+          ],
+          "name": "log_level",
+          "type": "key"
+        },
+        {
+          "lines": [
+            20,
+            20
+          ],
+          "name": "log_file",
+          "type": "key"
+        },
+        {
+          "lines": [
+            21,
+            21
+          ],
+          "name": "use_syslog",
+          "type": "key"
+        },
+        {
+          "lines": [
+            22,
+            22
+          ],
+          "name": "cert_refresh_delay",
+          "type": "key"
+        },
+        {
+          "lines": [
+            23,
+            23
+          ],
+          "name": "dnscrypt_ephemeral_keys",
+          "type": "key"
+        },
+        {
+          "lines": [
+            24,
+            24
+          ],
+          "name": "tls_disable_session_tickets",
+          "type": "key"
+        },
+        {
+          "lines": [
+            25,
+            25
+          ],
+          "name": "bootstrap_resolvers",
+          "type": "key"
+        },
+        {
+          "lines": [
+            26,
+            26
+          ],
+          "name": "netprobe_address",
+          "type": "key"
+        },
+        {
+          "lines": [
+            27,
+            27
+          ],
+          "name": "block_unqualified",
+          "type": "key"
+        },
+        {
+          "lines": [
+            28,
+            28
+          ],
+          "name": "block_undelegated",
+          "type": "key"
+        },
+        {
+          "lines": [
+            29,
+            29
+          ],
+          "name": "reject_ttl",
+          "type": "key"
+        },
+        {
+          "lines": [
+            30,
+            30
+          ],
+          "name": "ignore_system_dns",
+          "type": "key"
+        },
+        {
+          "lines": [
+            31,
+            31
+          ],
+          "name": "http3",
+          "type": "key"
+        },
+        {
+          "lines": [
+            32,
+            32
+          ],
+          "name": "log_files_max_size",
+          "type": "key"
+        },
+        {
+          "lines": [
+            33,
+            33
+          ],
+          "name": "log_files_max_age",
+          "type": "key"
+        },
+        {
+          "lines": [
+            34,
+            34
+          ],
+          "name": "log_files_max_backups",
+          "type": "key"
+        },
+        {
+          "lines": [
+            35,
+            35
+          ],
+          "name": "cache",
+          "type": "key"
+        },
+        {
+          "lines": [
+            36,
+            36
+          ],
+          "name": "cache_size",
+          "type": "key"
+        },
+        {
+          "lines": [
+            37,
+            37
+          ],
+          "name": "cache_min_ttl",
+          "type": "key"
+        },
+        {
+          "lines": [
+            38,
+            38
+          ],
+          "name": "cache_max_ttl",
+          "type": "key"
+        },
+        {
+          "lines": [
+            39,
+            39
+          ],
+          "name": "cache_neg_ttl",
+          "type": "key"
+        },
+        {
+          "lines": [
+            40,
+            40
+          ],
+          "name": "cache_neg_max_ttl",
+          "type": "key"
+        },
+        {
+          "lines": [
+            41,
+            41
+          ],
+          "name": "forwarding_rules",
+          "type": "key"
+        },
+        {
+          "lines": [
+            42,
+            42
+          ],
+          "name": "cloaking_rules",
+          "type": "key"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                45,
+                45
+              ],
+              "name": "map_file",
+              "type": "key"
+            }
+          ],
+          "docstring": "proxy = 'socks5://127.0.0.1:9050'",
+          "lines": [
+            44,
+            45
+          ],
+          "name": "captive_portals",
+          "type": "table"
+        },
+        {
+          "lines": [
+            46,
+            47
+          ],
+          "name": "dns64",
+          "type": "table"
+        },
+        {
+          "docstring": "prefix = ['64:ff9b::/96']",
+          "lines": [
+            48,
+            52
+          ],
+          "name": "local_doh",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                54,
+                54
+              ],
+              "name": "format",
+              "type": "key"
+            },
+            {
+              "lines": [
+                56,
+                56
+              ],
+              "name": "ignored_qtypes",
+              "type": "key"
+            }
+          ],
+          "docstring": "listen_addresses = ['127.0.0.1:3000'] path = '/dns-query' cert_file = 'localhost.pem' cert_key_file = 'localhost.pem'",
+          "lines": [
+            53,
+            56
+          ],
+          "name": "query_log",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                58,
+                58
+              ],
+              "name": "format",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            57,
+            59
+          ],
+          "name": "nx_log",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                61,
+                61
+              ],
+              "name": "blocked_names_file",
+              "type": "key"
+            }
+          ],
+          "docstring": "file = '/data/user/0/pan.alexander.libumdnscrypt/cache/nx.log'",
+          "lines": [
+            60,
+            61
+          ],
+          "name": "blocked_names",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                63,
+                63
+              ],
+              "name": "blocked_ips_file",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            62,
+            63
+          ],
+          "name": "blocked_ips",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                65,
+                65
+              ],
+              "name": "allowed_names_file",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            64,
+            65
+          ],
+          "name": "allowed_names",
+          "type": "table"
+        },
+        {
+          "lines": [
+            66,
+            66
+          ],
+          "name": "sources",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                68,
+                68
+              ],
+              "name": "urls",
+              "type": "key"
+            },
+            {
+              "lines": [
+                69,
+                69
+              ],
+              "name": "minisign_key",
+              "type": "key"
+            },
+            {
+              "lines": [
+                70,
+                70
+              ],
+              "name": "cache_file",
+              "type": "key"
+            },
+            {
+              "lines": [
+                71,
+                71
+              ],
+              "name": "refresh_delay",
+              "type": "key"
+            },
+            {
+              "lines": [
+                72,
+                72
+              ],
+              "name": "prefix",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            67,
+            72
+          ],
+          "name": "sources.'public-resolvers'",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                74,
+                74
+              ],
+              "name": "urls",
+              "type": "key"
+            },
+            {
+              "lines": [
+                75,
+                75
+              ],
+              "name": "cache_file",
+              "type": "key"
+            },
+            {
+              "lines": [
+                76,
+                76
+              ],
+              "name": "minisign_key",
+              "type": "key"
+            },
+            {
+              "lines": [
+                77,
+                77
+              ],
+              "name": "refresh_delay",
+              "type": "key"
+            },
+            {
+              "lines": [
+                78,
+                78
+              ],
+              "name": "prefix",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            73,
+            78
+          ],
+          "name": "sources.'relays'",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                80,
+                80
+              ],
+              "name": "urls",
+              "type": "key"
+            },
+            {
+              "lines": [
+                81,
+                81
+              ],
+              "name": "cache_file",
+              "type": "key"
+            },
+            {
+              "lines": [
+                82,
+                82
+              ],
+              "name": "minisign_key",
+              "type": "key"
+            },
+            {
+              "lines": [
+                83,
+                83
+              ],
+              "name": "refresh_delay",
+              "type": "key"
+            },
+            {
+              "lines": [
+                84,
+                84
+              ],
+              "name": "prefix",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            79,
+            84
+          ],
+          "name": "sources.'odoh-servers'",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                86,
+                86
+              ],
+              "name": "urls",
+              "type": "key"
+            },
+            {
+              "lines": [
+                87,
+                87
+              ],
+              "name": "cache_file",
+              "type": "key"
+            },
+            {
+              "lines": [
+                88,
+                88
+              ],
+              "name": "minisign_key",
+              "type": "key"
+            },
+            {
+              "lines": [
+                89,
+                89
+              ],
+              "name": "refresh_delay",
+              "type": "key"
+            },
+            {
+              "lines": [
+                90,
+                90
+              ],
+              "name": "prefix",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            85,
+            90
+          ],
+          "name": "sources.'odoh-relays'",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                92,
+                92
+              ],
+              "name": "fragments_blocked",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            91,
+            92
+          ],
+          "name": "broken_implementations",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                94,
+                94
+              ],
+              "name": "skip_incompatible",
+              "type": "key"
+            },
+            {
+              "lines": [
+                95,
+                95
+              ],
+              "name": "routes",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            93,
+            99
+          ],
+          "name": "anonymized_dns",
+          "type": "table"
+        },
+        {
+          "lines": [
+            100,
+            101
+          ],
+          "name": "static",
+          "type": "table"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:01:08.822212+00:00",
+  "version": "1.0"
+}

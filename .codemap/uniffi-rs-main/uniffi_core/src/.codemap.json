@@ -1,0 +1,1430 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_core\\src",
+  "files": {
+    "ffi_converter_impls.rs": {
+      "hash": "0f8c99250df7",
+      "indexed_at": "2026-07-24T20:35:13.140025+00:00",
+      "language": "rust",
+      "lines": 655,
+      "mtime_ns": 1782136568000000000,
+      "size": 24089,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                88,
+                90
+              ],
+              "name": "lower",
+              "signature": "(obj: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                92,
+                98
+              ],
+              "name": "try_lift",
+              "signature": "(v: Self::FfiType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                102
+              ],
+              "name": "write",
+              "signature": "(obj: bool, buf: &mut Vec<u8>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                104,
+                107
+              ],
+              "name": "try_read",
+              "signature": "(buf: &mut &[u8])",
+              "type": "method"
+            }
+          ],
+          "docstring": "C-compatible boolean values on JVM-based languages.",
+          "lines": [
+            85,
+            110
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "foreign language code (and can be restored by it passing the pointer back).",
+              "lines": [
+                129,
+                131
+              ],
+              "name": "lower",
+              "signature": "(obj: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "from `lower` above, and hence must be the bytes of a valid rust string.",
+              "lines": [
+                135,
+                143
+              ],
+              "name": "try_lift",
+              "signature": "(v: Self::FfiType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                145,
+                151
+              ],
+              "name": "write",
+              "signature": "(obj: String, buf: &mut Vec<u8>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                153,
+                164
+              ],
+              "name": "try_read",
+              "signature": "(buf: &mut &[u8])",
+              "type": "method"
+            }
+          ],
+          "docstring": "currently experimental in Kotlin).",
+          "lines": [
+            123,
+            167
+          ],
+          "name": "String",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                186,
+                201
+              ],
+              "name": "write",
+              "signature": "(obj: SystemTime, buf: &mut Vec<u8>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                203,
+                214
+              ],
+              "name": "try_read",
+              "signature": "(buf: &mut &[u8])",
+              "type": "method"
+            }
+          ],
+          "docstring": "if the total offset should be added to or subtracted from the unix epoch.",
+          "lines": [
+            183,
+            218
+          ],
+          "name": "SystemTime",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                231,
+                234
+              ],
+              "name": "write",
+              "signature": "(obj: Duration, buf: &mut Vec<u8>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                236,
+                239
+              ],
+              "name": "try_read",
+              "signature": "(buf: &mut &[u8])",
+              "type": "method"
+            }
+          ],
+          "docstring": "and 999,999,999.",
+          "lines": [
+            228,
+            242
+          ],
+          "name": "Duration",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                257,
+                265
+              ],
+              "name": "write",
+              "signature": "(obj: Option<T>, buf: &mut Vec<u8>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                267,
+                269
+              ],
+              "name": "lower",
+              "signature": "(obj: Option<T>)",
+              "type": "method"
+            }
+          ],
+          "docstring": "but that seems more fiddly and less safe in the short term, so it can wait.",
+          "lines": [
+            254,
+            270
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                275,
+                282
+              ],
+              "name": "try_read",
+              "signature": "(buf: &mut &[u8])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                284,
+                286
+              ],
+              "name": "try_lift",
+              "signature": "(buf: RustBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            272,
+            287
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            289,
+            292
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                302,
+                304
+              ],
+              "name": "write",
+              "signature": "(obj: Box<T>, buf: &mut Vec<u8>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                306,
+                308
+              ],
+              "name": "lower",
+              "signature": "(obj: Box<T>)",
+              "type": "method"
+            }
+          ],
+          "docstring": "From the FFI perspective, Box<T> is serialized/deserialized exactly the same as T.",
+          "lines": [
+            299,
+            309
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                314,
+                316
+              ],
+              "name": "try_read",
+              "signature": "(buf: &mut &[u8])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                318,
+                320
+              ],
+              "name": "try_lift",
+              "signature": "(v: Self::FfiType)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            311,
+            321
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            323,
+            326
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                341,
+                348
+              ],
+              "name": "write",
+              "signature": "(obj: Vec<T>, buf: &mut Vec<u8>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                350,
+                352
+              ],
+              "name": "lower",
+              "signature": "(obj: Vec<T>)",
+              "type": "method"
+            }
+          ],
+          "docstring": "similar struct. But that's for future work.",
+          "lines": [
+            338,
+            353
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                363,
+                371
+              ],
+              "name": "try_read",
+              "signature": "(buf: &mut &[u8])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                373,
+                375
+              ],
+              "name": "try_lift",
+              "signature": "(buf: RustBuffer)",
+              "type": "method"
+            }
+          ],
+          "docstring": "(It's a signed type due to limits of the JVM).",
+          "lines": [
+            360,
+            376
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            378,
+            381
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                390,
+                398
+              ],
+              "name": "write",
+              "signature": "(obj: HashMap<K, V>, buf: &mut Vec<u8>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                400,
+                402
+              ],
+              "name": "lower",
+              "signature": "(obj: HashMap<K, V>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            383,
+            403
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                412,
+                422
+              ],
+              "name": "try_read",
+              "signature": "(buf: &mut &[u8])",
+              "type": "method"
+            },
+            {
+              "lines": [
+                424,
+                426
+              ],
+              "name": "try_lift",
+              "signature": "(buf: RustBuffer)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            405,
+            427
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            429,
+            437
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                484,
+                486
+              ],
+              "name": "lower",
+              "signature": "(obj: HashSet<T>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                488,
+                495
+              ],
+              "name": "write",
+              "signature": "(obj: HashSet<T>, buf: &mut Vec<u8>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            478,
+            496
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                504,
+                506
+              ],
+              "name": "try_lift",
+              "signature": "(buf: RustBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                508,
+                516
+              ],
+              "name": "try_read",
+              "signature": "(buf: &mut &[u8])",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            498,
+            517
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            519,
+            525
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                546,
+                548
+              ],
+              "name": "lower_return",
+              "signature": "(_: ())",
+              "type": "method"
+            }
+          ],
+          "docstring": "Implement LowerReturn/LiftReturn for the unit type (void returns)",
+          "lines": [
+            543,
+            549
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                554,
+                556
+              ],
+              "name": "try_lift_successful_return",
+              "signature": "(_: ())",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            551,
+            557
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            559,
+            561
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                574,
+                579
+              ],
+              "name": "lower_return",
+              "signature": "(v: Self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                581,
+                590
+              ],
+              "name": "handle_failed_lift",
+              "signature": "(error: crate::LiftArgsError)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            567,
+            591
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                601,
+                606
+              ],
+              "name": "lower_return",
+              "signature": "(v: Self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            594,
+            607
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                616,
+                618
+              ],
+              "name": "try_lift_successful_return",
+              "signature": "(v: R::ReturnType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                620,
+                629
+              ],
+              "name": "lift_error",
+              "signature": "(buf: RustBuffer)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                631,
+                633
+              ],
+              "name": "handle_callback_unexpected_error",
+              "signature": "(e: UnexpectedUniFFICallbackError)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            609,
+            634
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            636,
+            644
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            646,
+            651
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            653,
+            655
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        }
+      ]
+    },
+    "ffi_converter_traits.rs": {
+      "hash": "84791c621dc0",
+      "indexed_at": "2026-07-24T20:35:13.143325+00:00",
+      "language": "rust",
+      "lines": 660,
+      "mtime_ns": 1782136568000000000,
+      "size": 30135,
+      "symbols": [
+        {
+          "docstring": "have fixture tests to test that everything works correctly together.",
+          "lines": [
+            76,
+            136
+          ],
+          "name": "FfiConverter",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            155,
+            164
+          ],
+          "name": "FfiConverterArc",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            172,
+            181
+          ],
+          "name": "FfiConverterArc",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                189,
+                191
+              ],
+              "name": "lower",
+              "signature": "(obj: Self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                193,
+                195
+              ],
+              "name": "try_lift",
+              "signature": "(v: Self::FfiType)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                197,
+                199
+              ],
+              "name": "write",
+              "signature": "(obj: Self, buf: &mut Vec<u8>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                201,
+                203
+              ],
+              "name": "try_read",
+              "signature": "(buf: &mut &[u8])",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            183,
+            206
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Convenience method",
+              "lines": [
+                231,
+                239
+              ],
+              "name": "try_lift_from_rust_buffer",
+              "signature": "(v: RustBuffer)",
+              "type": "method"
+            }
+          ],
+          "docstring": "have fixture tests to test that everything works correctly together.",
+          "lines": [
+            223,
+            240
+          ],
+          "name": "Lift",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Convenience method",
+              "lines": [
+                265,
+                269
+              ],
+              "name": "lower_into_rust_buffer",
+              "signature": "(obj: Self)",
+              "type": "method"
+            }
+          ],
+          "docstring": "have fixture tests to test that everything works correctly together.",
+          "lines": [
+            257,
+            270
+          ],
+          "name": "Lower",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "docstring": "side.",
+              "lines": [
+                308,
+                310
+              ],
+              "name": "handle_failed_lift",
+              "signature": "(error: LiftArgsError)",
+              "type": "method"
+            }
+          ],
+          "docstring": "have fixture tests to test that everything works correctly together.",
+          "lines": [
+            284,
+            311
+          ],
+          "name": "LowerReturn",
+          "type": "trait"
+        },
+        {
+          "docstring": "have fixture tests to test that everything works correctly together.",
+          "lines": [
+            326,
+            331
+          ],
+          "name": "LowerError",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "docstring": "it.",
+              "lines": [
+                357,
+                374
+              ],
+              "name": "lift_foreign_return",
+              "signature": "(ffi_return: Self::ReturnType, call_status: RustCallStatus)",
+              "type": "method"
+            },
+            {
+              "docstring": "foreign code throws an exception that corresponds to the error type.",
+              "lines": [
+                380,
+                382
+              ],
+              "name": "lift_error",
+              "signature": "(_buf: RustBuffer)",
+              "type": "method"
+            },
+            {
+              "docstring": "must provide.",
+              "lines": [
+                393,
+                395
+              ],
+              "name": "handle_callback_unexpected_error",
+              "signature": "(e: UnexpectedUniFFICallbackError)",
+              "type": "method"
+            }
+          ],
+          "docstring": "have fixture tests to test that everything works correctly together.",
+          "lines": [
+            345,
+            396
+          ],
+          "name": "LiftReturn",
+          "type": "trait"
+        },
+        {
+          "docstring": "`&T` using the Arc.",
+          "lines": [
+            412,
+            414
+          ],
+          "name": "LiftRef",
+          "type": "trait"
+        },
+        {
+          "docstring": "signatures includes a copy of this metadata for each argument and return type.",
+          "lines": [
+            420,
+            422
+          ],
+          "name": "TypeId",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            424,
+            426
+          ],
+          "name": "ConvertError",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "docstring": "`get_arc()` is called.  #1797 is a cautionary tale.",
+              "lines": [
+                484,
+                486
+              ],
+              "name": "get_arc",
+              "signature": "(handle: Handle)",
+              "type": "method"
+            }
+          ],
+          "docstring": "`&T` using the Arc.",
+          "lines": [
+            462,
+            492
+          ],
+          "name": "HandleAlloc",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                649,
+                651
+              ],
+              "name": "new_handle",
+              "signature": "(value: Arc<Self>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                653,
+                655
+              ],
+              "name": "clone_handle",
+              "signature": "(handle: Handle)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                657,
+                659
+              ],
+              "name": "consume_handle",
+              "signature": "(handle: Handle)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            648,
+            660
+          ],
+          "name": "T",
+          "type": "impl"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "d4c68524214f",
+      "indexed_at": "2026-07-24T20:35:13.144972+00:00",
+      "language": "rust",
+      "lines": 295,
+      "mtime_ns": 1782136568000000000,
+      "size": 11297,
+      "symbols": [
+        {
+          "lines": [
+            79,
+            79
+          ],
+          "name": "ffi",
+          "type": "module"
+        },
+        {
+          "lines": [
+            80,
+            80
+          ],
+          "name": "ffi_converter_impls",
+          "type": "module"
+        },
+        {
+          "lines": [
+            81,
+            81
+          ],
+          "name": "ffi_converter_traits",
+          "type": "module"
+        },
+        {
+          "lines": [
+            82,
+            82
+          ],
+          "name": "metadata",
+          "type": "module"
+        },
+        {
+          "lines": [
+            83,
+            83
+          ],
+          "name": "oneshot",
+          "type": "module"
+        },
+        {
+          "docstring": "so the consumer doesn't have to depend on them directly.",
+          "lines": [
+            96,
+            103
+          ],
+          "name": "deps",
+          "type": "module"
+        },
+        {
+          "lines": [
+            117,
+            160
+          ],
+          "name": "check_compatible_version",
+          "signature": "(bindgen_version: &'static str)",
+          "type": "function"
+        },
+        {
+          "docstring": "Struct to use when we want to lift/lower/serialize types inside the `uniffi` crate.",
+          "lines": [
+            175,
+            175
+          ],
+          "name": "UniFfiTag",
+          "type": "struct"
+        },
+        {
+          "docstring": "helper function to instead return an explicit error, to help with debugging.",
+          "lines": [
+            182,
+            190
+          ],
+          "name": "check_remaining",
+          "signature": "(buf: &[u8], num_bytes: usize)",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                230,
+                238
+              ],
+              "name": "timestamp_roundtrip_post_epoch",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                241,
+                252
+              ],
+              "name": "timestamp_roundtrip_pre_epoch",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            225,
+            253
+          ],
+          "name": "test",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                262,
+                262
+              ],
+              "name": "TestError",
+              "type": "struct"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    268,
+                    270
+                  ],
+                  "name": "write",
+                  "signature": "(obj: TestError, buf: &mut Vec<u8>)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    272,
+                    274
+                  ],
+                  "name": "try_read",
+                  "signature": "(buf: &mut &[u8])",
+                  "type": "method"
+                }
+              ],
+              "docstring": "Use FfiConverter to simplify lifting TestError out of RustBuffer to check it",
+              "lines": [
+                265,
+                278
+              ],
+              "name": "TestError",
+              "type": "impl"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    281,
+                    283
+                  ],
+                  "name": "fmt",
+                  "signature": "(&self, f: &mut fmt::Formatter<'_>)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                280,
+                284
+              ],
+              "name": "TestError",
+              "type": "impl"
+            },
+            {
+              "lines": [
+                286,
+                286
+              ],
+              "name": "Error",
+              "type": "impl"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    289,
+                    291
+                  ],
+                  "name": "from",
+                  "signature": "(v: T)",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                288,
+                292
+              ],
+              "name": "TestError",
+              "type": "impl"
+            }
+          ],
+          "lines": [
+            256,
+            295
+          ],
+          "name": "test_util",
+          "type": "module"
+        }
+      ]
+    },
+    "metadata.rs": {
+      "hash": "b72e2dbe0e78",
+      "indexed_at": "2026-07-24T20:35:13.146530+00:00",
+      "language": "rust",
+      "lines": 291,
+      "mtime_ns": 1782136568000000000,
+      "size": 10565,
+      "symbols": [
+        {
+          "docstring": "Metadata constants, make sure to keep this in sync with copy in `uniffi_meta::metadata::codes`",
+          "lines": [
+            28,
+            94
+          ],
+          "name": "codes",
+          "type": "module"
+        },
+        {
+          "lines": [
+            121,
+            124
+          ],
+          "name": "MetadataBuffer",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                127,
+                132
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                134,
+                136
+              ],
+              "name": "from_code",
+              "signature": "(value: u8)",
+              "type": "method"
+            },
+            {
+              "docstring": "allocated an extra buffer.",
+              "lines": [
+                142,
+                153
+              ],
+              "name": "concat",
+              "signature": "(mut self, other: MetadataBuffer)",
+              "type": "method"
+            },
+            {
+              "docstring": "allocated an extra buffer.",
+              "lines": [
+                159,
+                164
+              ],
+              "name": "concat_value",
+              "signature": "(mut self, value: u8)",
+              "type": "method"
+            },
+            {
+              "docstring": "allocated an extra buffer.",
+              "lines": [
+                170,
+                179
+              ],
+              "name": "concat_u32",
+              "signature": "(mut self, value: u32)",
+              "type": "method"
+            },
+            {
+              "docstring": "allocated an extra buffer.",
+              "lines": [
+                185,
+                187
+              ],
+              "name": "concat_bool",
+              "signature": "(self, value: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "allocated an extra buffer.",
+              "lines": [
+                196,
+                209
+              ],
+              "name": "concat_str",
+              "signature": "(mut self, string: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "allocated an extra buffer.",
+              "lines": [
+                217,
+                231
+              ],
+              "name": "concat_long_str",
+              "signature": "(mut self, string: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "gets better const generic support.",
+              "lines": [
+                237,
+                245
+              ],
+              "name": "into_array",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "that the bindings were generated from.",
+              "lines": [
+                251,
+                253
+              ],
+              "name": "checksum",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            126,
+            254
+          ],
+          "name": "MetadataBuffer",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                257,
+                259
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            256,
+            260
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                263,
+                265
+              ],
+              "name": "as_ref",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            262,
+            266
+          ],
+          "name": "MetadataBuffer",
+          "type": "impl"
+        },
+        {
+          "docstring": "that the bindings were generated from.",
+          "lines": [
+            272,
+            274
+          ],
+          "name": "checksum_metadata",
+          "signature": "(buf: &[u8])",
+          "type": "function"
+        },
+        {
+          "lines": [
+            276,
+            291
+          ],
+          "name": "calc_checksum",
+          "signature": "(bytes: &[u8], size: usize)",
+          "type": "function"
+        }
+      ]
+    },
+    "oneshot.rs": {
+      "hash": "44ba68490c4e",
+      "indexed_at": "2026-07-24T20:35:13.147317+00:00",
+      "language": "rust",
+      "lines": 84,
+      "mtime_ns": 1782136568000000000,
+      "size": 2601,
+      "symbols": [
+        {
+          "lines": [
+            20,
+            20
+          ],
+          "name": "Sender",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            21,
+            21
+          ],
+          "name": "Receiver",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            23,
+            26
+          ],
+          "name": "OneshotInner",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            28,
+            34
+          ],
+          "name": "channel",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Send a value to the receiver",
+              "lines": [
+                38,
+                51
+              ],
+              "name": "send",
+              "signature": "(self, value: T)",
+              "type": "method"
+            },
+            {
+              "docstring": "from_raw must be called with this pointer or else the sender will leak",
+              "lines": [
+                56,
+                58
+              ],
+              "name": "into_raw",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "docstring": "not be used again.",
+              "lines": [
+                66,
+                68
+              ],
+              "name": "from_raw",
+              "signature": "(raw_ptr: *const ())",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            36,
+            69
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                74,
+                83
+              ],
+              "name": "poll",
+              "signature": "(self: Pin<&mut Self>, cx: &mut Context<'_>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            71,
+            84
+          ],
+          "name": "Future",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.787056+00:00",
+  "version": "1.0"
+}

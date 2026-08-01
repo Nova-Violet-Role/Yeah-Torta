@@ -1,0 +1,1303 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\dns_engine\\wire_cake_inu\\elevation",
+  "files": {
+    "AdbDiscovery.kt": {
+      "hash": "d1348e65422c",
+      "indexed_at": "2026-08-01T03:59:44.239314+00:00",
+      "language": "kotlin",
+      "lines": 106,
+      "mtime_ns": 1785556376594898900,
+      "size": 4891,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                42,
+                42
+              ],
+              "name": "Endpoint",
+              "type": "class"
+            },
+            {
+              "lines": [
+                49,
+                57
+              ],
+              "name": "classify",
+              "signature": "(serviceType: String?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                68,
+                83
+              ],
+              "name": "isSelfHost",
+              "signature": "(hostAddress: String?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                86,
+                92
+              ],
+              "name": "isIpv4Loopback",
+              "signature": "(ip: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                98,
+                105
+              ],
+              "name": "Resolved",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            33,
+            106
+          ],
+          "name": "AdbDiscovery",
+          "type": "class"
+        }
+      ]
+    },
+    "BootReapplyPolicy.kt": {
+      "hash": "a227c2cc980a",
+      "indexed_at": "2026-08-01T03:59:44.532671+00:00",
+      "language": "kotlin",
+      "lines": 83,
+      "mtime_ns": 1785556376606898600,
+      "size": 3664,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                36,
+                42
+              ],
+              "name": "Durability",
+              "type": "class"
+            },
+            {
+              "lines": [
+                45,
+                50
+              ],
+              "name": "PowerState",
+              "type": "class"
+            },
+            {
+              "lines": [
+                53,
+                60
+              ],
+              "name": "Plan",
+              "type": "class"
+            },
+            {
+              "lines": [
+                70,
+                82
+              ],
+              "name": "decide",
+              "signature": "(isProtected: Boolean, powers: List<PowerState>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            33,
+            83
+          ],
+          "name": "BootReapplyPolicy",
+          "type": "class"
+        }
+      ]
+    },
+    "ElevationManager.kt": {
+      "hash": "082efa8f3427",
+      "indexed_at": "2026-08-01T03:59:44.826108+00:00",
+      "language": "kotlin",
+      "lines": 184,
+      "mtime_ns": 1785556376618901200,
+      "size": 8280,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                74,
+                84
+              ],
+              "name": "detectBestProvider",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                95,
+                132
+              ],
+              "name": "acquire",
+              "signature": "(\n        request: ElevationRequest = ElevationRequest(),\n        forceProvider: ProviderId? = nu...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                135,
+                143
+              ],
+              "name": "release",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                145,
+                150
+              ],
+              "name": "runCatchingProbe",
+              "signature": "(provider: ElevationProvider)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            50,
+            156
+          ],
+          "name": "ElevationManager",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                165,
+                165
+              ],
+              "name": "inPreferenceOrder",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            163,
+            166
+          ],
+          "name": "ElevationProviders",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                171,
+                171
+              ],
+              "name": "Unknown",
+              "type": "class"
+            },
+            {
+              "lines": [
+                174,
+                174
+              ],
+              "name": "Available",
+              "type": "class"
+            },
+            {
+              "lines": [
+                177,
+                177
+              ],
+              "name": "NoneAvailable",
+              "type": "class"
+            },
+            {
+              "lines": [
+                180,
+                180
+              ],
+              "name": "Acquiring",
+              "type": "class"
+            },
+            {
+              "lines": [
+                183,
+                183
+              ],
+              "name": "Elevated",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            169,
+            184
+          ],
+          "name": "ElevationStatus",
+          "type": "interface"
+        }
+      ]
+    },
+    "ElevationProvider.kt": {
+      "hash": "a99844276091",
+      "indexed_at": "2026-08-01T03:59:45.135796+00:00",
+      "language": "kotlin",
+      "lines": 168,
+      "mtime_ns": 1785556376629899100,
+      "size": 7089,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                49,
+                49
+              ],
+              "name": "probe",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                57,
+                57
+              ],
+              "name": "acquire",
+              "signature": "(request: ElevationRequest)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            40,
+            65
+          ],
+          "name": "ElevationProvider",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            68,
+            76
+          ],
+          "name": "ProviderId",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                81,
+                81
+              ],
+              "name": "Ready",
+              "type": "class"
+            },
+            {
+              "lines": [
+                88,
+                88
+              ],
+              "name": "NeedsSetup",
+              "type": "class"
+            },
+            {
+              "lines": [
+                91,
+                91
+              ],
+              "name": "Unavailable",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            79,
+            92
+          ],
+          "name": "Availability",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            95,
+            99
+          ],
+          "name": "SetupReason",
+          "type": "class"
+        },
+        {
+          "lines": [
+            102,
+            107
+          ],
+          "name": "UnavailableReason",
+          "type": "class"
+        },
+        {
+          "lines": [
+            114,
+            120
+          ],
+          "name": "ElevationRequest",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                136,
+                136
+              ],
+              "name": "exec",
+              "signature": "(command: String, timeoutMs: Long = DEFAULT_EXEC_TIMEOUT_MS)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                142,
+                142
+              ],
+              "name": "close",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            127,
+            149
+          ],
+          "name": "ElevationSession",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            154,
+            168
+          ],
+          "name": "ShellResult",
+          "type": "class"
+        }
+      ]
+    },
+    "ElevationState.kt": {
+      "hash": "db1715ad027e",
+      "indexed_at": "2026-08-01T03:59:45.454371+00:00",
+      "language": "kotlin",
+      "lines": 141,
+      "mtime_ns": 1785556376641900100,
+      "size": 6426,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                35,
+                35
+              ],
+              "name": "Idle",
+              "type": "class"
+            },
+            {
+              "lines": [
+                42,
+                42
+              ],
+              "name": "Discovering",
+              "type": "class"
+            },
+            {
+              "lines": [
+                48,
+                48
+              ],
+              "name": "Pairing",
+              "type": "class"
+            },
+            {
+              "lines": [
+                51,
+                51
+              ],
+              "name": "Connecting",
+              "type": "class"
+            },
+            {
+              "lines": [
+                57,
+                57
+              ],
+              "name": "Elevated",
+              "type": "class"
+            },
+            {
+              "lines": [
+                63,
+                63
+              ],
+              "name": "Failed",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            32,
+            64
+          ],
+          "name": "ElevationState",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            67,
+            84
+          ],
+          "name": "FailureReason",
+          "type": "class"
+        },
+        {
+          "lines": [
+            91,
+            101
+          ],
+          "name": "ElevationProgress",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                120,
+                136
+              ],
+              "name": "isValid",
+              "signature": "(from: ElevationState, to: ElevationState)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                139,
+                140
+              ],
+              "name": "isTerminal",
+              "signature": "(state: ElevationState)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            118,
+            141
+          ],
+          "name": "ElevationTransitions",
+          "type": "class"
+        }
+      ]
+    },
+    "GrantEngine.kt": {
+      "hash": "f46c7481bb71",
+      "indexed_at": "2026-08-01T03:59:45.755742+00:00",
+      "language": "kotlin",
+      "lines": 221,
+      "mtime_ns": 1785556376653899500,
+      "size": 10451,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                50,
+                71
+              ],
+              "name": "applyAll",
+              "signature": "(session: ElevationSession, ops: List<PowerOp>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                79,
+                86
+              ],
+              "name": "revertAll",
+              "signature": "(session: ElevationSession, ops: List<PowerOp>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                89,
+                96
+              ],
+              "name": "revert",
+              "signature": "(session: ElevationSession, op: PowerOp)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                99,
+                102
+              ],
+              "name": "clearDesired",
+              "signature": "(ops: List<PowerOp>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                109,
+                129
+              ],
+              "name": "apply",
+              "signature": "(session: ElevationSession, op: PowerOp)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                132,
+                138
+              ],
+              "name": "verify",
+              "signature": "(session: ElevationSession, op: PowerOp)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                140,
+                141
+              ],
+              "name": "outcome",
+              "signature": "(op: PowerOp, held: Boolean, applied: Boolean, detail: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                143,
+                154
+              ],
+              "name": "persist",
+              "signature": "(outcomes: List<PowerOutcome>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                157,
+                160
+              ],
+              "name": "isFullyProtected",
+              "signature": "(catalogue: List<PowerOp>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            39,
+            161
+          ],
+          "name": "GrantEngine",
+          "type": "class"
+        },
+        {
+          "lines": [
+            164,
+            170
+          ],
+          "name": "PowerOutcome",
+          "type": "class"
+        },
+        {
+          "lines": [
+            173,
+            178
+          ],
+          "name": "PowerState",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                185,
+                185
+              ],
+              "name": "load",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                186,
+                186
+              ],
+              "name": "save",
+              "signature": "(states: List<PowerState>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            184,
+            187
+          ],
+          "name": "PowerStateStore",
+          "type": "interface"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                196,
+                199
+              ],
+              "name": "encode",
+              "signature": "(states: List<PowerState>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                201,
+                212
+              ],
+              "name": "decode",
+              "signature": "(raw: String?)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            194,
+            213
+          ],
+          "name": "PowerStateCodec",
+          "type": "class"
+        },
+        {
+          "lines": [
+            220,
+            221
+          ],
+          "name": "combined",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "PowerCatalogue.kt": {
+      "hash": "3ef768ced268",
+      "indexed_at": "2026-08-01T03:59:46.061501+00:00",
+      "language": "kotlin",
+      "lines": 441,
+      "mtime_ns": 1785556376664898900,
+      "size": 23187,
+      "symbols": [
+        {
+          "lines": [
+            48,
+            80
+          ],
+          "name": "PowerId",
+          "type": "class"
+        },
+        {
+          "lines": [
+            83,
+            83
+          ],
+          "name": "PowerTier",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                112,
+                112
+              ],
+              "name": "isHeld",
+              "signature": "(result: ShellResult)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            99,
+            113
+          ],
+          "name": "PowerOp",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                136,
+                402
+              ],
+              "name": "build",
+              "signature": "(pkg: String, appUid: Int? = null)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                405,
+                405
+              ],
+              "name": "tier1",
+              "signature": "(pkg: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                408,
+                409
+              ],
+              "name": "tier3",
+              "signature": "(pkg: String, appUid: Int? = null)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                412,
+                412
+              ],
+              "name": "driftProne",
+              "signature": "(pkg: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                420,
+                440
+              ],
+              "name": "isHeld",
+              "signature": "(op: PowerOp, result: ShellResult)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            119,
+            441
+          ],
+          "name": "PowerCatalogue",
+          "type": "class"
+        }
+      ]
+    },
+    "ReadBackVerifier.kt": {
+      "hash": "d9b13bf7f23a",
+      "indexed_at": "2026-08-01T03:59:46.362474+00:00",
+      "language": "kotlin",
+      "lines": 106,
+      "mtime_ns": 1785556376676900300,
+      "size": 4585,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                39,
+                44
+              ],
+              "name": "Power",
+              "type": "class"
+            },
+            {
+              "lines": [
+                47,
+                48
+              ],
+              "name": "matches",
+              "signature": "(power: Power, readBack: ShellResult)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                51,
+                58
+              ],
+              "name": "Outcome",
+              "type": "class"
+            },
+            {
+              "lines": [
+                68,
+                83
+              ],
+              "name": "converge",
+              "signature": "(power: Power, exec: suspend (String) -> ShellResult)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                90,
+                101
+              ],
+              "name": "convergeAll",
+              "signature": "(\n        powers: List<Power>,\n        exec: suspend (String) -> ShellResult,\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                104,
+                105
+              ],
+              "name": "allVerified",
+              "signature": "(outcomes: List<Outcome>, expectedCount: Int)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            31,
+            106
+          ],
+          "name": "ReadBackVerifier",
+          "type": "class"
+        }
+      ]
+    },
+    "RustPowerStateStore.kt": {
+      "hash": "bfdb4b252f15",
+      "indexed_at": "2026-08-01T03:59:46.667517+00:00",
+      "language": "kotlin",
+      "lines": 196,
+      "mtime_ns": 1785556376688899300,
+      "size": 8494,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                52,
+                58
+              ],
+              "name": "load",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                60,
+                68
+              ],
+              "name": "save",
+              "signature": "(states: List<PowerState>)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            50,
+            69
+          ],
+          "name": "RustPowerStateStore",
+          "type": "class"
+        },
+        {
+          "lines": [
+            94,
+            97
+          ],
+          "name": "toInuPowerId",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            99,
+            99
+          ],
+          "name": "toPowerId",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            105,
+            116
+          ],
+          "name": "toInuPowerFlag",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            122,
+            130
+          ],
+          "name": "toPowerState",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                148,
+                195
+              ],
+              "name": "openAndMigrate",
+              "signature": "(context: Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            142,
+            196
+          ],
+          "name": "LegacyInuMigration",
+          "type": "class"
+        }
+      ]
+    },
+    "ShellResult.kt": {
+      "hash": "b58dcc4ad98e",
+      "indexed_at": "2026-08-01T03:59:46.972640+00:00",
+      "language": "kotlin",
+      "lines": 90,
+      "mtime_ns": 1785556376700903200,
+      "size": 4210,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                51,
+                51
+              ],
+              "name": "wrap",
+              "signature": "(command: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                64,
+                89
+              ],
+              "name": "parse",
+              "signature": "(raw: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            38,
+            90
+          ],
+          "name": "AdbSentinel",
+          "type": "class"
+        }
+      ]
+    },
+    "ShizukuBridge.kt": {
+      "hash": "a1aa21adde6e",
+      "indexed_at": "2026-08-01T03:59:47.275425+00:00",
+      "language": "kotlin",
+      "lines": 205,
+      "mtime_ns": 1785556376711900200,
+      "size": 9226,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                43,
+                43
+              ],
+              "name": "pingBinder",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                46,
+                46
+              ],
+              "name": "hasPermission",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                56
+              ],
+              "name": "newProcess",
+              "signature": "(command: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                77
+              ],
+              "name": "requestPermission",
+              "signature": "(requestCode: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                85,
+                85
+              ],
+              "name": "shouldShowRationale",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                94,
+                94
+              ],
+              "name": "serverUid",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                102
+              ],
+              "name": "serverVersion",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                110,
+                110
+              ],
+              "name": "seContext",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            37,
+            111
+          ],
+          "name": "ShizukuBridge",
+          "type": "interface"
+        },
+        {
+          "lines": [
+            114,
+            114
+          ],
+          "name": "RawProcessResult",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                130,
+                134
+              ],
+              "name": "pingBinder",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                136,
+                142
+              ],
+              "name": "hasPermission",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                144,
+                168
+              ],
+              "name": "newProcess",
+              "signature": "(command: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                170,
+                176
+              ],
+              "name": "requestPermission",
+              "signature": "(requestCode: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                178,
+                183
+              ],
+              "name": "shouldShowRationale",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                185,
+                190
+              ],
+              "name": "serverUid",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                192,
+                197
+              ],
+              "name": "serverVersion",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                199,
+                204
+              ],
+              "name": "seContext",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            121,
+            205
+          ],
+          "name": "ReflectiveShizukuBridge",
+          "type": "class"
+        }
+      ]
+    },
+    "ShizukuElevation.kt": {
+      "hash": "7df468cc7622",
+      "indexed_at": "2026-08-01T03:59:47.598476+00:00",
+      "language": "kotlin",
+      "lines": 264,
+      "mtime_ns": 1785556376723899300,
+      "size": 11399,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                49,
+                55
+              ],
+              "name": "availability",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                66,
+                74
+              ],
+              "name": "connect",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                84,
+                85
+              ],
+              "name": "requestPermission",
+              "signature": "(requestCode: Int = REQUEST_CODE_ONE_TAP)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                88,
+                88
+              ],
+              "name": "shouldShowRationale",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                96,
+                96
+              ],
+              "name": "serverPrivilege",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            43,
+            104
+          ],
+          "name": "ShizukuElevation",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                138,
+                155
+              ],
+              "name": "exec",
+              "signature": "(command: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            110,
+            156
+          ],
+          "name": "ShizukuShell",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                175,
+                175
+              ],
+              "name": "wrap",
+              "signature": "(command: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                182,
+                196
+              ],
+              "name": "parse",
+              "signature": "(raw: RawProcessResult)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            166,
+            197
+          ],
+          "name": "ShizukuSentinel",
+          "type": "class"
+        },
+        {
+          "lines": [
+            204,
+            212
+          ],
+          "name": "ShizukuExecResult",
+          "type": "class"
+        },
+        {
+          "lines": [
+            217,
+            234
+          ],
+          "name": "ShizukuAvailability",
+          "type": "class"
+        },
+        {
+          "lines": [
+            242,
+            264
+          ],
+          "name": "ShizukuPrivilege",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:47.599923+00:00",
+  "version": "1.0"
+}

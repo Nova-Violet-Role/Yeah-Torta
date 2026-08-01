@@ -1,0 +1,158 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\data\\dnscrypt_servers",
+  "files": {
+    "ServersPingDataSource.kt": {
+      "hash": "0b5343469959",
+      "indexed_at": "2026-08-01T03:59:19.224348+00:00",
+      "language": "kotlin",
+      "lines": 32,
+      "mtime_ns": 1785556375474899100,
+      "size": 862,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                21,
+                24
+              ],
+              "name": "checkTimeoutDirectly",
+              "signature": "(\n        ip: String,\n        port: Int\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                31
+              ],
+              "name": "checkTimeoutViaProxy",
+              "signature": "(\n        ip: String,\n        port: Int,\n        proxyAddress: String,\n        proxyPort: Int\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            32
+          ],
+          "name": "ServersPingDataSource",
+          "type": "interface"
+        }
+      ]
+    },
+    "ServersPingDataSourceImpl.kt": {
+      "hash": "e7cc145955e9",
+      "indexed_at": "2026-08-01T03:59:19.523225+00:00",
+      "language": "kotlin",
+      "lines": 50,
+      "mtime_ns": 1785556375486899300,
+      "size": 1508,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                26,
+                34
+              ],
+              "name": "checkTimeoutDirectly",
+              "signature": "(ip: String, port: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                36,
+                49
+              ],
+              "name": "checkTimeoutViaProxy",
+              "signature": "(\n        ip: String,\n        port: Int,\n        proxyAddress: String,\n        proxyPort: Int\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            50
+          ],
+          "name": "ServersPingDataSourceImpl",
+          "type": "class"
+        }
+      ]
+    },
+    "ServersPingRepositoryImpl.kt": {
+      "hash": "a70d8ade2020",
+      "indexed_at": "2026-08-01T03:59:19.861359+00:00",
+      "language": "kotlin",
+      "lines": 115,
+      "mtime_ns": 1785556375497899700,
+      "size": 4657,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                44,
+                53
+              ],
+              "name": "getTimeout",
+              "signature": "(address: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                55,
+                75
+              ],
+              "name": "tryGetTimeout",
+              "signature": "(address: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "Address example: 1.2.3.4:123 or [1:2:3:4]:123 or www.host.com:123",
+              "lines": [
+                78,
+                106
+              ],
+              "name": "getIpToPort",
+              "signature": "(address: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                108
+              ],
+              "name": "isIPv6Address",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                110,
+                111
+              ],
+              "name": "isDnsCryptOutboundProxyEnabled",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                114
+              ],
+              "name": "getDnsCryptOutboundProxyAddress",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            33,
+            115
+          ],
+          "name": "ServersPingRepositoryImpl",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:19.863322+00:00",
+  "version": "1.0"
+}

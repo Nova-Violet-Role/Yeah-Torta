@@ -1,0 +1,383 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\domain\\connection_checker",
+  "files": {
+    "ConnectionCheckerInteractor.kt": {
+      "hash": "414899e2b4e5",
+      "indexed_at": "2026-08-01T03:59:50.383123+00:00",
+      "language": "kotlin",
+      "lines": 29,
+      "mtime_ns": 1785556376735900100,
+      "size": 1150,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "addListener",
+              "signature": "(listener: T)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "checkInternetConnection",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "removeListener",
+              "signature": "(listener: T)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "getInternetConnectionResult",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "setInternetConnectionResult",
+              "signature": "(internetIsAvailable: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "checkNetworkConnection",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "getNetworkConnectionResult",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "setNetworkConnectionResult",
+              "signature": "(networkIsAvailable: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                28
+              ],
+              "name": "isFreeWiFiAccessPointDetected",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            29
+          ],
+          "name": "ConnectionCheckerInteractor",
+          "type": "interface"
+        }
+      ]
+    },
+    "ConnectionCheckerInteractorImpl.kt": {
+      "hash": "6ba10ef922aa",
+      "indexed_at": "2026-08-01T03:59:50.819022+00:00",
+      "language": "kotlin",
+      "lines": 310,
+      "mtime_ns": 1785556376748899500,
+      "size": 11325,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                95,
+                98
+              ],
+              "name": "addListener",
+              "signature": "(listener: T)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                112
+              ],
+              "name": "removeListener",
+              "signature": "(listener: T)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                114,
+                114
+              ],
+              "name": "getInternetConnectionResult",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                116,
+                118
+              ],
+              "name": "setInternetConnectionResult",
+              "signature": "(internetIsAvailable: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                120,
+                123
+              ],
+              "name": "checkNetworkConnection",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                125,
+                126
+              ],
+              "name": "getNetworkConnectionResult",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                128,
+                130
+              ],
+              "name": "setNetworkConnectionResult",
+              "signature": "(networkIsAvailable: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                132,
+                134
+              ],
+              "name": "isFreeWiFiAccessPointDetected",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                136,
+                140
+              ],
+              "name": "checkInternetConnection",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                142,
+                151
+              ],
+              "name": "checkConnection",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                153,
+                204
+              ],
+              "name": "tryCheckConnection",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                206,
+                216
+              ],
+              "name": "informListeners",
+              "signature": "(available: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                218,
+                223
+              ],
+              "name": "makeDelay",
+              "signature": "(delaySec: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                225,
+                227
+              ],
+              "name": "logException",
+              "signature": "(via: Via, e: Exception)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                229,
+                288
+              ],
+              "name": "check",
+              "signature": "(via: Via)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                290,
+                303
+              ],
+              "name": "getNetworkDns",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                305,
+                305
+              ],
+              "name": "isIPv6",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                307,
+                309
+              ],
+              "name": "Via",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            63,
+            310
+          ],
+          "name": "ConnectionCheckerInteractorImpl",
+          "type": "class"
+        }
+      ]
+    },
+    "ConnectionCheckerRepository.kt": {
+      "hash": "f162e5bd62b8",
+      "indexed_at": "2026-08-01T03:59:51.159069+00:00",
+      "language": "kotlin",
+      "lines": 40,
+      "mtime_ns": 1785556376760900300,
+      "size": 1138,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                26
+              ],
+              "name": "checkInternetAvailableOverHttp",
+              "signature": "(\n        site: String,\n        proxyAddress: String,\n        proxyPort: Int,\n        proxyUser: ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                28,
+                35
+              ],
+              "name": "checkInternetAvailableOverSocks",
+              "signature": "(\n        ip: String,\n        port: Int,\n        proxyAddress: String,\n        proxyPort: Int,\n  ...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                37
+              ],
+              "name": "checkNetworkAvailable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                39,
+                39
+              ],
+              "name": "isCaptivePortalOnWiFiDetected",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            40
+          ],
+          "name": "ConnectionCheckerRepository",
+          "type": "interface"
+        }
+      ]
+    },
+    "OnInternetConnectionCheckedListener.kt": {
+      "hash": "df2283e0e25e",
+      "indexed_at": "2026-08-01T03:59:51.470102+00:00",
+      "language": "kotlin",
+      "lines": 22,
+      "mtime_ns": 1785556376773900100,
+      "size": 742,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "onConnectionChecked",
+              "signature": "(available: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "isActive",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            19,
+            22
+          ],
+          "name": "OnInternetConnectionCheckedListener",
+          "type": "interface"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T03:59:51.471606+00:00",
+  "version": "1.0"
+}

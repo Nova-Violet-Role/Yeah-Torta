@@ -1,0 +1,582 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä SLINT GENERAL section — the general-settings surface of the ||| Advanced hamburger
+// (OMEGA Stage-D · D2, charter §2.2 step 7: "the remaining general-settings .java retire → SLINT +
+// Kotlin-Inject").
+//
+// This is the SLINT home the general settings retire INTO: it mirrors the live Kotlin surfaces —
+// the noob SimpleSettingsFragment (presets + the constant-pillar switches + battery keep-alive), the
+// BackgroundBootPillarFragment (autostart/boot + notification) and the two absorbed log routes the
+// TortaeSettingsHost serves (open_qery_log / open_nx_log → the Kotlin-ported ShowLogFragment) — so
+// the burger's GENERAL tab and the Android settings host can never claim different rows. The two
+// remaining general-settings .java are retired THIS wave: ConfigEditorFragment.java (orphaned raw-TOML
+// editor — DELETED; the Genesis law forbids raw TOML editing, the K5 typed authority owns config) and
+// ShowLogFragment.java (rewritten in Kotlin with a Kotlin-Inject-constructed reader).
+//
+// DATA FLOW (house law): the host pushes the CURRENT pref state; intents flow back as callbacks;
+// the host owns the truth. Callback → REAL destinations (all measured from the Kotlin surfaces):
+//   preset-picked(id)        -> PresetApplier.applyPreset(PRIVACY|GAMING|BALANCED)  (the ONE write path)
+//   pillar-toggled(key,on)   -> pref_resolver_rotation / pref_engine_solver / pref_warden_native /
+//                               pref_common_dns_rebind_protection  (the 4 constant pillars Simple syncs)
+//   boot-toggled(on)         -> the autostart-on-boot pref (BackgroundBootPillarFragment)
+//   autostart-delay-stepped  -> pref_fast_autostart_delay (seconds)
+//   notification-toggled(on) -> swShowNotification
+//   open-battery-settings()  -> the OS battery-optimization request chain (torta_keepalive_battery)
+//   open-query-log()/open-nx-log() -> the host's open_qery_log / open_nx_log routes (ShowLogFragment.kt)
+//   open-expert()            -> TortaeSettingsHost.openAdvanced (the Expert grid)
+//
+// HONESTY FLAG: `host-live` — the general rows live in Android SharedPreferences, which the
+// spike-local .so cannot read (the D1 two-instance boundary). Until the Kotlin bridge pushes real
+// pref state, host-live stays false and the pane says so in a banner — preview values are NEVER
+// presented as live state (the felt-truth law).
+
+import { VerticalBox, HorizontalBox, Button } from "std-widgets.slint";
+import { Monokuma } from "monokuma_palette.slint";
+import { ThemeBook, MotifWash } from "theme_tokens.slint";
+
+// ── Local controls (file-local per the sibling law; the shared hoist is B4-G8, Design-Finale). ──
+
+component ToggleSwitch inherits Rectangle {
+    in property <bool> on: false;
+    in property <color> on-color: Monokuma.safe;
+    callback toggled(bool);
+    width: 42px;
+    height: 24px;
+    border-radius: 12px;
+    background: root.on ? root.on-color : Monokuma.iron;
+    animate background { duration: 120ms; }
+    Rectangle {
+        width: 18px;
+        height: 18px;
+        border-radius: 9px;
+        background: white;
+        x: root.on ? parent.width - self.width - 3px : 3px;
+        y: (parent.height - self.height) / 2;
+        animate x { duration: 120ms; }
+    }
+    TouchArea {
+        width: max(parent.width, 48px);
+        height: 48px;
+        x: (parent.width - self.width) / 2;
+        y: (parent.height - self.height) / 2;
+        clicked => { root.toggled(!root.on); }
+    }
+}
+
+component SectionTitle inherits Text {
+    // ★ #21 slice 3 - a section title must WRAP, never truncate. Slint Text defaults to no-wrap, so with the
+    // burger rail open (~268px content column) any long title was cut mid-word and whatever it carried went
+    // with it - measured on the Centauri dashboard, where the CLOAKED CDN HOSTS title lost its trailing
+    // clause entirely. Wrapping costs a second line only when the text does not fit.
+    wrap: word-wrap;
+    color: Monokuma.dim;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+component RowCard inherits Rectangle {
+    background: Monokuma.pitch.with-alpha(0.58);
+    border-radius: 6px;
+}
+
+component AlertBanner inherits Rectangle {
+    in property <string> message;
+    in property <color> accent: Monokuma.wound;
+    border-radius: 6px;
+    background: root.accent;
+    HorizontalLayout {
+        padding: 8px;
+        spacing: 8px;
+        Text {
+            text: "[!]";
+            color: Monokuma.strike;
+            font-size: 14px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.message;
+            color: Monokuma.strike;
+            font-size: 11px;
+            font-weight: 700;
+            wrap: word-wrap;
+        }
+    }
+}
+
+component ToggleRow inherits RowCard {
+    in property <string> label;
+    in property <string> hint;
+    in property <bool> on;
+    in property <color> on-color: Monokuma.safe;
+    callback toggled(bool);
+    HorizontalLayout {
+        padding: 10px;
+        spacing: 10px;
+        VerticalLayout {
+            horizontal-stretch: 1;
+            Text {
+                text: root.label;
+                color: Monokuma.bone;
+                font-size: 13px;
+                font-weight: 700;
+            }
+            Text {
+                text: root.hint;
+                color: Monokuma.ash;
+                font-size: 10px;
+                wrap: word-wrap;
+            }
+        }
+        ToggleSwitch {
+            on: root.on;
+            on-color: root.on-color;
+            toggled(v) => { root.toggled(v); }
+        }
+    }
+}
+
+// An action row (label + hint + a chevron affordance) — the "opens another screen" vocabulary.
+component ActionRow inherits RowCard {
+    in property <string> label;
+    in property <string> hint;
+    callback tapped();
+    HorizontalLayout {
+        padding: 10px;
+        spacing: 10px;
+        VerticalLayout {
+            horizontal-stretch: 1;
+            Text {
+                text: root.label;
+                color: Monokuma.bone;
+                font-size: 13px;
+                font-weight: 700;
+            }
+            Text {
+                text: root.hint;
+                color: Monokuma.ash;
+                font-size: 10px;
+                wrap: word-wrap;
+            }
+        }
+        Text {
+            text: "›";
+            color: Monokuma.ash;
+            font-size: 18px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+    }
+    TouchArea {
+        clicked => { root.tapped(); }
+    }
+}
+
+// A one-tap preset chip (Privacy / Gaming / Balanced — a STARTING POINT, never a lock).
+component PresetChip inherits Rectangle {
+    in property <string> label;
+    in property <bool> active;
+    callback picked();
+    height: 30px;
+    border-radius: 8px;
+    background: root.active ? Monokuma.slate : Monokuma.pitch;
+    border-width: root.active ? 1px : 0px;
+    border-color: Monokuma.safe;
+    HorizontalLayout {
+        alignment: center;
+        padding-left: 10px;
+        padding-right: 10px;
+        Text {
+            text: root.active ? "✓ \{root.label}" : root.label;
+            color: root.active ? Monokuma.safe : Monokuma.bone;
+            font-size: 11px;
+            font-weight: 800;
+            vertical-alignment: center;
+        }
+    }
+    TouchArea {
+        height: max(parent.height, 48px);
+        y: (parent.height - self.height) / 2;
+        clicked => { root.picked(); }
+    }
+}
+
+// =================================================================================================
+// THE GENERAL SECTION — an EMBEDDABLE pane (inherits Rectangle, the pane idiom from birth) hosted by
+// the ||| Advanced burger. Monokuma chrome = the app-shell base theme direction (B4-G9).
+// =================================================================================================
+// ── #34 THE CLOCKWORK — a brass gear, fully animated (SOLID metals; the no-transparency law:
+//    alpha is for foreground covers, never the theme itself). Pure animation-tick; zero timers.
+component BrassGear inherits Rectangle {
+    in property <duration> spin: 12s;
+    in property <bool> reverse: false;
+    in property <color> metal: #c9954f;    // #36 SOCIO push — sand-brass: browner body, brighter face
+    in property <color> deep: #6e4520;     // dark saddle brown — the automaton's bones
+    background: transparent;
+    wheel := Rectangle {        // the spinning body — rotation cannot ride the component root
+        width: 100%; height: 100%;
+        background: transparent;
+        transform-rotation: (root.reverse ? -360deg : 360deg) * (animation-tick() / root.spin);
+
+    for t in 12 : Rectangle {   // the toothed rim — 12 teeth riding the wheel
+        x: parent.width / 2 + parent.width * 0.5 * Math.cos(t * 30deg) - parent.width * 0.06;
+        y: parent.height / 2 + parent.height * 0.5 * Math.sin(t * 30deg) - parent.width * 0.06;
+        width: parent.width * 0.12;
+        height: self.width;
+        border-radius: 2px;
+        // #36 SOCIO push — every 3rd tooth is polished sand: the brilliant glint riding the spin
+        background: Math.mod(t, 3) == 0 ? #f2dcab : root.metal;
+    }
+    Rectangle {                 // the ring
+        width: 100%; height: 100%;
+        border-radius: self.width / 2;
+        border-width: self.width * 0.10;
+        border-color: root.metal;
+        background: transparent;
+    }
+    for s in 3 : Rectangle {    // three spokes through the heart
+        x: 0;
+        y: parent.height / 2 - parent.height * 0.035;
+        width: parent.width;
+        height: parent.height * 0.07;
+        transform-rotation: s * 60deg;
+        background: root.deep;
+    }
+    Rectangle {                 // the hub
+        x: parent.width / 2 - parent.width * 0.11;
+        y: parent.height / 2 - parent.height * 0.11;
+        width: parent.width * 0.22; height: self.width;
+        border-radius: self.width / 2;
+        background: #ecc27e;    // #36 — polished sand hub, the brilliant heart
+    }
+    }   // /wheel — the spinning body
+}
+
+// ── #36 THE AUTOMATA ESCAPEMENT (SOCIO push) — the wound heart of the machine: a balance
+//    wheel swinging on its hairspring + the pallet bar rocking counter-beat beneath it.
+//    Brown + sand, brilliant rim; pure animation-tick; zero timers; SOLID metals. ──
+component AutomataEscapement inherits Rectangle {
+    in property <duration> beat: 1.6s;
+    background: transparent;
+    balance := Rectangle {      // the balance wheel — swings ±38° (rotation cannot ride the root)
+        x: parent.width / 2 - self.width / 2;
+        y: 0;
+        width: parent.width * 0.72; height: self.width;
+        background: transparent;
+        transform-rotation: 38deg * Math.sin(360deg * (animation-tick() / root.beat));
+        Rectangle {             // the rim — brilliant sand
+            width: 100%; height: 100%;
+            border-radius: self.width / 2;
+            border-width: self.width * 0.09;
+            border-color: #f2dcab;
+            background: transparent;
+        }
+        Rectangle {             // the cross-arm
+            y: parent.height / 2 - parent.height * 0.05;
+            width: 100%; height: parent.height * 0.10;
+            background: #6e4520;
+        }
+        Rectangle {             // the impulse jewel riding the rim
+            x: parent.width / 2 - parent.width * 0.07;
+            y: 0;
+            width: parent.width * 0.14; height: self.width;
+            border-radius: self.width / 2;
+            background: #ecc27e;
+        }
+    }
+    Rectangle {                 // the pallet bar — rocking counter-beat below the wheel
+        x: parent.width / 2 - parent.width * 0.045;
+        y: parent.height * 0.66;
+        width: parent.width * 0.09; height: parent.height * 0.34;
+        border-radius: self.width / 2;
+        transform-rotation: -22deg * Math.sin(360deg * (animation-tick() / root.beat));
+        background: #8a5a2b;
+    }
+}
+
+export component GeneralSection inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.general; width: 100%; height: 100%; }
+    background: #33220f;    // SOLID sand-warmed leather (#36 SOCIO: browner) — the no-transparency law: the theme is
+                            // never see-through; alpha belongs to foreground covers only.
+
+    // ===== #34 THE CLOCKWORK AMBIENT — the steampunk wall: a train of live brass gears
+    //       band-pitched down the WHOLE scroll (#22 drench law), plus the great roman clock
+    //       with living hands. SOLID metals on leather; pure animation-tick; zero timers;
+    //       glass panels stay above. =====
+    clockwork := Rectangle {
+        width: 100%; height: 100%;
+        clip: true;
+        background: transparent;
+        property <int> gear-bands: Math.max(3, Math.floor(self.height / 1px / 360) + 1);
+        property <int> heart-count: Math.max(2, Math.floor(self.height / 1px / 720));
+
+        // the gear train — alternating spin, varied pitch, scattered across the leather
+        for g in clockwork.gear-bands : BrassGear {
+            width: 90px + 50px * Math.abs(Math.sin(g * 67deg));
+            height: self.width;
+            x: parent.width * (0.08 + 0.72 * Math.abs(Math.sin(g * 73deg)));
+            y: g * 360px + 40px;
+            spin: 9s + Math.mod(g, 3) * 4s;
+            reverse: Math.mod(g, 2) == 1;
+        }
+
+        // #36 SOCIO push — the meshed pinions: a small counter-gear biting each big wheel,
+        // so the wall reads as one automaton TRAIN, not scattered coins
+        for g in clockwork.gear-bands : BrassGear {
+            width: 44px + 18px * Math.abs(Math.sin(g * 41deg));
+            height: self.width;
+            x: parent.width * (0.08 + 0.72 * Math.abs(Math.sin(g * 73deg))) + 78px;
+            y: g * 360px + 118px;
+            spin: 6s + Math.mod(g, 2) * 3s;
+            reverse: Math.mod(g, 2) == 0;   // opposite hand — it bites the big wheel
+            metal: #d8ac66;                 // the pinions run brighter — sand-forward
+        }
+
+        // #36 THE AUTOMATA HEARTBEAT — escapements wound between the bands
+        for e in clockwork.heart-count : AutomataEscapement {
+            width: 64px; height: 84px;
+            x: parent.width * (0.14 + 0.58 * Math.abs(Math.sin(e * 97deg)));
+            y: e * 720px + 250px;
+            beat: 1.4s + Math.mod(e, 3) * 0.4s;
+        }
+
+        // THE GREAT CLOCK — roman face; minute hand laps in 45s, hour hand in 9min
+        clockface := Rectangle {
+            x: parent.width * 0.30;
+            y: 90px;
+            width: 210px; height: 210px;
+            border-radius: 105px;
+            background: #a34a28;                // solid terracotta face
+            border-width: 9px;
+            border-color: #c98d4e;
+            Text { text: "XII"; x: parent.width / 2 - self.width / 2; y: parent.height * 0.05; color: #ecc27d; font-size: 22px; font-weight: 800; }
+            Text { text: "III"; x: parent.width * 0.86 - self.width; y: parent.height / 2 - 11px; color: #ecc27d; font-size: 22px; font-weight: 800; }
+            Text { text: "VI";  x: parent.width / 2 - self.width / 2; y: parent.height * 0.80; color: #ecc27d; font-size: 22px; font-weight: 800; }
+            Text { text: "IX";  x: parent.width * 0.06; y: parent.height / 2 - 11px; color: #ecc27d; font-size: 22px; font-weight: 800; }
+            Rectangle {         // minute hand — half-bar pivot (container centered on the face)
+                x: parent.width / 2 - 2.5px;
+                y: parent.height * 0.07;
+                width: 5px; height: parent.height * 0.86;
+                transform-rotation: 360deg * (animation-tick() / 45s);
+                background: transparent;
+                Rectangle { y: 0; width: 100%; height: parent.height * 0.5; border-radius: 2.5px; background: #3a2415; }
+            }
+            Rectangle {         // hour hand — shorter, slower
+                x: parent.width / 2 - 3.5px;
+                y: parent.height * 0.07;
+                width: 7px; height: parent.height * 0.86;
+                transform-rotation: 360deg * (animation-tick() / 540s);
+                background: transparent;
+                Rectangle { y: parent.height * 0.16; width: 100%; height: parent.height * 0.34; border-radius: 3.5px; background: #3a2415; }
+            }
+            Rectangle {         // the boss — center pin
+                x: parent.width / 2 - 9px;
+                y: parent.height / 2 - 9px;
+                width: 18px; height: 18px;
+                border-radius: 9px;
+                background: #3a2415;
+            }
+        }
+    }
+
+    // ===== Host-pushed pref state (defaults mirror a fresh install) =====
+    in-out property <int> preset-active: 0;         // 0 custom/none · 1 privacy · 2 gaming · 3 balanced
+    in-out property <bool> rotation-on: true;       // pref_resolver_rotation
+    in-out property <bool> solver-on: true;         // pref_engine_solver
+    in-out property <bool> warden-on: false;         // pref_warden_native
+    in-out property <bool> rebind-protect-on: true; // pref_common_dns_rebind_protection
+    in-out property <bool> boot-autostart-on: false;
+    in-out property <int> autostart-delay-secs: 0;  // pref_fast_autostart_delay
+    in-out property <bool> notification-on: true;   // swShowNotification
+    // The felt-truth flag: FALSE until a host genuinely pushes live pref state (the spike-local .so
+    // cannot read SharedPreferences — preview values are never presented as live).
+    in-out property <bool> host-live: false;
+
+    // ===== 🎷 derived guards (host-readable; the proof test asserts these) =====
+    // Every helper pillar off — the engine still tunnels, but rotation/solver/warden protections are dark.
+    out property <bool> warn-all-pillars-off: !root.rotation-on && !root.solver-on && !root.warden-on;
+    // The Inu "WON'T SURVIVE REBOOT" sibling: protection is manual-start only.
+    out property <bool> note-boot-off: !root.boot-autostart-on;
+    out property <string> preset-label: root.preset-active == 1 ? "PRIVACY"
+        : root.preset-active == 2 ? "GAMING"
+        : root.preset-active == 3 ? "BALANCED" : "CUSTOM";
+
+    // ===== The edit intents (destinations in the file-head table) =====
+    callback preset-picked(int /* 1 privacy · 2 gaming · 3 balanced */);
+    callback pillar-toggled(string /* rotation|solver|warden|rebind */, bool);
+    callback boot-toggled(bool);
+    callback autostart-delay-stepped(int /* ±seconds */);
+    callback notification-toggled(bool);
+    callback open-battery-settings();
+    callback open-query-log();
+    callback open-nx-log();
+    callback open-expert();
+
+    VerticalBox {
+        padding: 14px;
+        spacing: 12px;
+
+        // ---- Header ----
+        HorizontalBox {
+            spacing: 8px;
+            VerticalLayout {
+                Text {
+                    text: "GENERAL  |||";
+                    color: Monokuma.bone;
+                    font-size: 22px;
+                    font-weight: 900;
+                }
+                Text {
+                    text: "presets · pillars · boot · logs — plain words, no jargon";
+                    color: Monokuma.ash;
+                    font-size: 11px;
+                }
+            }
+            Rectangle { }
+            Text {
+                text: root.preset-label;
+                color: Monokuma.safe;
+                font-size: 11px;
+                font-weight: 900;
+                vertical-alignment: center;
+                horizontal-alignment: right;
+            }
+        }
+
+        if !root.host-live : AlertBanner {
+            accent: Monokuma.caution;
+            message: "PREVIEW -> these rows show defaults, not your live preferences. The Kotlin bridge pushes the real state (Stage-D shell wave).";
+        }
+        if root.warn-all-pillars-off : AlertBanner {
+            accent: Monokuma.wound;
+            message: "Every helper pillar is OFF -> rotation, the solver and the Warden are all dark. The tunnel still runs, but unguarded.";
+        }
+
+        // ---- ONE-TAP PRESETS (PresetApplier — the single live write path; never a lock) ----
+        SectionTitle { text: "ONE-TAP PRESETS  (a starting point — every switch stays yours)"; }
+        HorizontalBox {
+            spacing: 8px;
+            PresetChip {
+                label: "PRIVACY";
+                active: root.preset-active == 1;
+                picked => { root.preset-picked(1); }
+            }
+            PresetChip {
+                label: "GAMING";
+                active: root.preset-active == 2;
+                picked => { root.preset-picked(2); }
+            }
+            PresetChip {
+                label: "BALANCED";
+                active: root.preset-active == 3;
+                picked => { root.preset-picked(3); }
+            }
+        }
+
+        // ---- THE HELPER PILLARS (the 4 constant switches the Simple surface syncs) ----
+        SectionTitle { text: "HELPER PILLARS"; }
+        ToggleRow {
+            label: "Resolver rotation";
+            hint: "Rotate the upstream DNS servers on a cadence (pref_resolver_rotation).";
+            on: root.rotation-on;
+            toggled(v) => { root.rotation-on = v; root.pillar-toggled("rotation", v); }
+        }
+        ToggleRow {
+            label: "MaskSolver resolver & cache";
+            hint: "The in-app Rust resolver + warm answer cache (pref_engine_solver).";
+            on: root.solver-on;
+            toggled(v) => { root.solver-on = v; root.pillar-toggled("solver", v); }
+        }
+        ToggleRow {
+            label: "Warden firewall";
+            hint: "The native per-app verdict engine (pref_warden_native).";
+            on: root.warden-on;
+            toggled(v) => { root.warden-on = v; root.pillar-toggled("warden", v); }
+        }
+        ToggleRow {
+            label: "DNS rebind protection";
+            hint: "Reject private-range answers from public names (pref_common_dns_rebind_protection).";
+            on: root.rebind-protect-on;
+            toggled(v) => { root.rebind-protect-on = v; root.pillar-toggled("rebind", v); }
+        }
+
+        // ---- BOOT & BACKGROUND ----
+        SectionTitle { text: "BOOT & BACKGROUND"; }
+        if root.note-boot-off : AlertBanner {
+            accent: Monokuma.caution;
+            message: "Autostart is OFF -> protection will NOT come back after a reboot until you open the app.";
+        }
+        ToggleRow {
+            label: "Start on boot";
+            hint: "Re-arm the engine after a reboot (the BackgroundBoot pillar).";
+            on: root.boot-autostart-on;
+            toggled(v) => { root.boot-autostart-on = v; root.boot-toggled(v); }
+        }
+        if root.boot-autostart-on : RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 10px;
+                Text {
+                    text: "Autostart delay";
+                    color: Monokuma.bone;
+                    font-size: 12px;
+                    font-weight: 700;
+                    vertical-alignment: center;
+                    horizontal-stretch: 1;
+                }
+                Button {
+                    text: "−";
+                    clicked => { root.autostart-delay-stepped(-5); }
+                }
+                Text {
+                    text: "\{root.autostart-delay-secs} s";
+                    color: Monokuma.bone;
+                    font-size: 12px;
+                    font-weight: 800;
+                    vertical-alignment: center;
+                }
+                Button {
+                    text: "+";
+                    clicked => { root.autostart-delay-stepped(5); }
+                }
+            }
+        }
+        ToggleRow {
+            label: "Status notification";
+            hint: "The persistent engine notification (swShowNotification).";
+            on: root.notification-on;
+            toggled(v) => { root.notification-on = v; root.notification-toggled(v); }
+        }
+        ActionRow {
+            label: "Keep alive on battery";
+            hint: "Ask Android to exempt Tortä from battery optimization (the OS screen).";
+            tapped => { root.open-battery-settings(); }
+        }
+
+        // ---- LOGS (the absorbed open_qery_log / open_nx_log routes — ShowLogFragment.kt) ----
+        SectionTitle { text: "LOGS"; }
+        ActionRow {
+            label: "Query log";
+            hint: "The answered-query tail (cache/query.log).";
+            tapped => { root.open-query-log(); }
+        }
+        ActionRow {
+            label: "Suspicious log";
+            hint: "NXDOMAIN / SERVFAIL answers (cache/nx.log).";
+            tapped => { root.open-nx-log(); }
+        }
+
+        // ---- THE EXPERT DOOR ----
+        SectionTitle { text: "ADVANCED"; }
+        ActionRow {
+            label: "Expert settings…";
+            hint: "The geek grid — every pillar's own screen (TortaeSettingsHost).";
+            tapped => { root.open-expert(); }
+        }
+
+        Rectangle { }  // tail spacer
+    }
+}

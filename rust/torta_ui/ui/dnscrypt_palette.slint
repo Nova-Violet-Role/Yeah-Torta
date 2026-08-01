@@ -1,0 +1,50 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// THE CANDLE — the DNSCrypt/namesake palette, hoisted file-of-its-own (#24 wave; matches
+// the sibling *_palette.slint pattern) so BOTH theme_tokens.slint (the ThemeBook spine)
+// and dnscrypt_section.slint can consume it without an import cycle.
+//
+// Slice-10 grammar: panel scale → text scale → brand accent → verdicts. The app's brand
+// GOLD (#e7ad42, the tokens.xml torta_primary / palettes_torta.xml candle-gold) carried
+// onto the namesake pillar — the app-shell neutral base the B7-G2 parity table keeps as
+// the anchor while each pillar brands its own accent.
+// ═══════════════════════════════════════════════════════════════════════════════════════
+
+export global Candle {
+    // warm-black panel scale (deepest → faintest)
+    out property <color> wax:      #100e09;  // the section ground
+    out property <color> wick:     #17140d;  // row cards
+    out property <color> panel:    #1e1a12;  // lifted tiles
+    out property <color> hairline: #332b1c;  // borders on the dark
+    // legibility scale
+    out property <color> bright: #f4ead6;    // primary text
+    out property <color> haze:   #a3906f;    // secondary text
+    out property <color> dim:    #6f6350;    // section titles
+    // the brand accent
+    out property <color> candle: #e7ad42;    // the flame-gold — headings, live values
+    out property <color> flame:  #f5c76a;    // the lighter lick — chips, highlights
+    // verdicts (the shared grammar)
+    out property <color> safe:    #2ecc71;
+    out property <color> caution: #f39c12;
+    out property <color> breach:  #ef4d57;
+    out property <color> wound:   #c0392b;   // alert-banner FILL
+    out property <color> strike:  white;
+    out property <color> track:   #3a3226;   // toggle off-rail
+    out property <color> copper:  #c77b4a;   // #22 s5B overload hint — soft-amber advisory (below the warn verdict)
+    // ── #24→IMAGE-7 RECON motif accents (the Dark-Angel EYE, whole-frame) ──
+    // The telefilm close-up reconned tone-for-tone: warm umber skin folds, the
+    // amber iris field, the near-black pupil with the burning angel-figure
+    // reflected in it, the pale window specular riding the cornea, the cool
+    // blue-grey sclera sliver. MOTIF-ONLY: consumed by the eye drench + the
+    // signature glyph + spark particles — NEVER by the section grammar
+    // (grounds/text/verdicts stay on the Candle scales above).
+    out property <color> lid:    #8a5a3a;   // the skin-fold umber (lid ridges)
+    out property <color> iris:   #b06a30;   // the amber iris field
+    out property <color> pupil:  #1c0f08;   // the near-black pupil brown
+    out property <color> ember:  #ffd9a0;   // the burning figure in the pupil
+    out property <color> glare:  #e8dfd2;   // the pale window specular
+    out property <color> sclera: #9fb0c0;   // the cool sclera sliver
+}

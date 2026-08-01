@@ -1,0 +1,996 @@
+{
+  "directory": "rust\\torta_iconforge\\ui",
+  "files": {
+    "icon.slint": {
+      "hash": "7232c5c33ff8",
+      "indexed_at": "2026-07-26T19:12:58.210677+00:00",
+      "language": "slint",
+      "lines": 157,
+      "mtime_ns": 1785030833435605100,
+      "size": 8578,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                14
+              ],
+              "name": "zoom",
+              "signature": "in <float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                15,
+                15
+              ],
+              "name": "animated",
+              "signature": "in <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                16,
+                16
+              ],
+              "name": "tick-ms",
+              "signature": "in <float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "phase",
+              "signature": "<angle>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                22,
+                22
+              ],
+              "name": "pulse",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "eff-zoom",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "vbw",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "vbx",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                26,
+                26
+              ],
+              "name": "vby",
+              "signature": "<float>",
+              "type": "property"
+            }
+          ],
+          "docstring": "CakeArt \u2014 the cake, drawn in a 108-unit viewbox scaled by `zoom` (1.0 = adaptive safe-zone inset; >1 zooms in so the cake fills a tighter legacy frame",
+          "lines": [
+            13,
+            65
+          ],
+          "name": "CakeArt",
+          "signature": "inherits Rectangle",
+          "type": "component"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                79,
+                79
+              ],
+              "name": "scene",
+              "signature": "in <string>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                80,
+                80
+              ],
+              "name": "on-background",
+              "signature": "in <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                81,
+                81
+              ],
+              "name": "round",
+              "signature": "in <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                82,
+                82
+              ],
+              "name": "zoom",
+              "signature": "in <float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                83,
+                83
+              ],
+              "name": "animated",
+              "signature": "in <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                84,
+                84
+              ],
+              "name": "tick-ms",
+              "signature": "in <float>",
+              "type": "property"
+            }
+          ],
+          "docstring": "IconScene \u2014 the render target, now SCENE-KEYED (#24/#32: the scene gate generalized). \u00b7 scene=\"icon\"    -> the cake (launcher art; on-background/round",
+          "lines": [
+            78,
+            157
+          ],
+          "name": "IconScene",
+          "signature": "inherits Window",
+          "type": "component"
+        }
+      ]
+    },
+    "jesdict.slint": {
+      "hash": "e1684e0d842d",
+      "indexed_at": "2026-07-26T19:12:58.211466+00:00",
+      "language": "slint",
+      "lines": 111,
+      "mtime_ns": 1785030833445604600,
+      "size": 4914,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                18,
+                18
+              ],
+              "name": "animated",
+              "signature": "in <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                19,
+                19
+              ],
+              "name": "tick-ms",
+              "signature": "in <float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "t",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                24,
+                24
+              ],
+              "name": "write",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "fade",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                27,
+                27
+              ],
+              "name": "pen-x",
+              "signature": "<length>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                30,
+                30
+              ],
+              "name": "clip-w",
+              "signature": "<length>",
+              "type": "property"
+            }
+          ],
+          "lines": [
+            17,
+            109
+          ],
+          "name": "JesdictArt",
+          "signature": "inherits Rectangle",
+          "type": "component"
+        }
+      ]
+    },
+    "scenebook.slint": {
+      "hash": "9570e2f805a8",
+      "indexed_at": "2026-07-26T19:12:58.214346+00:00",
+      "language": "slint",
+      "lines": 585,
+      "mtime_ns": 1785030833456604900,
+      "size": 29381,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                31,
+                31
+              ],
+              "name": "animated",
+              "signature": "in <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                32,
+                32
+              ],
+              "name": "tick-ms",
+              "signature": "in <float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                35,
+                35
+              ],
+              "name": "t",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                36,
+                36
+              ],
+              "name": "hot",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                37,
+                37
+              ],
+              "name": "flow",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                38,
+                38
+              ],
+              "name": "backoff",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                39,
+                39
+              ],
+              "name": "pit",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                40,
+                40
+              ],
+              "name": "hairline",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                83,
+                83
+              ],
+              "name": "p",
+              "signature": "<float>",
+              "type": "property"
+            }
+          ],
+          "docstring": "\u2500\u2500 BEAST \u2014 \"THE OVEN MOUTH\" \u00b7 HEAT grammar: hearth breath, dark iron arch, molten floor seam, three embers rising on staggered thirds. Loop: 4200ms. R",
+          "lines": [
+            30,
+            103
+          ],
+          "name": "BeastOvenArt",
+          "signature": "inherits Rectangle",
+          "type": "component"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                108,
+                108
+              ],
+              "name": "animated",
+              "signature": "in <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                109,
+                109
+              ],
+              "name": "tick-ms",
+              "signature": "in <float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                112,
+                112
+              ],
+              "name": "t",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                113,
+                113
+              ],
+              "name": "stellar",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                114,
+                114
+              ],
+              "name": "crown",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                115,
+                115
+              ],
+              "name": "starlight",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                116,
+                116
+              ],
+              "name": "abyss",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                117,
+                117
+              ],
+              "name": "comet-x",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                118,
+                118
+              ],
+              "name": "comet-y",
+              "signature": "<float>",
+              "type": "property"
+            }
+          ],
+          "docstring": "\u2500\u2500 CENTAURI \u2014 \"THE NIGHT SKY\" \u00b7 STARFIELD grammar: aurora crown, a dark ridge horizon, four phase-offset twinkles, one comet crossing per loop. Loop:",
+          "lines": [
+            107,
+            173
+          ],
+          "name": "CentauriSkyArt",
+          "signature": "inherits Rectangle",
+          "type": "component"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                179,
+                179
+              ],
+              "name": "animated",
+              "signature": "in <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                180,
+                180
+              ],
+              "name": "tick-ms",
+              "signature": "in <float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                183,
+                183
+              ],
+              "name": "t",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                184,
+                184
+              ],
+              "name": "burrow",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                185,
+                185
+              ],
+              "name": "straw",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                186,
+                186
+              ],
+              "name": "collar",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                187,
+                187
+              ],
+              "name": "tag",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                188,
+                188
+              ],
+              "name": "cream",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                189,
+                189
+              ],
+              "name": "swing",
+              "signature": "<angle>",
+              "type": "property"
+            }
+          ],
+          "docstring": "\u2500\u2500 INU \u2014 \"THE DEN\" \u00b7 WARM-BURROW grammar: two den mounds, the collar arc over the door, a gold tag swinging like a pendulum, a cream paw-trail pulsing",
+          "lines": [
+            178,
+            237
+          ],
+          "name": "InuDenArt",
+          "signature": "inherits Rectangle",
+          "type": "component"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                243,
+                243
+              ],
+              "name": "animated",
+              "signature": "in <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                244,
+                244
+              ],
+              "name": "tick-ms",
+              "signature": "in <float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                247,
+                247
+              ],
+              "name": "t",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                248,
+                248
+              ],
+              "name": "veil",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                249,
+                249
+              ],
+              "name": "veil-void",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                250,
+                250
+              ],
+              "name": "mask",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                251,
+                251
+              ],
+              "name": "cache",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                252,
+                252
+              ],
+              "name": "moon",
+              "signature": "<color>",
+              "type": "property"
+            }
+          ],
+          "docstring": "\u2500\u2500 MASQUE \u2014 \"THE MASQUERADE\" \u00b7 PHANTOM grammar: velvet curtains at the wings, a domino mask fading like a ghost, one moon-sheen sweep per loop, a cyan",
+          "lines": [
+            242,
+            299
+          ],
+          "name": "MasqueVeilArt",
+          "signature": "inherits Rectangle",
+          "type": "component"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                305,
+                305
+              ],
+              "name": "animated",
+              "signature": "in <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                306,
+                306
+              ],
+              "name": "tick-ms",
+              "signature": "in <float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                309,
+                309
+              ],
+              "name": "t",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                310,
+                310
+              ],
+              "name": "spoke",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                311,
+                311
+              ],
+              "name": "turn",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                312,
+                312
+              ],
+              "name": "warm",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                313,
+                313
+              ],
+              "name": "panel",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                314,
+                314
+              ],
+              "name": "hairline",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                315,
+                315
+              ],
+              "name": "a",
+              "signature": "<angle>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                345,
+                345
+              ],
+              "name": "b",
+              "signature": "<angle>",
+              "type": "property"
+            }
+          ],
+          "docstring": "\u2500\u2500 WHEEL \u2014 \"THE ORBIT\" \u00b7 MACHINE grammar: a hub, two rings, four warm cardinal ticks, one satellite completing exactly one revolution per loop with a",
+          "lines": [
+            304,
+            366
+          ],
+          "name": "WheelOrbitArt",
+          "signature": "inherits Rectangle",
+          "type": "component"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                372,
+                372
+              ],
+              "name": "animated",
+              "signature": "in <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                373,
+                373
+              ],
+              "name": "tick-ms",
+              "signature": "in <float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                376,
+                376
+              ],
+              "name": "t",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                377,
+                377
+              ],
+              "name": "pitch",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                378,
+                378
+              ],
+              "name": "iron",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                379,
+                379
+              ],
+              "name": "bone",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                380,
+                380
+              ],
+              "name": "risk",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                381,
+                381
+              ],
+              "name": "safe",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                382,
+                382
+              ],
+              "name": "verdict",
+              "signature": "<float>",
+              "type": "property"
+            }
+          ],
+          "docstring": "\u2500\u2500 WARDEN \u2014 \"THE COURTROOM\" \u00b7 DUALITY grammar: the Monokuma split (pitch left, bone right), the scale beam, and the verdict strobe \u2014 the green O and t",
+          "lines": [
+            371,
+            419
+          ],
+          "name": "WardenCourtArt",
+          "signature": "inherits Rectangle",
+          "type": "component"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                425,
+                425
+              ],
+              "name": "animated",
+              "signature": "in <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                426,
+                426
+              ],
+              "name": "tick-ms",
+              "signature": "in <float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                429,
+                429
+              ],
+              "name": "t",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                430,
+                430
+              ],
+              "name": "phosphor",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                431,
+                431
+              ],
+              "name": "deep",
+              "signature": "<color>",
+              "type": "property"
+            }
+          ],
+          "docstring": "\u2500\u2500 UNDERGROUND \u2014 \"THE TERMINAL RAIN\" \u00b7 MATRIX grammar: five phosphor columns falling at fixed offsets (deterministic \u2014 offsets ARE the randomness), a",
+          "lines": [
+            424,
+            474
+          ],
+          "name": "UndergroundRainArt",
+          "signature": "inherits Rectangle",
+          "type": "component"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                482,
+                482
+              ],
+              "name": "animated",
+              "signature": "in <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                483,
+                483
+              ],
+              "name": "tick-ms",
+              "signature": "in <float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                486,
+                486
+              ],
+              "name": "t",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                487,
+                487
+              ],
+              "name": "sakura",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                488,
+                488
+              ],
+              "name": "cream",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                489,
+                489
+              ],
+              "name": "matcha",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                490,
+                490
+              ],
+              "name": "stick",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                491,
+                491
+              ],
+              "name": "bean",
+              "signature": "<color>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                492,
+                492
+              ],
+              "name": "blink",
+              "signature": "<bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                500,
+                500
+              ],
+              "name": "tw",
+              "signature": "<float>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                528,
+                528
+              ],
+              "name": "bob",
+              "signature": "<float>",
+              "type": "property"
+            }
+          ],
+          "docstring": "\u2500\u2500 DANGO-DAIKAZOKU \u2014 \"THE DESSERT FAMILY\" \u00b7 KAWAII-BOB grammar: a tilted three-dango skewer breathing a squash-bob, phase-staggered blinks, four twink",
+          "lines": [
+            481,
+            585
+          ],
+          "name": "DangoDaikazokuArt",
+          "signature": "inherits Rectangle",
+          "type": "component"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-26T19:12:58.664512+00:00",
+  "version": "1.0"
+}

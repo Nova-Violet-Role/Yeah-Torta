@@ -1,0 +1,73 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\regressions\\missing-newline\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "a4f13775857d",
+      "indexed_at": "2026-07-24T20:35:12.637224+00:00",
+      "language": "rust",
+      "lines": 15,
+      "mtime_ns": 1782136568000000000,
+      "size": 406,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            9
+          ],
+          "name": "empty_func",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            11,
+            13
+          ],
+          "name": "get_dict",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    },
+    "test.udl": {
+      "hash": "9d1f2186bbb7",
+      "indexed_at": "2026-07-24T20:35:12.637789+00:00",
+      "language": "udl",
+      "lines": 10,
+      "mtime_ns": 1782136568000000000,
+      "size": 326,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                7
+              ],
+              "name": "empty_func",
+              "signature": "() : void",
+              "type": "method"
+            },
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "get_dict",
+              "signature": "() : record<string, string>",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            6,
+            10
+          ],
+          "name": "regression_test_missing_newline",
+          "type": "namespace"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.723977+00:00",
+  "version": "1.0"
+}

@@ -1,0 +1,147 @@
+{
+  "directory": "rust\\carbon_bridge",
+  "files": {
+    "Cargo.toml": {
+      "hash": "8154ea962ffe",
+      "indexed_at": "2026-07-24T20:35:10.214111+00:00",
+      "language": "toml",
+      "lines": 21,
+      "mtime_ns": 1784746756149346700,
+      "size": 703,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                2,
+                2
+              ],
+              "name": "name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                3,
+                3
+              ],
+              "name": "version",
+              "type": "key"
+            },
+            {
+              "lines": [
+                4,
+                4
+              ],
+              "name": "edition",
+              "type": "key"
+            },
+            {
+              "lines": [
+                5,
+                5
+              ],
+              "name": "description",
+              "type": "key"
+            },
+            {
+              "lines": [
+                6,
+                6
+              ],
+              "name": "license",
+              "type": "key"
+            },
+            {
+              "lines": [
+                7,
+                7
+              ],
+              "name": "publish",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            1,
+            8
+          ],
+          "name": "package",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                12,
+                12
+              ],
+              "name": "chrono",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            9,
+            15
+          ],
+          "name": "dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "libc",
+              "type": "key"
+            }
+          ],
+          "docstring": "libc is UNIX-ONLY (Android/NDK lane): input/tty.rs is the terminal seam \u2014 it is cfg(unix)-gated in input.rs and never builds on the win32 dev host.",
+          "lines": [
+            16,
+            18
+          ],
+          "name": "target.'cfg(unix)'.dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "path",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            19,
+            22
+          ],
+          "name": "lib",
+          "type": "table"
+        }
+      ]
+    },
+    "LICENSE.carbonyl.md": {
+      "hash": "4535bd0cba5d",
+      "indexed_at": "2026-07-24T20:35:10.214502+00:00",
+      "language": "markdown",
+      "lines": 25,
+      "mtime_ns": 1784745493769379900,
+      "size": 1490,
+      "symbols": []
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.373542+00:00",
+  "version": "1.0"
+}

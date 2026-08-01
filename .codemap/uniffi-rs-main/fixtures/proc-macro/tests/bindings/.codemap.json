@@ -1,0 +1,366 @@
+{
+  "directory": "uniffi-rs-main\\fixtures\\proc-macro\\tests\\bindings",
+  "files": {
+    "test_proc_macro.kts": {
+      "hash": "2ffc7b472bda",
+      "indexed_at": "2026-07-24T20:35:12.594833+00:00",
+      "language": "kotlin",
+      "lines": 160,
+      "mtime_ns": 1782136568000000000,
+      "size": 5187,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                106,
+                106
+              ],
+              "name": "doNothing",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                108
+              ],
+              "name": "add",
+              "signature": "(a: UInt, b: UInt)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                110,
+                110
+              ],
+              "name": "optional",
+              "signature": "(a: UInt?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                112
+              ],
+              "name": "withBytes",
+              "signature": "(rwb: RecordWithBytes)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                114,
+                124
+              ],
+              "name": "tryParseInt",
+              "signature": "(value: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                126,
+                129
+              ],
+              "name": "callbackHandler",
+              "signature": "(o: Object)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                131,
+                131
+              ],
+              "name": "getOtherCallbackInterface",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            105,
+            132
+          ],
+          "name": "KtTestCallbackInterface",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                135,
+                135
+              ],
+              "name": "multiply",
+              "signature": "(a: UInt, b: UInt)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            134,
+            136
+          ],
+          "name": "KtTestCallbackInterface2",
+          "type": "class"
+        }
+      ]
+    },
+    "test_proc_macro.py": {
+      "hash": "1aa348ab3ecf",
+      "indexed_at": "2026-07-24T20:35:12.596564+00:00",
+      "language": "python",
+      "lines": 197,
+      "mtime_ns": 1782136568000000000,
+      "size": 6651,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                121,
+                122
+              ],
+              "name": "do_nothing",
+              "signature": "(self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                124,
+                125
+              ],
+              "name": "add",
+              "signature": "(self, a, b)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                127,
+                130
+              ],
+              "name": "optional",
+              "signature": "(self, a)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                132,
+                133
+              ],
+              "name": "with_bytes",
+              "signature": "(self, rwb)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                135,
+                142
+              ],
+              "name": "try_parse_int",
+              "signature": "(self, value)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                144,
+                146
+              ],
+              "name": "callback_handler",
+              "signature": "(self, h)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                148,
+                149
+              ],
+              "name": "get_other_callback_interface",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            120,
+            149
+          ],
+          "name": "PyTestCallbackInterface",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                152,
+                153
+              ],
+              "name": "multiply",
+              "signature": "(self, a, b)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            151,
+            153
+          ],
+          "name": "PyTestCallbackInterface2",
+          "type": "class"
+        }
+      ]
+    },
+    "test_proc_macro.rb": {
+      "hash": "a464242a0cc0",
+      "indexed_at": "2026-07-24T20:35:12.597489+00:00",
+      "language": "ruby",
+      "lines": 63,
+      "mtime_ns": 1782136568000000000,
+      "size": 1756,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                13,
+                27
+              ],
+              "name": "test_record_with_explicit_defaults",
+              "type": "method"
+            },
+            {
+              "lines": [
+                29,
+                48
+              ],
+              "name": "test_record_with_implicit_defaults",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                54
+              ],
+              "name": "test_function_defaults",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                62
+              ],
+              "name": "test_object_defaults",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            12,
+            63
+          ],
+          "name": "TestProcMacroDefaults",
+          "type": "class"
+        }
+      ]
+    },
+    "test_proc_macro.swift": {
+      "hash": "2f0e45b04c05",
+      "indexed_at": "2026-07-24T20:35:12.600279+00:00",
+      "language": "swift",
+      "lines": 192,
+      "mtime_ns": 1782136568000000000,
+      "size": 5874,
+      "symbols": [
+        {
+          "lines": [
+            70,
+            70
+          ],
+          "name": "SomeOtherError",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                117,
+                117
+              ],
+              "name": "doNothing",
+              "type": "method"
+            },
+            {
+              "lines": [
+                119,
+                121
+              ],
+              "name": "add",
+              "type": "method"
+            },
+            {
+              "lines": [
+                123,
+                125
+              ],
+              "name": "`optional`",
+              "type": "method"
+            },
+            {
+              "lines": [
+                127,
+                129
+              ],
+              "name": "withBytes",
+              "type": "method"
+            },
+            {
+              "lines": [
+                131,
+                142
+              ],
+              "name": "tryParseInt",
+              "type": "method"
+            },
+            {
+              "lines": [
+                144,
+                146
+              ],
+              "name": "callbackHandler",
+              "type": "method"
+            },
+            {
+              "lines": [
+                148,
+                150
+              ],
+              "name": "getOtherCallbackInterface",
+              "type": "method"
+            }
+          ],
+          "docstring": "Traits",
+          "lines": [
+            116,
+            151
+          ],
+          "name": "SwiftTestCallbackInterface",
+          "type": "class"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                154,
+                156
+              ],
+              "name": "multiply",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            153,
+            157
+          ],
+          "name": "SwiftTestCallbackInterface2",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.714835+00:00",
+  "version": "1.0"
+}

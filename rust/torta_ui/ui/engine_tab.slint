@@ -1,0 +1,624 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// The Tortä ENGINE tab (OMEGA Stage-D · D3, charter step 8: the second of the Design Finale's
+// 4 tabs) — the flagship Beast (CAKE × YeAH) at Home-glance depth.
+//
+// This is the COMPACT engine surface: the live YeahMode gear + window, the RTT witnesses, the three
+// CAKE tin mini-basins, and the CoBALT valve row — every value from the typed `BeastSnapshot`
+// (torta_core beast/mod.rs:128, the ONE `build_snapshot` reader both push and pull share, no drift).
+// The FULL CAKE-FOUNTAIN (per-tin valves at depth · DRR++ fairness · the query-beast.log tick feed)
+// stays the BeastDashboard's crown — reachable at ||| -> PILLARS -> BEAST; this tab is the Home's
+// engine-room porthole, not a second fountain (one deep surface, no drift).
+//
+// PROFILE-GATED HONESTY (the Chroma F6 law, inherited from beast.slint): `canonical-brain` /
+// `cobalt-aqm` gate the deep YeAH / valve tiles so a Legacy profile's inert 0s render as the muted
+// "—", never as live metrics. `engine-live` is the spike-honesty flag: the spike .so constructs a
+// REAL but COLD Beast Object (real reads, zero flows) — the pane says SPIKE PREVIEW until the
+// single-.so unification feeds the RUNNING engine's snapshot (the D1 two-instance boundary).
+// This pane inherits Rectangle — embeddable from birth (the G2 idiom).
+
+import { Monokuma } from "monokuma_palette.slint";
+import { Beast } from "beast_palette.slint";
+import { SectionTitle, RowCard, AlertBanner, StatTile, ToggleSwitch } from "widgets.slint";
+import { Button, LineEdit } from "std-widgets.slint";
+import { ThemeBook, MotifWash } from "theme_tokens.slint";
+
+// One CAKE tin as a mini-basin: label + count/cap + the heat-colored fill bar (host pushes the
+// fraction — Rust computes q/cap, the UI never re-derives engine math).
+component TinBar inherits RowCard {
+    in property <string> label;
+    in property <int> count;
+    in property <int> cap;
+    in property <float> fill; // 0.0 ..= 1.0, host-clamped
+    in property <color> heat;
+    in property <bool> live: true;
+    // AQM retention overlay (AqmRetention): `peak` = session-peak depth of THIS tin, `served` = its
+    // lifetime throughput. The instantaneous `count` flickers to 0 between polls (the 100ms pump drains
+    // it); these RETAIN, so a page-load burst that filled the tin stays visible + provable ("N served").
+    in property <int> peak: 0;
+    in property <int> served: 0;
+    VerticalLayout {
+        padding: 8px;
+        spacing: 3px;
+        HorizontalLayout {
+            spacing: 8px;
+            Text {
+                width: 64px;
+                text: root.label;
+                color: Monokuma.ash;
+                font-size: 9px;
+                font-weight: 800;
+                vertical-alignment: center;
+            }
+            Rectangle {
+                horizontal-stretch: 1;
+                height: 10px;
+                border-radius: 5px;
+                background: Monokuma.slate;
+                Rectangle {
+                    x: 0;
+                    width: parent.width * root.fill;
+                    height: parent.height;
+                    border-radius: 5px;
+                    background: root.live ? root.heat : Monokuma.iron;
+                    animate width { duration: 200ms; easing: ease-out; }
+                }
+            }
+            Text {
+                text: root.live ? "\{root.count}/\{root.cap}" : "—";
+                color: root.live ? root.heat : Monokuma.dim;
+                font-size: 10px;
+                font-weight: 800;
+                vertical-alignment: center;
+            }
+        }
+        // The honest RETENTION line — session high-water + lifetime served. Shown only once traffic has
+        // flowed (served > 0), so a cold/dormant tin stays clean instead of asserting a fake "0 served".
+        if root.live && root.served > 0: Text {
+            text: "peak \{root.peak}/\{root.cap}  \{root.served} served";
+            color: Monokuma.dim;
+            font-size: 8px;
+            font-weight: 700;
+            horizontal-alignment: right;
+        }
+    }
+}
+
+export component EngineTab inherits Rectangle {
+    // ===== #33 THEME-TOKEN SPINE — full-surface drench (z-first child; glass panels above). =====
+    MotifWash { theme: ThemeBook.dnscrypt; width: 100%; height: 100%; }
+    background: transparent;
+
+    // ── Host-pushed truth (BeastSnapshot, field-for-field) ──
+    in-out property <bool> engine-live: false;
+    in-out property <string> mode: "SLOW-START";
+    in-out property <bool> slow-start: true;
+    in-out property <bool> fast-mode: false;
+    in-out property <int> cwnd: 0;
+    in-out property <int> window-max: 0;
+    in-out property <float> base-rtt-ms: 0.0;
+    in-out property <float> udp-rtt-ms: 0.0;
+    in-out property <float> floor-rtt-ms: 0.0;
+    // #3-EXT · the TCP display lane (netstack forwarder dial RTTs — the twin-RTT cure) + the
+    // LineRate per-family telemetry + the Soft-cake Mochi memory pair (snapshot field-for-field).
+    in-out property <float> tcp-rtt-ms: 0.0;      // snapshot.tcp_base_rtt_ms (0 until a TCP flow dials)
+    in-out property <float> tcp-floor-ms: 0.0;    // snapshot.tcp_floor_ms
+    in-out property <float> udp-floor-ms: 0.0;    // snapshot.udp_floor_ms (LineRate per-family floor)
+    in-out property <float> q-smooth: 0.0;        // snapshot.q_smooth (LineRate EWMA queue memory)
+    in-out property <int> zeta-streak: 0;         // snapshot.zeta_streak (FAST streak toward LR_ZETA)
+    in-out property <int> shed-streak: 0;         // snapshot.shed_streak (toward LR_SHED_CONFIRM)
+    in-out property <int> valve-streak: 0;        // snapshot.valve_streak (Mochi-Dango escalation)
+    in-out property <int> soft-memory: 0;         // snapshot.soft_memory (Soft-cake CoDel memory)
+    in-out property <int> adaptive-timeout-ms: 0;
+    in-out property <float> pacing-rate: 0.0;
+    in-out property <float> q-packets: 0.0;
+    in-out property <int> reno-count: 0;
+    in-out property <int> pipeline-depth: 0;
+    in-out property <int> q-critical: 0;
+    in-out property <int> q-high: 0;
+    in-out property <int> q-normal: 0;
+    in-out property <float> fill-critical: 0.0;
+    in-out property <float> fill-high: 0.0;
+    in-out property <float> fill-normal: 0.0;
+    in-out property <float> blue-critical: 0.0;
+    in-out property <float> blue-high: 0.0;
+    in-out property <float> blue-normal: 0.0;
+    // AQM retention (host-pushed from AqmRetention): the session high-water each tin ROW overlays so a
+    // real query burst leaves an honest, durable mark despite the 100ms pump drain the instant depth to 0.
+    in-out property <int> peak-critical: 0;   // session-peak Critical tin depth
+    in-out property <int> peak-high: 0;
+    in-out property <int> peak-normal: 0;
+    in-out property <int> served-critical: 0; // lifetime Critical throughput (the monotonic "N served")
+    in-out property <int> served-high: 0;
+    in-out property <int> served-normal: 0;
+    in-out property <string> yeah-profile-label: "CANONICAL";
+    in-out property <string> cake-profile-label: "SOFT-CAKE";
+    in-out property <bool> canonical-brain: true;
+    in-out property <bool> cobalt-aqm: true;
+
+    // ── N6c · THE NETSTACK FORWARDER (ForwarderSnapshot, tunnel/mod.rs) — the pure-Rust TCP/UDP
+    //    flow fountain riding the tun device. Zeros are the honest DORMANT birth state (T20 law:
+    //    counts only, no addresses). `armed` = netstack compiled + switched on; `live` = the accept
+    //    loop is actually running. ──
+    in-out property <bool> fwd-armed: false;         // snapshot.armed (netstack_enabled)
+    in-out property <bool> fwd-live: false;          // snapshot.live (accept loop running)
+    in-out property <int> fwd-flows-tcp: 0;          // snapshot.flows_tcp (lifetime)
+    in-out property <int> fwd-flows-udp: 0;          // snapshot.flows_udp
+    in-out property <int> fwd-flows-other: 0;        // snapshot.flows_other (non-TCP/UDP, dropped)
+    in-out property <int> fwd-active-flows: 0;       // snapshot.active_flows (now)
+    in-out property <int> fwd-tin-critical: 0;       // snapshot.tin_critical (dport 53/853)
+    in-out property <int> fwd-tin-high: 0;           // snapshot.tin_high (dport 443/80/22)
+    in-out property <int> fwd-tin-normal: 0;         // snapshot.tin_normal (the paced bulk)
+    in-out property <int> fwd-dns-answered: 0;       // snapshot.dns_answered (in-process datapath)
+    in-out property <int> fwd-paced-flows: 0;        // snapshot.paced_flows (YeAH write-budget)
+    in-out property <float> fwd-bytes-up: 0.0;       // snapshot.bytes_up (raw bytes)
+    in-out property <float> fwd-bytes-down: 0.0;     // snapshot.bytes_down
+    in-out property <int> fwd-rtt-samples: 0;        // snapshot.rtt_samples (paced write RTTs)
+    in-out property <int> fwd-stalls: 0;             // snapshot.stalls (write errors → on_stall)
+    in-out property <int> fwd-warden-denied: 0;      // snapshot.warden_denied (flows the Warden refused)
+    in-out property <int> fwd-cwnd-last: 0;          // snapshot.cwnd_last (last paced-flow window)
+    // ★ #66-A · the CENTAURI HTTPS SEAM. A cloaked host resolves to ONE sentinel IP, so a :443 flow
+    // arrives nameless; the seam peeks its TLS ClientHello to recover the host, then splices it to the
+    // GENUINE CDN. Every `spliced` is an asset that BROKE before #66 (the old hairpin posted a
+    // ClientHello into the plain-HTTP mirror). Counts only — the peeked host is never surfaced.
+    in-out property <int> fwd-centauri-sni-peeked: 0;    // snapshot.centauri_sni_peeked
+    in-out property <int> fwd-centauri-spliced: 0;       // snapshot.centauri_spliced (A LEAK COUNT)
+    in-out property <int> fwd-centauri-splice-failed: 0; // snapshot.centauri_splice_failed
+    in-out property <int> fwd-centauri-tls-served: 0;    // snapshot.centauri_tls_served (LOCAL serve)
+    in-out property <int> fwd-centauri-tls-failed: 0;    // snapshot.centauri_tls_failed
+    in-out property <bool> fwd-centauri-tls-armed: false;// centauri_tls_armed() — device CA live?
+    // ★ N-dial — the upstream dial's two failure witnesses. A flow that dies here was ALREADY
+    // accepted off the netstack, so the client sees its connection open and close with no reply:
+    // ERR_CONNECTION_CLOSED. These were silent until now. `protect-failed` climbing means the VPN
+    // seam (VpnService.protect) is refusing sockets — pages die while DNS still answers, because
+    // in-loop DNS is never dialed. `connect-failed` climbing means the destination is unreachable.
+    in-out property <int> fwd-dial-protect-failed: 0;    // snapshot.dial_protect_failed
+    in-out property <int> fwd-dial-connect-failed: 0;    // snapshot.dial_connect_failed (TOTAL)
+    // ★ N-dial CLASSIFIED — why the dial failed. The four ALWAYS sum to fwd-dial-connect-failed
+    // (proved total+disjoint over every errno: Proofs/DialFailure.lean, buckets_sum_to_total).
+    in-out property <int> fwd-dial-refused: 0;           // snapshot.dial_refused     (ECONNREFUSED)
+    in-out property <int> fwd-dial-unreachable: 0;       // snapshot.dial_unreachable (ENET/EHOST)
+    // A POLICY count, never a network measurement: dials the IPv6 latch declined to make. Kept
+    // SEPARATE from dial-unreachable, which used to absorb them and so reported "no route" for
+    // Tortä's own decision (126 of them beside 5 genuinely refused, measured on the AVD).
+    in-out property <int> fwd-dial-v6-suppressed: 0;     // snapshot.dial_v6_suppressed (policy)
+    in-out property <int> fwd-dial-timed-out: 0;         // snapshot.dial_timed_out   (ETIMEDOUT)
+    in-out property <int> fwd-dial-other: 0;             // snapshot.dial_other       (catch-all)
+    // ★ N-dial-UDP — the same two witnesses for the UDP dial, which had NONE. The totals are split by
+    // transport because that split is the diagnostic: for a browser UDP is HTTP/3, so udp climbing
+    // while tcp stays flat means QUIC is dying and the page is limping in over the TCP fallback.
+    // The four buckets above are SHARED by both transports (an errno does not know its protocol), so
+    // they sum to fwd-dial-connect-failed + fwd-udp-dial-connect-failed — never to either alone.
+    in-out property <int> fwd-udp-dial-protect-failed: 0; // snapshot.udp_dial_protect_failed
+    in-out property <int> fwd-udp-dial-connect-failed: 0; // snapshot.udp_dial_connect_failed (TOTAL/UDP)
+    // N7 · the ARM SWITCH: `fwd-pref-armed` is the HOST PREF truth (swNetstackForwarder), distinct
+    // from `fwd-armed` (the RUNNING snapshot truth) — the two diverge exactly while a flip is
+    // queued for the next tunnel start, and the divergence note below names that state honestly.
+    in-out property <bool> fwd-pref-armed: false;    // host pref (swNetstackForwarder)
+    callback forwarder-toggled(bool);                // switch → host pref write (next-start latch)
+
+    // ── CP-U · THE UNDERGROUND LAYER (UndergroundSnapshot, underground.rs) — the navigation-fed
+    //    licence court. Every host starts with 20 points; witnessed accidents deduct, idle time
+    //    heals (+1/30s), a drained licence sequestrates and the TEETH answer it NXDOMAIN locally.
+    //    DORMANT (armed=false) mutes every tile — the store arms on the resolver boot edge. ──
+    in-out property <bool> ug-armed: false;          // snapshot.armed (ledger bound + rehydrated)
+    in-out property <int> ug-total: 0;               // snapshot.total (hosts holding a licence)
+    in-out property <int> ug-recorded: 0;            // snapshot.recorded_total (accidents witnessed)
+    in-out property <int> ug-recovered: 0;           // snapshot.recovered_total (idle heals granted)
+    in-out property <int> ug-teeth: 0;               // snapshot.teeth_total (NXDOMAIN bites served)
+    in-out property <int> ug-sequestrated: 0;        // snapshot.sequestrated (licences at 0)
+    in-out property <int> ug-probation: 0;           // snapshot.on_probation (points <= 6, x2 penalty)
+    in-out property <int> ug-content-lane: 0;        // snapshot.content_lane (Centauri-witnessed, never bitten)
+    in-out property <int> ug-content-hot: 0;         // snapshot.content_hot (content lane below full licence)
+    in-out property <int> ug-r-analytics: 0;         // per_risk lanes (accident provenance)
+    in-out property <int> ug-r-ads: 0;
+    in-out property <int> ug-r-tracker: 0;
+    in-out property <int> ug-r-dnsleak: 0;           // dormant until the geo rung
+    in-out property <int> ug-r-ipleak: 0;
+    in-out property <int> ug-r-sonar: 0;
+    in-out property <int> ug-r-mitm: 0;              // dormant until the geo rung
+    in-out property <int> ug-r-spoof: 0;
+    in-out property <int> ug-r-malware: 0;           // dormant until the geo rung
+    in-out property <int> ug-r-cdn: 0;
+    in-out property <int> ug-s-blocklist: 0;         // per_source lanes (which guard witnessed it)
+    in-out property <int> ug-s-guard: 0;
+    in-out property <int> ug-s-rebind: 0;
+    in-out property <int> ug-s-suffix: 0;
+    in-out property <int> ug-s-centauri: 0;
+    in-out property <float> ug-ledger-bytes: 0.0;    // snapshot.ledger_bytes (the on-disk TSV)
+    in-out property <string> ug-top: "";             // worst offenders, one rendered row per line
+    // ── The re-homed Trust bands: the manual pin census + the control-row surface. `code`:
+    //    0 = Neutral (clear), 1 = Trusted (immune), 2 = Distrusted (condemned). ──
+    in-out property <int> ug-trusted: 0;             // snapshot.trusted_total (hosts manually vouched)
+    in-out property <int> ug-distrusted: 0;          // snapshot.distrusted_total (hosts manually condemned)
+    in-out property <int> ug-trust-status: 0;        // last pin result: 0 idle, 1 landed, 2 fail-open
+    in-out property <string> ug-trust-input: "";     // the control-row host field (cleared on a landed pin)
+    callback underground-set-verdict(string, int);   // host + code → the LIVE licence store write
+
+    // ── Derived (display-only; the gear ramp colors are the Beast palette's mode language) ──
+    out property <color> mode-accent: root.mode == "YEAH" ? Beast.thrust
+        : root.mode == "COMPETING" ? Beast.backoff
+        : root.mode == "RECOVERY" ? Beast.climb
+        : Beast.warming;
+    out property <bool> note-preview: !root.engine-live;
+    out property <bool> note-legacy-brain: !root.canonical-brain;
+    out property <bool> note-legacy-aqm: !root.cobalt-aqm;
+
+    VerticalLayout {
+        padding: 12px;
+        spacing: 10px;
+
+        // ---- THE GEAR CROWN: the live YeahMode + the window ----
+        Rectangle {
+            background: Monokuma.coal;
+            border-radius: 10px;
+            border-width: 1px;
+            border-color: root.mode-accent;
+            HorizontalLayout {
+                padding: 14px;
+                spacing: 12px;
+                VerticalLayout {
+                    horizontal-stretch: 1;
+                    spacing: 4px;
+                    Text {
+                        text: "TORTÄ ENGINE · Tortä × YeAH TCP/UDP";
+                        color: Monokuma.ash;
+                        font-size: 10px;
+                        font-weight: 800;
+                    }
+                    Text {
+                        text: root.mode;
+                        color: root.mode-accent;
+                        font-size: 24px;
+                        font-weight: 900;
+                    }
+                    Text {
+                        text: root.slow-start ? "warming the window (exponential)" :
+                              root.fast-mode ? "fast mode — the queue is drained" :
+                              "steady flow";
+                        color: Monokuma.ash;
+                        font-size: 10px;
+                    }
+                }
+                VerticalLayout {
+                    alignment: center;
+                    StatTile {
+                        label: "cwnd / max";
+                        value: "\{root.cwnd} / \{root.window-max}";
+                        tint: Beast.flow;
+                    }
+                }
+            }
+        }
+
+        if root.note-preview : AlertBanner {
+            accent: Monokuma.caution;
+            message: "ENGINE OFF -> start DNSCrypt on HOME to shape the live tunnel. The window + pacing below are the pre-start defaults; they move once the engine is running.";
+        }
+
+        // ---- THE RTT WITNESSES ----
+        // #3-EXT (twin-RTT cure) — the TCP tile renders the TRUE TCP lane (the netstack forwarder's
+        // dial-RTT EWMA), NOT the shared estimator that echoed the UDP value as a twin: "—" until a
+        // real TCP flow dials through the forwarder. The per-family floors ride the second row.
+        SectionTitle { text: "ROUND-TRIP WITNESSES"; }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "base RTT (TCP)"; value: root.tcp-rtt-ms > 0.0 ? "\{Math.round(root.tcp-rtt-ms)}ms" : "—"; tint: Monokuma.bone; muted: root.tcp-rtt-ms <= 0.0; horizontal-stretch: 1; }
+            // EMPTY-STATE ADDED — these two rendered a bare "0ms" when they had NO SAMPLES, which
+            // reads as a measurement ("the floor is zero") rather than as an absence ("nothing has
+            // been observed"). Their own sibling one line above, `base RTT (TCP)`, already used the
+            // `> 0.0 ? … : "—"` idiom; these two simply never got it. MEASURED on the AVD:
+            // `true-min floor` showed "0ms" beside a live 240ms/355ms/43ms/89ms row, and the zero
+            // was honest-but-unreadable — `rtt_base_floor` is the YeAH brain's DNS-TRANSPORT TCP
+            // floor (family 2 = DoH/DoH3/ODoH), and this device resolves over DNSCrypt/UDP, so that
+            // lane genuinely has no samples. Distinct from `floor (TCP)` below, which is the
+            // netstack forwarder's dial floor and was correctly showing 43ms at the same instant.
+            // A 0 with no empty-state is the quietest kind of overclaim: nothing is wrong with the
+            // number, only with what a reader is invited to conclude from it.
+            StatTile { label: "base RTT (UDP)"; value: root.udp-rtt-ms > 0.0 ? "\{Math.round(root.udp-rtt-ms)}ms" : "—"; tint: Monokuma.bone; muted: root.udp-rtt-ms <= 0.0; horizontal-stretch: 1; }
+            StatTile { label: "true-min floor"; value: root.floor-rtt-ms > 0.0 ? "\{Math.round(root.floor-rtt-ms)}ms" : "—"; tint: Beast.flow; muted: root.floor-rtt-ms <= 0.0 || !root.canonical-brain; horizontal-stretch: 1; }
+        }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "floor (TCP)"; value: root.tcp-floor-ms > 0.0 ? "\{Math.round(root.tcp-floor-ms)}ms" : "—"; tint: Beast.flow; muted: root.tcp-floor-ms <= 0.0; horizontal-stretch: 1; }
+            StatTile { label: "floor (UDP)"; value: root.udp-floor-ms > 0.0 ? "\{Math.round(root.udp-floor-ms)}ms" : "—"; tint: Beast.flow; muted: root.udp-floor-ms <= 0.0; horizontal-stretch: 1; }
+            StatTile { label: "Q smooth"; value: "\{Math.round(root.q-smooth * 100) / 100.0}"; tint: Monokuma.bone; muted: !root.canonical-brain; horizontal-stretch: 1; }
+        }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "adaptive timeout"; value: "\{root.adaptive-timeout-ms}ms"; tint: Monokuma.bone; horizontal-stretch: 1; }
+            StatTile { label: "pacing /s"; value: "\{Math.round(root.pacing-rate)}"; tint: Beast.flow; horizontal-stretch: 1; }
+            StatTile { label: "backlog Q"; value: "\{Math.round(root.q-packets)}"; tint: Monokuma.bone; muted: !root.canonical-brain; horizontal-stretch: 1; }
+        }
+        // #3-EXT — the LineRate hysteresis streaks (ZETA toward LR_ZETA · SHED toward LR_SHED_CONFIRM,
+        // tcp_yeah_vegas.c parity) + the Soft-cake Mochi pair (valve escalation streak · CoDel memory).
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "ZETA streak"; value: "\{root.zeta-streak}"; tint: Beast.flow; muted: !root.canonical-brain; horizontal-stretch: 1; }
+            StatTile { label: "SHED streak"; value: "\{root.shed-streak}"; tint: Beast.shed; muted: !root.canonical-brain; horizontal-stretch: 1; }
+            StatTile { label: "valve streak"; value: "\{root.valve-streak}"; tint: Beast.shed; muted: !root.cobalt-aqm; horizontal-stretch: 1; }
+            StatTile { label: "soft memory"; value: "\{root.soft-memory}"; tint: Monokuma.bone; muted: !root.cobalt-aqm; horizontal-stretch: 1; }
+        }
+
+        // ---- THE TIN BASINS (the fountain porthole) ----
+        SectionTitle { text: "THE CAKE TINS · fill vs cap"; }
+        TinBar { label: "CRITICAL"; count: root.q-critical; cap: 4; fill: root.fill-critical; heat: Beast.hot; peak: root.peak-critical; served: root.served-critical; }
+        TinBar { label: "HIGH"; count: root.q-high; cap: 8; fill: root.fill-high; heat: Beast.warm; peak: root.peak-high; served: root.served-high; }
+        TinBar { label: "NORMAL"; count: root.q-normal; cap: 16; fill: root.fill-normal; heat: Beast.cool; peak: root.peak-normal; served: root.served-normal; }
+
+        // ---- THE MOCHI-DANGO VALVES (gated: a Legacy AQM keeps no valve — muted, never zero-as-live) ----
+        SectionTitle { text: "THE MOCHI-DANGO VALVES"; }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "critical valve"; value: "\{Math.round(root.blue-critical * 100)}%"; tint: Beast.shed; muted: !root.cobalt-aqm; horizontal-stretch: 1; }
+            StatTile { label: "high valve"; value: "\{Math.round(root.blue-high * 100)}%"; tint: Beast.shed; muted: !root.cobalt-aqm; horizontal-stretch: 1; }
+            StatTile { label: "normal valve"; value: "\{Math.round(root.blue-normal * 100)}%"; tint: Beast.shed; muted: !root.cobalt-aqm; horizontal-stretch: 1; }
+        }
+        if root.note-legacy-brain : Text {
+            text: "LEGACY brain — the canonical YeAH tiles are dark by design (no floor/backlog runs)";
+            color: Monokuma.dim;
+            font-size: 10px;
+        }
+        if root.note-legacy-aqm : Text {
+            text: "LEGACY AQM — no Soft-cake valve runs; the valve tiles are dark by design";
+            color: Monokuma.dim;
+            font-size: 10px;
+        }
+
+        // ---- N6c · THE NETSTACK FORWARDER (the flow fountain porthole) — every tile rides the
+        //      live ForwarderSnapshot bridge; DORMANT (armed=false) keeps the tiles muted so the
+        //      zeros never read as a live-but-idle forwarder (the Chroma F6 honesty law). ----
+        HorizontalLayout {
+            spacing: 8px;
+            SectionTitle { text: "NETSTACK FORWARDER · the flow fountain"; horizontal-stretch: 1; }
+            VerticalLayout {
+                alignment: center;
+                spacing: 2px;
+                ToggleSwitch {
+                    on: root.fwd-pref-armed;
+                    on-color: Beast.flow;
+                    toggled(on) => { root.forwarder-toggled(on); }
+                }
+                Text {
+                    text: root.fwd-pref-armed ? "ARMED" : "OFF";
+                    color: root.fwd-pref-armed ? Beast.flow : Monokuma.ash;
+                    font-size: 9px;
+                    font-weight: 900;
+                    horizontal-alignment: center;
+                }
+            }
+        }
+        // The next-start latch made visible: pref truth vs running truth diverge exactly while a
+        // flip is queued (TunnelController latches the pref once per start — no mid-flight rebind).
+        if root.fwd-pref-armed != root.fwd-armed : Text {
+            text: root.fwd-pref-armed
+                ? "ARM QUEUED — the forwarder captures the full device on the NEXT tunnel start"
+                : "DISARM QUEUED — the tunnel returns to DNS-only routes on the NEXT start";
+            color: Monokuma.caution;
+            font-size: 10px;
+            wrap: word-wrap;
+        }
+        if !root.fwd-armed : AlertBanner {
+            accent: Monokuma.caution;
+            message: "FORWARDER DORMANT — netstack is OFF (DNS-only tunnel). Arm the switch, then start the tunnel.";
+        }
+        if root.fwd-armed && !root.fwd-live : AlertBanner {
+            accent: Monokuma.caution;
+            message: "FORWARDER ARMED — the accept loop is not running yet (tunnel starting or stopped).";
+        }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "TCP flows"; value: "\{root.fwd-flows-tcp}"; tint: Beast.flow; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "UDP flows"; value: "\{root.fwd-flows-udp}"; tint: Beast.flow; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "other (dropped)"; value: "\{root.fwd-flows-other}"; tint: Monokuma.bone; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "active now"; value: "\{root.fwd-active-flows}"; tint: Beast.thrust; muted: !root.fwd-live; horizontal-stretch: 1; }
+        }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "tin CRITICAL"; value: "\{root.fwd-tin-critical}"; tint: Beast.hot; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "tin HIGH"; value: "\{root.fwd-tin-high}"; tint: Beast.warm; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "tin NORMAL (paced)"; value: "\{root.fwd-tin-normal}"; tint: Beast.cool; muted: !root.fwd-live; horizontal-stretch: 1; }
+        }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "DNS answered"; value: "\{root.fwd-dns-answered}"; tint: Beast.flow; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "paced flows"; value: "\{root.fwd-paced-flows}"; tint: Beast.cool; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "paced cwnd"; value: "\{root.fwd-cwnd-last}"; tint: Beast.flow; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "Warden denied"; value: "\{root.fwd-warden-denied}"; tint: Beast.shed; muted: !root.fwd-live; horizontal-stretch: 1; }
+        }
+        // ★ #66-A · the Centauri HTTPS seam row. Dormant (all-zero) until the cloak is armed AND a
+        // client actually reaches for a watched CDN over TLS — an honest zero, never a fabricated one.
+        //
+        // HONESTY LAW: "SERVED LOCAL" is the win — an HTTPS asset delivered from the device's own
+        // catalog with the CDN never contacted. "CDN SAW YOU" is a LEAK count (tinted `shed`, the
+        // warning tint, never `thrust`): it counts flows that fell back to the real CDN because the
+        // device CA is not armed/trusted yet. A fallback must never render as a success.
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "TLS named (SNI)"; value: "\{root.fwd-centauri-sni-peeked}"; tint: Beast.flow; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "SERVED LOCAL"; value: "\{root.fwd-centauri-tls-served}"; tint: Beast.thrust; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "CDN SAW YOU"; value: "\{root.fwd-centauri-spliced}"; tint: Beast.shed; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "TLS failed"; value: "\{root.fwd-centauri-tls-failed}"; tint: Monokuma.bone; muted: !root.fwd-live; horizontal-stretch: 1; }
+        }
+        // ★ N-dial — the dial's own failure row. A flow that dies at the dial was already accepted
+        // off the netstack, so the client sees ERR_CONNECTION_CLOSED with nothing logged anywhere.
+        // These two tiles are the difference between a diagnosable failure and an invisible one.
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "DIAL blocked (VPN)"; value: "\{root.fwd-dial-protect-failed}"; tint: Beast.shed; muted: !root.fwd-live; horizontal-stretch: 1; }
+            // Relabelled from "DIAL failed (all)" — it never was "all". It counted TCP only, while the
+            // UDP dial failed in total silence, so the tile overclaimed totality it did not have.
+            StatTile { label: "DIAL failed (TCP)"; value: "\{root.fwd-dial-connect-failed}"; tint: Monokuma.bone; muted: !root.fwd-live; horizontal-stretch: 1; }
+        }
+        // ★ N-dial-UDP — its own row rather than a fifth and sixth chip on the row above: five chips in
+        // one HorizontalLayout clip past ~618px and the last becomes unreachable (measured, ck49).
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "DIAL blocked UDP (VPN)"; value: "\{root.fwd-udp-dial-protect-failed}"; tint: Beast.shed; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "DIAL failed (UDP/QUIC)"; value: "\{root.fwd-udp-dial-connect-failed}"; tint: Monokuma.bone; muted: !root.fwd-live; horizontal-stretch: 1; }
+        }
+        // ★ N-dial CLASSIFIED — the WHY behind the total above. "DIAL unreachable" used to be the
+        // label on the total, which was a lie whenever the peer had refused us or the dial timed
+        // out. These four are a proved partition: they always add up to the tile above.
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "dial refused"; value: "\{root.fwd-dial-refused}"; tint: Beast.shed; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "dial unreachable"; value: "\{root.fwd-dial-unreachable}"; tint: Monokuma.bone; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "v6 suppressed"; value: "\{root.fwd-dial-v6-suppressed}"; tint: Beast.flow; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "dial timed out"; value: "\{root.fwd-dial-timed-out}"; tint: Beast.backoff; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "dial other"; value: "\{root.fwd-dial-other}"; tint: Monokuma.bone; muted: !root.fwd-live; horizontal-stretch: 1; }
+        }
+        // The interpretation, stated rather than left for the user to infer — protect-refusal is the
+        // one failure that kills every page while DNS keeps answering, which reads like a DNS bug.
+        if root.fwd-dial-protect-failed > 0: Text {
+            text: "VpnService.protect() is refusing upstream sockets — pages fail with ERR_CONNECTION_CLOSED while DNS still answers (in-loop DNS is never dialed). This is the VPN seam, not the network.";
+            wrap: word-wrap;
+            font-size: 11px;
+            color: Beast.shed;
+        }
+        // Plain-language truth, stated in the UI rather than left for the user to infer from a number.
+        if !root.fwd-centauri-tls-armed: Text {
+            text: "HTTPS serve leg DISARMED — cloaked HTTPS assets still come from the real CDN. Arm the device CA and trust it to have them served from this device instead.";
+            wrap: word-wrap;
+            font-size: 11px;
+            color: Beast.shed;
+        }
+        if root.fwd-centauri-tls-armed && root.fwd-centauri-spliced > 0: Text {
+            text: "⚠ \{root.fwd-centauri-spliced} HTTPS flows still reached the real CDN — the device CA is armed but the client does not trust it yet.";
+            wrap: word-wrap;
+            font-size: 11px;
+            color: Beast.shed;
+        }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile {
+                label: "bytes up";
+                value: root.fwd-bytes-up >= 1048576.0 ? "\{Math.round(root.fwd-bytes-up / 1048576)}MB" : "\{Math.round(root.fwd-bytes-up / 1024)}KB";
+                tint: Monokuma.bone; muted: !root.fwd-live; horizontal-stretch: 1;
+            }
+            StatTile {
+                label: "bytes down";
+                value: root.fwd-bytes-down >= 1048576.0 ? "\{Math.round(root.fwd-bytes-down / 1048576)}MB" : "\{Math.round(root.fwd-bytes-down / 1024)}KB";
+                tint: Monokuma.bone; muted: !root.fwd-live; horizontal-stretch: 1;
+            }
+            StatTile { label: "RTT samples"; value: "\{root.fwd-rtt-samples}"; tint: Monokuma.bone; muted: !root.fwd-live; horizontal-stretch: 1; }
+            StatTile { label: "stalls"; value: "\{root.fwd-stalls}"; tint: Beast.shed; muted: !root.fwd-live; horizontal-stretch: 1; }
+        }
+
+        // ---- CP-U · THE UNDERGROUND LAYER (the licence court) — every tile rides the live
+        //      UndergroundSnapshot bridge; DORMANT (armed=false) keeps the tiles muted so the
+        //      zeros never read as a live-but-clean court (the Chroma F6 honesty law). ----
+        SectionTitle { text: "UNDERGROUND LAYER · the licence court"; }
+        if !root.ug-armed : AlertBanner {
+            accent: Monokuma.caution;
+            message: "UNDERGROUND DORMANT — the licence store arms with the resolver boot (start DNSCrypt on HOME).";
+        }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "licences held"; value: "\{root.ug-total}"; tint: Beast.flow; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "accidents"; value: "\{root.ug-recorded}"; tint: Beast.warm; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "heals"; value: "\{root.ug-recovered}"; tint: Beast.cool; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "teeth bites"; value: "\{root.ug-teeth}"; tint: Beast.shed; muted: !root.ug-armed; horizontal-stretch: 1; }
+        }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "sequestrated"; value: "\{root.ug-sequestrated}"; tint: Beast.hot; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "on probation"; value: "\{root.ug-probation}"; tint: Beast.warm; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "content lane"; value: "\{root.ug-content-lane}"; tint: Beast.cool; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "content hot"; value: "\{root.ug-content-hot}"; tint: Beast.thrust; muted: !root.ug-armed; horizontal-stretch: 1; }
+        }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "analytics"; value: "\{root.ug-r-analytics}"; tint: Beast.warm; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "ads"; value: "\{root.ug-r-ads}"; tint: Beast.warm; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "tracker"; value: "\{root.ug-r-tracker}"; tint: Beast.warm; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "sonar"; value: "\{root.ug-r-sonar}"; tint: Monokuma.bone; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "cdn"; value: "\{root.ug-r-cdn}"; tint: Beast.cool; muted: !root.ug-armed; horizontal-stretch: 1; }
+        }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "spoof"; value: "\{root.ug-r-spoof}"; tint: Beast.hot; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "ip leak"; value: "\{root.ug-r-ipleak}"; tint: Beast.hot; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "mitm"; value: "\{root.ug-r-mitm}"; tint: Beast.hot; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "malware"; value: "\{root.ug-r-malware}"; tint: Beast.hot; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "dns leak"; value: "\{root.ug-r-dnsleak}"; tint: Beast.hot; muted: !root.ug-armed; horizontal-stretch: 1; }
+        }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "via blocklist"; value: "\{root.ug-s-blocklist}"; tint: Monokuma.bone; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "via guard"; value: "\{root.ug-s-guard}"; tint: Monokuma.bone; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "via rebind"; value: "\{root.ug-s-rebind}"; tint: Monokuma.bone; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "via suffix"; value: "\{root.ug-s-suffix}"; tint: Monokuma.bone; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "via centauri"; value: "\{root.ug-s-centauri}"; tint: Monokuma.bone; muted: !root.ug-armed; horizontal-stretch: 1; }
+        }
+        HorizontalLayout {
+            spacing: 8px;
+            StatTile { label: "trusted"; value: "\{root.ug-trusted}"; tint: Beast.flow; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile { label: "distrusted"; value: "\{root.ug-distrusted}"; tint: Beast.hot; muted: !root.ug-armed; horizontal-stretch: 1; }
+            StatTile {
+                label: "ledger";
+                value: root.ug-ledger-bytes >= 1048576.0 ? "\{Math.round(root.ug-ledger-bytes / 1048576)}MB" : root.ug-ledger-bytes >= 1024.0 ? "\{Math.round(root.ug-ledger-bytes / 1024)}KB" : "\{Math.round(root.ug-ledger-bytes)}B";
+                tint: Monokuma.bone; muted: !root.ug-armed; horizontal-stretch: 1;
+            }
+        }
+        if root.ug-armed && root.ug-top != "" : VerticalLayout {
+            spacing: 2px;
+            Text {
+                text: "WORST OFFENDERS · host · risk/source · hits · points · band";
+                color: Monokuma.ash;
+                font-size: 9px;
+                font-weight: 800;
+            }
+            Text {
+                text: root.ug-top;
+                color: Monokuma.bone;
+                font-size: 9px;
+                wrap: word-wrap;
+            }
+        }
+
+        // ---- CP-U · #15 UNDERGROUND H — THE RELOCATION (the standing directive): the TRUST
+        //      BANDS control surface (host pin row + TRUST/BLOCK/FORGET) MOVED OUT of this tab
+        //      into the Underground's OWN pillar space (||| → PILLARS → UNDERGROUND LAYER, the
+        //      row under DNSCRYPT — underground_dashboard.slint). The Beast's room keeps only
+        //      the census summary above + this honest pointer. The `ug-trust-*` props +
+        //      `underground-set-verdict` wire stay on this component (the shell hubs BOTH rooms
+        //      through them — one truth, the pillar pane is the control room now). ----
+        if root.ug-armed : RowCard {
+            VerticalLayout {
+                padding: 8px;
+                Text {
+                    text: "TRUST BANDS + the court docket moved to the UNDERGROUND LAYER pillar — ||| → PILLARS → the row under DNSCRYPT.";
+                    color: Monokuma.ash;
+                    font-size: 9px;
+                    wrap: word-wrap;
+                }
+            }
+        }
+
+        // ---- The profiles + the deep-surface pointer ----
+        RowCard {
+            HorizontalLayout {
+                padding: 10px;
+                spacing: 8px;
+                Text {
+                    text: "brain \{root.yeah-profile-label} · queue \{root.cake-profile-label} · pipeline \{root.pipeline-depth} · reno \{root.reno-count}";
+                    color: Monokuma.ash;
+                    font-size: 10px;
+                    font-weight: 700;
+                    horizontal-stretch: 1;
+                    wrap: word-wrap;
+                }
+            }
+        }
+        Text {
+            text: "the full CAKE-FOUNTAIN (per-tin valves · Tortä · the tick feed) lives at ||| -> PILLARS -> BEAST";
+            color: Monokuma.dim;
+            font-size: 9px;
+            wrap: word-wrap;
+        }
+        Rectangle { }
+    }
+}

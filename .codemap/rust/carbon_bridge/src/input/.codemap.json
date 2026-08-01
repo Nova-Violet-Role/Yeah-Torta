@@ -1,0 +1,552 @@
+{
+  "directory": "rust\\carbon_bridge\\src\\input",
+  "files": {
+    "dcs.rs": {
+      "hash": "d996e28a8583",
+      "indexed_at": "2026-07-26T19:12:57.741426+00:00",
+      "language": "rust",
+      "lines": 12,
+      "mtime_ns": 1785030832133605600,
+      "size": 213,
+      "symbols": [
+        {
+          "docstring": "/*\n    This file is part of Yeah! Tort\u00e4.\n    SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2\n    Copyright 2026 Saimonokuma.\n*/",
+          "lines": [
+            7,
+            7
+          ],
+          "name": "control_flow",
+          "type": "module"
+        },
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "parser",
+          "type": "module"
+        },
+        {
+          "lines": [
+            9,
+            9
+          ],
+          "name": "resource",
+          "type": "module"
+        },
+        {
+          "lines": [
+            10,
+            10
+          ],
+          "name": "status",
+          "type": "module"
+        }
+      ]
+    },
+    "keyboard.rs": {
+      "hash": "8e7f66c9fed0",
+      "indexed_at": "2026-07-26T19:12:57.742361+00:00",
+      "language": "rust",
+      "lines": 113,
+      "mtime_ns": 1785030832143604500,
+      "size": 2645,
+      "symbols": [
+        {
+          "lines": [
+            11,
+            13
+          ],
+          "name": "Keyboard",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            16,
+            19
+          ],
+          "name": "Key",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            22,
+            27
+          ],
+          "name": "KeyModifiers",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            29,
+            32
+          ],
+          "name": "State",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                35,
+                39
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                40,
+                57
+              ],
+              "name": "key",
+              "signature": "(key: u8, modifiers: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                59,
+                72
+              ],
+              "name": "parse",
+              "signature": "(&mut self, key: u8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            34,
+            73
+          ],
+          "name": "Keyboard",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                76,
+                81
+              ],
+              "name": "from",
+              "signature": "(char: u8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            75,
+            82
+          ],
+          "name": "Key",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                85,
+                112
+              ],
+              "name": "parse",
+              "signature": "(key: u8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            84,
+            113
+          ],
+          "name": "KeyModifiers",
+          "type": "impl"
+        }
+      ]
+    },
+    "listen.rs": {
+      "hash": "b765103790c7",
+      "indexed_at": "2026-07-26T19:12:57.742877+00:00",
+      "language": "rust",
+      "lines": 42,
+      "mtime_ns": 1785030832153604500,
+      "size": 1049,
+      "symbols": [
+        {
+          "docstring": "This will block, so it should run from a dedicated thread.",
+          "lines": [
+            13,
+            42
+          ],
+          "name": "listen",
+          "signature": "(mut callback: F)",
+          "type": "function"
+        }
+      ]
+    },
+    "mouse.rs": {
+      "hash": "4e1a8c149bd3",
+      "indexed_at": "2026-07-26T19:12:57.743735+00:00",
+      "language": "rust",
+      "lines": 98,
+      "mtime_ns": 1785030832164604300,
+      "size": 2367,
+      "symbols": [
+        {
+          "lines": [
+            14,
+            19
+          ],
+          "name": "Mouse",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                22,
+                24
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                26,
+                35
+              ],
+              "name": "parse",
+              "signature": "(&mut self, key: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                37,
+                54
+              ],
+              "name": "read",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                56,
+                81
+              ],
+              "name": "get",
+              "signature": "(&mut self, key: u8)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            82
+          ],
+          "name": "Mouse",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            84,
+            88
+          ],
+          "name": "Mask",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                93,
+                97
+              ],
+              "name": "bitand",
+              "signature": "(self, rhs: u32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            90,
+            98
+          ],
+          "name": "Mask",
+          "type": "impl"
+        }
+      ]
+    },
+    "parser.rs": {
+      "hash": "f6bcf6f23403",
+      "indexed_at": "2026-07-26T19:12:57.744748+00:00",
+      "language": "rust",
+      "lines": 113,
+      "mtime_ns": 1785030832174604400,
+      "size": 3275,
+      "symbols": [
+        {
+          "lines": [
+            12,
+            15
+          ],
+          "name": "Parser",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            18,
+            26
+          ],
+          "name": "Sequence",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            29,
+            32
+          ],
+          "name": "TerminalEvent",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            35,
+            43
+          ],
+          "name": "Event",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                48,
+                50
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                52,
+                112
+              ],
+              "name": "parse",
+              "signature": "(&mut self, input: &[u8])",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            47,
+            113
+          ],
+          "name": "Parser",
+          "type": "impl"
+        }
+      ]
+    },
+    "tty.rs": {
+      "hash": "22f19ad2b719",
+      "indexed_at": "2026-07-26T19:12:57.745823+00:00",
+      "language": "rust",
+      "lines": 184,
+      "mtime_ns": 1785030832185604500,
+      "size": 4479,
+      "symbols": [
+        {
+          "lines": [
+            16,
+            19
+          ],
+          "name": "Terminal",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                22,
+                24
+              ],
+              "name": "drop",
+              "signature": "(&mut self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            21,
+            25
+          ],
+          "name": "Drop",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Returns an object that'll revert terminal settings.",
+              "lines": [
+                30,
+                48
+              ],
+              "name": "setup",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                66
+              ],
+              "name": "teardown",
+              "signature": "(&mut self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            27,
+            67
+          ],
+          "name": "Terminal",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            69,
+            72
+          ],
+          "name": "TTY",
+          "type": "enum"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                77,
+                87
+              ],
+              "name": "stdin",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                89,
+                104
+              ],
+              "name": "enter_alt_screen",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                106,
+                114
+              ],
+              "name": "quit_alt_screen",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                116,
+                121
+              ],
+              "name": "as_raw_fd",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            76,
+            122
+          ],
+          "name": "TTY",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            124,
+            126
+          ],
+          "name": "ToErr",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                128,
+                134
+              ],
+              "name": "to_err",
+              "signature": "(self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            127,
+            135
+          ],
+          "name": "ToErr",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            139,
+            141
+          ],
+          "name": "TerminalSettings",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "docstring": "Fetch settings from the current TTY",
+              "lines": [
+                145,
+                155
+              ],
+              "name": "open",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                157,
+                165
+              ],
+              "name": "open_raw",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Enable raw input",
+              "lines": [
+                168,
+                176
+              ],
+              "name": "make_raw",
+              "signature": "(&mut self)",
+              "type": "method"
+            },
+            {
+              "docstring": "Apply the settings to the current TTY",
+              "lines": [
+                179,
+                183
+              ],
+              "name": "apply",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            143,
+            184
+          ],
+          "name": "TerminalSettings",
+          "type": "impl"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-26T19:12:58.604889+00:00",
+  "version": "1.0"
+}

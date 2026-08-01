@@ -1,0 +1,367 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// =============================================================================================
+// #35 THE NOTIFY-BAR — the ALL-SEEING SURVEILLANCE STRIP.
+// ALWAYS-ON: mounted as the shell's LAST root child (z-topmost) — the one surface that never
+// leaves the screen, even under the ||| ADVANCED overlay.
+// COLLAPSED: ↓/↑ speed + START/STOP (the thin strip). EXPANDED: the PILLAR MATRIX — every
+// pillar's status at a glance (Slice A); YeAH TCP/UDP throughput + the Beast logarithm land
+// in Slice B. Spec: master 23.json + [[tortae-notify-bar-slint]].
+// THE FELT-TRUTH LAW: every readout is host-fed; un-fed = honest "—" / "no live read yet" —
+// never a fabricated number. The matrix reads the SAME PillarTabRow model the HOME tab and the
+// ||| overlay read — one row source, three views, zero drift.
+// Pure animation-tick flourishes; zero timers; nothing intercepts input it doesn't own.
+// =============================================================================================
+import { ThemeBook } from "theme_tokens.slint";
+import { Monokuma } from "monokuma_palette.slint";
+import { PillarTabRow } from "advanced_burger.slint";
+
+export component NotifyBar inherits Rectangle {
+    // ── the routing truth ──
+    in-out property <bool> expanded: false;
+
+    // ── host-fed live truth ──
+    in property <bool> live: false;              // a real engine read backs the speeds
+    in property <string> dl-speed: "—";          // host-formatted ("1.2 MB/s")
+    in property <string> ul-speed: "—";
+    // ── #36C THE DIAGRAM FEED (user directive) — every line host-fed, never fabricated ──
+    in property <string> tcp-state: "—";         // host-formatted ("14 flows · cwnd steady")
+    in property <string> udp-state: "—";         // host-formatted ("6 flows · 0.3% loss")
+    in property <[float]> dl-history: [];        // host-pushed 0..1 samples (right = newest)
+    in property <[float]> ul-history: [];
+    // ── #59 DONATE — display default only; the Rust donate engine re-asserts the truth
+    //    every tick (torta_core::donate::donate_url() — four sealed clones, majority vote) ──
+    in property <string> donate-url: "ko-fi.com/saimonokuma";
+    callback open-donate();
+    in property <bool> engine-running: false;    // host truth; the button carries intent only
+    in property <[PillarTabRow]> pillars: [];    // the one row source (home_tab's model)
+    callback toggle-engine();
+
+    // ── THE ON-REFLEX CHROME (user directive): metallic + chroma that reads like sunlight
+    //    catching brushed steel while you walk. `lux-tilt` is the OPTIONAL host light-sensor
+    //    hook (0..1 ambient); un-fed (-1) = autonomous shimmer — never a fabricated sensor. ──
+    in property <float> lux-tilt: -1.0;
+    property <float> glint-gain: root.lux-tilt < 0.0 ? 1.0 : 0.55 + 0.90 * root.lux-tilt;
+    property <[color]> spectrum: [#e6323c, #f39c12, #ffd94a, #2ecc71, #28c8d8, #5e8bff, #a78bfa];
+
+    property <float> tk: animation-tick() / 1ms;
+    property <length> strip-h: 38px;
+    property <length> panel-h: 336px;            // matrix + ENGINE⊕BEAST diagram + DONATE (#59)
+
+    width: 100%;
+    height: root.expanded ? root.strip-h + root.panel-h : root.strip-h;
+    animate height { duration: 160ms; easing: ease-out; }
+    clip: true;
+    background: transparent;
+
+    // ===== THE EXPANDED PANE — the matrix rises above the strip =====
+    panel := Rectangle {
+        x: 0; y: 0;
+        width: 100%;
+        height: parent.height - root.strip-h;
+        visible: self.height > 2px;
+        clip: true;
+        background: ThemeBook.home.ground.with-alpha(0.97);
+        border-width: 1px;
+        border-color: ThemeBook.home.edge;
+
+        // the pane wears the same chroma — one spectral hairline marching the top edge
+        for c[i] in root.spectrum : Rectangle {
+            x: parent.width * (Math.mod(root.tk / 13400.0 + i * 0.055, 1.3) - 0.15);
+            y: 0; width: 40px; height: 2px;
+            background: c.with-alpha(0.35 * root.glint-gain);
+        }
+
+        // header — the identity + the honest live hint
+        Text {
+            x: 12px; y: 8px;
+            text: "SURVEILLANCE — every pillar at a glance";
+            color: ThemeBook.home.faint;
+            font-size: 9px; font-weight: 800;
+        }
+        Text {
+            x: parent.width - self.width - 12px; y: 8px;
+            text: root.live ? "live" : "no live read yet";
+            color: root.live ? ThemeBook.home.good : ThemeBook.home.muted;
+            font-size: 9px; font-weight: 700;
+        }
+
+        // THE PILLAR MATRIX — 2×4, one cell per pillar, the shared row model
+        for p[i] in root.pillars : Rectangle {
+            x: 10px + Math.mod(i, 4) * ((parent.width - 20px) / 4);
+            y: 28px + Math.floor(i / 4) * 72px;
+            width: (parent.width - 20px) / 4 - 6px;
+            height: 64px;
+            border-radius: 8px;
+            background: ThemeBook.home.floor;
+            border-width: 1px;
+            border-color: p.live ? p.accent.with-alpha(0.55) : ThemeBook.home.edge;
+            Rectangle {                          // the accent dot — breathes only when live
+                x: 8px; y: 8px; width: 8px; height: 8px;
+                border-radius: 4px;
+                background: p.accent;
+                opacity: p.live
+                    ? 0.55 + 0.45 * sin(360deg * Math.mod(root.tk / 2600.0 + i * 0.125, 1.0))
+                    : 0.30;
+            }
+            Text {
+                x: 22px; y: 5px;
+                width: parent.width - 28px;
+                text: p.name;
+                color: ThemeBook.home.bright;
+                font-size: 9px; font-weight: 800;
+                overflow: elide;
+            }
+            Text {
+                x: 8px; y: 22px;
+                width: parent.width - 16px; height: 36px;
+                text: p.status;
+                color: p.live ? p.accent : ThemeBook.home.muted;
+                font-size: 8px; font-weight: 600;
+                wrap: word-wrap;
+                overflow: elide;
+            }
+        }
+
+        // THE SCANLINE — one thin sweep across the matrix; the watcher watching
+        Rectangle {
+            x: 0;
+            y: 28px + 148px * Math.mod(root.tk / 7300.0, 1.0);
+            width: 100%; height: 1.5px;
+            background: ThemeBook.home.accent.with-alpha(0.14);
+        }
+
+        // ── #36C THE ENGINE ⊕ BEAST DIAGRAM (user directive) — what the engine is doing,
+        //    drawn ONLY from host-pushed samples; un-fed = honest flatline. ──
+        Rectangle {
+            x: 10px; y: 180px;
+            width: parent.width - 20px; height: 92px;
+            border-radius: 8px;
+            background: ThemeBook.home.floor;
+            border-width: 1px;
+            border-color: root.live ? ThemeBook.home.accent.with-alpha(0.35) : ThemeBook.home.edge;
+            clip: true;
+
+            Text {
+                x: 8px; y: 4px;
+                text: "ENGINE ⊕ THE BEAST — live diagram";
+                color: ThemeBook.home.faint;
+                font-size: 8px; font-weight: 800;
+            }
+            Text {
+                x: parent.width - self.width - 8px; y: 4px;
+                text: root.live ? "↓ " + root.dl-speed + "   ↑ " + root.ul-speed : "no live read yet";
+                color: root.live ? ThemeBook.home.bright : ThemeBook.home.muted;
+                font-size: 8px; font-weight: 700;
+            }
+
+            // DL bars — above the baseline (right edge = newest sample)
+            for s[i] in root.dl-history : Rectangle {
+                x: 8px + i * ((parent.width - 16px) / Math.max(1, root.dl-history.length));
+                width: ((parent.width - 16px) / Math.max(1, root.dl-history.length)) * 0.72;
+                height: 26px * Math.min(1.0, Math.max(0.0, s));
+                y: 44px - self.height;
+                background: ThemeBook.home.accent.with-alpha(0.85);
+            }
+            // the baseline — the zero line both lanes share
+            Rectangle {
+                x: 8px; y: 45px; width: parent.width - 16px; height: 1.5px;
+                background: ThemeBook.home.edge;
+            }
+            // UL bars — mirrored below the baseline
+            for s[i] in root.ul-history : Rectangle {
+                x: 8px + i * ((parent.width - 16px) / Math.max(1, root.ul-history.length));
+                width: ((parent.width - 16px) / Math.max(1, root.ul-history.length)) * 0.72;
+                y: 47px;
+                height: 22px * Math.min(1.0, Math.max(0.0, s));
+                background: ThemeBook.home.accent2.with-alpha(0.75);
+            }
+
+            // the congestion truth — TCP + UDP, host-formatted strings only
+            Text {
+                x: 8px; y: parent.height - 18px;
+                text: "TCP  " + root.tcp-state;
+                color: root.live ? ThemeBook.home.accent : Monokuma.dim;
+                font-size: 9px; font-weight: 800;
+            }
+            Text {
+                x: parent.width - self.width - 8px; y: parent.height - 18px;
+                text: "UDP  " + root.udp-state;
+                color: root.live ? ThemeBook.home.accent2 : Monokuma.dim;
+                font-size: 9px; font-weight: 800;
+            }
+        }
+
+        // ── #59 DONATE — the Ko-Fi heart (engine-truth link; the host re-asserts it every tick) ──
+        Rectangle {
+            x: 10px; y: 276px;
+            width: parent.width - 20px; height: 26px;
+            border-radius: 13px;
+            background: @linear-gradient(90deg,
+                #ff5a7a.with-alpha(0.18) 0%, ThemeBook.home.floor 55%, #ff5a7a.with-alpha(0.10) 100%);
+            border-width: 1px;
+            border-color: #ff5a7a.with-alpha(0.55);
+            HorizontalLayout {
+                padding-left: 10px; padding-right: 10px; spacing: 6px;
+                Text {                           // the Ko-Fi heart — beats on its own clock
+                    text: "♥";
+                    color: #ff5a7a;
+                    font-size: 12.5px; font-weight: 900;
+                    vertical-alignment: center;
+                    opacity: 0.70 + 0.30 * sin(360deg * Math.mod(root.tk / 1400.0, 1.0));
+                }
+                Text {
+                    text: "DONATE — support the baker";
+                    color: ThemeBook.home.bright;
+                    font-size: 10px; font-weight: 800;
+                    vertical-alignment: center;
+                }
+                Rectangle { horizontal-stretch: 1; }
+                Text {
+                    text: root.donate-url;
+                    color: ThemeBook.home.faint;
+                    font-size: 8px; font-weight: 700;
+                    vertical-alignment: center;
+                    overflow: elide;
+                }
+            }
+            TouchArea { clicked => { root.open-donate(); } }
+        }
+
+        // footer — where the truth comes from
+        Text {
+            x: 12px; y: parent.height - 16px;
+            text: "feeds: BEAST · WIRE CAKE INU · every armed pillar Object";
+            color: ThemeBook.home.faint;
+            font-size: 8px; font-weight: 700;
+        }
+    }
+
+    // ===== THE COLLAPSED STRIP — always visible =====
+    strip := Rectangle {
+        x: 0; y: parent.height - root.strip-h;
+        width: 100%; height: root.strip-h;
+        background: ThemeBook.home.floor;
+        clip: true;                              // the trains enter and leave off-screen
+
+        // tap anywhere on the strip toggles the pane (declared first = under the button)
+        TouchArea { clicked => { root.expanded = !root.expanded; } }
+
+        // ── #36B THE ON-REFLEX CHROME ── brushed-steel base: vertical micro-grain over the floor
+        Rectangle {
+            width: 100%; height: 100%;
+            background: @linear-gradient(180deg,
+                Monokuma.chrome-lo.with-alpha(0.10) 0%,
+                transparent 45%,
+                Monokuma.chrome-lo.with-alpha(0.06) 100%);
+        }
+        // THE RAINBOW TRAIN — seven spectral bands marching the steel (the walking-light chroma)
+        for c[i] in root.spectrum : Rectangle {
+            x: parent.width * (Math.mod(root.tk / 11700.0 + i * 0.055, 1.3) - 0.15);
+            y: 0; width: 46px; height: 100%;
+            background: @linear-gradient(90deg,
+                transparent 0%, c.with-alpha(0.13 * root.glint-gain) 50%, transparent 100%);
+        }
+        // the counter-drift — a slower train running the other way (the interference hypnosis)
+        for c[i] in root.spectrum : Rectangle {
+            x: parent.width * (1.15 - Math.mod(root.tk / 17900.0 + i * 0.055, 1.3));
+            y: 0; width: 64px; height: 100%;
+            background: @linear-gradient(90deg,
+                transparent 0%, c.with-alpha(0.07 * root.glint-gain) 50%, transparent 100%);
+        }
+        // THE SUN GLINT — chrome-hi specular leading the train (the on-reflex catch)
+        Rectangle {
+            x: parent.width * (Math.mod(root.tk / 11700.0 - 0.04, 1.3) - 0.15);
+            y: 0; width: 22px; height: 100%;
+            background: @linear-gradient(90deg,
+                transparent 0%, Monokuma.chrome-hi.with-alpha(0.16 * root.glint-gain) 50%, transparent 100%);
+        }
+
+        // the top hairline + the drifting shimmer (the strip is alive even at rest)
+        Rectangle { x: 0; y: 0; width: 100%; height: 1.5px; background: ThemeBook.home.edge; }
+        Rectangle {
+            x: parent.width * Math.mod(root.tk / 9100.0, 1.0) - 40px;
+            y: 0; width: 80px; height: 1.5px;
+            background: ThemeBook.home.accent.with-alpha(0.55);
+        }
+
+        HorizontalLayout {
+            padding-left: 10px; padding-right: 10px;
+            spacing: 10px;
+
+            // (the 10px chevron moved into the EXPAND pill below — 25% bigger, user directive)
+            Text {                               // download
+                text: "↓ " + root.dl-speed;
+                color: root.live ? ThemeBook.home.accent : Monokuma.dim;
+                font-size: 11px; font-weight: 800;
+                vertical-alignment: center;
+            }
+            Text {                               // upload
+                text: "↑ " + root.ul-speed;
+                color: root.live ? ThemeBook.home.accent2 : Monokuma.dim;
+                font-size: 11px; font-weight: 800;
+                vertical-alignment: center;
+            }
+            Text {                               // the honest hint (only when un-fed)
+                text: root.live ? "" : "no live read yet";
+                color: ThemeBook.home.muted;
+                font-size: 8px; font-weight: 600;
+                vertical-alignment: center;
+            }
+            Rectangle { horizontal-stretch: 1; } // the spacer
+
+            Rectangle {                          // EXPAND — Android has no notify-dropdown, so the
+                width: 88px; height: 26px;       // gate to the full diagram is explicit (user directive)
+                y: (parent.height - self.height) / 2;
+                border-radius: 13px;
+                border-width: 1.5px;
+                border-color: root.expanded ? ThemeBook.home.accent : ThemeBook.home.edge;
+                background: root.expanded ? ThemeBook.home.accent.with-alpha(0.14) : transparent;
+                HorizontalLayout {
+                    padding-left: 9px; padding-right: 9px; spacing: 5px;
+                    Text {                       // the glyph — 25% bigger by directive (10px → 12.5px)
+                        text: root.expanded ? "▼" : "▲";
+                        color: ThemeBook.home.accent;
+                        font-size: 12.5px; font-weight: 800;
+                        vertical-alignment: center;
+                    }
+                    Text {
+                        text: root.expanded ? "CLOSE" : "EXPAND";
+                        color: ThemeBook.home.bright;
+                        font-size: 10px; font-weight: 800;
+                        vertical-alignment: center;
+                    }
+                }
+                TouchArea { clicked => { root.expanded = !root.expanded; } }
+            }
+
+            Rectangle {                          // START/STOP — intent only, host echoes truth
+                width: 76px; height: 26px;
+                y: (parent.height - self.height) / 2;
+                border-radius: 13px;
+                background: root.engine-running ? Monokuma.risk : Monokuma.safe;
+                Rectangle {                      // the running breath — a glow ring
+                    x: -3px; y: -3px;
+                    width: parent.width + 6px; height: parent.height + 6px;
+                    border-radius: self.height / 2;
+                    border-width: 1.5px;
+                    border-color: parent.background;
+                    opacity: root.engine-running
+                        ? 0.25 + 0.30 * sin(360deg * Math.mod(root.tk / 1800.0, 1.0))
+                        : 0.0;
+                }
+                Text {
+                    width: 100%; height: 100%;
+                    text: root.engine-running ? "STOP" : "START";
+                    color: white;
+                    font-size: 10px; font-weight: 900;
+                    horizontal-alignment: center;
+                    vertical-alignment: center;
+                }
+                TouchArea { clicked => { root.toggle-engine(); } }
+            }
+        }
+    }
+}

@@ -1,0 +1,810 @@
+{
+  "directory": "libumdnscrypt\\src\\test\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\dns_engine\\solver",
+  "files": {
+    "AntiThrashInvariantTest.kt": {
+      "hash": "ec61f6434ba0",
+      "indexed_at": "2026-08-01T04:01:02.139760+00:00",
+      "language": "kotlin",
+      "lines": 567,
+      "mtime_ns": 1785556379510901600,
+      "size": 35218,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                42,
+                49
+              ],
+              "name": "cfg",
+              "signature": "(\n        enter: Double = 0.70,\n        exit: Double = 0.40,\n        confirm: Int = 3,\n        dw...",
+              "type": "method"
+            },
+            {
+              "docstring": "A LockedBinding template (the cache record shape; copy()/score to perturb).",
+              "lines": [
+                52,
+                61
+              ],
+              "name": "binding",
+              "signature": "(resolverId: String = \"alpha\", score: Double = 100.0, healthyAt: Long = 0L)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                64,
+                76
+              ],
+              "name": "countSolves",
+              "signature": "(config: HysteresisConfig, steps: List<Pair<Double, Long>>)",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+              "lines": [
+                82,
+                88
+              ],
+              "name": "`I1 sawtooth strictly inside the dead-band yields ZERO solves`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                90,
+                103
+              ],
+              "name": "`I1 the armed latch survives dead-band noise after a solve and never re-fires there`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+              "lines": [
+                109,
+                113
+              ],
+              "name": "`I5 a single-tick spike above enter does NOT solve`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                115,
+                120
+              ],
+              "name": "`I5 a sub-threshold tick resets the confirm run - 2 then break then 2 never reaches 3`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                122,
+                127
+              ],
+              "name": "`I5 exactly confirmSamples consecutive over-enter ticks triggers once`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+              "lines": [
+                133,
+                139
+              ],
+              "name": "`I2 a trigger storm during dwell yields exactly one solve per dwell window`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                141,
+                151
+              ],
+              "name": "`I2 a fresh obstruction strictly inside dwell is suppressed`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+              "lines": [
+                157,
+                165
+              ],
+              "name": "`I4 continuous max obstruction is rate-limited by cooldown not tick rate`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+              "lines": [
+                171,
+                174
+              ],
+              "name": "`I3 a candidate tied with the incumbent does not switch`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                176,
+                184
+              ],
+              "name": "`I3 a candidate marginally better (below the margin) does not switch`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                186,
+                189
+              ],
+              "name": "`I3 a genuine improvement past the margin switches`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                191,
+                195
+              ],
+              "name": "`I3 a dead incumbent is replaced even by a marginal (worse) winner`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                197,
+                200
+              ],
+              "name": "`I3 the first binding (no incumbent) always takes`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                202,
+                209
+              ],
+              "name": "`hysteresis config rejects an inverted dead-band or bad dials`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+              "lines": [
+                215,
+                229
+              ],
+              "name": "`HEADLINE oscillating candidate scores within the margin band produce ZERO switches`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                231,
+                257
+              ],
+              "name": "`HEADLINE a sustained genuine improvement past dwell produces exactly ONE switch`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                265,
+                265
+              ],
+              "name": "obstructed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                267,
+                267
+              ],
+              "name": "deadBand",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                269,
+                269
+              ],
+              "name": "calm",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                271,
+                271
+              ],
+              "name": "spike",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                273,
+                293
+              ],
+              "name": "`PIPELINE a sustained genuine improvement past dwell produces exactly ONE committed switch`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                295,
+                315
+              ],
+              "name": "`PIPELINE a dead-band oscillation produces ZERO solves and ZERO switches`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                317,
+                354
+              ],
+              "name": "`PIPELINE an adversarial mixed storm cannot make the binding flap`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+              "lines": [
+                360,
+                368
+              ],
+              "name": "`I6 a fresh cached binding is an instant-reuse hit (no race)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                370,
+                380
+              ],
+              "name": "`I6 the same network fingerprint twice is a cache hit - second entry needs no race`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+              "lines": [
+                386,
+                394
+              ],
+              "name": "`cache a stale binding past TTL is a miss (forces a re-race)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                396,
+                406
+              ],
+              "name": "`cache touchHealthy keeps a good lock warm against TTL`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                408,
+                423
+              ],
+              "name": "`cache LRU evicts the least-recently-used beyond capacity`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                425,
+                433
+              ],
+              "name": "`cache invalidate drops a proven-dead binding so the next entry re-races`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                435,
+                439
+              ],
+              "name": "`cache rejects a non-positive capacity or ttl`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+              "lines": [
+                445,
+                460
+              ],
+              "name": "`mirror a snapshot rehydrated into a fresh cache round-trips the fresh binding (warm re-entry)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                462,
+                475
+              ],
+              "name": "`mirror a binding that expired while the process was dead is DROPPED at rehydrate (stale = miss = re-race)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                477,
+                488
+              ],
+              "name": "`mirror rehydrate admits fresh and drops stale in ONE persisted set`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                490,
+                503
+              ],
+              "name": "`mirror snapshot does not perturb LRU order (a pure read)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550",
+              "lines": [
+                509,
+                517
+              ],
+              "name": "`fingerprint is stable for the same network and quote-insensitive for the SSID`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                519,
+                525
+              ],
+              "name": "`fingerprint differs across SSID and across gateway and across link type`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                527,
+                533
+              ],
+              "name": "`fingerprint never stores the raw SSID (privacy)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                535,
+                541
+              ],
+              "name": "`fingerprint collapses unreadable wifi SSID to the gateway (still stable on a LAN)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                543,
+                549
+              ],
+              "name": "`fingerprint UNKNOWN link folds to the single NONE sentinel (no cache thrash)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                551,
+                556
+              ],
+              "name": "`fingerprint cellular ignores the unstable gateway, keys on the carrier`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                558,
+                566
+              ],
+              "name": "`fingerprint hasChanged detects a network change and equality across a round-trip key`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            40,
+            567
+          ],
+          "name": "AntiThrashInvariantTest",
+          "type": "class"
+        }
+      ]
+    },
+    "SolverTest.kt": {
+      "hash": "2ac0672e5c99",
+      "indexed_at": "2026-08-01T04:01:02.470369+00:00",
+      "language": "kotlin",
+      "lines": 509,
+      "mtime_ns": 1785556379522899900,
+      "size": 24224,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "A clean, healthy snapshot template; copy() to perturb a single dimension per test.",
+              "lines": [
+                57,
+                64
+              ],
+              "name": "healthy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "====================================================================================",
+              "lines": [
+                70,
+                75
+              ],
+              "name": "`a healthy snapshot scores zero and attributes no signal`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                77,
+                82
+              ],
+              "name": "`a captive signature is a HARD full obstruction regardless of healthy queues`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                84,
+                90
+              ],
+              "name": "`high sojourn drives the obstruction and is the dominant signal`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                92,
+                98
+              ],
+              "name": "`BLUE probability contributes and dominates when it is the only signal`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                100,
+                106
+              ],
+              "name": "`a null best-upstream score (no governor map yet) adds NO false obstruction`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                108,
+                114
+              ],
+              "name": "`a collapsed upstream score registers as score-collapse`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                116,
+                122
+              ],
+              "name": "`competing alone (no failovers) is a moderate, sub-trigger lift`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                124,
+                129
+              ],
+              "name": "`a failover (no explicit competing flag) still lifts via the competing axis`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                131,
+                144
+              ],
+              "name": "`combined signals saturate the obstruction past the enter threshold`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "====================================================================================",
+              "lines": [
+                150,
+                150
+              ],
+              "name": "verdict",
+              "signature": "(score: Double)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                152,
+                158
+              ],
+              "name": "`I5 debounce - a single over-threshold spike never triggers`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                160,
+                168
+              ],
+              "name": "`I5 debounce - triggers only after confirmSamples consecutive over-threshold ticks`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                170,
+                178
+              ],
+              "name": "`I1 hysteresis - once armed it does NOT re-fire while the signal stays high`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                180,
+                188
+              ],
+              "name": "`I1 hysteresis - a dead-band sawtooth never triggers`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                190,
+                204
+              ],
+              "name": "`I1 hysteresis - disarms only below the EXIT band, then can re-arm and re-fire`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                206,
+                212
+              ],
+              "name": "`dead-band entry from below does not trigger and resets the confirm run`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                214,
+                229
+              ],
+              "name": "`detectObstruction feeds shouldTrigger - a sustained obstruction fires exactly once per crossing`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                231,
+                240
+              ],
+              "name": "`detectObstruction feeds shouldTrigger - a healthy snapshot never fires`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                249,
+                255
+              ],
+              "name": "`DNSCrypt is relay-capable, plain DoH transports are not`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                257,
+                264
+              ],
+              "name": "`enumerate produces the transport x resolver x relay cross-product`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                266,
+                273
+              ],
+              "name": "`a non-relay-capable transport only pairs with the direct (null) relay`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                275,
+                280
+              ],
+              "name": "`empty relay axis is treated as direct-only`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                282,
+                285
+              ],
+              "name": "`enumerate is empty when there are no resolvers (fail-safe)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                287,
+                293
+              ],
+              "name": "`enumeration is deterministic and stable across runs`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                295,
+                306
+              ],
+              "name": "`pick returns the fastest reachable candidate`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                308,
+                319
+              ],
+              "name": "`pick drops unreachable candidates`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                321,
+                326
+              ],
+              "name": "`pick returns null when every candidate is unreachable (keep-current fail-safe)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                328,
+                340
+              ],
+              "name": "`pick is deterministic on an exact RTT tie (stable key tiebreak)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                342,
+                357
+              ],
+              "name": "`race score never lets props leapfrog a much faster binding (RTT dominates)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                359,
+                374
+              ],
+              "name": "`race score - props break a near-tie in favour of no-log + DNSSEC`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "====================================================================================",
+              "lines": [
+                380,
+                395
+              ],
+              "name": "`solveBinding races, picks, and returns a link-tuned binding`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                397,
+                406
+              ],
+              "name": "`solveBinding returns null when all candidates are unreachable`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                408,
+                415
+              ],
+              "name": "`solveBinding returns null on an empty pool`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                417,
+                432
+              ],
+              "name": "`tuned cwnd is the injected brain's window for the won link (REUSE not invent)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                434,
+                447
+              ],
+              "name": "`CAKE CoDel interval scales with the link RTT (floor 20ms)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                449,
+                473
+              ],
+              "name": "`a preferred transport nudges a near-tie but never beats a faster link`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "====================================================================================",
+              "lines": [
+                479,
+                494
+              ],
+              "name": "`toLockedBinding maps a solved binding onto the sibling cache record (lower-better score)`",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                496,
+                508
+              ],
+              "name": "`a solved binding round-trips into the sibling BindingCache as an instant-reuse hit`",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            39,
+            509
+          ],
+          "name": "SolverTest",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:01:02.472132+00:00",
+  "version": "1.0"
+}

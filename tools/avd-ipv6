@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# Yeah! Tortä — GIVE THE AVD REAL IPv6, and PROVE it carries traffic
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+#
+# THE MEASURED TRUTH, after three weeks of believing the opposite:
+# the Android emulator DOES carry IPv6, and its plumbing was COMPLETE the entire time. QEMU's slirp
+# SLAACs a site-local `fec0::/64` and NATs TCP over it, and Android's netd installs a proper default
+# route from the Router Advertisement. What was missing was UPSTREAM -- the Windows host had no IPv6
+# prefix, so slirp had nothing to NAT to.
+#
+# THREE OF MY OWN INSTRUMENTS MANUFACTURED THE FALSE NEGATIVE. Named so nobody repeats them:
+#   1. `ip -6 addr show scope global` -- the guest address is `fec0::`, scope SITE. The filter
+#      DELETED the evidence on every single look.
+#   2. `ping6` -- slirp does not forward ICMPv6. 100% packet loss on a link where TCP works
+#      perfectly. ICMP IS NOT REACHABILITY.
+#   3. `ip -6 route show` -- ANDROID DOES NOT ROUTE FROM THE MAIN TABLE. It uses PER-NETWORK tables:
+#      `ip -6 route show table eth0` carries `default via fe80::2 proto ra` with a live expiry. The
+#      main table is empty and always was, on a perfectly healthy link.
+# I also read the launcher's `INFO | Ignore IPv6 address` (which concerns HOST DNS enumeration) as
+# proof the emulator drops IPv6. Read the GUEST, not the launcher's chatter.
+#
+# The route install below is BELT-AND-BRACES for a guest whose RA expired or never arrived. It is a
+# no-op when netd has already done the right thing, which is the normal case. It is NOT what makes
+# IPv6 work, and an earlier draft of this header wrongly claimed it was.
+#
+# NEGATIVE CONTROL: `tools/avd-ipv6 --self-test` probes the RFC 3849 documentation prefix
+# `2001:db8::1`, which is guaranteed UNROUTABLE. It MUST report IPV6=NO. Deleting the main-table
+# route is NOT a valid negative control -- measured: TCP6 still succeeded with zero main-table
+# routes, because the per-network table carries the traffic. A control that cannot fail proves
+# nothing, and that one could not.
+set -uo pipefail
+cd "$(dirname "$0")/.."
+ADB=./tools/tadb
+V6_PROBE=${V6_PROBE:-2606:4700:4700::1111}
+V4_PROBE=${V4_PROBE:-1.1.1.1}
+
+if [ "${1:-}" = "--self-test" ]; then
+  # RFC 3849 documentation prefix: routable NOWHERE, by standard. A green here means the probe is
+  # not probing.
+  V6_PROBE=2001:db8::1
+  echo "SELF-TEST: probing the unroutable documentation prefix -- IPV6=NO is the PASS"
+fi
+
+state=$($ADB get-state </dev/null 2>&1 | tail -1 | tr -d '\r')
+if [ "$state" != "device" ]; then echo "FAIL: no device (get-state=[$state])"; exit 2; fi
+
+if [ "${1:-}" != "--verify-only" ]; then
+  $ADB root </dev/null >/dev/null 2>&1
+  sleep 5
+  $ADB wait-for-device </dev/null >/dev/null 2>&1
+  # The gateway is slirp's link-local router, NOT the fec0:: host address. Read it from the
+  # neighbour table rather than hardcoding: `ip -6 neigh show` marks it `router`.
+  GW=$($ADB shell "ip -6 neigh show | grep -m1 router | awk '{print \$1}'" </dev/null 2>/dev/null | tr -d '\r')
+  [ -z "$GW" ] && GW="fe80::2"
+  echo "slirp IPv6 gateway: $GW"
+  for dev in eth0 wlan0; do
+    $ADB shell "ip -6 route add default via $GW dev $dev metric 1024 2>&1" </dev/null >/dev/null 2>&1
+  done
+fi
+
+echo "--- guest IPv6 state ---"
+$ADB shell "ip -6 addr show | grep -E 'inet6 (fec0|2)' | head -3" </dev/null 2>/dev/null | tr -d '\r'
+$ADB shell "ip -6 route show | head -3" </dev/null 2>/dev/null | tr -d '\r'
+
+# TCP, never ping. See the header: ICMPv6 is not forwarded and would report a false failure.
+V6=$($ADB shell "toybox nc -6 -w 8 $V6_PROBE 443 </dev/null && echo OK || echo FAIL" </dev/null 2>&1 | tr -d '\r' | tail -1)
+V4=$($ADB shell "toybox nc -w 8 $V4_PROBE 443 </dev/null && echo OK || echo FAIL" </dev/null 2>&1 | tr -d '\r' | tail -1)
+echo "TCP6 [$V6_PROBE]:443 -> $V6"
+echo "TCP4 $V4_PROBE:443    -> $V4   (control: if this fails the network is down, not IPv6)"
+
+if [ "$V4" != "OK" ]; then echo "INCONCLUSIVE: IPv4 control failed -- fix the network first"; exit 3; fi
+if [ "$V6" != "OK" ]; then echo "IPV6=NO"; exit 1; fi
+echo "IPV6=YES"
+exit 0

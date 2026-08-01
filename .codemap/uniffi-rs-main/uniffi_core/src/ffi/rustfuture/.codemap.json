@@ -1,0 +1,691 @@
+{
+  "directory": "uniffi-rs-main\\uniffi_core\\src\\ffi\\rustfuture",
+  "files": {
+    "future.rs": {
+      "hash": "0ebf77f318ba",
+      "indexed_at": "2026-07-24T20:35:13.162739+00:00",
+      "language": "rust",
+      "lines": 310,
+      "mtime_ns": 1782136568000000000,
+      "size": 12521,
+      "symbols": [
+        {
+          "docstring": "* Polls the future inside of `rust_call_with_out_status` so that panics can be caught.",
+          "lines": [
+            97,
+            106
+          ],
+          "name": "WrappedFuture",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                109,
+                141
+              ],
+              "name": "new",
+              "signature": "(future: F)",
+              "type": "method"
+            },
+            {
+              "docstring": "Poll the future and check if it's ready or not",
+              "lines": [
+                144,
+                160
+              ],
+              "name": "poll",
+              "signature": "(&mut self, context: &mut Context<'_>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                162,
+                174
+              ],
+              "name": "complete",
+              "signature": "(&mut self, out_status: &mut RustCallStatus)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                176,
+                179
+              ],
+              "name": "free",
+              "signature": "(&mut self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            108,
+            180
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "docstring": "Future that the foreign code is awaiting",
+          "lines": [
+            183,
+            188
+          ],
+          "name": "RustFuture",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                194,
+                203
+              ],
+              "name": "new",
+              "signature": "(future: F, _tag: UT)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                205,
+                218
+              ],
+              "name": "poll",
+              "signature": "(self: Arc<Self>, callback: Callback)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                220,
+                222
+              ],
+              "name": "is_cancelled",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                224,
+                226
+              ],
+              "name": "cancel",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                228,
+                233
+              ],
+              "name": "complete",
+              "signature": "(&self, call_status: &mut RustCallStatus)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                235,
+                240
+              ],
+              "name": "free",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            190,
+            241
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                249,
+                261
+              ],
+              "name": "waker_clone",
+              "signature": "(ptr: *const ())",
+              "type": "method"
+            },
+            {
+              "lines": [
+                263,
+                266
+              ],
+              "name": "waker_wake",
+              "signature": "(ptr: *const ())",
+              "type": "method"
+            },
+            {
+              "lines": [
+                268,
+                274
+              ],
+              "name": "waker_wake_by_ref",
+              "signature": "(ptr: *const ())",
+              "type": "method"
+            },
+            {
+              "lines": [
+                276,
+                279
+              ],
+              "name": "waker_drop",
+              "signature": "(ptr: *const ())",
+              "type": "method"
+            },
+            {
+              "docstring": "* ptr must only be used once to re-create the arc",
+              "lines": [
+                286,
+                289
+              ],
+              "name": "recreate_arc",
+              "signature": "(ptr: *const ())",
+              "type": "method"
+            },
+            {
+              "lines": [
+                291,
+                309
+              ],
+              "name": "into_waker",
+              "signature": "(self: Arc<Self>)",
+              "type": "method"
+            }
+          ],
+          "docstring": "`RawWaker` implementation for RustFuture",
+          "lines": [
+            244,
+            310
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        }
+      ]
+    },
+    "mod.rs": {
+      "hash": "02d175061c80",
+      "indexed_at": "2026-07-24T20:35:13.164069+00:00",
+      "language": "rust",
+      "lines": 193,
+      "mtime_ns": 1782136568000000000,
+      "size": 7998,
+      "symbols": [
+        {
+          "lines": [
+            7,
+            7
+          ],
+          "name": "future",
+          "type": "module"
+        },
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "scheduler",
+          "type": "module"
+        },
+        {
+          "lines": [
+            11,
+            11
+          ],
+          "name": "tests",
+          "type": "module"
+        },
+        {
+          "lines": [
+            20,
+            25
+          ],
+          "name": "RustFuturePoll",
+          "type": "enum"
+        },
+        {
+          "docstring": "RustFutureContinuationCallback and data bound together",
+          "lines": [
+            34,
+            37
+          ],
+          "name": "RustFutureContinuationBoundCallback",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            49,
+            49
+          ],
+          "name": "UniffiCompatibleFuture",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            52,
+            52
+          ],
+          "name": "FutureLowerReturn",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            57,
+            57
+          ],
+          "name": "F",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            59,
+            59
+          ],
+          "name": "LR",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            102,
+            102
+          ],
+          "name": "UniffiCompatibleFuture",
+          "type": "trait"
+        },
+        {
+          "lines": [
+            104,
+            104
+          ],
+          "name": "F",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            106,
+            106
+          ],
+          "name": "LR",
+          "type": "impl"
+        },
+        {
+          "docstring": "create the [Handle] to pass to the foreign code.",
+          "lines": [
+            114,
+            124
+          ],
+          "name": "rust_future_new",
+          "signature": "(future: F, tag: UT)",
+          "type": "function"
+        },
+        {
+          "docstring": "The [Handle] must not previously have been passed to [rust_future_free]",
+          "lines": [
+            135,
+            146
+          ],
+          "name": "rust_future_poll",
+          "signature": "(\n    handle: Handle,\n    callback: extern \"C\" fn(callback_data: u64, RustFuturePoll),\n    data: ...",
+          "type": "function"
+        },
+        {
+          "docstring": "The [Handle] must not previously have been passed to [rust_future_free]",
+          "lines": [
+            158,
+            161
+          ],
+          "name": "rust_future_cancel",
+          "signature": "(handle: Handle)",
+          "type": "function"
+        },
+        {
+          "docstring": "be `<Output as LowerReturn<UT>>::ReturnType`",
+          "lines": [
+            173,
+            182
+          ],
+          "name": "rust_future_complete",
+          "signature": "(\n    handle: Handle,\n    out_status: &mut RustCallStatus,\n)",
+          "type": "function"
+        },
+        {
+          "docstring": "The [Handle] must not previously have been passed to [rust_future_free]",
+          "lines": [
+            190,
+            193
+          ],
+          "name": "rust_future_free",
+          "signature": "(handle: Handle)",
+          "type": "function"
+        }
+      ]
+    },
+    "scheduler.rs": {
+      "hash": "54080fca3cea",
+      "indexed_at": "2026-07-24T20:35:13.165166+00:00",
+      "language": "rust",
+      "lines": 154,
+      "mtime_ns": 1782136568000000000,
+      "size": 5685,
+      "symbols": [
+        {
+          "lines": [
+            27,
+            38
+          ],
+          "name": "State",
+          "type": "enum"
+        },
+        {
+          "lines": [
+            40,
+            42
+          ],
+          "name": "Scheduler",
+          "type": "struct"
+        },
+        {
+          "docstring": "Callback function that the scheduler stores",
+          "lines": [
+            45,
+            47
+          ],
+          "name": "RustFutureCallback",
+          "type": "trait"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                50,
+                52
+              ],
+              "name": "invoke",
+              "signature": "(self, poll: RustFuturePoll)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            49,
+            53
+          ],
+          "name": "RustFutureCallback",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                56,
+                58
+              ],
+              "name": "default",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            55,
+            59
+          ],
+          "name": "Default",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                62,
+                66
+              ],
+              "name": "new",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "`Cancelled` state, call the continuation immediately with the data.",
+              "lines": [
+                70,
+                100
+              ],
+              "name": "store",
+              "signature": "(&self, callback: Callback)",
+              "type": "method"
+            },
+            {
+              "docstring": "runtime lock and may call cancel/free (which require this lock).",
+              "lines": [
+                109,
+                135
+              ],
+              "name": "wake",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                137,
+                149
+              ],
+              "name": "cancel",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                151,
+                153
+              ],
+              "name": "is_cancelled",
+              "signature": "(&self)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            61,
+            154
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        }
+      ]
+    },
+    "tests.rs": {
+      "hash": "86d9cb915530",
+      "indexed_at": "2026-07-24T20:35:13.167032+00:00",
+      "language": "rust",
+      "lines": 268,
+      "mtime_ns": 1782136568000000000,
+      "size": 9180,
+      "symbols": [
+        {
+          "docstring": "Sender/Receiver pair that we use for testing",
+          "lines": [
+            15,
+            18
+          ],
+          "name": "Channel",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            20,
+            20
+          ],
+          "name": "Sender",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                23,
+                28
+              ],
+              "name": "wake",
+              "signature": "(&self)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                30,
+                38
+              ],
+              "name": "send",
+              "signature": "(&self, value: Result<String, TestError>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                40,
+                52
+              ],
+              "name": "send_lift_args_error",
+              "signature": "(&self, arg_name: &'static str, error: anyhow::Error)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            22,
+            53
+          ],
+          "name": "Sender",
+          "type": "impl"
+        },
+        {
+          "lines": [
+            55,
+            55
+          ],
+          "name": "Receiver",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                60,
+                72
+              ],
+              "name": "poll",
+              "signature": "(\n        self: Pin<&mut Self>,\n        context: &mut Context<'_>,\n    )",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            57,
+            73
+          ],
+          "name": "Future",
+          "type": "impl"
+        },
+        {
+          "docstring": "Create a sender and rust future that we can use for testing",
+          "lines": [
+            76,
+            83
+          ],
+          "name": "channel",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "docstring": "Poll a Rust future and get an OnceCell that's set when the continuation is called",
+          "lines": [
+            86,
+            96
+          ],
+          "name": "poll",
+          "signature": "(rust_future: &Arc<RustFuture<RustBuffer>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            98,
+            101
+          ],
+          "name": "poll_continuation",
+          "signature": "(data: u64, code: RustFuturePoll)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            103,
+            107
+          ],
+          "name": "complete",
+          "signature": "(rust_future: Arc<RustFuture<RustBuffer>>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            110,
+            136
+          ],
+          "name": "test_success",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            139,
+            159
+          ],
+          "name": "test_error",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            162,
+            182
+          ],
+          "name": "test_lift_args_error",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            187,
+            202
+          ],
+          "name": "test_cancel",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            207,
+            223
+          ],
+          "name": "test_release_future",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            229,
+            235
+          ],
+          "name": "test_complete_with_stored_continuation",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "lines": [
+            241,
+            268
+          ],
+          "name": "test_wake_during_poll",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.791392+00:00",
+  "version": "1.0"
+}

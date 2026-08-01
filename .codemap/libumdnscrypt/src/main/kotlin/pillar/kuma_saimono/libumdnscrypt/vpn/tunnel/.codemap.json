@@ -1,0 +1,184 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\vpn\\tunnel",
+  "files": {
+    "ConnectivityManagerUidResolver.kt": {
+      "hash": "73eb8917ad8e",
+      "indexed_at": "2026-08-01T04:00:56.726242+00:00",
+      "language": "kotlin",
+      "lines": 119,
+      "mtime_ns": 1785556379341900900,
+      "size": 5648,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                75,
+                77
+              ],
+              "name": "bind",
+              "signature": "(service: VpnService)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                83,
+                85
+              ],
+              "name": "unbind",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                93,
+                118
+              ],
+              "name": "uidOf",
+              "signature": "(\n        protocol: Int,\n        srcIp: String,\n        srcPort: UShort,\n        dstIp: String,\n ...",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            60,
+            119
+          ],
+          "name": "ConnectivityManagerUidResolver",
+          "type": "class"
+        }
+      ]
+    },
+    "TunnelController.kt": {
+      "hash": "effabceec2e2",
+      "indexed_at": "2026-08-01T04:00:57.064335+00:00",
+      "language": "kotlin",
+      "lines": 554,
+      "mtime_ns": 1785556379353900100,
+      "size": 31720,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                224,
+                377
+              ],
+              "name": "start",
+              "signature": "(\n        pfd: ParcelFileDescriptor,\n        mtu: Int,\n        virtualDnsIp: String,\n        bloc...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                399,
+                428
+              ],
+              "name": "launchWarmUpBeacon",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                440,
+                490
+              ],
+              "name": "stop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                497,
+                503
+              ],
+              "name": "snapshot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                511,
+                517
+              ],
+              "name": "forwarderSnapshot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                535,
+                541
+              ],
+              "name": "forwarderFlowDocket",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                547,
+                553
+              ],
+              "name": "isRunning",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            89,
+            554
+          ],
+          "name": "TunnelController",
+          "type": "class"
+        }
+      ]
+    },
+    "VpnProtectCallback.kt": {
+      "hash": "a050662b5379",
+      "indexed_at": "2026-08-01T04:00:57.381204+00:00",
+      "language": "kotlin",
+      "lines": 154,
+      "mtime_ns": 1785556379365902900,
+      "size": 8164,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                104,
+                106
+              ],
+              "name": "bind",
+              "signature": "(service: VpnService)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                115
+              ],
+              "name": "unbind",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                129,
+                153
+              ],
+              "name": "protectFd",
+              "signature": "(fd: Int)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            85,
+            154
+          ],
+          "name": "VpnProtectCallback",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:57.382868+00:00",
+  "version": "1.0"
+}

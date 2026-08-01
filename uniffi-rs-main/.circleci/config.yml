@@ -1,0 +1,201 @@
+# Build all the things we need for CI
+
+version: 2.1
+
+commands:
+  install-mkdocs:
+    steps:
+      - run:
+          name: Install Material for MkDocs
+          command: |
+            sudo apt-get update -qq
+            sudo apt-get install -qy --no-install-recommends python3-pip
+            sudo apt-get clean
+            pip install -r tools/requirements_docs.txt
+
+  # Our policy for updating rust versions is at https://github.com/mozilla/uniffi-rs/tree/main/docs/policies/rust-versions.md
+  # See also rust-toolchain.toml in the root of this repo, which is used to specify our official target version.
+  prepare-rust-target-version:
+    steps:
+      # So long as this is executed after the checkout it will use the version specified in rust-toolchain.yaml
+      - run: rustup self update
+      - run: rustup toolchain install
+      - run: rustup target add wasm32-unknown-unknown
+  # Our minimum supported rust version is specified here.
+  prepare-rust-min-version:
+    steps:
+      - run: rustup override set 1.90.0
+      - run: rustup update
+  build-api-docs:
+    steps:
+      - run:
+          name: Build API Docs
+          # The `--lib` here is important; without it `cargo doc` will sometimes choose to document the `uniffi_bindgen` library
+          # and othertimes choose to document the `uniffi_bindgen` binary, which is much less useful.
+          command: cargo doc --no-deps --document-private-items --lib -p uniffi_bindgen -p uniffi -p uniffi_build -p uniffi_macros
+          environment:
+            RUSTDOCFLAGS: -Dwarnings -Arustdoc::private-intra-doc-links
+
+orbs:
+  gh-pages: sugarshin/gh-pages@0.0.6
+jobs:
+  Check Rust formatting:
+    docker:
+      - image: cimg/rust:1.90
+    resource_class: small
+    steps:
+      - checkout
+      - prepare-rust-target-version
+      - run: rustup component add rustfmt
+      - run: rustfmt --version
+      - run: cargo fmt -- --check
+  Lint Rust with clippy:
+    docker:
+      - image: cimg/rust:1.90
+    resource_class: large
+    steps:
+      - checkout
+      - prepare-rust-target-version
+      - run: rustup component add clippy
+      - run: cargo clippy --version
+      - run: cargo clippy --all --all-targets -- -D warnings
+      - run: |
+            for manifest_path in $(ls fixtures/wasm-*/Cargo.toml) ; do
+              cargo clippy \
+                --target wasm32-unknown-unknown \
+                --manifest-path "$manifest_path" \
+                -- -D warnings
+            done
+  Lint Rust Docs:
+    docker:
+      - image: cimg/rust:1.90
+    resource_class: small
+    steps:
+      - checkout
+      - prepare-rust-target-version
+      - build-api-docs
+  Rust and Foreign Language tests:
+    docker:
+      - image: janerik/uniffi-ci-test:2026.05
+    resource_class: large
+    steps:
+      - run: cat ~/.profile >> $BASH_ENV
+      - checkout
+      - prepare-rust-target-version
+      - run:
+          name: "Print the Rust version, to help with debugging"
+          command: rustc --version
+      - run:
+          name: "Set RUSTFLAGS to fail the build if there are warnings"
+          command: echo 'export RUSTFLAGS="-D warnings"' >> $BASH_ENV
+      - run:
+          name: Build all code
+          command: |
+            # Ensures that all examples are built and avaiable
+            cargo build
+      - run:
+          name: Build WASM crates
+          command: |
+            for manifest_path in $(ls fixtures/wasm-*/Cargo.toml) ; do
+              cargo build \
+                --target wasm32-unknown-unknown \
+                --manifest-path "$manifest_path"
+            done
+      - run: cargo test --features=uniffi/ffi-trace
+      - run:
+          name: mypy Python typechecks
+          command: |
+            uv tool install mypy
+            for file in $(find target -name "*.py" ! -name "recursive_types.py"); do
+              mypy "$file";
+            done
+
+  Rust and Foreign Language tests - min supported rust:
+    docker:
+      - image: janerik/uniffi-ci-test:2026.05
+    resource_class: large
+    steps:
+      - run: cat ~/.profile >> $BASH_ENV
+      - checkout
+      - prepare-rust-min-version
+      - run:
+          name: "Print the Rust version, to help with debugging"
+          command: rustc --version
+      - run:
+          name: Build all code
+          command: |
+            # Ensures that all examples are built and avaiable
+            cargo build
+      # some tests fail on earlier rust versions and we want to ignore them:
+      # * trybuild_ui_tests - 1.61 vs 1.62 hits https://github.com/dtolnay/trybuild/issues/186
+      #   (which was WONTFIXd, so this is the best we can do)
+      - run: cargo test -- --skip trybuild_ui_tests
+  Deploy website:
+    docker:
+      - image: cimg/rust:1.90
+    resource_class: small
+    steps:
+      - checkout
+      - install-mkdocs
+      # It should be possible to do something like https://github.com/jimporter/mike/issues/49
+      # So we can automagically deploy on release too!
+      - run:
+          name: Deploy docs
+          # can't use `gh-pages/deploy`, it doesn't handle the versioning.
+          command: |
+            # circle ci docs and jj both do this git config.
+            git config user.name 'uniffi-docs[bot]'
+            git config user.email 'uniffi-docs[bot]@users.noreply.github.io'
+            mike deploy next --push
+
+  Deploy Docker:
+    docker:
+      - image: cimg/python:3.11
+    steps:
+      - checkout
+      - setup_remote_docker
+
+      - run:
+          name: Build container image
+          command: |
+            docker build -t uniffi-ci:build -f docker/Dockerfile-build .
+      - run:
+          name: Push to Dockerhub
+          command: |
+            cd docker
+            if [ -n "${CIRCLE_TAG}" ]; then
+              # Strip the `docker-` prefix of the tag
+              TAG="${CIRCLE_TAG#docker-}"
+              ./deploy-dockerhub.sh "$TAG"
+              ./deploy-dockerhub.sh "latest"
+            fi
+
+workflows:
+  version: 2
+  check-formatting:
+    jobs:
+      - Check Rust formatting
+  clippy:
+    jobs:
+      - Lint Rust with clippy
+  docs:
+    jobs:
+      - Lint Rust Docs
+  run-tests:
+    jobs:
+      - Rust and Foreign Language tests
+      - Rust and Foreign Language tests - min supported rust
+  deploy-website:
+    jobs:
+      - Deploy website:
+          filters:
+            branches:
+              only: main
+  deploy-docker:
+    jobs:
+      - Deploy Docker:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^docker-v.*/

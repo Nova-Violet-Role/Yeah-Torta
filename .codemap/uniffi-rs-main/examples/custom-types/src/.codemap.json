@@ -1,0 +1,296 @@
+{
+  "directory": "uniffi-rs-main\\examples\\custom-types\\src",
+  "files": {
+    "custom-types.udl": {
+      "hash": "c316f2d2dc76",
+      "indexed_at": "2026-07-24T20:35:12.303869+00:00",
+      "language": "udl",
+      "lines": 26,
+      "mtime_ns": 1782136568000000000,
+      "size": 470,
+      "symbols": [
+        {
+          "lines": [
+            2,
+            2
+          ],
+          "name": "Url",
+          "signature": "string",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            5,
+            5
+          ],
+          "name": "Handle",
+          "signature": "i64",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            8,
+            8
+          ],
+          "name": "TimeIntervalMs",
+          "signature": "i64",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            11,
+            11
+          ],
+          "name": "TimeIntervalSecDbl",
+          "signature": "f64",
+          "type": "typedef"
+        },
+        {
+          "lines": [
+            14,
+            14
+          ],
+          "name": "TimeIntervalSecFlt",
+          "signature": "f32",
+          "type": "typedef"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                17,
+                17
+              ],
+              "name": "url",
+              "signature": "Url",
+              "type": "field"
+            },
+            {
+              "lines": [
+                18,
+                18
+              ],
+              "name": "handle",
+              "signature": "Handle",
+              "type": "field"
+            },
+            {
+              "lines": [
+                19,
+                19
+              ],
+              "name": "time_interval_ms",
+              "signature": "TimeIntervalMs",
+              "type": "field"
+            },
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "time_interval_sec_dbl",
+              "signature": "TimeIntervalSecDbl",
+              "type": "field"
+            },
+            {
+              "lines": [
+                21,
+                21
+              ],
+              "name": "time_interval_sec_flt",
+              "signature": "TimeIntervalSecFlt",
+              "type": "field"
+            }
+          ],
+          "lines": [
+            16,
+            22
+          ],
+          "name": "CustomTypesDemo",
+          "type": "dictionary"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                25,
+                25
+              ],
+              "name": "get_custom_types_demo",
+              "signature": "(CustomTypesDemo? demo) : CustomTypesDemo",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            24,
+            26
+          ],
+          "name": "custom_types",
+          "type": "namespace"
+        }
+      ]
+    },
+    "lib.rs": {
+      "hash": "7989e474fcaf",
+      "indexed_at": "2026-07-24T20:35:12.304779+00:00",
+      "language": "rust",
+      "lines": 98,
+      "mtime_ns": 1782136568000000000,
+      "size": 3105,
+      "symbols": [
+        {
+          "docstring": "A custom guid defined via a proc-macro (ie, not referenced in the UDL)",
+          "lines": [
+            4,
+            4
+          ],
+          "name": "ExampleCustomType",
+          "type": "struct"
+        },
+        {
+          "docstring": "Custom Handle type which trivially wraps an i64.",
+          "lines": [
+            11,
+            11
+          ],
+          "name": "Handle",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                18,
+                20
+              ],
+              "name": "from",
+              "signature": "(val: Handle)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Defining `From<Handle> for i64` also gives us `Into<i64> for Handle`",
+          "lines": [
+            17,
+            21
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                24,
+                26
+              ],
+              "name": "from",
+              "signature": "(val: i64)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            23,
+            27
+          ],
+          "name": "Handle",
+          "type": "impl"
+        },
+        {
+          "docstring": "Custom TimeIntervalMs type which trivially wraps an i64.",
+          "lines": [
+            30,
+            30
+          ],
+          "name": "TimeIntervalMs",
+          "type": "struct"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                36,
+                38
+              ],
+              "name": "from",
+              "signature": "(val: TimeIntervalMs)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            35,
+            39
+          ],
+          "name": "<anonymous>",
+          "type": "impl"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                42,
+                44
+              ],
+              "name": "from",
+              "signature": "(val: i64)",
+              "type": "method"
+            }
+          ],
+          "docstring": "Defining `From<i64> for Handle` also gives us `Into<Handle> for i64`",
+          "lines": [
+            41,
+            45
+          ],
+          "name": "TimeIntervalMs",
+          "type": "impl"
+        },
+        {
+          "docstring": "Custom TimeIntervalSecDbl type which trivially wraps an f64.",
+          "lines": [
+            48,
+            48
+          ],
+          "name": "TimeIntervalSecDbl",
+          "type": "struct"
+        },
+        {
+          "docstring": "Custom TimeIntervalSecFlt type which trivially wraps an f32.",
+          "lines": [
+            57,
+            57
+          ],
+          "name": "TimeIntervalSecFlt",
+          "type": "struct"
+        },
+        {
+          "docstring": "And a little struct and function that ties them together.",
+          "lines": [
+            75,
+            81
+          ],
+          "name": "CustomTypesDemo",
+          "type": "struct"
+        },
+        {
+          "lines": [
+            83,
+            91
+          ],
+          "name": "get_custom_types_demo",
+          "signature": "(v: Option<CustomTypesDemo>)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            94,
+            96
+          ],
+          "name": "get_example_custom_type",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-24T20:35:13.645866+00:00",
+  "version": "1.0"
+}

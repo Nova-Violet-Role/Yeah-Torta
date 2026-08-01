@@ -1,0 +1,1163 @@
+{
+  "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\vpn\\service",
+  "files": {
+    "ServiceVPN.kt": {
+      "hash": "68590de699fa",
+      "indexed_at": "2026-08-01T04:00:54.308384+00:00",
+      "language": "kotlin",
+      "lines": 949,
+      "mtime_ns": 1785556379246904400,
+      "size": 36765,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "and the native context lifecycle (`jni_init`/`stop`/`clear`/`done`). No JNI, no C, no Go.",
+              "lines": [
+                171,
+                227
+              ],
+              "name": "startNative",
+              "signature": "(vpn: ParcelFileDescriptor, listAllowed: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                229,
+                236
+              ],
+              "name": "stopNative",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "it is intentionally retired with this callback (the Rust loop owns verdicts inline now).",
+              "lines": [
+                261,
+                289
+              ],
+              "name": "addDnsToConnectionRecords",
+              "signature": "(rr: ResourceRecord)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                291,
+                296
+              ],
+              "name": "freeSpaceInConnectionRecords",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                298,
+                302
+              ],
+              "name": "getSortedConnectionDataByTime",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Called from native code",
+              "lines": [
+                305,
+                321
+              ],
+              "name": "isDomainBlocked",
+              "signature": "(name: String?)",
+              "type": "method"
+            },
+            {
+              "docstring": "Called from native code",
+              "lines": [
+                324,
+                328
+              ],
+              "name": "isRedirectToTor",
+              "signature": "(uid: Int, destAddress: String?, destPort: Int)",
+              "type": "method"
+            },
+            {
+              "docstring": "Called from native code",
+              "lines": [
+                331,
+                356
+              ],
+              "name": "isRedirectToProxy",
+              "signature": "(uid: Int, destAddress: String?, destPort: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                358,
+                360
+              ],
+              "name": "isIpInDNSRebindRange",
+              "signature": "(destAddress: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "Called from native code",
+              "lines": [
+                363,
+                390
+              ],
+              "name": "getUidQ",
+              "signature": "(version: Int, protocol: Int, saddr: String?, sport: Int, daddr: String?, dport: Int)",
+              "type": "method"
+            },
+            {
+              "docstring": "Called from native code",
+              "lines": [
+                393,
+                396
+              ],
+              "name": "protectSocket",
+              "signature": "(socket: Int)",
+              "type": "method"
+            },
+            {
+              "docstring": "Called from native code",
+              "lines": [
+                399,
+                402
+              ],
+              "name": "isAddressAllowed",
+              "signature": "(packet: Packet)",
+              "type": "method"
+            },
+            {
+              "docstring": "Called from native code",
+              "lines": [
+                405,
+                409
+              ],
+              "name": "suspectTorConnectionUnavailable",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                411,
+                416
+              ],
+              "name": "unlockCheckingTorConnectionDelayed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Called from native code",
+              "lines": [
+                419,
+                422
+              ],
+              "name": "accountUsage",
+              "signature": "(usage: Usage)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                424,
+                475
+              ],
+              "name": "onCreate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                477,
+                585
+              ],
+              "name": "onStartCommand",
+              "signature": "(intent: Intent?, flags: Int, startId: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                587,
+                596
+              ],
+              "name": "onRevoke",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                598,
+                605
+              ],
+              "name": "sendRevokeBroadcast",
+              "signature": "(revoked: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                607,
+                647
+              ],
+              "name": "onDestroy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                649,
+                662
+              ],
+              "name": "onBind",
+              "signature": "(intent: Intent?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                664,
+                667
+              ],
+              "name": "onUnbind",
+              "signature": "(intent: Intent?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                669,
+                672
+              ],
+              "name": "onRebind",
+              "signature": "(intent: Intent?)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                674,
+                686
+              ],
+              "name": "onConnectionChecked",
+              "signature": "(available: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                694,
+                696
+              ],
+              "name": "isActive",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                698,
+                701
+              ],
+              "name": "VPNBinder",
+              "type": "class"
+            },
+            {
+              "lines": [
+                706,
+                723
+              ],
+              "name": "clearDnsQueryRawRecords",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                725,
+                765
+              ],
+              "name": "addUIDtoDNSQueryRawRecords",
+              "signature": "(\n        uid: Int,\n        destinationAddress: String?,\n        destinationPort: Int,\n        so...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                767,
+                771
+              ],
+              "name": "onLowMemory",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                773,
+                785
+              ],
+              "name": "onTaskRemoved",
+              "signature": "(rootIntent: Intent?)",
+              "type": "method"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    805,
+                    809
+                  ],
+                  "name": "setMtu",
+                  "signature": "(mtu: Int)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    811,
+                    815
+                  ],
+                  "name": "addAddress",
+                  "signature": "(address: String, prefixLength: Int)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    817,
+                    821
+                  ],
+                  "name": "addRoute",
+                  "signature": "(address: String, prefixLength: Int)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    823,
+                    827
+                  ],
+                  "name": "addRoute",
+                  "signature": "(address: java.net.InetAddress, prefixLength: Int)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    829,
+                    833
+                  ],
+                  "name": "addDnsServer",
+                  "signature": "(address: java.net.InetAddress)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    835,
+                    841
+                  ],
+                  "name": "addDisallowedApplication",
+                  "signature": "(packageName: String)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    843,
+                    849
+                  ],
+                  "name": "addAllowedApplication",
+                  "signature": "(packageName: String)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    851,
+                    853
+                  ],
+                  "name": "setFixTTL",
+                  "signature": "(fixTTL: Boolean)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    855,
+                    935
+                  ],
+                  "name": "equals",
+                  "signature": "(obj: Any?)",
+                  "type": "method"
+                },
+                {
+                  "lines": [
+                    937,
+                    939
+                  ],
+                  "name": "hashCode",
+                  "signature": "()",
+                  "type": "method"
+                }
+              ],
+              "lines": [
+                787,
+                940
+              ],
+              "name": "BuilderVPN",
+              "type": "class"
+            }
+          ],
+          "lines": [
+            89,
+            949
+          ],
+          "name": "ServiceVPN",
+          "type": "class"
+        }
+      ]
+    },
+    "ServiceVPNHandler.kt": {
+      "hash": "1e35e418a36f",
+      "indexed_at": "2026-08-01T04:00:54.638964+00:00",
+      "language": "kotlin",
+      "lines": 586,
+      "mtime_ns": 1785556379261901800,
+      "size": 25537,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                95,
+                109
+              ],
+              "name": "queue",
+              "signature": "(intent: Intent)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                111,
+                117
+              ],
+              "name": "handleMessage",
+              "signature": "(msg: Message)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                119,
+                194
+              ],
+              "name": "handleIntent",
+              "signature": "(intent: Intent)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                196,
+                246
+              ],
+              "name": "start",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                248,
+                389
+              ],
+              "name": "reload",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                391,
+                439
+              ],
+              "name": "stop",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                441,
+                478
+              ],
+              "name": "getAllowedRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                480,
+                496
+              ],
+              "name": "startVPN",
+              "signature": "(builder: VpnService.Builder)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                498,
+                523
+              ],
+              "name": "setUnderlyingNetwork",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                525,
+                538
+              ],
+              "name": "stopVPN",
+              "signature": "(pfd: ParcelFileDescriptor)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                540,
+                571
+              ],
+              "name": "stopServiceVPN",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                573,
+                573
+              ],
+              "name": "StartFailedException",
+              "type": "class"
+            },
+            {
+              "lines": [
+                575,
+                577
+              ],
+              "name": "getAppsList",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            71,
+            586
+          ],
+          "name": "ServiceVPNHandler",
+          "type": "class"
+        }
+      ]
+    },
+    "ServiceVPNHelper.kt": {
+      "hash": "b402d1e075be",
+      "indexed_at": "2026-08-01T04:00:54.970074+00:00",
+      "language": "kotlin",
+      "lines": 171,
+      "mtime_ns": 1785556379274900600,
+      "size": 6652,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                40,
+                48
+              ],
+              "name": "start",
+              "signature": "(reason: String, context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                50,
+                55
+              ],
+              "name": "startVpnService",
+              "signature": "(reason: String, context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                57,
+                65
+              ],
+              "name": "reload",
+              "signature": "(reason: String, context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                67,
+                90
+              ],
+              "name": "reloadVpnService",
+              "signature": "(reason: String, context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                92,
+                100
+              ],
+              "name": "stop",
+              "signature": "(reason: String, context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                102,
+                110
+              ],
+              "name": "stopVpnService",
+              "signature": "(reason: String, context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                112,
+                140
+              ],
+              "name": "prepareVPNServiceIfRequired",
+              "signature": "(activity: Activity, modulesStatus: ModulesStatus)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                142,
+                157
+              ],
+              "name": "sendIntent",
+              "signature": "(context: Context, intent: Intent, showNotification: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                159,
+                162
+              ],
+              "name": "isVpnServiceEnabled",
+              "signature": "(context: Context)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                164,
+                170
+              ],
+              "name": "getMainHandler",
+              "signature": "(context: Context)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            36,
+            171
+          ],
+          "name": "ServiceVPNHelper",
+          "type": "class"
+        }
+      ]
+    },
+    "VpnBuilder.kt": {
+      "hash": "27d8da2d5bdd",
+      "indexed_at": "2026-08-01T04:00:55.374566+00:00",
+      "language": "kotlin",
+      "lines": 482,
+      "mtime_ns": 1785556379289900700,
+      "size": 24571,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                64,
+                139
+              ],
+              "name": "getBuilder",
+              "signature": "(vpn: ServiceVPN, listAllowed: List<String>, listRule: List<Rule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                148,
+                179
+              ],
+              "name": "addDnsOnlyRoutes",
+              "signature": "(builder: ServiceVPN.BuilderVPN)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                181,
+                237
+              ],
+              "name": "addIPv4Routes",
+              "signature": "(builder: ServiceVPN.BuilderVPN, lan: Boolean, fixTTL: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                239,
+                295
+              ],
+              "name": "addIPv6Routes",
+              "signature": "(builder: ServiceVPN.BuilderVPN, lan: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                297,
+                336
+              ],
+              "name": "manageAppsTunneling",
+              "signature": "(builder: ServiceVPN.BuilderVPN, listRule: List<Rule>, fixTTL: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                356,
+                376
+              ],
+              "name": "getDns",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                378,
+                400
+              ],
+              "name": "getConfigureIntent",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            54,
+            482
+          ],
+          "name": "VpnBuilder",
+          "type": "class"
+        }
+      ]
+    },
+    "VpnPreferenceHolder.kt": {
+      "hash": "4ac030181d5b",
+      "indexed_at": "2026-08-01T04:00:55.739194+00:00",
+      "language": "kotlin",
+      "lines": 106,
+      "mtime_ns": 1785556379302900500,
+      "size": 5411,
+      "symbols": [
+        {
+          "lines": [
+            51,
+            106
+          ],
+          "name": "VpnPreferenceHolder",
+          "type": "class"
+        }
+      ]
+    },
+    "VpnRulesHolder.kt": {
+      "hash": "ece6f5b25b96",
+      "indexed_at": "2026-08-01T04:00:56.082895+00:00",
+      "language": "kotlin",
+      "lines": 533,
+      "mtime_ns": 1785556379315902000,
+      "size": 22344,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                101,
+                304
+              ],
+              "name": "isAddressAllowed",
+              "signature": "(vpn: ServiceVPN, packet: Packet)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                306,
+                324
+              ],
+              "name": "isFixTTLForPacket",
+              "signature": "(packet: Packet)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                326,
+                331
+              ],
+              "name": "isSupported",
+              "signature": "(protocol: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                333,
+                340
+              ],
+              "name": "isDestinationInSpecialRange",
+              "signature": "(uid: Int, destIp: String, destPort: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                342,
+                362
+              ],
+              "name": "isSpecialAllowed",
+              "signature": "(\n        uidAllowed: Set<Int>,\n        specialUidAllowed: Set<Int>,\n        uid: Int,\n        de...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                372,
+                382
+              ],
+              "name": "isAllowedByWarden",
+              "signature": "(packet: Packet)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                384,
+                401
+              ],
+              "name": "isPacketAllowedForCompatibilityMode",
+              "signature": "(packet: Packet, fixTTLForPacket: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                403,
+                442
+              ],
+              "name": "prepareUidAllowed",
+              "signature": "(\n        listAllowed: List<String?>,\n        listRule: List<Rule>\n    )",
+              "type": "method"
+            },
+            {
+              "lines": [
+                444,
+                474
+              ],
+              "name": "prepareForwarding",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                476,
+                479
+              ],
+              "name": "forwardDnsToDnsCrypt",
+              "signature": "(dnsCryptPort: Int, ownUID: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                481,
+                491
+              ],
+              "name": "addForwardPortRule",
+              "signature": "(protocol: Int, dport: Int, raddr: String, rport: Int, ruid: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                493,
+                503
+              ],
+              "name": "addForwardAddressRule",
+              "signature": "(protocol: Int, daddr: String, raddr: String, rport: Int, ruid: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                505,
+                515
+              ],
+              "name": "unPrepare",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                517,
+                519
+              ],
+              "name": "getCaptivePortalUids",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "https://datatracker.ietf.org/doc/html/rfc6762",
+              "lines": [
+                522,
+                532
+              ],
+              "name": "isLanDomain",
+              "signature": "(domain: String)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            65,
+            533
+          ],
+          "name": "VpnRulesHolder",
+          "type": "class"
+        }
+      ]
+    },
+    "WardenDatapathGate.kt": {
+      "hash": "55e1276a7286",
+      "indexed_at": "2026-08-01T04:00:56.408017+00:00",
+      "language": "kotlin",
+      "lines": 548,
+      "mtime_ns": 1785556379328899800,
+      "size": 24111,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                95,
+                103
+              ],
+              "name": "hold",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                113,
+                123
+              ],
+              "name": "setEnforced",
+              "signature": "(on: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                126,
+                132
+              ],
+              "name": "enforced",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                145,
+                177
+              ],
+              "name": "verdict",
+              "signature": "(uid: Int, daddr: String, dport: Int, proto: Int, netOrdinal: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                198,
+                206
+              ],
+              "name": "snapshot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                215,
+                223
+              ],
+              "name": "bindDurable",
+              "signature": "(dir: String, nowMs: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                231,
+                239
+              ],
+              "name": "expireTempAllows",
+              "signature": "(nowMs: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                247,
+                255
+              ],
+              "name": "installDomainRules",
+              "signature": "(rules: List<WardenDomainRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                261,
+                269
+              ],
+              "name": "installCidrRules",
+              "signature": "(rules: List<WardenCidrRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                275,
+                283
+              ],
+              "name": "setUniversalRules",
+              "signature": "(rules: List<WardenUniversalRule>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                289,
+                297
+              ],
+              "name": "setAppRow",
+              "signature": "(row: WardenAppRow)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                300,
+                308
+              ],
+              "name": "removeAppRow",
+              "signature": "(uid: Int)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                317,
+                325
+              ],
+              "name": "appRows",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                334,
+                342
+              ],
+              "name": "domainRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                349,
+                357
+              ],
+              "name": "cidrRules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                366,
+                374
+              ],
+              "name": "cidrRulesWire",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                382,
+                390
+              ],
+              "name": "removeCidrRuleAt",
+              "signature": "(index: UInt)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                396,
+                413
+              ],
+              "name": "setUniversalToggles",
+              "signature": "(toggles: WardenUniversalToggles)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                424,
+                433
+              ],
+              "name": "rulesFor",
+              "signature": "(t: WardenUniversalToggles)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                442,
+                450
+              ],
+              "name": "universalToggles",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                453,
+                461
+              ],
+              "name": "setFailClosed",
+              "signature": "(failClosed: Boolean)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                471,
+                479
+              ],
+              "name": "logDnsVerdict",
+              "signature": "(name: String, addrs: List<String>, nowMs: Long)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                486,
+                494
+              ],
+              "name": "dnsVerdict",
+              "signature": "(name: String, addrs: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                512,
+                520
+              ],
+              "name": "blockIp",
+              "signature": "(uid: Int, cidr: String)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                527,
+                535
+              ],
+              "name": "setGeoBlocks",
+              "signature": "(codes: List<String>)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                539,
+                547
+              ],
+              "name": "geoBlocks",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            53,
+            548
+          ],
+          "name": "WardenDatapathGate",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:00:56.409823+00:00",
+  "version": "1.0"
+}

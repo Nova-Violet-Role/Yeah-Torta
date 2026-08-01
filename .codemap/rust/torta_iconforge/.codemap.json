@@ -1,0 +1,166 @@
+{
+  "directory": "rust\\torta_iconforge",
+  "files": {
+    "Cargo.toml": {
+      "hash": "c371a21ba4d4",
+      "indexed_at": "2026-07-26T19:12:58.207170+00:00",
+      "language": "toml",
+      "lines": 23,
+      "mtime_ns": 1785007922885640100,
+      "size": 896,
+      "symbols": [
+        {
+          "docstring": "self-contained workspace root: detaches torta_iconforge from any parent workspace under rust/. HOST-ONLY build-tool crate (#75) \u2014 renders the Slint-au",
+          "lines": [
+            4,
+            5
+          ],
+          "name": "workspace",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                7
+              ],
+              "name": "name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                8,
+                8
+              ],
+              "name": "version",
+              "type": "key"
+            },
+            {
+              "lines": [
+                9,
+                9
+              ],
+              "name": "edition",
+              "type": "key"
+            },
+            {
+              "lines": [
+                10,
+                10
+              ],
+              "name": "license",
+              "type": "key"
+            },
+            {
+              "lines": [
+                11,
+                11
+              ],
+              "name": "description",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            6,
+            12
+          ],
+          "name": "package",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                14,
+                14
+              ],
+              "name": "name",
+              "type": "key"
+            },
+            {
+              "lines": [
+                15,
+                15
+              ],
+              "name": "path",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            13,
+            16
+          ],
+          "name": "bin",
+          "type": "array_table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                19,
+                19
+              ],
+              "name": "slint",
+              "type": "key"
+            },
+            {
+              "lines": [
+                20,
+                20
+              ],
+              "name": "png",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            17,
+            21
+          ],
+          "name": "dependencies",
+          "type": "table"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                23,
+                23
+              ],
+              "name": "slint-build",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            22,
+            24
+          ],
+          "name": "build-dependencies",
+          "type": "table"
+        }
+      ]
+    },
+    "build.rs": {
+      "hash": "0ee8a3346298",
+      "indexed_at": "2026-07-26T19:12:58.207531+00:00",
+      "language": "rust",
+      "lines": 11,
+      "mtime_ns": 1785030833415604600,
+      "size": 409,
+      "symbols": [
+        {
+          "docstring": "Default host style is fine: the icon is Path-only (no widgets), so style injects nothing.",
+          "lines": [
+            9,
+            11
+          ],
+          "name": "main",
+          "signature": "()",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-26T19:12:58.663376+00:00",
+  "version": "1.0"
+}

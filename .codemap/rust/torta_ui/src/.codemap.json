@@ -1,0 +1,2516 @@
+{
+  "directory": "rust\\torta_ui\\src",
+  "files": {
+    "lib.rs": {
+      "hash": "b0697cc56de7",
+      "indexed_at": "2026-08-01T04:01:09.210836+00:00",
+      "language": "rust",
+      "lines": 11809,
+      "mtime_ns": 1785556379742899400,
+      "size": 647412,
+      "symbols": [
+        {
+          "children": [
+            {
+              "docstring": "(PillarLog.kt D40 canon: `app_data/centauri_cache/query-centauri.log`).",
+              "lines": [
+                33,
+                63
+              ],
+              "name": "query_log_path",
+              "signature": "(data_dir: &str, source: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "`relay=` default honestly (0 / \"\u2014\") so a shorter historical line still renders its pulse.",
+              "lines": [
+                76,
+                98
+              ],
+              "name": "beast_tick_row_parse",
+              "signature": "(line: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Monokuma verdict palette (risk/wound/caution) + the Masque cache violet + safe green.",
+              "lines": [
+                106,
+                140
+              ],
+              "name": "classify_query_line",
+              "signature": "(line: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            27,
+            141
+          ],
+          "name": "feed_shape",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "docstring": "TCAT v2 freshness epoch `catalog_authored_at_secs`). Same tiny flat-object scanner.",
+              "lines": [
+                168,
+                176
+              ],
+              "name": "json_i64",
+              "signature": "(json: &str, key: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Pure (caller passes `now`), unit-testable without a clock.",
+              "lines": [
+                182,
+                196
+              ],
+              "name": "freshness_label",
+              "signature": "(now_secs: i64, epoch_secs: i64)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            165,
+            197
+          ],
+          "name": "centauri_feed_fmt",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                265,
+                267
+              ],
+              "name": "ipv4",
+              "signature": "(a: u8, b: u8, c: u8, d: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                272,
+                287
+              ],
+              "name": "block_cidrs",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                291,
+                301
+              ],
+              "name": "conn",
+              "signature": "(uid: u32, daddr: &str, dport: u16, qname: &str, dns_blocked: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                312,
+                416
+              ],
+              "name": "arm_warden_spike",
+              "signature": "(w: &WardenObject)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                423,
+                470
+              ],
+              "name": "feed_from_live_warden",
+              "signature": "(dash: &crate::WardenDashboard, w: &WardenObject)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                478,
+                532
+              ],
+              "name": "feed_warden_shell",
+              "signature": "(sh: &crate::TortaShell, w: &WardenObject)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                550,
+                607
+              ],
+              "name": "refresh_warden_dash_live",
+              "signature": "(sh: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "docstring": "never a fabricated app row); an empty / `None` wire yields no rows (the pane's honest no-rows state).",
+              "lines": [
+                615,
+                649
+              ],
+              "name": "parse_warden_dash_matrix",
+              "signature": "(wire: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "The `WardenAppMode` \u2192 dashboard label (the .slint tints \"ISOLATE\" red).",
+              "lines": [
+                652,
+                661
+              ],
+              "name": "app_mode_label",
+              "signature": "(mode: WardenAppMode)",
+              "type": "method"
+            },
+            {
+              "docstring": "The `WardenNetClass` (meteredness) \u2192 dashboard label.",
+              "lines": [
+                664,
+                671
+              ],
+              "name": "net_class_label",
+              "signature": "(class: WardenNetClass)",
+              "type": "method"
+            },
+            {
+              "docstring": "declaration order). Delegates to [`app_mode_label`] so the label strings stay single-sourced.",
+              "lines": [
+                685,
+                695
+              ],
+              "name": "app_mode_label_ord",
+              "signature": "(ord: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "The wire `metered` ORDINAL \u2192 the settings-matrix label (the inverse of the Kotlin `.ordinal`).",
+              "lines": [
+                698,
+                706
+              ],
+              "name": "net_class_label_ord",
+              "signature": "(ord: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "unique + `=`-terminated, so a bare `find` never cross-matches a sibling key.",
+              "lines": [
+                726,
+                732
+              ],
+              "name": "warden_toggle_bit",
+              "signature": "(wire: &str, key: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "later-wave refinement once a per-rule arm state is bridged).",
+              "lines": [
+                738,
+                749
+              ],
+              "name": "build_warden_settings_toggles",
+              "signature": "(wire: Option<&str>)",
+              "type": "method"
+            },
+            {
+              "docstring": "\"arm to read\" state, and nine fabricated off-chips would dress an unreadable engine as all-clear.",
+              "lines": [
+                755,
+                767
+              ],
+              "name": "build_warden_dash_toggles",
+              "signature": "(wire: Option<&str>)",
+              "type": "method"
+            },
+            {
+              "docstring": "state). `armed` is not surfaced here (every held row enforces; the settings matrix edits held rows).",
+              "lines": [
+                773,
+                804
+              ],
+              "name": "parse_warden_settings_matrix",
+              "signature": "(wire: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2014 never a fabricated rule); an empty/`None` wire yields no rows (the pane's honest \"none armed\" state).",
+              "lines": [
+                810,
+                829
+              ],
+              "name": "parse_warden_settings_rules",
+              "signature": "(wire: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                835,
+                855
+              ],
+              "name": "read_warden_settings_live",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                858,
+                860
+              ],
+              "name": "read_warden_settings_live",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                866,
+                868
+              ],
+              "name": "read_warden_settings_rules_wire",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                871,
+                873
+              ],
+              "name": "read_warden_settings_rules_wire",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "a cold engine). No trust list \u2014 the Warden layer has no trust concept by design law.",
+              "lines": [
+                880,
+                908
+              ],
+              "name": "feed_warden_settings_shell",
+              "signature": "(sh: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                920,
+                926
+              ],
+              "name": "flow_verdict_label",
+              "signature": "(v: torta_core::WardenVerdict)",
+              "type": "method"
+            },
+            {
+              "docstring": "IANA protocol number \u2192 docket label; the unknown arm shows the honest number, never \"?\".",
+              "lines": [
+                929,
+                937
+              ],
+              "name": "proto_label",
+              "signature": "(proto: u8)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                945,
+                959
+              ],
+              "name": "record_to_row",
+              "signature": "(r: &torta_core::FlowRecord)",
+              "type": "method"
+            },
+            {
+              "docstring": "honest empty docket (ship-together law).",
+              "lines": [
+                972,
+                1018
+              ],
+              "name": "parse_flow_feed",
+              "signature": "(raw: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "\"unmeasured\" instead of claiming an instantaneous round trip (the #96 empty-state law).",
+              "lines": [
+                1036,
+                1110
+              ],
+              "name": "parse_forwarder_docket",
+              "signature": "(raw: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "honest reading is the empty docket \u2014 NOT a fabricated demo row.",
+              "lines": [
+                1115,
+                1127
+              ],
+              "name": "live_forwarder_docket_feed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "dressed as a reading. HOST/TEST: the in-process ring IS the engine's ring (one .so) \u2014 read it.",
+              "lines": [
+                1133,
+                1153
+              ],
+              "name": "live_flow_feed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Push the docket into the shell (startup + the 1s warden-dash Timer both land here).",
+              "lines": [
+                1156,
+                1160
+              ],
+              "name": "feed_live_flows",
+              "signature": "(sh: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "docstring": "`None` wire yields no rows (the pane's honest DORMANT browser).",
+              "lines": [
+                1172,
+                1209
+              ],
+              "name": "parse_inspector_apps",
+              "signature": "(wire: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "a malformed row is SKIPPED (fail-open).",
+              "lines": [
+                1216,
+                1244
+              ],
+              "name": "parse_inspector_dests",
+              "signature": "(wire: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "(mode 0) rides as-is (the engine parses bare = /32 or /128). Pure \u2014 host-testable.",
+              "lines": [
+                1249,
+                1258
+              ],
+              "name": "ladder_cidr",
+              "signature": "(ip: &str, mode: i32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1264,
+                1280
+              ],
+              "name": "feed_inspector_browser",
+              "signature": "(sh: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1285,
+                1307
+              ],
+              "name": "open_inspector",
+              "signature": "(sh: &crate::TortaShell, uid: i32)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1312,
+                1327
+              ],
+              "name": "inspector_toggle_select",
+              "signature": "(sh: &crate::TortaShell, ip: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                1335,
+                1372
+              ],
+              "name": "inspector_block_selected",
+              "signature": "(sh: &crate::TortaShell, uid: i32, mode: i32)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            200,
+            1373
+          ],
+          "name": "warden_feed",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "docstring": "input renders \"\".",
+              "lines": [
+                1392,
+                1413
+              ],
+              "name": "format_underground_top",
+              "signature": "(raw: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "host-testable (the `format_underground_top` precedent).",
+              "lines": [
+                1419,
+                1429
+              ],
+              "name": "DocketRow",
+              "type": "struct"
+            },
+            {
+              "docstring": "or a manual pin), else \"3h12m\" / \"12m\" / \"45s\".",
+              "lines": [
+                1433,
+                1445
+              ],
+              "name": "fmt_ttl",
+              "signature": "(secs: i64)",
+              "type": "method"
+            },
+            {
+              "docstring": "malformed rows are skipped fail-open \u2014 one bad row never blanks the court.",
+              "lines": [
+                1450,
+                1470
+              ],
+              "name": "parse_underground_docket",
+              "signature": "(raw: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "skip fail-open; empty input renders \"\".",
+              "lines": [
+                1476,
+                1490
+              ],
+              "name": "format_underground_wire",
+              "signature": "(raw: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "mirrors; the ENGINE's serde parse is the authority (garbled \u21d2 sitting law).",
+              "lines": [
+                1496,
+                1516
+              ],
+              "name": "parse_underground_law",
+              "signature": "(toml: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "whole section. Returns the new text.",
+              "lines": [
+                1522,
+                1567
+              ],
+              "name": "patch_underground_detection",
+              "signature": "(toml: &str, name: &str, on: bool)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1381,
+            1568
+          ],
+          "name": "underground_feed",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "docstring": "field holds its honest default (off / off / AUTO=0) \u2014 fail-open per field, never a panic.",
+              "lines": [
+                1595,
+                1607
+              ],
+              "name": "parse_inu_prefs",
+              "signature": "(cfg: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "to the 0..=300 s band the stepper walks (the Kotlin writer clamps identically).",
+              "lines": [
+                1613,
+                1626
+              ],
+              "name": "parse_boot_autostart",
+              "signature": "(cfg: &str)",
+              "type": "method"
+            }
+          ],
+          "docstring": "===========================================================================================",
+          "lines": [
+            1576,
+            1627
+          ],
+          "name": "inu_feed",
+          "type": "module"
+        },
+        {
+          "docstring": "wins (`OnceLock`), so a re-launch cannot repoint the durable tier mid-session.",
+          "lines": [
+            1669,
+            1673
+          ],
+          "name": "publish_inu_data_dir",
+          "signature": "(dir: &str)",
+          "type": "function"
+        },
+        {
+          "docstring": "spike, never for an absent record, never for a mid-flight or failed elevation.",
+          "lines": [
+            1680,
+            1722
+          ],
+          "name": "inu_row_posture",
+          "signature": "()",
+          "type": "function"
+        },
+        {
+          "children": [
+            {
+              "docstring": "(fail-open \u2014 the caller keeps rendering).",
+              "lines": [
+                1739,
+                1773
+              ],
+              "name": "with_class",
+              "signature": "(\n        class_name: &str,\n        f: impl FnOnce(&mut jni::JNIEnv, &JClass) -> jni::errors::Res...",
+              "type": "method"
+            },
+            {
+              "docstring": "The `TortaSlintBridge` (engine master-switch) specialization of [`with_class`].",
+              "lines": [
+                1776,
+                1780
+              ],
+              "name": "with_bridge_class",
+              "signature": "(\n        f: impl FnOnce(&mut jni::JNIEnv, &JClass) -> jni::errors::Result<T>,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "Drive DNSCrypt on/off \u2014 JNI-calls `TortaSlintBridge.setDnsCryptEnabled(Z)`.",
+              "lines": [
+                1783,
+                1793
+              ],
+              "name": "set_dnscrypt_enabled",
+              "signature": "(enable: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "0 stopped \u00b7 1 starting \u00b7 2 running \u00b7 3 stopping \u00b7 5 fault. `None` on a JNI failure.",
+              "lines": [
+                1797,
+                1802
+              ],
+              "name": "dnscrypt_state_code",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\"the shield is engaged\" signal. `None` on a JNI failure \u2192 the caller keeps the last honest value.",
+              "lines": [
+                1812,
+                1817
+              ],
+              "name": "tunnel_up",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "bridge shares).",
+              "lines": [
+                1826,
+                1836
+              ],
+              "name": "traffic_snapshot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "and a Ko-Fi payment page cannot be completed in text, so the way out has to exist.",
+              "lines": [
+                1855,
+                1866
+              ],
+              "name": "open_donate_intent",
+              "signature": "(url: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "claim). `None` on a JNI failure \u2192 the caller keeps the last honest value.",
+              "lines": [
+                1872,
+                1877
+              ],
+              "name": "browser_role_held",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "truth lands via [browser_role_held], never via the request's own claim.",
+              "lines": [
+                1885,
+                1890
+              ],
+              "name": "request_browser_role",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "The result parks Kotlin-side; [carbon_page_seq] advances when it lands.",
+              "lines": [
+                1896,
+                1907
+              ],
+              "name": "carbon_fetch",
+              "signature": "(url: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "ever landed). `None` on a JNI failure \u2192 the caller keeps the last honest seq.",
+              "lines": [
+                1911,
+                1915
+              ],
+              "name": "carbon_page_seq",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "The landed HTTP status (\u22121 = transport failure \u2014 rendered AS a failure).",
+              "lines": [
+                1918,
+                1923
+              ],
+              "name": "carbon_page_status",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "The landed page URL (what the fetch was actually for).",
+              "lines": [
+                1926,
+                1935
+              ],
+              "name": "carbon_page_url",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "The landed page body (capped 512 KiB Kotlin-side \u2014 a terminal page, not a heap flood).",
+              "lines": [
+                1938,
+                1947
+              ],
+              "name": "carbon_page_body",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "treats it as error (5). This is the SLINT \"Rotate Now\" \u2192 real RotationManager.rotateNow() seam.",
+              "lines": [
+                1954,
+                1959
+              ],
+              "name": "rotate_resolvers_now",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Write RESOLVER_ROTATION_ENABLED \u2014 JNI-calls `TortaPillarBridge.setRotationEnabled(Z)V`.",
+              "lines": [
+                1962,
+                1972
+              ],
+              "name": "set_rotation_enabled",
+              "signature": "(enable: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "Read RESOLVER_ROTATION_ENABLED \u2014 JNI-calls `TortaPillarBridge.rotationEnabled()Z`. `None` on failure.",
+              "lines": [
+                1975,
+                1980
+              ],
+              "name": "rotation_enabled",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Read RESOLVER_NATIVE_ENABLED \u2014 JNI-calls `TortaPillarBridge.solverEnabled()Z`. `None` on failure.",
+              "lines": [
+                1983,
+                1988
+              ],
+              "name": "solver_enabled",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Read WARDEN_NATIVE_ENABLED \u2014 JNI-calls `TortaPillarBridge.wardenArmedPreference()Z`. `None` on failure.",
+              "lines": [
+                1991,
+                1996
+              ],
+              "name": "warden_armed_preference",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "the shell at its seed defaults.",
+              "lines": [
+                2004,
+                2040
+              ],
+              "name": "feed_general_section_prefs",
+              "signature": "(shell: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "docstring": "Write RESOLVER_ROTATION_CADENCE_MINUTES \u2014 JNI-calls `TortaPillarBridge.setRotationCadence(I)V`.",
+              "lines": [
+                2043,
+                2048
+              ],
+              "name": "set_rotation_cadence",
+              "signature": "(minutes: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "the pref `RotationManager.readMaxServers` consumes at every pick). `None` on a JNI failure.",
+              "lines": [
+                2052,
+                2057
+              ],
+              "name": "rotation_max_servers",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "the Kotlin side clamps floor-only \u22651 \u2014 NO upper limit (Socio no-limits law); the host owns it, never this .so).",
+              "lines": [
+                2061,
+                2071
+              ],
+              "name": "set_rotation_max_servers",
+              "signature": "(count: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "0 is the legal \"direct, no relays\" posture). `None` on a JNI failure.",
+              "lines": [
+                2075,
+                2080
+              ],
+              "name": "rotation_max_relays",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Kotlin clamps floor-only \u22650 \u2014 NO upper limit, the Socio 2026-07-19 no-limits law).",
+              "lines": [
+                2084,
+                2094
+              ],
+              "name": "set_rotation_max_relays",
+              "signature": "(count: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "(`TortaPillarBridge.tunnelOnlyKillSwitch()Z`, the app-wide swKillSwitch). None \u21d2 JNI fault.",
+              "lines": [
+                2098,
+                2103
+              ],
+              "name": "tunnel_only_kill_switch",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "(`TortaPillarBridge.setTunnelOnlyKillSwitch(Z)V`; Socio: \"allow Connection only inside The Tunnel\").",
+              "lines": [
+                2107,
+                2117
+              ],
+              "name": "set_tunnel_only_kill_switch",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "change (the feed then SEEDS the pane off the live engine snapshot so cold reads agree, dirty=false).",
+              "lines": [
+                2126,
+                2128
+              ],
+              "name": "staged_beast_config",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "(`apply_beast_config`). thresholds are milli units.",
+              "lines": [
+                2134,
+                2160
+              ],
+              "name": "stage_beast_config",
+              "signature": "(\n        yeah: i32,\n        cake: i32,\n        preset: i32,\n        cycle_ms: i32,\n        max_w...",
+              "type": "method"
+            },
+            {
+              "docstring": "scheduler has no live interval setter yet (staged-honest). thresholds are milli units.",
+              "lines": [
+                2167,
+                2191
+              ],
+              "name": "apply_beast_config",
+              "signature": "(\n        yeah: i32,\n        cake: i32,\n        cycle_ms: i32,\n        max_window: i32,\n        f...",
+              "type": "method"
+            },
+            {
+              "docstring": "empty/`None` before Kotlin ever persisted one (the feed then holds the cold defaults).",
+              "lines": [
+                2203,
+                2205
+              ],
+              "name": "staged_inu_config",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Pipe record `on=<0/1>|delay=<secs>`; `None` on a JNI hiccup (the burger keeps its cold defaults).",
+              "lines": [
+                2210,
+                2212
+              ],
+              "name": "boot_autostart_config",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "exact key the boot receiver reads \u2014 the Socio \"VPN dead after reboot\" seam closer).",
+              "lines": [
+                2216,
+                2221
+              ],
+              "name": "set_boot_autostart",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "(`AUTO_START_DELAY`, stored Kotlin-side as the seconds STRING `parseAutostartDelayMs` expects).",
+              "lines": [
+                2225,
+                2235
+              ],
+              "name": "set_boot_autostart_delay",
+              "signature": "(secs: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "Run the ADB pair + elevate flow \u2014 `TortaPillarBridge.inuPairNow()V` (Kotlin ElevationManager).",
+              "lines": [
+                2238,
+                2243
+              ],
+              "name": "inu_pair_now",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Clear the persisted pair (key/cert) + drop elevation \u2014 `TortaPillarBridge.inuUnpair()V`.",
+              "lines": [
+                2246,
+                2251
+              ],
+              "name": "inu_unpair",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "(Kotlin GrantEngine PowerState.desired + persist to the InuState grant map).",
+              "lines": [
+                2255,
+                2266
+              ],
+              "name": "inu_power_toggled",
+              "signature": "(id: &str, desired: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "durable pref + arm the live BootReapplyPolicy \u2014 the Genesis #1 gap closer).",
+              "lines": [
+                2270,
+                2275
+              ],
+              "name": "inu_boot_reapply",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "Toggle the always-on foreground pairing notification \u2014 `TortaPillarBridge.inuAlwaysOn(Z)V`.",
+              "lines": [
+                2278,
+                2283
+              ],
+              "name": "inu_always_on",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "`TortaPillarBridge.inuProviderPref(I)V`.",
+              "lines": [
+                2287,
+                2292
+              ],
+              "name": "inu_provider_pref",
+              "signature": "(pref: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "WIRELESS_DEBUG_EXPERT + the InuState `expert_enabled` flag through the Kotlin store).",
+              "lines": [
+                2296,
+                2301
+              ],
+              "name": "inu_expert_toggled",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "Ljava/lang/String;Ljava/lang/String;)V` (host, port, 6-digit code; Kotlin parses the port).",
+              "lines": [
+                2305,
+                2322
+              ],
+              "name": "inu_manual_pair",
+              "signature": "(host: &str, port: &str, code: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Read RESOLVER_ROTATION_CADENCE_MINUTES \u2014 JNI-calls `TortaPillarBridge.rotationCadence()I`.",
+              "lines": [
+                2325,
+                2330
+              ],
+              "name": "rotation_cadence",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "Helper \u2014 a MaskSolver Expert BOOLEAN toggle: JNI-call `TortaPillarBridge.<method>(Z)V`.",
+              "lines": [
+                2341,
+                2346
+              ],
+              "name": "call_resolver_bool",
+              "signature": "(method: &str, on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "Helper \u2014 a MaskSolver cache/deadline STEPPER: JNI-call `TortaPillarBridge.<method>(I)V`.",
+              "lines": [
+                2348,
+                2353
+              ],
+              "name": "call_resolver_int",
+              "signature": "(method: &str, value: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "P12 R6 SOLVE ladder \u2014 arm the verdict-gated resilient-resolution ladder (resolverSetSolveLadder).",
+              "lines": [
+                2356,
+                2358
+              ],
+              "name": "set_resolver_solve_ladder",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "P12 R6 `--all-servers` \u2014 race every upstream concurrently vs the strict-order ladder.",
+              "lines": [
+                2360,
+                2362
+              ],
+              "name": "set_resolver_all_servers",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "P12 `--stop-dns-rebind` \u2014 enforce (drop) public names resolving to a private IP.",
+              "lines": [
+                2364,
+                2366
+              ],
+              "name": "set_resolver_rebind_enforce",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "P12 R5 `--bogus-priv` \u2014 NXDOMAIN reverse (PTR) lookups of RFC1918/ULA/link-local IPs locally.",
+              "lines": [
+                2368,
+                2370
+              ],
+              "name": "set_resolver_bogus_priv",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "P12 N3 `--proxy-dnssec` \u2014 pass the upstream AD bit through on a live forward (awareness).",
+              "lines": [
+                2372,
+                2374
+              ],
+              "name": "set_resolver_proxy_dnssec",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "P12 `--never-forward` \u2014 keep RFC 6761/8375 special-use + private PTR names LOCAL (never egress).",
+              "lines": [
+                2376,
+                2378
+              ],
+              "name": "set_resolver_never_forward",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "P12 N2 `--cache-rr` \u2014 cache SVCB/HTTPS answer records (speeds modern sites).",
+              "lines": [
+                2380,
+                2382
+              ],
+              "name": "set_resolver_cache_rr",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "`--cache-size` \u2014 the RAM-hot cache capacity (staged; commits on reapply, live-resizes the held cache).",
+              "lines": [
+                2384,
+                2386
+              ],
+              "name": "set_resolver_cache_cap",
+              "signature": "(cap: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "The per-query deadline in ms (0 = engine default; staged, commits on reapply \u2014 bites the next query).",
+              "lines": [
+                2388,
+                2390
+              ],
+              "name": "set_resolver_query_timeout",
+              "signature": "(ms: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "RFC 8767 serve-stale window in seconds (0 = OFF; staged, commits on reapply \u2014 bites the held cache).",
+              "lines": [
+                2392,
+                2394
+              ],
+              "name": "set_resolver_serve_stale",
+              "signature": "(secs: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "Positive-TTL floor `min-cache-ttl` in seconds (0 = no floor; staged, commits on reapply).",
+              "lines": [
+                2396,
+                2398
+              ],
+              "name": "set_resolver_ttl_floor",
+              "signature": "(secs: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "Positive-TTL ceiling `max-cache-ttl` in seconds (0 -> the 24h default; staged, commits on reapply).",
+              "lines": [
+                2400,
+                2402
+              ],
+              "name": "set_resolver_ttl_ceiling",
+              "signature": "(secs: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "one-shot), so the flip lands on the NEXT tunnel start \u2014 never a mid-flight rebind.",
+              "lines": [
+                2407,
+                2417
+              ],
+              "name": "set_netstack_forwarder",
+              "signature": "(enable: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "`None` on failure (host build, bridge unreachable) \u2014 callers fall to false, the ship default.",
+              "lines": [
+                2421,
+                2426
+              ],
+              "name": "netstack_forwarder_armed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "`resolverSetCentauriCloak`, a live process-global atomic the armed resolver consults per-query).",
+              "lines": [
+                2441,
+                2451
+              ],
+              "name": "set_centauri_cloak",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "`TortaPillarBridge.cycleCentauriSeedPolicy()I`. Returns the NEW policy code (0/1); `None` on failure.",
+              "lines": [
+                2455,
+                2460
+              ],
+              "name": "cycle_centauri_seed_policy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "count of assets FILLED (\u22650), or `-1` on no-catalog/unreachable. `None` on a JNI failure.",
+              "lines": [
+                2464,
+                2469
+              ],
+              "name": "centauri_warm_up_now",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "caller holds its last honest value rather than claiming trust it cannot see.",
+              "lines": [
+                2479,
+                2484
+              ],
+              "name": "centauri_ca_trusted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2605 #65 \u00b7 Has a CA been minted yet \u2014 `TortaPillarBridge.centauriCaMinted()Z`.",
+              "lines": [
+                2487,
+                2492
+              ],
+              "name": "centauri_ca_minted",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "property that makes it safe to expose as a one-tap button.",
+              "lines": [
+                2498,
+                2503
+              ],
+              "name": "centauri_ca_install",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "honest value rather than showing a fabricated zero.",
+              "lines": [
+                2515,
+                2520
+              ],
+              "name": "centauri_tls_retrust",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "failure \u21d2 the caller holds its last honest value.",
+              "lines": [
+                2524,
+                2529
+              ],
+              "name": "centauri_cloak_armed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "`TortaPillarBridge.centauriSeedPolicy()I`. `None` on failure \u21d2 the caller holds its last honest value.",
+              "lines": [
+                2533,
+                2538
+              ],
+              "name": "centauri_seed_policy",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "push that fails to land snaps the pill back. Fail-open (host/preview has no bridge => inert `false`).",
+              "lines": [
+                2554,
+                2564
+              ],
+              "name": "set_warden_armed",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "Arm/disarm the fail-CLOSED posture bit \u2014 `TortaPillarBridge.setWardenFailClosed(Z)Z`.",
+              "lines": [
+                2567,
+                2577
+              ],
+              "name": "set_warden_fail_closed",
+              "signature": "(on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "(read-mutate-write against the live 9 bits, so a chip tap never clobbers its siblings).",
+              "lines": [
+                2581,
+                2592
+              ],
+              "name": "set_warden_universal_toggle",
+              "signature": "(key: &str, on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "meteredness + temp-allow).",
+              "lines": [
+                2596,
+                2601
+              ],
+              "name": "cycle_warden_app_mode",
+              "signature": "(uid: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "temp-allow).",
+              "lines": [
+                2605,
+                2610
+              ],
+              "name": "cycle_warden_app_metered",
+              "signature": "(uid: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "meteredness).",
+              "lines": [
+                2614,
+                2619
+              ],
+              "name": "toggle_warden_app_pause",
+              "signature": "(uid: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "(`wildcard` = the `*.domain` form; the engine RFC-1123 validates on insert). `Some(true)` iff armed.",
+              "lines": [
+                2623,
+                2634
+              ],
+              "name": "add_warden_domain_rule",
+              "signature": "(text: &str, wildcard: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "`a.b.c.d[/prefix]` Kotlin-side; a malformed string arms nothing). `Some(true)` iff armed.",
+              "lines": [
+                2638,
+                2649
+              ],
+              "name": "add_warden_cidr_rule",
+              "signature": "(text: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "index `idx`, and re-installs the remainder (install REPLACES). `Some(true)` iff a rule was removed.",
+              "lines": [
+                2654,
+                2659
+              ],
+              "name": "remove_warden_rule",
+              "signature": "(idx: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "owned String \u2014 the int-arg sibling of [`read_pillar_string`]. `None` on any JNI failure (fail-open).",
+              "lines": [
+                2669,
+                2678
+              ],
+              "name": "read_pillar_string_i",
+              "signature": "(method: &str, arg: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "the honest DORMANT browser.",
+              "lines": [
+                2686,
+                2688
+              ],
+              "name": "live_warden_app_flows",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "`None` when the bridge is unreachable OR the app has no recorded endpoint.",
+              "lines": [
+                2695,
+                2697
+              ],
+              "name": "live_warden_app_dests",
+              "signature": "(uid: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "`None` on any failure \u2014 the caller then keeps its last honest read.",
+              "lines": [
+                2702,
+                2704
+              ],
+              "name": "warden_geo_blocks",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "the v6 sibling). ADDITIVE (the engine `add_cidr_rule`, never install-replace). `Some(true)` iff armed.",
+              "lines": [
+                2709,
+                2720
+              ],
+              "name": "warden_block_ip",
+              "signature": "(uid: i32, cidr: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Returns the NEW armed count (>=0); `None` on any JNI failure.",
+              "lines": [
+                2725,
+                2736
+              ],
+              "name": "warden_set_geo_blocks",
+              "signature": "(csv: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "meteredness NetClass read-modify-write, preserving mode + the mobile axis + temp-allow).",
+              "lines": [
+                2740,
+                2750
+              ],
+              "name": "warden_set_app_block_wifi",
+              "signature": "(uid: i32, on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "mobile sibling of [`warden_set_app_block_wifi`], preserving mode + the wifi axis + temp-allow).",
+              "lines": [
+                2754,
+                2764
+              ],
+              "name": "warden_set_app_block_mobile",
+              "signature": "(uid: i32, on: bool)",
+              "type": "method"
+            },
+            {
+              "docstring": "iff the pin landed; `None` on any JNI failure (fail-open \u2014 the control row keeps rendering).",
+              "lines": [
+                2770,
+                2781
+              ],
+              "name": "set_underground_verdict",
+              "signature": "(host: &str, code: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "`seq:host:verdict:delta:signal:ts` rows `;`-joined, oldest first. `None`/\"\" fail-open.",
+              "lines": [
+                2788,
+                2790
+              ],
+              "name": "live_underground_events",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\"\" = no file (the compile-time defaults sit). `None` on JNI failure only.",
+              "lines": [
+                2794,
+                2796
+              ],
+              "name": "underground_scoring_toml",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "watcher hot-reloads \u22645 s. `Some(true)` iff the write landed.",
+              "lines": [
+                2801,
+                2812
+              ],
+              "name": "set_underground_scoring_toml",
+              "signature": "(text: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "iff anything was forgotten.",
+              "lines": [
+                2817,
+                2822
+              ],
+              "name": "reset_underground_reputation",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "`None` on any JNI failure (fail-open).",
+              "lines": [
+                2835,
+                2848
+              ],
+              "name": "read_pillar_string",
+              "signature": "(method: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "bridge is unreachable or returns empty (\u21d2 the caller holds the honest OFF state).",
+              "lines": [
+                2852,
+                2854
+              ],
+              "name": "live_resolver_stats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "The RUNNING Warden firewall's stats JSON (configured + the per-tier deny tally). `None` on failure.",
+              "lines": [
+                2857,
+                2859
+              ],
+              "name": "live_warden_stats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "SLINT substitution \u00b7 4-FIX-2 \u2014 the Centauri live cross-.so reader the round-2 witness flagged missing.",
+              "lines": [
+                2865,
+                2867
+              ],
+              "name": "live_mirror_status",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "every tile except cache-libraries/bytes read this `.so`'s cold spike-local Object.",
+              "lines": [
+                2876,
+                2878
+              ],
+              "name": "live_centauri_stats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "empty constellation, never a fabricated serve.",
+              "lines": [
+                2885,
+                2887
+              ],
+              "name": "live_centauri_serves",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "rotation was left on the spike seed).",
+              "lines": [
+                2896,
+                2898
+              ],
+              "name": "live_rotation_state",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "honest DORMANT card (armed=false, every counter zero), never a stale/fabricated flow tally.",
+              "lines": [
+                2905,
+                2907
+              ],
+              "name": "live_forwarder_stats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "the caller then holds the honest DORMANT court, never a stale licence tally.",
+              "lines": [
+                2915,
+                2917
+              ],
+              "name": "live_underground_stats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "renders the honest empty docket, never a fabricated flow.",
+              "lines": [
+                2925,
+                2927
+              ],
+              "name": "live_warden_flows",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "unreachable or no tunnel is live \u2014 the caller renders the honest empty docket.",
+              "lines": [
+                2937,
+                2939
+              ],
+              "name": "live_forwarder_docket",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "rows exist \u2014 the caller then renders the honest no-rows state (never a fabricated app row).",
+              "lines": [
+                2946,
+                2948
+              ],
+              "name": "live_warden_matrix",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "pipe record. `None` on any failure \u2014 the caller then keeps the honest all-off default.",
+              "lines": [
+                2954,
+                2956
+              ],
+              "name": "warden_universal_toggles",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "\u2014 the caller then renders the honest \"none armed\" empty-state.",
+              "lines": [
+                2963,
+                2965
+              ],
+              "name": "live_warden_rules",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "(`feed_engine`'s spike-local Beast, `engine-live=false`), never a stale window dressed as live.",
+              "lines": [
+                2974,
+                2976
+              ],
+              "name": "live_beast_stats",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "string when the key is absent.",
+              "lines": [
+                2982,
+                2992
+              ],
+              "name": "rot_field_str",
+              "signature": "(rec: &str, key: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "The integer value of a flat rotation-record `key` (via [`rot_field_str`]). `None` if absent/unparsable.",
+              "lines": [
+                2995,
+                2997
+              ],
+              "name": "rot_field_i64",
+              "signature": "(rec: &str, key: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "fields the Beast snapshot carries. `None` if absent/unparsable.",
+              "lines": [
+                3001,
+                3003
+              ],
+              "name": "rot_field_f64",
+              "signature": "(rec: &str, key: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Whether a flat rotation-record `key` is exactly `true`.",
+              "lines": [
+                3006,
+                3008
+              ],
+              "name": "rot_field_bool",
+              "signature": "(rec: &str, key: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "if the key is absent or its value is not an integer.",
+              "lines": [
+                3013,
+                3021
+              ],
+              "name": "kv_i64",
+              "signature": "(line: &str, key: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "key is absent or its value is not an integer.",
+              "lines": [
+                3026,
+                3034
+              ],
+              "name": "json_i32",
+              "signature": "(json: &str, key: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "float). `None` if the key is absent or its value is unparsable.",
+              "lines": [
+                3038,
+                3046
+              ],
+              "name": "json_f32",
+              "signature": "(json: &str, key: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Whether a flat-JSON boolean `key` is `true`.",
+              "lines": [
+                3049,
+                3055
+              ],
+              "name": "json_bool",
+              "signature": "(json: &str, key: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "value could actually contain). `None` if the key is absent. Never used for a numeric/`null` field.",
+              "lines": [
+                3061,
+                3067
+              ],
+              "name": "json_str",
+              "signature": "(json: &str, key: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "(`json_str`/`json_f32`/`json_i32`) read field-by-field.",
+              "lines": [
+                3074,
+                3104
+              ],
+              "name": "json_object_array",
+              "signature": "(json: &str, key: &str)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            1725,
+            3105
+          ],
+          "name": "engine_bridge",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "docstring": "panel renders. Empty entries are dropped so an absent/trailing separator never yields a blank row.",
+              "lines": [
+                3151,
+                3158
+              ],
+              "name": "split_discovered_line",
+              "signature": "(line: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Called at startup + each 500 ms engine poll so the ledger streams while running.",
+              "lines": [
+                3191,
+                3278
+              ],
+              "name": "overlay_live_engine",
+              "signature": "(shell: &crate::TortaShell, running_hint: bool)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3280,
+                3303
+              ],
+              "name": "feed_home",
+              "signature": "(shell: &crate::TortaShell, centauri: &torta_core::mirror::object::Centauri)",
+              "type": "method"
+            },
+            {
+              "docstring": "a stale or fabricated flow tally (the Chroma F6 honesty law).",
+              "lines": [
+                3315,
+                3437
+              ],
+              "name": "feed_from_live_forwarder",
+              "signature": "(shell: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "docstring": "counter zero \u2014 never a stale or fabricated licence tally (the Chroma F6 honesty law).",
+              "lines": [
+                3444,
+                3498
+              ],
+              "name": "feed_from_live_underground",
+              "signature": "(shell: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "docstring": "fail-open \u21d2 the wire simply stays quiet.",
+              "lines": [
+                3509,
+                3528
+              ],
+              "name": "feed_underground_wire",
+              "signature": "(shell: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "docstring": "the raw text + the parsed quick state (detection switches, quarantine TTL label).",
+              "lines": [
+                3532,
+                3541
+              ],
+              "name": "feed_underground_law",
+              "signature": "(shell: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3543,
+                3614
+              ],
+              "name": "feed_engine",
+              "signature": "(shell: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "docstring": "render identically (no cold\u2194live drift), only the SOURCE of truth differs.",
+              "lines": [
+                3627,
+                3718
+              ],
+              "name": "overlay_live_beast",
+              "signature": "(shell: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "docstring": "unification lands.",
+              "lines": [
+                3730,
+                3813
+              ],
+              "name": "feed_from_live_beast",
+              "signature": "(shell: &crate::TortaShell, beast: &torta_core::Beast)",
+              "type": "method"
+            },
+            {
+              "docstring": "RAM\u2297NAND read path the \u2463 QUERY feed rides (`log_tail_recent`), newest first.",
+              "lines": [
+                3825,
+                3896
+              ],
+              "name": "overlay_live_beast_dashboard",
+              "signature": "(shell: &crate::TortaShell, data_dir: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "the pane's \"not written yet\" honesty, never a fabricated \"stale\".",
+              "lines": [
+                3908,
+                3921
+              ],
+              "name": "refresh_query_rows",
+              "signature": "(s: &crate::TortaShell, data_dir: &str, source: &str)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                3923,
+                3946
+              ],
+              "name": "wire_query_feed",
+              "signature": "(shell: &crate::TortaShell, data_dir: String)",
+              "type": "method"
+            },
+            {
+              "docstring": "and `pq-measured` renders them as \"\u2014\" rather than as \"not protected\".",
+              "lines": [
+                3962,
+                3972
+              ],
+              "name": "feed_pq_witness",
+              "signature": "(sh: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "docstring": "honest empty feed + a 0 count, NEVER a fabricated row (the felt-truth law).",
+              "lines": [
+                3984,
+                4014
+              ],
+              "name": "feed_from_live_dnscrypt",
+              "signature": "(\n        shell: &crate::TortaShell,\n        cfg: &torta_core::DnscryptProxyConfig,\n        data_...",
+              "type": "method"
+            },
+            {
+              "docstring": "short/blank line is skipped (`None`). T20: outcome + type labels only, never a qname / client-IP.",
+              "lines": [
+                4021,
+                4034
+              ],
+              "name": "parse_mask_row",
+              "signature": "(line: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "`strategy` + the per-upstream health rows carry real STRUCTURAL numbers, never fabricated traffic.",
+              "lines": [
+                4046,
+                4259
+              ],
+              "name": "feed_from_live_masksolver",
+              "signature": "(shell: &crate::TortaShell, solver: &torta_core::MaskSolver)",
+              "type": "method"
+            },
+            {
+              "docstring": "slint defaults stand. T20-safe: shapes/bools/counts only \u2014 no qname/IP crosses.",
+              "lines": [
+                4270,
+                4429
+              ],
+              "name": "feed_masksolver_settings_shell",
+              "signature": "(sh: &crate::TortaShell, tier_dir: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "hiccup leaves the honest cold baseline, never a fabricated wheel. Mirrors `feed_masksolver_settings_shell`.",
+              "lines": [
+                4440,
+                4476
+              ],
+              "name": "feed_rotation_settings_shell",
+              "signature": "(sh: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "docstring": "documents. An out-of-range field -> -1 (the caller keeps its current value).",
+              "lines": [
+                4483,
+                4495
+              ],
+              "name": "beast_preset_host",
+              "signature": "(preset: i32, field: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "retired). An unknown field passes `raw` through unchanged.",
+              "lines": [
+                4500,
+                4508
+              ],
+              "name": "beast_clamp_host",
+              "signature": "(field: i32, raw: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "the live engine (that is Apply's job).",
+              "lines": [
+                4513,
+                4523
+              ],
+              "name": "stage_beast_from_shell",
+              "signature": "(sh: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "docstring": "live (staged brain/queue/window vs what the engine actually runs) so it self-clears after Apply.",
+              "lines": [
+                4530,
+                4611
+              ],
+              "name": "feed_beast_settings_shell",
+              "signature": "(sh: &crate::TortaShell)",
+              "type": "method"
+            },
+            {
+              "docstring": "so the HOME chips + the burger tabs can never disagree.",
+              "lines": [
+                4620,
+                4878
+              ],
+              "name": "pillar_rows",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "HOME chips take the SAME rows in [`feed_home`]).",
+              "lines": [
+                4882,
+                4884
+              ],
+              "name": "feed_pillar_tabs",
+              "signature": "(burger: &crate::AdvancedBurger)",
+              "type": "method"
+            },
+            {
+              "docstring": "empty model (the picker shows nothing rather than failing \u2014 the resolver's fail-open posture).",
+              "lines": [
+                4890,
+                4929
+              ],
+              "name": "build_server_rows",
+              "signature": "(\n        md_path: &str,\n        cfg: &torta_core::DnscryptProxyConfig,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "resolvers earns a visible \"rides N resolvers\" hint so the operator SPREADS instead of stacks.",
+              "lines": [
+                4935,
+                4945
+              ],
+              "name": "relay_ride_counts",
+              "signature": "(\n        cfg: &torta_core::DnscryptProxyConfig,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "Render one relay's overload hint from its ride count \u2014 \"\" below the 2-resolver threshold.",
+              "lines": [
+                4948,
+                4953
+              ],
+              "name": "overload_hint",
+              "signature": "(rides: &std::collections::HashMap<String, usize>, name: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "from its owner). Each row carries the [`overload_hint`] ride-count note.",
+              "lines": [
+                4962,
+                4990
+              ],
+              "name": "build_relay_rows",
+              "signature": "(\n        md_path: &str,\n        cfg: &torta_core::DnscryptProxyConfig,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "[`build_relay_rows`]; a relay armed on this route always shows.",
+              "lines": [
+                4997,
+                5027
+              ],
+              "name": "build_pairing_rows",
+              "signature": "(\n        md_path: &str,\n        cfg: &torta_core::DnscryptProxyConfig,\n        server: &str,\n    )",
+              "type": "method"
+            },
+            {
+              "docstring": "Extract the trailing `:port` of an address/URL as an int (the Kotlin extractPort twin).",
+              "lines": [
+                5546,
+                5551
+              ],
+              "name": "port_of",
+              "signature": "(addr: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "validator enforces on this build.",
+              "lines": [
+                5555,
+                5561
+              ],
+              "name": "parse_port",
+              "signature": "(text: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "Re-derive the loopback listener addresses (the Kotlin setListenAddresses twin).",
+              "lines": [
+                5564,
+                5570
+              ],
+              "name": "set_listen",
+              "signature": "(cfg: &mut torta_core::DnscryptProxyConfig, port: i32)",
+              "type": "method"
+            },
+            {
+              "docstring": "Step every named source's refresh cadence by \u00b1delta hours (clamped) and return the new value.",
+              "lines": [
+                5573,
+                5589
+              ],
+              "name": "step_refresh",
+              "signature": "(\n        cfg: &Rc<RefCell<torta_core::DnscryptProxyConfig>>,\n        names: &[&str],\n        del...",
+              "type": "method"
+            },
+            {
+              "docstring": "Render the bootstrap list for display (strip `:53` + brackets \u2014 the Kotlin displayBootstrap twin).",
+              "lines": [
+                5592,
+                5604
+              ],
+              "name": "display_bootstrap",
+              "signature": "(resolvers: &[String])",
+              "type": "method"
+            },
+            {
+              "docstring": "stores disagreeing.",
+              "lines": [
+                5612,
+                5853
+              ],
+              "name": "feed_from_live_centauri",
+              "signature": "(\n        // 2-FEED-Centauri: feeds the SHELL's in-shell centauri-dash pane. The `TortaShell` Cen...",
+              "type": "method"
+            },
+            {
+              "docstring": "way it was silently absent.",
+              "lines": [
+                5884,
+                5981
+              ],
+              "name": "feed_from_live_inu",
+              "signature": "(\n        dash: &crate::InuDashboard,\n        store: &torta_core::inu::object::InuStore,\n        ...",
+              "type": "method"
+            },
+            {
+              "docstring": "actually opens (the ADVANCED inu-dash section), so this is the one that matters most.",
+              "lines": [
+                5993,
+                6073
+              ],
+              "name": "feed_inu_shell",
+              "signature": "(\n        sh: &crate::TortaShell,\n        store: &torta_core::inu::object::InuStore,\n        demo...",
+              "type": "method"
+            },
+            {
+              "docstring": "which is the more misleading of the two, since this is the surface that offers Unpair and Re-pair.",
+              "lines": [
+                6090,
+                6156
+              ],
+              "name": "feed_inu_settings_shell",
+              "signature": "(\n        sh: &crate::TortaShell,\n        store: &torta_core::inu::object::InuStore,\n        demo...",
+              "type": "method"
+            },
+            {
+              "docstring": "over-claim of reboot-safety).",
+              "lines": [
+                6162,
+                6166
+              ],
+              "name": "staged_inu_prefs",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "docstring": "stamp degrades to a plain \"paired\" (never a fabricated interval).",
+              "lines": [
+                6171,
+                6197
+              ],
+              "name": "inu_paired_label",
+              "signature": "(paired: bool, granted_at: i64)",
+              "type": "method"
+            },
+            {
+              "docstring": "`InuPowerFlag`, never this map. A closed 21-variant match (the [`torta_core::inu::InuPowerId`] set).",
+              "lines": [
+                6203,
+                6229
+              ],
+              "name": "inu_power_meta",
+              "signature": "(id: torta_core::inu::InuPowerId)",
+              "type": "method"
+            },
+            {
+              "docstring": "hint column; the same closed 21-variant [`torta_core::inu::InuPowerId`] set as [`inu_power_meta`].",
+              "lines": [
+                6234,
+                6259
+              ],
+              "name": "inu_power_hint",
+              "signature": "(id: torta_core::inu::InuPowerId)",
+              "type": "method"
+            },
+            {
+              "docstring": "empty line is skipped (never a torn row).",
+              "lines": [
+                6266,
+                6280
+              ],
+              "name": "parse_inu_log",
+              "signature": "(tail: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "DRIFT-UNGUARDED fault). A clean crown \u21d2 ELEVATED.",
+              "lines": [
+                6295,
+                6349
+              ],
+              "name": "seed_inu_spike_posture",
+              "signature": "(store: &torta_core::inu::object::InuStore)",
+              "type": "method"
+            },
+            {
+              "docstring": "truth; only the rendered string is capped.",
+              "lines": [
+                6365,
+                6372
+              ],
+              "name": "join_names_capped",
+              "signature": "(csv: &str, cap: usize)",
+              "type": "method"
+            },
+            {
+              "lines": [
+                6374,
+                6414
+              ],
+              "name": "classify_rotation_line",
+              "signature": "(line: &str)",
+              "type": "method"
+            },
+            {
+              "docstring": "snapshot streams once the single-.so unification lands. The D1 Centauri-feed template, mapped to the wheel.",
+              "lines": [
+                6430,
+                6603
+              ],
+              "name": "feed_from_live_rotation",
+              "signature": "(\n        shell: &crate::TortaShell,\n        solver: &torta_core::MaskSolver,\n        data_dir: &...",
+              "type": "method"
+            },
+            {
+              "lines": [
+                6621,
+                8935
+              ],
+              "name": "android_main",
+              "signature": "(app: slint::android::AndroidApp)",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            3138,
+            8936
+          ],
+          "name": "android_spike",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                8963,
+                10711
+              ],
+              "name": "slint_substrate_compiles_and_binds",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                10718,
+                10728
+              ],
+              "name": "warden_engine_surface_reachable_from_ui_crate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                10737,
+                10756
+              ],
+              "name": "centauri_engine_surface_reachable_from_ui_crate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                10767,
+                10793
+              ],
+              "name": "masksolver_engine_surface_reachable_from_ui_crate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                10803,
+                10837
+              ],
+              "name": "dnscrypt_config_engine_surface_reachable_from_ui_crate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                10847,
+                10880
+              ],
+              "name": "design_finale_typed_feeds_reachable_from_ui_crate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                10890,
+                10998
+              ],
+              "name": "query_log_surface_and_feed_shape_reachable_from_ui_crate",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11004,
+                11023
+              ],
+              "name": "forwarder_docket_parses_the_bridge_wire_field_for_field",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11029,
+                11037
+              ],
+              "name": "forwarder_docket_keeps_an_unmeasured_rtt_negative",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11042,
+                11053
+              ],
+              "name": "forwarder_docket_skips_malformed_rows_and_keeps_the_good_ones",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11063,
+                11080
+              ],
+              "name": "forwarder_docket_names_the_icmp_lane_and_never_guesses_an_unknown_one",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11085,
+                11089
+              ],
+              "name": "forwarder_docket_accepts_a_live_but_empty_docket",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11095,
+                11125
+              ],
+              "name": "beast_tick_parser_decodes_the_writer_line_and_rejects_headers",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            8939,
+            11126
+          ],
+          "name": "tests",
+          "type": "module"
+        },
+        {
+          "children": [
+            {
+              "lines": [
+                11142,
+                11203
+              ],
+              "name": "arm_warden_spike_yields_real_nonzero_snapshot",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11211,
+                11300
+              ],
+              "name": "warden_settings_feed_parsers_decode_the_live_wire",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11309,
+                11346
+              ],
+              "name": "warden_dash_matrix_parser_carries_mode_ord_and_armed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11354,
+                11361
+              ],
+              "name": "underground_top_renders_rows",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11369,
+                11387
+              ],
+              "name": "underground_top_trust_bands_render_and_override_seq",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11394,
+                11404
+              ],
+              "name": "underground_top_skips_malformed_rows_fail_open",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11413,
+                11437
+              ],
+              "name": "underground_docket_parses_the_nine_field_row",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11443,
+                11462
+              ],
+              "name": "underground_wire_renders_newest_first_capped",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11471,
+                11495
+              ],
+              "name": "underground_law_parses_and_patches",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11504,
+                11529
+              ],
+              "name": "inu_prefs_parse_live_and_fail_open",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11538,
+                11620
+              ],
+              "name": "live_flows_ring_feeds_newest_first_docket_rows",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11629,
+                11678
+              ],
+              "name": "live_flows_bridge_wire_parses_and_skips_malformed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11686,
+                11719
+              ],
+              "name": "inspector_apps_wire_parses_posture_and_skips_malformed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11727,
+                11759
+              ],
+              "name": "inspector_dests_wire_parses_flag_and_skips_malformed",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11766,
+                11785
+              ],
+              "name": "ladder_cidr_climbs_v4_and_v6_rungs",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11791,
+                11808
+              ],
+              "name": "freshness_label_renders_honest_ages",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "lines": [
+            11138,
+            11809
+          ],
+          "name": "warden_feed_proof",
+          "type": "module"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T04:01:09.212895+00:00",
+  "version": "1.0"
+}

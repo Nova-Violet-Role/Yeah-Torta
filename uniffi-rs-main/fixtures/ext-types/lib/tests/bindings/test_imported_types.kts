@@ -1,0 +1,94 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+import uniffi.imported_types_lib.*
+import uniffi.imported_types_sublib.*
+import uniffi.uniffi_one_ns.*
+import uniffi.ext_types_custom.*
+import java.net.URI
+import kotlinx.coroutines.runBlocking
+
+// First step: implement a trait from an external crate in Kotlin and pass it to a function from this
+// crate.  This tests #2343 -- the codegen for this module needs to initialize the vtable from
+// uniffi_one.
+class KtUniffiOneImpl: UniffiOneTrait {
+    override fun hello(): String {
+        return "Hello from Kotlin"
+    }
+}
+assert(invokeUniffiOneTrait(KtUniffiOneImpl()) == "Hello from Kotlin")
+
+val ct = getCombinedType(null)
+assert(ct.uot.sval == "hello")
+assert(ct.guid ==  "a-guid")
+assert(ct.url ==  URI.create("http://example.com/").toURL())
+
+val ct2 = getCombinedType(ct)
+assert(ct == ct2)
+
+assert(getObjectsType(null).maybeInterface == null)
+assert(getObjectsType(null).maybeTrait == null)
+assert(getUniffiOneTrait(null) == null)
+
+assert(getSubType(null).maybeInterface == null)
+assert(getTraitImpl().hello() == "sub-lib trait impl says hello")
+
+val url = URI.create("http://example.com/").toURL()
+assert(getUrl(url) ==  url)
+assert(getMaybeUrl(url)!! ==  url)
+assert(getMaybeUrl(null) ==  null)
+assert(getUrls(listOf(url)) ==  listOf(url))
+assert(getMaybeUrls(listOf(url, null)) == listOf(url, null))
+
+assert(getGuid("guid") == "guid")
+assert(getOuid("ouid") == "ouid")
+//assert(getImportedGuid("guid") == "guid")
+assert(getImportedOuid("ouid") == "ouid")
+assert(getImportedHandleU8(null) == 3u.toUByte())
+runBlocking {
+    assert(getNestedExternalOuidAsync(null) == "nested-external-ouid")
+    assert(getLocalExternalGuidAsync() == "local-external-guid")
+}
+
+val uot = UniffiOneType("hello")
+assert(getUniffiOneType(uot) == uot)
+assert(getMaybeUniffiOneType(uot)!! == uot)
+assert(getMaybeUniffiOneType(null) == null)
+assert(getUniffiOneTypes(listOf(uot)) == listOf(uot))
+assert(getMaybeUniffiOneTypes(listOf(uot, null)) == listOf(uot, null))
+
+val uopmt = UniffiOneProcMacroType("hello from proc-macro world")
+assert(getUniffiOneProcMacroType(uopmt) == uopmt)
+assert(getMyProcMacroType(uopmt) == uopmt)
+
+val uoe = UniffiOneEnum.ONE
+assert(getUniffiOneEnum(uoe) == uoe)
+assert(getMaybeUniffiOneEnum(uoe)!! == uoe)
+assert(getMaybeUniffiOneEnum(null) == null)
+assert(getUniffiOneEnums(listOf(uoe)) == listOf(uoe))
+assert(getMaybeUniffiOneEnums(listOf(uoe, null)) == listOf(uoe, null))
+
+try {
+    throwUniffiOneError()
+    throw RuntimeException("Should have thrown a UniffiOne exception!")
+} catch (e: UniffiOneException) {
+    assert(e is UniffiOneException.Oops)
+    e as UniffiOneException.Oops
+    assert(e.v1 == "oh no")
+}
+
+try {
+    throwUniffiOneErrorInterface()
+    throw RuntimeException("Should have thrown a UniffiOneErrorInterface exception!")
+} catch (e: UniffiOneErrorInterface) {
+    assert(e.message() == "interface oops")
+}
+
+assert(ct.ecd.sval == "ecd")
+assert(getExternalCrateInterface("foo").value() == "foo")
+
+// Test that BindingRenamedType from uniffi-one is renamed to KotlinRenamedType via direct function call
+val renamedType = getBindingRenamedType("external_rename_test")
+assert(renamedType is KotlinRenamedType)
+assert(renamedType.kotlinValue == "external_rename_test")

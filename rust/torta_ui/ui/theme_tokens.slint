@@ -1,0 +1,456 @@
+// This file is part of Yeah! Tortä.
+// SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+// Copyright 2026 Saimonokuma.
+
+// ============================================================================
+//  theme_tokens.slint — THE THEME-TOKEN SPINE  (#33, the 24-37 wave foundation)
+//  ⬜ Soleil facet · SLINT/Rust token system — NO XML (the no-XML law).
+// ============================================================================
+//
+// #23 (the master) calls for a NAME-DRIVEN identity per section: every pillar +
+// HOME + GENERAL pulls its OWN palette · motif · typography from tokens, so a
+// section's whole identity lives in ONE block, not scattered across a 54KB
+// surface. This file is that spine:
+//
+//   • `SectionTheme` — the NORMALIZED slice-10 grammar every existing palette
+//     already follows (panel scale → legibility scale → accents → verdicts →
+//     track), plus the typography energy + the motif glyph, as ONE typed struct.
+//   • `ThemeBook` — the global that binds each section's theme. Colors ALIAS
+//     the existing per-pillar palette globals (Monokuma/Beast/Wheel/Masque/
+//     Inu/Centauri-stellar/Candle) — the palette files STAY the single source
+//     of color truth; the book normalizes the names. Sections without a palette
+//     file yet (underground #29, home #34, general #36) seed their tokens HERE
+//     and graduate to their own palette file in their own task.
+//   • THE DEMON-SLAYER DUALITY — `hashira` (the heroes' chrome) vs `oni` (the
+//     Upper-Moon chrome) as two full token sets, flipped at RUNTIME by the
+//     `akuma` switch: the ||| burger chrome binds `ThemeBook.burger`, and
+//     navigating to ⚙ GENERAL (the Infinity-Castle lean, task #36) flips the
+//     whole chrome demon-side without touching a single consumer line. That
+//     flip IS the load-bearing witness — the token is live state, not config.
+//
+// USAGE (a consumer surface):
+//   import { ThemeBook } from "theme_tokens.slint";
+//   background: ThemeBook.burger.ground;   color: ThemeBook.burger.bright;
+//   // or a fixed section:  color: ThemeBook.warden.accent;
+//
+// GROUND RULES: additive-only this wave — pillar-pane INTERNALS keep reading
+// their own palette globals (each restyle task 24-31 migrates its pillar onto
+// its ThemeBook entry); the burger/shell CHROME is the first consumer.
+// ============================================================================
+
+import { Monokuma } from "monokuma_palette.slint";
+import { Beast } from "beast_palette.slint";
+import { Wheel } from "rotation_palette.slint";
+import { Masque } from "masksolver_palette.slint";
+import { Inu } from "inu_palette.slint";
+import { Centauri } from "centauri_palette.slint";
+import { Candle } from "dnscrypt_palette.slint";
+
+// The normalized identity grammar — ONE struct, every section speaks it.
+export struct SectionTheme {
+    // ── identity ──
+    name: string,          // the identity tag ("MONOKUMA COURT", "UPPER MOONS", …)
+    motif: string,         // the recurring glyph/word token the surfaces reference
+    // ── the panel scale (deepest → faintest) ──
+    ground: color,         // the section window ground
+    floor: color,          // row cards
+    panel: color,          // lifted tiles
+    edge: color,           // hairline borders on the dark
+    track: color,          // toggle off-rail
+    // ── the legibility scale ──
+    bright: color,         // primary text
+    muted: color,          // secondary text / labels
+    faint: color,          // tertiary text / section titles
+    // ── the brand accents ──
+    accent: color,         // the section's signature color
+    accent2: color,        // the lighter lick / secondary brand
+    // ── the verdict grammar (shared across the app) ──
+    good: color,
+    warn: color,
+    bad: color,
+    wound: color,          // alert-banner FILL (≠ the accent stroke)
+    strike: color,         // text struck on a filled banner
+    // ── the typography energy ──
+    title-size: length,    // section/crown titles
+    title-weight: int,
+    value-size: length,    // the big metric values
+    value-weight: int,
+    label-size: length,    // tile labels / chip text
+    label-weight: int,
+}
+
+export global ThemeBook {
+    // ================= THE EIGHT PILLARS (palette-file backed) =================
+
+    // WARDEN — the Monokuma courtroom: black/white split, the red eye rules.
+    out property <SectionTheme> warden: {
+        name: "MONOKUMA COURT", motif: "X / O",
+        ground: Monokuma.night, floor: Monokuma.pitch.with-alpha(0.68), panel: Monokuma.slate.with-alpha(0.58),
+        edge: Monokuma.iron, track: Monokuma.iron.with-alpha(0.45),
+        bright: Monokuma.bone, muted: Monokuma.ash, faint: Monokuma.dim,
+        accent: Monokuma.risk, accent2: Monokuma.caution,
+        good: Monokuma.safe, warn: Monokuma.caution, bad: Monokuma.risk,
+        wound: Monokuma.wound, strike: Monokuma.strike,
+        title-size: 17px, title-weight: 900,
+        value-size: 22px, value-weight: 800,
+        label-size: 10px, label-weight: 700,
+    };
+
+    // BEAST — the CAKE × YeAH oven: molten flow-orange on scorched black.
+    out property <SectionTheme> beast: {
+        name: "THE CAKE OVEN", motif: "CAKE ▲",
+        ground: Beast.abyss, floor: Beast.pit.with-alpha(0.68), panel: Beast.panel.with-alpha(0.58),
+        edge: Beast.hairline, track: Beast.track.with-alpha(0.45),
+        bright: Beast.ink, muted: Beast.mist, faint: Beast.dim,
+        accent: Beast.flow, accent2: Beast.cool,
+        good: Beast.thrust, warn: Beast.caution, bad: Beast.shed,
+        wound: Beast.wound, strike: Beast.strike,
+        title-size: 18px, title-weight: 900,
+        value-size: 23px, value-weight: 900,
+        label-size: 10px, label-weight: 700,
+    };
+
+    // CENTAURI — the constellation: cyan starlight in the deep-blue void.
+    out property <SectionTheme> centauri: {
+        name: "THE CONSTELLATION", motif: "★ NEXUS",
+        ground: Centauri.void, floor: Centauri.nebula.with-alpha(0.68), panel: Centauri.panel.with-alpha(0.58),
+        edge: Centauri.hairline, track: Centauri.track.with-alpha(0.45),
+        bright: Centauri.starlight, muted: Centauri.haze, faint: Centauri.dim,
+        accent: Centauri.stellar, accent2: Centauri.crown,
+        good: Centauri.crown, warn: Centauri.caution, bad: Centauri.breach,
+        wound: Centauri.wound, strike: Centauri.strike,
+        title-size: 16px, title-weight: 800,
+        value-size: 21px, value-weight: 700,
+        label-size: 10px, label-weight: 700,
+    };
+
+    // MASKSOLVER — the Persona veil: phantom violet under the moon.
+    out property <SectionTheme> masksolver: {
+        name: "THE MASQUERADE", motif: "MASQUE",
+        ground: Masque.veil-void, floor: Masque.veil.with-alpha(0.68), panel: Masque.panel.with-alpha(0.58),
+        edge: Masque.hairline, track: Masque.track.with-alpha(0.45),
+        bright: Masque.moon, muted: Masque.haze, faint: Masque.dim,
+        accent: Masque.mask, accent2: Masque.cache,
+        good: Masque.resolve, warn: Masque.caution, bad: Masque.breach,
+        wound: Masque.wound, strike: Masque.strike,
+        title-size: 17px, title-weight: 900,
+        value-size: 22px, value-weight: 800,
+        label-size: 10px, label-weight: 700,
+    };
+
+    // ROTATION — the operator wheel: pillar-blue spokes, racing green turns.
+    out property <SectionTheme> rotation: {
+        name: "THE WHEEL", motif: "WHEEL",
+        ground: Wheel.orbit-void, floor: Wheel.abyss.with-alpha(0.68), panel: Wheel.tile.with-alpha(0.58),
+        edge: Wheel.hairline, track: Wheel.track.with-alpha(0.45),
+        bright: Wheel.starlight, muted: Wheel.haze, faint: Wheel.dim,
+        accent: Wheel.spoke, accent2: Wheel.turn,
+        good: Wheel.turn, warn: Wheel.caution, bad: Wheel.stall,
+        wound: Wheel.wound, strike: Wheel.strike,
+        title-size: 17px, title-weight: 900,
+        value-size: 23px, value-weight: 900,
+        label-size: 10px, label-weight: 700,
+    };
+
+    // WIRE CAKE INU — the loyal dog's den: warm straw, teal collar.
+    out property <SectionTheme> inu: {
+        name: "THE DEN", motif: "INU ◆",
+        ground: Inu.den, floor: Inu.burrow.with-alpha(0.68), panel: Inu.kennel.with-alpha(0.58),
+        edge: Inu.leash, track: Inu.track.with-alpha(0.45),
+        bright: Inu.cream, muted: Inu.fur, faint: Inu.dim,
+        accent: Inu.collar, accent2: Inu.tag,
+        good: Inu.goodboy, warn: Inu.caution, bad: Inu.growl,
+        wound: Inu.wound, strike: Inu.strike,
+        title-size: 16px, title-weight: 800,
+        value-size: 21px, value-weight: 800,
+        label-size: 10px, label-weight: 700,
+    };
+
+    // CARBON — the 13th pillar: graphite slab + carbon-ring cyan glint (#60B).
+    // Inline hex until the carbon palette file lands with the 60C renderer wave;
+    // colors match the established ||| Carbon bar identity (ZERO transparency law).
+    out property <SectionTheme> carbon: {
+        name: "THE CARBON RING", motif: "⌬",
+        ground: #101214, floor: #16181b.with-alpha(0.68), panel: #2a2f34.with-alpha(0.58),
+        edge: #3a4148, track: #3a4148.with-alpha(0.45),
+        bright: #eaf6fb, muted: #9fb4bd, faint: #5c6f78,
+        accent: #8be9fd, accent2: #b8f2ff,
+        good: #50fa7b, warn: #f1fa8c, bad: #ff5555,
+        wound: #4a1620, strike: #ffd7de,
+        title-size: 16px, title-weight: 900,
+        value-size: 21px, value-weight: 800,
+        label-size: 10px, label-weight: 700,
+    };
+
+    // DNSCRYPT — the namesake candle: flame-gold on warm black.
+    out property <SectionTheme> dnscrypt: {
+        name: "THE CANDLE", motif: "CANDLE ★",
+        ground: Candle.wax, floor: Candle.wick.with-alpha(0.68), panel: Candle.panel.with-alpha(0.58),
+        edge: Candle.hairline, track: Candle.track.with-alpha(0.45),
+        bright: Candle.bright, muted: Candle.haze, faint: Candle.dim,
+        accent: Candle.candle, accent2: Candle.flame,
+        good: Candle.safe, warn: Candle.caution, bad: Candle.breach,
+        wound: Candle.wound, strike: Candle.strike,
+        title-size: 17px, title-weight: 900,
+        value-size: 22px, value-weight: 800,
+        label-size: 10px, label-weight: 700,
+    };
+
+    // UNDERGROUND — Matrix rain: phosphor green on terminal black.
+    // (No palette file yet — task #29 extracts these into underground_palette.)
+    out property <SectionTheme> underground: {
+        name: "THE MATRIX", motif: "01",
+        ground: #050a06, floor: #0a140c, panel: #0e1a10,
+        edge: #1c3a22, track: #1c3a22,
+        bright: #d8ffe0, muted: #6fae7f, faint: #4a7a56,
+        accent: #2fe26a, accent2: #9dffb0,
+        good: #2fe26a, warn: #f0a830, bad: #ef4d57,
+        wound: #a5342a, strike: #ffffff,
+        title-size: 15px, title-weight: 800,
+        value-size: 20px, value-weight: 700,
+        label-size: 10px, label-weight: 700,
+    };
+
+    // ================= THE APP SURFACES (seeded here, graduate later) ==========
+
+    // HOME — the dessert tower: parfait gold + strawberry cream (task #34's canvas).
+    out property <SectionTheme> home: {
+        name: "THE DESSERT TOWER", motif: "TORTÄ",
+        ground: Candle.wax, floor: Candle.wick.with-alpha(0.68), panel: Candle.panel.with-alpha(0.58),
+        edge: Candle.hairline, track: Candle.track.with-alpha(0.45),
+        bright: Candle.bright, muted: Candle.haze, faint: Candle.dim,
+        accent: Candle.candle, accent2: #f2a6c2,
+        good: Candle.safe, warn: Candle.caution, bad: Candle.breach,
+        wound: Candle.wound, strike: Candle.strike,
+        title-size: 18px, title-weight: 900,
+        value-size: 23px, value-weight: 900,
+        label-size: 10px, label-weight: 700,
+    };
+
+    // GENERAL — the gear room: neutral steel (task #36 raises the Infinity Castle).
+    out property <SectionTheme> general: {
+        name: "THE GEAR ROOM", motif: "⚙",
+        ground: #101218, floor: #161a22, panel: #1a1f2a,
+        edge: #2a3242, track: #2a3242,
+        bright: #e8edf6, muted: #93a0b5, faint: #5f6b80,
+        accent: #7f9db8, accent2: #b8c4d6,
+        good: #2ecc71, warn: #f39c12, bad: #ef4d57,
+        wound: #c0392b, strike: #ffffff,
+        title-size: 16px, title-weight: 800,
+        value-size: 21px, value-weight: 700,
+        label-size: 10px, label-weight: 700,
+    };
+
+    // ================= THE DEMON-SLAYER DUALITY (the ||| burger chrome) ========
+    //
+    // ◆ PILLARS = the HASHIRA side (heroes: the Monokuma-neutral shell chrome the
+    // D2 burger set, pillar-blue signature). ⚙ GENERAL = the AKUMA side (the
+    // Upper-Moon chrome: demon crimson-violet on a deeper black — task #36's
+    // Infinity Castle lean). `akuma` flips the WHOLE chrome set at runtime.
+
+    out property <SectionTheme> hashira: {
+        name: "HASHIRA", motif: "|||",
+        // #36 GLASS WIRE — the PILLARS overlay panels go translucent (the DESCENT ambient
+        // breathes through every card) and the hairlines turn ember wire (the castle's light).
+        ground: Monokuma.night, floor: Monokuma.pitch.with-alpha(0.42), panel: Monokuma.slate.with-alpha(0.28),
+        edge: #d98a3c.with-alpha(0.62), track: Monokuma.iron.with-alpha(0.45),
+        bright: Monokuma.bone, muted: Monokuma.ash, faint: Monokuma.dim,
+        accent: #5e8bff, accent2: #4ade80,
+        good: Monokuma.safe, warn: Monokuma.caution, bad: Monokuma.risk,
+        wound: Monokuma.wound, strike: Monokuma.strike,
+        title-size: 18px, title-weight: 900,
+        value-size: 22px, value-weight: 800,
+        label-size: 10px, label-weight: 700,
+    };
+
+    out property <SectionTheme> oni: {
+        name: "UPPER MOONS", motif: "月",
+        ground: #0d0812, floor: #150d1c, panel: #1a1024,
+        edge: #33204a, track: #33204a,
+        bright: #f6eefc, muted: #a08cb8, faint: #6c5a84,
+        accent: #c026d3, accent2: #7c3aed,
+        good: #2ecc71, warn: #f39c12, bad: #ff2447,
+        wound: #8b1a3a, strike: #ffffff,
+        title-size: 18px, title-weight: 900,
+        value-size: 22px, value-weight: 800,
+        label-size: 10px, label-weight: 700,
+    };
+
+    // THE RUNTIME SWITCH — consumers bind `burger`; flipping `akuma` restyles
+    // every bound consumer in one assignment (the load-bearing proof).
+    in-out property <bool> akuma: false;
+    out property <SectionTheme> burger: root.akuma ? root.oni : root.hashira;
+}
+
+// ── THE MOTIF WASH (#24 wave-2) — the ONE drifting-calligraphy identity layer. Every pillar
+//    header mounts THIS component instead of hand-rolling glyphs (dnscrypt_section precedent):
+//    name-calligraphy + motif glyph + accent token, all breathing on animation-tick().
+//    Pure decor — clipped strip, no hit surface, feeds ONLY from the pillar's SectionTheme. ──
+// THE SECTION DRENCH — a FULL-SURFACE theme wash (not a top band). Mount it as the FIRST child
+// of a pillar pane and it fills the whole scrollable surface: a faint duotone gradient soak +
+// the section's motif glyphs drifting at %-scattered coords. Panels above it ride the ThemeBook
+// glass tokens (panel/floor carry alpha) so the wash breathes through the ENTIRE Dashboard/Settings.
+export component MotifWash inherits Rectangle {
+    in property <SectionTheme> theme;
+    in property <string> extra: "〜 ★ 〜";
+    clip: true;
+    // ---- the drench: a vertical duotone soak, accent up top, accent2 sinking to the floor ----
+    Rectangle {
+        background: @linear-gradient(168deg,
+            root.theme.accent.with-alpha(0.10) 0%,
+            root.theme.ground.with-alpha(0.00) 34%,
+            root.theme.accent2.with-alpha(0.07) 72%,
+            root.theme.accent.with-alpha(0.11) 100%);
+    }
+    // ---- the NAME banner, drifting across the top strip ----
+    Text {
+        text: root.theme.name;
+        color: root.theme.accent2;
+        opacity: 0.20 + 0.07 * Math.sin(360deg * (animation-tick() / 7s));
+        font-size: 30px;
+        font-weight: 900;
+        font-italic: true;
+        x: parent.width - 330px + 26px * Math.sin(360deg * (animation-tick() / 11s));
+        y: parent.height * 2% + 7px * Math.sin(360deg * (animation-tick() / 5.5s));
+        transform-rotation: -12deg + 4deg * Math.sin(360deg * (animation-tick() / 9s));
+    }
+    // ---- #22 the WHOLE-SCROLL drench: band repeaters that scale with content height.
+    //      The old anchors were %-of-height — six sparks stretched over any scroll length,
+    //      leaving the deep third matt. Bands are px-pitched; count = height/pitch, so a
+    //      12000px pillar gets ~8 giants, ~22 glyphs, ~10 words. Every band is unique via
+    //      golden-angle sin scatter (i * primes), parity-flipped left/right. ----
+    property <int> giant-bands: Math.max(1, Math.floor(self.height / 1600px) + 1);
+    property <int> glyph-bands: Math.max(2, Math.floor(self.height / 560px) + 1);
+    property <int> word-bands:  Math.max(1, Math.floor(self.height / 1240px) + 1);
+    // ---- the GIANT watermark: one enormous motif per ~1600px band ----
+    for g in root.giant-bands : Text {
+        text: root.theme.motif;
+        color: Math.sin(g * 137deg) > 0 ? root.theme.accent : root.theme.accent2;
+        opacity: 0.075 + 0.025 * Math.sin(360deg * (animation-tick() / 19s) + g * 67deg);
+        font-size: 170px + 60px * Math.abs(Math.sin(g * 53deg));
+        font-weight: 900;
+        x: parent.width * (Math.sin(g * 137deg) > 0 ? 52% : 4%) + 18px * Math.sin(360deg * (animation-tick() / 23s) + g * 41deg);
+        y: g * 1600px + 340px * Math.abs(Math.sin(g * 79deg)) + 14px * Math.sin(360deg * (animation-tick() / 17s) + g * 29deg);
+        transform-rotation: -14deg + 9deg * Math.sin(g * 97deg) + 3deg * Math.sin(360deg * (animation-tick() / 29s) + g * 59deg);
+    }
+    // ---- the glyph rain: a motif every ~560px, scattered edge-to-edge ----
+    for i in root.glyph-bands : Text {
+        text: root.theme.motif;
+        color: Math.sin(i * 137deg) > 0 ? root.theme.accent2 : root.theme.accent;
+        opacity: 0.12 + 0.05 * Math.sin(360deg * (animation-tick() / 8s) + i * 47deg);
+        font-size: 26px + 24px * Math.abs(Math.sin(i * 51deg));
+        font-weight: 900;
+        x: parent.width * (6% + 74% * Math.abs(Math.sin(i * 73deg))) + 14px * Math.sin(360deg * (animation-tick() / 13s) + i * 61deg);
+        y: i * 560px + 60px + 120px * Math.abs(Math.sin(i * 83deg)) + 9px * Math.sin(360deg * (animation-tick() / 7.5s) + i * 83deg);
+        transform-rotation: -12deg + 24deg * Math.sin(i * 107deg) + 4deg * Math.sin(360deg * (animation-tick() / 12s) + i * 31deg);
+    }
+    // ---- the word band: name/extra alternating down the scroll (~1240px pitch) ----
+    for w in root.word-bands : Text {
+        text: Math.sin(w * 137deg) > 0 ? root.theme.name : root.extra;
+        color: Math.sin(w * 91deg) > 0 ? root.theme.accent : root.theme.good;
+        opacity: 0.11 + 0.05 * Math.sin(360deg * (animation-tick() / 6s) + w * 53deg);
+        font-size: 16px + 14px * Math.abs(Math.sin(w * 67deg));
+        font-weight: 900; font-italic: true;
+        x: parent.width * (10% + 60% * Math.abs(Math.sin(w * 113deg))) + 16px * Math.sin(360deg * (animation-tick() / 15s) + w * 71deg);
+        y: w * 1240px + 420px + 160px * Math.abs(Math.sin(w * 43deg)) + 11px * Math.sin(360deg * (animation-tick() / 9.5s) + w * 37deg);
+        transform-rotation: -7deg + 13deg * Math.sin(w * 61deg);
+    }
+}
+
+// ── #36 THE UPPER MOON SEAL — the demon mirror of the Hashira law: every pillar DASH is a
+// Hashira, so every pillar SETTINGS pane bears the matching Upper Moon's engraved rank.
+// A static identity seal (felt-truth: pure identity, zero fabricated state) — kanji rank +
+// latin name on SOLID lacquer. Each pane declares it LAST, so it rides above the drench
+// (slint paints in declaration order; there is no z-index). ──
+export component UpperMoonChip inherits Rectangle {
+    in property <string> kanji;         // the engraved rank — e.g. "上弦・壱"
+    in property <string> moon-name;     // the demon — e.g. "UPPER ONE — KOKUSHIBO"
+    in property <color> tint: #b02a3a;
+    width: seal.preferred-width + 22px;
+    height: 26px;
+    border-radius: 13px;
+    background: #120a0c;                // SOLID lacquer — the no-transparency law
+    border-width: 1px;
+    border-color: root.tint;
+    seal := HorizontalLayout {
+        x: 11px;
+        y: 0;
+        height: 100%;
+        spacing: 7px;
+        Text {
+            text: root.kanji;
+            color: root.tint;
+            font-size: 12px;
+            font-weight: 900;
+            vertical-alignment: center;
+        }
+        Text {
+            text: root.moon-name;
+            color: root.tint.with-alpha(0.85);  // foreground cover — alpha is legal here
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            vertical-alignment: center;
+        }
+    }
+}
+
+// ── CHARCOAL LUMP — the Carbon Browser identity glyph, DRAWN (the old "⌬"
+// U+232C font glyph rendered as tofu-[X] on device fonts — same bug class as
+// the wishlist tofu). Faceted coal + a live ember seam that BREATHES;
+// brightness only, geometry fixed — an ember is not a loader. ──
+export component CharcoalLump inherits Rectangle {
+    in property <length> lump-size: 16px;
+    in property <bool> ember: true;
+    property <float> ph: 0.5 + 0.5 * Math.sin(360deg * (animation-tick() / 3.4s));
+    width: self.lump-size; height: self.lump-size;
+    background: transparent;
+    // body facet
+    Rectangle {
+        x: root.lump-size * 0.08; y: root.lump-size * 0.30;
+        width: root.lump-size * 0.84; height: root.lump-size * 0.52;
+        border-radius: root.lump-size * 0.12;
+        background: #17191c;
+        border-width: 1px; border-color: #000000.with-alpha(0.55);
+        transform-rotation: -6deg;
+    }
+    // top-left facet catching the light
+    Rectangle {
+        x: root.lump-size * 0.14; y: root.lump-size * 0.10;
+        width: root.lump-size * 0.46; height: root.lump-size * 0.36;
+        border-radius: root.lump-size * 0.10;
+        background: #2a2f34;
+        transform-rotation: 8deg;
+    }
+    // right shoulder facet
+    Rectangle {
+        x: root.lump-size * 0.52; y: root.lump-size * 0.20;
+        width: root.lump-size * 0.38; height: root.lump-size * 0.32;
+        border-radius: root.lump-size * 0.09;
+        background: #212529;
+        transform-rotation: -11deg;
+    }
+    // ember seam — breathes, never orbits
+    Rectangle {
+        x: root.lump-size * 0.28; y: root.lump-size * 0.58;
+        width: root.lump-size * 0.42; height: root.lump-size * 0.11;
+        border-radius: root.lump-size * 0.05;
+        background: #ff6e40;
+        opacity: root.ember ? 0.30 + 0.55 * root.ph : 0;
+    }
+    // ember mote
+    Rectangle {
+        x: root.lump-size * 0.62; y: root.lump-size * 0.46;
+        width: root.lump-size * 0.10; height: root.lump-size * 0.10;
+        border-radius: root.lump-size * 0.05;
+        background: #ffa62b;
+        opacity: root.ember ? 0.20 + 0.55 * root.ph : 0;
+    }
+    // carbon-cyan identity tick — static
+    Rectangle {
+        x: root.lump-size * 0.20; y: root.lump-size * 0.22;
+        width: root.lump-size * 0.09; height: root.lump-size * 0.09;
+        border-radius: root.lump-size * 0.04;
+        background: #8be9fd.with-alpha(0.9);
+    }
+}
