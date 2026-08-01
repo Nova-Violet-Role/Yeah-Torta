@@ -159,8 +159,17 @@ jobs:
             echo "::group::$abi"
             # Output is captured so the two failure modes can be told apart. cargo's exit code is
             # read directly from $? on the very next line -- never through a pipe.
+            # `set +e` around the capture, and it is NOT belt-and-braces. GitHub runs steps under
+            # `bash -e`, and the exit status of `var=$(cmd)` is cmd's status -- so errexit killed
+            # the step RIGHT HERE, before any of the classification below could run. Every branch
+            # that tells "emits warnings" from "failed to build" was unreachable on the only path
+            # that needs it. Measured on run 30694805814: the step died with `exit code 101` having
+            # printed nothing but the group header, which is exactly the uninformative failure this
+            # gate was written to avoid.
+            set +e
             out="$(RUSTFLAGS='-D warnings' cargo ndk -t "$abi" check \
                      --features mirror,pure_rust,netstack --all-targets 2>&1)"; code=$?
+            set -e
             echo "$out"
             echo "::endgroup::"
             if [ "$code" -eq 0 ]; then
@@ -198,8 +207,11 @@ jobs:
           fail=0
           for abi in arm64-v8a armeabi-v7a x86 x86_64; do
             echo "::group::clippy $abi"
+            # Same errexit trap as the check gate above -- see the note there.
+            set +e
             out="$(cargo ndk -t "$abi" clippy \
                      --lib --features mirror,pure_rust,netstack -- -D warnings 2>&1)"; code=$?
+            set -e
             echo "$out"
             echo "::endgroup::"
             if [ "$code" -ne 0 ]; then
