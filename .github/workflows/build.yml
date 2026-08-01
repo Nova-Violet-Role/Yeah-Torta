@@ -589,6 +589,17 @@ jobs:
       # evidence: the SDK_INT window crossed function boundaries. Fixtures cover direct gate,
       # caller gate, mixed callers, no callers, property initialiser, cycle, depth exhaustion and
       # the anonymous-object indent case. Mutation-tested: 10 mutations, 10 killed.
+      # unmute2.js strips the @Suppress annotations before the measuring compile, so it is the
+      # ROOT of the chain: under-strip and the compiler reports fewer warnings, the classifier
+      # classifies fewer, the ceiling compares fewer, and every gate below stays green on a wrong
+      # number. Measured 2026-08-01: it matched only the exact literal @Suppress("DEPRECATION"),
+      # Kotlin suppression names are case-insensitive, and six lowercase ones masked 45
+      # deprecations -- 34 reported, 79 real. The corpus covers every spelling Kotlin accepts,
+      # including @file: and multi-argument forms that do not exist in the tree today.
+      - name: the suppression stripper must match its corpus
+        if: matrix.flavor == 'arm64'
+        run: node tools/deprecation/unmute-conformance.js
+
       - name: the gated/ungated classifier must match its corpus
         if: matrix.flavor == 'arm64'
         run: node tools/deprecation/gated-conformance.js

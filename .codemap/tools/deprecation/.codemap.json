@@ -175,18 +175,47 @@
         }
       ]
     },
-    "unmute2.js": {
-      "hash": "77c0f2487483",
-      "indexed_at": "2026-08-01T11:37:14.606940+00:00",
+    "unmute-conformance.js": {
+      "hash": "02da89337f07",
+      "indexed_at": "2026-08-01T14:51:04.204155+00:00",
       "language": "javascript",
-      "lines": 60,
-      "mtime_ns": 1785584175334682900,
-      "size": 2489,
+      "lines": 97,
+      "mtime_ns": 1785595709109835500,
+      "size": 3874,
+      "symbols": []
+    },
+    "unmute2.js": {
+      "hash": "2af2df3dcc72",
+      "indexed_at": "2026-08-01T14:51:03.929520+00:00",
+      "language": "javascript",
+      "lines": 159,
+      "mtime_ns": 1785595837663834500,
+      "size": 7600,
       "symbols": [
         {
+          "docstring": "Is this one argument a deprecation suppression, in any case and with any spacing?",
           "lines": [
-            13,
-            20
+            48,
+            50
+          ],
+          "name": "isDeprecationArg",
+          "signature": "(arg)",
+          "type": "function"
+        },
+        {
+          "docstring": "Remove every deprecation suppression from `src`. An annotation whose ONLY argument was the deprecation one becomes the marker comment, so the line cou",
+          "lines": [
+            61,
+            72
+          ],
+          "name": "stripDeprecationSuppressions",
+          "signature": "(src)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            76,
+            83
           ],
           "name": "walk",
           "signature": "(dir, out = [])",
@@ -195,6 +224,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T14:26:32.808781+00:00",
+  "generated_at": "2026-08-01T14:51:04.205667+00:00",
   "version": "1.0"
 }
