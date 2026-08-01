@@ -707,7 +707,11 @@ object TortaPillarBridge {
             val cold =
                 snap == null ||
                     (!snap.rehydratedWarm && snap.lastFamily.isEmpty() && snap.rotationIndex == 0L)
-            if (cold || snap == null) {
+            // Operands SWAPPED, not deleted. `snap == null` is redundant after `cold` (cold already
+            // contains it, and || short-circuits) -- but it is what gives the else branch its
+            // smart-cast to non-null `snap`. Deleting it does not compile. Testing null FIRST is
+            // identical in meaning, keeps the cast, and leaves no constant term.
+            if (snap == null || cold) {
                 ""
             } else {
                 val hints = snap.rttHints.joinToString(";") { "${it.id}:${it.rttMs}" }

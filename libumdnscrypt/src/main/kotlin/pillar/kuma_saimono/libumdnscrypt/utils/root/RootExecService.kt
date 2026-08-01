@@ -108,7 +108,10 @@ class RootExecService : Service(),
             val rootCommands = intent.getSerializableExtra("Commands") as RootCommands?
             val mark = intent.getIntExtra("Mark", 0)
 
-            if (rootCommands != null && rootCommands.commands != null) {
+            // Only `rootCommands.commands != null` was dropped (the compiler proved THAT term
+            // constant, col 41). `rootCommands != null` is a REAL check -- it arrives from an
+            // Intent extra and can genuinely be absent -- so it stays.
+            if (rootCommands != null) {
                 rootExecutor.execute(
                     rootCommands.commands,
                     mark

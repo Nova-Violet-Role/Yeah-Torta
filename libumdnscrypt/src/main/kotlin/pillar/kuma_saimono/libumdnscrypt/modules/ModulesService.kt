@@ -323,10 +323,8 @@ class ModulesService : Service() {
 
             } catch (e: Exception) {
                 loge("DnsCrypt was unable to start", e)
-                if (handler != null) {
-                    handler.get().post {
-                        Toast.makeText(this@ModulesService, e.message, Toast.LENGTH_LONG).show()
-                    }
+                handler.get().post {
+                    Toast.makeText(this@ModulesService, e.message, Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -516,9 +514,6 @@ class ModulesService : Service() {
 
     private fun stopVPNServiceIfRunning() {
         val operationMode = modulesStatus.mode
-        if (defaultSharedPreferences == null) {
-            return
-        }
         val prefs = defaultSharedPreferences.get()
         if ((operationMode == VPN_MODE || modulesStatus.isFixTTL) && prefs.getBoolean(VPN_SERVICE_ENABLED, false)) {
             ServiceVPNHelper.stop("ModulesService is destroyed", this)
@@ -567,9 +562,7 @@ class ModulesService : Service() {
 
         stopVPNServiceIfRunning()
 
-        if (handler != null) {
-            handler.get().removeCallbacksAndMessages(null)
-        }
+        handler.get().removeCallbacksAndMessages(null)
 
         InternetSharingChecker.resetTetherInterfaceNames()
 

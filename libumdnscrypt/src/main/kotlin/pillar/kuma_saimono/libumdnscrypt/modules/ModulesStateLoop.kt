@@ -158,9 +158,6 @@ class ModulesStateLoop(private val modulesService: ModulesService) : Runnable,
 
         try {
 
-            if (modulesStatus == null) {
-                return
-            }
 
             val operationMode = modulesStatus.mode
 
@@ -206,9 +203,7 @@ class ModulesStateLoop(private val modulesService: ModulesService) : Runnable,
             slowDownModulesStateTimerIfRequired()
 
         } catch (e: Exception) {
-            if (handler != null) {
-                handler.get().post { Toast.makeText(modulesService, uniffi.torta_core.tortaText("wrong"), Toast.LENGTH_SHORT).show() }
-            }
+            handler.get().post { Toast.makeText(modulesService, uniffi.torta_core.tortaText("wrong"), Toast.LENGTH_SHORT).show() }
             loge("ModulesStateLoop run()", e)
         }
 
@@ -472,9 +467,7 @@ class ModulesStateLoop(private val modulesService: ModulesService) : Runnable,
             if (dnsCryptState == RESTARTING) {
                 setDNSCryptReady(false)
 
-                if (dnsCryptInteractor != null) {
-                    dnsCryptInteractor.addOnDNSCryptLogUpdatedListener(this)
-                }
+                dnsCryptInteractor.addOnDNSCryptLogUpdatedListener(this)
             }
 
             if (dnsCryptState != STOPPED && dnsCryptState != RUNNING) {
@@ -491,9 +484,7 @@ class ModulesStateLoop(private val modulesService: ModulesService) : Runnable,
 
                 if (dnsCryptState == RUNNING) {
                     runningEdgeFiredThisProcess = true
-                    if (dnsCryptInteractor != null) {
-                        dnsCryptInteractor.addOnDNSCryptLogUpdatedListener(this)
-                    }
+                    dnsCryptInteractor.addOnDNSCryptLogUpdatedListener(this)
                     modulesStatusBroadcaster.get().broadcastDNSCryptRunning()
                     monokumaDnsEngineManager.get().onDnsCryptStarted()
                     // P8 Wave B1: score the installed blocklist's trust and publish to the cross-graph
@@ -547,9 +538,7 @@ class ModulesStateLoop(private val modulesService: ModulesService) : Runnable,
                     }
                     startNflogIfRootMode()
                 } else {
-                    if (dnsCryptInteractor != null) {
-                        dnsCryptInteractor.removeOnDNSCryptLogUpdatedListener(this)
-                    }
+                    dnsCryptInteractor.removeOnDNSCryptLogUpdatedListener(this)
                     modulesStatusBroadcaster.get().broadcastDNSCryptStopped()
                     monokumaDnsEngineManager.get().onDnsCryptStopped()
                     // P8 Wave B1: clear the trust verdict (publish null = idle), or keep it live if the
@@ -615,7 +604,9 @@ class ModulesStateLoop(private val modulesService: ModulesService) : Runnable,
             // datapath instead: TunnelController's live-holder cannot outlive the process.
             val vpnServiceEnabled = TunnelController.isDatapathLive()
 
-            if (iptablesRules != null && rootIsAvailable && operationMode == ROOT_MODE) {
+            // `iptablesRules != null` was dropped here: the field is non-nullable, so the compiler
+            // proved that term constant. rootIsAvailable and ROOT_MODE are the REAL gate and stay.
+            if (rootIsAvailable && operationMode == ROOT_MODE) {
                 var commands = iptablesRules.configureIptables(
                         dnsCryptState,
                         firewallState
@@ -667,8 +658,9 @@ class ModulesStateLoop(private val modulesService: ModulesService) : Runnable,
             }
 
             //Avoid too frequent iptables update
-            if (handler != null
-                    && (dnsCryptState != STOPPED)) {
+            // `handler != null` dropped -- non-nullable field, constant term. The STOPPED check is
+            // the throttle's actual condition and is untouched.
+            if (dnsCryptState != STOPPED) {
                 iptablesUpdateTemporaryBlocked = true
                 handler.get().postDelayed({
                     iptablesUpdateTemporaryBlocked = false
@@ -743,23 +735,24 @@ class ModulesStateLoop(private val modulesService: ModulesService) : Runnable,
 
         //Start VPN service if it is not started by modules presenters
 
-        if (handler != null) {
-            handler.get().postDelayed({
-                if (modulesService != null && modulesStatus != null && sharedPreferences != null
-                        && !sharedPreferences.getBoolean(VPN_SERVICE_ENABLED, false)
+        // The `handler != null` wrapper and the three `!= null` terms below were dropped: all four
+        // fields are non-nullable, so the compiler proved every one of them constant. What decides
+        // whether the VPN starts -- the stored flag, the module states, and VpnService.prepare() --
+        // is untouched, and the 10 s delay still applies.
+        handler.get().postDelayed({
+            if (!sharedPreferences.getBoolean(VPN_SERVICE_ENABLED, false)
                         // 2-DRIVE-ENGINE-VPN: DNSCrypt is the SOLE VPN gatekeeper. The Tortä engine is no
                         // longer a first-class VPN trigger — it rides the DNSCrypt VpnService (an OS-protected
                         // FGS), so only DNSCrypt / the Warden firewall raise the tunnel. The engine never needs
                         // the Always-on-VPN + access-log keep-alive to survive; it lives while the VPN is up.
-                        && (modulesStatus.dnsCryptState == RUNNING
-                        || modulesStatus.firewallState == STARTING
-                        || modulesStatus.firewallState == RUNNING)
-                        && VpnService.prepare(modulesService) == null) {
-                    sharedPreferences.edit().putBoolean(VPN_SERVICE_ENABLED, true).apply()
-                    ServiceVPNHelper.start("ModulesStateLoop start VPN service", modulesService)
-                }
-            }, 10000L)
-        }
+                    && (modulesStatus.dnsCryptState == RUNNING
+                    || modulesStatus.firewallState == STARTING
+                    || modulesStatus.firewallState == RUNNING)
+                    && VpnService.prepare(modulesService) == null) {
+                sharedPreferences.edit().putBoolean(VPN_SERVICE_ENABLED, true).apply()
+                ServiceVPNHelper.start("ModulesStateLoop start VPN service", modulesService)
+            }
+        }, 10000L)
     }
 
     private fun safeStopModulesService() {
@@ -782,13 +775,9 @@ class ModulesStateLoop(private val modulesService: ModulesService) : Runnable,
     }
 
     fun removeHandlerTasks() {
-        if (iptablesRules != null) {
-            iptablesRules.unregisterReceiver()
-        }
+        iptablesRules.unregisterReceiver()
 
-        if (handler != null) {
-            handler.get().removeCallbacksAndMessages(null)
-        }
+        handler.get().removeCallbacksAndMessages(null)
     }
 
     override fun onDNSCryptLogUpdated(dnsCryptLogData: LogDataModel) {
@@ -796,9 +785,7 @@ class ModulesStateLoop(private val modulesService: ModulesService) : Runnable,
                 && modulesStatus.dnsCryptState == RUNNING) {
             setDNSCryptReady(true)
             denySystemDNS()
-            if (dnsCryptInteractor != null) {
-                dnsCryptInteractor.removeOnDNSCryptLogUpdatedListener(this)
-            }
+            dnsCryptInteractor.removeOnDNSCryptLogUpdatedListener(this)
         }
     }
 

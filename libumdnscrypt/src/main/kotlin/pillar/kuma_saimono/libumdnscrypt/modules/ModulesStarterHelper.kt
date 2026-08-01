@@ -346,9 +346,6 @@ class ModulesStarterHelper(
         var http3Index = -1
         for (i in lines.indices) {
             val line = lines[i]
-            if (line == null) {
-                continue
-            }
             val trimmed = line.trim()
             // Strip a single leading '#' so a commented http3 line is detected too (comment-agnostic).
             val bare = if (trimmed.startsWith("#")) trimmed.substring(1).trim() else trimmed
@@ -415,9 +412,6 @@ class ModulesStarterHelper(
         var firstSection = -1
         for (i in lines.indices) {
             val line = lines[i]
-            if (line == null) {
-                continue
-            }
             val trimmed = line.trim()
             if (firstSection < 0 && trimmed.startsWith("[")) {
                 firstSection = i
@@ -457,9 +451,6 @@ class ModulesStarterHelper(
         val target = "force_tcp = false"
         for (i in lines.indices) {
             val line = lines[i]
-            if (line == null) {
-                continue
-            }
             val trimmed = line.trim()
             val bare = if (trimmed.startsWith("#")) trimmed.substring(1).trim() else trimmed
             if (bare.startsWith("force_tcp")) {
@@ -502,9 +493,6 @@ class ModulesStarterHelper(
         var ignoreSystemDnsIndex = -1
         for (i in lines.indices) {
             val line = lines[i]
-            if (line == null) {
-                continue
-            }
             val trimmed = line.trim()
             // Strip a single leading '#' so a commented ignore_system_dns line is detected too.
             val bare = if (trimmed.startsWith("#")) trimmed.substring(1).trim() else trimmed
@@ -639,9 +627,6 @@ class ModulesStarterHelper(
         var queryLogHeaderIndex = -1
         for (i in lines.indices) {
             val line = lines[i]
-            if (line == null) {
-                continue
-            }
             val trimmed = line.trim()
             // Match the [query_log] file line by suffix only (comment state + stale prefix agnostic).
             // Exclude the nx_log line, whose value ends in cache/nx.log.
@@ -706,9 +691,6 @@ class ModulesStarterHelper(
         val targetLine = "log_file = '" + appDataDir + "/logs/DnsCrypt.log'"
         for (i in lines.indices) {
             val line = lines[i]
-            if (line == null) {
-                continue
-            }
             val trimmed = line.trim()
             if (trimmed.contains("log_file")
                     && (trimmed.endsWith("logs/DnsCrypt.log'") || trimmed.endsWith("logs/DnsCrypt.log\""))) {

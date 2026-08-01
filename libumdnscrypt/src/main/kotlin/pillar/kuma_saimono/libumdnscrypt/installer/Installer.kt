@@ -163,9 +163,6 @@ class Installer(private val activity: Activity) {
     }
 
     private fun savePreferencesModulesInstalled(installed: Boolean) {
-        if (activity == null) {
-            return
-        }
 
         val preferences = preferenceRepository.get()
 
@@ -258,8 +255,8 @@ class Installer(private val activity: Activity) {
             }
 
             var result: List<String> = lines
-            if (activity != null
-                    && activity.getText(R.string.package_name).toString().contains(".gp")
+            // `activity != null` dropped (constant); the .gp / path / not-installed terms stay.
+            if (activity.getText(R.string.package_name).toString().contains(".gp")
                     && path.contains("dnscrypt-proxy.toml")
                     && !PathVars.isModulesInstalled(preferenceRepository.get())) {
                 result = installerHelper.get().prepareDNSCryptForGP(lines)
@@ -310,8 +307,8 @@ class Installer(private val activity: Activity) {
             var counter = 15
 
             while (counter > 0) {
-                if (activity != null
-                        && !ModulesAux.isDnsCryptSavedStateRunning()) {
+                // `activity != null` dropped (constant); the DNSCrypt state check is the real one.
+                if (!ModulesAux.isDnsCryptSavedStateRunning()) {
                     sendModulesStopResult("checkModulesRunning")
                     break
                 } else {

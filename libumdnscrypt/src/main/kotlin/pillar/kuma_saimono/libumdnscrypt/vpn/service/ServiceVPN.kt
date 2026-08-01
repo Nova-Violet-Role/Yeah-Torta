@@ -266,12 +266,17 @@ class ServiceVPN : VpnService(), OnInternetConnectionCheckedListener {
 
         val dnsRecord = DnsRecord(
             System.currentTimeMillis(),
-            if (rr.QName != null) IDN.toUnicode(rr.QName.trim().lowercase(Locale.getDefault()), IDN.ALLOW_UNASSIGNED) else "",
-            if (rr.AName != null) IDN.toUnicode(rr.AName.trim().lowercase(Locale.getDefault()), IDN.ALLOW_UNASSIGNED) else "",
-            if (rr.CName != null) IDN.toUnicode(rr.CName.trim().lowercase(Locale.getDefault()), IDN.ALLOW_UNASSIGNED) else "",
-            if (rr.HInfo != null) rr.HInfo.trim() else "",
+            // The five `!= null` tests here were constant: ResourceRecord.kt:36-48 declares every
+            // one of these as a NON-NULLABLE `String = ""`, so null is unrepresentable and the
+            // `else ""` arms were unreachable. Dropping them is behaviour-identical even for the
+            // empty record -- IDN.toUnicode("") is "" and "".trim() is "", exactly what the dead
+            // else arms returned. The empty-string default lives in ResourceRecord, not here.
+            IDN.toUnicode(rr.QName.trim().lowercase(Locale.getDefault()), IDN.ALLOW_UNASSIGNED),
+            IDN.toUnicode(rr.AName.trim().lowercase(Locale.getDefault()), IDN.ALLOW_UNASSIGNED),
+            IDN.toUnicode(rr.CName.trim().lowercase(Locale.getDefault()), IDN.ALLOW_UNASSIGNED),
+            rr.HInfo.trim(),
             rr.Rcode,
-            if (rr.Resource != null) rr.Resource.trim() else ""
+            rr.Resource.trim()
         )
 
         //Remove entry to update key time

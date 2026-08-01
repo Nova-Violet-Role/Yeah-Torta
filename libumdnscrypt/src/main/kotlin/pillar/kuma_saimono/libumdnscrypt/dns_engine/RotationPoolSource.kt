@@ -77,7 +77,9 @@ object RotationPoolSource {
                 line.startsWith("sdns://") && !pendingName.isNullOrBlank() -> {
                     val stamp = line.substringBefore(' ')
                     val name = pendingName
-                    if (name != null && isCleanToken(name) && isCleanToken(stamp)) {
+                    // `name != null` dropped (proven constant); BOTH isCleanToken guards stay --
+                    // they are the actual sanitiser on the pool entry.
+                    if (isCleanToken(name) && isCleanToken(stamp)) {
                         out.add(name to stamp)
                     }
                     pendingName = null

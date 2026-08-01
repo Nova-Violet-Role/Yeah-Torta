@@ -230,7 +230,7 @@ class FileManager {
                 }
             }
 
-            if (executorService == null || executorService.isShutdown) {
+            if (executorService.isShutdown) {
                 executorService = Executors.newSingleThreadExecutor()
             }
             executorService.execute(runnable)
@@ -330,7 +330,7 @@ class FileManager {
 
             }
 
-            if (executorService == null || executorService.isShutdown) {
+            if (executorService.isShutdown) {
                 executorService = Executors.newSingleThreadExecutor()
             }
             executorService.execute(runnable)
@@ -602,7 +602,7 @@ class FileManager {
                 }
             }
 
-            if (executorService == null || executorService.isShutdown) {
+            if (executorService.isShutdown) {
                 executorService = Executors.newSingleThreadExecutor()
             }
             executorService.execute(runnable)
@@ -783,7 +783,7 @@ class FileManager {
                 }
             }
 
-            if (executorService == null || executorService.isShutdown) {
+            if (executorService.isShutdown) {
                 executorService = Executors.newSingleThreadExecutor()
             }
             executorService.execute(runnable)
@@ -856,7 +856,7 @@ class FileManager {
                 }
             }
 
-            if (executorService == null || executorService.isShutdown) {
+            if (executorService.isShutdown) {
                 executorService = Executors.newSingleThreadExecutor()
             }
             executorService.execute(runnable)
@@ -1114,7 +1114,7 @@ class FileManager {
                 stackCallbacks!!.clear()
 
             Thread {
-                if (executorService != null && !executorService.isShutdown) {
+                if (!executorService.isShutdown) {
                     executorService.shutdown()
                     try {
                         executorService.awaitTermination(10, TimeUnit.SECONDS)

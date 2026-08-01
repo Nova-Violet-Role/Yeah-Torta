@@ -60,9 +60,6 @@ class Tethering(private val context: Context) {
 
     fun activateTethering(privacyMode: Boolean): List<String> {
 
-        if (context == null) {
-            return ArrayList()
-        }
 
         val pathVars = pathVarsLazy.get()
 
