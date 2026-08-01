@@ -172,6 +172,24 @@ android {
             // `-Xopt-in=kotlin.RequiresOptIn` or a blanket `-nowarn`, either of which would also
             // silence markers nobody has considered yet.
             optIn.add("kotlinx.coroutines.ExperimentalCoroutinesApi")
+
+            // ★ ANNOTATION DEFAULT TARGET, PINNED DELIBERATELY (2026-08-01). 51 warnings in this
+            // variant say: "This annotation is currently applied to the value parameter only, but
+            // in the future it will also be applied to property." Every site inspected is a
+            // Dagger `@Named(...)` on a constructor parameter, e.g.
+            // TopFragmentViewModel.kt:37.
+            //
+            // Kotlin offers `param-property` (adopt the future behaviour now) or `first-only`
+            // (keep today's). This picks first-only ON PURPOSE. `param-property` would place these
+            // annotations on the generated PROPERTIES as well, which changes what a
+            // reflection-driven dependency-injection graph sees -- a runtime-semantics change,
+            // made to quieten a compiler message, days before an alpha, with no device test that
+            // would notice if a qualifier started resolving differently.
+            //
+            // So this is a DECISION recorded in the build, not a suppression: behaviour stays
+            // exactly what it is today, and the migration to param-property becomes a deliberate
+            // piece of work with its own testing rather than a side effect of tidying warnings.
+            freeCompilerArgs.add("-Xannotation-default-target=first-only")
         }
     }
 
