@@ -37,6 +37,7 @@ import pillar.kuma_saimono.libumdnscrypt.vpn.service.WardenDatapathGate
 import java.io.File
 import java.net.InetAddress
 import java.util.Locale
+import androidx.core.content.pm.PackageInfoCompat
 
 object VpnUtils {
 
@@ -182,12 +183,24 @@ object VpnUtils {
         }
     }
 
-    @Suppress("DEPRECATION")
+    /**
+     * This app's own versionCode, or -1 if the package cannot be found.
+     *
+     * PackageInfo.versionCode is deprecated at API 28 in favour of the Long `longVersionCode`,
+     * which widens the field so the upper 32 bits can carry a major version. The narrowing back to
+     * Int here is DELIBERATE and safe rather than a lossy shortcut: `PackageInfoCompat.getLongVersionCode`
+     * returns exactly the old value in its low 32 bits, and this module sets versionCode in
+     * build.gradle as a plain Int (defaultConfig.versionCode 270, plus per-flavor overrides), so
+     * the high bits are always zero. `.toInt()` therefore round-trips.
+     *
+     * The return type stays Int because callers compare it against Int literals; widening the
+     * signature would be an API change for a value that cannot currently exceed Int range.
+     */
     @JvmStatic
     fun getSelfVersionCode(context: Context): Int {
         return try {
             val pInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-            pInfo.versionCode
+            PackageInfoCompat.getLongVersionCode(pInfo).toInt()
         } catch (ex: PackageManager.NameNotFoundException) {
             -1
         }
