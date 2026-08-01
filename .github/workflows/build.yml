@@ -236,13 +236,27 @@ jobs:
       - name: cargo-ndk
         run: cargo install cargo-ndk --locked
 
-      # THE ENGINE. `--features mirror` is load-bearing: without it the resulting .so carries zero
-      # mirror symbols and Centauri regresses to inert while every other signal stays green.
+      # ★ THE SHIP RECIPE, quoted from rust/torta_core/Cargo.toml:236-238 -- not chosen by me:
+      #
+      #   "the engine .so MUST build --features mirror,pure_rust,netstack -- without netstack,
+      #    set_netstack is a documented no-op (tunnel/mod.rs) and the tunnel silently runs DNS-only
+      #    while the Kotlin side logs 'forwarder ARMED'."
+      #
+      # This job previously built `--features mirror` alone. That is the SAME defect class the
+      # symbol gate below was written to catch, reintroduced one line above it: the build succeeds,
+      # every test passes, the UI reports the forwarder armed, and the forwarder thread
+      # ("torta-netstack", tunnel/mod.rs:1159) never exists -- so non-DNS traffic never leaves
+      # through the Rust datapath and pages do not load through it. Measured on the .so this repo
+      # last produced: `grep -c -a torta-netstack` = 0.
+      #
+      # `pure_rust` and `netstack` are real features (Cargo.toml [features]); `odoh` is deliberately
+      # NOT added here -- it is not part of the quoted recipe, and widening a ship recipe on a hunch
+      # is how the next silent difference gets in.
       - name: Build torta_core (${{ matrix.abi }})
         working-directory: rust/torta_core
         run: |
           cargo ndk -t ${{ matrix.abi }} -o ../../libumdnscrypt/src/main/jniLibs \
-            build --release --features mirror
+            build --release --features mirror,pure_rust,netstack
 
       # THE UI. The entire interface is compiled Rust + Slint; slint-build rasterises the .slint
       # files during this step, so a broken scene fails HERE rather than at runtime.
@@ -261,10 +275,16 @@ jobs:
           UI=libumdnscrypt/src/main/jniLibs/${{ matrix.abi }}/libtorta_ui.so
           test -f "$SO" || { echo "::error::$SO was not produced"; exit 1; }
           test -f "$UI" || { echo "::error::$UI was not produced"; exit 1; }
-          for sym in mirror_status centauri_serve_hits resolver_doh_sinkhole_on; do
+          # `torta-netstack` is the FORWARDER THREAD NAME (tunnel/mod.rs:1159) and it is the check
+          # Cargo.toml:238 itself prescribes: "Verify a candidate .so with:
+          # grep -c -a 'torta-netstack' <so> -> >=1". It is in this list because its absence is
+          # INVISIBLE at runtime -- the Kotlin side still logs "forwarder ARMED" while the thread
+          # that would carry the traffic was never compiled in. A pillar that fails loudly needs no
+          # gate; this one needed exactly this.
+          for sym in mirror_status centauri_serve_hits resolver_doh_sinkhole_on torta-netstack; do
             n=$(grep -ac "$sym" "$SO" || true)
             echo "  $sym: $n"
-            [ "$n" -gt 0 ] || { echo "::error::$sym MISSING from $SO — built without --features mirror?"; exit 1; }
+            [ "$n" -gt 0 ] || { echo "::error::$sym MISSING from $SO — built without the full ship recipe (mirror,pure_rust,netstack)?"; exit 1; }
           done
           ls -la libumdnscrypt/src/main/jniLibs/${{ matrix.abi }}/
 
