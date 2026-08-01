@@ -184,47 +184,110 @@ class WireCakeInuManager(
         override fun onServiceLost(serviceInfo: NsdServiceInfo?) {}
     }
 
-    @Suppress("DEPRECATION")
+    /**
+     * Resolve a discovered `_adb-tls-pairing` service to a host and port.
+     *
+     * API 34 deprecates the one-shot [NsdManager.resolveService] in favour of
+     * [NsdManager.registerServiceInfoCallback], which is CONTINUOUS: it keeps delivering updates
+     * until it is unregistered. That difference is the whole risk of this migration -- a
+     * drop-in swap would leak a callback per discovered service, and pairing discovery can fire
+     * repeatedly. The 34+ path below therefore takes the FIRST update, latches, unregisters itself,
+     * and ignores everything after; the observable behaviour matches the one-shot call it replaces.
+     *
+     * NOT VERIFIED ON A DEVICE -- compiled only. The latch-and-unregister logic is the part that
+     * needs a real phone with adb wireless pairing to confirm, and this machine cannot produce that.
+     */
     private fun resolve(nsd: NsdManager, serviceInfo: NsdServiceInfo) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            resolveViaServiceInfoCallback(nsd, serviceInfo)
+        } else {
+            resolveViaLegacyListener(nsd, serviceInfo)
+        }
+    }
+
+    /** API 34+ path. See [resolve] for why it latches and unregisters. */
+    @androidx.annotation.RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+    private fun resolveViaServiceInfoCallback(nsd: NsdManager, serviceInfo: NsdServiceInfo) {
+        // AtomicBoolean, not a plain flag: the callback is delivered on the executor, so "first
+        // update wins" has to be decided atomically or two near-simultaneous updates could both
+        // pass and pair twice.
+        val handled = java.util.concurrent.atomic.AtomicBoolean(false)
+        var callback: NsdManager.ServiceInfoCallback? = null
+        callback = object : NsdManager.ServiceInfoCallback {
+            override fun onServiceInfoCallbackRegistrationFailed(errorCode: Int) {
+                _state.value = WireCakeInuUiState.Error("could not resolve pairing port ($errorCode)")
+            }
+
+            override fun onServiceUpdated(info: NsdServiceInfo) {
+                if (!handled.compareAndSet(false, true)) return
+                // Unregister BEFORE acting: onPairingEndpoint can be slow, and the registration must
+                // not outlive this one use even if it throws.
+                runCatching { callback?.let { nsd.unregisterServiceInfoCallback(it) } }
+                onResolvedServiceInfo(info)
+            }
+
+            override fun onServiceLost() {}
+
+            override fun onServiceInfoCallbackUnregistered() {}
+        }
+        try {
+            nsd.registerServiceInfoCallback(serviceInfo, appContext.mainExecutor, callback)
+        } catch (e: Exception) {
+            _state.value = WireCakeInuUiState.Error(e.message ?: "resolve failed")
+        }
+    }
+
+    /** The pre-34 one-shot resolve, unchanged in behaviour. */
+    @Suppress("DEPRECATION")
+    private fun resolveViaLegacyListener(nsd: NsdManager, serviceInfo: NsdServiceInfo) {
         val resolveListener = object : NsdManager.ResolveListener {
             override fun onResolveFailed(info: NsdServiceInfo?, errorCode: Int) {
                 _state.value = WireCakeInuUiState.Error("could not resolve pairing port ($errorCode)")
             }
 
-            override fun onServiceResolved(info: NsdServiceInfo) {
-                // NsdServiceInfo.host is deprecated at API 34 in favour of hostAddresses, which is a
-                // LIST because one service can advertise several addresses (v4 and v6). Taking the
-                // first preserves the previous single-address behaviour exactly.
-                //
-                // The safety property does NOT rest on which address is picked: isOwnDeviceAddress
-                // below is what rejects a foreign host advertising a fake _adb-tls-pairing, and it
-                // runs on whichever address this yields, on both branches.
-                val host = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                    info.hostAddresses.firstOrNull()?.hostAddress ?: return
-                } else {
-                    @Suppress("DEPRECATION")
-                    info.host?.hostAddress ?: return
-                }
-                // The adb pairing service is on THIS device — but on a real phone NsdManager resolves it to
-                // the device's own LAN/Wi-Fi address (e.g. 192.168.x.x), NOT the literal loopback. So accept
-                // the device's OWN addresses (loopback + every local-interface IP) and reject only a
-                // genuinely-foreign host (a rogue on the LAN advertising a fake _adb-tls-pairing). Fixes the
-                // "pairing endpoint is not on this device (must be 127.0.0.1) — refused for safety" self-pair bug.
-                if (!isOwnDeviceAddress(host)) {
-                    _state.value = WireCakeInuUiState.Error(
-                        uniffi.torta_core.tortaText("wd_err_not_loopback")
-                    )
-                    return
-                }
-                val port = info.port
-                onPairingEndpoint(host, port)
-            }
+            override fun onServiceResolved(info: NsdServiceInfo) = onResolvedServiceInfo(info)
         }
         try {
             nsd.resolveService(serviceInfo, resolveListener)
         } catch (e: Exception) {
             _state.value = WireCakeInuUiState.Error(e.message ?: "resolve failed")
         }
+    }
+
+    /**
+     * What to do with a resolved `_adb-tls-pairing` service, shared by BOTH resolve paths.
+     *
+     * Extracted rather than duplicated deliberately: this is where the security check lives, and
+     * two copies of a security check are two things that can drift apart. The API 34 callback and
+     * the pre-34 listener now enforce the same rule by construction, not by inspection.
+     */
+    private fun onResolvedServiceInfo(info: NsdServiceInfo) {
+        // NsdServiceInfo.host is deprecated at API 34 in favour of hostAddresses, which is a
+        // LIST because one service can advertise several addresses (v4 and v6). Taking the
+        // first preserves the previous single-address behaviour exactly.
+        //
+        // The safety property does NOT rest on which address is picked: isOwnDeviceAddress
+        // below is what rejects a foreign host advertising a fake _adb-tls-pairing, and it
+        // runs on whichever address this yields, on both branches.
+        val host = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            info.hostAddresses.firstOrNull()?.hostAddress ?: return
+        } else {
+            @Suppress("DEPRECATION")
+            info.host?.hostAddress ?: return
+        }
+        // The adb pairing service is on THIS device — but on a real phone NsdManager resolves it to
+        // the device's own LAN/Wi-Fi address (e.g. 192.168.x.x), NOT the literal loopback. So accept
+        // the device's OWN addresses (loopback + every local-interface IP) and reject only a
+        // genuinely-foreign host (a rogue on the LAN advertising a fake _adb-tls-pairing). Fixes the
+        // "pairing endpoint is not on this device (must be 127.0.0.1) — refused for safety" self-pair bug.
+        if (!isOwnDeviceAddress(host)) {
+            _state.value = WireCakeInuUiState.Error(
+                uniffi.torta_core.tortaText("wd_err_not_loopback")
+            )
+            return
+        }
+        val port = info.port
+        onPairingEndpoint(host, port)
     }
 
     /**
