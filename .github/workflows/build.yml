@@ -10,7 +10,9 @@
 ##  Every job below is a gate that CAN FAIL, and each one was chosen because the corresponding
 ##  failure has actually happened on this project:
 ##
-##    rust-tests      1311 unit tests. A regression in the engine must never reach an APK.
+##    rust-tests      the engine suite under the SHIP recipe, plus a floor gate so it cannot
+##                    silently shrink. A regression in the engine must never reach an APK.
+##    rust-abi-warnings  zero compiler warnings on the four ABIs that go into the APK.
 ##    bindings-drift  the committed torta_core.kt must equal what the CURRENT Rust surface
 ##                    generates. Hand-edited or stale bindings compile fine and then fail at
 ##                    runtime with an ABI mismatch, which is the worst place to find out.
@@ -44,7 +46,7 @@ jobs:
   # 1. THE ENGINE'S OWN TESTS — before anything is packaged.
   # ---------------------------------------------------------------------------------------------
   rust-tests:
-    name: engine tests (1311)
+    name: engine tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -70,33 +72,38 @@ jobs:
       # a different program.
       - name: cargo test --features mirror,pure_rust,netstack (the ship recipe)
         working-directory: rust/torta_core
-        run: cargo test --lib --features mirror,pure_rust,netstack
+        run: cargo test --lib --features mirror,pure_rust,netstack | tee "$RUNNER_TEMP/test.out"
+        # NOTE: `tee` is safe here ONLY because `pipefail` is set by GitHub's default bash flags
+        # (`bash -e -o pipefail`), so the pipeline still reports cargo's failure. The count gate
+        # below re-reads the file rather than the pipe.
 
-      # ZERO WARNINGS ON THE SHIPPED TARGETS, enforced rather than tracked in a document.
-      # `cargo check` on the host is the WRONG instrument for this: on a Windows dev box the same
-      # library reports 135 warnings because every #[cfg(unix)] caller is compiled out and the
-      # callee it leaves behind looks dead. Warnings are a property of the target. This gate asks
-      # the question on the four ABIs that are actually built into the APK, where the answer is 0
-      # and any regression is a real one.
-      - name: no warnings on the four shipped Android ABIs
+      # A FLOOR, NOT AN EXACT COUNT -- and that distinction is the whole point.
+      #
+      # This job was named "engine tests (1311)" while the suite had grown to 1375. A number frozen
+      # into a label is wrong the day someone adds a test, and the obvious repair (edit the label)
+      # teaches nobody anything. Worse, had it been an EQUALITY gate it would have failed every
+      # correct commit that added coverage -- a spec that forbids a correct future.
+      #
+      # A floor is durable: it can only be broken by tests DISAPPEARING, which is the failure that
+      # actually matters and is otherwise invisible -- a deleted #[test] or a module dropped from a
+      # cfg leaves the run green with a smaller suite. Raise the floor deliberately when the suite
+      # grows; never lower it to make a red build green.
+      - name: the suite must not silently shrink
         working-directory: rust/torta_core
         run: |
-          set -e
-          rustup target add aarch64-linux-android armv7-linux-androideabi \
-                            i686-linux-android x86_64-linux-android
-          fail=0
-          for t in aarch64-linux-android armv7-linux-androideabi \
-                   i686-linux-android x86_64-linux-android; do
-            # -D warnings makes cargo's OWN exit code the verdict, so it is never read through a pipe.
-            if RUSTFLAGS="-D warnings" cargo check --target "$t" \
-                 --features mirror,pure_rust,netstack --all-targets; then
-              echo "  $t: clean"
-            else
-              echo "::error::$t emits warnings under the ship recipe -- see the log above"
-              fail=1
-            fi
-          done
-          exit $fail
+          FLOOR=1370
+          # Sum every "test result: ok. N passed" line -- the lib target may report more than once.
+          PASSED=$(grep -oE '^test result: ok\. [0-9]+ passed' "$RUNNER_TEMP/test.out" \
+                   | grep -oE '[0-9]+' | paste -sd+ - | bc)
+          echo "passed=$PASSED floor=$FLOOR"
+          if [ -z "$PASSED" ]; then
+            echo "::error::could not parse a test count -- the gate cannot pass by failing to measure"
+            exit 1
+          fi
+          if [ "$PASSED" -lt "$FLOOR" ]; then
+            echo "::error::the suite SHRANK: $PASSED passed, floor is $FLOOR. Tests were removed or stopped compiling in."
+            exit 1
+          fi
 
       - name: cargo fmt / clippy (advisory)
         working-directory: rust/torta_core
@@ -104,6 +111,69 @@ jobs:
         run: |
           cargo fmt --check || echo "::warning::rustfmt differences present"
           cargo clippy --lib --features mirror,pure_rust,netstack -- -W clippy::all || true
+
+  # ---------------------------------------------------------------------------------------------
+  # 1b. ZERO WARNINGS ON THE ABIs THAT SHIP — a separate job because it needs the NDK.
+  #
+  # WHY ITS OWN JOB, learned by getting it wrong first: this began as a step inside `rust-tests`,
+  # which has no NDK. `ring`'s build script cross-compiles C, so every target died with
+  # `cc-rs: failed to find tool "x86_64-linux-android-clang"` -- and the step then reported
+  # "emits warnings under the ship recipe". THAT MESSAGE WAS FALSE. A missing toolchain is not a
+  # warning, and an alarm that attributes every non-zero exit to its own subject sends you hunting
+  # for dead code that was never there. The gate below therefore SEPARATES the two outcomes and
+  # says which one happened.
+  #
+  # WHY THE TARGET MATTERS: on a Windows dev box the identical library reports 135 warnings,
+  # because every #[cfg(unix)] caller compiles out and the callee left behind looks dead. On
+  # aarch64-linux-android it reports 0. Warnings are a property of the TARGET, so the only honest
+  # place to ask is the four ABIs that actually go into the APK.
+  # ---------------------------------------------------------------------------------------------
+  rust-abi-warnings:
+    name: zero warnings on the 4 shipped ABIs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust/torta_core
+
+      - uses: android-actions/setup-android@v3
+      - name: NDK
+        run: |
+          sdkmanager --install "ndk;26.3.11579264" >/dev/null
+          echo "ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/26.3.11579264" >> "$GITHUB_ENV"
+
+      - name: cargo-ndk
+        run: cargo install cargo-ndk --locked
+
+      - name: check every shipped ABI with -D warnings
+        working-directory: rust/torta_core
+        run: |
+          rustup target add aarch64-linux-android armv7-linux-androideabi \
+                            i686-linux-android x86_64-linux-android
+          fail=0
+          # cargo-ndk sets CC/AR/linker for the NDK, which is what `ring` needs. `-t` takes the
+          # Android ABI name; the rust triples above are what those map to.
+          for abi in arm64-v8a armeabi-v7a x86 x86_64; do
+            echo "::group::$abi"
+            # Output is captured so the two failure modes can be told apart. cargo's exit code is
+            # read directly from $? on the very next line -- never through a pipe.
+            out="$(RUSTFLAGS='-D warnings' cargo ndk -t "$abi" check \
+                     --features mirror,pure_rust,netstack --all-targets 2>&1)"; code=$?
+            echo "$out"
+            echo "::endgroup::"
+            if [ "$code" -eq 0 ]; then
+              echo "  $abi: clean"
+            elif echo "$out" | grep -qE "^(warning|error): .* (is never|are never|should have|unused)"; then
+              echo "::error::$abi emits WARNINGS under the ship recipe (denied by -D warnings)"
+              fail=1
+            else
+              echo "::error::$abi FAILED TO BUILD -- this is not a warning regression, read the log"
+              fail=1
+            fi
+          done
+          exit $fail
 
   # ---------------------------------------------------------------------------------------------
   # 2. BINDINGS DRIFT — the generated Kotlin must match the Rust surface that exists TODAY.
@@ -135,13 +205,42 @@ jobs:
           # consisting entirely of deletions, which this gate would then report as "your committed
           # bindings are stale" while the truth was that the generator had been handed the wrong
           # library.
-          # Both commands now carry `mirror,uniffi-cli`, so the artifact bindgen reads is the one
-          # the previous line built.
-          cargo build --lib --features mirror,uniffi-cli
+          # Both commands now carry the same set, so the artifact bindgen reads is the one the
+          # previous line built.
+          #
+          # ★ AND THAT SET IS NOW THE SHIP RECIPE + cli (2026-08-01), not `mirror` alone.
+          #
+          # MEASURED BEFORE CHANGING IT, because the honest answer mattered: bindings generated from
+          # `mirror,uniffi-cli` and from `mirror,pure_rust,netstack,uniffi-cli` are byte-identical
+          # today -- diff exit 0, 0 lines, 27136 lines each. So this fixes NO current drift, and
+          # claiming otherwise would be inventing a bug to justify a change.
+          #
+          # It is still wrong to leave, because that identity is a CONTINGENT fact, not a property.
+          # The day someone adds a #[uniffi::export] behind #[cfg(feature = "netstack")] -- which is
+          # exactly how the netstack capability surface was added -- this gate would generate the
+          # bindings WITHOUT it and then fail the correct commit for being "stale", with the obvious
+          # repair being to delete the new export from the committed file. A gate that punishes the
+          # right change is worse than no gate. Generating from the recipe that SHIPS makes the
+          # comparison meaningful for whatever the surface becomes.
+          cargo build --lib --features mirror,pure_rust,netstack,uniffi-cli
           test -f target/debug/libtorta_core.so || { echo "::error::host cdylib missing — bindgen would silently write nothing"; exit 1; }
           grep -qa centauri_serve_hits target/debug/libtorta_core.so \
             || { echo "::error::host cdylib carries no mirror exports — bindgen would emit bindings missing every Centauri function"; exit 1; }
-          cargo run --bin uniffi-bindgen --features mirror,uniffi-cli -- \
+          # NO `grep -qa torta-netstack` ASSERTION HERE, and the reason is worth more than the
+          # assertion would have been. I wrote one, then ran the negative control before trusting it:
+          # built the cdylib WITHOUT the netstack feature and grepped again. It still matched, twice.
+          #
+          # The thread name lives in `tunnel/mod.rs:1159`, inside a function gated
+          # `#[cfg(all(unix, feature = "netstack"))]` -- but the SAME literal also appears in the doc
+          # comments at `lib.rs:58` and `lib.rs:65`, and rustc embeds doc text in the crate metadata
+          # carried by the dylib. So the string is present whether or not the code is. Measured on a
+          # Windows host, where `unix` is false and the function CANNOT have been compiled: count 2.
+          #
+          # An assertion that matches its own documentation is decoration, and a decoration in a
+          # fail-closed position is worse than nothing -- it reads as proof. The android job's
+          # equivalent check on the STRIPPED release .so is a different measurement and was observed
+          # to discriminate (0 before the netstack fix, 3 after); this one would not have.
+          cargo run --bin uniffi-bindgen --features mirror,pure_rust,netstack,uniffi-cli -- \
             generate --library target/debug/libtorta_core.so \
             --language kotlin --out-dir "$RUNNER_TEMP/bindgen_out"
           test -s "$RUNNER_TEMP/bindgen_out/uniffi/torta_core/torta_core.kt" \
@@ -166,7 +265,9 @@ jobs:
   # ---------------------------------------------------------------------------------------------
   android:
     name: apk (${{ matrix.flavor }})
-    needs: [rust-tests, bindings-drift]
+    # rust-abi-warnings added 2026-08-01: an APK must not be built from an engine that only
+    # compiles cleanly by not being asked. The gate is cheap and it fails closed.
+    needs: [rust-tests, rust-abi-warnings, bindings-drift]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
