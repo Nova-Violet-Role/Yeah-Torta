@@ -1529,12 +1529,12 @@
       ]
     },
     "tag-manager.yml": {
-      "hash": "410312dc5a3c",
-      "indexed_at": "2026-08-01T07:42:12.145981+00:00",
+      "hash": "c40f90f439f8",
+      "indexed_at": "2026-08-01T08:07:17.642214+00:00",
       "language": "yaml",
-      "lines": 300,
-      "mtime_ns": 1785570096032868700,
-      "size": 15490,
+      "lines": 330,
+      "mtime_ns": 1785571577793153400,
+      "size": 17643,
       "symbols": [
         {
           "docstring": "Meta Hashtag Manager",
@@ -1768,16 +1768,16 @@
                     {
                       "lines": [
                         202,
-                        277
+                        289
                       ],
                       "name": "run",
                       "type": "multiline"
                     },
                     {
-                      "docstring": "Push repo topics",
+                      "docstring": "Push repo topics if permitted, and audit them either way",
                       "lines": [
-                        278,
-                        278
+                        290,
+                        290
                       ],
                       "name": "name",
                       "type": "item"
@@ -1785,26 +1785,35 @@
                     {
                       "children": [
                         {
-                          "docstring": "${{ secrets.GITHUB_TOKEN }}",
+                          "docstring": "${{ secrets.TOPICS_TOKEN || secrets.GITHUB_TOKEN }}",
                           "lines": [
-                            280,
-                            280
+                            292,
+                            292
                           ],
                           "name": "GH_TOKEN",
+                          "type": "key"
+                        },
+                        {
+                          "docstring": "${{ secrets.TOPICS_TOKEN != '' }}",
+                          "lines": [
+                            293,
+                            293
+                          ],
+                          "name": "HAVE_PAT",
                           "type": "key"
                         }
                       ],
                       "lines": [
-                        279,
-                        280
+                        291,
+                        293
                       ],
                       "name": "env",
                       "type": "section"
                     },
                     {
                       "lines": [
-                        281,
-                        288
+                        294,
+                        318
                       ],
                       "name": "run",
                       "type": "multiline"
@@ -1812,16 +1821,16 @@
                     {
                       "docstring": "Commit only on real drift",
                       "lines": [
-                        289,
-                        289
+                        319,
+                        319
                       ],
                       "name": "name",
                       "type": "item"
                     },
                     {
                       "lines": [
-                        290,
-                        301
+                        320,
+                        331
                       ],
                       "name": "run",
                       "type": "multiline"
@@ -1829,7 +1838,7 @@
                   ],
                   "lines": [
                     51,
-                    301
+                    331
                   ],
                   "name": "steps",
                   "type": "list"
@@ -1837,7 +1846,7 @@
               ],
               "lines": [
                 49,
-                301
+                331
               ],
               "name": "sync",
               "type": "section"
@@ -1845,7 +1854,7 @@
           ],
           "lines": [
             48,
-            301
+            331
           ],
           "name": "jobs",
           "type": "section"
@@ -1853,6 +1862,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T07:42:12.147558+00:00",
+  "generated_at": "2026-08-01T08:07:17.643800+00:00",
   "version": "1.0"
 }

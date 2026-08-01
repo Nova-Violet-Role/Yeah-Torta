@@ -275,16 +275,46 @@ jobs:
 
       # 3. The repo topics themselves -- the structured descendant of the forum
       #    signature tag. Each becomes a crawlable github.com/topics/<t> page.
-      - name: Push repo topics
+      # ★ PUSH IF WE CAN, AUDIT ALWAYS (2026-08-01). This step used to be an unconditional
+      #   `gh api -X PUT .../topics`, and it failed 403 "Resource not accessible by integration"
+      #   every single time it ran. The cause is not a missing `permissions:` block: writing repo
+      #   topics needs the **Administration** repository permission, and that is NOT among the
+      #   permissions a workflow can grant its GITHUB_TOKEN. No amount of YAML fixes it -- only a
+      #   PAT can write topics.
+      #
+      #   Deleting the step would have been the easy repair and the wrong one: the topics are the
+      #   crawlable surface this whole job exists to maintain. So the step now does what the token
+      #   it HAS is allowed to do -- it READS the live topics and fails on DRIFT from tags.txt.
+      #   That is the invariant that actually matters (the file and the repo agree); pushing is
+      #   merely how it gets restored. With TOPICS_TOKEN present it still pushes, then re-reads.
+      - name: Push repo topics if permitted, and audit them either way
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.TOPICS_TOKEN || secrets.GITHUB_TOKEN }}
+          HAVE_PAT: ${{ secrets.TOPICS_TOKEN != '' }}
         run: |
           set -euo pipefail
           mapfile -t TOPICS < /tmp/topics.txt    # the CAPPED tier -- max 20
-          args=()
-          for t in "${TOPICS[@]}"; do [ -n "$t" ] && args+=( -f "names[]=$t" ); done
-          gh api -X PUT "repos/${GITHUB_REPOSITORY}/topics" "${args[@]}" > /tmp/topics.json
-          echo "topics now:"; cat /tmp/topics.json
+
+          if [ "$HAVE_PAT" = "true" ]; then
+            args=()
+            for t in "${TOPICS[@]}"; do [ -n "$t" ] && args+=( -f "names[]=$t" ); done
+            gh api -X PUT "repos/${GITHUB_REPOSITORY}/topics" "${args[@]}" > /tmp/topics.json
+            echo "topics PUSHED with TOPICS_TOKEN"
+          else
+            echo "::notice::no TOPICS_TOKEN -- GITHUB_TOKEN cannot write topics (needs Administration), auditing instead"
+          fi
+
+          # The audit runs in BOTH paths: after a push it proves the push landed; without one it is
+          # the only thing standing between tags.txt and a silently diverged repo.
+          gh api "repos/${GITHUB_REPOSITORY}/topics" --jq '.names[]' | sort > /tmp/live_topics.txt
+          printf '%s\n' "${TOPICS[@]}" | grep -v '^$' | sort > /tmp/want_topics.txt
+          echo "live=$(wc -l < /tmp/live_topics.txt)  declared=$(wc -l < /tmp/want_topics.txt)"
+          if ! diff -u /tmp/want_topics.txt /tmp/live_topics.txt > /tmp/topic.diff; then
+            echo "::error::repo topics have DRIFTED from .github/tags.txt [TOPICS] -- diff below (- declared, + live)"
+            cat /tmp/topic.diff
+            exit 1
+          fi
+          echo "topics on the repo match tags.txt exactly: $(wc -l < /tmp/live_topics.txt)"
 
       - name: Commit only on real drift
         run: |
