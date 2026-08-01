@@ -21,6 +21,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import androidx.core.content.IntentCompat
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.LinkProperties
@@ -988,7 +989,12 @@ class ModulesReceiver @Inject constructor(
 
         logi("ModulesReceiver connectivityStateChanged received " + intent)
 
-        val network = intent.getParcelableExtra<android.net.NetworkInfo>(LEGACY_EXTRA_NETWORK_INFO)
+        // The EXTRA is a NetworkInfo -- fixed by the legacy broadcast, no modern replacement --
+        // but the deprecated single-argument READER does have one. IntentCompat performs the
+        // API-33 class-checked split internally.
+        val network = IntentCompat.getParcelableExtra(
+            intent, LEGACY_EXTRA_NETWORK_INFO, android.net.NetworkInfo::class.java
+        )
 
         if (isVpnMode()) {
             // Filter VPN connectivity changes

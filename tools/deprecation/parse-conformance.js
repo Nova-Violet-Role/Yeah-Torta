@@ -48,9 +48,32 @@ const CASES = [
    "w: file:///C:/repo/Weird.kt:7:1 something deprecated without any quotes at all here",
    "Weird.kt|something deprecated without any quotes"],
 
-  ["generic type in the symbol is cut at the colon",
+  // CORRECTED 2026-08-01. THIS CASE USED TO ASSERT "Gen.kt|<T" -- it pinned a DEFECT as the
+  // expected answer. A generic declaration carries its type parameters before the name, so
+  // cutting at the first ':' threw the method name away and EVERY generic deprecation in a file
+  // collapsed onto one key. The corpus then guaranteed the collapse would never be fixed.
+  //
+  // Found by watching keys vanish during the IntentCompat migration: the diff read
+  // "ModulesReceiver.kt|<T  1 -> 0", which names no method. The spec was wrong, not the code.
+  // This is the only failure parse.js's header calls silently survivable -- a plausible, stable
+  // key that quietly merges two distinct methods into one baseline slot.
+  ["a GENERIC method keeps its name rather than collapsing to <T",
    "w: file:///C:/repo/Gen.kt:3:3 'fun <T : Parcelable!> getParcelableExtra(p0: String!): T!' is deprecated.",
-   "Gen.kt|<T"],
+   "Gen.kt|getParcelableExtra"],
+
+  ["a generic with SEVERAL type parameters",
+   "w: file:///C:/repo/Gen.kt:4:3 'fun <K, V> legacyMap(p0: K): V' is deprecated.",
+   "Gen.kt|legacyMap"],
+
+  // The control: two DIFFERENT generic methods in one file must not share a key. Under the old
+  // rule both were "Gen.kt|<T" and one could be deleted without the ceiling ever noticing.
+  ["two different generics in one file get DIFFERENT keys",
+   "w: file:///C:/repo/Gen.kt:5:3 'fun <T> otherLegacy(p0: String!): T!' is deprecated.",
+   "Gen.kt|otherLegacy"],
+
+  ["a NON-generic method is unaffected by the type-parameter strip",
+   "w: file:///C:/repo/Gen.kt:6:3 'fun getRunningServices(p0: Int): List' is deprecated.",
+   "Gen.kt|getRunningServices"],
 
   ["not a warning line at all",
    "> Task :libumdnscrypt:compileArm64DebugKotlin",
@@ -83,7 +106,7 @@ for (const [desc, input, expected] of CASES) {
 }
 
 // A corpus that shrank to nothing would report a perfect score. Same defect as an empty-log gate.
-const FLOOR = 10;
+const FLOOR = 14;
 if (CASES.length < FLOOR) {
   console.log("  FAIL: corpus has only " + CASES.length + " cases, floor is " + FLOOR +
               " -- a suite that examined almost nothing must not report success.");

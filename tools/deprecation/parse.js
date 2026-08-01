@@ -47,7 +47,20 @@ function parseWarningLine(l) {
   // FALLBACK when the compiler emitted no quoted declaration. Kept because dropping the line
   // entirely would UNDERCOUNT, and undercounting is the direction that makes a gate pass wrongly.
   let symbol = sm ? sm[1] : message.slice(0, 40);
-  symbol = symbol.replace(DECL_PREFIX, "").replace(/[:(].*$/, "").trim();
+  symbol = symbol.replace(DECL_PREFIX, "");
+  // A GENERIC declaration puts its type parameters before the name:
+  //     'fun <T : Parcelable!> getParcelableExtra(p0: String!): T?'
+  // Cutting at the first ':' then yields "<T" -- the method name is GONE, and EVERY generic
+  // deprecation in a file collapses onto the single key "<file>|<T". Found 2026-08-01 while
+  // watching keys disappear during the IntentCompat migration: the log showed
+  // "ModulesReceiver.kt|<T  1 -> 0", which names no method at all.
+  //
+  // This is precisely the failure mode parse.js's own header calls the only SILENTLY SURVIVABLE
+  // one: the key is stable and plausible, so no floor trips and no gate reddens, while two
+  // distinct methods share one baseline slot and one of them can be replaced by the other without
+  // the ceiling noticing. Strip the type-parameter list so the name survives.
+  symbol = symbol.replace(/^<[^>]*>\s*/, "");
+  symbol = symbol.replace(/[:(].*$/, "").trim();
 
   return { base, line: Number(m[2]), message, symbol };
 }

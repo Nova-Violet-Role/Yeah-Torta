@@ -20,6 +20,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import androidx.core.content.IntentCompat
 import android.os.Build
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import pillar.kuma_saimono.libumdnscrypt.settings.dnscrypt_rules.remote.DownloadRemoteRulesManager.Companion.DOWNLOAD_REMOTE_DNS_RULES_PROGRESS_ACTION
@@ -92,18 +93,12 @@ class DnsRulesReceiver @Inject constructor(
         }
     }
 
-    @Suppress("deprecation")
     private fun downloadRemoteRulesProgress(intent: Intent) {
-        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(
-                DOWNLOAD_REMOTE_DNS_RULES_PROGRESS_DATA,
-                DnsRulesDownloadProgress::class.java
-            )
-        } else {
-            intent.getParcelableExtra(
-                DOWNLOAD_REMOTE_DNS_RULES_PROGRESS_DATA
-            )
-        }
+        // IntentCompat performs the API-33 split internally, so the deprecated single-argument
+        // overload no longer appears in this source at all.
+        val data = IntentCompat.getParcelableExtra(
+            intent, DOWNLOAD_REMOTE_DNS_RULES_PROGRESS_DATA, DnsRulesDownloadProgress::class.java
+        )
         data ?: return
         when (data) {
             is DnsRulesDownloadProgress.DownloadProgress -> {
@@ -148,18 +143,12 @@ class DnsRulesReceiver @Inject constructor(
         }
     }
 
-    @Suppress("deprecation")
     private fun updateRemoteRulesProgress(intent: Intent) {
-        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(
-                UPDATE_DNS_RULES_PROGRESS_DATA,
-                DnsRulesUpdateProgress::class.java
-            )
-        } else {
-            intent.getParcelableExtra(
-                UPDATE_DNS_RULES_PROGRESS_DATA
-            )
-        }
+        // IntentCompat performs the API-33 split internally, so the deprecated single-argument
+        // overload no longer appears in this source at all.
+        val data = IntentCompat.getParcelableExtra(
+            intent, UPDATE_DNS_RULES_PROGRESS_DATA, DnsRulesUpdateProgress::class.java
+        )
         data ?: return
         when (data) {
             is DnsRulesUpdateProgress.UpdateProgress -> {
@@ -206,18 +195,12 @@ class DnsRulesReceiver @Inject constructor(
         }
     }
 
-    @Suppress("deprecation")
     private fun updateLocalRulesProgress(intent: Intent) {
-        val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(
-                UPDATE_DNS_RULES_PROGRESS_DATA,
-                DnsRulesUpdateProgress::class.java
-            )
-        } else {
-            intent.getParcelableExtra(
-                UPDATE_DNS_RULES_PROGRESS_DATA
-            )
-        }
+        // IntentCompat performs the API-33 split internally, so the deprecated single-argument
+        // overload no longer appears in this source at all.
+        val data = IntentCompat.getParcelableExtra(
+            intent, UPDATE_DNS_RULES_PROGRESS_DATA, DnsRulesUpdateProgress::class.java
+        )
         data ?: return
         when (data) {
             is DnsRulesUpdateProgress.UpdateProgress -> {
