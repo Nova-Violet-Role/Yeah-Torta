@@ -175,6 +175,49 @@ jobs:
           done
           exit $fail
 
+      # -----------------------------------------------------------------------------------------
+      # CLIPPY, GATED -- on the ABIs that ship, not on the host.
+      #
+      # WHY THIS STEP EXISTS. The advisory `cargo clippy` in rust-tests is `continue-on-error: true`,
+      # so the job reported SUCCESS while its log carried 30 clippy warnings. That is not a lie by
+      # the workflow -- advisory means advisory -- but it means the only way to see them was to
+      # DOWNLOAD THE RUN LOG ZIP, which is how they were found at all. A number nobody enforces
+      # drifts back up; it was 24 on the ship target and is now 0, so it gets a gate.
+      #
+      # WHY HERE AND NOT IN rust-tests. Warnings are a property of the TARGET. The host figure and
+      # the Android figure disagreed (30 vs 24), and it is the four shipped ABIs that matter. This
+      # job already has the NDK and cargo-ndk, which `ring` needs to cross-compile; putting the gate
+      # in rust-tests is exactly the mistake that made the FIRST version of this gate fail every run
+      # with a cc-rs error it then misreported as a warning regression.
+      #
+      # The advisory step upstream is deliberately left in place: it also runs `cargo fmt --check`
+      # and still covers the host, which this does not.
+      - name: clippy must stay at zero on the shipped ABIs
+        working-directory: rust/torta_core
+        run: |
+          fail=0
+          for abi in arm64-v8a armeabi-v7a x86 x86_64; do
+            echo "::group::clippy $abi"
+            out="$(cargo ndk -t "$abi" clippy \
+                     --lib --features mirror,pure_rust,netstack -- -D warnings 2>&1)"; code=$?
+            echo "$out"
+            echo "::endgroup::"
+            if [ "$code" -ne 0 ]; then
+              # Same discipline as the check gate above: distinguish "clippy objected" from "the
+              # build broke", because conflating them sent me chasing a warning that was an NDK
+              # failure for two CI runs.
+              if echo "$out" | grep -q "^error: .*clippy::"; then
+                echo "::error::$abi has CLIPPY findings (denied by -D warnings)"
+              else
+                echo "::error::$abi clippy FAILED TO RUN -- not a lint regression, read the log"
+              fi
+              fail=1
+            else
+              echo "  $abi: clippy clean"
+            fi
+          done
+          exit $fail
+
   # ---------------------------------------------------------------------------------------------
   # 2. BINDINGS DRIFT — the generated Kotlin must match the Rust surface that exists TODAY.
   # ---------------------------------------------------------------------------------------------
