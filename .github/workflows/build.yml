@@ -218,7 +218,14 @@ jobs:
               # Same discipline as the check gate above: distinguish "clippy objected" from "the
               # build broke", because conflating them sent me chasing a warning that was an NDK
               # failure for two CI runs.
-              if echo "$out" | grep -q "^error: .*clippy::"; then
+              # MEASURED, not guessed: clippy does NOT put "clippy::" on the message line. It prints
+              # `error: this `match` expression can be replaced with `?`` and names the lint only in
+              # the trailing help URL. The first version of this test grepped for "clippy::" and so
+              # reported five genuine lint findings as "FAILED TO RUN" on all four ABIs -- the exact
+              # misattribution the branch exists to prevent, committed inside the fix for it.
+              # The help URL is the reliable marker: every clippy lint emits one, a compile error
+              # does not.
+              if echo "$out" | grep -q "rust-clippy/.*index.html#"; then
                 echo "::error::$abi has CLIPPY findings (denied by -D warnings)"
               else
                 echo "::error::$abi clippy FAILED TO RUN -- not a lint regression, read the log"

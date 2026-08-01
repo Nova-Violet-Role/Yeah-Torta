@@ -2,12 +2,12 @@
   "directory": "rust\\torta_core\\src\\resolver",
   "files": {
     "cache.rs": {
-      "hash": "0e361ff196ee",
-      "indexed_at": "2026-07-29T06:41:45.494918+00:00",
+      "hash": "d6e316be62d2",
+      "indexed_at": "2026-08-01T10:16:43.212466+00:00",
       "language": "rust",
-      "lines": 2979,
-      "mtime_ns": 1785306408716684600,
-      "size": 143648,
+      "lines": 2977,
+      "mtime_ns": 1785579189329443300,
+      "size": 143456,
       "symbols": [
         {
           "docstring": "Set whether SVCB/HTTPS RRs are cacheable (the `DNSMASQ_CACHE_RR` Expert toggle).",
@@ -485,7 +485,7 @@
               "docstring": "re-checks identity, and the recency touch is O(log n) (was an O(n) `Vec` scan + memmove per HIT).",
               "lines": [
                 728,
-                781
+                779
               ],
               "name": "get_hit_at",
               "signature": "(&mut self, q: &DnsQuestion, now: Instant, live_epoch: u64)",
@@ -494,8 +494,8 @@
             {
               "docstring": "ANCOUNT>0); a SERVFAIL/REFUSED never gets here (dns.rs:291). Never stores failure-as-success.",
               "lines": [
-                789,
-                806
+                787,
+                804
               ],
               "name": "put",
               "signature": "(&mut self, q: &DnsQuestion, response: Vec<u8>)",
@@ -504,8 +504,8 @@
             {
               "docstring": "caching denials at all. SERVFAIL/REFUSED are NOT negatives and never reach here (dns.rs:291).",
               "lines": [
-                813,
-                816
+                811,
+                814
               ],
               "name": "put_negative",
               "signature": "(&mut self, q: &DnsQuestion, response: Vec<u8>, neg_ttl_secs: u32)",
@@ -514,8 +514,8 @@
             {
               "docstring": "SOA-minimum once the dns.rs skimmer surfaces it\") \u2014 the skimmer now surfaces it.",
               "lines": [
-                824,
-                832
+                822,
+                830
               ],
               "name": "put_negative_from_response",
               "signature": "(\n        &mut self,\n        q: &DnsQuestion,\n        response: Vec<u8>,\n        default_neg_ttl_...",
@@ -524,8 +524,8 @@
             {
               "docstring": "\"explicitly 0\" \u21d2 returns `false` (fails open to cacheable) \u2014 the placeholder-wire locks stay green.",
               "lines": [
-                838,
-                843
+                836,
+                841
               ],
               "name": "is_explicit_zero_ttl",
               "signature": "(response: &[u8])",
@@ -534,8 +534,8 @@
             {
               "docstring": "is Off (a stale-serving cache retains a 0-TTL answer to serve stale, faithful to dnsmasq).",
               "lines": [
-                848,
-                850
+                846,
+                848
               ],
               "name": "set_honor_zero_ttl",
               "signature": "(&mut self, on: bool)",
@@ -544,8 +544,8 @@
             {
               "docstring": "`[ttl_floor, ttl_ceiling]`; a missing/zero answer-TTL falls back to a small bounded default.",
               "lines": [
-                854,
-                860
+                852,
+                858
               ],
               "name": "positive_ttl",
               "signature": "(&self, response: &[u8])",
@@ -554,8 +554,8 @@
             {
               "docstring": "negatives \u2014 a denial must never be artificially extended by a positive min-cache-ttl knob.",
               "lines": [
-                865,
-                870
+                863,
+                868
               ],
               "name": "negative_ttl",
               "signature": "(&self, neg_ttl_secs: u32)",
@@ -564,8 +564,8 @@
             {
               "docstring": "`max-cache-ttl` caps long ones.)",
               "lines": [
-                874,
-                876
+                872,
+                874
               ],
               "name": "clamp_positive",
               "signature": "(&self, ttl: Duration)",
@@ -574,8 +574,8 @@
             {
               "docstring": "a non-empty slice narrows to exactly those types; use [`Cache::set_cacheable_all`] for cache-all.",
               "lines": [
-                884,
-                896
+                882,
+                894
               ],
               "name": "set_cacheable_types",
               "signature": "(&mut self, types: &[u16])",
@@ -584,8 +584,8 @@
             {
               "docstring": "Expert setter \u2014 restore cache-all (the `=ANY` sentinel / today's default behaviour).",
               "lines": [
-                899,
-                901
+                897,
+                899
               ],
               "name": "set_cacheable_all",
               "signature": "(&mut self)",
@@ -594,8 +594,8 @@
             {
               "docstring": "Only a DETERMINABLE type under an `Only(set)` policy can ever decline the put.",
               "lines": [
-                909,
-                931
+                907,
+                929
               ],
               "name": "is_type_cacheable",
               "signature": "(&self, response: &[u8])",
@@ -603,8 +603,8 @@
             },
             {
               "lines": [
-                940,
-                942
+                938,
+                940
               ],
               "name": "set_local_ttl",
               "signature": "(&mut self, ttl: Option<Duration>)",
@@ -612,8 +612,8 @@
             },
             {
               "lines": [
-                948,
-                960
+                946,
+                958
               ],
               "name": "local_record_ttl",
               "signature": "(&self, response: &[u8])",
@@ -621,8 +621,8 @@
             },
             {
               "lines": [
-                969,
-                972
+                967,
+                970
               ],
               "name": "put_local",
               "signature": "(&mut self, q: &DnsQuestion, response: Vec<u8>)",
@@ -630,8 +630,8 @@
             },
             {
               "lines": [
-                985,
-                998
+                983,
+                996
               ],
               "name": "put_immortal",
               "signature": "(&mut self, q: &DnsQuestion, mut response: Vec<u8>)",
@@ -640,8 +640,8 @@
             {
               "docstring": "byte 3 are untouched. No-op on a sub-header wire (the placeholder-wire locks stay green).",
               "lines": [
-                1009,
-                1013
+                1007,
+                1011
               ],
               "name": "strip_ad_bit",
               "signature": "(wire: &mut [u8])",
@@ -650,8 +650,8 @@
             {
               "docstring": "Shared insert: store/replace an ordinary (mortal) entry, maintain the LRU order, evict past `cap`.",
               "lines": [
-                1016,
-                1038
+                1014,
+                1036
               ],
               "name": "insert",
               "signature": "(\n        &mut self,\n        q: &DnsQuestion,\n        mut response: Vec<u8>,\n        ttl: Duratio...",
@@ -660,8 +660,8 @@
             {
               "docstring": "evicts the colliding resident (a bounded, hash-random one-entry cost, never a wrong answer).",
               "lines": [
-                1045,
-                1054
+                1043,
+                1052
               ],
               "name": "insert_entry",
               "signature": "(&mut self, key: Key, entry: Entry)",
@@ -670,8 +670,8 @@
             {
               "docstring": "remaining entry is immortal, eviction STOPS (immortals bypass `cap` by design \u2014 a documented bound).",
               "lines": [
-                1060,
-                1073
+                1058,
+                1071
               ],
               "name": "evict_to_cap",
               "signature": "(&mut self)",
@@ -680,8 +680,8 @@
             {
               "docstring": "D16 \u2014 refresh the slot at identity-hash `h` to MRU (highest seq). O(log n); no-op if absent.",
               "lines": [
-                1076,
-                1085
+                1074,
+                1083
               ],
               "name": "touch",
               "signature": "(&mut self, h: u64)",
@@ -690,8 +690,8 @@
             {
               "docstring": "D16 \u2014 drop the slot at identity-hash `h` together with its recency row (the epoch/expiry evict).",
               "lines": [
-                1088,
-                1092
+                1086,
+                1090
               ],
               "name": "remove_hash",
               "signature": "(&mut self, h: u64)",
@@ -699,8 +699,8 @@
             },
             {
               "lines": [
-                1096,
-                1101
+                1094,
+                1099
               ],
               "name": "peek_entry",
               "signature": "(&self, q: &DnsQuestion)",
@@ -708,8 +708,8 @@
             },
             {
               "lines": [
-                1103,
-                1105
+                1101,
+                1103
               ],
               "name": "len",
               "signature": "(&self)",
@@ -717,8 +717,8 @@
             },
             {
               "lines": [
-                1107,
-                1109
+                1105,
+                1107
               ],
               "name": "is_empty",
               "signature": "(&self)",
@@ -727,8 +727,8 @@
             {
               "docstring": "otherwise unanswerable from the outside.",
               "lines": [
-                1118,
-                1120
+                1116,
+                1118
               ],
               "name": "configured_epoch",
               "signature": "(&self)",
@@ -737,8 +737,8 @@
             {
               "docstring": "The LIVE blocklist generation, for the same comparison from outside this module.",
               "lines": [
-                1123,
-                1125
+                1121,
+                1123
               ],
               "name": "live_epoch",
               "signature": "()",
@@ -747,8 +747,8 @@
             {
               "docstring": "replaces the whole `Inner`). Distinct from the lazy per-entry epoch gate in `get()`.",
               "lines": [
-                1129,
-                1132
+                1127,
+                1130
               ],
               "name": "clear",
               "signature": "(&mut self)",
@@ -757,8 +757,8 @@
             {
               "docstring": "CONTROL-PLANE only \u2014 NEVER `resolve()`.",
               "lines": [
-                1149,
-                1215
+                1147,
+                1213
               ],
               "name": "snapshot",
               "signature": "(&self, now: Instant, now_unix: u64, budget: usize)",
@@ -766,8 +766,8 @@
             },
             {
               "lines": [
-                1249,
-                1251
+                1247,
+                1249
               ],
               "name": "restore",
               "signature": "(&mut self, payload: &[u8], now: Instant, now_unix: u64)",
@@ -776,8 +776,8 @@
             {
               "docstring": "STALE entry is re-gated too, so the crown can never make a rebind answer durable.",
               "lines": [
-                1261,
-                1269
+                1259,
+                1267
               ],
               "name": "restore_gated",
               "signature": "(\n        &mut self,\n        payload: &[u8],\n        now: Instant,\n        now_unix: u64,\n       ...",
@@ -786,8 +786,8 @@
             {
               "docstring": "cleanly (never an OOB read, never a panic). `admit` runs on the parsed wire BEFORE insertion.",
               "lines": [
-                1274,
-                1370
+                1272,
+                1368
               ],
               "name": "restore_with",
               "signature": "(\n        &mut self,\n        payload: &[u8],\n        now: Instant,\n        now_unix: u64,\n       ...",
@@ -796,7 +796,7 @@
           ],
           "lines": [
             557,
-            1371
+            1369
           ],
           "name": "Cache",
           "type": "impl"
@@ -804,8 +804,8 @@
         {
           "docstring": "this value, which is exactly what `get()`'s epoch gate keys on.",
           "lines": [
-            1376,
-            1378
+            1374,
+            1376
           ],
           "name": "current_epoch",
           "signature": "()",
@@ -814,8 +814,8 @@
         {
           "docstring": "bounds-guard that makes [`Cache::restore`] OOB-proof on a truncated / hostile snapshot tail.",
           "lines": [
-            1382,
-            1389
+            1380,
+            1387
           ],
           "name": "take",
           "signature": "(cur: &mut &'a [u8], n: usize)",
@@ -824,8 +824,8 @@
         {
           "docstring": "Read a big-endian `u16` off the cursor (advancing it), or `None` if it is short.",
           "lines": [
-            1392,
-            1395
+            1390,
+            1393
           ],
           "name": "read_u16",
           "signature": "(cur: &mut &[u8])",
@@ -834,8 +834,8 @@
         {
           "docstring": "Read a big-endian `u32` off the cursor (advancing it), or `None` if it is short.",
           "lines": [
-            1398,
-            1401
+            1396,
+            1399
           ],
           "name": "read_u32",
           "signature": "(cur: &mut &[u8])",
@@ -844,8 +844,8 @@
         {
           "docstring": "Read a big-endian `u64` off the cursor (advancing it), or `None` if it is short.",
           "lines": [
-            1404,
-            1409
+            1402,
+            1407
           ],
           "name": "read_u64",
           "signature": "(cur: &mut &[u8])",
@@ -855,8 +855,8 @@
           "children": [
             {
               "lines": [
-                1416,
-                1418
+                1414,
+                1416
               ],
               "name": "q",
               "signature": "(name: &str)",
@@ -864,8 +864,8 @@
             },
             {
               "lines": [
-                1425,
-                1452
+                1423,
+                1450
               ],
               "name": "snapshot_restore_round_trips_fresh_entries",
               "signature": "()",
@@ -873,8 +873,8 @@
             },
             {
               "lines": [
-                1457,
-                1470
+                1455,
+                1468
               ],
               "name": "restore_drops_wall_clock_expired_entries",
               "signature": "()",
@@ -882,8 +882,8 @@
             },
             {
               "lines": [
-                1475,
-                1497
+                1473,
+                1495
               ],
               "name": "restore_is_oob_proof_on_hostile_payload",
               "signature": "()",
@@ -892,8 +892,8 @@
             {
               "docstring": "answer closely enough that `dns::answer_records` reads the per-record TTL back.",
               "lines": [
-                1503,
-                1520
+                1501,
+                1518
               ],
               "name": "positive_response",
               "signature": "(name: &str, ttl: u32)",
@@ -901,8 +901,8 @@
             },
             {
               "lines": [
-                1523,
-                1531
+                1521,
+                1529
               ],
               "name": "put_then_get_round_trips_on_the_question_tuple",
               "signature": "()",
@@ -910,8 +910,8 @@
             },
             {
               "lines": [
-                1534,
-                1548
+                1532,
+                1546
               ],
               "name": "evicts_lru_not_merely_oldest_inserted",
               "signature": "()",
@@ -919,8 +919,8 @@
             },
             {
               "lines": [
-                1551,
-                1562
+                1549,
+                1560
               ],
               "name": "insertion_order_eviction_still_holds_without_touch",
               "signature": "()",
@@ -928,8 +928,8 @@
             },
             {
               "lines": [
-                1565,
-                1601
+                1563,
+                1599
               ],
               "name": "d16_hash_first_recency_survives_a_large_working_set",
               "signature": "()",
@@ -937,8 +937,8 @@
             },
             {
               "lines": [
-                1604,
-                1619
+                1602,
+                1617
               ],
               "name": "ttl_expiry_makes_get_a_miss_and_drops_the_entry",
               "signature": "()",
@@ -946,8 +946,8 @@
             },
             {
               "lines": [
-                1622,
-                1638
+                1620,
+                1636
               ],
               "name": "min_ttl_floor_raises_a_tiny_ttl",
               "signature": "()",
@@ -955,8 +955,8 @@
             },
             {
               "lines": [
-                1641,
-                1658
+                1639,
+                1656
               ],
               "name": "max_ttl_ceiling_caps_a_huge_ttl",
               "signature": "()",
@@ -964,8 +964,8 @@
             },
             {
               "lines": [
-                1661,
-                1678
+                1659,
+                1676
               ],
               "name": "negative_ttl_is_hard_clamped_to_the_ceiling",
               "signature": "()",
@@ -973,8 +973,8 @@
             },
             {
               "lines": [
-                1681,
-                1689
+                1679,
+                1687
               ],
               "name": "negative_ttl_never_zero",
               "signature": "()",
@@ -982,8 +982,8 @@
             },
             {
               "lines": [
-                1692,
-                1705
+                1690,
+                1703
               ],
               "name": "epoch_change_invalidates_lazily_without_reconfigure",
               "signature": "()",
@@ -991,8 +991,8 @@
             },
             {
               "lines": [
-                1708,
-                1737
+                1706,
+                1735
               ],
               "name": "serve_stale_returns_expired_within_window_but_off_by_default",
               "signature": "()",
@@ -1000,8 +1000,8 @@
             },
             {
               "lines": [
-                1740,
-                1764
+                1738,
+                1762
               ],
               "name": "serve_stale_still_honors_the_epoch",
               "signature": "()",
@@ -1009,8 +1009,8 @@
             },
             {
               "lines": [
-                1767,
-                1778
+                1765,
+                1776
               ],
               "name": "zero_ceiling_config_coerces_to_a_sane_default_never_disables_cache",
               "signature": "()",
@@ -1018,8 +1018,8 @@
             },
             {
               "lines": [
-                1781,
-                1792
+                1779,
+                1790
               ],
               "name": "replacing_a_key_refreshes_its_lru_position",
               "signature": "()",
@@ -1027,8 +1027,8 @@
             },
             {
               "lines": [
-                1795,
-                1807
+                1793,
+                1805
               ],
               "name": "kind_is_recorded_distinctly",
               "signature": "()",
@@ -1037,8 +1037,8 @@
             {
               "docstring": "key is deterministic, but the ANSWER's type is what the N2 gate reads.",
               "lines": [
-                1816,
-                1829
+                1814,
+                1827
               ],
               "name": "typed_response",
               "signature": "(name: &str, rtype: u16, ttl: u32)",
@@ -1046,8 +1046,8 @@
             },
             {
               "lines": [
-                1838,
-                1883
+                1836,
+                1881
               ],
               "name": "cache_rr_default_set_holds_a_aaaa_srv_ptr_only_extras_opt_in",
               "signature": "()",
@@ -1055,8 +1055,8 @@
             },
             {
               "lines": [
-                1889,
-                1896
+                1887,
+                1894
               ],
               "name": "default_cache_is_cache_all_no_type_gate",
               "signature": "()",
@@ -1064,8 +1064,8 @@
             },
             {
               "lines": [
-                1902,
-                1932
+                1900,
+                1930
               ],
               "name": "cache_rr_any_sentinel_and_indeterminable_wire_fail_open",
               "signature": "()",
@@ -1073,8 +1073,8 @@
             },
             {
               "lines": [
-                1940,
-                1964
+                1938,
+                1962
               ],
               "name": "local_record_uses_the_local_ttl_clamp_when_set",
               "signature": "()",
@@ -1082,8 +1082,8 @@
             },
             {
               "lines": [
-                1969,
-                1996
+                1967,
+                1994
               ],
               "name": "local_ttl_is_floored_at_1s_and_capped_at_the_ceiling",
               "signature": "()",
@@ -1092,8 +1092,8 @@
             {
               "docstring": "Build a positive A response with the AD bit (byte 3, 0x20) SET \u2014 to prove the cache strips it.",
               "lines": [
-                2001,
-                2005
+                1999,
+                2003
               ],
               "name": "positive_response_with_ad",
               "signature": "(name: &str, ttl: u32)",
@@ -1101,8 +1101,8 @@
             },
             {
               "lines": [
-                2013,
-                2035
+                2011,
+                2033
               ],
               "name": "proxy_dnssec_passes_ad_bit_through_but_never_serves_a_stale_ad_bit_cross_context",
               "signature": "()",
@@ -1110,8 +1110,8 @@
             },
             {
               "lines": [
-                2040,
-                2054
+                2038,
+                2052
               ],
               "name": "strip_ad_bit_is_precise_and_safe_on_short_wires",
               "signature": "()",
@@ -1119,8 +1119,8 @@
             },
             {
               "lines": [
-                2063,
-                2099
+                2061,
+                2097
               ],
               "name": "get_hit_reports_fresh_then_stale_then_miss",
               "signature": "()",
@@ -1128,8 +1128,8 @@
             },
             {
               "lines": [
-                2104,
-                2120
+                2102,
+                2118
               ],
               "name": "unbounded_serve_stale_serves_regardless_of_age",
               "signature": "()",
@@ -1137,8 +1137,8 @@
             },
             {
               "lines": [
-                2128,
-                2163
+                2126,
+                2161
               ],
               "name": "cold_boot_serve_stale_survives_a_reboot_and_signals_revalidate",
               "signature": "()",
@@ -1146,8 +1146,8 @@
             },
             {
               "lines": [
-                2168,
-                2197
+                2166,
+                2195
               ],
               "name": "cold_boot_stale_dropped_when_restored_cache_does_not_serve_stale",
               "signature": "()",
@@ -1155,8 +1155,8 @@
             },
             {
               "lines": [
-                2205,
-                2241
+                2203,
+                2239
               ],
               "name": "restore_gated_drops_a_wire_the_live_policy_rejects",
               "signature": "()",
@@ -1164,8 +1164,8 @@
             },
             {
               "lines": [
-                2248,
-                2280
+                2246,
+                2278
               ],
               "name": "immortal_records_survive_expiry_and_cap_eviction",
               "signature": "()",
@@ -1173,8 +1173,8 @@
             },
             {
               "lines": [
-                2288,
-                2335
+                2286,
+                2333
               ],
               "name": "honor_zero_ttl_declines_explicit_zero_only_when_opted_in_and_stale_off",
               "signature": "()",
@@ -1182,8 +1182,8 @@
             },
             {
               "lines": [
-                2344,
-                2362
+                2342,
+                2360
               ],
               "name": "put_negative_from_response_falls_back_and_clamps_without_an_soa",
               "signature": "()",
@@ -1191,8 +1191,8 @@
             },
             {
               "lines": [
-                2371,
-                2389
+                2369,
+                2387
               ],
               "name": "lru_eviction_removes_least_recently_used_non_immortal",
               "signature": "()",
@@ -1200,8 +1200,8 @@
             },
             {
               "lines": [
-                2394,
-                2411
+                2392,
+                2409
               ],
               "name": "lru_eviction_preserves_immortal_entries",
               "signature": "()",
@@ -1209,8 +1209,8 @@
             },
             {
               "lines": [
-                2416,
-                2436
+                2414,
+                2434
               ],
               "name": "touch_makes_entry_mru",
               "signature": "()",
@@ -1218,8 +1218,8 @@
             },
             {
               "lines": [
-                2442,
-                2455
+                2440,
+                2453
               ],
               "name": "cache_consistency_basic",
               "signature": "()",
@@ -1227,8 +1227,8 @@
             },
             {
               "lines": [
-                2459,
-                2475
+                2457,
+                2473
               ],
               "name": "epoch_gating_prevents_stale_reads",
               "signature": "()",
@@ -1236,8 +1236,8 @@
             }
           ],
           "lines": [
-            1412,
-            2476
+            1410,
+            2474
           ],
           "name": "tests",
           "type": "module"
@@ -1246,8 +1246,8 @@
           "children": [
             {
               "lines": [
-                2492,
-                2494
+                2490,
+                2492
               ],
               "name": "q",
               "signature": "(name: &str)",
@@ -1256,8 +1256,8 @@
             {
               "docstring": "MINIMUM) is exactly what `dns::negative_ttl_from_soa` reads positionally.",
               "lines": [
-                2499,
-                2521
+                2497,
+                2519
               ],
               "name": "nxdomain_with_soa",
               "signature": "(name: &str, soa_ttl: u32, soa_minimum: u32)",
@@ -1265,8 +1265,8 @@
             },
             {
               "lines": [
-                2525,
-                2535
+                2523,
+                2533
               ],
               "name": "a_denial_is_cached_and_served",
               "signature": "()",
@@ -1274,8 +1274,8 @@
             },
             {
               "lines": [
-                2540,
-                2559
+                2538,
+                2557
               ],
               "name": "a_denial_expires_and_does_not_pin_forever",
               "signature": "()",
@@ -1283,8 +1283,8 @@
             },
             {
               "lines": [
-                2565,
-                2584
+                2563,
+                2582
               ],
               "name": "a_hostile_soa_minimum_is_clamped_to_the_ceiling",
               "signature": "()",
@@ -1292,8 +1292,8 @@
             },
             {
               "lines": [
-                2589,
-                2605
+                2587,
+                2603
               ],
               "name": "a_soa_less_denial_uses_the_bounded_default",
               "signature": "()",
@@ -1301,8 +1301,8 @@
             },
             {
               "lines": [
-                2610,
-                2629
+                2608,
+                2627
               ],
               "name": "the_smaller_of_soa_ttl_and_minimum_wins",
               "signature": "()",
@@ -1310,8 +1310,8 @@
             }
           ],
           "lines": [
-            2488,
-            2630
+            2486,
+            2628
           ],
           "name": "negative_caching_tests",
           "type": "module"
@@ -1320,8 +1320,8 @@
           "children": [
             {
               "lines": [
-                2643,
-                2645
+                2641,
+                2643
               ],
               "name": "q",
               "signature": "(name: &str)",
@@ -1329,8 +1329,8 @@
             },
             {
               "lines": [
-                2650,
-                2660
+                2648,
+                2658
               ],
               "name": "a_fresh_entry_reports_fresh",
               "signature": "()",
@@ -1338,8 +1338,8 @@
             },
             {
               "lines": [
-                2665,
-                2687
+                2663,
+                2685
               ],
               "name": "an_expired_entry_in_the_window_reports_stale_and_still_serves",
               "signature": "()",
@@ -1347,8 +1347,8 @@
             },
             {
               "lines": [
-                2692,
-                2706
+                2690,
+                2704
               ],
               "name": "serve_stale_off_still_misses_on_expiry",
               "signature": "()",
@@ -1356,8 +1356,8 @@
             },
             {
               "lines": [
-                2712,
-                2737
+                2710,
+                2735
               ],
               "name": "get_hit_serves_byte_identical_bytes_to_get",
               "signature": "()",
@@ -1365,8 +1365,8 @@
             },
             {
               "lines": [
-                2742,
-                2757
+                2740,
+                2755
               ],
               "name": "the_epoch_gate_outranks_serve_stale",
               "signature": "()",
@@ -1374,8 +1374,8 @@
             }
           ],
           "lines": [
-            2639,
-            2758
+            2637,
+            2756
           ],
           "name": "serve_stale_freshness_tests",
           "type": "module"
@@ -1385,8 +1385,8 @@
             {
               "docstring": "Build a minimal positive reply whose first Answer record has type `rtype`.",
               "lines": [
-                2770,
-                2794
+                2768,
+                2792
               ],
               "name": "answer_of_type",
               "signature": "(rtype: u16)",
@@ -1394,8 +1394,8 @@
             },
             {
               "lines": [
-                2798,
-                2811
+                2796,
+                2809
               ],
               "name": "an_empty_set_means_cache_all_not_cache_nothing",
               "signature": "()",
@@ -1403,8 +1403,8 @@
             },
             {
               "lines": [
-                2815,
-                2822
+                2813,
+                2820
               ],
               "name": "a_narrowed_policy_admits_only_its_own_types",
               "signature": "()",
@@ -1412,8 +1412,8 @@
             },
             {
               "lines": [
-                2826,
-                2836
+                2824,
+                2834
               ],
               "name": "the_default_set_is_the_measured_dnsmasq_set",
               "signature": "()",
@@ -1421,8 +1421,8 @@
             },
             {
               "lines": [
-                2841,
-                2848
+                2839,
+                2846
               ],
               "name": "an_indeterminable_wire_fails_open_to_cacheable",
               "signature": "()",
@@ -1430,8 +1430,8 @@
             },
             {
               "lines": [
-                2853,
-                2864
+                2851,
+                2862
               ],
               "name": "the_sentinel_reads_empty_as_cache_all",
               "signature": "()",
@@ -1439,8 +1439,8 @@
             },
             {
               "lines": [
-                2868,
-                2879
+                2866,
+                2877
               ],
               "name": "the_durable_intent_round_trips",
               "signature": "()",
@@ -1448,8 +1448,8 @@
             }
           ],
           "lines": [
-            2766,
-            2880
+            2764,
+            2878
           ],
           "name": "cacheable_types_tests",
           "type": "module"
@@ -1458,8 +1458,8 @@
           "children": [
             {
               "lines": [
-                2889,
-                2891
+                2887,
+                2889
               ],
               "name": "q",
               "signature": "(name: &str)",
@@ -1467,8 +1467,8 @@
             },
             {
               "lines": [
-                2897,
-                2929
+                2895,
+                2927
               ],
               "name": "a_vetoed_wire_never_rehydrates",
               "signature": "()",
@@ -1476,8 +1476,8 @@
             },
             {
               "lines": [
-                2934,
-                2961
+                2932,
+                2959
               ],
               "name": "an_always_admit_gate_matches_the_ungated_path_exactly",
               "signature": "()",
@@ -1485,8 +1485,8 @@
             },
             {
               "lines": [
-                2966,
-                2978
+                2964,
+                2976
               ],
               "name": "clear_empties_the_cache",
               "signature": "()",
@@ -1494,8 +1494,8 @@
             }
           ],
           "lines": [
-            2885,
-            2979
+            2883,
+            2977
           ],
           "name": "rehydrate_gate_tests",
           "type": "module"
@@ -5859,12 +5859,12 @@
       ]
     },
     "mod.rs": {
-      "hash": "6a0f73ca8c50",
-      "indexed_at": "2026-08-01T09:56:55.879803+00:00",
+      "hash": "2eaf8b176fe4",
+      "indexed_at": "2026-08-01T10:16:43.548366+00:00",
       "language": "rust",
-      "lines": 5070,
-      "mtime_ns": 1785577798949585500,
-      "size": 278429,
+      "lines": 5069,
+      "mtime_ns": 1785579189330442700,
+      "size": 278281,
       "symbols": [
         {
           "docstring": "! *driver-task* panic \u21d2 a transport miss, same firewall outcome, never a process abort.",
@@ -6742,7 +6742,7 @@
               "docstring": "stack write, never IO, so the hot path stays byte-identical.",
               "lines": [
                 1805,
-                2409
+                2408
               ],
               "name": "resolve_inner",
               "signature": "(\n        &self,\n        query_wire: &[u8],\n        outcome: &mut log::ResolveOutcome,\n        cl...",
@@ -6751,7 +6751,7 @@
           ],
           "lines": [
             1799,
-            2410
+            2409
           ],
           "name": "Resolver",
           "type": "impl"
@@ -6761,8 +6761,8 @@
             {
               "docstring": "through to dnscrypt-proxy, never a half-built answer. Pure beyond the atomic count; never panics.",
               "lines": [
-                2429,
-                2471
+                2428,
+                2470
               ],
               "name": "synthesize_block_reply",
               "signature": "(\n        &self,\n        query_wire: &[u8],\n        action: crate::blocklist::BlockAction,\n    )",
@@ -6771,8 +6771,8 @@
             {
               "docstring": "filter must never drop a good answer). Pure beyond the atomic count; never panics.",
               "lines": [
-                2479,
-                2508
+                2478,
+                2507
               ],
               "name": "apply_filter_rr",
               "signature": "(&self, question: &dns::DnsQuestion, response: Vec<u8>)",
@@ -6781,8 +6781,8 @@
             {
               "docstring": "cross-context. No-op on a sub-header wire. Pure beyond the atomic count; never panics.",
               "lines": [
-                2516,
-                2533
+                2515,
+                2532
               ],
               "name": "apply_proxy_dnssec",
               "signature": "(&self, mut response: Vec<u8>)",
@@ -6791,8 +6791,8 @@
             {
               "docstring": "Pure beyond the atomics: no egress, no lock, never panics (bounded like `dns::answer_records`).",
               "lines": [
-                2548,
-                2566
+                2547,
+                2565
               ],
               "name": "rebind_reject",
               "signature": "(&self, question: &dns::DnsQuestion, response: &[u8])",
@@ -6801,8 +6801,8 @@
             {
               "docstring": "atomics: no egress, no lock, never panics (the decoder is `MAX_PUNYCODE_OUT`-bounded).",
               "lines": [
-                2581,
-                2593
+                2580,
+                2592
               ],
               "name": "homograph_reject",
               "signature": "(&self, question: &dns::DnsQuestion)",
@@ -6811,8 +6811,8 @@
             {
               "docstring": "or `None` on a full soft-fail exhaustion \u2014 the same `Option<Vec<u8>>` contract as `exchange`.",
               "lines": [
-                2602,
-                2618
+                2601,
+                2617
               ],
               "name": "solve_ladder_exchange",
               "signature": "(&self, query_wire: &[u8], pool: &Arc<Pool>)",
@@ -6821,8 +6821,8 @@
             {
               "docstring": "with DNS64 OFF (no prefix installed) is byte-identical in behaviour to pre-slice-4.",
               "lines": [
-                2638,
-                2703
+                2637,
+                2702
               ],
               "name": "try_dns64_synth",
               "signature": "(\n        &self,\n        query_wire: &[u8],\n        question: &dns::DnsQuestion,\n        aaaa_res...",
@@ -6830,8 +6830,8 @@
             }
           ],
           "lines": [
-            2412,
-            2704
+            2411,
+            2703
           ],
           "name": "Resolver",
           "type": "impl"
@@ -6839,8 +6839,8 @@
         {
           "docstring": "(P12_DNSMASQ_EVOKE.md:51), it becomes the authoritative oracle and this guard collapses into it.",
           "lines": [
-            2715,
-            2728
+            2714,
+            2727
           ],
           "name": "is_private_or_local_name",
           "signature": "(qname: &str)",
@@ -6849,8 +6849,8 @@
         {
           "docstring": "it would pin a denial forever. Pure + bounds-checked: never panics, never an OOB read.",
           "lines": [
-            2734,
-            2738
+            2733,
+            2737
           ],
           "name": "is_cacheable_positive",
           "signature": "(response: &[u8])",
@@ -6859,8 +6859,8 @@
         {
           "docstring": "Pure + bounds-checked: never panics, never an OOB read.",
           "lines": [
-            2759,
-            2767
+            2758,
+            2766
           ],
           "name": "is_cacheable_negative",
           "signature": "(response: &[u8])",
@@ -6869,8 +6869,8 @@
         {
           "docstring": "Pure + bounds-checked: never panics, never an OOB read.",
           "lines": [
-            2773,
-            2775
+            2772,
+            2774
           ],
           "name": "is_nxdomain_wire",
           "signature": "(response: &[u8])",
@@ -6879,8 +6879,8 @@
         {
           "docstring": "header is short or a label runs off the end. Never panics, never an OOB read.",
           "lines": [
-            2781,
-            2805
+            2780,
+            2804
           ],
           "name": "question_byte_len",
           "signature": "(wire: &[u8])",
@@ -6889,8 +6889,8 @@
         {
           "docstring": "`nativeResolverStats` core \u2014 a tiny hand-built JSON object (no serde for 2b). No qname ever (T20).",
           "lines": [
-            2808,
-            2953
+            2807,
+            2952
           ],
           "name": "stats",
           "signature": "()",
@@ -6899,8 +6899,8 @@
         {
           "docstring": "source behind [`object::MaskSolverSnapshot`]. Every field maps 1:1 to a `stats()` JSON field.",
           "lines": [
-            2965,
-            2992
+            2964,
+            2991
           ],
           "name": "ResolverStatsRaw",
           "type": "struct"
@@ -6908,8 +6908,8 @@
         {
           "docstring": "counter is a lock-free atomic load. Pure read, off the hot path.",
           "lines": [
-            2997,
-            3033
+            2996,
+            3032
           ],
           "name": "read_stats_raw",
           "signature": "()",
@@ -6918,8 +6918,8 @@
         {
           "docstring": "One transport's health view (the R7 RTT/loss EWMA twin) \u2014 the source behind [`object::MaskSolverTransport`].",
           "lines": [
-            3036,
-            3041
+            3035,
+            3040
           ],
           "name": "PoolTransportView",
           "type": "struct"
@@ -6927,8 +6927,8 @@
         {
           "docstring": "(dead-code-until-wired). Empty transports when unconfigured. Pure read, off the hot path.",
           "lines": [
-            3046,
-            3058
+            3045,
+            3057
           ],
           "name": "PoolView",
           "type": "struct"
@@ -6936,8 +6936,8 @@
         {
           "docstring": "deadline + miss-tally are read outside that lock. Pure read.",
           "lines": [
-            3062,
-            3116
+            3061,
+            3115
           ],
           "name": "pool_view",
           "signature": "()",
@@ -6946,8 +6946,8 @@
         {
           "docstring": "(parked) runtime so a later `configure` reuses it. Clearing twice is harmless (T26).",
           "lines": [
-            3120,
-            3124
+            3119,
+            3123
           ],
           "name": "shutdown",
           "signature": "()",
@@ -6956,8 +6956,8 @@
         {
           "docstring": "path. Call ONLY on the control plane (DNSCrypt stop, a periodic checkpoint), NEVER from `resolve()`.",
           "lines": [
-            3132,
-            3151
+            3131,
+            3150
           ],
           "name": "persist_cache",
           "signature": "(dir: &str)",
@@ -6966,8 +6966,8 @@
         {
           "docstring": "configure time (after the pool is up) \u2014 a pure NAND read on the hot path's behalf.",
           "lines": [
-            3158,
-            3206
+            3157,
+            3205
           ],
           "name": "rehydrate_cache",
           "signature": "(dir: &str)",
@@ -6976,8 +6976,8 @@
         {
           "docstring": "an unlearned transport contributes nothing (so a checkpoint never invents a hint).",
           "lines": [
-            3220,
-            3237
+            3219,
+            3236
           ],
           "name": "live_rtt_hints",
           "signature": "()",
@@ -6986,8 +6986,8 @@
         {
           "docstring": "(best-effort \u2014 the in-memory state is unaffected; the charter's FAIL-SAFE invariant).",
           "lines": [
-            3247,
-            3261
+            3246,
+            3260
           ],
           "name": "checkpoint_rotation",
           "signature": "(dir: &str)",
@@ -6996,8 +6996,8 @@
         {
           "docstring": "(default-OFF) `Strategy::Fastest` ranking reads; the default `StrictOrder` path never consults it.",
           "lines": [
-            3271,
-            3282
+            3270,
+            3281
           ],
           "name": "warm_start_pool_rtt",
           "signature": "(dir: &str)",
@@ -7006,8 +7006,8 @@
         {
           "docstring": "`Strategy::Fastest`/SOLVE-ladder ranking reads; the default `StrictOrder` path never consults it.",
           "lines": [
-            3297,
-            3312
+            3296,
+            3311
           ],
           "name": "seed_pool_rtt",
           "signature": "(hints: &[(String, u32)])",
@@ -7016,8 +7016,8 @@
         {
           "docstring": "remaining-secs \u2014 still bounded, never a panic).",
           "lines": [
-            3317,
-            3322
+            3316,
+            3321
           ],
           "name": "now_unix_secs",
           "signature": "()",
@@ -7026,8 +7026,8 @@
         {
           "docstring": "skipped, only the three fields we need are pulled. Returns whatever well-formed upstreams it found.",
           "lines": [
-            3327,
-            3384
+            3326,
+            3383
           ],
           "name": "parse_upstreams",
           "signature": "(json: &str)",
@@ -7036,8 +7036,8 @@
         {
           "docstring": "reads whichever it needs via `UpstreamSpec::stamp_or_url`.",
           "lines": [
-            3390,
-            3406
+            3389,
+            3405
           ],
           "name": "parse_upstream_obj",
           "signature": "(obj: &str)",
@@ -7045,8 +7045,8 @@
         },
         {
           "lines": [
-            3408,
-            3436
+            3407,
+            3435
           ],
           "name": "parse_relay_stamps_field",
           "signature": "(obj: &str)",
@@ -7055,8 +7055,8 @@
         {
           "docstring": "(`|sdns://\u2026`) collapses to `None` \u2014 no blank relay label leaks to the row.",
           "lines": [
-            3443,
-            3449
+            3442,
+            3448
           ],
           "name": "split_relay_label",
           "signature": "(s: &str)",
@@ -7065,8 +7065,8 @@
         {
           "docstring": "Find the byte index just after `\"<key>\"` in `json`, or `None`.",
           "lines": [
-            3452,
-            3455
+            3451,
+            3454
           ],
           "name": "find_key",
           "signature": "(json: &str, key: &str)",
@@ -7075,8 +7075,8 @@
         {
           "docstring": "escapes; returns the unescaped value. `None` if absent or not a string.",
           "lines": [
-            3459,
-            3500
+            3458,
+            3499
           ],
           "name": "string_field",
           "signature": "(obj: &str, key: &str)",
@@ -7086,8 +7086,8 @@
           "children": [
             {
               "lines": [
-                3516,
-                3541
+                3515,
+                3540
               ],
               "name": "the_global_reset_actually_clears_a_configured_pool",
               "signature": "()",
@@ -7095,8 +7095,8 @@
             },
             {
               "lines": [
-                3544,
-                3567
+                3543,
+                3566
               ],
               "name": "g5_split_relay_label_names_the_hop_and_stays_backward_compatible",
               "signature": "()",
@@ -7104,8 +7104,8 @@
             },
             {
               "lines": [
-                3570,
-                3605
+                3569,
+                3604
               ],
               "name": "picker_scan_names_protos_and_folds_extra_stamps",
               "signature": "()",
@@ -7113,8 +7113,8 @@
             },
             {
               "lines": [
-                3608,
-                3630
+                3607,
+                3629
               ],
               "name": "parses_upstreams_json_without_serde",
               "signature": "()",
@@ -7122,8 +7122,8 @@
             },
             {
               "lines": [
-                3633,
-                3644
+                3632,
+                3643
               ],
               "name": "drops_upstream_without_url_or_stamp",
               "signature": "()",
@@ -7131,8 +7131,8 @@
             },
             {
               "lines": [
-                3647,
-                3654
+                3646,
+                3653
               ],
               "name": "string_field_handles_escapes",
               "signature": "()",
@@ -7140,8 +7140,8 @@
             },
             {
               "lines": [
-                3657,
-                3660
+                3656,
+                3659
               ],
               "name": "configure_with_no_usable_upstream_returns_none",
               "signature": "()",
@@ -7149,8 +7149,8 @@
             },
             {
               "lines": [
-                3663,
-                3679
+                3662,
+                3678
               ],
               "name": "warm_start_pool_rtt_on_a_cold_dir_seeds_nothing",
               "signature": "()",
@@ -7158,8 +7158,8 @@
             },
             {
               "lines": [
-                3682,
-                3691
+                3681,
+                3690
               ],
               "name": "seed_pool_rtt_with_no_hints_seeds_nothing",
               "signature": "()",
@@ -7167,8 +7167,8 @@
             },
             {
               "lines": [
-                3694,
-                3712
+                3693,
+                3711
               ],
               "name": "seed_pool_rtt_unconfigured_resolver_seeds_nothing",
               "signature": "()",
@@ -7176,8 +7176,8 @@
             },
             {
               "lines": [
-                3727,
-                3745
+                3726,
+                3744
               ],
               "name": "configure_builds_loopback_do53_proxy_arm",
               "signature": "()",
@@ -7185,8 +7185,8 @@
             },
             {
               "lines": [
-                3748,
-                3775
+                3747,
+                3774
               ],
               "name": "configure_skips_non_loopback_do53_but_keeps_a_loopback_sibling",
               "signature": "()",
@@ -7194,8 +7194,8 @@
             },
             {
               "lines": [
-                3801,
-                3815
+                3800,
+                3814
               ],
               "name": "configure_builds_odoh_off_any_runtime",
               "signature": "()",
@@ -7203,8 +7203,8 @@
             },
             {
               "lines": [
-                3819,
-                3868
+                3818,
+                3867
               ],
               "name": "configure_builds_odoh_from_stamps_with_relay",
               "signature": "()",
@@ -7212,8 +7212,8 @@
             },
             {
               "lines": [
-                3871,
-                3877
+                3870,
+                3876
               ],
               "name": "stats_is_well_formed_json_when_unconfigured",
               "signature": "()",
@@ -7222,8 +7222,8 @@
             {
               "docstring": "padded to exactly 12 bytes so it parses as a header.",
               "lines": [
-                3883,
-                3889
+                3882,
+                3888
               ],
               "name": "header",
               "signature": "(rcode: u8, ancount: u16)",
@@ -7231,8 +7231,8 @@
             },
             {
               "lines": [
-                3892,
-                3896
+                3891,
+                3895
               ],
               "name": "cacheable_positive_true_for_noerror_with_answers",
               "signature": "()",
@@ -7240,8 +7240,8 @@
             },
             {
               "lines": [
-                3899,
-                3902
+                3898,
+                3901
               ],
               "name": "cacheable_positive_false_for_nxdomain",
               "signature": "()",
@@ -7249,8 +7249,8 @@
             },
             {
               "lines": [
-                3905,
-                3909
+                3904,
+                3908
               ],
               "name": "cacheable_positive_false_for_servfail",
               "signature": "()",
@@ -7258,8 +7258,8 @@
             },
             {
               "lines": [
-                3912,
-                3915
+                3911,
+                3914
               ],
               "name": "cacheable_positive_false_for_nodata",
               "signature": "()",
@@ -7267,8 +7267,8 @@
             },
             {
               "lines": [
-                3918,
-                3922
+                3917,
+                3921
               ],
               "name": "cacheable_positive_false_when_too_short",
               "signature": "()",
@@ -7276,8 +7276,8 @@
             },
             {
               "lines": [
-                3927,
-                3934
+                3926,
+                3933
               ],
               "name": "nxdomain_wire_classifier_reads_rcode3_only",
               "signature": "()",
@@ -7285,8 +7285,8 @@
             },
             {
               "lines": [
-                3937,
-                3977
+                3936,
+                3976
               ],
               "name": "armed_datapath_writes_a_classified_verdict_line",
               "signature": "()",
@@ -7294,8 +7294,8 @@
             },
             {
               "lines": [
-                3980,
-                3993
+                3979,
+                3992
               ],
               "name": "arm_query_log_with_a_blank_dir_is_a_noop",
               "signature": "()",
@@ -7303,8 +7303,8 @@
             },
             {
               "lines": [
-                3998,
-                4082
+                3997,
+                4081
               ],
               "name": "armed_feed_writes_a_go_shape_row_for_a_rust_answered_query",
               "signature": "()",
@@ -7312,8 +7312,8 @@
             },
             {
               "lines": [
-                4087,
-                4151
+                4086,
+                4150
               ],
               "name": "datapath_drive_climbs_the_ram_ledger_and_lands_the_nand_row",
               "signature": "()",
@@ -7321,8 +7321,8 @@
             },
             {
               "lines": [
-                4156,
-                4169
+                4155,
+                4168
               ],
               "name": "question_byte_len_round_trips_on_a_built_query",
               "signature": "()",
@@ -7330,8 +7330,8 @@
             },
             {
               "lines": [
-                4172,
-                4185
+                4171,
+                4184
               ],
               "name": "question_byte_len_is_safe_on_malformed_input",
               "signature": "()",
@@ -7339,8 +7339,8 @@
             }
           ],
           "lines": [
-            3503,
-            4186
+            3502,
+            4185
           ],
           "name": "tests",
           "type": "module"
@@ -7350,8 +7350,8 @@
             {
               "docstring": "Byte offset just past a single-question `build_query` message (12B header + qname + QTYPE/QCLASS).",
               "lines": [
-                4204,
-                4215
+                4203,
+                4214
               ],
               "name": "question_end",
               "signature": "(query: &[u8])",
@@ -7360,8 +7360,8 @@
             {
               "docstring": "accept it \u2014 the bytes are a genuinely well-formed answer, only the IP is the rebind subject.",
               "lines": [
-                4220,
-                4236
+                4219,
+                4235
               ],
               "name": "forge_a_response",
               "signature": "(query: &[u8], ip: [u8; 4])",
@@ -7370,8 +7370,8 @@
             {
               "docstring": "The caller must already hold [`REBIND_TEST_LOCK`] (serializing it against sibling tests).",
               "lines": [
-                4249,
-                4255
+                4248,
+                4254
               ],
               "name": "with_enforce",
               "signature": "(on: bool, f: impl FnOnce() -> R)",
@@ -7380,8 +7380,8 @@
             {
               "docstring": "closure so a test never leaks the flipped state. Caller must hold [`REBIND_TEST_LOCK`].",
               "lines": [
-                4259,
-                4265
+                4258,
+                4264
               ],
               "name": "with_homograph_enforce",
               "signature": "(on: bool, f: impl FnOnce() -> R)",
@@ -7389,8 +7389,8 @@
             },
             {
               "lines": [
-                4272,
-                4297
+                4271,
+                4296
               ],
               "name": "lookalike_name_is_denied_when_enforcing",
               "signature": "()",
@@ -7398,8 +7398,8 @@
             },
             {
               "lines": [
-                4302,
-                4322
+                4301,
+                4321
               ],
               "name": "lookalike_name_is_observed_but_kept_when_not_enforcing",
               "signature": "()",
@@ -7407,8 +7407,8 @@
             },
             {
               "lines": [
-                4327,
-                4342
+                4326,
+                4341
               ],
               "name": "plain_ascii_name_is_never_flagged",
               "signature": "()",
@@ -7416,8 +7416,8 @@
             },
             {
               "lines": [
-                4347,
-                4357
+                4346,
+                4356
               ],
               "name": "private_local_suffixes_are_allowlisted",
               "signature": "()",
@@ -7425,8 +7425,8 @@
             },
             {
               "lines": [
-                4360,
-                4368
+                4359,
+                4367
               ],
               "name": "public_names_are_not_allowlisted",
               "signature": "()",
@@ -7434,8 +7434,8 @@
             },
             {
               "lines": [
-                4373,
-                4401
+                4372,
+                4400
               ],
               "name": "public_to_private_is_rejected_when_enforcing",
               "signature": "()",
@@ -7443,8 +7443,8 @@
             },
             {
               "lines": [
-                4404,
-                4428
+                4403,
+                4427
               ],
               "name": "public_to_private_is_observed_but_kept_when_not_enforcing",
               "signature": "()",
@@ -7452,8 +7452,8 @@
             },
             {
               "lines": [
-                4431,
-                4447
+                4430,
+                4446
               ],
               "name": "public_to_public_is_clean_never_dropped",
               "signature": "()",
@@ -7461,8 +7461,8 @@
             },
             {
               "lines": [
-                4450,
-                4475
+                4449,
+                4474
               ],
               "name": "private_domain_answer_is_allowed_even_with_private_ip",
               "signature": "()",
@@ -7470,8 +7470,8 @@
             },
             {
               "lines": [
-                4478,
-                4487
+                4477,
+                4486
               ],
               "name": "no_answer_records_is_clean",
               "signature": "()",
@@ -7479,8 +7479,8 @@
             },
             {
               "lines": [
-                4490,
-                4510
+                4489,
+                4509
               ],
               "name": "set_rebind_enforce_flips_the_switch",
               "signature": "()",
@@ -7488,8 +7488,8 @@
             },
             {
               "lines": [
-                4513,
-                4525
+                4512,
+                4524
               ],
               "name": "stats_json_carries_the_rebind_counters",
               "signature": "()",
@@ -7497,8 +7497,8 @@
             },
             {
               "lines": [
-                4528,
-                4554
+                4527,
+                4553
               ],
               "name": "stats_json_carries_the_settings_control_plane_posture",
               "signature": "()",
@@ -7506,8 +7506,8 @@
             },
             {
               "lines": [
-                4557,
-                4579
+                4556,
+                4578
               ],
               "name": "settings_serve_stale_and_ttl_setters_record_durable_intent",
               "signature": "()",
@@ -7515,8 +7515,8 @@
             },
             {
               "lines": [
-                4582,
-                4602
+                4581,
+                4601
               ],
               "name": "settings_cache_cap_and_query_timeout_record_durable_intent",
               "signature": "()",
@@ -7524,8 +7524,8 @@
             },
             {
               "lines": [
-                4605,
-                4631
+                4604,
+                4630
               ],
               "name": "stats_json_carries_the_dnsmasq_telemetry_keys",
               "signature": "()",
@@ -7533,8 +7533,8 @@
             },
             {
               "lines": [
-                4636,
-                4648
+                4635,
+                4647
               ],
               "name": "solve_ladder_toggle_defaults_off_and_flips",
               "signature": "()",
@@ -7542,8 +7542,8 @@
             },
             {
               "lines": [
-                4651,
-                4665
+                4650,
+                4664
               ],
               "name": "stats_json_carries_the_solve_counters",
               "signature": "()",
@@ -7551,8 +7551,8 @@
             },
             {
               "lines": [
-                4668,
-                4699
+                4667,
+                4698
               ],
               "name": "stats_json_rates_match_the_typed_snapshot",
               "signature": "()",
@@ -7560,8 +7560,8 @@
             },
             {
               "lines": [
-                4702,
-                4709
+                4701,
+                4708
               ],
               "name": "solve_ranking_prefers_low_loss_then_low_rtt_stable",
               "signature": "()",
@@ -7569,8 +7569,8 @@
             },
             {
               "lines": [
-                4712,
-                4722
+                4711,
+                4721
               ],
               "name": "solve_ranking_cold_start_is_configured_order_no_promotion",
               "signature": "()",
@@ -7578,8 +7578,8 @@
             },
             {
               "lines": [
-                4725,
-                4730
+                4724,
+                4729
               ],
               "name": "solve_ranking_proven_fast_leads_an_untried_upstream",
               "signature": "()",
@@ -7587,8 +7587,8 @@
             },
             {
               "lines": [
-                4736,
-                4841
+                4735,
+                4840
               ],
               "name": "centauri_cloak_synthesizes_tun_sentinel_for_a_watched_cdn_host_only_when_armed",
               "signature": "()",
@@ -7596,8 +7596,8 @@
             }
           ],
           "lines": [
-            4198,
-            4842
+            4197,
+            4841
           ],
           "name": "rebind_tests",
           "type": "module"
@@ -7606,8 +7606,8 @@
           "children": [
             {
               "lines": [
-                4851,
-                4863
+                4850,
+                4862
               ],
               "name": "private_resolver",
               "signature": "()",
@@ -7615,8 +7615,8 @@
             },
             {
               "lines": [
-                4867,
-                4876
+                4866,
+                4875
               ],
               "name": "budget_uncapped_acquire_is_immediate_and_raii_counted",
               "signature": "()",
@@ -7624,8 +7624,8 @@
             },
             {
               "lines": [
-                4881,
-                4904
+                4880,
+                4903
               ],
               "name": "budget_full_window_fails_open_after_the_bounded_wait",
               "signature": "()",
@@ -7633,8 +7633,8 @@
             },
             {
               "lines": [
-                4908,
-                4919
+                4907,
+                4918
               ],
               "name": "budget_freed_slot_admits_immediately",
               "signature": "()",
@@ -7642,8 +7642,8 @@
             },
             {
               "lines": [
-                4924,
-                4954
+                4923,
+                4953
               ],
               "name": "apply_pool_budget_swaps_and_releases_the_deadline",
               "signature": "()",
@@ -7651,8 +7651,8 @@
             },
             {
               "lines": [
-                4959,
-                4964
+                4958,
+                4963
               ],
               "name": "stats_json_carries_the_budget_witness_keys",
               "signature": "()",
@@ -7660,8 +7660,8 @@
             },
             {
               "lines": [
-                4996,
-                5000
+                4995,
+                4999
               ],
               "name": "gap1_concurrency_safety_documented",
               "signature": "()",
@@ -7669,8 +7669,8 @@
             }
           ],
           "lines": [
-            4848,
-            5001
+            4847,
+            5000
           ],
           "name": "budget_tests",
           "type": "module"
@@ -7680,8 +7680,8 @@
             {
               "docstring": "Minimal 12-byte header with the given RCODE and ANCOUNT.",
               "lines": [
-                5011,
-                5017
+                5010,
+                5016
               ],
               "name": "hdr",
               "signature": "(rcode: u8, ancount: u16)",
@@ -7689,8 +7689,8 @@
             },
             {
               "lines": [
-                5020,
-                5026
+                5019,
+                5025
               ],
               "name": "nxdomain_is_negatively_cacheable",
               "signature": "()",
@@ -7698,8 +7698,8 @@
             },
             {
               "lines": [
-                5029,
-                5034
+                5028,
+                5033
               ],
               "name": "nodata_is_negatively_cacheable",
               "signature": "()",
@@ -7707,8 +7707,8 @@
             },
             {
               "lines": [
-                5039,
-                5046
+                5038,
+                5045
               ],
               "name": "transport_failures_are_never_negatively_cacheable",
               "signature": "()",
@@ -7716,8 +7716,8 @@
             },
             {
               "lines": [
-                5051,
-                5061
+                5050,
+                5060
               ],
               "name": "positives_and_negatives_never_overlap",
               "signature": "()",
@@ -7725,8 +7725,8 @@
             },
             {
               "lines": [
-                5065,
-                5069
+                5064,
+                5068
               ],
               "name": "short_wires_are_refused_not_panicked",
               "signature": "()",
@@ -7734,8 +7734,8 @@
             }
           ],
           "lines": [
-            5007,
-            5070
+            5006,
+            5069
           ],
           "name": "negative_cacheability_tests",
           "type": "module"
@@ -10561,12 +10561,12 @@
       ]
     },
     "routes_store.rs": {
-      "hash": "656d75a09374",
-      "indexed_at": "2026-07-26T19:12:58.133379+00:00",
+      "hash": "4596fc6b999a",
+      "indexed_at": "2026-08-01T10:16:43.861344+00:00",
       "language": "rust",
-      "lines": 314,
-      "mtime_ns": 1785030833124604500,
-      "size": 12837,
+      "lines": 313,
+      "mtime_ns": 1785579189329443300,
+      "size": 12776,
       "symbols": [
         {
           "lines": [
@@ -10598,7 +10598,7 @@
           "docstring": "target is malformed (or with zero usable suffixes) is unusable.",
           "lines": [
             92,
-            128
+            127
           ],
           "name": "parse_rule_line",
           "signature": "(line: &str)",
@@ -10607,8 +10607,8 @@
         {
           "docstring": "suffix matches the Router's canonical insert. `None` for an empty / over-bound suffix.",
           "lines": [
-            133,
-            144
+            132,
+            143
           ],
           "name": "canonicalize_suffix",
           "signature": "(suffix: &str)",
@@ -10617,8 +10617,8 @@
         {
           "docstring": "Empty input \u2192 `\"[]\"`.",
           "lines": [
-            151,
-            178
+            150,
+            177
           ],
           "name": "to_json_fragment",
           "signature": "(routes: &[StoredRoute])",
@@ -10627,8 +10627,8 @@
         {
           "docstring": "`false` = the write was refused.",
           "lines": [
-            183,
-            191
+            182,
+            190
           ],
           "name": "persist_text",
           "signature": "(dir: &str, text: &str)",
@@ -10637,8 +10637,8 @@
         {
           "docstring": "torn record; non-UTF-8 degrades to `None`, never a panic).",
           "lines": [
-            195,
-            200
+            194,
+            199
           ],
           "name": "load_text",
           "signature": "(dir: &str)",
@@ -10647,8 +10647,8 @@
         {
           "docstring": "Cold store \u21d2 `([], 0)` \u2014 the empty Router fast-path, behavior identical to pre-P12.",
           "lines": [
-            204,
-            209
+            203,
+            208
           ],
           "name": "load_parsed",
           "signature": "(dir: &str)",
@@ -10658,8 +10658,8 @@
           "children": [
             {
               "lines": [
-                217,
-                256
+                216,
+                255
               ],
               "name": "parses_server_and_address_forms_with_multi_suffix_and_comments",
               "signature": "()",
@@ -10667,8 +10667,8 @@
             },
             {
               "lines": [
-                259,
-                266
+                258,
+                265
               ],
               "name": "suffixes_canonicalize_like_the_router_keys",
               "signature": "()",
@@ -10676,8 +10676,8 @@
             },
             {
               "lines": [
-                269,
-                286
+                268,
+                285
               ],
               "name": "json_fragment_matches_the_parse_routes_contract_and_escapes",
               "signature": "()",
@@ -10685,8 +10685,8 @@
             },
             {
               "lines": [
-                289,
-                313
+                288,
+                312
               ],
               "name": "persist_load_round_trip_and_blank_clears",
               "signature": "()",
@@ -10694,8 +10694,8 @@
             }
           ],
           "lines": [
-            212,
-            314
+            211,
+            313
           ],
           "name": "tests",
           "type": "module"
@@ -11145,6 +11145,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T09:56:56.178419+00:00",
+  "generated_at": "2026-08-01T10:16:43.862872+00:00",
   "version": "1.0"
 }

@@ -2105,7 +2105,8 @@ impl Resolver {
         let mut literal_ip: Option<std::net::IpAddr> = None;
         {
             let mut guard = self.inner.lock().unwrap_or_else(|e| e.into_inner());
-            if let Some(inner) = guard.as_mut() {
+            {
+                let inner = guard.as_mut()?;
                 // Read the route while we hold the guard (pure, no egress — safe under lock). Skip the
                 // suffix-trie consult ENTIRELY when no routes are installed — the empty fast-path
                 // (`routing.rs:120`): the overwhelmingly common dnscrypt-only config has zero `server=`/
@@ -2165,8 +2166,6 @@ impl Resolver {
                     }
                     return Some(cached);
                 }
-            } else {
-                return None; // not configured yet → fall through
             }
         }
 
@@ -2210,9 +2209,9 @@ impl Resolver {
         //    panics into a JoinError that surfaces here as a transport timeout → miss.)
         let pool = {
             let guard = self.inner.lock().unwrap_or_else(|e| e.into_inner());
-            match guard.as_ref() {
-                Some(inner) => inner.pool.clone(),
-                None => return None, // not configured yet → fall through
+            {
+                let inner = guard.as_ref()?;
+                inner.pool.clone()
             }
         };
 

@@ -92,10 +92,9 @@ pub fn parse_lines(text: &str) -> (Vec<StoredRoute>, usize) {
 fn parse_rule_line(line: &str) -> Option<Vec<StoredRoute>> {
     let (is_address, value) = if let Some(v) = line.strip_prefix("server=") {
         (false, v)
-    } else if let Some(v) = line.strip_prefix("address=") {
-        (true, v)
     } else {
-        return None; // not a rule form we speak
+        let v = line.strip_prefix("address=")?;
+        (true, v)
     };
     let value = value.trim();
     if !value.starts_with('/') {

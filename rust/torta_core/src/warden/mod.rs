@@ -342,14 +342,14 @@ impl DecisionCache {
     fn get(&mut self, conn: &ConnFacts, live_epoch: u64) -> Option<Verdict> {
         let hash = Self::hash_conn(conn);
         // Read what we need under the immutable borrow, then release it before any mutation.
-        let (verdict, epoch, last_used, identity_ok) = match self.map.get(&hash) {
-            Some(slot) => (
+        let (verdict, epoch, last_used, identity_ok) = {
+            let slot = self.map.get(&hash)?;
+            (
                 slot.verdict,
                 slot.epoch,
                 slot.last_used,
                 slot.key.matches(conn),
-            ),
-            None => return None,
+            )
         };
         // A hash collision with a DIFFERENT identity ⇒ a miss (a later insert will overwrite the slot).
         if !identity_ok {

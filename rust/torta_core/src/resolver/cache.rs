@@ -729,43 +729,41 @@ impl Cache {
         let h = question_hash(&q.qname, q.qtype, q.qclass);
         let mode = self.stale_mode;
 
-        let (hit, evict) = match self.map.get(&h) {
-            None => return None,
-            Some(slot) => {
-                // D16 collision guard — a hash collision with a DIFFERENT identity is a plain MISS
-                // (re-resolve), NEVER the other identity's bytes. The colliding resident is left alone.
-                if !slot.key.matches(q) {
-                    return None;
-                }
-                let entry = &slot.entry;
-                // EPOCH GATE first — a stale-list answer is invalid regardless of TTL / serve-stale.
-                // This is the load-bearing 2e invariant: a blocklist re-arm (new fingerprint) without
-                // a configure() rebuild invalidates every entry stored under the old epoch.
-                if entry.epoch != live_epoch {
-                    (None, true)
-                } else if entry.is_fresh(now) {
-                    (
-                        Some(CacheHit {
-                            wire: entry.wire.clone(),
-                            freshness: Freshness::Fresh,
-                        }),
-                        false,
-                    )
-                } else if entry.is_usable_stale(now, mode) {
-                    // serve-stale: the expired-but-usable bytes (epoch already honored). SIGNAL Stale so
-                    // the resolver revalidates. `is_usable_stale` folds in Off (never) / Unbounded /
-                    // Window(w) / the cold-boot per-entry deadline — one predicate, no external guard.
-                    (
-                        Some(CacheHit {
-                            wire: entry.wire.clone(),
-                            freshness: Freshness::Stale,
-                        }),
-                        false,
-                    )
-                } else {
-                    // Expired past any stale bound — drop it.
-                    (None, true)
-                }
+        let (hit, evict) = {
+            let slot = self.map.get(&h)?;
+            // D16 collision guard — a hash collision with a DIFFERENT identity is a plain MISS
+            // (re-resolve), NEVER the other identity's bytes. The colliding resident is left alone.
+            if !slot.key.matches(q) {
+                return None;
+            }
+            let entry = &slot.entry;
+            // EPOCH GATE first — a stale-list answer is invalid regardless of TTL / serve-stale.
+            // This is the load-bearing 2e invariant: a blocklist re-arm (new fingerprint) without
+            // a configure() rebuild invalidates every entry stored under the old epoch.
+            if entry.epoch != live_epoch {
+                (None, true)
+            } else if entry.is_fresh(now) {
+                (
+                    Some(CacheHit {
+                        wire: entry.wire.clone(),
+                        freshness: Freshness::Fresh,
+                    }),
+                    false,
+                )
+            } else if entry.is_usable_stale(now, mode) {
+                // serve-stale: the expired-but-usable bytes (epoch already honored). SIGNAL Stale so
+                // the resolver revalidates. `is_usable_stale` folds in Off (never) / Unbounded /
+                // Window(w) / the cold-boot per-entry deadline — one predicate, no external guard.
+                (
+                    Some(CacheHit {
+                        wire: entry.wire.clone(),
+                        freshness: Freshness::Stale,
+                    }),
+                    false,
+                )
+            } else {
+                // Expired past any stale bound — drop it.
+                (None, true)
             }
         };
 
