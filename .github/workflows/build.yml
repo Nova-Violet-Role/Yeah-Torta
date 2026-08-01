@@ -686,13 +686,35 @@ jobs:
             UniFFI bindings and both APKs. No binary in this repository was trusted to produce
             them.
 
-            Gates that had to pass first:
+            Gates that had to pass first — every one of these is a step in this workflow, and
+            every one of them can fail the build:
+
+            *Engine*
+            - the Rust corpus must BE the shipped asset (checked before the tests, so a passing
+              round-trip cannot be a round-trip over the wrong bytes)
             - engine unit tests (`cargo test --lib --features mirror,pure_rust,netstack` -- the SHIP recipe)
+            - the suite must not silently shrink (a test-count floor, so deleting tests fails)
+            - `rustfmt` must stay clean
             - zero warnings on all four shipped Android ABIs (`RUSTFLAGS=-D warnings cargo check --target ...`)
+            - `clippy` must stay at zero on the shipped ABIs
+
+            *Bindings and the .so*
             - UniFFI bindings match the current Rust surface (no stale generated Kotlin)
             - the built `.so` actually carries the pillar symbols (`mirror_status`,
               `centauri_serve_hits`, `resolver_doh_sinkhole_on`)
-            - A14 uniffi-record guard and the A4 Slint golden gate
+            - the A14 uniffi-record guard (wired into Gradle, and it throws if its script is missing)
+
+            *Android*
             - JVM unit tests for the flavour
+            - four self-check corpora for the deprecation tooling: the suppression stripper, the
+              gated/ungated classifier, the parser, and a backlog ceiling that fails if the number
+              of ungated deprecated usages grows
+
+            NOT a gate, said plainly because an earlier version of this text claimed it was: the
+            Slint goldens. This workflow RENDERS them on Linux and uploads them as an artifact,
+            and the step is labelled "never authoritative" for a reason -- three `Text` elements
+            carry no pinned font-family, so they rasterise with the host's default font and a
+            Linux render cannot be compared against a device golden. `torta_ui` is BUILT here but
+            its tests are not run; the only `cargo test` in this workflow is `torta_core`'s.
 
             See README.md for what is proven and — deliberately — what is not yet.
