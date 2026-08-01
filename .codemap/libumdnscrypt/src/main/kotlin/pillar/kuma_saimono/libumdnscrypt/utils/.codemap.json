@@ -95,10 +95,10 @@
     },
     "IntentExtras.kt": {
       "hash": "1ba2ad8ff4bf",
-      "indexed_at": "2026-08-01T15:41:11.882623+00:00",
+      "indexed_at": "2026-08-01T16:07:09.053182+00:00",
       "language": "kotlin",
       "lines": 99,
-      "mtime_ns": 1785598841156665700,
+      "mtime_ns": 1785600393363173000,
       "size": 4937,
       "symbols": [
         {
@@ -178,19 +178,19 @@
       ]
     },
     "ThemeUtils.kt": {
-      "hash": "b2fdab96bb62",
-      "indexed_at": "2026-08-01T15:41:11.885628+00:00",
+      "hash": "636c946e4074",
+      "indexed_at": "2026-08-01T16:07:07.054659+00:00",
       "language": "kotlin",
-      "lines": 59,
-      "mtime_ns": 1785598841157664900,
-      "size": 2365,
+      "lines": 84,
+      "mtime_ns": 1785600393363173000,
+      "size": 3753,
       "symbols": [
         {
           "children": [
             {
               "lines": [
-                31,
-                51
+                57,
+                76
               ],
               "name": "setDayNightTheme",
               "signature": "(context: Context, pathVars: PathVars)",
@@ -198,8 +198,8 @@
             },
             {
               "lines": [
-                53,
-                58
+                78,
+                83
               ],
               "name": "isNightMode",
               "signature": "(context: Context)",
@@ -208,7 +208,7 @@
           ],
           "lines": [
             29,
-            59
+            84
           ],
           "name": "ThemeUtils",
           "type": "class"
@@ -216,19 +216,19 @@
       ]
     },
     "Utils.kt": {
-      "hash": "730d6e3fa8dc",
-      "indexed_at": "2026-08-01T15:41:11.889208+00:00",
+      "hash": "e7d0a2c5c7f6",
+      "indexed_at": "2026-08-01T16:07:07.331877+00:00",
       "language": "kotlin",
-      "lines": 384,
-      "mtime_ns": 1785598841157664900,
-      "size": 14394,
+      "lines": 399,
+      "mtime_ns": 1785600245120676300,
+      "size": 15821,
       "symbols": [
         {
           "children": [
             {
               "lines": [
-                88,
-                92
+                87,
+                91
               ],
               "name": "getScreenOrientationOld",
               "signature": "(activity: Activity)",
@@ -236,8 +236,8 @@
             },
             {
               "lines": [
-                94,
-                101
+                93,
+                100
               ],
               "name": "getScreenOrientation",
               "signature": "(activity: Activity)",
@@ -245,8 +245,8 @@
             },
             {
               "lines": [
-                104,
-                106
+                103,
+                105
               ],
               "name": "dips2pixels",
               "signature": "(dips: Int, context: Context)",
@@ -254,8 +254,8 @@
             },
             {
               "lines": [
-                108,
-                113
+                107,
+                112
               ],
               "name": "dp2pixels",
               "signature": "(dp: Int)",
@@ -263,8 +263,8 @@
             },
             {
               "lines": [
-                116,
-                134
+                115,
+                133
               ],
               "name": "getDeviceIP",
               "signature": "()",
@@ -272,18 +272,17 @@
             },
             {
               "lines": [
-                136,
-                160
+                135,
+                159
               ],
               "name": "isLANInterfaceExist",
               "signature": "()",
               "type": "method"
             },
             {
-              "docstring": "For backwards compatibility, it will still return the caller's own services.",
               "lines": [
-                163,
-                179
+                183,
+                194
               ],
               "name": "isServiceRunning",
               "signature": "(context: Context, serviceClass: Class<ModulesService>)",
@@ -291,8 +290,8 @@
             },
             {
               "lines": [
-                181,
-                184
+                196,
+                199
               ],
               "name": "isShowNotification",
               "signature": "(context: Context)",
@@ -300,8 +299,8 @@
             },
             {
               "lines": [
-                186,
-                222
+                201,
+                237
               ],
               "name": "isLogsDirAccessible",
               "signature": "()",
@@ -309,8 +308,8 @@
             },
             {
               "lines": [
-                224,
-                235
+                239,
+                250
               ],
               "name": "isInterfaceLocked",
               "signature": "(preferenceRepository: PreferenceRepository)",
@@ -318,8 +317,8 @@
             },
             {
               "lines": [
-                237,
-                247
+                252,
+                262
               ],
               "name": "startAppExitDetectService",
               "signature": "(context: Context)",
@@ -327,8 +326,8 @@
             },
             {
               "lines": [
-                249,
-                262
+                264,
+                277
               ],
               "name": "getUidForName",
               "signature": "(name: String, defaultValue: Int)",
@@ -336,8 +335,8 @@
             },
             {
               "lines": [
-                264,
-                274
+                279,
+                289
               ],
               "name": "getCriticalSystemUids",
               "signature": "(ownUid: Int)",
@@ -345,8 +344,8 @@
             },
             {
               "lines": [
-                276,
-                277
+                291,
+                292
               ],
               "name": "getDnsTetherUid",
               "signature": "(ownUid: Int)",
@@ -354,8 +353,8 @@
             },
             {
               "lines": [
-                279,
-                294
+                294,
+                309
               ],
               "name": "allowInteractAcrossUsersPermissionIfRequired",
               "signature": "(\n        context: Context,\n        pathVars: PathVars\n    )",
@@ -363,8 +362,8 @@
             },
             {
               "lines": [
-                296,
-                301
+                311,
+                316
               ],
               "name": "isInteractAcrossUsersPermissionGranted",
               "signature": "(context: Context)",
@@ -372,8 +371,8 @@
             },
             {
               "lines": [
-                303,
-                309
+                318,
+                324
               ],
               "name": "areNotificationsAllowed",
               "signature": "(notificationManager: NotificationManager)",
@@ -381,8 +380,8 @@
             },
             {
               "lines": [
-                311,
-                313
+                326,
+                328
               ],
               "name": "areNotificationsNotAllowed",
               "signature": "(notificationManager: NotificationManager)",
@@ -390,8 +389,8 @@
             },
             {
               "lines": [
-                315,
-                320
+                330,
+                335
               ],
               "name": "verifyHostsSet",
               "signature": "(hosts: Set<String>)",
@@ -399,8 +398,8 @@
             },
             {
               "lines": [
-                322,
-                338
+                337,
+                353
               ],
               "name": "prepareFakeSniHosts",
               "signature": "(hosts: Set<String>, defaultHosts: List<String>?, remainLength: Int)",
@@ -408,8 +407,8 @@
             },
             {
               "lines": [
-                340,
-                349
+                355,
+                364
               ],
               "name": "hideKeyboard",
               "signature": "(activity: Activity)",
@@ -417,8 +416,8 @@
             },
             {
               "lines": [
-                351,
-                366
+                366,
+                381
               ],
               "name": "unescapeHTML",
               "signature": "(line: String)",
@@ -426,8 +425,8 @@
             },
             {
               "lines": [
-                368,
-                377
+                383,
+                392
               ],
               "name": "formatFileSizeToReadableUnits",
               "signature": "(length: Long)",
@@ -435,8 +434,8 @@
             },
             {
               "lines": [
-                379,
-                382
+                394,
+                397
               ],
               "name": "getDomainNameFromUrl",
               "signature": "(url: String)",
@@ -444,8 +443,8 @@
             }
           ],
           "lines": [
-            68,
-            384
+            67,
+            399
           ],
           "name": "Utils",
           "type": "class"
@@ -453,6 +452,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T15:41:14.782023+00:00",
+  "generated_at": "2026-08-01T16:07:11.954196+00:00",
   "version": "1.0"
 }

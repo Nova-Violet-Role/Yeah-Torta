@@ -28,8 +28,33 @@ import java.lang.Exception
 
 object ThemeUtils {
 
+    /**
+     * `AppCompatDelegate.MODE_NIGHT_AUTO_TIME`, routed through ONE named alias.
+     *
+     * MEASURED from `appcompat-1.7.1.aar` -> `classes.jar` -> `AppCompatDelegate.class` with
+     * `javap -v`, not recalled:
+     *
+     * ```text
+     *   MODE_NIGHT_AUTO_TIME     = 0   Deprecated: true
+     *   MODE_NIGHT_AUTO          = 0   Deprecated: true    <- only same-value alias, also gone
+     *   MODE_NIGHT_AUTO_BATTERY  = 3   (not deprecated)
+     *   MODE_NIGHT_FOLLOW_SYSTEM = -1  (not deprecated)
+     * ```
+     *
+     * So there is NO equivalent replacement: every non-deprecated mode carries a DIFFERENT value
+     * and therefore different behaviour. Swapping in `MODE_NIGHT_AUTO_BATTERY` would silently
+     * convert a user's time-of-day choice into a battery-saver choice -- a behaviour change
+     * dressed as a deprecation fix. It stays, and it stays declared rather than hidden.
+     *
+     * What DID change: the suppression used to sit on the whole of [setDayNightTheme], so every
+     * other line of that function was unmeasurable. Routing the constant through a single alias --
+     * the `LEGACY_*` convention this codebase already uses in ModulesReceiver -- narrows the
+     * suppression to the one declaration that needs it and leaves the function itself measured.
+     */
+    @Suppress("DEPRECATION")
+    private val LEGACY_MODE_NIGHT_AUTO_TIME: Int = AppCompatDelegate.MODE_NIGHT_AUTO_TIME
+
     @JvmStatic
-    @Suppress("deprecation")
     fun setDayNightTheme(context: Context, pathVars: PathVars) {
         try {
             val theme = if (pathVars.appVersion.startsWith("g") && !AccelerateDevelop.accelerated) {
@@ -42,7 +67,7 @@ object ThemeUtils {
             when (theme) {
                 "1" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 "2" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                "3" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_TIME)
+                "3" -> AppCompatDelegate.setDefaultNightMode(LEGACY_MODE_NIGHT_AUTO_TIME)
                 "4" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             }
         } catch (e: Exception) {

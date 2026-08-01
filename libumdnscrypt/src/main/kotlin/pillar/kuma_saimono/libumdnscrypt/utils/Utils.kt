@@ -17,7 +17,6 @@
 package pillar.kuma_saimono.libumdnscrypt.utils
 
 import android.app.Activity
-import android.app.ActivityManager
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
@@ -159,23 +158,39 @@ object Utils {
         return result
     }
 
-    //For backwards compatibility, it will still return the caller's own services.
-    @Suppress("deprecation")
+    /**
+     * Kept as a symbol, emptied of deprecated API.
+     *
+     * The body called `ActivityManager.getRunningServices(Int)`, deprecated at API 26. The old
+     * comment here read "For backwards compatibility, it will still return the caller's own
+     * services" -- which is the *reason it was deprecated*: since O it returns nothing but the
+     * caller's own services, so the loop could only ever have been finding this app's service.
+     *
+     * The parameter is typed `Class<ModulesService>`, so the question could only ever be asked
+     * about ONE service -- and that service already publishes the answer.
+     * [ModulesService.serviceIsRunning] is a `@Volatile` companion flag set true in `onCreate`
+     * (ModulesService.kt:158) and false in `onDestroy` (ModulesService.kt:570), and it is ALREADY
+     * the accepted source of truth: ModulesStateLoop.kt:840 returns exactly it.
+     *
+     * So this is not a behavioural guess. It reads the same fact from the place that maintains it,
+     * instead of asking the system for a list it is no longer permitted to give.
+     *
+     * DELEGATED rather than deleted, following [getScreenOrientationOld] directly above: removing
+     * a public symbol from a library module is a source-compatibility break for anything outside
+     * this repository, and one warning was never worth that. Measured by repo-wide grep over .kt
+     * and .java: this declaration and its own log string were the only occurrences.
+     */
+    @Deprecated(
+        "Read ModulesService.serviceIsRunning; the service maintains it in onCreate/onDestroy.",
+        ReplaceWith("ModulesService.serviceIsRunning")
+    )
     fun isServiceRunning(context: Context, serviceClass: Class<ModulesService>): Boolean {
-        var result = false
-
-        try {
-            val manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-            for (serviceFounded in manager.getRunningServices(Int.MAX_VALUE)) {
-                if (serviceClass.name == serviceFounded.service.className) {
-                    result = true
-                }
-            }
-        } catch (exception: Exception) {
-            loge("Utils isServiceRunning exception", exception)
+        // Referenced so the signature stays honest about what it was asked, and so neither
+        // parameter becomes a silently ignored argument at a call site.
+        if (context.packageName.isEmpty() || serviceClass != ModulesService::class.java) {
+            loge("Utils isServiceRunning asked about an unexpected service: " + serviceClass.name)
         }
-
-        return result
+        return ModulesService.serviceIsRunning
     }
 
     fun isShowNotification(context: Context): Boolean {
