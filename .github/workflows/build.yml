@@ -155,6 +155,23 @@ jobs:
             rust/torta_ui
           key: ${{ matrix.abi }}
 
+      # torta_iconforge (the launcher-icon / values generator that Gradle runs as
+      # :generateXxxTortaValuesRes) pulls yeslogic-fontconfig-sys, whose build script links
+      # against the SYSTEM fontconfig. The GitHub runner image does not ship the dev headers,
+      # so the build script exits 101 and Gradle reports only "torta_iconforge failed
+      # (exit 101)" -- a failure whose real cause is four log screens further up.
+      #
+      # This is a HOST-side dependency of a build tool, not an Android one: it renders on the
+      # runner and emits resources. It is therefore installed here rather than being papered
+      # over by disabling the task, which would ship an APK missing generated resources while
+      # the build stayed green.
+      - name: Host libraries for torta_iconforge (fontconfig)
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libfontconfig1-dev libfreetype6-dev pkg-config
+          pkg-config --modversion fontconfig
+
       - name: Android SDK
         uses: android-actions/setup-android@v3
 
