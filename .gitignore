@@ -27,3 +27,9 @@ libumdnscrypt/src/main/jniLibs/*/*.so
 # Local run artifacts
 hosts_probe.txt
 *.png.tmp
+
+# The shared cargo config is MACHINE-LOCAL (absolute D:/ and C:/Users paths).
+# Committing it broke CI: cargo tried to join "D:/cargo-targets/..." into a Linux
+# $LD_LIBRARY_PATH and died with "path segment contains separator :".
+# Copy rust/.cargo/config.toml.example and edit it for your machine.
+rust/.cargo/config.toml

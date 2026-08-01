@@ -1,0 +1,82 @@
+# TEMPLATE -- copy to rust/.cargo/config.toml and edit for YOUR machine.
+#
+# The real file is gitignored, and that is the fix for a measured CI failure:
+# it had been committed with absolute Windows paths, so on a Linux runner cargo
+# tried to join "D:/cargo-targets/torta/debug/deps" into $LD_LIBRARY_PATH and
+# died with "path segment contains separator `:`" (exit 101) before compiling
+# a single crate. A machine-local path in a shared repo is not a preference,
+# it is a build break for everyone who is not that machine.
+#
+# CI does NOT use this file at all: cargo-ndk supplies the NDK toolchain and
+# the workflow sets ANDROID_HOME/ANDROID_JAR from the runner SDK.
+#
+# On Windows the compiler entries need the .cmd wrappers and prebuilt/windows-x86_64;
+# on Linux/macOS use the extensionless scripts and the matching <host-tag>
+# (linux-x86_64, darwin-x86_64).
+# Shared cargo config for all four Torta crates (carbon_bridge, torta_core,
+# torta_iconforge, torta_ui). Cargo discovers this via upward search from each
+# crate dir, so Android SDK discovery no longer depends on shell env inheritance.
+#
+# Background: i-slint-backend-android-activity's build.rs (via the android-build
+# crate, env_paths/mod.rs) resolves android.jar as:
+#   ANDROID_JAR -> explicit platform -> ANDROID_PLATFORM/API_LEVEL/SDK_VERSION
+#   -> lexicographic max of <sdk>/platforms/*. Pinning ANDROID_JAR directly
+# short-circuits the whole chain deterministically (android-36 = stable; avoids
+# the preview-style "android-37.0" dir winning the lexicographic .max()).
+
+# All four crates share ONE target dir on D: (218GB free) — C: was choked to
+# <1GB by 92GB of per-crate target/ dirs. Shared dir also dedupes the SLINT +
+# winnow + uniffi dependency graph that torta_core/torta_ui/carbon_bridge/
+# torta_iconforge would otherwise each compile and store separately.
+[build]
+target-dir = "/absolute/path/to/a/shared/target-dir"
+
+[env]
+ANDROID_HOME = "/absolute/path/to/android-sdk"
+ANDROID_SDK_ROOT = "/absolute/path/to/android-sdk"
+# android-37.0 = newest platform (Android 17): the dependency's glue shim is
+# compiled against the latest API surface; d8 still floors bytecode at minSdk.
+ANDROID_JAR = "/absolute/path/to/android-sdk/platforms/android-37.0/android.jar"
+ANDROID_PLATFORM = "android-37.0"
+ANDROID_D8_JAR = "/absolute/path/to/android-sdk/build-tools/36.0.0/lib/d8.jar"
+ANDROID_BUILD_TOOLS_VERSION = "36.0.0"
+ANDROID_NDK_HOME = "/absolute/path/to/android-sdk/ndk/23.1.7779620"
+ANDROID_NDK_ROOT = "/absolute/path/to/android-sdk/ndk/23.1.7779620"
+JAVA_HOME = "/absolute/path/to/jdk17"
+
+# cc-rs toolchain pins for C code inside third-party -sys crates (our own code
+# is pure Rust x UniFFI x Kotlin x SLINT — no .java/.c of ours). API level 21
+# matches minSdkVersion 21 in libumdnscrypt/build.gradle. Windows needs the .cmd
+# wrappers; the extensionless siblings are POSIX shell scripts.
+CC_aarch64_linux_android = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/aarch64-linux-android21-clang"
+CXX_aarch64_linux_android = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/aarch64-linux-android21-clang++"
+AR_aarch64_linux_android = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/llvm-ar"
+CC_armv7_linux_androideabi = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/armv7a-linux-androideabi21-clang"
+CXX_armv7_linux_androideabi = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/armv7a-linux-androideabi21-clang++"
+AR_armv7_linux_androideabi = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/llvm-ar"
+CC_i686_linux_android = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/i686-linux-android21-clang"
+CXX_i686_linux_android = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/i686-linux-android21-clang++"
+AR_i686_linux_android = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/llvm-ar"
+CC_x86_64_linux_android = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/x86_64-linux-android21-clang"
+CXX_x86_64_linux_android = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/x86_64-linux-android21-clang++"
+AR_x86_64_linux_android = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/llvm-ar"
+
+# 16 KB page-size alignment on 64-bit ABIs: required for Android 15+/16/17
+# devices with 16K pages; NDK r23 does not emit this by default.
+[target.aarch64-linux-android]
+linker = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/aarch64-linux-android21-clang"
+ar = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/llvm-ar"
+rustflags = ["-C", "link-arg=-Wl,-z,max-page-size=16384"]
+
+[target.armv7-linux-androideabi]
+linker = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/armv7a-linux-androideabi21-clang"
+ar = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/llvm-ar"
+
+[target.i686-linux-android]
+linker = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/i686-linux-android21-clang"
+ar = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/llvm-ar"
+
+[target.x86_64-linux-android]
+linker = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/x86_64-linux-android21-clang"
+ar = "/absolute/path/to/android-sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/<host-tag>/bin/llvm-ar"
+rustflags = ["-C", "link-arg=-Wl,-z,max-page-size=16384"]

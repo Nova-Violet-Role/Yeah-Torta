@@ -163,6 +163,32 @@ jobs:
           sdkmanager --install "ndk;26.3.11579264" >/dev/null
           echo "ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/26.3.11579264" >> "$GITHUB_ENV"
 
+      # torta_ui pulls i-slint-backend-android-activity, whose build.rs resolves
+      # android.jar through android-build's env_paths chain:
+      #   ANDROID_JAR -> explicit platform -> ANDROID_PLATFORM/API_LEVEL/SDK_VERSION
+      #   -> lexicographic max of <sdk>/platforms/*
+      # Pinning ANDROID_JAR short-circuits the whole chain deterministically. The
+      # lexicographic fallback is the hazard worth avoiding: a preview directory
+      # like "android-37.0" wins .max() over "android-36" and the build silently
+      # compiles against a surface nobody chose.
+      #
+      # These used to live in rust/.cargo/config.toml as absolute D:/ paths. That
+      # file is now gitignored (it broke this very job -- see the template at
+      # rust/.cargo/config.toml.example), so CI states its own values here, from
+      # the runner's SDK, with no machine-local anything.
+      - name: Android platform for slint-android-activity
+        run: |
+          set -euo pipefail
+          PLAT=$(ls -1 "$ANDROID_SDK_ROOT/platforms" | sort -V | tail -1)
+          JAR="$ANDROID_SDK_ROOT/platforms/$PLAT/android.jar"
+          test -f "$JAR" || { echo "::error::no android.jar under $PLAT"; exit 1; }
+          {
+            echo "ANDROID_HOME=$ANDROID_SDK_ROOT"
+            echo "ANDROID_PLATFORM=$PLAT"
+            echo "ANDROID_JAR=$JAR"
+          } >> "$GITHUB_ENV"
+          echo "using $PLAT -> $JAR"
+
       - name: cargo-ndk
         run: cargo install cargo-ndk --locked
 

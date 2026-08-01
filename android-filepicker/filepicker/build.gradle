@@ -1,0 +1,68 @@
+apply plugin: 'com.android.library'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'filepicker'
+
+    publishedGroupId = 'com.github.angads25'
+    libraryName = 'File Picker'
+    artifact = 'filepicker'
+
+    libraryDescription = 'Android Library To pick Files from Device Storage.'
+
+    siteUrl = 'https://github.com/angads25/android-filepicker'
+    gitUrl = 'https://github.com/angads25/android-filepicker.git'
+
+    libraryVersion = '1.1.1'
+
+    developerId = 'angads25'
+    developerName = 'Angad Singh'
+    developerEmail = 'angads25@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+android {
+    compileSdkVersion 36
+    buildToolsVersion = '36.0.0'
+    namespace 'com.github.angads25.filepicker'
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 36
+        versionCode 12
+        versionName "1.1.1"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    allprojects {
+        repositories {
+            google()
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility = 17
+        targetCompatibility = 17
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'androidx.recyclerview:recyclerview:1.4.0'
+    implementation 'androidx.preference:preference:1.2.1'
+}

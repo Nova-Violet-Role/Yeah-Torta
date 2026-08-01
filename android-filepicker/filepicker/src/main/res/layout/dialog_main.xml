@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="?android:attr/background">
+
+    <include
+        layout="@layout/dialog_header"
+        android:id="@+id/header"/>
+
+    <include
+        android:id="@+id/fileList"
+        layout="@layout/dialog_file_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:listitem="@layout/dialog_file_list_item"/>
+
+    <include
+        layout="@layout/dialog_footer"
+        android:id="@+id/footer" />
+</androidx.appcompat.widget.LinearLayoutCompat>

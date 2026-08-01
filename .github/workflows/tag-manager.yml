@@ -62,7 +62,6 @@ jobs:
         run: |
           set -euo pipefail
           section () { awk -v s="[$1]" '$0==s{f=1;next} /^\[/{f=0} f' .github/tags.txt \
-                       | sed -E 's/[[:space:]]*\(.*\)$//' | sed -E 's/^#//' \
                        | grep -vE '^\s*(#|$)'; }
           section TOPICS    > /tmp/topics.txt
           section SIGNATURE > /tmp/signature.txt
@@ -195,7 +194,6 @@ jobs:
           # tags.txt -- an identical block on every page teaches a crawler
           # nothing about which page it is on.
           docsection () { awk -v s="[DOC:$1]" '$0==s{f=1;next} /^\[/{f=0} f' .github/tags.txt \
-                          | sed -E 's/[[:space:]]*\(.*\)$//' | sed -E 's/^#//' \
                           | grep -vE '^\s*(#|$)' || true; }
 
           for doc in README.md CODE_OF_CONDUCT.md CONTRIBUTING.md SECURITY.md TORTA-CODEBASE.md NOTICE.md; do
