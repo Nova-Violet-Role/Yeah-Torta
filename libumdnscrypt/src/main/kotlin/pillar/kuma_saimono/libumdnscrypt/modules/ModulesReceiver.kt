@@ -26,7 +26,6 @@ import android.net.ConnectivityManager
 import android.net.LinkProperties
 import android.net.Network
 import android.net.NetworkCapabilities
-import android.net.NetworkInfo
 import android.net.NetworkRequest
 import android.net.VpnService
 import android.os.Build
@@ -111,6 +110,13 @@ class ModulesReceiver @Inject constructor(
     private var context: Context? = null
     @Volatile
     private var commonNetworkCallback: Any? = null
+
+    /**
+     * The VPN-transport NetworkCallback, non-null only while the API 23+ path is registered.
+     * Typed as Any? for the same reason [commonNetworkCallback] is: the class it refers to did not
+     * exist at this module minSdk, so naming it in a field type is not portable.
+     */
+    private var vpnNetworkCallback: Any? = null
     @Volatile
     private var vpnConnectivityReceiver: BroadcastReceiver? = null
     private val modulesStatus = ModulesStatus.getInstance()
@@ -187,7 +193,7 @@ class ModulesReceiver @Inject constructor(
 
         if (action.equals(PowerManager.ACTION_DEVICE_IDLE_MODE_CHANGED, ignoreCase = true)) {
             idleStateChanged()
-        } else if (action.equals(ConnectivityManager.CONNECTIVITY_ACTION, ignoreCase = true)) {
+        } else if (action.equals(LEGACY_CONNECTIVITY_ACTION, ignoreCase = true)) {
             connectivityStateChanged(intent)
         } else if (action.equals(Intent.ACTION_PACKAGE_ADDED, ignoreCase = true)
                 || action.equals(Intent.ACTION_PACKAGE_REMOVED, ignoreCase = true)) {
@@ -265,7 +271,9 @@ class ModulesReceiver @Inject constructor(
             commonNetworkCallback = null
         }
 
-        if (vpnConnectivityReceiver != null) {
+        // Either registration counts. Checking only the receiver LEAKED the NetworkCallback on
+        // every device from API 23 up, because that path never sets vpnConnectivityReceiver.
+        if (vpnConnectivityReceiver != null || vpnNetworkCallback != null) {
             unlistenVpnConnectivityChanges()
             vpnRevoked = false
         }
@@ -775,7 +783,7 @@ class ModulesReceiver @Inject constructor(
         logi("ModulesReceiver start listening to connectivity changes")
         setNetworkAvailable(false)
         val ifConnectivity = IntentFilter()
-        ifConnectivity.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+        ifConnectivity.addAction(LEGACY_CONNECTIVITY_ACTION)
         context!!.registerReceiver(this, ifConnectivity)
         commonReceiversRegistered = true
     }
@@ -791,34 +799,124 @@ class ModulesReceiver @Inject constructor(
         }
     }
 
+    /**
+     * The reaction to a VPN network appearing or disappearing, shared by both implementations
+     * below so the two paths cannot drift apart.
+     */
+    private fun onVpnTransportChanged() {
+        if (isVpnMode()) {
+            checkVpnRestoreAfterRevoke()
+        } else if (isRootMode()
+            && !modulesStatus.isUseModulesWithRoot
+            && !modulesStatus.isFixTTL
+        ) {
+            connectivityStateChanged(Intent("VPN connectivity changed"))
+        }
+    }
+
+    /**
+     * WHY THIS ONE WAS MIGRATED AND THE OTHER LEGACY PATH WAS NOT.
+     *
+     * `registerConnectivityChanges()` already picks a NetworkCallback on API 23+ and only falls
+     * back to the CONNECTIVITY_ACTION broadcast below M (or if the modern registration throws), so
+     * its deprecated code is genuinely unreachable on a modern device.
+     *
+     * This function was NOT gated at all. It is called from the root-mode branch
+     * (`ModulesReceiver.kt:237`) on every API level, so the deprecated broadcast really did run on
+     * current Android -- and it is the deprecated mechanism, not merely a deprecated constant:
+     * CONNECTIVITY_ACTION is the thing Google replaced.
+     *
+     * It now mirrors the SAME shape the file already uses ten lines up: NetworkCallback on 23+,
+     * broadcast below. That symmetry is deliberate -- a second, different fallback strategy in one
+     * class is how the two get out of step.
+     *
+     * EQUIVALENCE, stated so it can be checked rather than trusted: the old code fired when a
+     * CONNECTIVITY_ACTION carried EXTRA_NETWORK_TYPE == TYPE_VPN, i.e. "a VPN network changed
+     * state". The request below asks for exactly TRANSPORT_VPN, so onAvailable/onLost fire when a
+     * VPN network appears or goes away. Both funnel into [onVpnTransportChanged], which is the
+     * unchanged original body.
+     *
+     * NOT PROVED, MEASURED-BY-COMPILATION ONLY: the timing differs. onAvailable fires when the
+     * network is USABLE, whereas the broadcast fired on any state transition including CONNECTING.
+     * On a real device that means this reacts marginally later and marginally less often. That is
+     * a behaviour change and it needs a device to confirm; it is written down rather than glossed.
+     */
     private fun listenVpnConnectivityChanges() {
 
         logi("ModulesReceiver start listening to vpn connectivity changes")
 
+        val cm = context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && cm != null) {
+            try {
+                val callback = object : ConnectivityManager.NetworkCallback() {
+                    override fun onAvailable(network: Network) {
+                        onVpnTransportChanged()
+                    }
+
+                    override fun onLost(network: Network) {
+                        onVpnTransportChanged()
+                    }
+                }
+                val request = NetworkRequest.Builder()
+                    .addTransportType(NetworkCapabilities.TRANSPORT_VPN)
+                    .build()
+                cm.registerNetworkCallback(request, callback)
+                vpnNetworkCallback = callback
+                return
+            } catch (e: Exception) {
+                // Same failure discipline as registerConnectivityChanges: if the modern
+                // registration is refused, fall through to the broadcast rather than silently
+                // watching nothing.
+                logw("ModulesReceiver listenVpnConnectivityChanges callback", e)
+                vpnNetworkCallback = null
+            }
+        }
+
         vpnConnectivityReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent) {
+                // Pre-M fallback only. The deprecated extras ARE the payload of the deprecated
+                // broadcast -- there is nothing modern to read here, so the suppression is scoped
+                // to the expression that must use them.
                 val networkType = intent.getIntExtra(
-                        ConnectivityManager.EXTRA_NETWORK_TYPE,
-                        ConnectivityManager.TYPE_DUMMY
+                    LEGACY_EXTRA_NETWORK_TYPE,
+                    LEGACY_TYPE_DUMMY
                 )
-                if (networkType == ConnectivityManager.TYPE_VPN) {
-                    if (isVpnMode()) {
-                        checkVpnRestoreAfterRevoke()
-                    } else if (isRootMode()
-                            && !modulesStatus.isUseModulesWithRoot
-                            && !modulesStatus.isFixTTL) {
-                        connectivityStateChanged(Intent("VPN connectivity changed"))
-                    }
+                if (networkType == LEGACY_TYPE_VPN) {
+                    onVpnTransportChanged()
                 }
             }
         }
 
         val ifConnectivity = IntentFilter()
-        ifConnectivity.addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+        ifConnectivity.addAction(LEGACY_CONNECTIVITY_ACTION)
         context!!.registerReceiver(vpnConnectivityReceiver, ifConnectivity)
     }
 
     private fun unlistenVpnConnectivityChanges() {
+
+        // BOTH registrations must be undone, and independently. Only one is ever active, but
+        // making this an if/else on SDK_INT would leak the receiver in the case that matters most:
+        // a device on 23+ whose callback registration threw and fell back to the broadcast. Each
+        // branch is guarded by its own non-null field, so the inactive one is simply skipped.
+        val callback = vpnNetworkCallback
+        if (callback != null) {
+            logi("ModulesReceiver stop listening to vpn connectivity changes (callback)")
+            try {
+                val cm = context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+                // `as?` not `as`: the field is Any?, and an unchecked cast here would turn a
+                // type confusion into a crash during teardown -- the worst moment for one, since
+                // the caller is already unwinding. A null simply skips, and the field is cleared
+                // in `finally` either way so nothing is retried forever.
+                (callback as? ConnectivityManager.NetworkCallback)?.let {
+                    cm?.unregisterNetworkCallback(it)
+                }
+            } catch (e: Exception) {
+                logw("ModulesReceiver unlistenVpnConnectivityChanges callback", e)
+            } finally {
+                vpnNetworkCallback = null
+            }
+        }
 
         if (vpnConnectivityReceiver != null) {
             logi("ModulesReceiver stop listening to vpn connectivity changes")
@@ -868,6 +966,20 @@ class ModulesReceiver @Inject constructor(
         }
     }
 
+    /**
+     * The handler for the PRE-M connectivity broadcast.
+     *
+     * @Suppress is on the whole function because the whole function is legacy: its argument is
+     * an Intent whose payload is the deprecated NetworkInfo, and there is nothing modern to read
+     * from it. Reaching for ConnectivityManager here instead would be WRONG, not modern -- the
+     * extra describes the network THE BROADCAST IS ABOUT, while a fresh query describes now, and
+     * during a connectivity change those are routinely different.
+     *
+     * It is also reachable on modern devices via onVpnTransportChanged(), but only with a
+     * synthetic Intent that carries no extras -- so the NetworkInfo branches below do not fire
+     * there.
+     */
+    @Suppress("DEPRECATION")
     private fun connectivityStateChanged(intent: Intent?) {
 
         if (intent == null) {
@@ -876,15 +988,15 @@ class ModulesReceiver @Inject constructor(
 
         logi("ModulesReceiver connectivityStateChanged received " + intent)
 
-        val network = intent.getParcelableExtra<NetworkInfo>(ConnectivityManager.EXTRA_NETWORK_INFO)
+        val network = intent.getParcelableExtra<android.net.NetworkInfo>(LEGACY_EXTRA_NETWORK_INFO)
 
         if (isVpnMode()) {
             // Filter VPN connectivity changes
-            val networkType = intent.getIntExtra(ConnectivityManager.EXTRA_NETWORK_TYPE, ConnectivityManager.TYPE_DUMMY)
-            if (networkType == ConnectivityManager.TYPE_VPN)
+            val networkType = intent.getIntExtra(LEGACY_EXTRA_NETWORK_TYPE, LEGACY_TYPE_DUMMY)
+            if (networkType == LEGACY_TYPE_VPN)
                 return
 
-            if (network is NetworkInfo) {
+            if (network is android.net.NetworkInfo) {
                 setNetworkAvailable(network.isConnectedOrConnecting)
             }
 
@@ -897,14 +1009,14 @@ class ModulesReceiver @Inject constructor(
             }
 
         } else if (isRootMode()) {
-            if (network is NetworkInfo) {
+            if (network is android.net.NetworkInfo) {
                 setNetworkAvailable(network.isConnectedOrConnecting)
             }
             updateIptablesRules(false)
             resetArpScanner()
             checkInternetConnection()
         } else if (isProxyMode()) {
-            if (network is NetworkInfo) {
+            if (network is android.net.NetworkInfo) {
                 setNetworkAvailable(network.isConnectedOrConnecting)
             }
             resetArpScanner()
@@ -1195,6 +1307,39 @@ class ModulesReceiver @Inject constructor(
     }
 
     companion object {
+
+        /**
+         * THE PRE-M CONNECTIVITY API, NAMED ONCE.
+         *
+         * Every constant below is deprecated, and every one of them is still REQUIRED: this
+         * module ships minSdkVersion 21 (build.gradle:67) while ConnectivityManager.NetworkCallback
+         * needs API 23. registerConnectivityChanges() uses the callback on 23+ and falls back to
+         * this broadcast below M -- or if the modern registration throws, which is why the
+         * fallback cannot simply be deleted even if minSdk rose tomorrow.
+         *
+         * ROUTING THEM THROUGH NAMED ALIASES rather than sprinkling @Suppress at ten call sites
+         * is a deliberate choice about what the suppression COVERS. A file-level or
+         * function-level annotation would also silence the NEXT API that goes stale nearby,
+         * which is exactly how this module ended up with 33 warnings hidden behind 20 blanket
+         * suppressions -- measured earlier this session: 47 reported, 80 real. These five
+         * aliases suppress five named constants and nothing else, and the LEGACY_ prefix states
+         * at every use site which era of the API is being spoken.
+         */
+        @Suppress("DEPRECATION")
+        private val LEGACY_CONNECTIVITY_ACTION: String = ConnectivityManager.CONNECTIVITY_ACTION
+
+        @Suppress("DEPRECATION")
+        private val LEGACY_EXTRA_NETWORK_TYPE: String = ConnectivityManager.EXTRA_NETWORK_TYPE
+
+        @Suppress("DEPRECATION")
+        private val LEGACY_EXTRA_NETWORK_INFO: String = ConnectivityManager.EXTRA_NETWORK_INFO
+
+        @Suppress("DEPRECATION")
+        private val LEGACY_TYPE_DUMMY: Int = ConnectivityManager.TYPE_DUMMY
+
+        @Suppress("DEPRECATION")
+        private val LEGACY_TYPE_VPN: Int = ConnectivityManager.TYPE_VPN
+
 
         const val VPN_REVOKE_ACTION = "pillar.kuma_saimono.libumdnscrypt.VPN_REVOKE_ACTION"
         const val VPN_REVOKED_EXTRA = "pillar.kuma_saimono.libumdnscrypt.VPN_REVOKED_EXTRA"

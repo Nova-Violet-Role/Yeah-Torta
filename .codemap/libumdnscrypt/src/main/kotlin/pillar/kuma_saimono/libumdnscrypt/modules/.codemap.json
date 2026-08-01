@@ -353,19 +353,19 @@
       ]
     },
     "ModulesReceiver.kt": {
-      "hash": "35c729da3566",
-      "indexed_at": "2026-08-01T08:49:50.320803+00:00",
+      "hash": "cc3f8f711062",
+      "indexed_at": "2026-08-01T09:22:08.578666+00:00",
       "language": "kotlin",
-      "lines": 1217,
-      "mtime_ns": 1785574116786035300,
-      "size": 48468,
+      "lines": 1362,
+      "mtime_ns": 1785576066336859200,
+      "size": 56314,
       "symbols": [
         {
           "children": [
             {
               "lines": [
-                132,
-                175
+                138,
+                181
               ],
               "name": "onReceive",
               "signature": "(context: Context?, intent: Intent?)",
@@ -373,8 +373,8 @@
             },
             {
               "lines": [
-                177,
-                208
+                183,
+                214
               ],
               "name": "intentOnReceive",
               "signature": "(intent: Intent, action: String)",
@@ -382,8 +382,8 @@
             },
             {
               "lines": [
-                210,
-                245
+                216,
+                251
               ],
               "name": "registerReceivers",
               "signature": "(context: Context)",
@@ -391,8 +391,8 @@
             },
             {
               "lines": [
-                247,
-                272
+                253,
+                280
               ],
               "name": "unregisterReceivers",
               "signature": "()",
@@ -400,8 +400,8 @@
             },
             {
               "lines": [
-                274,
-                281
+                282,
+                289
               ],
               "name": "registerIdleStateChanged",
               "signature": "()",
@@ -409,8 +409,8 @@
             },
             {
               "lines": [
-                283,
-                294
+                291,
+                302
               ],
               "name": "registerConnectivityChanges",
               "signature": "()",
@@ -418,8 +418,8 @@
             },
             {
               "lines": [
-                296,
-                301
+                304,
+                309
               ],
               "name": "registerAPisOn",
               "signature": "()",
@@ -427,8 +427,8 @@
             },
             {
               "lines": [
-                303,
-                308
+                311,
+                316
               ],
               "name": "registerUSBModemIsOn",
               "signature": "()",
@@ -436,8 +436,8 @@
             },
             {
               "lines": [
-                310,
-                322
+                318,
+                330
               ],
               "name": "registerPowerOFF",
               "signature": "()",
@@ -445,8 +445,8 @@
             },
             {
               "lines": [
-                324,
-                331
+                332,
+                339
               ],
               "name": "registerPackageChanged",
               "signature": "()",
@@ -454,8 +454,8 @@
             },
             {
               "lines": [
-                333,
-                760
+                341,
+                768
               ],
               "name": "listenNetworkChanges",
               "signature": "()",
@@ -463,8 +463,8 @@
             },
             {
               "lines": [
-                762,
-                764
+                770,
+                772
               ],
               "name": "isPreventDnsLeaks",
               "signature": "()",
@@ -472,8 +472,8 @@
             },
             {
               "lines": [
-                766,
-                772
+                774,
+                780
               ],
               "name": "unlistenNetworkChanges",
               "signature": "()",
@@ -481,8 +481,8 @@
             },
             {
               "lines": [
-                774,
-                781
+                782,
+                789
               ],
               "name": "listenConnectivityChanges",
               "signature": "()",
@@ -490,8 +490,8 @@
             },
             {
               "lines": [
-                783,
-                792
+                791,
+                800
               ],
               "name": "registerVpnRevokeReceiver",
               "signature": "()",
@@ -499,8 +499,17 @@
             },
             {
               "lines": [
-                794,
-                819
+                806,
+                815
+              ],
+              "name": "onVpnTransportChanged",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                844,
+                894
               ],
               "name": "listenVpnConnectivityChanges",
               "signature": "()",
@@ -508,8 +517,8 @@
             },
             {
               "lines": [
-                821,
-                833
+                896,
+                931
               ],
               "name": "unlistenVpnConnectivityChanges",
               "signature": "()",
@@ -517,8 +526,8 @@
             },
             {
               "lines": [
-                835,
-                841
+                933,
+                939
               ],
               "name": "registerInteractiveStateReceiver",
               "signature": "()",
@@ -526,8 +535,8 @@
             },
             {
               "lines": [
-                843,
-                869
+                941,
+                967
               ],
               "name": "idleStateChanged",
               "signature": "()",
@@ -535,8 +544,8 @@
             },
             {
               "lines": [
-                871,
-                912
+                982,
+                1024
               ],
               "name": "connectivityStateChanged",
               "signature": "(intent: Intent?)",
@@ -544,8 +553,8 @@
             },
             {
               "lines": [
-                914,
-                930
+                1026,
+                1042
               ],
               "name": "interactiveStateChanged",
               "signature": "(intent: Intent)",
@@ -553,8 +562,8 @@
             },
             {
               "lines": [
-                932,
-                996
+                1044,
+                1108
               ],
               "name": "checkInternetSharingState",
               "signature": "(intent: Intent)",
@@ -562,8 +571,8 @@
             },
             {
               "lines": [
-                998,
-                1028
+                1110,
+                1140
               ],
               "name": "powerOFFDetected",
               "signature": "()",
@@ -571,8 +580,8 @@
             },
             {
               "lines": [
-                1030,
-                1048
+                1142,
+                1160
               ],
               "name": "packageChanged",
               "signature": "(intent: Intent)",
@@ -580,8 +589,8 @@
             },
             {
               "lines": [
-                1050,
-                1059
+                1162,
+                1171
               ],
               "name": "vpnRevoked",
               "signature": "(vpnRevoked: Boolean)",
@@ -589,8 +598,8 @@
             },
             {
               "lines": [
-                1061,
-                1067
+                1173,
+                1179
               ],
               "name": "checkVpnRestoreAfterRevoke",
               "signature": "()",
@@ -598,8 +607,8 @@
             },
             {
               "lines": [
-                1069,
-                1083
+                1181,
+                1195
               ],
               "name": "startVPNService",
               "signature": "()",
@@ -607,8 +616,8 @@
             },
             {
               "lines": [
-                1085,
-                1117
+                1197,
+                1229
               ],
               "name": "updateIptablesRules",
               "signature": "(forceUpdate: Boolean)",
@@ -616,8 +625,8 @@
             },
             {
               "lines": [
-                1119,
-                1127
+                1231,
+                1239
               ],
               "name": "resetArpScanner",
               "signature": "(connectionAvailable: Boolean)",
@@ -625,8 +634,8 @@
             },
             {
               "lines": [
-                1129,
-                1139
+                1241,
+                1251
               ],
               "name": "resetArpScanner",
               "signature": "()",
@@ -634,8 +643,8 @@
             },
             {
               "lines": [
-                1141,
-                1146
+                1253,
+                1258
               ],
               "name": "setInternetAvailable",
               "signature": "(available: Boolean)",
@@ -643,8 +652,8 @@
             },
             {
               "lines": [
-                1148,
-                1152
+                1260,
+                1264
               ],
               "name": "checkInternetConnection",
               "signature": "()",
@@ -652,8 +661,8 @@
             },
             {
               "lines": [
-                1154,
-                1166
+                1266,
+                1278
               ],
               "name": "onConnectionChecked",
               "signature": "(available: Boolean)",
@@ -661,8 +670,8 @@
             },
             {
               "lines": [
-                1168,
-                1170
+                1280,
+                1282
               ],
               "name": "isActive",
               "signature": "()",
@@ -670,8 +679,8 @@
             },
             {
               "lines": [
-                1172,
-                1174
+                1284,
+                1286
               ],
               "name": "isVpnMode",
               "signature": "()",
@@ -679,8 +688,8 @@
             },
             {
               "lines": [
-                1176,
-                1178
+                1288,
+                1290
               ],
               "name": "isRootMode",
               "signature": "()",
@@ -688,8 +697,8 @@
             },
             {
               "lines": [
-                1180,
-                1182
+                1292,
+                1294
               ],
               "name": "isProxyMode",
               "signature": "()",
@@ -697,8 +706,8 @@
             },
             {
               "lines": [
-                1184,
-                1187
+                1296,
+                1299
               ],
               "name": "isNetworkAvailable",
               "signature": "()",
@@ -706,8 +715,8 @@
             },
             {
               "lines": [
-                1189,
-                1191
+                1301,
+                1303
               ],
               "name": "setNetworkAvailable",
               "signature": "(available: Boolean)",
@@ -715,8 +724,8 @@
             },
             {
               "lines": [
-                1193,
-                1195
+                1305,
+                1307
               ],
               "name": "isFirewallEnabled",
               "signature": "()",
@@ -724,8 +733,8 @@
             }
           ],
           "lines": [
-            99,
-            1217
+            98,
+            1362
           ],
           "name": "ModulesReceiver",
           "type": "class"
@@ -2171,6 +2180,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T08:53:20.271387+00:00",
+  "generated_at": "2026-08-01T09:22:08.580263+00:00",
   "version": "1.0"
 }
