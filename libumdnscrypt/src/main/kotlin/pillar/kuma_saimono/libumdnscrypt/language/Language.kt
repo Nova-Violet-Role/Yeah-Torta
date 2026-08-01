@@ -23,6 +23,11 @@ import android.content.res.Resources
 import androidx.preference.PreferenceManager
 import pillar.kuma_saimono.libumdnscrypt.utils.logger.Logger.loge
 import java.util.Locale
+// java.util, NOT android.icu.util. Locale.Builder is java.util.Locale.Builder and
+// throws java.util.IllformedLocaleException; the ICU class is a DIFFERENT type that this catch
+// would never match, so the fallback would be dead and a malformed code would crash the language
+// switch instead of degrading. It compiled either way -- both are RuntimeExceptions.
+import java.util.IllformedLocaleException
 
 object Language {
 
@@ -87,12 +92,25 @@ object Language {
                         // split the language code into language and region
                         val language_region = languageCode.split("-(r)?".toRegex())
                         // construct a new Locale object with the specified language and region
-                        newLocale = Locale(language_region[0], language_region[1])
+                        newLocale = try {
+                            Locale.Builder()
+                                .setLanguage(language_region[0])
+                                .setRegion(language_region[1])
+                                .build()
+                        } catch (e: IllformedLocaleException) {
+                            // Lenient like the old constructor: a bad code must not crash a
+                            // language switch, it must simply match nothing.
+                            Locale.forLanguageTag(language_region[0] + "-" + language_region[1])
+                        }
                     }
                     // if the language code does not contain a region
                     else {
                         // simply construct a new Locale object from the given language code
-                        newLocale = Locale(languageCode)
+                        newLocale = try {
+                            Locale.Builder().setLanguage(languageCode).build()
+                        } catch (e: IllformedLocaleException) {
+                            Locale.forLanguageTag(languageCode)
+                        }
                     }
                 }
 

@@ -30,6 +30,7 @@ import pillar.kuma_saimono.libumdnscrypt.R
 import pillar.kuma_saimono.libumdnscrypt.utils.enums.AccessPointState
 import pillar.kuma_saimono.libumdnscrypt.utils.logger.Logger.loge
 import pillar.kuma_saimono.libumdnscrypt.utils.logger.Logger.logi
+import android.os.Looper
 
 @SuppressLint("PrivateApi")
 @Suppress("DEPRECATION")
@@ -170,7 +171,7 @@ class ApManager @Inject constructor(
                             super.onFailed(reason)
                             logi("Wifi Hotspot onFailed: ")
                         }
-                    }, Handler())
+                    }, Handler(Looper.getMainLooper()))
                 }
             } else if (apState == AccessPointState.STATE_ON) {
                 if (mReservation is WifiManager.LocalOnlyHotspotReservation) {

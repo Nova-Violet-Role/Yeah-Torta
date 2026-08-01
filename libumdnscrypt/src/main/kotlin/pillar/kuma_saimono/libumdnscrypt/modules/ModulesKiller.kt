@@ -270,7 +270,10 @@ class ModulesKiller(
     private fun killWithSH(module: String, commands: List<String>, delay: Int): List<String>? {
         var shellResult: List<String>? = null
         try {
-            shellResult = Shell.SH.run(commands)
+            // libsuperuser's Shell.SH.run is deprecated in every overload, exactly like
+            // Shell.SU.run above. jrummyapps takes varargs where libsuperuser took a List,
+            // hence the spread; same commands, same order, one shell invocation.
+            shellResult = com.jrummyapps.android.shell.Shell.SH.run(*commands.toTypedArray())?.stdout
             makeDelay(delay)
         } catch (e: Exception) {
             loge("Kill " + module + " without root", e)

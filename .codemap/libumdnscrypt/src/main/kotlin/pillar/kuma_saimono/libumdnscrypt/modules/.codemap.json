@@ -215,12 +215,12 @@
       ]
     },
     "ModulesKiller.kt": {
-      "hash": "8c62ad92b167",
-      "indexed_at": "2026-08-01T09:56:58.280059+00:00",
+      "hash": "c57b3f49c6f1",
+      "indexed_at": "2026-08-01T10:02:40.043196+00:00",
       "language": "kotlin",
-      "lines": 451,
-      "mtime_ns": 1785577675846586600,
-      "size": 17872,
+      "lines": 454,
+      "mtime_ns": 1785578540432742900,
+      "size": 18188,
       "symbols": [
         {
           "children": [
@@ -290,7 +290,7 @@
             {
               "lines": [
                 269,
-                279
+                282
               ],
               "name": "killWithSH",
               "signature": "(module: String, commands: List<String>, delay: Int)",
@@ -298,8 +298,8 @@
             },
             {
               "lines": [
-                281,
-                297
+                284,
+                300
               ],
               "name": "killWithSU",
               "signature": "(module: String, commands: List<String>)",
@@ -308,8 +308,8 @@
             {
               "docstring": "kill default signal SIGTERM - 15, SIGKILL -9, SIGQUIT - 3",
               "lines": [
-                300,
-                349
+                303,
+                352
               ],
               "name": "prepareKillCommands",
               "signature": "(module: String, pid: String, signal: String, killWithRoot: Boolean)",
@@ -317,8 +317,8 @@
             },
             {
               "lines": [
-                351,
-                364
+                354,
+                367
               ],
               "name": "doThreeAttemptsToStopModule",
               "signature": "(modulePath: String, pid: String, thread: Thread?, moduleStartedWithRoot: Boolean)",
@@ -326,8 +326,8 @@
             },
             {
               "lines": [
-                366,
-                388
+                369,
+                391
               ],
               "name": "stopModuleWithInterruptThread",
               "signature": "(thread: Thread?)",
@@ -335,8 +335,8 @@
             },
             {
               "lines": [
-                390,
-                405
+                393,
+                408
               ],
               "name": "readPidFile",
               "signature": "(path: String)",
@@ -345,7 +345,7 @@
           ],
           "lines": [
             45,
-            451
+            454
           ],
           "name": "ModulesKiller",
           "type": "class"
@@ -2180,6 +2180,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T09:57:01.429878+00:00",
+  "generated_at": "2026-08-01T10:02:40.044875+00:00",
   "version": "1.0"
 }

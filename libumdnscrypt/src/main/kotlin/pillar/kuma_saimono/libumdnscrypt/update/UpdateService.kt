@@ -267,7 +267,7 @@ class UpdateService : Service() {
             .setWhen(startTime)
             .setUsesChronometer(true)
             .setChannelId(UPDATE_CHANNEL_ID)
-            .setPriority(Notification.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .setProgress(100, 100, true)
 
