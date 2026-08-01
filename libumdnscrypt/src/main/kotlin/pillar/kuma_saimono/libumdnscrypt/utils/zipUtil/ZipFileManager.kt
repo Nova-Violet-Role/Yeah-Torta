@@ -88,7 +88,10 @@ class ZipFileManager @JvmOverloads constructor(private val zipFile: String? = nu
 
     @Throws(Exception::class)
     fun extractZip(outputPathDir: String) {
-        val inputFile = File(zipFile)
+        // `zipFile` is nullable because of the @JvmOverloads no-arg constructor. Extracting without
+        // a path is a programming error, so it is named as one HERE instead of surfacing three
+        // frames deeper as a bare NPE from the File(String) constructor.
+        val inputFile = File(requireNotNull(zipFile) { "extractZip on a ZipFileManager built without a zip path" })
 
         if (!inputFile.exists()) {
             throw FileNotFoundException("ZipFileManager input file missing " + zipFile)
@@ -107,7 +110,7 @@ class ZipFileManager @JvmOverloads constructor(private val zipFile: String? = nu
             inputSources.add(File(source))
         }
 
-        val outputFile = File(zipFile)
+        val outputFile = File(requireNotNull(zipFile) { "createZip on a ZipFileManager built without a zip path" })
         val outputFileDir = File(removeEndSlash(Objects.requireNonNull(outputFile.parent)))
 
         if (!outputFileDir.isDirectory) {

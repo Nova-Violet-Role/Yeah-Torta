@@ -85,11 +85,15 @@ class PreferenceRepositoryImpl @Inject constructor(
         preferenceDataSource.setPreference(key, value)
     }
 
+    // Erasure again: the data source hands back `Any`, and Set<String>'s element type is gone at
+    // runtime. The CONTAINER is now checked -- a non-Set yields an empty set instead of a
+    // ClassCastException thrown inside the HashSet constructor, which is where this used to fail
+    // and where the stack trace named HashSet rather than the preference that was actually wrong.
+    @Suppress("UNCHECKED_CAST")
     @Synchronized
     override fun getStringSetPreference(key: String): HashSet<String> {
-        return HashSet(
-            preferenceDataSource.getPreference(STRING_SET_PREFERENCE, key) as Set<String>
-        )
+        val stored = preferenceDataSource.getPreference(STRING_SET_PREFERENCE, key)
+        return if (stored is Set<*>) HashSet(stored as Set<String>) else HashSet()
     }
 
     override fun setStringSetPreference(key: String, value: Set<String>) {

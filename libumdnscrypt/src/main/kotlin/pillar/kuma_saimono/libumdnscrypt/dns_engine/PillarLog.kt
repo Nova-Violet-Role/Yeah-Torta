@@ -118,6 +118,15 @@ object PillarLog {
             override fun initialValue() = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
         }
 
+    /**
+     * ThreadLocal.get() is typed nullable, but this one overrides initialValue() and therefore
+     * cannot return null. Rather than assert that with `!!` -- which turns an impossible case into
+     * a crash in the LOGGER, of all places -- the fallback constructs the identical formatter. A
+     * log line is never worth an exception, and the two paths produce byte-identical output.
+     */
+    private fun timestampFormat(): SimpleDateFormat =
+        TS.get() ?: SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
+
     private val WS = Regex("\\s+")
 
     /** The per-pillar log path beside `DnsCrypt.log`: `<appDataDir>/logs/query-<pillar>.log`. */
@@ -136,7 +145,7 @@ object PillarLog {
             val file = File(dir, "query-${pillar.tag}.log")
 
             val sb = StringBuilder(64)
-            sb.append('[').append(TS.get().format(Date())).append("] ")
+            sb.append('[').append(timestampFormat().format(Date())).append("] ")
             sb.append(pillar.tag).append(' ').append(event)
             for ((k, v) in fields) {
                 if (v == null) continue

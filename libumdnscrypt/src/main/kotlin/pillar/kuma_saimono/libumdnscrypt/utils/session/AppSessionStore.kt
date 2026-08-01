@@ -38,6 +38,14 @@ class AppSessionStore @Inject constructor() {
         keyToValue[key] = value
     }
 
+    // The three casts below are UNCHECKED because of JVM generic erasure, not because of a shortcut:
+    // this is a heterogeneous store (String -> Any), and at runtime `T` does not exist. The
+    // @Suppress is an acknowledgement of a language limit, and it is deliberately paired with the
+    // strongest check that IS possible -- the CONTAINER type is now verified with `is` before the
+    // cast, so a value stored as a List and restored as a Set returns empty instead of throwing a
+    // ClassCastException later, at some unrelated call site. Only the ELEMENT type stays unverified,
+    // and no amount of code can verify it without walking every element.
+    @Suppress("UNCHECKED_CAST")
     fun <T> restore(key: String): T? = try {
         keyToValue[key] as? T
     } catch (e: Exception) {
@@ -45,9 +53,10 @@ class AppSessionStore @Inject constructor() {
         null
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun <T> restoreSet(key: String): Set<T> = try {
         val value = keyToValue[key]
-        if (value != null) {
+        if (value is Set<*>) {
             value as Set<T>
         } else {
             emptySet()
@@ -63,9 +72,10 @@ class AppSessionStore @Inject constructor() {
         loge("AppSessionStore clearSet", e)
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun <T, V> restoreMap(key: String): Map<T, V> = try {
         val value = keyToValue[key]
-        if (value != null) {
+        if (value is Map<*, *>) {
             value as Map<T, V>
         } else {
             emptyMap()

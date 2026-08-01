@@ -2,12 +2,12 @@
   "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\vpn\\service",
   "files": {
     "ServiceVPN.kt": {
-      "hash": "00fe6a98815c",
-      "indexed_at": "2026-08-01T08:12:59.439666+00:00",
+      "hash": "d8ed9b4affa4",
+      "indexed_at": "2026-08-01T08:20:04.553639+00:00",
       "language": "kotlin",
-      "lines": 954,
-      "mtime_ns": 1785571804349154000,
-      "size": 37106,
+      "lines": 958,
+      "mtime_ns": 1785572324825599900,
+      "size": 37512,
       "symbols": [
         {
           "children": [
@@ -322,7 +322,7 @@
                 {
                   "lines": [
                     828,
-                    832
+                    836
                   ],
                   "name": "addRoute",
                   "signature": "(address: java.net.InetAddress, prefixLength: Int)",
@@ -330,8 +330,8 @@
                 },
                 {
                   "lines": [
-                    834,
-                    838
+                    838,
+                    842
                   ],
                   "name": "addDnsServer",
                   "signature": "(address: java.net.InetAddress)",
@@ -339,8 +339,8 @@
                 },
                 {
                   "lines": [
-                    840,
-                    846
+                    844,
+                    850
                   ],
                   "name": "addDisallowedApplication",
                   "signature": "(packageName: String)",
@@ -348,8 +348,8 @@
                 },
                 {
                   "lines": [
-                    848,
-                    854
+                    852,
+                    858
                   ],
                   "name": "addAllowedApplication",
                   "signature": "(packageName: String)",
@@ -357,8 +357,8 @@
                 },
                 {
                   "lines": [
-                    856,
-                    858
+                    860,
+                    862
                   ],
                   "name": "setFixTTL",
                   "signature": "(fixTTL: Boolean)",
@@ -366,8 +366,8 @@
                 },
                 {
                   "lines": [
-                    860,
-                    940
+                    864,
+                    944
                   ],
                   "name": "equals",
                   "signature": "(other: Any?)",
@@ -375,8 +375,8 @@
                 },
                 {
                   "lines": [
-                    942,
-                    944
+                    946,
+                    948
                   ],
                   "name": "hashCode",
                   "signature": "()",
@@ -385,7 +385,7 @@
               ],
               "lines": [
                 792,
-                945
+                949
               ],
               "name": "BuilderVPN",
               "type": "class"
@@ -393,7 +393,7 @@
           ],
           "lines": [
             89,
-            954
+            958
           ],
           "name": "ServiceVPN",
           "type": "class"
@@ -402,10 +402,10 @@
     },
     "ServiceVPNHandler.kt": {
       "hash": "c4afca29079e",
-      "indexed_at": "2026-08-01T08:12:59.767585+00:00",
+      "indexed_at": "2026-08-01T08:20:06.802669+00:00",
       "language": "kotlin",
       "lines": 589,
-      "mtime_ns": 1785571850042154700,
+      "mtime_ns": 1785571997017215900,
       "size": 25818,
       "symbols": [
         {
@@ -647,12 +647,12 @@
       ]
     },
     "VpnBuilder.kt": {
-      "hash": "27d8da2d5bdd",
-      "indexed_at": "2026-08-01T04:00:55.374566+00:00",
+      "hash": "ec28bfc04f75",
+      "indexed_at": "2026-08-01T08:20:04.845277+00:00",
       "language": "kotlin",
-      "lines": 482,
-      "mtime_ns": 1785556379289900700,
-      "size": 24571,
+      "lines": 488,
+      "mtime_ns": 1785572333197168200,
+      "size": 25154,
       "symbols": [
         {
           "children": [
@@ -677,7 +677,7 @@
             {
               "lines": [
                 181,
-                237
+                243
               ],
               "name": "addIPv4Routes",
               "signature": "(builder: ServiceVPN.BuilderVPN, lan: Boolean, fixTTL: Boolean)",
@@ -685,8 +685,8 @@
             },
             {
               "lines": [
-                239,
-                295
+                245,
+                301
               ],
               "name": "addIPv6Routes",
               "signature": "(builder: ServiceVPN.BuilderVPN, lan: Boolean)",
@@ -694,8 +694,8 @@
             },
             {
               "lines": [
-                297,
-                336
+                303,
+                342
               ],
               "name": "manageAppsTunneling",
               "signature": "(builder: ServiceVPN.BuilderVPN, listRule: List<Rule>, fixTTL: Boolean)",
@@ -703,8 +703,8 @@
             },
             {
               "lines": [
-                356,
-                376
+                362,
+                382
               ],
               "name": "getDns",
               "signature": "()",
@@ -712,8 +712,8 @@
             },
             {
               "lines": [
-                378,
-                400
+                384,
+                406
               ],
               "name": "getConfigureIntent",
               "signature": "()",
@@ -722,7 +722,7 @@
           ],
           "lines": [
             54,
-            482
+            488
           ],
           "name": "VpnBuilder",
           "type": "class"
@@ -1158,6 +1158,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T08:12:59.769263+00:00",
+  "generated_at": "2026-08-01T08:20:09.895429+00:00",
   "version": "1.0"
 }

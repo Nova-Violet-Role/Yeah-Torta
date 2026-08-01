@@ -826,7 +826,11 @@ class ServiceVPN : VpnService(), OnInternetConnectionCheckedListener {
         }
 
         override fun addRoute(address: java.net.InetAddress, prefixLength: Int): BuilderVPN {
-            listRoute.add(address.hostAddress + "/" + prefixLength)
+            // The fallback is address.toString(), NOT "" -- listRoute is compared element-wise in
+            // BuilderVPN.equals() to decide whether the tunnel must be rebuilt. An empty fallback
+            // would render two different addresses as the identical string "/32", making unequal
+            // builders compare equal and SKIPPING a rebuild the VPN actually needed.
+            listRoute.add((address.hostAddress ?: address.toString()) + "/" + prefixLength)
             super.addRoute(address, prefixLength)
             return this
         }

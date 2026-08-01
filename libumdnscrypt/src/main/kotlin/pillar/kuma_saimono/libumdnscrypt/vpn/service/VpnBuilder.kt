@@ -219,7 +219,13 @@ class VpnBuilder @Inject constructor(
                         } catch (ex: Throwable) {
                             loge("VPNBuilder addIPv4Routes", ex, true)
                         }
-                    start = IPUtil.plus1(exclude.getEnd())
+                    // `!!` rather than a fallback, deliberately. plus1() returns null only when the
+                    // long->InetAddress conversion is out of range, which an in-range IPv4 exclude
+                    // end cannot be; and `start` was already a platform type, so a null here threw
+                    // the same NPE before -- this only moves the failure to the line that caused it.
+                    // A silent fallback would be WORSE than the crash: it would leave `start` stale
+                    // and emit routes for the wrong range in a VPN builder.
+                    start = IPUtil.plus1(exclude.getEnd())!!
                 }
                 val end = (if (lan) "255.255.255.254" else "255.255.255.255")
                 for (include in IPUtil.toCIDR(if (lan) "240.0.0.0" else "224.0.0.0", end))

@@ -96,8 +96,14 @@ object IPUtil {
             return long2inet((inet2long(this.address) and prefix2mask(this.prefix)) + (1L shl (32 - this.prefix)) - 1)
         }
 
+        // hostAddress is @Nullable on modern Android SDKs. This is a debug string, so a missing
+        // literal becomes "?" -- never an exception, and never a silently empty field that would
+        // read as "10.0.0.0/8=..." with the bounds mysteriously blank.
         override fun toString(): String {
-            return address!!.hostAddress + "/" + prefix + "=" + getStart()!!.hostAddress + "..." + getEnd()!!.hostAddress
+            val a = address?.hostAddress ?: "?"
+            val s = getStart()?.hostAddress ?: "?"
+            val e = getEnd()?.hostAddress ?: "?"
+            return "$a/$prefix=$s...$e"
         }
 
         override fun compareTo(other: CIDR): Int {
