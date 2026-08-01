@@ -185,13 +185,175 @@
         }
       ]
     },
-    "NOTICE.md": {
-      "hash": "b774c8face8d",
-      "indexed_at": "2026-08-01T05:07:04.594274+00:00",
+    "DNSCRYPT-RUST.md": {
+      "hash": "c60bc53601a4",
+      "indexed_at": "2026-08-01T05:18:16.548776+00:00",
       "language": "markdown",
-      "lines": 160,
-      "mtime_ns": 1785560746685137200,
-      "size": 9257,
+      "lines": 215,
+      "mtime_ns": 1785561444982960100,
+      "size": 11351,
+      "symbols": [
+        {
+          "docstring": "You designed DNSCrypt and wrote the reference implementation. This project implements your protocol **natively in Rust inside its own engine**, and th",
+          "lines": [
+            16,
+            31
+          ],
+          "name": "\ud83d\udcec Why this document exists",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "| stage | what the code does | |:--|:--| | **stamp** | self-contained `sdns://` decoder for protocol `0x01` \u2192 resolver address, provider name `2.dnscr",
+              "lines": [
+                48,
+                62
+              ],
+              "name": "The datapath, as implemented",
+              "type": "subsection"
+            },
+            {
+              "docstring": "`0x81` relay stamps are decoded **and used**. When a relay chain is attached, both the encrypted query and the cert-fetch TXT are wrapped in the anony",
+              "lines": [
+                63,
+                70
+              ],
+              "name": "Anonymized DNSCrypt is wired, not just parsed",
+              "type": "subsection"
+            },
+            {
+              "docstring": "There is a PQ switch (`set_pq_enabled`), and **PQ and classic exchanges are counted separately** (`pq_exchanges`). A single merged counter would tell",
+              "lines": [
+                71,
+                79
+              ],
+              "name": "Post-quantum, counted honestly",
+              "type": "subsection"
+            }
+          ],
+          "docstring": "**7,002 lines** across three modules, entered directly from the resolution ladder at [`resolver/mod.rs:1165`](rust/torta_core/src/resolver/mod.rs). Th",
+          "lines": [
+            32,
+            79
+          ],
+          "name": "1\ufe0f\u20e3 The port \u2014 DNSCrypt v2, no proxy, no localhost hop",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "The engine has a congestion controller (**BEAST**) whose LineRate brain treats a **UDP-family DNSCrypt RTT as a first-class congestion input** ([`beas",
+              "lines": [
+                85,
+                103
+              ],
+              "name": "\ud83d\udc3a A DNSCrypt round-trip is a congestion signal",
+              "type": "subsection"
+            },
+            {
+              "docstring": "DNSCrypt is one rung of a resolution ladder \u2014 cache \u2192 local \u2192 **DNSCrypt** \u2192 DoH \u2192 plain \u2014 and every escalation is attributed in `query-masksolver.log",
+              "lines": [
+                104,
+                111
+              ],
+              "name": "\ud83c\udfad A ladder that records *why* it moved on",
+              "type": "subsection"
+            },
+            {
+              "docstring": "Upstreams rotate so no single operator sees a whole history. After a switch, the engine sends real labelled queries and **rolls back** if the new upst",
+              "lines": [
+                112,
+                120
+              ],
+              "name": "\ud83d\udd04 Rotation that requires an *answer*, not a ping",
+              "type": "subsection"
+            },
+            {
+              "docstring": "| module | theorems | what it settles | |:--|--:|:--| | `SdnsScheme.lean` | 7 | stamp scheme handling | | `YeahUdpIndependence.lean` | 14 | the UDP co",
+              "lines": [
+                121,
+                131
+              ],
+              "name": "\ud83d\udcd0 Some of it is proved, not tested",
+              "type": "subsection"
+            },
+            {
+              "docstring": "Centauri \u2014 the offline CDN \u2014 verifies its catalogue with **minisign** before a single byte is served (50 files reference it). The content-addressed de",
+              "lines": [
+                132,
+                139
+              ],
+              "name": "\ud83c\udf0c minisign, doing exactly what it says",
+              "type": "subsection"
+            }
+          ],
+          "docstring": "This is the part we think may interest you, because it uses DNSCrypt for something beyond carrying a query.",
+          "lines": [
+            80,
+            139
+          ],
+          "name": "2\ufe0f\u20e3 What we added around it \u2014 and what each one buys",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "It said the Go `dnscrypt-proxy` was \"still bundled\" and that calling this a full Rust port \"would be false\". **We counted, and it was the draft that w",
+              "lines": [
+                152,
+                178
+              ],
+              "name": "\u26a0\ufe0f A correction we owe you, because the first draft of this document was wrong",
+              "type": "subsection"
+            }
+          ],
+          "docstring": "Stated plainly, because a roadmap that lists only achievements is a brochure.",
+          "lines": [
+            140,
+            178
+          ],
+          "name": "3\ufe0f\u20e3 What we have **not** done",
+          "type": "section"
+        },
+        {
+          "docstring": "1. **Drop the legacy Go assets** once the resolver lists and stock config are sourced natively \u2014 the last thing keeping a second implementation in the",
+          "lines": [
+            179,
+            187
+          ],
+          "name": "4\ufe0f\u20e3 Where this is going",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "*Nine pillars. One ledger. No claim without an instrument.*",
+              "lines": [
+                204,
+                216
+              ],
+              "name": "\ud83c\udf70 Yeah! Tort\u00e4",
+              "type": "subsection"
+            }
+          ],
+          "docstring": "Your protocol is the reason pillar 7 exists, and minisign is the reason another pillar can be trusted at all. We reimplemented DNSCrypt v2 in Rust bec",
+          "lines": [
+            188,
+            216
+          ],
+          "name": "\ud83d\ude4f In short",
+          "type": "section"
+        }
+      ]
+    },
+    "NOTICE.md": {
+      "hash": "1348287637d1",
+      "indexed_at": "2026-08-01T05:18:16.825908+00:00",
+      "language": "markdown",
+      "lines": 177,
+      "mtime_ns": 1785561427027533200,
+      "size": 10102,
       "symbols": [
         {
           "docstring": "**Yeah! Tort\u00e4** began as a fork of **[InviZible Pro](https://github.com/Gedsh/InviZible)** \u00a9 Garmatin Oleksandr, licensed AGPL-3.0. The Android servic",
@@ -217,7 +379,7 @@
               "docstring": "The engine does not shell out to a proxy. **DNSCrypt is implemented natively inside `torta_core`** \u2014 7,002 lines across three modules, called directly",
               "lines": [
                 57,
-                85
+                102
               ],
               "name": "\ud83e\udd80 And the part he might actually find interesting: the client is Rust, in-process",
               "type": "subsection"
@@ -226,7 +388,7 @@
           "docstring": "Some people shape a project without ever appearing in `git log`. This section exists so the record is complete rather than merely accurate.",
           "lines": [
             26,
-            85
+            102
           ],
           "name": "\ud83c\udfc5 Honorary contributors",
           "type": "section"
@@ -234,8 +396,8 @@
         {
           "docstring": "| component | licence | where | |:--|:--|:--| | InviZible Pro (upstream) | AGPL-3.0 | app scaffolding, service layer | | UniFFI (Mozilla) | MPL-2.0 /",
           "lines": [
-            86,
-            101
+            103,
+            118
           ],
           "name": "\ud83d\udce6 Third-party components",
           "type": "section"
@@ -243,8 +405,8 @@
         {
           "docstring": "This section exists because a project that only publishes its successes is advertising. Every entry below was found **by measurement, against our own",
           "lines": [
-            102,
-            126
+            119,
+            143
           ],
           "name": "\ud83d\udd0d The defect record",
           "type": "section"
@@ -254,8 +416,8 @@
             {
               "docstring": "*Nine pillars. One ledger. No claim without an instrument.*",
               "lines": [
-                140,
-                161
+                157,
+                178
               ],
               "name": "\ud83c\udf70 Yeah! Tort\u00e4",
               "type": "subsection"
@@ -263,8 +425,8 @@
           ],
           "docstring": "1. **A false green is a defect**, and it is in scope for [security reports](SECURITY.md). 2. **Unproven claims stay labelled unproven**, including on",
           "lines": [
-            127,
-            161
+            144,
+            178
           ],
           "name": "\ud83e\udded Standing commitments",
           "type": "section"
@@ -835,6 +997,6 @@
       "symbols": []
     }
   },
-  "generated_at": "2026-08-01T05:07:04.875261+00:00",
+  "generated_at": "2026-08-01T05:18:16.827626+00:00",
   "version": "1.0"
 }

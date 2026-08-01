@@ -70,13 +70,30 @@ at [`resolver/mod.rs:1165`](rust/torta_core/src/resolver/mod.rs):
 | **Anonymized DNSCrypt** | relay chains supported (`set_relays`, `parse_relay_chain`) |
 | **post-quantum** | `set_pq_enabled` — PQ and classic exchanges are counted **separately**, because a counter that merges them cannot tell you which one you actually got |
 
-**Stated honestly, because the flattering version would be wrong:** the Go `dnscrypt-proxy`
-assets inherited from InviZible Pro are **still bundled** (`assets/dnscrypt.zip`), and are
-still the source of the stock TOML and the signed resolver lists that get extracted at
-install. So this is not "the Go implementation has been removed" — it is "the engine's own
-resolution path speaks DNSCrypt in Rust, in-process, with no separate binary and no
-localhost hop". Removing the legacy assets entirely is open work, and pretending otherwise
-to the protocol's author would be an odd way to say thank you.
+**A correction to an earlier version of this file, which understated the truth.** It said the
+Go `dnscrypt-proxy` was "still bundled". That was wrong, and counting settled it:
+
+| measured on the tracked tree | count |
+|:--|--:|
+| `.go` source files | **0** |
+| `dnscrypt-proxy` executables anywhere on disk | **0** |
+| tracked `jniLibs/` files (how Android ships Go binaries) | **0** |
+
+**There is no Go implementation in this project.** The engine's DNSCrypt is the only DNSCrypt.
+
+What *is* bundled is `assets/dnscrypt.zip` — **36 text files, 236 KB, no executable** — and it
+is not an implementation, it is a **data directory**: your minisign-signed resolver catalogue
+(`public-resolvers.md` + `.minisig`, `relays.md` + `.minisig`, the ODoH lists), a stock TOML,
+and a set of rule files most of which are empty placeholders.
+
+And those signed lists are **load-bearing for the Rust path**: `ResolverRuntime.kt:811,878,907`
+derives the live DNSCrypt lane from `server_names ∩ the signed public-resolvers.md stamps`.
+Shipping them is what lets the app resolve on first launch without the bootstrap deadlock of
+needing DNS in order to fetch a list of DNS servers.
+
+So the accurate sentence is: **the Go proxy is gone; the signed catalogue it used stayed,
+because it is yours and it is good.** The open work is smaller than previously stated — drop
+the empty rule stubs and stop naming a data bundle after a program that is no longer here.
 
 **Thank you, Frank.** The protocol is the reason this pillar exists at all, and minisign is
 the reason another one can be trusted. The hearth is the right place to be remembered.
