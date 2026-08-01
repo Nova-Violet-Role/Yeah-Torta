@@ -114,6 +114,103 @@ The userspace network stack behind the VPN interface: TCP/UDP forwarding, SNI in
 
 ---
 
+## 🎮 Tired of high ping and lag?
+
+**Then you already know the feeling.** You are in the middle of a ranked match. Someone else in the house starts a download, your phone decides *now* is a great time to sync photos, and suddenly your character is teleporting. Your connection speed did not change. Your **queue** did.
+
+That is called **bufferbloat**, and it is the single most common cause of "my internet is fast but my game lags". A fat download fills every buffer between your phone and the world, and your game's tiny, urgent packets get stuck in the queue behind it — like an ambulance behind a parade.
+
+**Tortä's answer is a congestion brain called 🐺 BEAST**, and it has three parts with silly names and serious jobs:
+
+| name | what it really is | what it does for you |
+|:--|:--|:--|
+| 🍜 **Yeah TCP/UDP** | the congestion algorithm (`beast/yeah.rs`) | learns how much your connection can *actually* take, in real time — and unlike classic TCP algorithms, it treats **UDP round-trips as first-class evidence**. Most of your gaming traffic is UDP, so this is the part that stops the engine from being blind to exactly the traffic you care about |
+| 🍡 **Mochi-Dango** | the escalation valve (`beast/scheduler.rs`) | when things go wrong repeatedly, it does not panic — it escalates *gradually*, in a streak, so a moment of bad Wi-Fi does not make the engine overreact and make everything worse |
+| 🧁 **Soft-cake** | the queue law, an AQM (`beast/scheduler.rs`) | sorts your traffic into three tins and makes sure the urgent one is never buried |
+
+### The three tins — this is the whole trick
+
+Every connection your phone makes gets sorted by where it is going (`forwarder/shape.rs`):
+
+| tin | what lands there | how it is treated |
+|:--|:--|:--|
+| 🔴 **CRITICAL** | DNS — ports 53 / 853 | **floor-protected.** It cannot be starved, ever. This is your phone's ability to *find* servers at all |
+| 🟡 **HIGH** | interactive — 443 / 80 / 22 | **runs unshaped, latency first.** Page loads and API calls are never paced |
+| ⚪ **NORMAL** | everything else, bulk | **paced.** Big TCP transfers get a write budget (1–16 segments per burst) so they fill the pipe *without* filling the queue |
+
+The result in one sentence: **the download still gets your full speed, but it stops parking on top of everything else.**
+
+**Now the honest detail, because the flattering version was wrong.** A first draft of this section claimed your game's UDP is "never paced". It is not true, and the source says so: a game on a high UDP port lands in the NORMAL tin and goes through the paced path like any other bulk flow (`forwarder/run.rs:186-195`). Here is what actually protects you, which is better than the marketing line anyway:
+
+- **The budget is a ceiling, not a brake.** A game sends small, frequent bursts — nowhere near the 1–16 segment budget. Pacing only *binds* on flows genuinely trying to fill the pipe. Your match traffic passes through untouched; the download is the one that meets the ceiling.
+- **A paced flow is never killed.** On loss the window backs off toward a minimum and the flow **lives** — because a truly dead path and a briefly bad one look identical for a moment, and killing the second one is how "optimisers" ruin games.
+- **The engine refuses to guess.** It only records a round-trip when exactly one request was outstanding when the answer arrived. Pipelined traffic gets pacing but contributes **no** timing sample, rather than a fabricated one (`run.rs:351-353`). An engine that invents measurements tunes itself into a hole.
+
+### The other three things that help, and why
+
+1. **Fewer requests, full stop.** Mobile games are stuffed with ad and analytics endpoints. Every one is a DNS lookup, a TLS handshake and a burst of traffic *while you play*. Tortä denies them before the connection exists (🛡️ WARDEN), so they never compete with your game at all.
+2. **Faster "finding" of things.** Matchmaking, login, asset servers and CDN downloads all start with a DNS lookup. Tortä caches aggressively, keeps upstreams warm, and rolls back any upstream that goes quiet (🔄 ROTATION) — so the lookup that starts your match is not the one that times out.
+3. **Assets served from your own phone.** Game sites and launchers pull the same handful of CDN libraries over and over. 🌌 CENTAURI serves them locally after the first fetch — zero network round-trip, zero queue.
+
+### 🚫 What it does **not** do — read this part
+
+We would rather lose the sale than lie to you:
+
+- **It cannot beat physics.** If the game server is 8,000 km away, your base ping is set by the speed of light and Tortä cannot argue with it. Nothing can.
+- **It is not a "gaming VPN".** It does not reroute you through a faster path or a closer region. It manages *your own queue*, on *your own device*.
+- **It will not fix a bad Wi-Fi signal**, a congested tower, or an ISP that is oversubscribed at 9pm.
+- **The tin behaviour is MEASURED, not PROVED.** The no-starvation and fairness results come from the engine's own simulator (`beast/beastsim.rs`, 6 scenario tests) and 102 further tests in `beast/tests.rs` — including a deliberate negative control that fails the suite if the NORMAL tin is ever starved to zero. That is strong evidence. It is **not** the same as a Lean theorem, and it is **not** yet a measurement taken during a real match on a real device. When that measurement exists, it will appear here with the numbers.
+
+> **The honest summary:** Tortä will not lower your ping to the server. It removes the *self-inflicted* lag — the lag your own device creates by letting a download, an ad tracker and a photo sync trample your game. For most people on a busy home network, that is the lag they actually feel.
+
+---
+
+## 🏛️ The pillars at a glance — what each one does *for you*
+
+The long version is above. This is the version you can read in thirty seconds.
+
+| pillar | what it does | what you notice | how you can check |
+|:--|:--|:--|:--|
+| 🛡️ **WARDEN** | decides whether a connection may exist at all | apps that phone home simply cannot | `REJECT` rows in `cache/query.log` |
+| 🌌 **CENTAURI** | serves common CDN files from your own phone | pages using jQuery & friends load with no network trip | the serve counters on the dashboard |
+| 🎭 **MASKSOLVER** | tries transports until one honestly answers | lookups still work when one upstream sulks | `query-masksolver.log` names the rung that answered |
+| 🐺 **BEAST** | tunes windows, pacing and queues live | downloads stop strangling everything else | the live tin depths in the UI |
+| 🔄 **ROTATION** | changes upstream so no one operator sees it all | nothing — and that is the point | it **rolls back** if the new upstream goes quiet |
+| 🍰 **WIRE CAKE INU** | gets extra capability without root, reversibly | features that normally need root, working | it tells you exactly what it gained |
+| 🔐 **DNSCRYPT** | encrypts the lookups themselves | your network operator stops reading your DNS | PQ and classic exchanges are counted apart |
+| ⛓️ **UNDERGROUND LAYER** | the deny plane, with five distinct gates | ads and trackers die before connecting | every denial is labelled with *which* gate did it |
+| 🌐 **NETSTACK FORWARDER** | the userspace TCP/UDP datapath | everything above actually reaching your traffic | it is the road the other eight drive on |
+
+---
+
+## 💡 Tips & tricks
+
+**Start here, in this order.** Turning everything on at once is the fastest way to have a bad time and not know which pillar caused it.
+
+1. **Run it plain for a day.** DNSCrypt on, everything else default. If your phone is happy, you have a baseline — and a baseline is the thing that makes every later problem diagnosable.
+2. **Then read your own ledger.** `cache/query.log` is one tab-separated row per decision. It is the single most useful thing in the app, and almost nobody looks at it. You will find out which app on your phone is the chattiest, and the answer is usually a surprise.
+3. **Turn on the deny plane next**, before Centauri. It is the pillar with the biggest visible payoff and the smallest risk.
+4. **Leave Centauri for last**, and only if you want it. It mints a certificate authority; that is a real trade and it is explained in [SECURITY.md](SECURITY.md).
+
+**Small things worth knowing:**
+
+- 🕵️ **If a site breaks, the ledger tells you why in one line.** Look for the most recent `REJECT` row for that domain — the label names the exact gate. No guessing, no bisecting settings.
+- 📵 **A browser with its own DoH will make Tortä look broken.** It is not: the browser stopped asking. Brave, Chrome and Firefox all do this. Tortä sinkholes the bootstrap endpoints for exactly this reason — but if you have manually pinned a secure DNS provider in your browser settings, turn it **off** and let the engine do it.
+- 🎮 **Before a match, do nothing.** Seriously. The best thing you can do is *not* start a big download; the queue law helps, but the physics of a saturated uplink still exist.
+- 🔋 **The engine is not a battery hog, but the screen is.** If you leave the dashboard open watching the counters move, that is your battery — not the resolver.
+- 🧊 **Rotation is boring on purpose.** If you never notice it happening, it is working. The interesting part is the rollback, and you can see it in the log when an upstream stops answering.
+
+**Funny, but true:**
+
+- 😅 This project once shipped a build where the whole CDN pillar was **silently missing** because of a single missing `--features mirror` flag. Everything was green. Every counter was zero. The fix was one word; finding it took a day. There is now a gate in CI whose entire job is to grep the built library for four symbols, because of that one day.
+- 🕳️ We also once made the cloak work *perfectly* — it intercepted exactly what it was supposed to — and the browser returned `ERR_CONNECTION_TIMED_OUT` on everything, because there was nothing on the other end. A feature being **on** made the internet stop. That is why the cloak now refuses to arm unless it can prove it is able to answer.
+- 🎩 Three certificate authorities once shared the same name and the same filename, and the trust check happily accepted all of them. It was matching on the *name*. It now matches on the actual bytes, and there are 12 Lean theorems making sure it stays that way.
+- 📛 The app module is called `libumdnscrypt`, the engine is `torta_core`, the CDN is named after a **star system**, and the congestion algorithm is named after **rice cakes**. We regret nothing.
+
+> Every story above is in [NOTICE.md](NOTICE.md), in a table, with the instrument that caught it. A project that only tells you its wins is selling you something.
+
+---
+
 ## 🗺️ Codemap — what this repository is made of
 
 Measured with `git ls-files` on the published tree, **2,437 files / 615,494 lines**:
