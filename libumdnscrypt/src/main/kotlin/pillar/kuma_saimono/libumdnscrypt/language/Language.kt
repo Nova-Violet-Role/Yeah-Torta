@@ -100,9 +100,14 @@ object Language {
                 val resources: Resources = context.baseContext.resources
                 val conf: Configuration = resources.configuration
 
-                conf.locale = newLocale
+                // Configuration.locale (the FIELD) is deprecated; setLocale() is the supported
+                // setter and has existed since API 17, well below this minSdk of 21.
+                conf.setLocale(newLocale)
 
-                conf.setLayoutDirection(conf.locale)
+                // Reading conf.locale back was a second use of the same deprecated field, and it
+                // could only ever return what was just written. Using newLocale directly is both
+                // non-deprecated and one less way for the two to disagree.
+                conf.setLayoutDirection(newLocale)
 
                 resources.updateConfiguration(conf, resources.displayMetrics)
 
