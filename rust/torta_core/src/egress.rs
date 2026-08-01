@@ -255,8 +255,38 @@ mod backoff_tests {
 mod tests {
     use super::*;
 
+    /// SERIALIZES EVERY TEST IN THIS MODULE, because they all mutate the SAME process-global
+    /// state: V6_FAILS, V6_ASKED, V6_DEAD, V6_REVIVALS and V6_BACKOFF (egress.rs:67-82).
+    ///
+    /// Each test opens with reset_for_new_network() and then asserts on those atomics. Under the
+    /// default parallel test runner that reset lands in the middle of another test's measurement,
+    /// and the verdict it reads belongs to a different scenario. This is not a hypothesis: CI
+    /// caught it on run 30693750708, where v4_outcomes_never_move_the_v6_verdict failed at
+    /// egress.rs:271 with 'IPv4 failures must never condemn IPv6' -- an assertion that CANNOT be
+    /// falsified by its own body, which only ever records IPv4 outcomes. Something else had set
+    /// V6_DEAD, and only a sibling test can do that.
+    ///
+    /// NOT REPRODUCED LOCALLY -- 12 full-suite runs and 20 filtered runs on this machine were all
+    /// green. That is exactly why the lock is justified by STRUCTURE rather than by a repro: a
+    /// race that needs a particular interleaving is not absent when it does not fire, and waiting
+    /// for it to fire again is not a test strategy.
+    ///
+    /// Same pattern the repo already adopted for the counter alarms in mirror::catalog
+    /// (LEGACY_ALARM_TEST_LOCK, catalog.rs:861) after the identical hazard produced a flake there.
+    ///
+    /// Poison is tolerated deliberately: if one test panics while holding the guard, a poisoned
+    /// mutex would fail every sibling and bury the original failure under five unrelated ones.
+    static EGRESS_TEST_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
+    /// Take the lock, ignoring poison. Every test in this module calls this FIRST, before
+    /// reset_for_new_network().
+    fn serialized() -> std::sync::MutexGuard<'static, ()> {
+        EGRESS_TEST_LOCK.lock().unwrap_or_else(|e| e.into_inner())
+    }
+
     #[test]
     fn a_fresh_network_always_attempts_v6() {
+        let _guard = serialized();
         reset_for_new_network();
         assert!(!v6_presumed_dead());
         assert!(v6_should_attempt());
@@ -264,6 +294,7 @@ mod tests {
 
     #[test]
     fn v4_outcomes_never_move_the_v6_verdict() {
+        let _guard = serialized();
         reset_for_new_network();
         for _ in 0..1000 {
             record_dial(false, false);
@@ -273,6 +304,7 @@ mod tests {
 
     #[test]
     fn it_takes_exactly_dead_after_consecutive_failures() {
+        let _guard = serialized();
         reset_for_new_network();
         for _ in 0..(DEAD_AFTER - 1) {
             record_dial(true, false);
@@ -290,6 +322,7 @@ mod tests {
         // REPLACES `one_success_revives_v6_immediately`, which asserted the OPPOSITE and was
         // measured to be the bug: instant revival made the verdict oscillate, allowing 84 doomed
         // dials over 111 URLs where the probe cadence alone would have allowed about two.
+        let _guard = serialized();
         reset_for_new_network();
         for _ in 0..(DEAD_AFTER * 10) {
             record_dial(true, false);
@@ -304,6 +337,7 @@ mod tests {
 
     #[test]
     fn enough_successes_do_lift_the_latch() {
+        let _guard = serialized();
         reset_for_new_network();
         for _ in 0..DEAD_AFTER {
             record_dial(true, false);
@@ -318,6 +352,7 @@ mod tests {
 
     #[test]
     fn a_failure_destroys_accumulated_revival_credit() {
+        let _guard = serialized();
         reset_for_new_network();
         for _ in 0..DEAD_AFTER {
             record_dial(true, false);
@@ -413,11 +448,18 @@ mod tests {
 
     #[test]
     fn a_new_network_forgets_the_old_verdict() {
+        let _guard = serialized();
         reset_for_new_network();
         for _ in 0..(DEAD_AFTER * 3) {
             record_dial(true, false);
         }
         assert!(v6_presumed_dead());
+        // NO second serialized() here. std::sync::Mutex is NOT reentrant and the guard taken at the
+        // top of this test is still alive, so a second acquisition deadlocks the whole run -- which
+        // is exactly what happened when the guards were inserted mechanically at every
+        // reset_for_new_network() call site: 8 sites, 6 tests, and a 10-minute hang.
+        // This reset is the SCENARIO (a new network arriving mid-test), not test isolation, and it
+        // is already covered by the guard above.
         reset_for_new_network();
         assert!(!v6_presumed_dead(), "a new tunnel re-probes from scratch");
     }
