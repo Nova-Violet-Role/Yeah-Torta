@@ -333,7 +333,25 @@ fn main() {
             let mut failed = 0usize;
             for scene in SCENES {
                 let rgba = render_scene_for_golden(&window, &ui, &clock, scene, size);
-                let path = Path::new(&dir).join(format!("{scene}.png"));
+                // ★ PLATFORM-KEYED GOLDENS (2026-08-01). A scene containing `Text` with no pinned
+                // `font-family` renders with whatever font the HOST provides, so its raster is not
+                // portable: `jesdict` (three Text elements, the "THX to JESDICT" calligraphy) drifted
+                // by 2,290 pixels on a Linux runner against a golden baked on Windows, while every
+                // pure-shape scene matched exactly. That is a real difference in the rendered output,
+                // not a flaky comparison -- so it must not be hidden behind a tolerance, and the gate
+                // must not be switched off either.
+                //
+                // Resolution order: `<scene>.<os>.png` first, then `<scene>.png`. A platform whose
+                // rendering genuinely differs gets its own baseline and keeps a STRICT, exact gate;
+                // every platform-independent scene keeps sharing the single golden it already has.
+                // A missing golden is still a hard failure in both cases -- see below.
+                let os_key = std::env::consts::OS; // "windows", "linux", "macos"
+                let os_path = Path::new(&dir).join(format!("{scene}.{os_key}.png"));
+                let path = if os_path.exists() {
+                    os_path
+                } else {
+                    Path::new(&dir).join(format!("{scene}.png"))
+                };
                 match read_png(&path) {
                     // A MISSING golden is a FAILURE, never a pass. This is the case a lazy harness
                     // treats as "nothing to compare" and reports green.

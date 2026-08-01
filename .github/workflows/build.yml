@@ -172,6 +172,33 @@ jobs:
           sudo apt-get install -y -qq libfontconfig1-dev libfreetype6-dev pkg-config
           pkg-config --modversion fontconfig
 
+      # ★ THE LINUX GOLDEN BASELINE. `jesdict` carries three `Text` elements with no pinned
+      # font-family, so it rasterises with the HOST's default font and cannot match a golden
+      # baked on Windows (measured: 2,290 differing pixels, max_delta 227; every pure-shape
+      # scene matched exactly). The verifier now prefers `<scene>.<os>.png`, so this step
+      # renders the Linux set and uploads it as an artifact -- which is how a real baseline
+      # gets INSPECTED and committed, rather than a tolerance being invented to make the
+      # comparison stop complaining.
+      - name: Render Linux golden candidates (artifact, never authoritative)
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          cd rust/torta_iconforge
+          mkdir -p /tmp/goldens-linux
+          # `bless` is the real emit subcommand (src/main.rs:312) and it refuses to write a BLANK
+          # raster, so an empty render cannot become a baseline. Names verified in the source, not
+          # guessed: an invented flag would fail silently under continue-on-error and upload nothing.
+          cargo run --quiet -- bless --goldens /tmp/goldens-linux
+          ls -la /tmp/goldens-linux
+
+      - name: Upload Linux golden candidates
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: goldens-linux-${{ matrix.abi }}
+          path: /tmp/goldens-linux
+          if-no-files-found: warn
+
       - name: Android SDK
         uses: android-actions/setup-android@v3
 
