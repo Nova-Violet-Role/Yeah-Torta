@@ -282,7 +282,14 @@ class ModulesKiller(
     private fun killWithSU(module: String, commands: List<String>): List<String>? {
         var shellResult: List<String>? = null
         try {
-            shellResult = Shell.SU.run(commands)
+            // libsuperuser's Shell.SU.run is deprecated in every overload; the jrummyapps
+            // shell is already a dependency (build.gradle:228) and already carries root
+            // commands in NflogManager / CommandExecutor / ModulesVersions. Its run() returns
+            // CommandResult, whose stdout is the List<String> this call site expects.
+            // Spread: jrummyapps run() is varargs String..., where libsuperuser also took a
+            // List. Same commands, same order, one shell invocation -- the spread is a calling
+            // convention difference, not a semantic one.
+            shellResult = com.jrummyapps.android.shell.Shell.SU.run(*commands.toTypedArray())?.stdout
         } catch (e: Exception) {
             loge("Kill " + module + " with root", e)
         }
@@ -437,7 +444,7 @@ class ModulesKiller(
                     busyboxPath + "killall -s SIGKILL libdnscrypt-proxy.so || true"
                 )
 
-                Thread { Shell.SU.run(commands) }.start()
+                Thread { com.jrummyapps.android.shell.Shell.SU.run(*commands) }.start()
             }
         }
     }

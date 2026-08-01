@@ -215,12 +215,12 @@
       ]
     },
     "ModulesKiller.kt": {
-      "hash": "35177b60f1c4",
-      "indexed_at": "2026-08-01T09:26:25.359813+00:00",
+      "hash": "8c62ad92b167",
+      "indexed_at": "2026-08-01T09:30:01.070996+00:00",
       "language": "kotlin",
-      "lines": 444,
-      "mtime_ns": 1785576337158860800,
-      "size": 17180,
+      "lines": 451,
+      "mtime_ns": 1785576567433236800,
+      "size": 17872,
       "symbols": [
         {
           "children": [
@@ -299,7 +299,7 @@
             {
               "lines": [
                 281,
-                290
+                297
               ],
               "name": "killWithSU",
               "signature": "(module: String, commands: List<String>)",
@@ -308,8 +308,8 @@
             {
               "docstring": "kill default signal SIGTERM - 15, SIGKILL -9, SIGQUIT - 3",
               "lines": [
-                293,
-                342
+                300,
+                349
               ],
               "name": "prepareKillCommands",
               "signature": "(module: String, pid: String, signal: String, killWithRoot: Boolean)",
@@ -317,8 +317,8 @@
             },
             {
               "lines": [
-                344,
-                357
+                351,
+                364
               ],
               "name": "doThreeAttemptsToStopModule",
               "signature": "(modulePath: String, pid: String, thread: Thread?, moduleStartedWithRoot: Boolean)",
@@ -326,8 +326,8 @@
             },
             {
               "lines": [
-                359,
-                381
+                366,
+                388
               ],
               "name": "stopModuleWithInterruptThread",
               "signature": "(thread: Thread?)",
@@ -335,8 +335,8 @@
             },
             {
               "lines": [
-                383,
-                398
+                390,
+                405
               ],
               "name": "readPidFile",
               "signature": "(path: String)",
@@ -345,7 +345,7 @@
           ],
           "lines": [
             45,
-            444
+            451
           ],
           "name": "ModulesKiller",
           "type": "class"
@@ -2180,6 +2180,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T09:26:28.392568+00:00",
+  "generated_at": "2026-08-01T09:30:01.072510+00:00",
   "version": "1.0"
 }

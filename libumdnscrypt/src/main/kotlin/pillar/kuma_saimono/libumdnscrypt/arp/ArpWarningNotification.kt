@@ -65,7 +65,7 @@ class ArpWarningNotification @Inject constructor(
             .setColor(getBrandColor())
             .setContentTitle(title)
             .setContentText(text)
-            .setPriority(Notification.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setOnlyAlertOnce(true)
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .setAutoCancel(true)

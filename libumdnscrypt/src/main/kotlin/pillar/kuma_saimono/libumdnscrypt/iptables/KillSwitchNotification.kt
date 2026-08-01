@@ -65,7 +65,7 @@ class KillSwitchNotification @Inject constructor(
             .setContentText(uniffi.torta_core.tortaText("notification_internet_blocked_message"))
             .setStyle(NotificationCompat.BigTextStyle()
                 .bigText(uniffi.torta_core.tortaText("notification_internet_blocked_message")))
-            .setPriority(Notification.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setOnlyAlertOnce(true)
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .setChannelId(AUX_CHANNEL_ID)
