@@ -91,9 +91,21 @@ jobs:
       - name: Generate bindings from the HOST cdylib
         working-directory: rust/torta_core
         run: |
-          cargo build --lib --features mirror
+          # ★ ONE CONSISTENT FEATURE SET FOR BOTH COMMANDS (2026-08-01).
+          # These two steps used `--features mirror` then `--features uniffi-cli`. Cargo features
+          # are per-invocation, so the second command RE-LINKS the cdylib with only `uniffi-cli`
+          # and bindgen can end up reading a library with no `mirror` in it. Measured locally when
+          # regenerating: that produced bindings missing EVERY Centauri export -- a 4,952-line diff
+          # consisting entirely of deletions, which this gate would then report as "your committed
+          # bindings are stale" while the truth was that the generator had been handed the wrong
+          # library.
+          # Both commands now carry `mirror,uniffi-cli`, so the artifact bindgen reads is the one
+          # the previous line built.
+          cargo build --lib --features mirror,uniffi-cli
           test -f target/debug/libtorta_core.so || { echo "::error::host cdylib missing — bindgen would silently write nothing"; exit 1; }
-          cargo run --bin uniffi-bindgen --features uniffi-cli -- \
+          grep -qa centauri_serve_hits target/debug/libtorta_core.so \
+            || { echo "::error::host cdylib carries no mirror exports — bindgen would emit bindings missing every Centauri function"; exit 1; }
+          cargo run --bin uniffi-bindgen --features mirror,uniffi-cli -- \
             generate --library target/debug/libtorta_core.so \
             --language kotlin --out-dir "$RUNNER_TEMP/bindgen_out"
           test -s "$RUNNER_TEMP/bindgen_out/uniffi/torta_core/torta_core.kt" \
