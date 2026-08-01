@@ -38,6 +38,14 @@
 //! ADR-001 note: this bin is auto-discovered under `src/bin/` — it is NOT a dependency in any Cargo.toml,
 //! so it does not breach `isolation-lint.{sh,ps1}` (the Haskell brain stays fenced from gradle/cargo).
 
+// ★ WARNING AUDIT (2026-08-01). Same reasoning as `blocklist_vectors.rs`: the `#[path]` include
+// gives this oracle the library's internals without widening the library's `pub` surface, and the
+// price is that the bin compiles the whole of `dns.rs` while calling only `validate_response` and
+// `RejectReason`. Everything else is dead FROM THIS BIN'S POINT OF VIEW and fully live in the
+// library, so the allow is scoped to this inclusion rather than to the crate -- a crate-wide
+// `allow(dead_code)` would also swallow the next genuinely unused item, which is the one worth
+// hearing about.
+#[allow(dead_code)]
 #[path = "../dns.rs"]
 mod dns;
 

@@ -1007,7 +1007,6 @@ mod tests {
             .expect("a genuinely signed 1-entry catalog verifies + parses")
     }
 
-    #[test]
     /// THE LEDGER MUST ACTUALLY COUNT.
     ///
     /// The defect this whole instrument exists to answer was a counter that could never move for

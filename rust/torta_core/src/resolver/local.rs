@@ -867,7 +867,6 @@ nonsense-no-ip-here
     }
 
     #[test]
-    #[test]
     fn nodata_is_noerror_with_no_answers_and_is_not_nxdomain() {
         let q = query_for("example.com", QTYPE_AAAA);
         let resp = synth_nodata(&q).expect("a well-formed question must yield a canvas");

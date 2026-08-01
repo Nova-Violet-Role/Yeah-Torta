@@ -202,18 +202,30 @@ jobs:
             key=$(basename "$doc" .md)
             mapfile -t EXTRA < <(docsection "$key")
             {
+              # ★ PASCALCASE, NOT KEBAB (2026-08-01). This block used to emit `**#dns-over-https**`.
+              # A GitHub *topic* must be lowercase-and-hyphens, so tags.txt stores them that way --
+              # but a HASHTAG is a different medium with a different lexer, and every major platform
+              # (X, LinkedIn, Instagram, Mastodon) TERMINATES a hashtag at the first hyphen. So
+              # `#dns-over-https` is posted as `#dns`: the most generic, least findable token in the
+              # list, and the four specific words are discarded. The whole point of these tags is to
+              # be found, which made the kebab form actively counterproductive off-GitHub.
+              #
+              # PascalCase is the portable hashtag convention and survives every platform's lexer:
+              # #DnsOverHttps. The topics themselves are untouched -- see the topic PATCH above,
+              # which still sends the kebab form GitHub's API requires. One source, two renderings,
+              # each correct for its own surface.
+              #
+              # The bold-plus-interpunct decoration and the <sub> wrapper are dropped with it: <sub>
+              # renders these at ~80% size, i.e. the search surface was also the smallest text on
+              # the page.
               echo "<!-- TAGS:BEGIN generated from .github/tags.txt -- do not hand-edit -->"
-              printf '<sub>\n\n'
-              first=1
+              printf '**Topics** ·\n'
               for t in "${EXTRA[@]}" "${TAGS[@]}"; do
                 [ -z "$t" ] && continue
-                [ $first -eq 0 ] && printf ' · '
-                printf '**#%s**' "$t"
-                first=0
+                printf '#%s ' "$(printf '%s' "$t" | sed -E 's/(^|-)([a-z])/\U\2/g')"
               done
               printf '\n\n'
-              printf '*Tags are generated from [`.github/tags.txt`](.github/tags.txt) by the Meta Hashtag Manager — every one names something present in this tree.*\n\n'
-              printf '</sub>\n'
+              printf '<sub>*Generated from [`.github/tags.txt`](.github/tags.txt) by the Meta Hashtag Manager — every tag names something present in this tree, and the check that proves it fails on a tag that names nothing.*</sub>\n'
               echo "<!-- TAGS:END -->"
             } > /tmp/sig.md
 

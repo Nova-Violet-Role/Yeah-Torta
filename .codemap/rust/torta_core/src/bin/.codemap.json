@@ -2,12 +2,12 @@
   "directory": "rust\\torta_core\\src\\bin",
   "files": {
     "blocklist_vectors.rs": {
-      "hash": "903680c9f927",
-      "indexed_at": "2026-07-31T15:59:52.098328+00:00",
+      "hash": "f3a99b06fb68",
+      "indexed_at": "2026-08-01T06:29:19.096775+00:00",
       "language": "rust",
-      "lines": 236,
-      "mtime_ns": 1785513091777887200,
-      "size": 11101,
+      "lines": 248,
+      "mtime_ns": 1785565616926869100,
+      "size": 12073,
       "symbols": [
         {
           "children": [
@@ -42,16 +42,16 @@
         },
         {
           "lines": [
-            80,
-            80
+            92,
+            92
           ],
           "name": "blocklist",
           "type": "module"
         },
         {
           "lines": [
-            106,
-            118
+            118,
+            130
           ],
           "name": "main",
           "signature": "()",
@@ -60,8 +60,8 @@
         {
           "docstring": "`text.as_bytes()` back through, so a valid-UTF-8 list round-trips byte-identically here.",
           "lines": [
-            125,
-            135
+            137,
+            147
           ],
           "name": "run_text",
           "signature": "()",
@@ -70,8 +70,8 @@
         {
           "docstring": "non-empty line of `<file>`; otherwise the args ARE the probe domains.",
           "lines": [
-            146,
-            187
+            158,
+            199
           ],
           "name": "run_artifact",
           "signature": "(rest: Vec<String>)",
@@ -80,8 +80,8 @@
         {
           "docstring": "Read the artifact bytes from `path` (if `Some`) or STDIN (if `None`).",
           "lines": [
-            190,
-            199
+            202,
+            211
           ],
           "name": "read_artifact",
           "signature": "(path: Option<&str>)",
@@ -90,8 +90,8 @@
         {
           "docstring": "- `[\"a.com\", \"b.com\", \u2026]`    \u2192 those domains, verbatim",
           "lines": [
-            205,
-            224
+            217,
+            236
           ],
           "name": "collect_probes",
           "signature": "(args: Vec<String>)",
@@ -99,8 +99,8 @@
         },
         {
           "lines": [
-            226,
-            236
+            238,
+            248
           ],
           "name": "usage",
           "signature": "()",
@@ -147,17 +147,17 @@
       ]
     },
     "dns_validate_oracle.rs": {
-      "hash": "b8cd1baecedd",
-      "indexed_at": "2026-07-29T00:46:21.730357+00:00",
+      "hash": "e0f2861fa618",
+      "indexed_at": "2026-08-01T06:29:19.387578+00:00",
       "language": "rust",
-      "lines": 125,
-      "mtime_ns": 1785284654453338400,
-      "size": 4974,
+      "lines": 133,
+      "mtime_ns": 1785565629275637300,
+      "size": 5602,
       "symbols": [
         {
           "lines": [
-            42,
-            42
+            50,
+            50
           ],
           "name": "dns",
           "type": "module"
@@ -165,8 +165,8 @@
         {
           "docstring": "The stable wire token \u2014 MUST match `BeastSpec.hs`'s `verdictToken`.",
           "lines": [
-            48,
-            61
+            56,
+            69
           ],
           "name": "token",
           "signature": "(r: Result<(), RejectReason>)",
@@ -175,8 +175,8 @@
         {
           "docstring": "Decode a lowercase/uppercase hex string into bytes. Returns Err on odd length / non-hex.",
           "lines": [
-            64,
-            79
+            72,
+            87
           ],
           "name": "from_hex",
           "signature": "(s: &str)",
@@ -184,8 +184,8 @@
         },
         {
           "lines": [
-            81,
-            88
+            89,
+            96
           ],
           "name": "hex_nibble",
           "signature": "(b: u8)",
@@ -193,8 +193,8 @@
         },
         {
           "lines": [
-            90,
-            125
+            98,
+            133
           ],
           "name": "main",
           "signature": "()",
@@ -223,6 +223,6 @@
       ]
     }
   },
-  "generated_at": "2026-07-31T15:59:52.386902+00:00",
+  "generated_at": "2026-08-01T06:29:19.389102+00:00",
   "version": "1.0"
 }

@@ -76,6 +76,18 @@ mod underground {
     }
 }
 
+// ★ WARNING AUDIT (2026-08-01). The `#[path]` include below is deliberate -- it lets this oracle
+// exercise library internals WITHOUT the library exporting them (the zero-`pub` surface described
+// above). The cost is that this bin compiles the WHOLE module while calling only the slice it
+// needs, so rustc correctly reports the remainder as dead: 54 of the 189 warnings in a test build
+// came from exactly this pattern, and NONE of them describe real rot -- the library itself uses
+// those items, and the library's own build is still analysed for dead code normally.
+//
+// The allow is therefore scoped to THIS INCLUSION ONLY -- not the library, not the crate. Silencing
+// it crate-wide, or making the items `pub` to please the compiler, would each hide a genuinely
+// unused item somewhere else. That is the trade that turns a warning list into noise nobody reads,
+// and a warning nobody reads is the same as no warning at all.
+#[allow(dead_code)]
 #[path = "../blocklist.rs"]
 mod blocklist;
 
