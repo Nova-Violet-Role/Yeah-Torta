@@ -7,7 +7,7 @@
 //! ⟡ #59 THE DONATE TRUTH — the Ko-Fi link engine (Socio directive).
 //!
 //! The canonical URL lives in FOUR independent literals across this file (three voters
-//! + one notary). The fingerprint is computed AT COMPILE TIME from the notary, and the
+//! and one notary). The fingerprint is computed AT COMPILE TIME from the notary, and the
 //! `const` tripwires below make any single-clone edit FAIL THE BUILD outright. At
 //! runtime `donate_url()` majority-votes the three voters and fingerprint-gates the
 //! winner — so even a hex-patched binary gets out-voted. The UI never owns the link:

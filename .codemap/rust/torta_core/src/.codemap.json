@@ -312,12 +312,12 @@
       ]
     },
     "blocklist.rs": {
-      "hash": "34057cfbfb26",
-      "indexed_at": "2026-07-31T23:39:52.914943+00:00",
+      "hash": "e86d315ea4ba",
+      "indexed_at": "2026-08-01T09:56:53.781014+00:00",
       "language": "rust",
-      "lines": 1783,
-      "mtime_ns": 1785540705113724200,
-      "size": 84620,
+      "lines": 1803,
+      "mtime_ns": 1785578159568099800,
+      "size": 84047,
       "symbols": [
         {
           "lines": [
@@ -610,10 +610,9 @@
           "type": "function"
         },
         {
-          "docstring": "honest answer to \"is this list doing anything for me?\".",
           "lines": [
-            659,
-            700
+            679,
+            720
           ],
           "name": "source_provenance_table",
           "signature": "()",
@@ -622,8 +621,8 @@
         {
           "docstring": "Returns how many sources had their reputation resolved.",
           "lines": [
-            719,
-            769
+            739,
+            789
           ],
           "name": "resolve_source_reputations",
           "signature": "()",
@@ -631,8 +630,8 @@
         },
         {
           "lines": [
-            771,
-            775
+            791,
+            795
           ],
           "name": "register_source_meta",
           "signature": "(meta: trust::SourceMeta)",
@@ -640,8 +639,8 @@
         },
         {
           "lines": [
-            777,
-            780
+            797,
+            800
           ],
           "name": "compile_and_install_file",
           "signature": "(path: &str, merge: bool)",
@@ -649,8 +648,8 @@
         },
         {
           "lines": [
-            782,
-            784
+            802,
+            804
           ],
           "name": "compile_and_install_text",
           "signature": "(text: &str, merge: bool)",
@@ -659,8 +658,8 @@
         {
           "docstring": "half-installed matcher. `merge` stacks the artifact's set onto the current list, identical to text.",
           "lines": [
-            792,
-            795
+            812,
+            815
           ],
           "name": "compile_and_install_artifact",
           "signature": "(bytes: &[u8], merge: bool)",
@@ -668,8 +667,8 @@
         },
         {
           "lines": [
-            797,
-            800
+            817,
+            820
           ],
           "name": "query",
           "signature": "(domain: &str)",
@@ -677,8 +676,8 @@
         },
         {
           "lines": [
-            831,
-            839
+            851,
+            859
           ],
           "name": "BlockAction",
           "type": "enum"
@@ -686,8 +685,8 @@
         {
           "docstring": "is byte-identical to pre-P12.",
           "lines": [
-            867,
-            885
+            887,
+            905
           ],
           "name": "set_block_action",
           "signature": "(action: BlockAction)",
@@ -696,8 +695,8 @@
         {
           "docstring": "pinned IP degrades to `NxDomain` (deny, never a half-configured redirect).",
           "lines": [
-            890,
-            904
+            910,
+            924
           ],
           "name": "block_action",
           "signature": "()",
@@ -706,8 +705,8 @@
         {
           "docstring": "resolver/mod.rs switches it to this. Until then the `.so` is byte-identical.",
           "lines": [
-            914,
-            920
+            934,
+            940
           ],
           "name": "query_action",
           "signature": "(domain: &str)",
@@ -716,8 +715,8 @@
         {
           "docstring": "Do NOT rebuild a `Matcher` per packet \u2014 borrow the installed one through here.",
           "lines": [
-            933,
-            936
+            953,
+            956
           ],
           "name": "with_global",
           "signature": "(f: impl FnOnce(Option<&Matcher>) -> R)",
@@ -726,8 +725,8 @@
         {
           "docstring": "Read-only: takes read locks on both stores and releases them. Never panics (poison-recovering).",
           "lines": [
-            957,
-            973
+            977,
+            993
           ],
           "name": "domain_provenance",
           "signature": "(domain: &str, now_days: u32)",
@@ -736,8 +735,8 @@
         {
           "docstring": "Returns `(trust, contributing_sources)`.",
           "lines": [
-            985,
-            997
+            1005,
+            1017
           ],
           "name": "list_trust_of",
           "signature": "(fp: u64, active_mask: trust::SourceMask, now_days: u32)",
@@ -746,8 +745,8 @@
         {
           "docstring": "keeps corroboration honest.",
           "lines": [
-            1005,
-            1016
+            1025,
+            1036
           ],
           "name": "installed_active_mask",
           "signature": "()",
@@ -756,8 +755,8 @@
         {
           "docstring": "currently backing?\" without re-reading the set.",
           "lines": [
-            1021,
-            1024
+            1041,
+            1044
           ],
           "name": "source_fingerprint",
           "signature": "(source_id: u32)",
@@ -765,8 +764,8 @@
         },
         {
           "lines": [
-            1026,
-            1029
+            1046,
+            1049
           ],
           "name": "installed_count",
           "signature": "()",
@@ -775,8 +774,8 @@
         {
           "docstring": "fails to load.",
           "lines": [
-            1044,
-            1047
+            1064,
+            1067
           ],
           "name": "export_installed_artifact",
           "signature": "()",
@@ -785,8 +784,8 @@
         {
           "docstring": "and it is worth surfacing on device precisely because a decode-only build can never notice it.",
           "lines": [
-            1054,
-            1072
+            1074,
+            1092
           ],
           "name": "verify_artifact_round_trip",
           "signature": "()",
@@ -795,8 +794,8 @@
         {
           "docstring": "The installed list's set-deterministic content fingerprint (0 if none) \u2014 P8's trust/dedup handle.",
           "lines": [
-            1075,
-            1078
+            1095,
+            1098
           ],
           "name": "installed_fingerprint",
           "signature": "()",
@@ -806,8 +805,8 @@
           "children": [
             {
               "lines": [
-                1093,
-                1095
+                1113,
+                1115
               ],
               "name": "lock_global",
               "signature": "()",
@@ -815,8 +814,8 @@
             },
             {
               "lines": [
-                1097,
-                1104
+                1117,
+                1124
               ],
               "name": "compiled",
               "signature": "(domains: &[&str])",
@@ -824,8 +823,8 @@
             },
             {
               "lines": [
-                1107,
-                1116
+                1127,
+                1136
               ],
               "name": "blocks_exact_and_subdomains_but_never_overblocks",
               "signature": "()",
@@ -833,8 +832,8 @@
             },
             {
               "lines": [
-                1119,
-                1125
+                1139,
+                1145
               ],
               "name": "case_dot_and_unicode_insensitive",
               "signature": "()",
@@ -842,8 +841,8 @@
             },
             {
               "lines": [
-                1128,
-                1156
+                1148,
+                1176
               ],
               "name": "d21_zero_alloc_walk_matches_normalize_exactly",
               "signature": "()",
@@ -851,8 +850,8 @@
             },
             {
               "lines": [
-                1159,
-                1169
+                1179,
+                1189
               ],
               "name": "wildcard_entries_block_the_zone",
               "signature": "()",
@@ -860,8 +859,8 @@
             },
             {
               "lines": [
-                1172,
-                1187
+                1192,
+                1207
               ],
               "name": "parse_host_adblock_ip_and_junk",
               "signature": "()",
@@ -869,8 +868,8 @@
             },
             {
               "lines": [
-                1190,
-                1193
+                1210,
+                1213
               ],
               "name": "rejects_over_deep_names",
               "signature": "()",
@@ -878,8 +877,8 @@
             },
             {
               "lines": [
-                1196,
-                1215
+                1216,
+                1235
               ],
               "name": "fingerprint_and_count_are_order_and_format_independent",
               "signature": "()",
@@ -887,8 +886,8 @@
             },
             {
               "lines": [
-                1218,
-                1228
+                1238,
+                1248
               ],
               "name": "compile_text_and_bounded_lines",
               "signature": "()",
@@ -896,8 +895,8 @@
             },
             {
               "lines": [
-                1231,
-                1239
+                1251,
+                1259
               ],
               "name": "merge_stacks_lists",
               "signature": "()",
@@ -905,8 +904,8 @@
             },
             {
               "lines": [
-                1244,
-                1270
+                1264,
+                1290
               ],
               "name": "artifact_roundtrip_preserves_count_fp_and_verdicts",
               "signature": "()",
@@ -914,8 +913,8 @@
             },
             {
               "lines": [
-                1273,
-                1292
+                1293,
+                1312
               ],
               "name": "artifact_header_layout_is_exact",
               "signature": "()",
@@ -923,8 +922,8 @@
             },
             {
               "lines": [
-                1295,
-                1304
+                1315,
+                1324
               ],
               "name": "empty_set_artifact_roundtrips",
               "signature": "()",
@@ -932,8 +931,8 @@
             },
             {
               "lines": [
-                1307,
-                1311
+                1327,
+                1331
               ],
               "name": "bad_magic_is_rejected",
               "signature": "()",
@@ -941,8 +940,8 @@
             },
             {
               "lines": [
-                1314,
-                1318
+                1334,
+                1338
               ],
               "name": "wrong_version_is_rejected",
               "signature": "()",
@@ -950,8 +949,8 @@
             },
             {
               "lines": [
-                1321,
-                1329
+                1341,
+                1349
               ],
               "name": "wrong_algo_and_nonzero_flags_are_rejected",
               "signature": "()",
@@ -959,8 +958,8 @@
             },
             {
               "lines": [
-                1332,
-                1342
+                1352,
+                1362
               ],
               "name": "truncated_artifacts_are_rejected",
               "signature": "()",
@@ -968,8 +967,8 @@
             },
             {
               "lines": [
-                1345,
-                1350
+                1365,
+                1370
               ],
               "name": "fingerprint_mismatch_is_rejected",
               "signature": "()",
@@ -977,8 +976,8 @@
             },
             {
               "lines": [
-                1353,
-                1360
+                1373,
+                1380
               ],
               "name": "over_long_record_len_is_rejected",
               "signature": "()",
@@ -986,8 +985,8 @@
             },
             {
               "lines": [
-                1363,
-                1377
+                1383,
+                1397
               ],
               "name": "artifact_installs_into_global_and_query_sees_it",
               "signature": "()",
@@ -995,8 +994,8 @@
             },
             {
               "lines": [
-                1380,
-                1392
+                1400,
+                1412
               ],
               "name": "artifact_merges_onto_a_text_list",
               "signature": "()",
@@ -1004,8 +1003,8 @@
             },
             {
               "lines": [
-                1395,
-                1399
+                1415,
+                1419
               ],
               "name": "bad_artifact_does_not_arm_and_returns_none",
               "signature": "()",
@@ -1013,8 +1012,8 @@
             },
             {
               "lines": [
-                1402,
-                1420
+                1422,
+                1440
               ],
               "name": "adversarial_domains_survive_with_stable_fingerprint",
               "signature": "()",
@@ -1022,8 +1021,8 @@
             },
             {
               "lines": [
-                1426,
-                1450
+                1446,
+                1470
               ],
               "name": "a2_two_sources_record_both_bits",
               "signature": "()",
@@ -1031,8 +1030,8 @@
             },
             {
               "lines": [
-                1455,
-                1498
+                1475,
+                1518
               ],
               "name": "a2_provenance_never_perturbs_the_fingerprint",
               "signature": "()",
@@ -1040,8 +1039,8 @@
             },
             {
               "lines": [
-                1503,
-                1521
+                1523,
+                1541
               ],
               "name": "a2_legacy_compile_text_fingerprint_byte_identical",
               "signature": "()",
@@ -1049,8 +1048,8 @@
             },
             {
               "lines": [
-                1526,
-                1559
+                1546,
+                1579
               ],
               "name": "a2_is_blocked_verdicts_unchanged_by_provenance",
               "signature": "()",
@@ -1058,8 +1057,8 @@
             },
             {
               "lines": [
-                1564,
-                1603
+                1584,
+                1623
               ],
               "name": "a2_install_with_source_merges_provenance",
               "signature": "()",
@@ -1067,8 +1066,8 @@
             },
             {
               "lines": [
-                1608,
-                1630
+                1628,
+                1650
               ],
               "name": "a2_source_aware_walk_matches_source_mask",
               "signature": "()",
@@ -1077,8 +1076,8 @@
             {
               "docstring": "test and an install test cannot interleave a `query_action` against a mid-swap GLOBAL.",
               "lines": [
-                1639,
-                1641
+                1659,
+                1661
               ],
               "name": "reset_block_action",
               "signature": "()",
@@ -1086,8 +1085,8 @@
             },
             {
               "lines": [
-                1645,
-                1650
+                1665,
+                1670
               ],
               "name": "block_action_defaults_to_nxdomain",
               "signature": "()",
@@ -1095,8 +1094,8 @@
             },
             {
               "lines": [
-                1655,
-                1680
+                1675,
+                1700
               ],
               "name": "block_action_selector_round_trips_each_variant",
               "signature": "()",
@@ -1104,8 +1103,8 @@
             },
             {
               "lines": [
-                1685,
-                1706
+                1705,
+                1726
               ],
               "name": "block_action_zerosink_clears_a_prior_custom_pin",
               "signature": "()",
@@ -1113,8 +1112,8 @@
             },
             {
               "lines": [
-                1711,
-                1741
+                1731,
+                1761
               ],
               "name": "query_action_returns_active_action_only_for_blocked_names",
               "signature": "()",
@@ -1122,8 +1121,8 @@
             },
             {
               "lines": [
-                1746,
-                1761
+                1766,
+                1781
               ],
               "name": "custom_ip_without_a_pin_degrades_to_nxdomain",
               "signature": "()",
@@ -1131,8 +1130,8 @@
             },
             {
               "lines": [
-                1766,
-                1782
+                1786,
+                1802
               ],
               "name": "block_action_survives_a_blocklist_reinstall",
               "signature": "()",
@@ -1140,8 +1139,8 @@
             }
           ],
           "lines": [
-            1090,
-            1783
+            1110,
+            1803
           ],
           "name": "tests",
           "type": "module"
@@ -2357,12 +2356,12 @@
       ]
     },
     "donate.rs": {
-      "hash": "c8b8a0394ddf",
-      "indexed_at": "2026-07-26T19:12:57.784791+00:00",
+      "hash": "32b0332e63bd",
+      "indexed_at": "2026-08-01T09:56:54.070496+00:00",
       "language": "rust",
       "lines": 89,
-      "mtime_ns": 1785030832601604700,
-      "size": 3099,
+      "mtime_ns": 1785578015994100900,
+      "size": 3101,
       "symbols": [
         {
           "lines": [
@@ -2439,12 +2438,12 @@
       ]
     },
     "egress.rs": {
-      "hash": "335294545bbe",
-      "indexed_at": "2026-08-01T09:45:04.036261+00:00",
+      "hash": "874a4b47f848",
+      "indexed_at": "2026-08-01T09:56:54.372995+00:00",
       "language": "rust",
       "lines": 466,
-      "mtime_ns": 1785577434221492900,
-      "size": 21559,
+      "mtime_ns": 1785577798950585700,
+      "size": 21568,
       "symbols": [
         {
           "docstring": "mistake already cost one false failure this project).",
@@ -9268,6 +9267,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T09:45:04.037832+00:00",
+  "generated_at": "2026-08-01T09:56:54.374627+00:00",
   "version": "1.0"
 }

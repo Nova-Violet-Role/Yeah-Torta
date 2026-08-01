@@ -160,7 +160,7 @@ pub(crate) fn should_attempt_decision(dead: bool, asked: u64) -> bool {
 /// can never become "never probe".
 pub(crate) fn should_attempt_with_gap(dead: bool, asked: u64, gap: u64) -> bool {
     let g = if gap == 0 { 1 } else { gap };
-    !dead || asked % g == 0
+    !dead || asked.is_multiple_of(g)
 }
 
 /// How many times the cadence gap may double. Capped so the gap stays finite — an uncapped backoff

@@ -1754,6 +1754,7 @@ struct ManifestRow {
 /// TAB-separated in ONE of two shapes (both supported so an owned-only seed stays terse):
 ///   - `<name>\t<host>\t<cloaked:0|1>\t<file>`  — the full form (CDN library or explicit host/cloak), OR
 ///   - `<name>\t<file>`                          — the owned-page short form (host `torta.local`, uncloaked).
+///
 /// Malformed lines are skipped, and the row count is bounded (a curated seed, never an unbounded crawl). An
 /// absent/unreadable manifest yields an empty list (the arming then authors a cloak-only catalog — honest
 /// `libraries=0`).

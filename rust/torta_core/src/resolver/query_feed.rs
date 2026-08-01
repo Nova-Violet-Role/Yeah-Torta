@@ -267,11 +267,12 @@ pub(crate) fn local_utc_offset_secs(_epoch_secs: i64) -> i64 {
 /// SERVER for every zero-egress arm, so the row says WHO answered, not merely how fast:
 ///   - `CacheHit`      → `cache`        (warm hit inside TTL — the win)
 ///   - `ServeStale`    → `cache:stale`  (served past TTL while refreshing — a DIFFERENT win, and a
-///                                       different diagnosis when a user reports staleness)
+///     different diagnosis when a user reports staleness)
 ///   - `LocalAnswer`   → `local:cloak`  (user pin / `address=` literal / Centauri cloak)
 ///   - `Blocked(gate)` → the GATE's own label (`blocklist` / `warden` / `underground` /
-///                                       `homograph`) — four gates, four names, never one
+///     `homograph`) — four gates, four names, never one
 ///   - `Guarded`       → `guard`        (bogus-priv / never-forward / RFC 6761 special-use)
+///
 /// Live-forward arms return `None` — their real upstream id belongs in the column and always wins.
 ///
 /// PURE + total: every arm is named, so a new `ResolveOutcome` variant is a compile error here rather
@@ -302,6 +303,12 @@ pub(crate) fn zero_egress_server(outcome: ResolveOutcome) -> Option<&'static str
 /// `"dnscrypt:quad9"`) for a live-forward, or `None` for a cache-hit/synth/cloak (the Go proxy renders
 /// "-" there). `relay` is the 0x81 anonymized-relay name (None ⇒ "-", the no-relay direct path). The
 /// server column is the ENCRYPTION proof + the ROTATION proof (it visibly rotates on cadence).
+// EIGHT arguments against a clippy default of seven, and they stay eight. Every one is a
+// distinct scalar this line must render, and the only way under the limit would be to bundle
+// unrelated values into a struct that exists solely to satisfy a counter -- an indirection with
+// no reader and no invariant to enforce. The lint is a heuristic about COUPLING; there is none
+// here to reduce.
+#[allow(clippy::too_many_arguments)]
 pub(crate) fn format_feed_line(
     epoch_ms: u64,
     offset_secs: i64,

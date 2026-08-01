@@ -232,7 +232,7 @@ pub(crate) fn clamp_tun_mtu(requested: i32) -> usize {
 }
 
 pub(crate) fn sanitize_blocked_rcode(requested: i32) -> u8 {
-    if requested >= 1 && requested <= 15 {
+    if (1..=15).contains(&requested) {
         requested as u8
     } else {
         RCODE_SERVFAIL
@@ -1202,7 +1202,11 @@ fn spawn_netstack_forwarder(
                 running_for_err.store(false, Ordering::Release);
                 let devnull = unsafe {
                     libc::open(
-                        b"/dev/null\0".as_ptr() as *const libc::c_char,
+                        // A c"..." literal is NUL-terminated by the compiler, so the terminator cannot
+                    // be dropped by an edit the way a hand-written \0 inside a byte string can --
+                    // and losing it here would hand libc::open a pointer with no end, which reads
+                    // past the literal.
+                    c"/dev/null".as_ptr(),
                         libc::O_RDONLY,
                     )
                 };

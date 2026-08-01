@@ -751,16 +751,17 @@ fn protect_socket_before_connect<T>(_sock: &T) -> Result<(), TransportError> {
     Ok(())
 }
 
-/// Build a quinn-compatible UDP socket with its fd `VpnService.protect()`-ed ONCE at construction
-/// (R2 for the QUIC transports — DoQ / DoH3). The quinn `Endpoint` multiplexes EVERY connection over
-/// this ONE long-lived fd, so unlike DNSCrypt (which opens a fresh protected socket per exchange) the
-/// QUIC transports protect ONCE here and rebuild when the VPN cycles (down/up). On the host build
-/// this is a plain unprotected bind (no callback installed) — byte-identical to pre-1E.
-///
-/// Returns a non-blocking `std::net::UdpSocket` bound to an OS-assigned port, ready to hand to
-/// `quinn::Endpoint::new`. The caller is expected to construct the `Endpoint` immediately (the socket
-/// is useless unwrapped) and to call this AGAIN on a VPN down/up cycle (re-protect the new fd).
-///
+// WHAT THE REMOVED FUNCTION DID, kept because the discipline outlived the function:
+// Build a quinn-compatible UDP socket with its fd `VpnService.protect()`-ed ONCE at construction
+// (R2 for the QUIC transports — DoQ / DoH3). The quinn `Endpoint` multiplexes EVERY connection over
+// this ONE long-lived fd, so unlike DNSCrypt (which opens a fresh protected socket per exchange) the
+// QUIC transports protect ONCE here and rebuild when the VPN cycles (down/up). On the host build
+// this is a plain unprotected bind (no callback installed) — byte-identical to pre-1E.
+//
+// Returns a non-blocking `std::net::UdpSocket` bound to an OS-assigned port, ready to hand to
+// `quinn::Endpoint::new`. The caller is expected to construct the `Endpoint` immediately (the socket
+// is useless unwrapped) and to call this AGAIN on a VPN down/up cycle (re-protect the new fd).
+
 // REMOVED 2026-07 with the DEPRECATED `quic`/`doh3` transports: `new_protected_quic_socket`, which
 // bound and VPN-protected the single UDP fd a `quinn::Endpoint` multiplexes over. Its only callers
 // were doq.rs and doh3.rs. The R2 protect discipline itself is UNCHANGED and still applies to every

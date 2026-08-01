@@ -2,12 +2,12 @@
   "directory": "rust\\torta_core\\src\\tunnel",
   "files": {
     "mod.rs": {
-      "hash": "96a0dade1120",
-      "indexed_at": "2026-07-31T19:08:57.919913+00:00",
+      "hash": "ee61e300f880",
+      "indexed_at": "2026-08-01T09:56:56.491828+00:00",
       "language": "rust",
-      "lines": 2240,
-      "mtime_ns": 1785514054716467100,
-      "size": 119074,
+      "lines": 2244,
+      "mtime_ns": 1785578026671100300,
+      "size": 119384,
       "symbols": [
         {
           "docstring": "! fd primitives (`dup`, `from_raw_fd`, `read`, `write`, `poll`) \u2014 every block has a SAFETY note.",
@@ -469,7 +469,7 @@
         {
           "lines": [
             1122,
-            1217
+            1221
           ],
           "name": "spawn_netstack_forwarder",
           "signature": "(\n    tun_mtu: usize,\n    owned: std::os::unix::io::OwnedFd,\n    protect: Option<Arc<dyn ProtectC...",
@@ -477,8 +477,8 @@
         },
         {
           "lines": [
-            1222,
-            1307
+            1226,
+            1311
           ],
           "name": "run_loop",
           "signature": "(\n    owned: std::os::unix::io::OwnedFd,\n    cfg: TunnelConfig,\n    running: Arc<AtomicBool>,\n   ...",
@@ -487,8 +487,8 @@
         {
           "docstring": "DENY; or a parse failure). This is the cross-platform core the loop thread calls.",
           "lines": [
-            1316,
-            1462
+            1320,
+            1466
           ],
           "name": "handle_packet",
           "signature": "(pkt: &[u8], cfg: &TunnelConfig, stats: &TunnelStats)",
@@ -497,8 +497,8 @@
         {
           "docstring": "Is `dns_payload` a standard query (qr==0, opcode==0, qdcount>0)? The udp.c:412 gate.",
           "lines": [
-            1465,
-            1474
+            1469,
+            1478
           ],
           "name": "is_standard_query",
           "signature": "(dns_payload: &[u8])",
@@ -508,8 +508,8 @@
           "children": [
             {
               "lines": [
-                1484,
-                1506
+                1488,
+                1510
               ],
               "name": "build_v4_udp_dns",
               "signature": "(\n        src_ip: [u8; 4],\n        dst_ip: [u8; 4],\n        sport: u16,\n        dport: u16,\n     ...",
@@ -517,8 +517,8 @@
             },
             {
               "lines": [
-                1508,
-                1516
+                1512,
+                1520
               ],
               "name": "example_dns_query",
               "signature": "()",
@@ -526,8 +526,8 @@
             },
             {
               "lines": [
-                1519,
-                1526
+                1523,
+                1530
               ],
               "name": "standard_query_classifier",
               "signature": "()",
@@ -535,8 +535,8 @@
             },
             {
               "lines": [
-                1529,
-                1535
+                1533,
+                1539
               ],
               "name": "handle_packet_drops_malformed_ip",
               "signature": "()",
@@ -544,8 +544,8 @@
             },
             {
               "lines": [
-                1538,
-                1558
+                1542,
+                1562
               ],
               "name": "handle_packet_servfails_when_resolver_unconfigured",
               "signature": "()",
@@ -553,8 +553,8 @@
             },
             {
               "lines": [
-                1561,
-                1573
+                1565,
+                1577
               ],
               "name": "handle_packet_short_circuits_when_fwd53_off",
               "signature": "()",
@@ -562,8 +562,8 @@
             },
             {
               "lines": [
-                1576,
-                1589
+                1580,
+                1593
               ],
               "name": "handle_packet_skips_lan_suffix_when_bypass_lan",
               "signature": "()",
@@ -571,8 +571,8 @@
             },
             {
               "lines": [
-                1592,
-                1598
+                1596,
+                1602
               ],
               "name": "controller_constructs_idle",
               "signature": "()",
@@ -581,8 +581,8 @@
             {
               "docstring": "A no-op ProtectCallback for the trait surface (1E wires the real Kotlin impl).",
               "lines": [
-                1601,
-                1601
+                1605,
+                1605
               ],
               "name": "NoopProtect",
               "type": "struct"
@@ -591,8 +591,8 @@
               "children": [
                 {
                   "lines": [
-                    1603,
-                    1605
+                    1607,
+                    1609
                   ],
                   "name": "protect_fd",
                   "signature": "(&self, _fd: i32)",
@@ -600,16 +600,16 @@
                 }
               ],
               "lines": [
-                1602,
-                1606
+                1606,
+                1610
               ],
               "name": "ProtectCallback",
               "type": "impl"
             },
             {
               "lines": [
-                1609,
-                1613
+                1613,
+                1617
               ],
               "name": "protect_callback_installs_and_retrieves",
               "signature": "()",
@@ -617,8 +617,8 @@
             },
             {
               "lines": [
-                1618,
-                1628
+                1622,
+                1632
               ],
               "name": "forwarder_snapshot_is_all_zero_and_disarmed_at_birth",
               "signature": "()",
@@ -626,8 +626,8 @@
             },
             {
               "lines": [
-                1643,
-                1649
+                1647,
+                1653
               ],
               "name": "docket_scrub",
               "signature": "()",
@@ -635,8 +635,8 @@
             },
             {
               "lines": [
-                1652,
-                1686
+                1656,
+                1690
               ],
               "name": "flow_docket_round_trips_one_live_flow_field_for_field",
               "signature": "()",
@@ -644,8 +644,8 @@
             },
             {
               "lines": [
-                1689,
-                1698
+                1693,
+                1702
               ],
               "name": "a_fresh_row_reports_rtt_unmeasured_not_zero",
               "signature": "()",
@@ -653,8 +653,8 @@
             },
             {
               "lines": [
-                1701,
-                1726
+                1705,
+                1730
               ],
               "name": "docket_refuses_past_cap_and_never_blocks_the_flow",
               "signature": "()",
@@ -662,8 +662,8 @@
             },
             {
               "lines": [
-                1729,
-                1746
+                1733,
+                1750
               ],
               "name": "release_retires_by_identity_not_by_colliding_key",
               "signature": "()",
@@ -671,8 +671,8 @@
             },
             {
               "lines": [
-                1749,
-                1791
+                1753,
+                1795
               ],
               "name": "forwarder_stats_snapshot_reads_every_counter",
               "signature": "()",
@@ -680,8 +680,8 @@
             },
             {
               "lines": [
-                1809,
-                1866
+                1813,
+                1870
               ],
               "name": "transport_miss_never_borrows_the_block_rcode",
               "signature": "()",
@@ -689,8 +689,8 @@
             }
           ],
           "lines": [
-            1481,
-            1867
+            1485,
+            1871
           ],
           "name": "tests",
           "type": "module"
@@ -699,8 +699,8 @@
           "children": [
             {
               "lines": [
-                1883,
-                1897
+                1887,
+                1901
               ],
               "name": "sixteen_no_longer_folds_onto_noerror",
               "signature": "()",
@@ -708,8 +708,8 @@
             },
             {
               "lines": [
-                1902,
-                1914
+                1906,
+                1918
               ],
               "name": "no_input_can_ever_produce_noerror",
               "signature": "()",
@@ -717,8 +717,8 @@
             },
             {
               "lines": [
-                1920,
-                1925
+                1924,
+                1929
               ],
               "name": "the_four_bit_stamp_never_alters_a_sanitized_value",
               "signature": "()",
@@ -726,8 +726,8 @@
             },
             {
               "lines": [
-                1931,
-                1942
+                1935,
+                1946
               ],
               "name": "every_legal_operator_choice_is_preserved_exactly",
               "signature": "()",
@@ -735,8 +735,8 @@
             }
           ],
           "lines": [
-            1874,
-            1943
+            1878,
+            1947
           ],
           "name": "blocked_rcode_tests",
           "type": "module"
@@ -745,8 +745,8 @@
           "children": [
             {
               "lines": [
-                1953,
-                1959
+                1957,
+                1963
               ],
               "name": "the_named_errnos_map_exactly",
               "signature": "()",
@@ -754,8 +754,8 @@
             },
             {
               "lines": [
-                1964,
-                1966
+                1968,
+                1970
               ],
               "name": "a_failure_with_no_errno_is_still_counted",
               "signature": "()",
@@ -763,8 +763,8 @@
             },
             {
               "lines": [
-                1976,
-                2020
+                1980,
+                2024
               ],
               "name": "the_shared_buckets_sum_to_both_totals_not_either_alone",
               "signature": "()",
@@ -772,8 +772,8 @@
             },
             {
               "lines": [
-                2026,
-                2038
+                2030,
+                2042
               ],
               "name": "udp_protect_refusal_is_its_own_counter_and_not_a_cause_bucket",
               "signature": "()",
@@ -781,8 +781,8 @@
             },
             {
               "lines": [
-                2043,
-                2050
+                2047,
+                2054
               ],
               "name": "the_three_causes_stay_distinguishable",
               "signature": "()",
@@ -790,8 +790,8 @@
             },
             {
               "lines": [
-                2056,
-                2077
+                2060,
+                2081
               ],
               "name": "every_errno_in_range_lands_in_exactly_one_bucket",
               "signature": "()",
@@ -799,8 +799,8 @@
             },
             {
               "lines": [
-                2082,
-                2090
+                2086,
+                2094
               ],
               "name": "out_of_range_errnos_still_classify",
               "signature": "()",
@@ -808,8 +808,8 @@
             }
           ],
           "lines": [
-            1949,
-            2091
+            1953,
+            2095
           ],
           "name": "dial_failure_tests",
           "type": "module"
@@ -818,8 +818,8 @@
           "children": [
             {
               "lines": [
-                2101,
-                2106
+                2105,
+                2110
               ],
               "name": "a_sub_millisecond_sample_never_reports_zero",
               "signature": "()",
@@ -827,8 +827,8 @@
             },
             {
               "lines": [
-                2110,
-                2115
+                2114,
+                2119
               ],
               "name": "an_ordinary_sample_is_passed_through_untouched",
               "signature": "()",
@@ -836,8 +836,8 @@
             },
             {
               "lines": [
-                2119,
-                2125
+                2123,
+                2129
               ],
               "name": "a_bad_reading_is_unmeasured_not_fast",
               "signature": "()",
@@ -845,8 +845,8 @@
             },
             {
               "lines": [
-                2129,
-                2132
+                2133,
+                2136
               ],
               "name": "an_absurd_magnitude_saturates_and_never_wraps",
               "signature": "()",
@@ -854,8 +854,8 @@
             },
             {
               "lines": [
-                2138,
-                2153
+                2142,
+                2157
               ],
               "name": "zero_is_unreachable_and_the_band_holds",
               "signature": "()",
@@ -863,8 +863,8 @@
             }
           ],
           "lines": [
-            2094,
-            2154
+            2098,
+            2158
           ],
           "name": "rtt_display_law_tests",
           "type": "module"
@@ -873,8 +873,8 @@
           "children": [
             {
               "lines": [
-                2167,
-                2169
+                2171,
+                2173
               ],
               "name": "the_shipped_defect_is_repaired",
               "signature": "()",
@@ -882,8 +882,8 @@
             },
             {
               "lines": [
-                2176,
-                2180
+                2180,
+                2184
               ],
               "name": "the_old_floor_only_guard_would_have_admitted_it",
               "signature": "()",
@@ -891,8 +891,8 @@
             },
             {
               "lines": [
-                2185,
-                2191
+                2189,
+                2195
               ],
               "name": "every_input_lands_in_the_window",
               "signature": "()",
@@ -900,8 +900,8 @@
             },
             {
               "lines": [
-                2196,
-                2200
+                2200,
+                2204
               ],
               "name": "headroom_is_always_positive",
               "signature": "()",
@@ -909,8 +909,8 @@
             },
             {
               "lines": [
-                2205,
-                2209
+                2209,
+                2213
               ],
               "name": "negatives_fold_to_the_floor_instead_of_wrapping",
               "signature": "()",
@@ -918,8 +918,8 @@
             },
             {
               "lines": [
-                2213,
-                2219
+                2217,
+                2223
               ],
               "name": "the_clamp_is_idempotent",
               "signature": "()",
@@ -927,8 +927,8 @@
             },
             {
               "lines": [
-                2224,
-                2228
+                2228,
+                2232
               ],
               "name": "values_inside_the_window_pass_through_untouched",
               "signature": "()",
@@ -936,8 +936,8 @@
             },
             {
               "lines": [
-                2232,
-                2239
+                2236,
+                2243
               ],
               "name": "the_clamp_is_monotone",
               "signature": "()",
@@ -945,8 +945,8 @@
             }
           ],
           "lines": [
-            2157,
-            2240
+            2161,
+            2244
           ],
           "name": "tun_mtu_headroom_tests",
           "type": "module"
@@ -1804,6 +1804,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T00:12:24.798821+00:00",
+  "generated_at": "2026-08-01T09:56:56.493574+00:00",
   "version": "1.0"
 }

@@ -3182,7 +3182,8 @@ pub fn rehydrate_cache(dir: &str) -> usize {
     // dropping those at rehydrate would break local name resolution across a reboot for users who
     // armed rebind-enforce. It reads `REBIND_ENFORCE` LIVE, so observe-only mode rehydrates exactly
     // as before and only an ARMED user changes behaviour.
-    let admitted = inner.cache.restore_gated(
+    
+    inner.cache.restore_gated(
         &payload,
         std::time::Instant::now(),
         now_unix,
@@ -3201,8 +3202,7 @@ pub fn rehydrate_cache(dir: &str) -> usize {
                 None => false, // unparseable under enforce ⇒ refuse to resurrect
             }
         },
-    );
-    admitted
+    )
 }
 
 // ---- W5/#98 rotation warm-RTT control-plane seams (siblings of the cache persist/rehydrate above) -------

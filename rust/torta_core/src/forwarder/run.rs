@@ -718,7 +718,7 @@ async fn centauri_https_seam(
     // ---- 3. Dial the genuine CDN and splice ------------------------------------------------------
     let real = SocketAddr::new(ip, super::HTTPS_PORT);
     let dial = std::time::Instant::now();
-    let Some(mut upstream) = connect_tcp_protected(real, &protect, &fwd).await else {
+    let Some(mut upstream) = connect_tcp_protected(real, &protect, fwd).await else {
         fwd.centauri_splice_failed.fetch_add(1, Ordering::Relaxed);
         return;
     };
@@ -759,7 +759,7 @@ async fn forward_tcp(
     // ★ #65 — remaining sentinel flows (:80) hairpin to the in-app mirror before the protected dial.
     let dst = hairpin_dst(dst);
     let dial = std::time::Instant::now();
-    let mut upstream = match connect_tcp_protected(dst, &protect, &fwd).await {
+    let mut upstream = match connect_tcp_protected(dst, &protect, fwd).await {
         Some(u) => u,
         None => {
             error!("forward_tcp: connect_tcp_protected failed for dst={}", dst);
@@ -807,7 +807,7 @@ async fn forward_tcp_paced(
     // ★ #65 — same law as `forward_tcp`: remaining sentinel flows hairpin to the in-app mirror.
     let dst = hairpin_dst(dst);
     let dial = std::time::Instant::now();
-    let mut upstream = match connect_tcp_protected(dst, &protect, &fwd).await {
+    let mut upstream = match connect_tcp_protected(dst, &protect, fwd).await {
         Some(u) => u,
         None => {
             error!("forward_tcp_paced: connect_tcp_protected failed for dst={}", dst);

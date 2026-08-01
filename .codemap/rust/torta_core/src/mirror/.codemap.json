@@ -2802,12 +2802,12 @@
       ]
     },
     "object.rs": {
-      "hash": "acc532c62532",
-      "indexed_at": "2026-07-31T23:50:05.645891+00:00",
+      "hash": "e209ce66076e",
+      "indexed_at": "2026-08-01T09:56:54.963856+00:00",
       "language": "rust",
-      "lines": 3281,
-      "mtime_ns": 1785541314353093900,
-      "size": 177925,
+      "lines": 3282,
+      "mtime_ns": 1785577967276100300,
+      "size": 177929,
       "symbols": [
         {
           "lines": [
@@ -3352,8 +3352,8 @@
         },
         {
           "lines": [
-            1761,
-            1800
+            1762,
+            1801
           ],
           "name": "read_content_manifest",
           "signature": "(dir: &std::path::Path)",
@@ -3361,8 +3361,8 @@
         },
         {
           "lines": [
-            1805,
-            1813
+            1806,
+            1814
           ],
           "name": "hex_lower_key_id",
           "signature": "(id: &[u8; 8])",
@@ -3373,8 +3373,8 @@
             {
               "docstring": "- `NotInCatalog` / `FetchFailed` \u21d2 no counter (no asset was served).",
               "lines": [
-                1833,
-                1835
+                1834,
+                1836
               ],
               "name": "record_serve",
               "signature": "(&self, rec: CentauriServeRecord)",
@@ -3383,8 +3383,8 @@
             {
               "docstring": "(The exported String twin is [`Centauri::query_centauri_log_path`] \u2014 D29.)",
               "lines": [
-                1842,
-                1844
+                1843,
+                1845
               ],
               "name": "log_path",
               "signature": "(&self)",
@@ -3393,8 +3393,8 @@
             {
               "docstring": "clock-free (the #133/warden clock-injection invariant).",
               "lines": [
-                1851,
-                1863
+                1852,
+                1864
               ],
               "name": "serve_observer",
               "signature": "(&self)",
@@ -3403,8 +3403,8 @@
             {
               "docstring": "poisoned cache/stats lock still reports the honest current toggle), everything else zero.",
               "lines": [
-                1867,
-                1894
+                1868,
+                1895
               ],
               "name": "zeroed_snapshot",
               "signature": "(&self)",
@@ -3412,16 +3412,16 @@
             }
           ],
           "lines": [
-            1821,
-            1895
+            1822,
+            1896
           ],
           "name": "Centauri",
           "type": "impl"
         },
         {
           "lines": [
-            1907,
-            1935
+            1908,
+            1936
           ],
           "name": "apply_serve",
           "signature": "(\n    live: &CentauriLiveStats,\n    recent: &Mutex<VecDeque<CentauriServeRecord>>,\n    rec: Centa...",
@@ -3429,8 +3429,8 @@
         },
         {
           "lines": [
-            1940,
-            1952
+            1941,
+            1953
           ],
           "name": "tally_substitution",
           "signature": "(live: &CentauriLiveStats, sub: CentauriSubstitution)",
@@ -3438,8 +3438,8 @@
         },
         {
           "lines": [
-            1966,
-            2024
+            1967,
+            2025
           ],
           "name": "record_from_trace",
           "signature": "(\n    now_ms: u64,\n    trace: &mirror::server::ServeTrace<'_>,\n)",
@@ -3447,8 +3447,8 @@
         },
         {
           "lines": [
-            2032,
-            2066
+            2033,
+            2067
           ],
           "name": "observe_trace",
           "signature": "(\n    live: &CentauriLiveStats,\n    recent: &Mutex<VecDeque<CentauriServeRecord>>,\n    sink: &Mut...",
@@ -3456,8 +3456,8 @@
         },
         {
           "lines": [
-            2074,
-            2119
+            2075,
+            2120
           ],
           "name": "warm_targets",
           "signature": "(catalog: &Catalog, max: usize)",
@@ -3467,8 +3467,8 @@
           "children": [
             {
               "lines": [
-                2126,
-                2136
+                2127,
+                2137
               ],
               "name": "constructor_builds_empty_store_for_cold_dir",
               "signature": "()",
@@ -3476,8 +3476,8 @@
             },
             {
               "lines": [
-                2139,
-                2152
+                2140,
+                2153
               ],
               "name": "install_catalog_with_empty_sig_is_invalid_signature_err",
               "signature": "()",
@@ -3485,8 +3485,8 @@
             },
             {
               "lines": [
-                2155,
-                2163
+                2156,
+                2164
               ],
               "name": "cdn_hosts_is_non_empty_pure_set",
               "signature": "()",
@@ -3494,8 +3494,8 @@
             },
             {
               "lines": [
-                2166,
-                2171
+                2167,
+                2172
               ],
               "name": "cloaking_rules_is_fenced_block",
               "signature": "()",
@@ -3503,8 +3503,8 @@
             },
             {
               "lines": [
-                2174,
-                2182
+                2175,
+                2183
               ],
               "name": "resolve_cdn_unmapped_host_is_none",
               "signature": "()",
@@ -3512,8 +3512,8 @@
             },
             {
               "lines": [
-                2185,
-                2198
+                2186,
+                2199
               ],
               "name": "rehydrate_from_signed_absent_pair_is_rehydrate_failed_err",
               "signature": "()",
@@ -3521,8 +3521,8 @@
             },
             {
               "lines": [
-                2201,
-                2209
+                2202,
+                2210
               ],
               "name": "snapshot_is_consistent_across_reads",
               "signature": "()",
@@ -3530,8 +3530,8 @@
             },
             {
               "lines": [
-                2212,
-                2217
+                2213,
+                2218
               ],
               "name": "enum_codes_match_the_stable_ordinal_contract",
               "signature": "()",
@@ -3539,8 +3539,8 @@
             },
             {
               "lines": [
-                2222,
-                2269
+                2223,
+                2270
               ],
               "name": "record_serve_logged_writes_query_centauri_log_and_bumps_counters",
               "signature": "()",
@@ -3548,8 +3548,8 @@
             },
             {
               "lines": [
-                2272,
-                2285
+                2273,
+                2286
               ],
               "name": "query_centauri_log_path_sits_beside_the_cache_dir",
               "signature": "()",
@@ -3558,8 +3558,8 @@
             {
               "docstring": "`parse_verified`). Replicates the `catalog.rs` wire layout exactly.",
               "lines": [
-                2293,
-                2327
+                2294,
+                2328
               ],
               "name": "signed_one_entry_catalog",
               "signature": "(\n        name: &str,\n        hash: [u8; 32],\n        host: &str,\n    )",
@@ -3567,8 +3567,8 @@
             },
             {
               "lines": [
-                2330,
-                2357
+                2331,
+                2358
               ],
               "name": "install_catalog_retains_the_verified_catalog",
               "signature": "()",
@@ -3577,8 +3577,8 @@
             {
               "docstring": "A fresh per-test temp dir (process-id + tag suffixed) \u2014 rehydrate tests write real `.tcat` pairs.",
               "lines": [
-                2362,
-                2368
+                2363,
+                2369
               ],
               "name": "rehydrate_dir",
               "signature": "(tag: &str)",
@@ -3586,8 +3586,8 @@
             },
             {
               "lines": [
-                2371,
-                2397
+                2372,
+                2398
               ],
               "name": "rehydrate_from_signed_retains_the_verified_catalog",
               "signature": "()",
@@ -3595,8 +3595,8 @@
             },
             {
               "lines": [
-                2400,
-                2416
+                2401,
+                2417
               ],
               "name": "rehydrate_absent_pair_is_rehydrate_failed_typed",
               "signature": "()",
@@ -3604,8 +3604,8 @@
             },
             {
               "lines": [
-                2419,
-                2452
+                2420,
+                2453
               ],
               "name": "rehydrate_bad_signature_is_invalid_signature_and_never_clobbers_retained",
               "signature": "()",
@@ -3613,8 +3613,8 @@
             },
             {
               "lines": [
-                2455,
-                2483
+                2456,
+                2484
               ],
               "name": "rehydrate_malformed_signed_body_is_malformed_catalog",
               "signature": "()",
@@ -3623,8 +3623,8 @@
             {
               "docstring": "Build a serve record for the `record_serve` CROWN-counter tests (the clock is injected, not read).",
               "lines": [
-                2488,
-                2505
+                2489,
+                2506
               ],
               "name": "serve_record",
               "signature": "(\n        now_ms: u64,\n        outcome: CentauriServeOutcome,\n        substitution: CentauriSubst...",
@@ -3632,8 +3632,8 @@
             },
             {
               "lines": [
-                2508,
-                2579
+                2509,
+                2580
               ],
               "name": "new_enums_cross_their_internal_twins_both_ways",
               "signature": "()",
@@ -3641,8 +3641,8 @@
             },
             {
               "lines": [
-                2582,
-                2591
+                2583,
+                2592
               ],
               "name": "cache_mode_toggle_is_live_in_method_and_snapshot",
               "signature": "()",
@@ -3650,8 +3650,8 @@
             },
             {
               "lines": [
-                2594,
-                2611
+                2595,
+                2612
               ],
               "name": "centauri_resolution_from_carries_substitution_and_canonical_name",
               "signature": "()",
@@ -3659,8 +3659,8 @@
             },
             {
               "lines": [
-                2614,
-                2642
+                2615,
+                2643
               ],
               "name": "resolve_cdn_typed_resolves_a_mapped_url_and_tallies",
               "signature": "()",
@@ -3668,8 +3668,8 @@
             },
             {
               "lines": [
-                2645,
-                2681
+                2646,
+                2682
               ],
               "name": "record_serve_witnesses_the_crown_counters",
               "signature": "()",
@@ -3677,8 +3677,8 @@
             },
             {
               "lines": [
-                2684,
-                2710
+                2685,
+                2711
               ],
               "name": "recent_serves_is_bounded_and_newest_first",
               "signature": "()",
@@ -3686,8 +3686,8 @@
             },
             {
               "lines": [
-                2713,
-                2721
+                2714,
+                2722
               ],
               "name": "cache_stat_matches_the_snapshot_cache_fields",
               "signature": "()",
@@ -3696,8 +3696,8 @@
             {
               "docstring": "reader (D26 \u2014 the Beast one-reader discipline) without a socket or a Kotlin runtime.",
               "lines": [
-                2727,
-                2729
+                2728,
+                2730
               ],
               "name": "CountingSink",
               "type": "struct"
@@ -3706,8 +3706,8 @@
               "children": [
                 {
                   "lines": [
-                    2731,
-                    2735
+                    2732,
+                    2736
                   ],
                   "name": "on_serve",
                   "signature": "(&self, record: CentauriServeRecord)",
@@ -3715,16 +3715,16 @@
                 }
               ],
               "lines": [
-                2730,
-                2736
+                2731,
+                2737
               ],
               "name": "CentauriServeSink",
               "type": "impl"
             },
             {
               "lines": [
-                2739,
-                2825
+                2740,
+                2826
               ],
               "name": "observer_feeds_ring_counters_log_and_sink_from_a_served_trace",
               "signature": "()",
@@ -3732,8 +3732,8 @@
             },
             {
               "lines": [
-                2828,
-                2893
+                2829,
+                2894
               ],
               "name": "observer_resolve_tally_splits_hit_from_miss_and_ignores_owned",
               "signature": "()",
@@ -3741,8 +3741,8 @@
             },
             {
               "lines": [
-                2896,
-                2944
+                2897,
+                2945
               ],
               "name": "warm_targets_derive_from_catalog_intersect_map",
               "signature": "()",
@@ -3750,8 +3750,8 @@
             },
             {
               "lines": [
-                2947,
-                2955
+                2948,
+                2956
               ],
               "name": "warm_up_with_no_catalog_is_a_zero_target_no_op",
               "signature": "()",
@@ -3759,8 +3759,8 @@
             },
             {
               "lines": [
-                2958,
-                2975
+                2959,
+                2976
               ],
               "name": "start_marks_serving_and_snapshot_reflects_it",
               "signature": "()",
@@ -3768,8 +3768,8 @@
             },
             {
               "lines": [
-                2978,
-                3093
+                2979,
+                3094
               ],
               "name": "arm_device_catalog_seeds_owned_content_and_installs_a_device_signed_catalog",
               "signature": "()",
@@ -3777,8 +3777,8 @@
             },
             {
               "lines": [
-                3096,
-                3169
+                3097,
+                3170
               ],
               "name": "sovereign_loop_arm_persists_then_reboot_rehydrates_by_device_key",
               "signature": "()",
@@ -3786,8 +3786,8 @@
             }
           ],
           "lines": [
-            2122,
-            3170
+            2123,
+            3171
           ],
           "name": "tests",
           "type": "module"
@@ -3796,8 +3796,8 @@
           "children": [
             {
               "lines": [
-                3176,
-                3188
+                3177,
+                3189
               ],
               "name": "rec",
               "signature": "(i: u64)",
@@ -3805,8 +3805,8 @@
             },
             {
               "lines": [
-                3199,
-                3246
+                3200,
+                3247
               ],
               "name": "max_manifest_rows_caps_accepted_rows_not_skipped_lines",
               "signature": "()",
@@ -3814,8 +3814,8 @@
             },
             {
               "lines": [
-                3256,
-                3280
+                3257,
+                3281
               ],
               "name": "recent_serves_cap_is_64_and_the_breach_is_loud",
               "signature": "()",
@@ -3823,8 +3823,8 @@
             }
           ],
           "lines": [
-            3173,
-            3281
+            3174,
+            3282
           ],
           "name": "recent_ring_cap_tests",
           "type": "module"
@@ -4463,12 +4463,12 @@
       ]
     },
     "server.rs": {
-      "hash": "ff12f86a93f7",
-      "indexed_at": "2026-08-01T06:29:19.678543+00:00",
+      "hash": "e9d3a289629c",
+      "indexed_at": "2026-08-01T09:56:55.255139+00:00",
       "language": "rust",
       "lines": 1289,
-      "mtime_ns": 1785565708432052000,
-      "size": 72385,
+      "mtime_ns": 1785577967275100200,
+      "size": 72387,
       "symbols": [
         {
           "docstring": "serve verdict. Borrowed \u2014 the observer copies what it keeps; the serve path allocates nothing for it.",
@@ -5240,6 +5240,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T08:44:34.440195+00:00",
+  "generated_at": "2026-08-01T09:56:55.257095+00:00",
   "version": "1.0"
 }

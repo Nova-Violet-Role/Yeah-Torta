@@ -656,7 +656,27 @@ pub fn source_first_seen(source_id: u32) -> Option<u32> {
 /// not what its catalog claimed at ingest time. A source whose list was wholly superseded by a
 /// later install therefore reports 0 here while still appearing in the registry, which is the
 /// honest answer to "is this list doing anything for me?".
-pub fn source_provenance_table() -> Vec<(u32, String, u8, u8, bool, u32, u32, u32)> {
+/// One row of [`source_provenance_table`].
+///
+/// A tuple cannot name its own fields, which is exactly why the bare
+/// `Vec<(u32, String, u8, u8, bool, u32, u32, u32)>` was unreadable at the call site -- three u32s
+/// and two u8s in a row, distinguishable only by counting commas. The alias does not fix that by
+/// itself; the position list below is the part that does.
+///
+/// 0. `id`          — the source's registry id.
+/// 1. `name`        — its display name.
+/// 2. `kind`        — source kind discriminant.
+/// 3. `format`      — parsed list format discriminant.
+/// 4. `enabled`     — whether it is currently switched on.
+/// 5. `rules`       — rules this source contributed to the set IN FORCE, after provenance masking.
+/// 6. `superseded`  — rules it contributed that a later install overrode.
+/// 7. `total`       — rules its catalog claimed at ingest time.
+///
+/// Kept as a tuple rather than promoted to a struct on purpose: this crosses the UniFFI boundary
+/// and changing the shape is an ABI change for every caller. The alias is transparent, so it
+/// carries the documentation at zero risk -- which a struct would not.
+pub type SourceProvenanceRow = (u32, String, u8, u8, bool, u32, u32, u32);
+pub fn source_provenance_table() -> Vec<SourceProvenanceRow> {
     let guard = REGISTRY.read().unwrap_or_else(|e| e.into_inner());
     let Some(reg) = guard.as_ref() else {
         return Vec::new();

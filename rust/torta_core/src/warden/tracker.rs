@@ -185,7 +185,7 @@ pub struct AppFlowSummary {
 
 /// One DESTINATION row of the per-app inspector (W-D, #79) — the flows for ONE app grouped by destination
 /// IP, so the inspector renders the WHOLE list of endpoints an app contacts, each with its GEO flag + ASN
-/// + the domain it resolved to reach it. This is the row the block-granularity ladder acts on: block this
+/// and the domain it resolved to reach it. This is the row the block-granularity ladder acts on: block this
 /// single IP (/32) → its CIDR family (/24) → its whole country (the `cc`) → a similar source (its `asn`).
 #[derive(Debug, Clone, PartialEq, Eq, uniffi::Record)]
 pub struct DestRecord {

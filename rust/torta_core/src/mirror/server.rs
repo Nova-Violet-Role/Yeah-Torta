@@ -116,7 +116,7 @@ pub enum ServeOutcome {
     /// The asset is in the catalog but absent from the cache ⇒ the caller runs the fetch-ONCE leg.
     CacheMiss(ContentHash),
     /// #85 — the LIVE loopback fetched the authorized-but-uncached asset ONCE (the ≤ 1 crown), hash-verified
-    /// + cached it, and serves it now. Distinct from `Served` (a 0-egress cache hit) so the per-serve
+    /// and cached it, and serves it now. Distinct from `Served` (a 0-egress cache hit) so the per-serve
     /// observer counts the one honest self-fill (`cdn_fetches`) instead of a local hit; the HTTP response is
     /// identical (`200 OK`, the verified bytes). Carries the store's shared `Arc<[u8]>` (zero-copy, D24).
     LeakedThenServed(Arc<[u8]>),
