@@ -2,17 +2,17 @@
   "directory": "tools\\deprecation",
   "files": {
     "depclass.js": {
-      "hash": "06e7746d1b6e",
-      "indexed_at": "2026-08-01T11:37:14.053595+00:00",
+      "hash": "a80c97695403",
+      "indexed_at": "2026-08-01T13:53:08.516876+00:00",
       "language": "javascript",
-      "lines": 131,
-      "mtime_ns": 1785584175287684100,
-      "size": 6367,
+      "lines": 154,
+      "mtime_ns": 1785592360693546500,
+      "size": 7692,
       "symbols": [
         {
           "lines": [
-            48,
-            48
+            71,
+            71
           ],
           "name": "indentOf",
           "signature": "(s)",
@@ -21,8 +21,8 @@
         {
           "docstring": "The name of the function STRUCTURALLY enclosing `line` (1-based), or null. Indentation-aware, and that is not a nicety. Scanning upward for the neares",
           "lines": [
-            61,
-            68
+            84,
+            91
           ],
           "name": "enclosingFun",
           "signature": "(src, line)",
@@ -31,8 +31,8 @@
         {
           "docstring": "Is `line` within `win` lines below an SDK_INT test, inside the same file?",
           "lines": [
-            71,
-            73
+            94,
+            96
           ],
           "name": "gatedAt",
           "signature": "(src, line, win = 15)",
@@ -41,8 +41,8 @@
         {
           "docstring": "Every call site of `name` across the module, as {file, line}.",
           "lines": [
-            76,
-            87
+            99,
+            110
           ],
           "name": "callSites",
           "signature": "(name)",
@@ -51,8 +51,8 @@
         {
           "docstring": "Gated directly, or gated at every call site (transitively, bounded depth).",
           "lines": [
-            90,
-            103
+            113,
+            126
           ],
           "name": "isGated",
           "signature": "(file, line, depth, seen)",
@@ -144,6 +144,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T11:37:14.608411+00:00",
+  "generated_at": "2026-08-01T13:53:08.518448+00:00",
   "version": "1.0"
 }

@@ -6,9 +6,32 @@
 // WHY v2 EXISTS. v1 decided this by looking at the 15 lines ABOVE the warning for a
 // Build.VERSION.SDK_INT test. That misses the commonest correct shape by design: a legacy helper
 // whose version test lives at its CALLER. It scored WireCakeInuManager's resolveService as ungated
-// immediately after that call had been correctly gated, and it scores ModulesReceiver's 13 legacy
-// broadcast lines as ungated for the same reason. Reporting a stale number is bad; reporting one
-// that moves the WRONG WAY when you fix something is worse.
+// immediately after that call had been correctly gated. Reporting a stale number is bad; reporting
+// one that moves the WRONG WAY when you fix something is worse.
+//
+// CORRECTION 2026-08-01 -- this comment used to continue "...and it scores ModulesReceiver's 13
+// legacy broadcast lines as ungated for the same reason", and I repeated that in commit 7b8c55b0
+// as "13 ModulesReceiver + 1 WireCakeInuManager are caller-gated, leaving 7 genuinely ungated".
+//
+// THAT WAS WRONG, AND THE TOOL WAS RIGHT. I read the source instead of asserting it
+// (ModulesReceiver.kt:291-301):
+//
+//     private fun registerConnectivityChanges() {
+//         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//             try { listenNetworkChanges() }
+//             catch (e: Exception) { listenConnectivityChanges() }   // legacy, on a MODERN device
+//         } else { listenConnectivityChanges() }
+//     }
+//
+// The legacy listener is reachable on EVERY device through the catch -- a deliberate defensive
+// fallback, and correct as code. So those call sites genuinely are not gated, and the five
+// LEGACY_* constants at :1329-1341 are not even inside a function: they are top-level property
+// initialisers evaluated at class-init on every device.
+//
+// The classifier's conservative direction (unresolvable => UNGATED) is what stopped me from
+// absolving 14 usages by hand on a reading that was simply not true. That is the whole argument
+// for fail-loud: my confident manual correction was the unreliable instrument here, not the tool.
+// The honest ungated count is 19, not 7.
 //
 // v2 adds one level of call-graph reasoning:
 //   1. find the function enclosing the warning
