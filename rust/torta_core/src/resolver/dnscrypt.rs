@@ -674,10 +674,19 @@ pub fn cert_serial_regressions() -> u64 {
     CERT_SERIAL_REGRESSIONS.load(Ordering::Relaxed)
 }
 
-#[cfg(test)]
-pub(crate) fn reset_cert_serial_regressions_for_test() {
-    CERT_SERIAL_REGRESSIONS.store(0, Ordering::Relaxed);
-}
+// ★ NO `reset_..._for_test()` HERE EITHER (removed 2026-08-01), for the same reason as
+// `mirror::catalog`: this counter is process-global and the test runner is parallel, so a reset by
+// one test corrupts another's reading. Measure a DELTA from `cert_serial_regressions()` under a
+// test-local lock instead.
+//
+// Stated plainly rather than left implicit: unlike the catalog alarm, this one has NO test that
+// trips it through the real path. Doing so requires a DNSCrypt exchange that returns a cert whose
+// serial is LOWER than a cached one (`dnscrypt.rs:449`), which needs a live-ish client with a
+// primed `cert_cache` -- not reachable from a unit test as this module stands. What IS covered is
+// only that the value is exported and non-negative (`lib.rs:7682`). So the alarm is WIRED and
+// READABLE from Kotlin, but its increment path is UNTESTED -- MEASURED as reachable by reading the
+// code, not demonstrated by a test. Recorded here so nobody reads the counter's existence as
+// evidence that it has ever been seen to move.
 
 static PROTECT_CALLBACK: Mutex<Option<Arc<dyn ProtectCallback>>> = Mutex::new(None);
 

@@ -133,6 +133,14 @@ pub(crate) fn should_deny(qname: &str) -> bool {
 
 /// How many apexes the curated set carries. Exposed so a test can assert the set is non-empty
 /// without reaching into the constant.
+///
+/// ★ `#[cfg(test)]` (2026-08-01). This was the ONE genuine dead-code warning on the ship target --
+/// 135 warnings on a Windows host collapse to 1 when the library is checked for
+/// aarch64-linux-android, and this was it. Its only caller is the unit test below, exactly as the
+/// doc comment always said, so it was being compiled into the shipped .so to serve a caller that
+/// does not exist there. The cfg states that fact instead of an #[allow] hiding it, and the test
+/// keeps working because #[cfg(test)] is precisely the configuration the test runs in.
+#[cfg(test)]
 pub fn apex_count() -> usize {
     DOH_BOOTSTRAP_APEXES.len()
 }

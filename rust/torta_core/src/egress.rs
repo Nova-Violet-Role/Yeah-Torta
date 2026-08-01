@@ -282,8 +282,11 @@ mod tests {
         assert!(v6_presumed_dead());
     }
 
+    /// NOT -- the capital letters used to be in the function name itself, which is a
+    /// non-snake-case identifier and a compiler warning. The emphasis belongs in prose; the
+    /// assertion below is what actually carries it.
     #[test]
-    fn one_success_does_NOT_lift_the_latch_hysteresis() {
+    fn one_success_does_not_lift_the_latch_hysteresis() {
         // REPLACES `one_success_revives_v6_immediately`, which asserted the OPPOSITE and was
         // measured to be the bug: instant revival made the verdict oscillate, allowing 84 doomed
         // dials over 111 URLs where the probe cadence alone would have allowed about two.

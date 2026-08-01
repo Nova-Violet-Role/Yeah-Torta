@@ -868,12 +868,12 @@
       ]
     },
     "catalog.rs": {
-      "hash": "fa67abeab5e7",
-      "indexed_at": "2026-07-31T23:54:58.826970+00:00",
+      "hash": "6cf0433d2d52",
+      "indexed_at": "2026-08-01T08:44:34.438627+00:00",
       "language": "rust",
-      "lines": 1058,
-      "mtime_ns": 1785542072923368000,
-      "size": 51514,
+      "lines": 1072,
+      "mtime_ns": 1785573800150512300,
+      "size": 52644,
       "symbols": [
         {
           "docstring": "Reader for [`LEGACY_ALGO_REJECTIONS`]. Honest zero is the expected reading.",
@@ -887,25 +887,16 @@
         },
         {
           "lines": [
-            107,
-            109
-          ],
-          "name": "reset_legacy_algo_rejections_for_test",
-          "signature": "()",
-          "type": "function"
-        },
-        {
-          "lines": [
-            137,
-            146
+            151,
+            160
           ],
           "name": "CatalogEntry",
           "type": "struct"
         },
         {
           "lines": [
-            156,
-            160
+            170,
+            174
           ],
           "name": "CloakSet",
           "type": "struct"
@@ -915,8 +906,8 @@
             {
               "docstring": "True iff `host` (after normalization) is in the cloak set \u2014 the cloak path's verdict query.",
               "lines": [
-                164,
-                170
+                178,
+                184
               ],
               "name": "is_cloaked",
               "signature": "(&self, host: &str)",
@@ -925,8 +916,8 @@
             {
               "docstring": "`None` means \"let it resolve normally\". Mirrors `is_blocked`'s `Some/None`-shaped verdict.",
               "lines": [
-                175,
-                181
+                189,
+                195
               ],
               "name": "cloak_ip",
               "signature": "(&self, host: &str)",
@@ -935,8 +926,8 @@
             {
               "docstring": "Borrow the sorted, normalized cloaked hostnames (the cloak-rules-file write source, `PathVars.java:280`).",
               "lines": [
-                184,
-                186
+                198,
+                200
               ],
               "name": "hosts",
               "signature": "(&self)",
@@ -945,8 +936,8 @@
             {
               "docstring": "The number of cloaked hosts.",
               "lines": [
-                189,
-                191
+                203,
+                205
               ],
               "name": "len",
               "signature": "(&self)",
@@ -955,8 +946,8 @@
             {
               "docstring": "Is the cloak set empty?",
               "lines": [
-                194,
-                196
+                208,
+                210
               ],
               "name": "is_empty",
               "signature": "(&self)",
@@ -964,24 +955,24 @@
             }
           ],
           "lines": [
-            162,
-            197
+            176,
+            211
           ],
           "name": "CloakSet",
           "type": "impl"
         },
         {
           "lines": [
-            205,
-            211
+            219,
+            225
           ],
           "name": "Catalog",
           "type": "struct"
         },
         {
           "lines": [
-            215,
-            231
+            229,
+            245
           ],
           "name": "CatalogError",
           "type": "enum"
@@ -991,8 +982,8 @@
             {
               "docstring": "`signature.rs:121` FFI-input discipline).",
               "lines": [
-                244,
-                258
+                258,
+                272
               ],
               "name": "parse_verified",
               "signature": "(\r\n        bytes: &[u8],\r\n        sig_blob: &[u8],\r\n        pubkey_blob: &[u8],\r\n    )",
@@ -1001,8 +992,8 @@
             {
               "docstring": "covers these bytes; this validates the STRUCTURE the producer must honor.",
               "lines": [
-                265,
-                372
+                279,
+                386
               ],
               "name": "parse_body",
               "signature": "(verified: &[u8])",
@@ -1011,8 +1002,8 @@
             {
               "docstring": "Borrow the authorized asset entries.",
               "lines": [
-                375,
-                377
+                389,
+                391
               ],
               "name": "entries",
               "signature": "(&self)",
@@ -1021,8 +1012,8 @@
             {
               "docstring": "math is `now - epoch` ONLY when `epoch != 0` (\u2605 #22 slice 2).",
               "lines": [
-                382,
-                384
+                396,
+                398
               ],
               "name": "authored_at_secs",
               "signature": "(&self)",
@@ -1031,8 +1022,8 @@
             {
               "docstring": "Look up an asset's content address by its request name (the server's routing query).",
               "lines": [
-                387,
-                392
+                401,
+                406
               ],
               "name": "content_hash_for",
               "signature": "(&self, name: &str)",
@@ -1041,8 +1032,8 @@
             {
               "docstring": "the datapath: the Forge crew wires it into the cloak-rules write / in-resolver consult.",
               "lines": [
-                398,
-                409
+                412,
+                423
               ],
               "name": "cloak_set",
               "signature": "(&self)",
@@ -1051,8 +1042,8 @@
             {
               "docstring": "The number of authorized assets in the catalog.",
               "lines": [
-                412,
-                414
+                426,
+                428
               ],
               "name": "len",
               "signature": "(&self)",
@@ -1061,8 +1052,8 @@
             {
               "docstring": "Is the catalog empty?",
               "lines": [
-                417,
-                419
+                431,
+                433
               ],
               "name": "is_empty",
               "signature": "(&self)",
@@ -1070,8 +1061,8 @@
             }
           ],
           "lines": [
-            233,
-            420
+            247,
+            434
           ],
           "name": "Catalog",
           "type": "impl"
@@ -1079,8 +1070,8 @@
         {
           "docstring": "(length \u2264 `max` and within the buffer) and UTF-8-validated; any failure is `Malformed`, never a panic.",
           "lines": [
-            424,
-            438
+            438,
+            452
           ],
           "name": "read_len_prefixed_str",
           "signature": "(buf: &[u8], cur: &mut usize, max: usize)",
@@ -1089,8 +1080,8 @@
         {
           "docstring": "homograph layer is the DNS Guardian's concern, \u00a72.C, deliberately NOT folded here).",
           "lines": [
-            444,
-            447
+            458,
+            461
           ],
           "name": "normalize_host",
           "signature": "(host: &str)",
@@ -1099,8 +1090,8 @@
         {
           "docstring": "a pinned epoch, never a live clock).",
           "lines": [
-            461,
-            482
+            475,
+            496
           ],
           "name": "encode_catalog",
           "signature": "(entries: &[CatalogEntry], authored_at_secs: u64)",
@@ -1110,8 +1101,8 @@
           "children": [
             {
               "lines": [
-                496,
-                538
+                510,
+                552
               ],
               "name": "len_prefixed_reader_refuses_every_malformed_shape",
               "signature": "()",
@@ -1120,8 +1111,8 @@
             {
               "docstring": "---- minisign blob helpers (mirror signature.rs:148/157 EXACTLY \u2014 the legacy `Ed` shape) ----",
               "lines": [
-                546,
-                552
+                560,
+                566
               ],
               "name": "make_pubkey_blob",
               "signature": "(pk: &[u8; 32], key_id: &[u8; 8])",
@@ -1129,8 +1120,8 @@
             },
             {
               "lines": [
-                554,
-                561
+                568,
+                575
               ],
               "name": "sign_legacy",
               "signature": "(sk: &SigningKey, key_id: &[u8; 8], bytes: &[u8])",
@@ -1139,8 +1130,8 @@
             {
               "docstring": "---- catalog wire-format builder (the producer's exact byte layout, host-side) ----",
               "lines": [
-                565,
-                570
+                579,
+                584
               ],
               "name": "WireEntry",
               "type": "struct"
@@ -1148,8 +1139,8 @@
             {
               "docstring": "the byte layout can never drift between test vectors and the shipped author).",
               "lines": [
-                575,
-                586
+                589,
+                600
               ],
               "name": "build_catalog",
               "signature": "(entries: &[WireEntry])",
@@ -1157,8 +1148,8 @@
             },
             {
               "lines": [
-                588,
-                594
+                602,
+                608
               ],
               "name": "signed",
               "signature": "(bytes: &[u8])",
@@ -1166,8 +1157,8 @@
             },
             {
               "lines": [
-                596,
-                617
+                610,
+                631
               ],
               "name": "sample_entries",
               "signature": "()",
@@ -1175,8 +1166,8 @@
             },
             {
               "lines": [
-                622,
-                633
+                636,
+                647
               ],
               "name": "parse_rejects_bad_signature_before_parsing",
               "signature": "()",
@@ -1184,8 +1175,8 @@
             },
             {
               "lines": [
-                636,
-                649
+                650,
+                663
               ],
               "name": "parse_rejects_tampered_body_at_the_signature_gate",
               "signature": "()",
@@ -1193,8 +1184,8 @@
             },
             {
               "lines": [
-                654,
-                686
+                668,
+                700
               ],
               "name": "device_signed_catalog_round_trips_against_its_own_pubkey",
               "signature": "()",
@@ -1202,8 +1193,8 @@
             },
             {
               "lines": [
-                689,
-                712
+                703,
+                726
               ],
               "name": "parse_accepts_and_reads_a_genuinely_signed_catalog",
               "signature": "()",
@@ -1211,8 +1202,8 @@
             },
             {
               "lines": [
-                715,
-                723
+                729,
+                737
               ],
               "name": "empty_catalog_is_well_defined",
               "signature": "()",
@@ -1220,8 +1211,8 @@
             },
             {
               "lines": [
-                728,
-                747
+                742,
+                761
               ],
               "name": "cloak_set_collects_only_cloaked_hosts_sorted_deduped",
               "signature": "()",
@@ -1229,8 +1220,8 @@
             },
             {
               "lines": [
-                750,
-                772
+                764,
+                786
               ],
               "name": "cloak_ip_maps_a_cloaked_host_to_loopback_and_others_to_none",
               "signature": "()",
@@ -1238,8 +1229,8 @@
             },
             {
               "lines": [
-                775,
-                796
+                789,
+                810
               ],
               "name": "cloak_lookup_normalizes_like_the_blocklist_consult",
               "signature": "()",
@@ -1247,8 +1238,8 @@
             },
             {
               "lines": [
-                799,
-                816
+                813,
+                830
               ],
               "name": "parse_normalizes_a_mixed_case_host_into_the_entry",
               "signature": "()",
@@ -1257,8 +1248,8 @@
             {
               "docstring": "Re-sign a (possibly mutated) body so it passes the signature gate, isolating the body parser.",
               "lines": [
-                821,
-                824
+                835,
+                838
               ],
               "name": "parse_resigned",
               "signature": "(body: &[u8])",
@@ -1266,8 +1257,8 @@
             },
             {
               "lines": [
-                827,
-                831
+                841,
+                845
               ],
               "name": "rejects_bad_magic",
               "signature": "()",
@@ -1275,8 +1266,8 @@
             },
             {
               "lines": [
-                834,
-                838
+                848,
+                852
               ],
               "name": "rejects_wrong_version",
               "signature": "()",
@@ -1284,8 +1275,8 @@
             },
             {
               "lines": [
-                855,
-                889
+                869,
+                903
               ],
               "name": "a_retired_algorithm_catalog_moves_the_alarm",
               "signature": "()",
@@ -1293,8 +1284,8 @@
             },
             {
               "lines": [
-                892,
-                960
+                906,
+                974
               ],
               "name": "rejects_wrong_hash_algo_id",
               "signature": "()",
@@ -1302,8 +1293,8 @@
             },
             {
               "lines": [
-                963,
-                987
+                977,
+                1001
               ],
               "name": "rejects_nonzero_reserved_fields",
               "signature": "()",
@@ -1311,8 +1302,8 @@
             },
             {
               "lines": [
-                990,
-                1000
+                1004,
+                1014
               ],
               "name": "v1_catalog_still_parses_with_epoch_zero",
               "signature": "()",
@@ -1320,8 +1311,8 @@
             },
             {
               "lines": [
-                1003,
-                1007
+                1017,
+                1021
               ],
               "name": "rejects_unknown_entry_flag_bit",
               "signature": "()",
@@ -1329,8 +1320,8 @@
             },
             {
               "lines": [
-                1010,
-                1017
+                1024,
+                1031
               ],
               "name": "rejects_truncated_body",
               "signature": "()",
@@ -1338,8 +1329,8 @@
             },
             {
               "lines": [
-                1020,
-                1024
+                1034,
+                1038
               ],
               "name": "rejects_trailing_garbage",
               "signature": "()",
@@ -1347,8 +1338,8 @@
             },
             {
               "lines": [
-                1027,
-                1030
+                1041,
+                1044
               ],
               "name": "rejects_header_shorter_than_24_bytes",
               "signature": "()",
@@ -1356,8 +1347,8 @@
             },
             {
               "lines": [
-                1033,
-                1040
+                1047,
+                1054
               ],
               "name": "rejects_overlarge_entry_count_without_oom",
               "signature": "()",
@@ -1365,8 +1356,8 @@
             },
             {
               "lines": [
-                1043,
-                1057
+                1057,
+                1071
               ],
               "name": "rejects_zero_length_name_field",
               "signature": "()",
@@ -1374,8 +1365,8 @@
             }
           ],
           "lines": [
-            485,
-            1058
+            499,
+            1072
           ],
           "name": "tests",
           "type": "module"
@@ -5249,6 +5240,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T06:29:19.680371+00:00",
+  "generated_at": "2026-08-01T08:44:34.440195+00:00",
   "version": "1.0"
 }

@@ -215,6 +215,25 @@ fn the_real_datapath_under_overload() {
             o.offered,
             "{label}: the probe ledger does not balance"
         );
+
+        // ★ THE RUN LENGTH IS PART OF THE LEDGER, and until now nothing read it -- `Outcome.rounds`
+        // was written by `run()` and never checked, which the compiler reported as a never-read
+        // field. It is not decoration: EVERY number printed above is an aggregate over exactly
+        // these rounds, so a `run()` that quietly executed fewer would understate offered,
+        // dispatched, shed and peak depth together -- consistently, and therefore invisibly. The
+        // ledger would still balance. This is the one assertion that catches that class of error.
+        assert_eq!(
+            o.rounds, rounds,
+            "{label}: run() reported {} rounds but {rounds} were requested -- every aggregate above \
+             is scaled by this number",
+            o.rounds
+        );
+        // And the offer must actually scale with the run: 14 arrivals per round were requested.
+        assert_eq!(
+            o.offered,
+            rounds * (arrivals.critical + arrivals.high + arrivals.normal),
+            "{label}: offered does not equal rounds x arrivals-per-round"
+        );
     }
 }
 

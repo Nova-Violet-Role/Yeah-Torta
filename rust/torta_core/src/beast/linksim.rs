@@ -250,6 +250,147 @@ pub(crate) fn run(sender: &mut dyn Sender, link: &mut Link, rounds: u64) -> Outc
 mod tests {
     use super::*;
 
+    /// ★ THE LEDGER, checked in Rust against the same statement `LinkSim.lean` proves.
+    ///
+    /// `Round` documents itself as "every field is a byte count or a delay, so the ledger can be
+    /// checked" — and until now NOTHING checked it. `offered` and `dropped` were written by
+    /// `step()` and read by nobody, which is exactly what the compiler was reporting: not that the
+    /// fields are pointless, but that the ledger they exist for was never verified on this side of
+    /// the wall. A proof about a model the code never confirms is a proof about a document.
+    ///
+    /// Three invariants, over a spread of link shapes and offers rather than one lucky case:
+    ///   1. CONSERVATION   accepted + dropped == offered   (nothing invented, nothing vanished)
+    ///   2. CAUSALITY      delivered <= accepted           (you cannot deliver what you refused)
+    ///   3. BOUNDEDNESS    queued <= queue_limit           (the FIFO never exceeds its own limit)
+    #[test]
+    fn the_link_ledger_balances_for_every_offer() {
+        for &cap in &[1u64, 7, 10 * SEG, 64 * SEG] {
+            for &limit in &[0u64, SEG, 10 * SEG, 100 * 10 * SEG] {
+                let mut link = Link::new(cap, 20.0, limit);
+                for &offered in &[0u64, 1, SEG, 3 * SEG, 40 * SEG, 1000 * SEG] {
+                    let r = link.step(offered);
+                    assert_eq!(
+                        r.accepted + r.dropped,
+                        r.offered,
+                        "CONSERVATION broken: cap={cap} limit={limit} offered={offered} -> {r:?}"
+                    );
+                    assert_eq!(r.offered, offered, "step() must report the offer it was given");
+                    assert!(
+                        r.delivered <= r.accepted,
+                        "CAUSALITY broken: delivered {} > accepted {} ({r:?})",
+                        r.delivered,
+                        r.accepted
+                    );
+                    assert!(
+                        link.queued <= limit,
+                        "BOUNDEDNESS broken: queued {} > queue_limit {limit}",
+                        link.queued
+                    );
+                }
+            }
+        }
+    }
+
+    /// A zero-capacity link with no buffer must drop EVERYTHING and deliver nothing -- the negative
+    /// control for the ledger above. Without it, a `step()` that silently returned an all-zero
+    /// Round would satisfy conservation and causality and look perfectly healthy.
+    #[test]
+    fn a_dead_link_drops_all_of_it_and_says_so() {
+        let mut link = Link::new(0, 20.0, 0);
+        let r = link.step(10 * SEG);
+        assert_eq!(r.offered, 10 * SEG);
+        assert_eq!(r.dropped, 10 * SEG, "a link with no capacity and no buffer must drop the lot");
+        assert_eq!(r.accepted, 0);
+        assert_eq!(r.delivered, 0);
+    }
+
+    /// ★ THE RUN-LEVEL LEDGER, and the reason `Outcome.offered`, `.dropped` and `.rounds` existed
+    /// unread. `Outcome`'s own doc calls them "the ledger", and every published comparison in this
+    /// module quotes goodput and delay while nothing ever checked that the run's totals ADD UP.
+    /// That is the weak point of a benchmark: a `run()` that quietly dropped rounds, or double
+    /// counted an offer, would still print a beautiful table.
+    ///
+    /// Checked across all three senders so no controller gets a private accounting rule:
+    ///   1. `rounds` is the count that was ASKED FOR -- a run that silently shortens is a lie
+    ///      about every per-round average derived from it (mean_queue_delay_ms divides by it).
+    ///   2. `delivered + dropped <= offered`, with the slack being exactly what is still queued.
+    ///   3. `offered` is 0 only when nothing was asked of the link.
+    ///   4. every sender reports a non-empty, DISTINCT `name()` -- the label a result is attributed
+    ///      to, which is worthless if two controllers answer the same string.
+    #[test]
+    fn the_run_ledger_adds_up_for_every_sender() {
+        // ALL THREE PROFILES, both families. Legacy / Canonical / LineRate are not variants of a
+        // test fixture -- they are the shipped congestion personalities, carried across YeAH TCP,
+        // YeAH UDP and the rest of the engine family (Engine Room, netstack forwarder, the Beast,
+        // where they pair with TortaProfile Legacy / Baseline / SoftCake). A ledger checked on
+        // Canonical alone would leave two thirds of the shipped surface unaccounted, and the
+        // profiles differ precisely in how aggressively they offer -- which is the input to every
+        // number in this ledger.
+        let profiles = [
+            ("Legacy", YeahProfile::Legacy),
+            ("Canonical", YeahProfile::Canonical),
+            ("LineRate", YeahProfile::LineRate),
+        ];
+
+        // `name()` returns `self.label`, so exercising it is also what proves the label field is
+        // a real attribution channel and not decoration.
+        let mut names: Vec<String> = Vec::new();
+        for (pname, p) in profiles {
+            let mut tcp = yeah_tcp(p);
+            let mut udp = yeah_udp(p);
+            let mut reno = RenoRef { cwnd: 1 };
+            let senders: Vec<&mut dyn Sender> = vec![&mut tcp, &mut udp, &mut reno];
+
+            for s in senders {
+                let mut l = bloated_link();
+                let o = run(s, &mut l, 200);
+                let who = format!("{pname}/{}", s.name());
+                assert_eq!(o.rounds, 200, "{who}: run reported {} rounds, 200 were asked for", o.rounds);
+                assert!(o.offered > 0, "{who}: a 200-round run offered nothing");
+                assert!(
+                    o.delivered + o.dropped <= o.offered,
+                    "{who}: delivered {} + dropped {} exceeds offered {}",
+                    o.delivered, o.dropped, o.offered
+                );
+                assert_eq!(
+                    o.offered - o.delivered - o.dropped,
+                    l.queued,
+                    "{who}: the unaccounted bytes must be exactly what is still in the queue"
+                );
+                // Reno is the shared reference controller, so it repeats across profiles by design;
+                // only the two YeAH families carry a per-profile identity worth uniqueness-checking.
+                if s.name() != "Reno (reference)" {
+                    names.push(who);
+                }
+            }
+        }
+        // Six identities expected: 3 profiles x 2 YeAH families. If any two collide, a result
+        // cannot be attributed to the profile/family that produced it.
+        assert_eq!(names.len(), 6, "expected 3 profiles x 2 YeAH families, got {names:?}");
+        for n in &names {
+            assert!(!n.is_empty(), "a sender reported an empty name -- results cannot be attributed");
+        }
+        let mut uniq = names.clone();
+        uniq.sort_unstable();
+        uniq.dedup();
+        assert_eq!(uniq.len(), names.len(), "two profile/family pairs share a name: {names:?}");
+    }
+
+    /// A zero-round run must produce an all-zero ledger rather than a division by `rounds`.
+    /// This is the negative control for the test above: it is the one input where an averaging
+    /// bug shows up as NaN instead of a number, and NaN compares false against every assertion.
+    #[test]
+    fn a_zero_round_run_is_empty_not_nan() {
+        let mut s = yeah_tcp(YeahProfile::Canonical);
+        let mut l = bloated_link();
+        let o = run(&mut s, &mut l, 0);
+        assert_eq!(o.rounds, 0);
+        assert_eq!(o.offered, 0);
+        assert_eq!(o.dropped, 0);
+        assert_eq!(o.delivered, 0);
+        assert!(o.mean_queue_delay_ms.is_finite(), "mean delay went NaN on a zero-round run");
+    }
+
     /// A deliberately BLOATED link: 100 rounds' worth of buffer at the bottleneck. This is the
     /// canonical bufferbloat setup — a dumb oversized FIFO on the last mile.
     fn bloated_link() -> Link {

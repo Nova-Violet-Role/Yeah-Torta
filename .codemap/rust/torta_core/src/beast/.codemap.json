@@ -2,12 +2,12 @@
   "directory": "rust\\torta_core\\src\\beast",
   "files": {
     "beastsim.rs": {
-      "hash": "e267a7bc0318",
-      "indexed_at": "2026-07-31T06:51:47.434646+00:00",
+      "hash": "28566c458ab8",
+      "indexed_at": "2026-08-01T08:44:33.483323+00:00",
       "language": "rust",
-      "lines": 505,
-      "mtime_ns": 1785480509661045500,
-      "size": 22341,
+      "lines": 524,
+      "mtime_ns": 1785573699282512300,
+      "size": 23452,
       "symbols": [
         {
           "lines": [
@@ -56,7 +56,7 @@
         {
           "lines": [
             151,
-            219
+            238
           ],
           "name": "the_real_datapath_under_overload",
           "signature": "()",
@@ -64,8 +64,8 @@
         },
         {
           "lines": [
-            230,
-            254
+            249,
+            273
           ],
           "name": "the_aqm_path_does_not_starve_the_bulk_tin",
           "signature": "()",
@@ -73,8 +73,8 @@
         },
         {
           "lines": [
-            265,
-            293
+            284,
+            312
           ],
           "name": "a_purely_critical_workload_never_fills_the_window",
           "signature": "()",
@@ -82,8 +82,8 @@
         },
         {
           "lines": [
-            309,
-            389
+            328,
+            408
           ],
           "name": "tcp_and_udp_run_together_and_alone_on_every_profile",
           "signature": "()",
@@ -91,8 +91,8 @@
         },
         {
           "lines": [
-            397,
-            430
+            416,
+            449
           ],
           "name": "the_enqueue_path_has_no_per_tin_bound_on_any_profile",
           "signature": "()",
@@ -100,8 +100,8 @@
         },
         {
           "lines": [
-            455,
-            505
+            474,
+            524
           ],
           "name": "the_resolver_path_does_move_the_window",
           "signature": "()",
@@ -110,12 +110,12 @@
       ]
     },
     "linksim.rs": {
-      "hash": "21229d14b9eb",
-      "indexed_at": "2026-07-31T03:37:21.834860+00:00",
+      "hash": "e031730f5a61",
+      "indexed_at": "2026-08-01T08:44:33.815518+00:00",
       "language": "rust",
-      "lines": 530,
-      "mtime_ns": 1785467308079624500,
-      "size": 23800,
+      "lines": 671,
+      "mtime_ns": 1785573768576513500,
+      "size": 31523,
       "symbols": [
         {
           "lines": [
@@ -377,10 +377,46 @@
         {
           "children": [
             {
+              "lines": [
+                266,
+                292
+              ],
+              "name": "the_link_ledger_balances_for_every_offer",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                298,
+                305
+              ],
+              "name": "a_dead_link_drops_all_of_it_and_says_so",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                321,
+                377
+              ],
+              "name": "the_run_ledger_adds_up_for_every_sender",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                383,
+                392
+              ],
+              "name": "a_zero_round_run_is_empty_not_nan",
+              "signature": "()",
+              "type": "method"
+            },
+            {
               "docstring": "canonical bufferbloat setup \u2014 a dumb oversized FIFO on the last mile.",
               "lines": [
-                255,
-                258
+                396,
+                399
               ],
               "name": "bloated_link",
               "signature": "()",
@@ -388,8 +424,8 @@
             },
             {
               "lines": [
-                260,
-                262
+                401,
+                403
               ],
               "name": "yeah_udp",
               "signature": "(p: YeahProfile)",
@@ -397,8 +433,8 @@
             },
             {
               "lines": [
-                264,
-                266
+                405,
+                407
               ],
               "name": "yeah_tcp",
               "signature": "(p: YeahProfile)",
@@ -406,8 +442,8 @@
             },
             {
               "lines": [
-                272,
-                299
+                413,
+                440
               ],
               "name": "the_link_conserves_every_byte",
               "signature": "()",
@@ -415,8 +451,8 @@
             },
             {
               "lines": [
-                313,
-                404
+                454,
+                545
               ],
               "name": "bufferbloat_and_speed_measured_together_on_a_bloated_link",
               "signature": "()",
@@ -424,8 +460,8 @@
             },
             {
               "lines": [
-                412,
-                448
+                553,
+                589
               ],
               "name": "the_window_ceiling_is_measured_against_a_small_buffer_link",
               "signature": "()",
@@ -433,8 +469,8 @@
             },
             {
               "lines": [
-                462,
-                529
+                603,
+                670
               ],
               "name": "a_capacity_sweep_shows_where_each_profile_bloats",
               "signature": "()",
@@ -443,7 +479,7 @@
           ],
           "lines": [
             250,
-            530
+            671
           ],
           "name": "tests",
           "type": "module"
@@ -3610,6 +3646,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T04:01:07.726830+00:00",
+  "generated_at": "2026-08-01T08:44:33.817404+00:00",
   "version": "1.0"
 }

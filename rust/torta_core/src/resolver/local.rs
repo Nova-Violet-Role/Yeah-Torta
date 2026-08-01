@@ -596,6 +596,58 @@ mod tests {
     use super::*;
     use crate::dns;
 
+    /// ★ ADD vs REPLACE -- the test `import_addn_hosts` was written for and never got.
+    ///
+    /// The compiler reported it as never used, and that was accurate in the worst way: the helper
+    /// is `#[cfg(test)]`, so it was carried in every test build to serve a caller that did not
+    /// exist. What was actually missing is the assertion that the two import paths have DIFFERENT
+    /// semantics -- `import_addn_hosts` is ADDITIVE (existing pins survive) while `set_records` is
+    /// REPLACE (a deleted line unpins). Nothing anywhere pinned that difference, so either one
+    /// could have quietly acquired the other's behaviour: an additive save would make deletions
+    /// impossible in the editor, and a replacing addn-import would silently wipe the user's pins.
+    ///
+    /// Serialized against the other pin tests -- the store is process-global, so a parallel test
+    /// that replaces the store would make the "survives" assertion below meaningless.
+    #[test]
+    fn addn_hosts_is_additive_while_set_records_replaces() {
+        static PIN_STORE_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+        let _g = PIN_STORE_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+
+        // Start from a known store: REPLACE with a single pin.
+        let (names, applied, _skipped) = set_records("10.0.0.1 first.example\n", 60);
+        assert_eq!(names, 1, "set_records should leave exactly one name pinned");
+        assert_eq!(applied, 1);
+
+        // ADDITIVE import: the existing pin must SURVIVE and the new one must join it.
+        let (added, skipped) = import_addn_hosts("10.0.0.2 second.example\n", 60);
+        assert_eq!(added, 1, "the additive import applied nothing");
+        assert_eq!(skipped, 0);
+        assert_eq!(
+            records_count(),
+            2,
+            "ADDITIVE import dropped the pre-existing pin -- import_addn_hosts is behaving like a replace"
+        );
+
+        // REPLACE again: the additive pin must now be GONE. This is the half that makes the test
+        // two-sided; without it, an import that never removes anything would also pass.
+        let (names2, _applied2, _skipped2) = set_records("10.0.0.3 third.example\n", 60);
+        assert_eq!(names2, 1);
+        assert_eq!(
+            records_count(),
+            1,
+            "REPLACE kept an older pin -- set_records is behaving like an additive import"
+        );
+
+        // Comments and blanks are not errors and must not inflate either counter.
+        let (added2, skipped2) = import_addn_hosts("# a comment\n\n! another\n10.0.0.4 fourth.example\n", 60);
+        assert_eq!(added2, 1, "comments/blanks were counted as applied records");
+        assert_eq!(skipped2, 0, "comments/blanks were counted as skipped LINES -- they are neither");
+        assert_eq!(records_count(), 2);
+
+        // Leave the store empty so no later test inherits these pins.
+        set_records("", 60);
+    }
+
     /// Forge a minimal DNS query wire for `qname`/`qtype` so the synthesized answer has a real question
     /// to echo — reuses the crate's own `dns::build_query` (the canonical builder, no hand-rolled wire).
     fn query_for(qname: &str, qtype: u16) -> Vec<u8> {

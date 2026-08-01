@@ -103,10 +103,24 @@ pub fn legacy_algo_rejections() -> u64 {
     LEGACY_ALGO_REJECTIONS.load(Ordering::Relaxed)
 }
 
-#[cfg(test)]
-pub(crate) fn reset_legacy_algo_rejections_for_test() {
-    LEGACY_ALGO_REJECTIONS.store(0, Ordering::Relaxed);
-}
+// ★ THERE IS DELIBERATELY NO `reset_..._for_test()` HERE (removed 2026-08-01).
+//
+// One existed and was never called, which the compiler reported as dead code. It was not merely
+// unused -- it was UNUSABLE, and keeping it around was an invitation to a flaky suite. This counter
+// is PROCESS-GLOBAL and the test runner is parallel, so a reset performed by one test lands in the
+// middle of another test's measurement. `a_retired_algorithm_catalog_moves_the_alarm` records that
+// exact failure being observed for a weaker reason (`left: 2, right: 1`, because a 256-id sweep in
+// a sibling test bumped the same counter concurrently).
+//
+// The pattern that survives parallelism, and the one every test here uses instead:
+//
+//     let _g = LEGACY_ALARM_TEST_LOCK.lock()...;     // serialize against other counter tests
+//     let before = legacy_algo_rejections();          // measure a DELTA, never an absolute
+//     ... trip the real gate ...
+//     assert_eq!(legacy_algo_rejections(), before + 1);
+//
+// Note the delta is asserted with `==`, not `>=`: a `>=` would pass just as happily if unrelated
+// code bumped the counter, which is precisely what the alarm exists to detect.
 /// Fixed header length: magic(4) + version(2) + algo(1) + flags(1) + reserved(8) + count(4) + reserved2(4).
 const CATALOG_HEADER_LEN: usize = 24;
 
