@@ -67,6 +67,7 @@ import java.util.Locale
 import java.util.concurrent.CopyOnWriteArrayList
 import javax.inject.Inject
 import javax.inject.Named
+import androidx.core.app.ServiceCompat
 
 class ServiceVPNHandler private constructor(
     looper: Looper,
@@ -549,7 +550,7 @@ class ServiceVPNHandler private constructor(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && serviceVPN.notificationManager != null) {
             try {
                 serviceVPN.notificationManager!!.cancel(ModulesService.DEFAULT_NOTIFICATION_ID)
-                serviceVPN.stopForeground(true)
+                ServiceCompat.stopForeground(serviceVPN, ServiceCompat.STOP_FOREGROUND_REMOVE)
             } catch (e: Exception) {
                 loge("ServiceVPNHandler stopServiceVPN", e)
             }

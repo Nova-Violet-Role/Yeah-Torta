@@ -85,6 +85,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Provider
+import androidx.core.app.ServiceCompat
 
 class ServiceVPN : VpnService(), OnInternetConnectionCheckedListener {
     // Task 4C: the legacy `static { System.loadLibrary("invizible"); }` block is GONE — the pure-Rust
@@ -489,7 +490,7 @@ class ServiceVPN : VpnService(), OnInternetConnectionCheckedListener {
 
             try {
                 notificationManager!!.cancel(ModulesService.DEFAULT_NOTIFICATION_ID)
-                stopForeground(true)
+                ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
             } catch (e: Exception) {
                 loge("VPNService stop Service foreground1 exception", e)
             }
@@ -529,7 +530,7 @@ class ServiceVPN : VpnService(), OnInternetConnectionCheckedListener {
 
             try {
                 notificationManager!!.cancel(ModulesService.DEFAULT_NOTIFICATION_ID)
-                stopForeground(true)
+                ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
             } catch (e: Exception) {
                 loge("VPNService stop Service foreground2 exception", e)
             }

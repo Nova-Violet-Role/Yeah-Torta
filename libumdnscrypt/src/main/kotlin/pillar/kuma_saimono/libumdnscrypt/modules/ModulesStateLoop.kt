@@ -78,6 +78,7 @@ import pillar.kuma_saimono.libumdnscrypt.utils.enums.OperationMode.VPN_MODE
 
 import javax.inject.Inject
 import javax.inject.Named
+import androidx.core.app.ServiceCompat
 
 class ModulesStateLoop(private val modulesService: ModulesService) : Runnable,
         OnDNSCryptLogUpdatedListener {
@@ -759,7 +760,7 @@ class ModulesStateLoop(private val modulesService: ModulesService) : Runnable,
         handler.get().post {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                modulesService.stopForeground(true)
+                ServiceCompat.stopForeground(modulesService, ServiceCompat.STOP_FOREGROUND_REMOVE)
             }
 
             modulesService.stopSelf()

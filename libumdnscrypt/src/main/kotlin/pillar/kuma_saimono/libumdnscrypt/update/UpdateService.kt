@@ -42,6 +42,7 @@ import pillar.kuma_saimono.libumdnscrypt.utils.wakelock.WakeLocksManager
 import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
+import androidx.core.app.ServiceCompat
 
 @Suppress("DEPRECATION")
 class UpdateService : Service() {
@@ -92,7 +93,7 @@ class UpdateService : Service() {
         val action = intent!!.action
         if (action == null) {
             sendNotification(startId, currentNotificationId.get(), System.currentTimeMillis(), uniffi.torta_core.tortaText("app_name"), uniffi.torta_core.tortaText("app_name"), "")
-            stopForeground(true)
+            ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
             stopSelf()
         } else if (action == DOWNLOAD_ACTION) {
             startDownloadAction(intent, startId)
@@ -102,7 +103,7 @@ class UpdateService : Service() {
             installationRequestAction()
         } else {
             sendNotification(startId, currentNotificationId.get(), System.currentTimeMillis(), uniffi.torta_core.tortaText("app_name"), uniffi.torta_core.tortaText("app_name"), "")
-            stopForeground(true)
+            ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
             stopSelf()
         }
         return START_NOT_STICKY
@@ -122,7 +123,7 @@ class UpdateService : Service() {
             }
         }
 
-        stopForeground(true)
+        ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
         stopSelf()
     }
 
@@ -193,7 +194,7 @@ class UpdateService : Service() {
             }
         }
 
-        stopForeground(true)
+        ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
         stopSelf()
     }
 

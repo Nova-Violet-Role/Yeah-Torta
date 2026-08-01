@@ -53,6 +53,7 @@ import java.util.concurrent.TimeUnit
 import java.util.zip.CRC32
 import javax.inject.Inject
 import javax.net.ssl.HttpsURLConnection
+import androidx.core.app.ServiceCompat
 
 @Suppress("DEPRECATION")
 class DownloadTask(
@@ -154,7 +155,7 @@ class DownloadTask(
         } finally {
             updateService.sparseArray.delete(serviceStartId)
             if (updateService.currentNotificationId.get() - 1 == UpdateService.UPDATE_CHANNEL_NOTIFICATION_ID) {
-                updateService.stopForeground(true)
+                ServiceCompat.stopForeground(updateService, ServiceCompat.STOP_FOREGROUND_REMOVE)
                 updateService.notificationManager!!.cancel(notificationId)
                 sendUpdateResultBroadcast()
                 updateService.stopSelf()

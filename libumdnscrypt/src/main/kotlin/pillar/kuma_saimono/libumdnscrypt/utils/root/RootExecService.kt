@@ -42,6 +42,7 @@ import pillar.kuma_saimono.libumdnscrypt.utils.preferences.TortaeKeys.OPERATION_
 import pillar.kuma_saimono.libumdnscrypt.utils.preferences.TortaeKeys.ROOT_IS_AVAILABLE
 import pillar.kuma_saimono.libumdnscrypt.utils.preferences.TortaeKeys.VPN_SERVICE_ENABLED
 import pillar.kuma_saimono.libumdnscrypt.vpn.service.ServiceVPNHelper
+import androidx.core.app.ServiceCompat
 
 @SuppressLint("UnsafeOptInUsageWarning")
 @Suppress("DEPRECATION")
@@ -159,7 +160,7 @@ class RootExecService : Service(),
             systemNotificationManager!!.cancel(RootServiceNotificationManager.DEFAULT_NOTIFICATION_ID)
 
             try {
-                stopForeground(true)
+                ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
             } catch (e: Exception) {
                 loge("RootExecService moveServiceToBackground", e)
             }

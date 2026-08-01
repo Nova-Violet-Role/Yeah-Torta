@@ -86,6 +86,7 @@ import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
+import androidx.core.app.ServiceCompat
 
 class ModulesService : Service() {
 
@@ -443,7 +444,7 @@ class ModulesService : Service() {
     private fun dismissNotification(startId: Int) {
         try {
             systemNotificationManager!!.cancel(DEFAULT_NOTIFICATION_ID)
-            stopForeground(true)
+            ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
         } catch (e: Exception) {
             loge("ModulesService dismissNotification exception", e)
         }
@@ -581,7 +582,7 @@ class ModulesService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             try {
                 systemNotificationManager!!.cancel(DEFAULT_NOTIFICATION_ID)
-                stopForeground(true)
+                ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
             } catch (e: Exception) {
                 loge("ModulesService stopService", e)
             }
@@ -637,7 +638,7 @@ class ModulesService : Service() {
     private fun stopModulesService() {
         try {
             systemNotificationManager!!.cancel(DEFAULT_NOTIFICATION_ID)
-            stopForeground(true)
+            ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
         } catch (e: Exception) {
             loge("ModulesService stopModulesService", e)
         }
@@ -649,7 +650,7 @@ class ModulesService : Service() {
 
         try {
             systemNotificationManager!!.cancel(DEFAULT_NOTIFICATION_ID)
-            stopForeground(true)
+            ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
         } catch (e: Exception) {
             loge("ModulesService stopModulesServiceForeground1", e)
         }
@@ -659,7 +660,7 @@ class ModulesService : Service() {
 
         try {
             systemNotificationManager!!.cancel(DEFAULT_NOTIFICATION_ID)
-            stopForeground(true)
+            ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
         } catch (e: Exception) {
             loge("ModulesService stopModulesServiceForeground2", e)
         }
