@@ -17,6 +17,7 @@
 [![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?style=flat-square&logo=android&logoColor=white)](#-building)
 [![Proved in Lean 4](https://img.shields.io/badge/Proved%20in-Lean%204-2C3E50?style=flat-square)](#-what-is-proved-not-merely-tested)
 [![Tests](https://img.shields.io/badge/engine%20tests-1311%20passing-27ae60?style=flat-square)](#-instruments)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-9b59b6.svg?style=flat-square)](#-contributors)
 
 </div>
 
@@ -405,6 +406,58 @@ This is a pre-release and the surface is moving. Pull requests are welcome, and 
 **One rule above the rest:** if you add a guarantee, add the instrument that would catch it failing — and try to break it before you claim it works. A green test that cannot fail is worse than no test, because it spends someone's trust.
 
 See [TORTA-CODEBASE.md](TORTA-CODEBASE.md) for the full tour: where every module lives, what it does, and the traps measured the hard way.
+
+---
+
+## ✨ Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="33.33%">
+        <a href="https://github.com/Saimonokuma">
+          <img src="https://avatars.githubusercontent.com/u/Saimonokuma?v=4" width="100px;" alt="Saimonokuma"/><br />
+          <sub><b>Saimonokuma</b></sub>
+        </a><br />
+        <a href="#code" title="Code">💻</a>
+        <a href="#doc" title="Documentation">📖</a>
+        <a href="#design" title="Design">🎨</a>
+        <a href="#infra" title="Infrastructure">🚇</a>
+        <a href="#test" title="Tests">⚠️</a>
+        <a href="#maintenance" title="Maintenance">🚧</a>
+      </td>
+      <td align="center" valign="top" width="33.33%">
+        <a href="https://github.com/jedisct1">
+          <img src="https://avatars.githubusercontent.com/u/124872?v=4" width="100px;" alt="Frank Denis"/><br />
+          <sub><b>Frank Denis</b></sub>
+        </a><br />
+        <a href="#tool" title="Tools">🔧</a>
+        <a href="#security" title="Security">🛡️</a>
+        <a href="#research" title="Research">🔬</a><br />
+        <sub><i>Keeper of the Encrypted Hearth</i></sub>
+      </td>
+      <td align="center" valign="top" width="33.33%">
+        <a href="https://github.com/Gedsh">
+          <img src="https://avatars.githubusercontent.com/u/Gedsh?v=4" width="100px;" alt="Garmatin Oleksandr"/><br />
+          <sub><b>Garmatin Oleksandr</b></sub>
+        </a><br />
+        <a href="#code" title="Code">💻</a>
+        <a href="#infra" title="Infrastructure">🚇</a><br />
+        <sub><i>InviZible Pro — the origin</i></sub>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This table follows the [all-contributors](https://allcontributors.org) specification, which exists precisely because **GitHub's Contributors sidebar counts commit authorship and nothing else** — so it structurally cannot show someone whose contribution is a protocol, a signing tool, or the codebase this one grew out of.
+
+> **Why we did not simply add them to that sidebar.** It can be done — a `Co-authored-by:` trailer on any commit puts a name in the graph. We did not, because it would assert that Frank Denis and Garmatin Oleksandr co-wrote commits they have never seen. Credit that misstates what someone did is not a favour to them. The contribution is real and it is recorded here, where it is accurate: the counts below are from `git grep` on this tree, and anyone can check them.
 
 ---
 

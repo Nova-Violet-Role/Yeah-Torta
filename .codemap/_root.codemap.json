@@ -434,18 +434,18 @@
       ]
     },
     "README.md": {
-      "hash": "be6ae2740c41",
-      "indexed_at": "2026-08-01T05:07:04.873645+00:00",
+      "hash": "1fa0721a63c2",
+      "indexed_at": "2026-08-01T05:23:11.732759+00:00",
       "language": "markdown",
-      "lines": 455,
-      "mtime_ns": 1785560756054783900,
-      "size": 36696,
+      "lines": 508,
+      "mtime_ns": 1785561645919940900,
+      "size": 39497,
       "symbols": [
         {
           "docstring": "Most privacy tools on Android tell you they are working. A switch turns green, a card says *protected*, a counter goes up. Almost none of them can tel",
           "lines": [
-            25,
-            45
+            26,
+            46
           ],
           "name": "\ud83d\udcdc About",
           "type": "section"
@@ -453,8 +453,8 @@
         {
           "docstring": "The APK is literally named `libumdnscrypt-universal-alpha.apk`, and that is not decoration. **This is a pre-release.** Some pillars are proven on a de",
           "lines": [
-            46,
-            61
+            47,
+            62
           ],
           "name": "\ud83d\udea7 Status: this is an ALPHA",
           "type": "section"
@@ -464,8 +464,8 @@
             {
               "docstring": "`rust/torta_core/src/warden/` \u00b7 9,751 lines",
               "lines": [
-                66,
-                70
+                67,
+                71
               ],
               "name": "1. \ud83d\udee1\ufe0f WARDEN \u2014 the datapath gate",
               "type": "subsection"
@@ -473,8 +473,8 @@
             {
               "docstring": "`rust/torta_core/src/mirror/` \u00b7 24,223 lines \u00b7 `#[cfg(feature = \"mirror\")]`",
               "lines": [
-                71,
-                77
+                72,
+                78
               ],
               "name": "2. \ud83c\udf0c CENTAURI \u2014 the offline CDN",
               "type": "subsection"
@@ -482,8 +482,8 @@
             {
               "docstring": "`rust/torta_core/src/resolver/` \u00b7 `query-masksolver.log`",
               "lines": [
-                78,
-                82
+                79,
+                83
               ],
               "name": "3. \ud83c\udfad MASKSOLVER \u2014 the resolution ladder",
               "type": "subsection"
@@ -491,8 +491,8 @@
             {
               "docstring": "`rust/torta_core/src/beast/` \u00b7 7,785 lines",
               "lines": [
-                83,
-                87
+                84,
+                88
               ],
               "name": "4. \ud83d\udc3a BEAST \u2014 the adaptive tuner",
               "type": "subsection"
@@ -500,8 +500,8 @@
             {
               "docstring": "`RotationManager.kt` + engine pool/routing",
               "lines": [
-                88,
-                92
+                89,
+                93
               ],
               "name": "5. \ud83d\udd04 ROTATION \u2014 the upstream carousel",
               "type": "subsection"
@@ -509,8 +509,8 @@
             {
               "docstring": "`libumdnscrypt/src/main/kotlin/.../wire_cake_inu/`",
               "lines": [
-                93,
-                97
+                94,
+                98
               ],
               "name": "6. \ud83c\udf70 WIRE CAKE INU \u2014 privileged capability, without root",
               "type": "subsection"
@@ -518,8 +518,8 @@
             {
               "docstring": "`rust/torta_core/src/resolver/dnscrypt.rs` + `ResolverRuntime.kt`",
               "lines": [
-                98,
-                102
+                99,
+                103
               ],
               "name": "7. \ud83d\udd10 DNSCRYPT \u2014 encrypted transport",
               "type": "subsection"
@@ -527,8 +527,8 @@
             {
               "docstring": "`rust/torta_core/src/resolver/underground.rs`",
               "lines": [
-                103,
-                109
+                104,
+                110
               ],
               "name": "8. \ud83d\udd73\ufe0f UNDERGROUND LAYER \u2014 the deny plane",
               "type": "subsection"
@@ -536,8 +536,8 @@
             {
               "docstring": "`rust/torta_core/src/forwarder/` \u00b7 3,603 lines",
               "lines": [
-                110,
-                116
+                111,
+                117
               ],
               "name": "9. \ud83c\udf10 NETSTACK FORWARDER \u2014 the tun datapath",
               "type": "subsection"
@@ -545,8 +545,8 @@
           ],
           "docstring": "Each pillar is a distinct guarantee with its own code, its own counters and its own failure mode.",
           "lines": [
-            62,
-            116
+            63,
+            117
           ],
           "name": "\ud83c\udfdb\ufe0f The nine pillars",
           "type": "section"
@@ -556,8 +556,8 @@
             {
               "docstring": "Every connection your phone makes gets sorted by where it is going (`forwarder/shape.rs`):",
               "lines": [
-                131,
-                148
+                132,
+                149
               ],
               "name": "The three tins \u2014 this is the whole trick",
               "type": "subsection"
@@ -565,8 +565,8 @@
             {
               "docstring": "1. **Fewer requests, full stop.** Mobile games are stuffed with ad and analytics endpoints. Every one is a DNS lookup, a TLS handshake and a burst of",
               "lines": [
-                149,
-                154
+                150,
+                155
               ],
               "name": "The other three things that help, and why",
               "type": "subsection"
@@ -574,8 +574,8 @@
             {
               "docstring": "Congestion control normally lives in **the kernel**, it normally governs **TCP**, and changing it normally requires **root** \u2014 a custom ROM, a `sysctl",
               "lines": [
-                155,
-                170
+                156,
+                171
               ],
               "name": "\ud83e\uddec The part that is genuinely unusual \u2014 and no kernel was harmed",
               "type": "subsection"
@@ -583,8 +583,8 @@
             {
               "docstring": "We would rather lose the sale than lie to you:",
               "lines": [
-                171,
-                183
+                172,
+                184
               ],
               "name": "\ud83d\udeab What it does **not** do \u2014 read this part",
               "type": "subsection"
@@ -592,8 +592,8 @@
           ],
           "docstring": "**Then you already know the feeling.** You are in the middle of a ranked match. Someone else in the house starts a download, your phone decides *now*",
           "lines": [
-            117,
-            183
+            118,
+            184
           ],
           "name": "\ud83c\udfae Tired of high ping and lag?",
           "type": "section"
@@ -601,8 +601,8 @@
         {
           "docstring": "The long version is above. This is the version you can read in thirty seconds.",
           "lines": [
-            184,
-            201
+            185,
+            202
           ],
           "name": "\ud83c\udfdb\ufe0f The pillars at a glance \u2014 what each one does *for you*",
           "type": "section"
@@ -610,8 +610,8 @@
         {
           "docstring": "**Start here, in this order.** Turning everything on at once is the fastest way to have a bad time and not know which pillar caused it.",
           "lines": [
-            202,
-            229
+            203,
+            230
           ],
           "name": "\ud83d\udca1 Tips & tricks",
           "type": "section"
@@ -621,8 +621,8 @@
             {
               "docstring": "**Libum** *(neuter noun, Latin)* \u2014 a **sacrificial cake** offered to the household gods. Not a metaphor: a real recipe, written down by **Cato the Eld",
               "lines": [
-                234,
-                243
+                235,
+                244
               ],
               "name": "\ud83c\udfdb\ufe0f `libum` \u2014 the ancient Roman cake, and why the app module is called `libumdnscrypt`",
               "type": "subsection"
@@ -630,8 +630,8 @@
             {
               "docstring": "| name | what it means | what it is | |:--|:--|:--| | **Tort\u00e4** | *torta* \u2014 cake, in Latin's descendants (Italian, Spanish, Portuguese) with a German",
               "lines": [
-                244,
-                256
+                245,
+                257
               ],
               "name": "\ud83c\udf70 \u2026and the rest of the bakery",
               "type": "subsection"
@@ -639,8 +639,8 @@
             {
               "docstring": "This is the Socio's joke and it is too accurate to leave out. In Rust, **`lib.rs` is the crate root** \u2014 the single file that decides what the outside",
               "lines": [
-                257,
-                268
+                258,
+                269
               ],
               "name": "\ud83d\udd2a And yes \u2014 `lib.rs` really is slices of *libum*",
               "type": "subsection"
@@ -648,8 +648,8 @@
           ],
           "docstring": "Nothing in this project is named at random. It is all the same joke, carried further than anyone should carry a joke.",
           "lines": [
-            230,
-            268
+            231,
+            269
           ],
           "name": "\ud83e\udd6e What's in a name? (everything here is cake)",
           "type": "section"
@@ -657,16 +657,16 @@
         {
           "docstring": "Measured with `git ls-files` on the published tree, **2,437 files / 615,494 lines**:",
           "lines": [
-            269,
-            288
+            270,
+            289
           ],
           "name": "\ud83d\uddfa\ufe0f Codemap \u2014 what this repository is made of",
           "type": "section"
         },
         {
           "lines": [
-            289,
-            317
+            290,
+            318
           ],
           "name": "\ud83e\uddf1 Architecture",
           "type": "section"
@@ -674,8 +674,8 @@
         {
           "docstring": "Requires the Android NDK, a Rust toolchain with the Android target, and JDK 17.",
           "lines": [
-            318,
-            346
+            319,
+            347
           ],
           "name": "\ud83d\udd28 Building",
           "type": "section"
@@ -683,8 +683,8 @@
         {
           "docstring": "Some properties must hold for **every** input, not for the inputs a test happens to supply. Those are proved in **Lean 4** \u2014 machine-checked, zero `so",
           "lines": [
-            347,
-            375
+            348,
+            376
           ],
           "name": "\ud83d\udcd0 What is proved, not merely tested",
           "type": "section"
@@ -692,8 +692,8 @@
         {
           "docstring": "Nothing here is claimed on the strength of reading the code.",
           "lines": [
-            376,
-            392
+            377,
+            393
           ],
           "name": "\ud83d\udd2c Instruments",
           "type": "section"
@@ -701,10 +701,19 @@
         {
           "docstring": "This is a pre-release and the surface is moving. Pull requests are welcome, and the bar is the same one the project holds itself to:",
           "lines": [
-            393,
-            410
+            394,
+            411
           ],
           "name": "\ud83e\udd1d Contributing",
+          "type": "section"
+        },
+        {
+          "docstring": "<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section --> <!-- prettier-ignore-start --> <!-- markdownlint-disable --> <table> <tbod",
+          "lines": [
+            412,
+            463
+          ],
+          "name": "\u2728 Contributors",
           "type": "section"
         },
         {
@@ -712,16 +721,16 @@
             {
               "docstring": "An honorary title, and a deliberate one \u2014 for the author of **DNSCrypt**, **minisign** and **libsodium**, three projects this repository stands on. DN",
               "lines": [
-                413,
-                426
+                466,
+                479
               ],
               "name": "\ud83d\udd10 [@jedisct1](https://github.com/jedisct1) \u2014 Frank Denis \u2014 **Keeper of the Encrypted Hearth**",
               "type": "subsection"
             }
           ],
           "lines": [
-            411,
-            426
+            464,
+            479
           ],
           "name": "\ud83c\udfc5 Acknowledgements",
           "type": "section"
@@ -731,8 +740,8 @@
             {
               "docstring": "*Nine pillars. One ledger. No claim without an instrument.*",
               "lines": [
-                437,
-                456
+                490,
+                509
               ],
               "name": "\ud83c\udf70 Yeah! Tort\u00e4",
               "type": "subsection"
@@ -740,8 +749,8 @@
           ],
           "docstring": "Dual-licensed at your option under **AGPL-3.0-or-later** OR **EUPL-1.2** \u2014 see [LICENSES/](LICENSES/).",
           "lines": [
-            427,
-            456
+            480,
+            509
           ],
           "name": "\ud83d\udcc4 License",
           "type": "section"
@@ -997,6 +1006,6 @@
       "symbols": []
     }
   },
-  "generated_at": "2026-08-01T05:18:16.827626+00:00",
+  "generated_at": "2026-08-01T05:23:11.734294+00:00",
   "version": "1.0"
 }
