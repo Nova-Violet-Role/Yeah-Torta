@@ -23,7 +23,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
+import android.net.NetworkCapabilities
 import android.net.VpnService
 import android.os.Binder
 import android.os.Build
@@ -791,8 +791,66 @@ class ServiceVPN : VpnService(), OnInternetConnectionCheckedListener {
         super.onTaskRemoved(rootIntent)
     }
 
+    /**
+     * A stable, comparable identifier for "what kind of network is active right now", replacing the
+     * deprecated `ConnectivityManager.activeNetworkInfo.type`.
+     *
+     * Only EQUALITY BETWEEN TWO SAMPLES is ever asked of this value ([BuilderVPN.equals]), never
+     * its meaning, so the two API paths do not have to agree on numbering with each other -- and
+     * they cannot mix, because `SDK_INT` is constant for the life of the process.
+     *
+     * API 23+: a bitmask over the transports the active network reports. A mask rather than "the
+     * first transport found" because a link can legitimately carry several (VPN over Wi-Fi is the
+     * obvious one, and this IS a VPN service); collapsing that to one value would make two
+     * genuinely different links compare equal and SKIP a tunnel rebuild.
+     *
+     * API 21-22: the deprecated `activeNetworkInfo.type`, which is the only thing available there.
+     * The @Suppress is scoped to that one expression.
+     *
+     * Returns null when there is no active network or its capabilities cannot be read. Callers
+     * treat null as "not equal to anything", so uncertainty forces a rebuild.
+     */
+    private fun currentNetworkTypeKey(): Int? {
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager ?: return null
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val active = cm.activeNetwork ?: return null
+            val caps = cm.getNetworkCapabilities(active) ?: return null
+            var key = 0
+            for (transport in NETWORK_TRANSPORTS_OF_INTEREST) {
+                if (caps.hasTransport(transport)) {
+                    key = key or (1 shl transport)
+                }
+            }
+            // 0 would be indistinguishable from "a network with none of these transports", which is
+            // not the same fact as "unknown". Report it as unknown-shaped only if truly empty.
+            if (key == 0) null else key
+        } else {
+            @Suppress("DEPRECATION")
+            cm.activeNetworkInfo?.type
+        }
+    }
+
     inner class BuilderVPN : Builder() {
-        private var networkInfo: NetworkInfo? = null
+        /**
+         * WHICH KIND OF NETWORK THIS BUILDER WAS MADE FOR, as a comparable value.
+         *
+         * This used to be a captured `NetworkInfo`, of which [equals] read exactly one thing:
+         * `.type`. Storing the object bought nothing and cost two defects:
+         *
+         *  1. `NetworkInfo` is deprecated (API 29), along with `activeNetworkInfo` and `.type`.
+         *  2. THE equals/hashCode CONTRACT WAS BROKEN. `equals` compared `networkInfo.type` -- a
+         *     value -- while `hashCode` hashed `networkInfo` itself, and `NetworkInfo` does not
+         *     override `hashCode`, so it was identity-based. Two builders that `equals` called
+         *     EQUAL therefore had DIFFERENT hash codes, which is exactly the case the contract
+         *     forbids: any HashSet/HashMap holding a BuilderVPN would fail to find an entry it
+         *     contains. That was not a deprecation, it was a latent bug, and it is fixed here
+         *     because an Int hashes by value.
+         *
+         * `null` means "could not determine", and [equals] treats null as NOT equal -- so an
+         * unknown network forces a tunnel rebuild rather than silently reusing a builder made for
+         * a different link. Reusing on doubt is the dangerous direction.
+         */
+        private val networkTypeKey: Int? = currentNetworkTypeKey()
         private var mtu = 0
         private val listAddress: MutableList<String> = ArrayList()
         private val listRoute: MutableList<String> = ArrayList()
@@ -801,13 +859,6 @@ class ServiceVPN : VpnService(), OnInternetConnectionCheckedListener {
         private val listAllowed: MutableList<String> = ArrayList()
         private var performAllowedOrDisallowed = ""
         private var fixTTL = false
-
-        init {
-            val cm = this@ServiceVPN.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-            if (cm != null) {
-                networkInfo = cm.activeNetworkInfo
-            }
-        }
 
         override fun setMtu(mtu: Int): VpnService.Builder {
             this.mtu = mtu
@@ -875,8 +926,10 @@ class ServiceVPN : VpnService(), OnInternetConnectionCheckedListener {
 
             val other = other as BuilderVPN
 
-            if (this.networkInfo == null || other.networkInfo == null ||
-                this.networkInfo!!.type != other.networkInfo!!.type) {
+            // null on either side means the network kind could not be determined; treat that as
+            // NOT equal so the tunnel is rebuilt. Same decision the NetworkInfo version made.
+            if (this.networkTypeKey == null || other.networkTypeKey == null ||
+                this.networkTypeKey != other.networkTypeKey) {
                 return false
             }
 
@@ -946,11 +999,24 @@ class ServiceVPN : VpnService(), OnInternetConnectionCheckedListener {
         }
 
         override fun hashCode(): Int {
-            return Objects.hash(networkInfo, mtu, listAddress, listRoute, listDns, listDisallowed, listAllowed, performAllowedOrDisallowed, fixTTL)
+            return Objects.hash(networkTypeKey, mtu, listAddress, listRoute, listDns, listDisallowed, listAllowed, performAllowedOrDisallowed, fixTTL)
         }
     }
 
     companion object {
+        /**
+         * The transports [currentNetworkTypeKey] distinguishes. TRANSPORT_VPN is included on
+         * purpose: this service builds a VPN, and a link that is itself carried over another VPN
+         * is a different link from the bare one -- omitting it would let the two compare equal.
+         */
+        private val NETWORK_TRANSPORTS_OF_INTEREST = intArrayOf(
+            NetworkCapabilities.TRANSPORT_WIFI,
+            NetworkCapabilities.TRANSPORT_CELLULAR,
+            NetworkCapabilities.TRANSPORT_ETHERNET,
+            NetworkCapabilities.TRANSPORT_BLUETOOTH,
+            NetworkCapabilities.TRANSPORT_VPN
+        )
+
         const val LINES_IN_DNS_QUERY_RAW_RECORDS = 512
         private const val CHECK_TOR_CONNECTION_DELAY_SEC = 300
 

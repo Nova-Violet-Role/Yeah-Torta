@@ -515,7 +515,10 @@ class ServiceVPNHandler private constructor(
         ) {
             serviceVPN.setUnderlyingNetworks(networks)
             for (network in networks) {
-                logi("VPN Handler Setting underlying network=" + cm.getNetworkInfo(network))
+                // getNetworkInfo is deprecated (API 29). This is a LOG line, so the
+                // replacement only has to identify the network usefully: capabilities name the
+                // transports and are what the modern API actually models.
+                logi("VPN Handler Setting underlying network=" + cm.getNetworkCapabilities(network))
             }
         }/* else if (!serviceVPN.isNetworkAvailable() && !serviceVPN.isInternetAvailable()) {
             Unfortunately, this code causes the Telegram messenger always connecting.

@@ -2,12 +2,12 @@
   "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\vpn\\service",
   "files": {
     "ServiceVPN.kt": {
-      "hash": "f2cd467fcb55",
-      "indexed_at": "2026-08-01T08:49:51.227710+00:00",
+      "hash": "b614559df176",
+      "indexed_at": "2026-08-01T09:13:36.298230+00:00",
       "language": "kotlin",
-      "lines": 960,
-      "mtime_ns": 1785574116784035400,
-      "size": 37726,
+      "lines": 1026,
+      "mtime_ns": 1785575548448004000,
+      "size": 41752,
       "symbols": [
         {
           "children": [
@@ -291,11 +291,20 @@
               "type": "method"
             },
             {
+              "lines": [
+                813,
+                831
+              ],
+              "name": "currentNetworkTypeKey",
+              "signature": "()",
+              "type": "method"
+            },
+            {
               "children": [
                 {
                   "lines": [
-                    812,
-                    816
+                    863,
+                    867
                   ],
                   "name": "setMtu",
                   "signature": "(mtu: Int)",
@@ -303,8 +312,8 @@
                 },
                 {
                   "lines": [
-                    818,
-                    822
+                    869,
+                    873
                   ],
                   "name": "addAddress",
                   "signature": "(address: String, prefixLength: Int)",
@@ -312,8 +321,8 @@
                 },
                 {
                   "lines": [
-                    824,
-                    828
+                    875,
+                    879
                   ],
                   "name": "addRoute",
                   "signature": "(address: String, prefixLength: Int)",
@@ -321,8 +330,8 @@
                 },
                 {
                   "lines": [
-                    830,
-                    838
+                    881,
+                    889
                   ],
                   "name": "addRoute",
                   "signature": "(address: java.net.InetAddress, prefixLength: Int)",
@@ -330,8 +339,8 @@
                 },
                 {
                   "lines": [
-                    840,
-                    844
+                    891,
+                    895
                   ],
                   "name": "addDnsServer",
                   "signature": "(address: java.net.InetAddress)",
@@ -339,8 +348,8 @@
                 },
                 {
                   "lines": [
-                    846,
-                    852
+                    897,
+                    903
                   ],
                   "name": "addDisallowedApplication",
                   "signature": "(packageName: String)",
@@ -348,8 +357,8 @@
                 },
                 {
                   "lines": [
-                    854,
-                    860
+                    905,
+                    911
                   ],
                   "name": "addAllowedApplication",
                   "signature": "(packageName: String)",
@@ -357,8 +366,8 @@
                 },
                 {
                   "lines": [
-                    862,
-                    864
+                    913,
+                    915
                   ],
                   "name": "setFixTTL",
                   "signature": "(fixTTL: Boolean)",
@@ -366,8 +375,8 @@
                 },
                 {
                   "lines": [
-                    866,
-                    946
+                    917,
+                    999
                   ],
                   "name": "equals",
                   "signature": "(other: Any?)",
@@ -375,8 +384,8 @@
                 },
                 {
                   "lines": [
-                    948,
-                    950
+                    1001,
+                    1003
                   ],
                   "name": "hashCode",
                   "signature": "()",
@@ -384,8 +393,8 @@
                 }
               ],
               "lines": [
-                794,
-                951
+                833,
+                1004
               ],
               "name": "BuilderVPN",
               "type": "class"
@@ -393,7 +402,7 @@
           ],
           "lines": [
             91,
-            960
+            1026
           ],
           "name": "ServiceVPN",
           "type": "class"
@@ -401,12 +410,12 @@
       ]
     },
     "ServiceVPNHandler.kt": {
-      "hash": "1ccb1a4a160a",
-      "indexed_at": "2026-08-01T08:49:51.525133+00:00",
+      "hash": "a3f08d6c18fc",
+      "indexed_at": "2026-08-01T09:13:36.591826+00:00",
       "language": "kotlin",
-      "lines": 591,
-      "mtime_ns": 1785574116785037300,
-      "size": 25975,
+      "lines": 594,
+      "mtime_ns": 1785575548491004500,
+      "size": 26239,
       "symbols": [
         {
           "children": [
@@ -485,7 +494,7 @@
             {
               "lines": [
                 503,
-                528
+                531
               ],
               "name": "setUnderlyingNetwork",
               "signature": "()",
@@ -493,8 +502,8 @@
             },
             {
               "lines": [
-                530,
-                543
+                533,
+                546
               ],
               "name": "stopVPN",
               "signature": "(pfd: ParcelFileDescriptor)",
@@ -502,8 +511,8 @@
             },
             {
               "lines": [
-                545,
-                576
+                548,
+                579
               ],
               "name": "stopServiceVPN",
               "signature": "()",
@@ -511,16 +520,16 @@
             },
             {
               "lines": [
-                578,
-                578
+                581,
+                581
               ],
               "name": "StartFailedException",
               "type": "class"
             },
             {
               "lines": [
-                580,
-                582
+                583,
+                585
               ],
               "name": "getAppsList",
               "signature": "()",
@@ -529,7 +538,7 @@
           ],
           "lines": [
             73,
-            591
+            594
           ],
           "name": "ServiceVPNHandler",
           "type": "class"
@@ -1158,6 +1167,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T08:49:51.526713+00:00",
+  "generated_at": "2026-08-01T09:13:36.593495+00:00",
   "version": "1.0"
 }
