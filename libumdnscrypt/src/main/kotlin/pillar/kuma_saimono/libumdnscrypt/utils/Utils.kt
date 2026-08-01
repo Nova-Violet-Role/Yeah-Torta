@@ -62,26 +62,34 @@ import java.net.SocketException
 import java.util.Locale
 import java.util.regex.Pattern
 import kotlin.math.roundToInt
+import androidx.core.text.HtmlCompat
 
 
 object Utils {
 
     const val MAX_SOCKS_ARG_LENGTH = 500
 
-    fun getScreenOrientationOld(activity: Activity): Int {
-        val getOrient: Display = activity.windowManager.defaultDisplay
-        val point = Point()
-        getOrient.getSize(point)
-        return if (point.x == point.y) {
-            Configuration.ORIENTATION_UNDEFINED
-        } else {
-            if (point.x < point.y) {
-                Configuration.ORIENTATION_PORTRAIT
-            } else {
-                Configuration.ORIENTATION_LANDSCAPE
-            }
-        }
-    }
+    /**
+     * Kept as a symbol, emptied of deprecated API.
+     *
+     * The body used `windowManager.defaultDisplay` + `Display.getSize(Point)`, both deprecated
+     * (API 30 and 30), and it has NO caller anywhere in the repository -- measured with a
+     * repo-wide grep over .kt and .java, which found only this declaration. Its modern twin
+     * [getScreenOrientation] sits directly below it, computes the same three-way answer from
+     * `resources.displayMetrics`, and uses nothing deprecated.
+     *
+     * It is DELEGATED rather than deleted. Deleting a public symbol from a library module is a
+     * source-compatibility break for anything outside this repository, and the two warnings were
+     * never worth that; delegating removes the deprecated calls while every existing caller --
+     * including one I cannot see -- keeps working and now gets the maintained implementation.
+     *
+     * @deprecated the "Old" was the deprecated-API path; there is no reason to prefer it now.
+     */
+    @Deprecated(
+        "Superseded by getScreenOrientation(), which reads displayMetrics and uses no deprecated API.",
+        ReplaceWith("getScreenOrientation(activity)")
+    )
+    fun getScreenOrientationOld(activity: Activity): Int = getScreenOrientation(activity)
 
     fun getScreenOrientation(activity: Activity): Int {
         val displayMetrics = activity.resources.displayMetrics
@@ -351,7 +359,7 @@ object Utils {
                     Html.fromHtml(matcher.group(), Html.FROM_HTML_MODE_LEGACY).toString()
                 )
             } else {
-                matcher.replaceAll(Html.fromHtml(matcher.group()).toString())
+                matcher.replaceAll(HtmlCompat.fromHtml(matcher.group(), HtmlCompat.FROM_HTML_MODE_LEGACY).toString())
             }
         }
         return result

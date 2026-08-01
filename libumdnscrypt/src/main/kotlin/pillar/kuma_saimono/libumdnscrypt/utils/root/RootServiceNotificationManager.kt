@@ -185,7 +185,7 @@ class RootServiceNotificationManager(
             .setColor(getBrandColor())
             .setContentTitle(title)
             .setContentText(text)
-            .setPriority(Notification.PRIORITY_MIN)
+            .setPriority(NotificationCompat.PRIORITY_MIN)
             .setOnlyAlertOnce(true)
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .setSilent(true)
