@@ -2,12 +2,12 @@
   "directory": "tools\\deprecation",
   "files": {
     "callgraph.js": {
-      "hash": "6a4cd94ed907",
-      "indexed_at": "2026-08-01T14:26:29.746892+00:00",
+      "hash": "c7ebc7f84155",
+      "indexed_at": "2026-08-01T15:15:51.505256+00:00",
       "language": "javascript",
-      "lines": 116,
-      "mtime_ns": 1785594349342707500,
-      "size": 5689,
+      "lines": 157,
+      "mtime_ns": 1785597299416853100,
+      "size": 8171,
       "symbols": [
         {
           "lines": [
@@ -29,20 +29,20 @@
           "type": "function"
         },
         {
-          "docstring": "Is `line` within `win` lines below an SDK_INT test **in the same function**? The clamp at the enclosing declaration is the fix described at the top of",
+          "docstring": "Is `line` inside a block whose condition tests `SDK_INT`? ============================================================================================",
           "lines": [
-            73,
-            81
+            97,
+            122
           ],
           "name": "gatedAt",
-          "signature": "(src, line, win = 15)",
+          "signature": "(src, line)",
           "type": "function"
         },
         {
           "docstring": "Every call site of `name` across the indexed module, as {file, line}.",
           "lines": [
-            84,
-            93
+            125,
+            134
           ],
           "name": "callSites",
           "signature": "(text, name)",
@@ -51,8 +51,8 @@
         {
           "docstring": "Is this deprecated usage reachable ONLY on API levels that require it? Every uncertain branch answers false (UNGATED). Precision may be poor; absolvin",
           "lines": [
-            101,
-            114
+            142,
+            155
           ],
           "name": "isGated",
           "signature": "(text, file, line, depth, seen)",
@@ -108,18 +108,18 @@
       ]
     },
     "gated-conformance.js": {
-      "hash": "37ee11614e0c",
-      "indexed_at": "2026-08-01T14:26:32.807279+00:00",
+      "hash": "5187343555c3",
+      "indexed_at": "2026-08-01T15:15:52.615021+00:00",
       "language": "javascript",
-      "lines": 129,
-      "mtime_ns": 1785594321001705200,
-      "size": 6635,
+      "lines": 146,
+      "mtime_ns": 1785597313769854500,
+      "size": 7896,
       "symbols": [
         {
           "docstring": "Build a synthetic compile log in the exact shape Kotlin emits, one warning per case.",
           "lines": [
-            54,
-            54
+            65,
+            65
           ],
           "name": "abs",
           "signature": "(f)",
@@ -127,8 +127,8 @@
         },
         {
           "lines": [
-            66,
-            82
+            77,
+            93
           ],
           "name": "runOne",
           "signature": "(idx)",
@@ -224,6 +224,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T14:51:04.205667+00:00",
+  "generated_at": "2026-08-01T15:15:52.616920+00:00",
   "version": "1.0"
 }

@@ -1,9 +1,14 @@
 // Conformance corpus for the isGated CALL-GRAPH WALK in depgate.js.
 //
-// isGated decides 15 of the 34 measured warnings: whether a deprecated call is a legacy branch
+// isGated decides 57 of the 79 measured warnings: whether a deprecated call is a legacy branch
 // REQUIRED by minSdk 21, or a real backlog item that runs on every device. It was the last
 // component with neither a corpus nor a theorem. A bug in it moves usages between GATED and
-// UNGATED silently -- the total is still 34 either way, so nothing looks wrong.
+// UNGATED silently -- the total is still 79 either way, so nothing looks wrong.
+//
+// (The counts here said "15 of 34" until unmute2.js was fixed on 2026-08-01; it had been
+// case-sensitive, six lowercase @Suppress("deprecation") were masking 45 warnings, and every
+// figure downstream was low. A comment stating a measured number goes stale the moment the
+// measurement improves, which is why the number is restated rather than left to rot.)
 //
 // This runs the REAL depgate.js against fixture sources (via DEPGATE_ROOT) and a synthetic
 // compile log, then asserts the verdict for each fixture. It does not re-implement the walk:
@@ -26,7 +31,13 @@ const FIX = "tools/deprecation/fixtures/kt";
 // [fixture file, 1-based line of the legacyCall(), expected verdict, why]
 const CASES = [
   ["DirectGate.kt", 9, "gated",
-   "SDK_INT test within the 15-line window directly above"],
+   "the call sits in the else of an SDK_INT test, directly above"],
+  ["FarEnclosingGate.kt", 27, "gated",
+   "ENCLOSED by an SDK_INT test 20 lines up -- distance is not the question (NetworkChecker:159)"],
+  ["AfterGateCloses.kt", 14, "ungated",
+   "the SDK_INT block CLOSED before this call; a closed block is never an enclosing opener"],
+  ["NestedGate.kt", 11, "gated",
+   "SDK_INT is on an OUTER block with an unrelated if between -- keep walking outward, do not stop"],
   ["CallerGate.kt", 7, "gated",
    "no local gate; its ONLY call site is inside an SDK_INT branch"],
   ["MixedCallers.kt", 8, "ungated",
@@ -43,7 +54,7 @@ const CASES = [
    "enclosing fun found by INDENT, not by nearest-above (an anon object's override sits between)"],
 ];
 
-const FLOOR = 8;
+const FLOOR = 11;
 if (CASES.length < FLOOR) {
   console.log("  FAIL: " + CASES.length + " cases, floor " + FLOOR + " -- a corpus that examined" +
               " almost nothing must not report success.");
@@ -116,6 +127,12 @@ const API = [
    () => cg.gatedAt(["fun a() {", "  if (Build.VERSION.SDK_INT >= 23) {", "    legacyCall()"], 3) === true],
   ["a gate in the PREVIOUS function is not borrowed",
    () => cg.gatedAt(["fun a() {", "  if (Build.VERSION.SDK_INT >= 23) { x() }", "}", "fun b() {", "  legacyCall()"], 5) === false],
+  // A single-line guard has no enclosing block at all -- the test and the call share one line.
+  // A mutation that stopped checking the call's own line survived until this assertion existed.
+  ["a SINGLE-LINE guard counts: if (SDK_INT >= 23) legacyCall()",
+   () => cg.gatedAt(["fun a() {", "  if (Build.VERSION.SDK_INT >= 23) legacyCall()"], 2) === true],
+  ["and a single-line call with NO guard does not",
+   () => cg.gatedAt(["fun a() {", "  legacyCall()"], 2) === false],
 ];
 for (const [desc, fn] of API) {
   let ok = false;

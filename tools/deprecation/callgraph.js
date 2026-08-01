@@ -65,19 +65,60 @@ function enclosingFun(src, line) {
 }
 
 /**
- * Is `line` within `win` lines below an SDK_INT test **in the same function**?
+ * Is `line` inside a block whose condition tests `SDK_INT`?
  *
- * The clamp at the enclosing declaration is the fix described at the top of this file. Without it
- * the scan reaches into the previous function and absolves an ungated call.
+ * ============================================================================================
+ * DISTANCE WAS THE WRONG QUESTION. This used to ask "is there an SDK_INT test in the 15 lines
+ * above", which is a proxy for enclosure and wrong in BOTH directions:
+ *
+ *   FALSE POSITIVE (unsafe): ExtendedDialogFragment.kt:89 was absolved by a test at :79 that
+ *     belonged to a function which had already CLOSED at :83. Fixed 2026-08-01 by clamping the
+ *     window at the enclosing declaration.
+ *
+ *   FALSE NEGATIVE (imprecise): NetworkChecker.kt:159 sits in the `else` of an SDK_INT test at
+ *     :141 -- unambiguously version-guarded, and eighteen lines up, so the window missed it. Its
+ *     identical twin at :153 was counted gated purely because it happened to be nearer.
+ *
+ * A rule where two identical expressions in the same conditional get opposite verdicts because of
+ * line spacing is not measuring what it claims to measure.
+ *
+ * WHAT IT ASKS NOW. Walk upward tracking brace depth. A line that leaves the running depth
+ * negative is a line that OPENED a block still enclosing our call. If any such block header tests
+ * SDK_INT, the call is version-guarded, at any distance. If we reach the enclosing function
+ * declaration first, it is not.
+ *
+ * This is sound in both directions: a conditional that has already closed can never be an
+ * enclosing opener, so the ExtendedDialogFragment case stays UNGATED; and an enclosing `if` stays
+ * found however far above it sits. `} else {` and `} else if (...) {` are net-zero lines, so the
+ * scan walks on to the matching `if` that carries the condition -- which is where the SDK_INT test
+ * actually lives in a legacy fallback.
+ * ============================================================================================
  */
-function gatedAt(src, line, win = 15) {
+function gatedAt(src, line) {
   const fn = enclosingFun(src, line);
-  // Never look above the enclosing declaration. When there is no enclosing function at all (a
-  // property initialiser, say) the window is unrestricted-but-textual as before -- such a site has
-  // no caller to be gated by, and is reported UNGATED by the walk regardless.
-  const floor = fn ? fn.at : 0;
-  const start = Math.max(0, line - 1 - win, floor);
-  return SDK.test(src.slice(start, line).join("\n"));
+  // INFRASTRUCTURE, not load-bearing -- labelled honestly because a mutation removing it SURVIVED
+  // the corpus and I could not construct a case that distinguishes it. Under the brace-depth rule
+  // the clamp is redundant: a sibling function's conditional has already closed, so it can never
+  // register as an enclosing opener, and the ExtendedDialogFragment case stays UNGATED with or
+  // without this line. It is kept as a bound on the damage if brace accounting is ever thrown off
+  // (a brace inside a string literal, say) -- cheap insurance, and NOT a guarantee this corpus
+  // tests. Calling it load-bearing would be the overclaim.
+  const floor = fn ? fn.at - 1 : 0;   // 0-based index of the declaration itself
+  // The call's own line counts: `if (SDK_INT >= M) foo()` on one line is gated.
+  if (SDK.test(src[line - 1] || "")) return true;
+  let depth = 0;
+  for (let i = line - 2; i >= floor; i--) {
+    const l = src[i] || "";
+    const opens = (l.match(/\{/g) || []).length;
+    const closes = (l.match(/\}/g) || []).length;
+    depth += closes - opens;
+    if (depth < 0) {
+      // This line opened a block that still encloses `line`.
+      if (SDK.test(l)) return true;
+      depth = 0;                      // continue outward from this block's header
+    }
+  }
+  return false;
 }
 
 /** Every call site of `name` across the indexed module, as {file, line}. */

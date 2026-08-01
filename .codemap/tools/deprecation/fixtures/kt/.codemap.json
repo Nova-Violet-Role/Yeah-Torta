@@ -1,6 +1,36 @@
 {
   "directory": "tools\\deprecation\\fixtures\\kt",
   "files": {
+    "AfterGateCloses.kt": {
+      "hash": "9cd7e0ababf6",
+      "indexed_at": "2026-08-01T15:15:51.782171+00:00",
+      "language": "kotlin",
+      "lines": 16,
+      "mtime_ns": 1785597157037098600,
+      "size": 593,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                15
+              ],
+              "name": "check",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "depth refuses to, because a closed block can never be an enclosing opener.",
+          "lines": [
+            7,
+            16
+          ],
+          "name": "AfterGateCloses",
+          "type": "class"
+        }
+      ]
+    },
     "AnonObject.kt": {
       "hash": "f8c2406d9411",
       "indexed_at": "2026-08-01T14:26:30.579047+00:00",
@@ -205,6 +235,36 @@
         }
       ]
     },
+    "FarEnclosingGate.kt": {
+      "hash": "4b9914a86a89",
+      "indexed_at": "2026-08-01T15:15:52.058980+00:00",
+      "language": "kotlin",
+      "lines": 30,
+      "mtime_ns": 1785597157015098300,
+      "size": 961,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                29
+              ],
+              "name": "check",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "decided by line spacing. Enclosure, not distance, is the question.",
+          "lines": [
+            7,
+            30
+          ],
+          "name": "FarEnclosingGate",
+          "type": "class"
+        }
+      ]
+    },
     "MixedCallers.kt": {
       "hash": "c4291f100831",
       "indexed_at": "2026-08-01T14:26:31.962277+00:00",
@@ -249,6 +309,36 @@
             20
           ],
           "name": "MixedCallers",
+          "type": "class"
+        }
+      ]
+    },
+    "NestedGate.kt": {
+      "hash": "51bfd0ccad6a",
+      "indexed_at": "2026-08-01T15:15:52.337260+00:00",
+      "language": "kotlin",
+      "lines": 15,
+      "mtime_ns": 1785597251053853900,
+      "size": 567,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                8,
+                14
+              ],
+              "name": "check",
+              "signature": "(flag: Boolean)",
+              "type": "method"
+            }
+          ],
+          "docstring": "`break` survived the corpus until this fixture existed.",
+          "lines": [
+            7,
+            15
+          ],
+          "name": "NestedGate",
           "type": "class"
         }
       ]
@@ -303,6 +393,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T14:26:32.531997+00:00",
+  "generated_at": "2026-08-01T15:15:52.338804+00:00",
   "version": "1.0"
 }
