@@ -583,6 +583,16 @@ jobs:
       # parser over a corpus of verbatim compiler output plus the adversarial branches the live
       # log does not reach (no-quote fallback, non-ASCII filename, error line, .java line, CR).
       # Mutation-tested: 6 mutations of parse.js, 6 killed.
+      # The isGated call-graph walk decides 14 of the 34 warnings -- required legacy branch, or
+      # real backlog. It was the last component with neither a corpus nor a theorem, and the
+      # first corpus run found a REAL defect in the only branch that could absolve without
+      # evidence: the SDK_INT window crossed function boundaries. Fixtures cover direct gate,
+      # caller gate, mixed callers, no callers, property initialiser, cycle, depth exhaustion and
+      # the anonymous-object indent case. Mutation-tested: 10 mutations, 10 killed.
+      - name: the gated/ungated classifier must match its corpus
+        if: matrix.flavor == 'arm64'
+        run: node tools/deprecation/gated-conformance.js
+
       - name: the deprecation parser must match its corpus
         if: matrix.flavor == 'arm64'
         run: node tools/deprecation/parse-conformance.js

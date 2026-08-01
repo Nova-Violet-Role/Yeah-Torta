@@ -1,58 +1,77 @@
 {
   "directory": "tools\\deprecation",
   "files": {
-    "depclass.js": {
-      "hash": "54808fd0331c",
-      "indexed_at": "2026-08-01T13:58:46.834787+00:00",
+    "callgraph.js": {
+      "hash": "6a4cd94ed907",
+      "indexed_at": "2026-08-01T14:26:29.746892+00:00",
       "language": "javascript",
-      "lines": 159,
-      "mtime_ns": 1785592644382546500,
-      "size": 7988,
+      "lines": 116,
+      "mtime_ns": 1785594349342707500,
+      "size": 5689,
       "symbols": [
         {
           "lines": [
-            72,
-            72
+            46,
+            46
           ],
           "name": "indentOf",
           "signature": "(s)",
           "type": "function"
         },
         {
-          "docstring": "The name of the function STRUCTURALLY enclosing `line` (1-based), or null. Indentation-aware, and that is not a nicety. Scanning upward for the neares",
+          "docstring": "The function declaration that CONTAINS `line` (1-based). The indentation test is load-bearing: without it a naive upward scan returns an `override fun",
           "lines": [
-            85,
-            92
+            58,
+            65
           ],
           "name": "enclosingFun",
           "signature": "(src, line)",
           "type": "function"
         },
         {
-          "docstring": "Is `line` within `win` lines below an SDK_INT test, inside the same file?",
+          "docstring": "Is `line` within `win` lines below an SDK_INT test **in the same function**? The clamp at the enclosing declaration is the fix described at the top of",
           "lines": [
-            95,
-            97
+            73,
+            81
           ],
           "name": "gatedAt",
           "signature": "(src, line, win = 15)",
           "type": "function"
         },
         {
-          "docstring": "Every call site of `name` across the module, as {file, line}.",
+          "docstring": "Every call site of `name` across the indexed module, as {file, line}.",
           "lines": [
-            100,
-            111
+            84,
+            93
           ],
           "name": "callSites",
-          "signature": "(name)",
+          "signature": "(text, name)",
           "type": "function"
         },
         {
-          "docstring": "Gated directly, or gated at every call site (transitively, bounded depth).",
+          "docstring": "Is this deprecated usage reachable ONLY on API levels that require it? Every uncertain branch answers false (UNGATED). Precision may be poor; absolvin",
           "lines": [
-            114,
-            127
+            101,
+            114
+          ],
+          "name": "isGated",
+          "signature": "(text, file, line, depth, seen)",
+          "type": "function"
+        }
+      ]
+    },
+    "depclass.js": {
+      "hash": "e22d841fdfe3",
+      "indexed_at": "2026-08-01T14:26:30.024241+00:00",
+      "language": "javascript",
+      "lines": 113,
+      "mtime_ns": 1785594232396706400,
+      "size": 6593,
+      "symbols": [
+        {
+          "lines": [
+            81,
+            81
           ],
           "name": "isGated",
           "signature": "(file, line, depth, seen)",
@@ -61,53 +80,17 @@
       ]
     },
     "depgate.js": {
-      "hash": "20c6a23390bc",
-      "indexed_at": "2026-08-01T13:58:47.110924+00:00",
+      "hash": "7c9f456f5ebe",
+      "indexed_at": "2026-08-01T14:26:30.303350+00:00",
       "language": "javascript",
-      "lines": 147,
-      "mtime_ns": 1785592619944546000,
-      "size": 7934,
+      "lines": 143,
+      "mtime_ns": 1785594140051705600,
+      "size": 8285,
       "symbols": [
         {
           "lines": [
-            47,
-            47
-          ],
-          "name": "indentOf",
-          "signature": "(s)",
-          "type": "function"
-        },
-        {
-          "lines": [
-            48,
-            52
-          ],
-          "name": "enclosingFun",
-          "signature": "(src, line)",
-          "type": "function"
-        },
-        {
-          "lines": [
-            53,
-            53
-          ],
-          "name": "gatedAt",
-          "signature": "(src, line, win = 15)",
-          "type": "function"
-        },
-        {
-          "lines": [
-            54,
-            59
-          ],
-          "name": "callSites",
-          "signature": "(name)",
-          "type": "function"
-        },
-        {
-          "lines": [
-            60,
-            68
+            61,
+            61
           ],
           "name": "isGated",
           "signature": "(file, line, depth, seen)",
@@ -115,11 +98,40 @@
         },
         {
           "lines": [
-            124,
-            124
+            120,
+            120
           ],
           "name": "sum",
           "signature": "(o)",
+          "type": "function"
+        }
+      ]
+    },
+    "gated-conformance.js": {
+      "hash": "37ee11614e0c",
+      "indexed_at": "2026-08-01T14:26:32.807279+00:00",
+      "language": "javascript",
+      "lines": 129,
+      "mtime_ns": 1785594321001705200,
+      "size": 6635,
+      "symbols": [
+        {
+          "docstring": "Build a synthetic compile log in the exact shape Kotlin emits, one warning per case.",
+          "lines": [
+            54,
+            54
+          ],
+          "name": "abs",
+          "signature": "(f)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            66,
+            82
+          ],
+          "name": "runOne",
+          "signature": "(idx)",
           "type": "function"
         }
       ]
@@ -183,6 +195,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T13:58:47.665229+00:00",
+  "generated_at": "2026-08-01T14:26:32.808781+00:00",
   "version": "1.0"
 }

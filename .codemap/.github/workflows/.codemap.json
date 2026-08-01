@@ -265,12 +265,12 @@
       ]
     },
     "build.yml": {
-      "hash": "d95f304b7bdf",
-      "indexed_at": "2026-08-01T13:58:46.552845+00:00",
+      "hash": "11b40fa861f4",
+      "indexed_at": "2026-08-01T14:26:29.463711+00:00",
       "language": "yaml",
-      "lines": 677,
-      "mtime_ns": 1785592701410667400,
-      "size": 37775,
+      "lines": 687,
+      "mtime_ns": 1785594365380705100,
+      "size": 38491,
       "symbols": [
         {
           "docstring": "build",
@@ -1439,7 +1439,34 @@
                       "docstring": "./gradlew :libumdnscrypt:test${{ matrix.flavor == 'arm64' && 'Arm64' || 'Universal' }}DebugUnitTest ...",
                       "lines": [
                         563,
-                        585
+                        591
+                      ],
+                      "name": "run",
+                      "type": "key"
+                    },
+                    {
+                      "docstring": "the gated/ungated classifier must match its corpus",
+                      "lines": [
+                        592,
+                        592
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "matrix.flavor == 'arm64'",
+                      "lines": [
+                        593,
+                        593
+                      ],
+                      "name": "if",
+                      "type": "key"
+                    },
+                    {
+                      "docstring": "node tools/deprecation/gated-conformance.js",
+                      "lines": [
+                        594,
+                        595
                       ],
                       "name": "run",
                       "type": "key"
@@ -1447,8 +1474,8 @@
                     {
                       "docstring": "the deprecation parser must match its corpus",
                       "lines": [
-                        586,
-                        586
+                        596,
+                        596
                       ],
                       "name": "name",
                       "type": "item"
@@ -1456,8 +1483,8 @@
                     {
                       "docstring": "matrix.flavor == 'arm64'",
                       "lines": [
-                        587,
-                        587
+                        597,
+                        597
                       ],
                       "name": "if",
                       "type": "key"
@@ -1465,8 +1492,8 @@
                     {
                       "docstring": "node tools/deprecation/parse-conformance.js",
                       "lines": [
-                        588,
-                        589
+                        598,
+                        599
                       ],
                       "name": "run",
                       "type": "key"
@@ -1474,8 +1501,8 @@
                     {
                       "docstring": "the suppressed-deprecation backlog must not grow",
                       "lines": [
-                        590,
-                        590
+                        600,
+                        600
                       ],
                       "name": "name",
                       "type": "item"
@@ -1483,16 +1510,16 @@
                     {
                       "docstring": "matrix.flavor == 'arm64'",
                       "lines": [
-                        591,
-                        591
+                        601,
+                        601
                       ],
                       "name": "if",
                       "type": "key"
                     },
                     {
                       "lines": [
-                        592,
-                        616
+                        602,
+                        626
                       ],
                       "name": "run",
                       "type": "multiline"
@@ -1500,8 +1527,8 @@
                     {
                       "docstring": "Name the APK",
                       "lines": [
-                        617,
-                        617
+                        627,
+                        627
                       ],
                       "name": "name",
                       "type": "item"
@@ -1509,16 +1536,16 @@
                     {
                       "docstring": "apk",
                       "lines": [
-                        618,
-                        618
+                        628,
+                        628
                       ],
                       "name": "id",
                       "type": "key"
                     },
                     {
                       "lines": [
-                        619,
-                        624
+                        629,
+                        634
                       ],
                       "name": "run",
                       "type": "multiline"
@@ -1526,8 +1553,8 @@
                     {
                       "docstring": "actions/upload-artifact@v6",
                       "lines": [
-                        625,
-                        625
+                        635,
+                        635
                       ],
                       "name": "uses",
                       "type": "item"
@@ -1537,8 +1564,8 @@
                         {
                           "docstring": "yeah-torta-${{ matrix.flavor }}-alpha",
                           "lines": [
-                            627,
-                            627
+                            637,
+                            637
                           ],
                           "name": "name",
                           "type": "key"
@@ -1546,8 +1573,8 @@
                         {
                           "docstring": "${{ steps.apk.outputs.path }}",
                           "lines": [
-                            628,
-                            628
+                            638,
+                            638
                           ],
                           "name": "path",
                           "type": "key"
@@ -1555,8 +1582,8 @@
                         {
                           "docstring": "error",
                           "lines": [
-                            629,
-                            629
+                            639,
+                            639
                           ],
                           "name": "if-no-files-found",
                           "type": "key"
@@ -1564,16 +1591,16 @@
                         {
                           "docstring": "30",
                           "lines": [
-                            630,
-                            634
+                            640,
+                            644
                           ],
                           "name": "retention-days",
                           "type": "key"
                         }
                       ],
                       "lines": [
-                        626,
-                        634
+                        636,
+                        644
                       ],
                       "name": "with",
                       "type": "section"
@@ -1581,7 +1608,7 @@
                   ],
                   "lines": [
                     391,
-                    634
+                    644
                   ],
                   "name": "steps",
                   "type": "list"
@@ -1589,7 +1616,7 @@
               ],
               "lines": [
                 375,
-                634
+                644
               ],
               "name": "android",
               "type": "section"
@@ -1599,8 +1626,8 @@
                 {
                   "docstring": "publish pre-release",
                   "lines": [
-                    636,
-                    636
+                    646,
+                    646
                   ],
                   "name": "name",
                   "type": "key"
@@ -1608,8 +1635,8 @@
                 {
                   "docstring": "startsWith(github.ref, 'refs/tags/v')",
                   "lines": [
-                    637,
-                    637
+                    647,
+                    647
                   ],
                   "name": "if",
                   "type": "key"
@@ -1617,8 +1644,8 @@
                 {
                   "docstring": "[android]",
                   "lines": [
-                    638,
-                    638
+                    648,
+                    648
                   ],
                   "name": "needs",
                   "type": "collection"
@@ -1626,8 +1653,8 @@
                 {
                   "docstring": "ubuntu-latest",
                   "lines": [
-                    639,
-                    639
+                    649,
+                    649
                   ],
                   "name": "runs-on",
                   "type": "key"
@@ -1637,16 +1664,16 @@
                     {
                       "docstring": "write",
                       "lines": [
-                        641,
-                        641
+                        651,
+                        651
                       ],
                       "name": "contents",
                       "type": "key"
                     }
                   ],
                   "lines": [
-                    640,
-                    641
+                    650,
+                    651
                   ],
                   "name": "permissions",
                   "type": "section"
@@ -1656,8 +1683,8 @@
                     {
                       "docstring": "actions/checkout@v5",
                       "lines": [
-                        643,
-                        643
+                        653,
+                        653
                       ],
                       "name": "uses",
                       "type": "item"
@@ -1665,8 +1692,8 @@
                     {
                       "docstring": "actions/download-artifact@v7",
                       "lines": [
-                        644,
-                        644
+                        654,
+                        654
                       ],
                       "name": "uses",
                       "type": "item"
@@ -1676,16 +1703,16 @@
                         {
                           "docstring": "artifacts",
                           "lines": [
-                            646,
-                            647
+                            656,
+                            657
                           ],
                           "name": "path",
                           "type": "key"
                         }
                       ],
                       "lines": [
-                        645,
-                        647
+                        655,
+                        657
                       ],
                       "name": "with",
                       "type": "section"
@@ -1693,16 +1720,16 @@
                     {
                       "docstring": "Collect the APKs",
                       "lines": [
-                        648,
-                        648
+                        658,
+                        658
                       ],
                       "name": "name",
                       "type": "item"
                     },
                     {
                       "lines": [
-                        649,
-                        654
+                        659,
+                        664
                       ],
                       "name": "run",
                       "type": "multiline"
@@ -1710,8 +1737,8 @@
                     {
                       "docstring": "softprops/action-gh-release@v2",
                       "lines": [
-                        655,
-                        655
+                        665,
+                        665
                       ],
                       "name": "uses",
                       "type": "item"
@@ -1721,8 +1748,8 @@
                         {
                           "docstring": "release/*.apk",
                           "lines": [
-                            657,
-                            657
+                            667,
+                            667
                           ],
                           "name": "files",
                           "type": "key"
@@ -1730,8 +1757,8 @@
                         {
                           "docstring": "true",
                           "lines": [
-                            658,
-                            658
+                            668,
+                            668
                           ],
                           "name": "prerelease",
                           "type": "key"
@@ -1739,8 +1766,8 @@
                         {
                           "docstring": "true",
                           "lines": [
-                            659,
-                            659
+                            669,
+                            669
                           ],
                           "name": "generate_release_notes",
                           "type": "key"
@@ -1748,40 +1775,40 @@
                         {
                           "docstring": "\"Yeah! Tort\u00e4 ${{ github.ref_name }} \u2014 ALPHA\"",
                           "lines": [
-                            660,
-                            660
+                            670,
+                            670
                           ],
                           "name": "name",
                           "type": "key"
                         },
                         {
                           "lines": [
-                            661,
-                            678
+                            671,
+                            688
                           ],
                           "name": "body",
                           "type": "multiline"
                         }
                       ],
                       "lines": [
-                        656,
-                        678
+                        666,
+                        688
                       ],
                       "name": "with",
                       "type": "section"
                     }
                   ],
                   "lines": [
-                    642,
-                    678
+                    652,
+                    688
                   ],
                   "name": "steps",
                   "type": "list"
                 }
               ],
               "lines": [
-                635,
-                678
+                645,
+                688
               ],
               "name": "prerelease",
               "type": "section"
@@ -1789,7 +1816,7 @@
           ],
           "lines": [
             43,
-            678
+            688
           ],
           "name": "jobs",
           "type": "section"
@@ -2130,6 +2157,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T13:58:46.554564+00:00",
+  "generated_at": "2026-08-01T14:26:29.465289+00:00",
   "version": "1.0"
 }

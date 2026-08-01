@@ -25,12 +25,23 @@ const path = require("path");
 
 const MODE = process.argv[2];                    // "check" | "write"
 const LOG = process.argv[3];
-const BASE = "tools/deprecation/deprecation-baseline.json";
+// DEPGATE_BASELINE / DEPGATE_ROOT / DEPGATE_FLOOR are injection points for the isGated corpus
+// (gated-conformance.js). Production sets none of them and gets the committed values below.
+const BASE = process.env.DEPGATE_BASELINE || "tools/deprecation/deprecation-baseline.json";
 
 if (!LOG || !fs.existsSync(LOG)) { console.log("usage: depgate.js <check|write> <compile-log>"); process.exit(2); }
 
 // ---- reuse depclass's classification -----------------------------------------------------------
-const ROOT = "libumdnscrypt/src/main";
+// DEPGATE_ROOT exists so the isGated call-graph walk can be exercised against FIXTURES.
+//
+// isGated decides 15 of the 34 warnings -- whether a deprecated call is a required minSdk-21
+// legacy branch or a real backlog item. It had no corpus and no theorem: a bug in it moves usages
+// between GATED and UNGATED silently, and the totals still add up to 34 either way.
+//
+// Hardcoding the root made it untestable, so the honest fix is to make the root injectable rather
+// than to re-implement the walk in a test (two copies of a classifier is the same defect the
+// parser had). Production passes nothing and gets the real tree.
+const ROOT = process.env.DEPGATE_ROOT || "libumdnscrypt/src/main";
 const files = [];
 (function walk(d) {
   for (const e of fs.readdirSync(d, { withFileTypes: true })) {
@@ -42,30 +53,12 @@ const files = [];
 const byBase = new Map(); const text = new Map();
 for (const p of files) { byBase.set(path.basename(p), p); text.set(p, fs.readFileSync(p, "utf8").replace(/\r\n/g, "\n").split("\n")); }
 
-const FUN = /^\s*(?:@\w+(?:\([^)]*\))?\s*)*(?:public |private |internal |protected )?(?:override |suspend |inline |open |abstract )*fun\s+(?:<[^>]+>\s*)?([A-Za-z_][A-Za-z0-9_]*)/;
-const SDK = /Build\.VERSION\.SDK_INT\s*(?:>=|>|<|<=)/;
-const indentOf = (s) => (s.match(/^\s*/) || [""])[0].length;
-function enclosingFun(src, line) {
-  const want = indentOf(src[line - 1] || "");
-  for (let i = line - 1; i >= 0; i--) { const m = src[i] && src[i].match(FUN); if (m && indentOf(src[i]) < want) return { name: m[1] }; }
-  return null;
-}
-const gatedAt = (src, line, win = 15) => SDK.test(src.slice(Math.max(0, line - 1 - win), line).join("\n"));
-function callSites(name) {
-  const re = new RegExp("(?:^|[^A-Za-z0-9_.])" + name + "\\s*\\(");
-  const out = [];
-  for (const [p, src] of text) for (let i = 0; i < src.length; i++) { if (re.test(src[i]) && !FUN.test(src[i])) out.push({ file: p, line: i + 1 }); }
-  return out;
-}
-function isGated(file, line, depth, seen) {
-  const src = text.get(file); if (!src) return false;
-  if (gatedAt(src, line)) return true;
-  if (depth <= 0) return false;
-  const fn = enclosingFun(src, line); if (!fn) return false;
-  const key = file + "#" + fn.name; if (seen.has(key)) return false; seen.add(key);
-  const sites = callSites(fn.name); if (sites.length === 0) return false;
-  return sites.every((s) => isGated(s.file, s.line, depth - 1, seen));
-}
+// The call-graph walk lives in callgraph.js -- ONE copy, shared with depclass.js, exercised by
+// gated-conformance.js against fixtures. It used to be duplicated here and there, and the two
+// copies had ALREADY drifted. The corpus found a real defect in it: the SDK_INT window crossed
+// function boundaries and absolved ungated calls. See callgraph.js for the full account.
+const { isGated: isGatedRaw } = require(__dirname + "/callgraph.js");
+const isGated = (file, line, depth, seen) => isGatedRaw(text, file, line, depth, seen);
 
 // ---- observe -----------------------------------------------------------------------------------
 const observed = {};
@@ -103,7 +96,10 @@ if (unresolved > 0) { console.log("  FAIL: " + unresolved + " warning(s) could n
 // with none of them did not come from a real, stripped compile. This is deliberately NOT a check
 // that the count equals the baseline -- fixing everything is a correct future and must stay
 // reachable -- but it does require the measurement to have HAPPENED.
-const FLOOR = 5;
+// DEPGATE_FLOOR is lowered ONLY by gated-conformance.js, which deliberately feeds one warning at
+// a time so each fixture's verdict is attributable. Production never sets it, so the floor that
+// protects a real run is the committed 5.
+const FLOOR = process.env.DEPGATE_FLOOR !== undefined ? Number(process.env.DEPGATE_FLOOR) : 5;
 if (MODE === "check" && total < FLOOR) {
   console.log("  FAIL: only " + total + " deprecation warning(s) in the log (floor " + FLOOR + ").");
   console.log("        This is a BROKEN MEASUREMENT, not a clean tree. Check that the compile");

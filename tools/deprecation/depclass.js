@@ -31,7 +31,13 @@
 // The classifier's conservative direction (unresolvable => UNGATED) is what stopped me from
 // absolving 14 usages by hand on a reading that was simply not true. That is the whole argument
 // for fail-loud: my confident manual correction was the unreliable instrument here, not the tool.
-// The honest ungated count is 19, not 7.
+//
+// SECOND CORRECTION, same day: the honest count is 20, not 19 and certainly not 7. The fixture
+// corpus (gated-conformance.js) found that the SDK_INT window crossed function boundaries, so
+// ExtendedDialogFragment.kt:89 `retainInstance` -- inside onDestroyView() declared at :86 -- was
+// absolved by an SDK_INT test at :79 that belongs to a DIFFERENT function which closed at :83.
+// That was the one branch of the walk capable of marking something safe without evidence, and it
+// had been quietly shrinking the backlog. The code did not get worse; the instrument got honest.
 //
 // v2 adds one level of call-graph reasoning:
 //   1. find the function enclosing the warning
@@ -46,7 +52,8 @@ const fs = require("fs");
 const { parseWarningLine } = require(__dirname + "/parse.js");
 const path = require("path");
 
-const ROOT = "libumdnscrypt/src/main";
+// DEPGATE_ROOT: injectable so the call-graph walk can be run against fixtures. See depgate.js.
+const ROOT = process.env.DEPGATE_ROOT || "libumdnscrypt/src/main";
 const LOG = process.argv[2];
 if (!LOG || !fs.existsSync(LOG)) { console.log("usage: depclass.js <compile-log>"); process.exit(2); }
 
@@ -66,65 +73,12 @@ for (const p of files) {
   text.set(p, fs.readFileSync(p, "utf8").replace(/\r\n/g, "\n").split("\n"));
 }
 
-const FUN = /^\s*(?:@\w+(?:\([^)]*\))?\s*)*(?:public |private |internal |protected )?(?:override |suspend |inline |open |abstract )*fun\s+(?:<[^>]+>\s*)?([A-Za-z_][A-Za-z0-9_]*)/;
-const SDK = /Build\.VERSION\.SDK_INT\s*(?:>=|>|<|<=)/;
-
-const indentOf = (s) => (s.match(/^\s*/) || [""])[0].length;
-
-/**
- * The name of the function STRUCTURALLY enclosing `line` (1-based), or null.
- *
- * Indentation-aware, and that is not a nicety. Scanning upward for the nearest `fun` picks up
- * overrides declared inside object expressions, which are nested DEEPER than the statement they
- * sit above. Measured: for `nsd.resolveService(...)` the naive scan returned `onServiceResolved`
- * -- an override of an anonymous NsdManager.ResolveListener -- whose call sites are the framework's
- * and therefore textually invisible, so the warning was scored UNGATED when its real enclosing
- * function is gated at the caller. Requiring the declaration to be less indented than the statement
- * selects the member that actually contains it.
- */
-function enclosingFun(src, line) {
-  const want = indentOf(src[line - 1] || "");
-  for (let i = line - 1; i >= 0; i--) {
-    const m = src[i] && src[i].match(FUN);
-    if (m && indentOf(src[i]) < want) return { name: m[1], at: i + 1 };
-  }
-  return null;
-}
-
-/** Is `line` within `win` lines below an SDK_INT test, inside the same file? */
-function gatedAt(src, line, win = 15) {
-  return SDK.test(src.slice(Math.max(0, line - 1 - win), line).join("\n"));
-}
-
-/** Every call site of `name` across the module, as {file, line}. */
-function callSites(name) {
-  const re = new RegExp("(?:^|[^A-Za-z0-9_.])" + name + "\\s*\\(");
-  const out = [];
-  for (const [p, src] of text) {
-    for (let i = 0; i < src.length; i++) {
-      if (!re.test(src[i])) continue;
-      if (FUN.test(src[i])) continue;              // the declaration itself
-      out.push({ file: p, line: i + 1 });
-    }
-  }
-  return out;
-}
-
-/** Gated directly, or gated at every call site (transitively, bounded depth). */
-function isGated(file, line, depth, seen) {
-  const src = text.get(file);
-  if (!src) return false;
-  if (gatedAt(src, line)) return true;
-  if (depth <= 0) return false;
-  const fn = enclosingFun(src, line);
-  if (!fn) return false;
-  const key = file + "#" + fn.name;
-  if (seen.has(key)) return false;                 // recursion guard
-  seen.add(key);
-  const sites = callSites(fn.name);
-  if (sites.length === 0) return false;            // no caller found -> cannot absolve it
-  return sites.every((s) => isGated(s.file, s.line, depth - 1, seen));
-}
+// The call-graph walk lives in callgraph.js -- the SAME copy depgate.js uses, so the reporter and
+// the gate can never disagree about which usages are gated. They previously held separate copies
+// that had already drifted, and the shared one carries a real fix: the SDK_INT window no longer
+// crosses function boundaries. See callgraph.js.
+const { isGated: isGatedRaw } = require(__dirname + "/callgraph.js");
+const isGated = (file, line, depth, seen) => isGatedRaw(text, file, line, depth, seen);
 
 // ---- read the warnings ------------------------------------------------------------------------
 const rows = [];

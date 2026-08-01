@@ -1,0 +1,308 @@
+{
+  "directory": "tools\\deprecation\\fixtures\\kt",
+  "files": {
+    "AnonObject.kt": {
+      "hash": "f8c2406d9411",
+      "indexed_at": "2026-08-01T14:26:30.579047+00:00",
+      "language": "kotlin",
+      "lines": 19,
+      "mtime_ns": 1785594297204706400,
+      "size": 766,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                9,
+                18
+              ],
+              "name": "setup",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "fixture exists because a mutation removing it survived the corpus.",
+          "lines": [
+            8,
+            19
+          ],
+          "name": "AnonObject",
+          "type": "class"
+        }
+      ]
+    },
+    "CallerGate.kt": {
+      "hash": "aa576959bcd3",
+      "indexed_at": "2026-08-01T14:26:30.855321+00:00",
+      "language": "kotlin",
+      "lines": 15,
+      "mtime_ns": 1785593965664744600,
+      "size": 389,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                6,
+                8
+              ],
+              "name": "legacyHelper",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                10,
+                14
+              ],
+              "name": "entry",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "This is the shape depclass v1 got wrong and v2 exists to handle.",
+          "lines": [
+            5,
+            15
+          ],
+          "name": "CallerGate",
+          "type": "class"
+        }
+      ]
+    },
+    "Cycle.kt": {
+      "hash": "91c0b26fe401",
+      "indexed_at": "2026-08-01T14:26:31.134755+00:00",
+      "language": "kotlin",
+      "lines": 14,
+      "mtime_ns": 1785593965706744200,
+      "size": 315,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                6,
+                9
+              ],
+              "name": "ping",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11,
+                13
+              ],
+              "name": "pong",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "than looping forever or concluding \"gated\" from an unfinished walk.",
+          "lines": [
+            5,
+            14
+          ],
+          "name": "Cycle",
+          "type": "class"
+        }
+      ]
+    },
+    "DeepChain.kt": {
+      "hash": "d0c7220b3c4c",
+      "indexed_at": "2026-08-01T14:26:31.411937+00:00",
+      "language": "kotlin",
+      "lines": 28,
+      "mtime_ns": 1785594297194706400,
+      "size": 634,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                9
+              ],
+              "name": "lvl4",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11,
+                13
+              ],
+              "name": "lvl3",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                15,
+                17
+              ],
+              "name": "lvl2",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                19,
+                21
+              ],
+              "name": "lvl1",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                23,
+                27
+              ],
+              "name": "entry",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "This fixture exists because a mutation that made depth-exhaustion absolve survived the corpus.",
+          "lines": [
+            6,
+            28
+          ],
+          "name": "DeepChain",
+          "type": "class"
+        }
+      ]
+    },
+    "DirectGate.kt": {
+      "hash": "2fdfae1ebc8f",
+      "indexed_at": "2026-08-01T14:26:31.687149+00:00",
+      "language": "kotlin",
+      "lines": 12,
+      "mtime_ns": 1785593965653743900,
+      "size": 290,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                5,
+                11
+              ],
+              "name": "doWork",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "EXPECT gated: the SDK_INT test is within the 15-line window directly above the call.",
+          "lines": [
+            4,
+            12
+          ],
+          "name": "DirectGate",
+          "type": "class"
+        }
+      ]
+    },
+    "MixedCallers.kt": {
+      "hash": "c4291f100831",
+      "indexed_at": "2026-08-01T14:26:31.962277+00:00",
+      "language": "kotlin",
+      "lines": 20,
+      "mtime_ns": 1785593965674744300,
+      "size": 553,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                7,
+                9
+              ],
+              "name": "mixedHelper",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                11,
+                15
+              ],
+              "name": "gatedEntry",
+              "signature": "()",
+              "type": "method"
+            },
+            {
+              "lines": [
+                17,
+                19
+              ],
+              "name": "ungatedEntry",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "device -- and it is the case my manual reading got wrong before the tool corrected me.",
+          "lines": [
+            6,
+            20
+          ],
+          "name": "MixedCallers",
+          "type": "class"
+        }
+      ]
+    },
+    "NoCallers.kt": {
+      "hash": "fa50e0b8ea36",
+      "indexed_at": "2026-08-01T14:26:32.246062+00:00",
+      "language": "kotlin",
+      "lines": 9,
+      "mtime_ns": 1785593965685745100,
+      "size": 281,
+      "symbols": [
+        {
+          "children": [
+            {
+              "lines": [
+                6,
+                8
+              ],
+              "name": "orphanHelper",
+              "signature": "()",
+              "type": "method"
+            }
+          ],
+          "docstring": "absolved -- an unreferenced helper might be invoked reflectively or by the framework.",
+          "lines": [
+            5,
+            9
+          ],
+          "name": "NoCallers",
+          "type": "class"
+        }
+      ]
+    },
+    "TopLevelProperty.kt": {
+      "hash": "9b3983abc613",
+      "indexed_at": "2026-08-01T14:26:32.530450+00:00",
+      "language": "kotlin",
+      "lines": 10,
+      "mtime_ns": 1785593965695744200,
+      "size": 369,
+      "symbols": [
+        {
+          "docstring": "of ModulesReceiver's five LEGACY_* constants.",
+          "lines": [
+            6,
+            10
+          ],
+          "name": "TopLevelProperty",
+          "type": "class"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T14:26:32.531997+00:00",
+  "version": "1.0"
+}
