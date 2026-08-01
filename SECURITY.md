@@ -124,11 +124,8 @@ something we do not do.
 ---
 
 <!-- TAGS:BEGIN generated from .github/tags.txt -- do not hand-edit -->
-<sub>
+**Topics** ·
+#Security #SecurityPolicy #ResponsibleDisclosure #VulnerabilityReporting #ThreatModel #CertificateAuthority #Tls #FailClosed #Minisign #Dns #DnsPrivacy #Dnscrypt #Doh #Android #Rust #Kotlin #Slint #Adblock #Blocklist #DnsServer #Privacy #Cdn #FormalVerification #Lean4 #Vpn #NoRoot #Uniffi #DnsResolver #AndroidApp #Odoh #Dnssec #Dns64 #Svcb #Homograph #Rebind #Warden #LocalCdn #ContentAddressed #DnsFiltering #NetworkSecurity #VpnService #Tun #PostQuantum #OpenSource #Agpl #Eupl #Alpha #PreRelease 
 
-**#security** · **#security-policy** · **#responsible-disclosure** · **#vulnerability-reporting** · **#threat-model** · **#certificate-authority** · **#tls** · **#fail-closed** · **#minisign** · **#dns** · **#dns-privacy** · **#dnscrypt** · **#doh** · **#android** · **#rust** · **#kotlin** · **#slint** · **#adblock** · **#blocklist** · **#dns-server** · **#privacy** · **#cdn** · **#formal-verification** · **#lean4** · **#vpn** · **#no-root** · **#uniffi** · **#dns-resolver** · **#android-app** · **#odoh** · **#dnssec** · **#dns64** · **#svcb** · **#homograph** · **#rebind** · **#warden** · **#local-cdn** · **#content-addressed** · **#dns-filtering** · **#network-security** · **#vpn-service** · **#tun** · **#post-quantum** · **#open-source** · **#agpl** · **#eupl** · **#alpha** · **#pre-release**
-
-*Tags are generated from [`.github/tags.txt`](.github/tags.txt) by the Meta Hashtag Manager — every one names something present in this tree.*
-
-</sub>
+<sub>*Generated from [`.github/tags.txt`](.github/tags.txt) by the Meta Hashtag Manager — every tag names something present in this tree, and the check that proves it fails on a tag that names nothing.*</sub>
 <!-- TAGS:END -->
