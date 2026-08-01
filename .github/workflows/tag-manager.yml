@@ -100,12 +100,24 @@ jobs:
       - name: Evidence check against the tree
         run: |
           set -euo pipefail
-          git ls-files > /tmp/evidence.txt
+          # ★ THE CORPUS EXCLUDES .github/ (2026-08-01), and the reason is that this job's own
+          # NEGATIVE CONTROL caught it. The corpus was every tracked file, and the control asserts
+          # the sentinel word "kardashian" has NO evidence -- but that word is written in THIS
+          # WORKFLOW FILE, which is tracked. So the sentinel was always found, the control fired
+          # with "the check is decoration", and it was right: a corpus that contains the tag list
+          # and the control terms can vouch for any tag merely because the tag was WRITTEN DOWN.
+          #
+          # Evidence must come from the SUBJECT, never from the instrument. Excluding .github/
+          # means a tag is now supported by the code, the docs and the assets -- not by the file
+          # that claims it.
+          git ls-files | grep -v '^\.github/' > /tmp/evidence.txt
           # file CONTENT is evidence too -- #dnscrypt is true because 662 files
           # say so, not because a path happens to contain the word.
-          git ls-files -z | xargs -0 grep -hoIE '[A-Za-z0-9-]{3,}' 2>/dev/null \
+          git ls-files -z | grep -zv '^\.github/' \
+            | xargs -0 grep -hoIE '[A-Za-z0-9-]{3,}' 2>/dev/null \
             | sort -u >> /tmp/evidence.txt || true
           tr 'A-Z' 'a-z' < /tmp/evidence.txt > /tmp/ev.lc
+          echo "evidence tokens: $(wc -l < /tmp/ev.lc)"
 
           missing=0
           while read -r t; do
@@ -132,6 +144,17 @@ jobs:
             exit 1
           fi
           echo "control: 'kardashian' correctly has no evidence -- the check CAN fail"
+
+          # ★ THE POSITIVE HALF (2026-08-01). The negative control alone is satisfied by an EMPTY
+          # corpus, which is decoration in the opposite direction -- and excluding .github/ from
+          # the corpus made an empty result newly possible, so the two changes belong together.
+          # These terms are load-bearing throughout the tree; if they ever stop appearing, the
+          # extractor has broken and no tag's evidence means anything.
+          for present in dnscrypt resolver android; do
+            grep -qF "$present" /tmp/ev.lc \
+              || { echo "::error::corpus is missing '$present' -- the extractor is broken, so EVERY tag's evidence is meaningless"; exit 1; }
+          done
+          echo "control: corpus contains dnscrypt/resolver/android -- it is real, not empty"
 
       # --- NEGATIVE CONTROL for the validator -------------------------------
       # An instrument is guilty until proven able to fail.

@@ -70,7 +70,7 @@ Each pillar is a distinct guarantee with its own code, its own counters and its 
 The last thing between a packet and the network. Warden holds numbered rules (`block_dns_bypass`, hardcoded-resolver denial, port policy) and decides whether a *connection* — not just a name — is allowed to exist. It is the pillar that catches an app trying to talk to `8.8.8.8:53` directly, having never asked us to resolve anything.
 
 ### 2. 🌌 CENTAURI — the offline CDN
-`rust/torta_core/src/mirror/` · 24,223 lines · `#[cfg(feature = "mirror")]`
+`rust/torta_core/src/mirror/` · 24,222 lines · `#[cfg(feature = "mirror")]`
 
 A Decentraleyes/LocalCDN idea taken further: a **content-addressed, signature-verified local mirror**. Common CDN assets (jQuery and friends) are fetched **at most once**, hash-verified against a minisign-signed catalog, and served from a loopback server afterwards. The upstream CDN sees one request ever, instead of one per site you visit.
 
