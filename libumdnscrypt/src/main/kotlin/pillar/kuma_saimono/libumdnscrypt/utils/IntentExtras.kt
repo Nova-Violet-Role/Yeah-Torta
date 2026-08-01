@@ -18,6 +18,7 @@ package pillar.kuma_saimono.libumdnscrypt.utils
 
 import android.content.Intent
 import android.os.Build
+import android.os.Bundle
 import java.io.Serializable
 
 /**
@@ -50,6 +51,25 @@ inline fun <reified T : Serializable> Intent.serializableExtraCompat(name: Strin
     } else {
         @Suppress("DEPRECATION")
         getSerializableExtra(name) as? T
+    }
+
+/**
+ * `Bundle.get(String)` is deprecated since API 33 because it is untyped -- it returns `Any?` and
+ * every caller casts, which is precisely how a wrong-typed argument becomes a ClassCastException
+ * far from the code that put it there.
+ *
+ * The typed replacement `getSerializable(String, Class<T>)` arrived in the same release, so below
+ * 33 the deprecated untyped call is still the only option; the branch is the fix.
+ *
+ * Returns null rather than throwing when the key is absent or holds another type, so a caller must
+ * decide what a missing argument means instead of inheriting a crash.
+ */
+inline fun <reified T : Serializable> Bundle.serializableCompat(name: String): T? =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        getSerializable(name, T::class.java)
+    } else {
+        @Suppress("DEPRECATION")
+        getSerializable(name) as? T
     }
 
 /**

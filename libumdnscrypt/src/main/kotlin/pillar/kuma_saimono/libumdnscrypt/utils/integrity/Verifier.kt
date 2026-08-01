@@ -122,7 +122,34 @@ class Verifier @Inject constructor(
         val packageManager = this.context.packageManager
         val strPackagename = this.context.packageName
 
-        val signatureArray = packageManager.getPackageInfo(strPackagename, PackageManager.GET_SIGNATURES).signatures
+        // GET_SIGNATURES and PackageInfo.signatures are deprecated since API 28 in favour of
+        // GET_SIGNING_CERTIFICATES / SigningInfo. minSdkVersion here is 21, so BOTH paths must
+        // exist -- the branch is the fix, not a workaround for one.
+        //
+        // WHY apkContentsSigners AND NOT signingCertificateHistory. For a single-signer APK the two
+        // agree, but they answer different questions: apkContentsSigners is WHO SIGNED THE APK THAT
+        // IS RUNNING, while signingCertificateHistory includes ROTATED-AWAY predecessors. This
+        // function feeds an integrity check, so accepting a superseded certificate would keep
+        // trusting a key that was deliberately retired -- the opposite of what rotation is for.
+        // hasMultipleSigners() is the documented guard: signingCertificateHistory is undefined for
+        // a multi-signer APK, and apkContentsSigners is the correct call for both.
+        //
+        // The digest input is unchanged on both paths -- element [0] of the signer array, X.509
+        // decoded, md5, base64 -- so an APK signed with one certificate produces the SAME string
+        // this method produced before, on every API level. That mattered more than tidiness here:
+        // a different value would silently fail the integrity comparison downstream.
+        val signatureArray: Array<android.content.pm.Signature>? =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                packageManager
+                    .getPackageInfo(strPackagename, PackageManager.GET_SIGNING_CERTIFICATES)
+                    .signingInfo
+                    ?.apkContentsSigners
+            } else {
+                @Suppress("DEPRECATION")
+                packageManager
+                    .getPackageInfo(strPackagename, PackageManager.GET_SIGNATURES)
+                    .signatures
+            }
 
         var byteSign = signatureArray!![0].toByteArray()
         byteSign = CertificateFactory.getInstance("X509").generateCertificate(ByteArrayInputStream(byteSign)).encoded

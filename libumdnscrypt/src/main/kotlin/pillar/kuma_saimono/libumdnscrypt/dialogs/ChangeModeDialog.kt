@@ -27,6 +27,7 @@ import pillar.kuma_saimono.libumdnscrypt.utils.mode.AppModeManagerCallback
 import pillar.kuma_saimono.libumdnscrypt.utils.enums.OperationMode
 import pillar.kuma_saimono.libumdnscrypt.utils.logger.Logger.loge
 import javax.inject.Inject
+import pillar.kuma_saimono.libumdnscrypt.utils.serializableCompat
 
 private const val OPERATION_MODE_ARG = "pillar.kuma_saimono.libumdnscrypt.dialogs.ChangeModeDialog"
 
@@ -50,7 +51,12 @@ class ChangeModeDialog: ExtendedDialogFragment() {
 
         val builder = AlertDialog.Builder(activity)
 
-        val mode = arguments?.get(OPERATION_MODE_ARG) as OperationMode
+        // Typed, version-gated read (see utils/IntentExtras.kt). The old `get(...) as OperationMode`
+        // was an untyped fetch plus an unchecked cast: a wrong-typed argument threw
+        // ClassCastException here rather than naming the argument that was actually wrong.
+        // `?: return null` keeps the dialog absent instead of crashing when the argument is
+        // missing -- the same outcome the two guards above this line already choose.
+        val mode = arguments?.serializableCompat<OperationMode>(OPERATION_MODE_ARG) ?: return null
 
         builder.setTitle(mode.name)
         builder.setMessage(uniffi.torta_core.tortaText("ask_save_changes"))

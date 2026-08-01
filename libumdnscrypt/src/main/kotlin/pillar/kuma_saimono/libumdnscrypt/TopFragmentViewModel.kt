@@ -87,8 +87,13 @@ class TopFragmentViewModel @Inject constructor(
         if (suAvailable) {
             try {
                 suVersion = Shell.SU.version(false) ?: ""
-                suResult.addAll(Shell.SU.run("id") ?: emptyList())
-                bbResult.addAll(Shell.SU.run("busybox | head -1") ?: emptyList())
+                // The single-String overload is deprecated in libsuperuser 1.1.1; the ARRAY form
+                // is the documented replacement and is what every other Shell.SU call in this
+                // module already uses (ModulesKiller, NflogManager, ModulesStarterHelper -- none
+                // of which warn, for exactly this reason). One command per element, same shell,
+                // same result list.
+                suResult.addAll(Shell.SU.run(arrayOf("id")) ?: emptyList())
+                bbResult.addAll(Shell.SU.run(arrayOf("busybox | head -1")) ?: emptyList())
             } catch (e: java.lang.Exception) {
                 loge("TopFragmentViewModel suParam exception", e)
             }
