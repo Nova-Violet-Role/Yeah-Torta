@@ -230,8 +230,22 @@ object VpnUtils {
         if (ip == null || ip.isEmpty()) {
             return false
         }
-        return android.util.Patterns.IP_ADDRESS.matcher(ip).matches() ||
-                ip.indexOf(':') >= 0 && isNumericIpv6(ip)
+        // Patterns.IP_ADDRESS is deprecated (API 31): it is a REGEX, and the platform's own note
+        // is that it matches strings no address parser accepts. InetAddresses.isNumericAddress
+        // (API 29) asks the actual parser instead, which is both stricter and the right question
+        // for a function named isNumericAddress.
+        //
+        // The OR structure is preserved on purpose. isNumericAddress covers IPv4 AND IPv6, so the
+        // modern branch could stand alone -- but the legacy branch below 29 still needs the
+        // hand-rolled IPv6 check, and keeping one shape for both makes the two paths visibly answer
+        // the same question. Below 29 the behaviour is exactly what it was before this change.
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            android.net.InetAddresses.isNumericAddress(ip)
+        } else {
+            @Suppress("DEPRECATION")
+            android.util.Patterns.IP_ADDRESS.matcher(ip).matches() ||
+                    ip.indexOf(':') >= 0 && isNumericIpv6(ip)
+        }
     }
 
     private fun isNumericIpv6(ip: String): Boolean {
