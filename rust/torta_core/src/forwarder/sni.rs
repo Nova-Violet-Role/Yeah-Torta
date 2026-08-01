@@ -257,9 +257,9 @@ fn sanitize_host(raw: &[u8]) -> Option<String> {
     if raw.is_empty() || raw.len() > 253 {
         return None;
     }
-    let ok = raw.iter().all(|&b| {
-        b.is_ascii_alphanumeric() || b == b'.' || b == b'-' || b == b'_'
-    });
+    let ok = raw
+        .iter()
+        .all(|&b| b.is_ascii_alphanumeric() || b == b'.' || b == b'-' || b == b'_');
     if !ok {
         return None;
     }
@@ -368,7 +368,10 @@ mod tests {
     /// for a TLS parse, and must never be held open waiting for more bytes.
     #[test]
     fn plain_http_is_not_tls() {
-        assert_eq!(peek_sni(b"GET /jquery.min.js HTTP/1.1\r\n"), SniOutcome::NotTls);
+        assert_eq!(
+            peek_sni(b"GET /jquery.min.js HTTP/1.1\r\n"),
+            SniOutcome::NotTls
+        );
     }
 
     /// A complete ClientHello with NO server_name is terminal (NotTls), NOT Incomplete: reading more
@@ -410,7 +413,14 @@ mod tests {
     /// routed on. A name that reaches the resolver or the catalog must already be a plain hostname.
     #[test]
     fn refuses_a_hostile_host_name() {
-        for bad in ["a/../b", "host name", "hö.st", "sub..host", ".leading", "trailing."] {
+        for bad in [
+            "a/../b",
+            "host name",
+            "hö.st",
+            "sub..host",
+            ".leading",
+            "trailing.",
+        ] {
             let hello = client_hello_with_sni(bad);
             assert_eq!(
                 peek_sni(&hello),
@@ -429,7 +439,14 @@ mod tests {
             vec![CONTENT_TYPE_HANDSHAKE, 3, 1],
             vec![CONTENT_TYPE_HANDSHAKE, 3, 1, 0xFF, 0xFF],
             vec![CONTENT_TYPE_HANDSHAKE, 3, 1, 0, 4, 1, 0xFF, 0xFF, 0xFF],
-            vec![CONTENT_TYPE_HANDSHAKE, 3, 1, 0, 1, HANDSHAKE_TYPE_CLIENT_HELLO],
+            vec![
+                CONTENT_TYPE_HANDSHAKE,
+                3,
+                1,
+                0,
+                1,
+                HANDSHAKE_TYPE_CLIENT_HELLO,
+            ],
             vec![0; 64],
         ];
         for c in cases {

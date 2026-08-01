@@ -1284,7 +1284,11 @@ pub fn configure(specs_json: &str, timeout_ms: u64, cache_cap: usize) -> Option<
     // ceiling) — so an untouched build reconfigures EXACTLY as before this wire.
     let seeded_cap = {
         let intent = cache::cache_cap_intent();
-        if intent > 0 { intent } else { cache_cap.max(1) }
+        if intent > 0 {
+            intent
+        } else {
+            cache_cap.max(1)
+        }
     };
     // The cacheable-TYPE-set intent is seeded the same way, through the constructor that exists for
     // it. An EMPTY intent is the cache-all sentinel and takes the byte-identical `with_policy` path,
@@ -1348,10 +1352,7 @@ pub(crate) fn resolve_uncloaked_addrs(host: &str) -> Vec<std::net::IpAddr> {
     let mut out = Vec::new();
     // A first, then AAAA: the splice prefers v4 (the tun's v6 upstream is the weaker leg on most
     // carriers), and answer order is preserved so the caller just takes the head.
-    for (id, qtype) in [
-        (0xC6A1u16, local::QTYPE_A),
-        (0xC6A2, local::QTYPE_AAAA),
-    ] {
+    for (id, qtype) in [(0xC6A1u16, local::QTYPE_A), (0xC6A2, local::QTYPE_AAAA)] {
         let q = dns::build_query(id, host, qtype);
         let caught = catch_unwind(AssertUnwindSafe(|| {
             resolver.resolve_inner(&q, &mut log::ResolveOutcome::Miss, CloakPolicy::Bypass)
@@ -1399,7 +1400,11 @@ pub fn resolve(query_wire: &[u8]) -> Option<Vec<u8>> {
     // hot path DISCARDS the classified outcome (a throwaway stack-local) — NO log, NO IO (the pure datapath
     // keystone); only the explicit `resolve_logged` seam below reads the outcome + writes the review line.
     let caught = catch_unwind(AssertUnwindSafe(|| {
-        resolver.resolve_inner(query_wire, &mut log::ResolveOutcome::Miss, CloakPolicy::Armed)
+        resolver.resolve_inner(
+            query_wire,
+            &mut log::ResolveOutcome::Miss,
+            CloakPolicy::Armed,
+        )
     }));
     match caught {
         Ok(result) => result,
@@ -1580,11 +1585,7 @@ fn resolve_with_outcome(
                     Some(false) => 2,
                     None => 0,
                 };
-                (
-                    resolver.last_winner(),
-                    resolver.last_winner_relay(),
-                    family,
-                )
+                (resolver.last_winner(), resolver.last_winner_relay(), family)
             } else {
                 (None, None, 0)
             };
@@ -1848,7 +1849,8 @@ impl Resolver {
             *outcome = log::ResolveOutcome::Blocked(log::DenyGate::DohBypass);
             // The SAME synthesized NXDOMAIN the blocklist produces (REUSE-law, byte-correct);
             // step-4 validate is skipped because we forged it and there is no upstream answer.
-            return self.synthesize_block_reply(query_wire, crate::blocklist::BlockAction::NxDomain);
+            return self
+                .synthesize_block_reply(query_wire, crate::blocklist::BlockAction::NxDomain);
         }
 
         // 1a. Inline WARDEN firewall (P-Warden rung 2) — the Warden's real teeth on the resolve datapath.
@@ -1903,7 +1905,8 @@ impl Resolver {
                 WARDEN_DENIED.fetch_add(1, Ordering::Relaxed);
                 self.stats.blocked.fetch_add(1, Ordering::Relaxed);
                 *outcome = log::ResolveOutcome::Blocked(log::DenyGate::Warden);
-                return self.synthesize_block_reply(query_wire, crate::blocklist::BlockAction::NxDomain);
+                return self
+                    .synthesize_block_reply(query_wire, crate::blocklist::BlockAction::NxDomain);
             }
         }
 
@@ -1919,7 +1922,8 @@ impl Resolver {
         if crate::underground::teeth_gate(&question.qname) {
             self.stats.blocked.fetch_add(1, Ordering::Relaxed);
             *outcome = log::ResolveOutcome::Blocked(log::DenyGate::Underground);
-            return self.synthesize_block_reply(query_wire, crate::blocklist::BlockAction::NxDomain);
+            return self
+                .synthesize_block_reply(query_wire, crate::blocklist::BlockAction::NxDomain);
         }
 
         // 1c. IDN HOMOGRAPH gate (C-2) — the look-alike-domain teeth. A query name carrying a
@@ -1935,7 +1939,8 @@ impl Resolver {
         if self.homograph_reject(&question) {
             self.stats.blocked.fetch_add(1, Ordering::Relaxed);
             *outcome = log::ResolveOutcome::Blocked(log::DenyGate::Homograph);
-            return self.synthesize_block_reply(query_wire, crate::blocklist::BlockAction::NxDomain);
+            return self
+                .synthesize_block_reply(query_wire, crate::blocklist::BlockAction::NxDomain);
         }
 
         // 1.5a Static local records (R4, P12) — BEFORE never-forward. A user-pinned name
@@ -2159,7 +2164,9 @@ impl Resolver {
                     // additional, narrower fact: how many of those answers were past their TTL.
                     self.stats.cache_hits.fetch_add(1, Ordering::Relaxed);
                     if stale {
-                        self.stats.serve_stale_served.fetch_add(1, Ordering::Relaxed);
+                        self.stats
+                            .serve_stale_served
+                            .fetch_add(1, Ordering::Relaxed);
                         *outcome = log::ResolveOutcome::ServeStale;
                     } else {
                         *outcome = log::ResolveOutcome::CacheHit;
@@ -2582,9 +2589,13 @@ impl Resolver {
             return false; // pure-ASCII or unambiguous ⇒ clean, the common path
         }
         // A look-alike name — observe always, exactly like the rebind signal.
-        self.stats.homograph_observed.fetch_add(1, Ordering::Relaxed);
+        self.stats
+            .homograph_observed
+            .fetch_add(1, Ordering::Relaxed);
         if HOMOGRAPH_ENFORCE.load(Ordering::Relaxed) {
-            self.stats.homograph_rejected.fetch_add(1, Ordering::Relaxed);
+            self.stats
+                .homograph_rejected
+                .fetch_add(1, Ordering::Relaxed);
             true // DENY: NXDOMAIN locally, zero egress
         } else {
             false // observe-only: counted but still resolved
@@ -2841,7 +2852,13 @@ pub fn stats() -> String {
                     })
                     .collect::<Vec<_>>()
                     .join(",");
-                (true, inner.pool.len(), inner.cache.len(), inner.cache.cap(), ups)
+                (
+                    true,
+                    inner.pool.len(),
+                    inner.cache.len(),
+                    inner.cache.cap(),
+                    ups,
+                )
             }
             None => (false, 0, 0, 0, String::new()),
         }
@@ -3181,7 +3198,7 @@ pub fn rehydrate_cache(dir: &str) -> usize {
     // dropping those at rehydrate would break local name resolution across a reboot for users who
     // armed rebind-enforce. It reads `REBIND_ENFORCE` LIVE, so observe-only mode rehydrates exactly
     // as before and only an ARMED user changes behaviour.
-    
+
     inner.cache.restore_gated(
         &payload,
         std::time::Instant::now(),
@@ -3806,7 +3823,8 @@ sdns://gRcADUMMYREL\n";
             5000,
             64,
         );
-        let summary = out.expect("odoh transport must be PRESENT (not silently dropped) off a runtime");
+        let summary =
+            out.expect("odoh transport must be PRESENT (not silently dropped) off a runtime");
         assert!(
             summary.contains("ready=1"),
             "expected the ODoH transport to be ready, got: {summary}",
@@ -3821,7 +3839,8 @@ sdns://gRcADUMMYREL\n";
         // Proves the relayed-ODoH spec survives the flat-JSON gate AND builds — the whole point of the
         // stamp rework (an https relay url would have been dropped by that gate).
         fn b64url(data: &[u8]) -> String {
-            const A: &[u8; 64] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+            const A: &[u8; 64] =
+                b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
             let (mut out, mut buf, mut bits) = (String::new(), 0u32, 0u32);
             for &b in data {
                 buf = (buf << 8) | b as u32;
@@ -3962,9 +3981,15 @@ sdns://gRcADUMMYREL\n";
         let row = got
             .lines()
             .find(|l| l.contains(" MISS "))
-            .unwrap_or_else(|| panic!("the armed datapath appends its classified verdict line: {got}"));
+            .unwrap_or_else(|| {
+                panic!("the armed datapath appends its classified verdict line: {got}")
+            });
         let cols: Vec<&str> = row.split_whitespace().collect();
-        assert_eq!(cols.len(), 5, "row shape <ts> <outcome> <transport> <rtt> <qtype>: {row}");
+        assert_eq!(
+            cols.len(),
+            5,
+            "row shape <ts> <outcome> <transport> <rtt> <qtype>: {row}"
+        );
         assert_eq!(cols[1], "MISS", "outcome token: {row}");
         assert_eq!(cols[2], "-", "a MISS has no answering upstream: {row}");
         assert!(
@@ -4565,9 +4590,17 @@ mod rebind_tests {
         set_serve_stale(1800);
         set_ttl_floor(60);
         set_ttl_ceiling(43_200);
-        assert_eq!(cache::serve_stale_secs(), 1800, "serve-stale intent recorded");
+        assert_eq!(
+            cache::serve_stale_secs(),
+            1800,
+            "serve-stale intent recorded"
+        );
         assert_eq!(cache::ttl_floor_secs(), 60, "ttl floor intent recorded");
-        assert_eq!(cache::ttl_ceiling_secs(), 43_200, "ttl ceiling intent recorded");
+        assert_eq!(
+            cache::ttl_ceiling_secs(),
+            43_200,
+            "ttl ceiling intent recorded"
+        );
         // A negative-clamped 0 is the OFF default — set_serve_stale(0) turns it off cleanly.
         set_serve_stale(0);
         assert_eq!(cache::serve_stale_secs(), 0, "serve-stale off");
@@ -4974,17 +5007,17 @@ mod budget_tests {
     // ========================================================================
 
     /// GAP 1 Documentation: Concurrency safety of resolve_inner
-    /// 
+    ///
     /// The `resolve_inner` method uses a single `Mutex<Option<Inner>>` to protect all
     /// resolver state. The lock is held for:
     /// - Blocklist check (read-only, fast)
     /// - Cache lookup (read-only, fast)
     /// - Cache insert (write, bounded time)
-    /// 
+    ///
     /// The lock is NOT held during:
     /// - DNS exchange (async, released before block_on)
     /// - Validation (post-exchange, lock re-acquired)
-    /// 
+    ///
     /// This design ensures:
     /// - No deadlocks (single lock, no nesting)
     /// - No data races (all mutable state protected)
@@ -5063,7 +5096,10 @@ mod negative_cacheability_tests {
     #[test]
     fn short_wires_are_refused_not_panicked() {
         for len in 0..12usize {
-            assert!(!is_cacheable_negative(&vec![0u8; len]), "len {len} is too short to classify");
+            assert!(
+                !is_cacheable_negative(&vec![0u8; len]),
+                "len {len} is too short to classify"
+            );
         }
     }
 }

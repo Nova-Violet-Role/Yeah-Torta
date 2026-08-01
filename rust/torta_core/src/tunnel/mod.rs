@@ -64,7 +64,6 @@
 //! `cargo build --lib` stays green without `libc` on non-unix). The loop uses `unsafe` ONLY for the
 //! fd primitives (`dup`, `from_raw_fd`, `read`, `write`, `poll`) — every block has a SAFETY note.
 
-
 pub mod parse;
 pub mod synth;
 pub mod warden;
@@ -121,8 +120,14 @@ pub trait ProtectCallback: Send + Sync {
 pub trait UidResolver: Send + Sync {
     /// The uid owning the flow `src → dst`, or `-1` when unresolved. `protocol` is the IANA
     /// protocol number (6 TCP, 17 UDP); addresses are `inet` strings; ports host-order.
-    fn uid_of(&self, protocol: i32, src_ip: String, src_port: u16, dst_ip: String, dst_port: u16)
-        -> i32;
+    fn uid_of(
+        &self,
+        protocol: i32,
+        src_ip: String,
+        src_port: u16,
+        dst_ip: String,
+        dst_port: u16,
+    ) -> i32;
 }
 
 // ===================================================================================================
@@ -1203,10 +1208,10 @@ fn spawn_netstack_forwarder(
                 let devnull = unsafe {
                     libc::open(
                         // A c"..." literal is NUL-terminated by the compiler, so the terminator cannot
-                    // be dropped by an edit the way a hand-written \0 inside a byte string can --
-                    // and losing it here would hand libc::open a pointer with no end, which reads
-                    // past the literal.
-                    c"/dev/null".as_ptr(),
+                        // be dropped by an edit the way a hand-written \0 inside a byte string can --
+                        // and losing it here would hand libc::open a pointer with no end, which reads
+                        // past the literal.
+                        c"/dev/null".as_ptr(),
                         libc::O_RDONLY,
                     )
                 };
@@ -1411,7 +1416,10 @@ fn handle_packet(pkt: &[u8], cfg: &TunnelConfig, stats: &TunnelStats) -> Option<
     if let Some((qname, _)) = parse::extract_qname(udp.payload) {
         let denied = !qname.is_empty()
             && match crate::warden_lock().as_ref() {
-                Some(w) => w.rule_sets().domain.matches(crate::warden::UID_UNIVERSAL, &qname),
+                Some(w) => w
+                    .rule_sets()
+                    .domain
+                    .matches(crate::warden::UID_UNIVERSAL, &qname),
                 None => false,
             };
         if denied {
@@ -1777,13 +1785,24 @@ mod tests {
         let snap = s.snapshot_with(true);
         assert!(snap.armed && snap.live);
         assert_eq!(
-            (snap.flows_tcp, snap.flows_udp, snap.flows_other, snap.active_flows),
+            (
+                snap.flows_tcp,
+                snap.flows_udp,
+                snap.flows_other,
+                snap.active_flows
+            ),
             (1, 2, 3, 4)
         );
-        assert_eq!((snap.tin_critical, snap.tin_high, snap.tin_normal), (5, 6, 7));
+        assert_eq!(
+            (snap.tin_critical, snap.tin_high, snap.tin_normal),
+            (5, 6, 7)
+        );
         assert_eq!((snap.dns_answered, snap.paced_flows), (8, 9));
         assert_eq!((snap.bytes_up, snap.bytes_down), (10, 11));
-        assert_eq!((snap.rtt_samples, snap.stalls, snap.cwnd_last), (12, 13, 14));
+        assert_eq!(
+            (snap.rtt_samples, snap.stalls, snap.cwnd_last),
+            (12, 13, 14)
+        );
         assert_eq!(snap.warden_denied, 15);
         assert_eq!(
             (snap.icmp_echo, snap.icmp_replied, snap.icmp_failed),
@@ -1924,7 +1943,11 @@ mod blocked_rcode_tests {
     fn the_four_bit_stamp_never_alters_a_sanitized_value() {
         for r in -300i32..=300 {
             let s = sanitize_blocked_rcode(r);
-            assert_eq!(s & 0x0F, s, "input {r} sanitized to {s}, which the wire stamp would alter");
+            assert_eq!(
+                s & 0x0F,
+                s,
+                "input {r} sanitized to {s}, which the wire stamp would alter"
+            );
         }
     }
 
@@ -1942,7 +1965,11 @@ mod blocked_rcode_tests {
         }
         // And the range genuinely includes values other than the fallback, or "preserved" would be
         // indistinguishable from "always SERVFAIL".
-        assert_ne!(sanitize_blocked_rcode(3), RCODE_SERVFAIL, "NXDOMAIN must survive as NXDOMAIN");
+        assert_ne!(
+            sanitize_blocked_rcode(3),
+            RCODE_SERVFAIL,
+            "NXDOMAIN must survive as NXDOMAIN"
+        );
     }
 }
 
@@ -2032,13 +2059,19 @@ mod dial_failure_tests {
         fwd.udp_dial_protect_failed.fetch_add(1, Ordering::Relaxed);
         let s = fwd.snapshot_with(true);
         assert_eq!(s.udp_dial_protect_failed, 1);
-        assert_eq!(s.udp_dial_connect_failed, 0, "a protect refusal never reached the network");
+        assert_eq!(
+            s.udp_dial_connect_failed, 0,
+            "a protect refusal never reached the network"
+        );
         assert_eq!(
             s.dial_refused + s.dial_unreachable + s.dial_timed_out + s.dial_other,
             0,
             "a protect refusal is not a network cause and must not land in the buckets"
         );
-        assert_eq!(s.dial_protect_failed, 0, "the TCP seam counter must stay untouched");
+        assert_eq!(
+            s.dial_protect_failed, 0,
+            "the TCP seam counter must stay untouched"
+        );
     }
 
     /// Refusal, unreachability and timeout demand different fixes, so they must never collapse into
@@ -2048,7 +2081,10 @@ mod dial_failure_tests {
         let refused = classify_dial_failure(Some(111));
         let unreachable = classify_dial_failure(Some(101));
         let timed_out = classify_dial_failure(Some(110));
-        assert_ne!(refused, unreachable, "a refused peer is NOT an unreachable one");
+        assert_ne!(
+            refused, unreachable,
+            "a refused peer is NOT an unreachable one"
+        );
         assert_ne!(timed_out, refused, "a silent drop is NOT a refusal");
         assert_ne!(timed_out, unreachable, "a timeout is NOT a missing route");
     }
@@ -2103,16 +2139,28 @@ mod rtt_display_law_tests {
     /// `forwarder_dashboard.slint:44` reserves as impossible.
     #[test]
     fn a_sub_millisecond_sample_never_reports_zero() {
-        assert_eq!(rtt_display_ms(0.3), 1, "the AVD case: 0.3ms must floor to 1, not 0");
+        assert_eq!(
+            rtt_display_ms(0.3),
+            1,
+            "the AVD case: 0.3ms must floor to 1, not 0"
+        );
         assert_eq!(rtt_display_ms(0.9), 1, "the icmp truncation case");
         assert_eq!(rtt_display_ms(0.000_1), 1);
-        assert_eq!(rtt_display_ms(0.0), 1, "even an exactly-zero reading is not the sentinel");
+        assert_eq!(
+            rtt_display_ms(0.0),
+            1,
+            "even an exactly-zero reading is not the sentinel"
+        );
     }
 
     /// The floor must not flatten real readings — this is the non-vacuity guard.
     #[test]
     fn an_ordinary_sample_is_passed_through_untouched() {
-        assert_eq!(rtt_display_ms(240.0), 240, "the RTT this device actually measures");
+        assert_eq!(
+            rtt_display_ms(240.0),
+            240,
+            "the RTT this device actually measures"
+        );
         assert_eq!(rtt_display_ms(1.4), 1);
         assert_eq!(rtt_display_ms(1.6), 2);
         assert_eq!(rtt_display_ms(1_000_000.0), 1_000_000);
@@ -2123,7 +2171,11 @@ mod rtt_display_law_tests {
     fn a_bad_reading_is_unmeasured_not_fast() {
         assert_eq!(rtt_display_ms(-1.0), -1);
         assert_eq!(rtt_display_ms(-0.000_1), -1);
-        assert_eq!(rtt_display_ms(f64::NAN), -1, "NaN fails every ordering test - matched by is_finite");
+        assert_eq!(
+            rtt_display_ms(f64::NAN),
+            -1,
+            "NaN fails every ordering test - matched by is_finite"
+        );
         assert_eq!(rtt_display_ms(f64::INFINITY), -1);
         assert_eq!(rtt_display_ms(f64::NEG_INFINITY), -1);
     }
@@ -2140,13 +2192,27 @@ mod rtt_display_law_tests {
     /// the implementation-side echo of that theorem.
     #[test]
     fn zero_is_unreachable_and_the_band_holds() {
-        let mut probes: Vec<f64> = vec![f64::NAN, f64::INFINITY, f64::NEG_INFINITY, f64::MAX, f64::MIN];
+        let mut probes: Vec<f64> = vec![
+            f64::NAN,
+            f64::INFINITY,
+            f64::NEG_INFINITY,
+            f64::MAX,
+            f64::MIN,
+        ];
         let mut x = -5.0f64;
         while x < 5.0 {
             probes.push(x);
             x += 0.01;
         }
-        for p in [0.4999, 0.5, 0.5001, 1e9, 2147483646.0, 2147483647.0, 2147483648.0] {
+        for p in [
+            0.4999,
+            0.5,
+            0.5001,
+            1e9,
+            2147483646.0,
+            2147483647.0,
+            2147483648.0,
+        ] {
             probes.push(p);
         }
         for p in probes {
@@ -2179,8 +2245,16 @@ mod tun_mtu_headroom_tests {
     #[test]
     fn the_old_floor_only_guard_would_have_admitted_it() {
         let old_guard = |m: i32| m.max(64) as usize;
-        assert_eq!(old_guard(1500), 1500, "the old guard let the defect through");
-        assert_ne!(old_guard(1500), clamp_tun_mtu(1500), "the guards must disagree");
+        assert_eq!(
+            old_guard(1500),
+            1500,
+            "the old guard let the defect through"
+        );
+        assert_ne!(
+            old_guard(1500),
+            clamp_tun_mtu(1500),
+            "the guards must disagree"
+        );
     }
 
     /// `clamp_never_exceeds_ceiling` + `clamp_never_below_floor`, swept over the whole
@@ -2198,7 +2272,18 @@ mod tun_mtu_headroom_tests {
     /// which is the property whose violation was the bug.
     #[test]
     fn headroom_is_always_positive() {
-        for r in [-2147483648i32, -1, 0, 64, 1200, 1400, 1401, 1500, 9000, 2147483647] {
+        for r in [
+            -2147483648i32,
+            -1,
+            0,
+            64,
+            1200,
+            1400,
+            1401,
+            1500,
+            9000,
+            2147483647,
+        ] {
             assert!(clamp_tun_mtu(r) < 1500, "no headroom for requested {r}");
         }
     }

@@ -794,7 +794,10 @@ mod tests {
         let mut disarmed = sample_full();
         disarmed.boot_reapply = false;
         let back = decode_state(&encode_state(&disarmed));
-        assert!(!back.boot_reapply, "bit2-clear (≡ pre-absorb blob) decodes false");
+        assert!(
+            !back.boot_reapply,
+            "bit2-clear (≡ pre-absorb blob) decodes false"
+        );
         let armed = sample_full();
         assert!(armed.boot_reapply, "sample_full arms bit2");
         assert!(
@@ -1017,10 +1020,7 @@ mod tests {
             "wifi_scan_throttle_off"
         );
         assert_eq!(InuPowerId::UsageStats.key(), "usage_stats");
-        assert_eq!(
-            InuPowerId::ScheduleExactAlarm.key(),
-            "schedule_exact_alarm"
-        );
+        assert_eq!(InuPowerId::ScheduleExactAlarm.key(), "schedule_exact_alarm");
         assert_eq!(InuPowerId::SystemAlertWindow.key(), "system_alert_window");
         assert_eq!(InuPowerId::IgnoreSystemDns.key(), "ignore_system_dns");
         assert_eq!(

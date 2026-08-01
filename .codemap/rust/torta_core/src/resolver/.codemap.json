@@ -2,12 +2,12 @@
   "directory": "rust\\torta_core\\src\\resolver",
   "files": {
     "cache.rs": {
-      "hash": "d6e316be62d2",
-      "indexed_at": "2026-08-01T10:16:43.212466+00:00",
+      "hash": "154026e35a58",
+      "indexed_at": "2026-08-01T12:52:09.834462+00:00",
       "language": "rust",
-      "lines": 2977,
-      "mtime_ns": 1785579189329443300,
-      "size": 143456,
+      "lines": 3078,
+      "mtime_ns": 1785588611300043500,
+      "size": 144842,
       "symbols": [
         {
           "docstring": "Set whether SVCB/HTTPS RRs are cacheable (the `DNSMASQ_CACHE_RR` Expert toggle).",
@@ -1192,7 +1192,7 @@
             {
               "lines": [
                 2369,
-                2387
+                2402
               ],
               "name": "lru_eviction_removes_least_recently_used_non_immortal",
               "signature": "()",
@@ -1200,8 +1200,8 @@
             },
             {
               "lines": [
-                2392,
-                2409
+                2407,
+                2442
               ],
               "name": "lru_eviction_preserves_immortal_entries",
               "signature": "()",
@@ -1209,8 +1209,8 @@
             },
             {
               "lines": [
-                2414,
-                2434
+                2447,
+                2479
               ],
               "name": "touch_makes_entry_mru",
               "signature": "()",
@@ -1218,8 +1218,8 @@
             },
             {
               "lines": [
-                2440,
-                2453
+                2485,
+                2508
               ],
               "name": "cache_consistency_basic",
               "signature": "()",
@@ -1227,8 +1227,8 @@
             },
             {
               "lines": [
-                2457,
-                2473
+                2512,
+                2540
               ],
               "name": "epoch_gating_prevents_stale_reads",
               "signature": "()",
@@ -1237,7 +1237,7 @@
           ],
           "lines": [
             1410,
-            2474
+            2541
           ],
           "name": "tests",
           "type": "module"
@@ -1246,8 +1246,8 @@
           "children": [
             {
               "lines": [
-                2490,
-                2492
+                2557,
+                2559
               ],
               "name": "q",
               "signature": "(name: &str)",
@@ -1256,8 +1256,8 @@
             {
               "docstring": "MINIMUM) is exactly what `dns::negative_ttl_from_soa` reads positionally.",
               "lines": [
-                2497,
-                2519
+                2564,
+                2586
               ],
               "name": "nxdomain_with_soa",
               "signature": "(name: &str, soa_ttl: u32, soa_minimum: u32)",
@@ -1265,8 +1265,8 @@
             },
             {
               "lines": [
-                2523,
-                2533
+                2590,
+                2600
               ],
               "name": "a_denial_is_cached_and_served",
               "signature": "()",
@@ -1274,8 +1274,8 @@
             },
             {
               "lines": [
-                2538,
-                2557
+                2605,
+                2625
               ],
               "name": "a_denial_expires_and_does_not_pin_forever",
               "signature": "()",
@@ -1283,8 +1283,8 @@
             },
             {
               "lines": [
-                2563,
-                2582
+                2631,
+                2651
               ],
               "name": "a_hostile_soa_minimum_is_clamped_to_the_ceiling",
               "signature": "()",
@@ -1292,8 +1292,8 @@
             },
             {
               "lines": [
-                2587,
-                2603
+                2656,
+                2677
               ],
               "name": "a_soa_less_denial_uses_the_bounded_default",
               "signature": "()",
@@ -1301,8 +1301,8 @@
             },
             {
               "lines": [
-                2608,
-                2627
+                2682,
+                2709
               ],
               "name": "the_smaller_of_soa_ttl_and_minimum_wins",
               "signature": "()",
@@ -1310,8 +1310,8 @@
             }
           ],
           "lines": [
-            2486,
-            2628
+            2553,
+            2710
           ],
           "name": "negative_caching_tests",
           "type": "module"
@@ -1320,8 +1320,8 @@
           "children": [
             {
               "lines": [
-                2641,
-                2643
+                2723,
+                2725
               ],
               "name": "q",
               "signature": "(name: &str)",
@@ -1329,8 +1329,8 @@
             },
             {
               "lines": [
-                2648,
-                2658
+                2730,
+                2740
               ],
               "name": "a_fresh_entry_reports_fresh",
               "signature": "()",
@@ -1338,8 +1338,8 @@
             },
             {
               "lines": [
-                2663,
-                2685
+                2745,
+                2767
               ],
               "name": "an_expired_entry_in_the_window_reports_stale_and_still_serves",
               "signature": "()",
@@ -1347,8 +1347,8 @@
             },
             {
               "lines": [
-                2690,
-                2704
+                2772,
+                2791
               ],
               "name": "serve_stale_off_still_misses_on_expiry",
               "signature": "()",
@@ -1356,8 +1356,8 @@
             },
             {
               "lines": [
-                2710,
-                2735
+                2797,
+                2822
               ],
               "name": "get_hit_serves_byte_identical_bytes_to_get",
               "signature": "()",
@@ -1365,8 +1365,8 @@
             },
             {
               "lines": [
-                2740,
-                2755
+                2827,
+                2846
               ],
               "name": "the_epoch_gate_outranks_serve_stale",
               "signature": "()",
@@ -1374,8 +1374,8 @@
             }
           ],
           "lines": [
-            2637,
-            2756
+            2719,
+            2847
           ],
           "name": "serve_stale_freshness_tests",
           "type": "module"
@@ -1385,8 +1385,8 @@
             {
               "docstring": "Build a minimal positive reply whose first Answer record has type `rtype`.",
               "lines": [
-                2768,
-                2792
+                2859,
+                2883
               ],
               "name": "answer_of_type",
               "signature": "(rtype: u16)",
@@ -1394,8 +1394,8 @@
             },
             {
               "lines": [
-                2796,
-                2809
+                2887,
+                2900
               ],
               "name": "an_empty_set_means_cache_all_not_cache_nothing",
               "signature": "()",
@@ -1403,8 +1403,8 @@
             },
             {
               "lines": [
-                2813,
-                2820
+                2904,
+                2911
               ],
               "name": "a_narrowed_policy_admits_only_its_own_types",
               "signature": "()",
@@ -1412,8 +1412,8 @@
             },
             {
               "lines": [
-                2824,
-                2834
+                2915,
+                2925
               ],
               "name": "the_default_set_is_the_measured_dnsmasq_set",
               "signature": "()",
@@ -1421,8 +1421,8 @@
             },
             {
               "lines": [
-                2839,
-                2846
+                2930,
+                2937
               ],
               "name": "an_indeterminable_wire_fails_open_to_cacheable",
               "signature": "()",
@@ -1430,8 +1430,8 @@
             },
             {
               "lines": [
-                2851,
-                2862
+                2942,
+                2956
               ],
               "name": "the_sentinel_reads_empty_as_cache_all",
               "signature": "()",
@@ -1439,8 +1439,8 @@
             },
             {
               "lines": [
-                2866,
-                2877
+                2960,
+                2971
               ],
               "name": "the_durable_intent_round_trips",
               "signature": "()",
@@ -1448,8 +1448,8 @@
             }
           ],
           "lines": [
-            2764,
-            2878
+            2855,
+            2972
           ],
           "name": "cacheable_types_tests",
           "type": "module"
@@ -1458,8 +1458,8 @@
           "children": [
             {
               "lines": [
-                2887,
-                2889
+                2981,
+                2983
               ],
               "name": "q",
               "signature": "(name: &str)",
@@ -1467,8 +1467,8 @@
             },
             {
               "lines": [
-                2895,
-                2927
+                2989,
+                3021
               ],
               "name": "a_vetoed_wire_never_rehydrates",
               "signature": "()",
@@ -1476,8 +1476,8 @@
             },
             {
               "lines": [
-                2932,
-                2959
+                3026,
+                3056
               ],
               "name": "an_always_admit_gate_matches_the_ungated_path_exactly",
               "signature": "()",
@@ -1485,8 +1485,8 @@
             },
             {
               "lines": [
-                2964,
-                2976
+                3061,
+                3077
               ],
               "name": "clear_empties_the_cache",
               "signature": "()",
@@ -1494,8 +1494,8 @@
             }
           ],
           "lines": [
-            2883,
-            2977
+            2977,
+            3078
           ],
           "name": "rehydrate_gate_tests",
           "type": "module"
@@ -1786,12 +1786,12 @@
       ]
     },
     "dns_rules_durable.rs": {
-      "hash": "0c816aed6301",
-      "indexed_at": "2026-07-26T19:12:58.028927+00:00",
+      "hash": "1d47c520e875",
+      "indexed_at": "2026-08-01T12:52:10.132309+00:00",
       "language": "rust",
-      "lines": 192,
-      "mtime_ns": 1785030832944605400,
-      "size": 8997,
+      "lines": 198,
+      "mtime_ns": 1785588611306044100,
+      "size": 9069,
       "symbols": [
         {
           "docstring": "already accepts, with zero format drift.",
@@ -1875,7 +1875,7 @@
             {
               "lines": [
                 176,
-                191
+                197
               ],
               "name": "overwrites_a_stale_loose_file_in_place",
               "signature": "()",
@@ -1884,7 +1884,7 @@
           ],
           "lines": [
             99,
-            192
+            198
           ],
           "name": "tests",
           "type": "module"
@@ -1892,12 +1892,12 @@
       ]
     },
     "dnscrypt.rs": {
-      "hash": "a953d9c05cb4",
-      "indexed_at": "2026-08-01T09:56:55.561624+00:00",
+      "hash": "577ed01270d6",
+      "indexed_at": "2026-08-01T12:52:10.446745+00:00",
       "language": "rust",
-      "lines": 4052,
-      "mtime_ns": 1785578091222098500,
-      "size": 202721,
+      "lines": 4137,
+      "mtime_ns": 1785588611333043500,
+      "size": 203725,
       "symbols": [
         {
           "docstring": "caller is responsible for rendering that as the honest unknown rather than as \"not protected\".",
@@ -2018,7 +2018,7 @@
               "docstring": "wins; nothing else is ever cached. No qname is logged (T20).",
               "lines": [
                 389,
-                455
+                456
               ],
               "name": "ensure_cert",
               "signature": "(&self)",
@@ -2027,8 +2027,8 @@
             {
               "docstring": "returned bytes are opaque (the resolver runs `validate_response`). No qname logged (T20).",
               "lines": [
-                460,
-                521
+                461,
+                522
               ],
               "name": "encrypted_exchange",
               "signature": "(\n        &self,\n        cert: &CachedCert,\n        query_wire: &[u8],\n    )",
@@ -2037,7 +2037,7 @@
             {
               "docstring": "\u2014 the shared key is HKDF-SHA256-bound to the SIGNED cert (see [`pq_derive_shared_key`]).",
               "lines": [
-                537,
+                538,
                 592
               ],
               "name": "pq_encrypted_exchange",
@@ -2297,7 +2297,7 @@
           "docstring": "Every read is bounds-checked: a short/garbled cert is `None`, never a panic.",
           "lines": [
             1088,
-            1171
+            1173
           ],
           "name": "parse_cert",
           "signature": "(bytes: &[u8])",
@@ -2306,8 +2306,8 @@
         {
           "docstring": "and the resolver's decrypt fails, closing any mix-and-match splice across certs.",
           "lines": [
-            1177,
-            1189
+            1179,
+            1192
           ],
           "name": "build_pq_cert_context",
           "signature": "(cert: &[u8])",
@@ -2316,8 +2316,8 @@
         {
           "docstring": "NOT the unsigned `es_version` header (bytes[4..6]) an on-path attacker can flip.",
           "lines": [
-            1195,
-            1203
+            1198,
+            1206
           ],
           "name": "VerifiedCert",
           "type": "struct"
@@ -2325,8 +2325,8 @@
         {
           "docstring": "so this is hardening \u2014 but the narrowing is a latent foot-gun the moment those widen.)",
           "lines": [
-            1211,
-            1213
+            1214,
+            1216
           ],
           "name": "cert_in_window",
           "signature": "(now: u64, ts_start: u64, ts_end: u64)",
@@ -2335,8 +2335,8 @@
         {
           "docstring": "resolver pinning a retired (lower-serial) key by listing it last/first.",
           "lines": [
-            1235,
-            1347
+            1238,
+            1350
           ],
           "name": "select_best_cert",
           "signature": "(\n    certs: &[Vec<u8>],\n    provider_pk: &[u8; 32],\n    now: u64,\n    pq_enabled: bool,\n)",
@@ -2345,8 +2345,8 @@
         {
           "docstring": "the cert fetch needs nothing from `dns.rs` (which only builds A/AAAA queries). RD=1, one question.",
           "lines": [
-            1351,
-            1372
+            1354,
+            1375
           ],
           "name": "build_txt_query",
           "signature": "(provider_name: &str)",
@@ -2355,8 +2355,8 @@
         {
           "docstring": "It never panics and never reads out of bounds \u2014 a malformed record stops the walk.",
           "lines": [
-            1382,
-            1432
+            1385,
+            1435
           ],
           "name": "parse_cert_txts",
           "signature": "(response: &[u8])",
@@ -2365,8 +2365,8 @@
         {
           "docstring": "length \u2014 so this is a skip, not a decode.)",
           "lines": [
-            1438,
-            1459
+            1441,
+            1462
           ],
           "name": "skip_name",
           "signature": "(buf: &[u8], mut pos: usize)",
@@ -2375,8 +2375,8 @@
         {
           "docstring": "nonce is sourced HERE, so a `getrandom` failure is surfaced (never a zero/weak nonce silently).",
           "lines": [
-            1467,
-            1469
+            1470,
+            1472
           ],
           "name": "csprng_fill",
           "signature": "(dst: &mut [u8])",
@@ -2385,8 +2385,8 @@
         {
           "docstring": "nonce prefix, exactly as libsodium `crypto_box_*` composes `beforenm` with `crypto_secretbox`.",
           "lines": [
-            1477,
-            1483
+            1480,
+            1486
           ],
           "name": "derive_shared_key",
           "signature": "(es_version: u16, point: &[u8; 32])",
@@ -2395,8 +2395,8 @@
         {
           "docstring": "`crypto_secretbox`'s `Aead::encrypt` PREPENDS the tag, so no manual assembly is needed.",
           "lines": [
-            1500,
-            1525
+            1503,
+            1528
           ],
           "name": "aead_seal",
           "signature": "(\n    es_version: u16,\n    key: &[u8; 32],\n    nonce: &[u8; FULL_NONCE_LEN],\n    plaintext: &[u8],\n)",
@@ -2405,8 +2405,8 @@
         {
           "docstring": "inverse of our NaCl seal for each version.",
           "lines": [
-            1533,
-            1556
+            1536,
+            1559
           ],
           "name": "aead_open",
           "signature": "(\n    es_version: u16,\n    key: &[u8; 32],\n    nonce: &[u8; FULL_NONCE_LEN],\n    boxed: &[u8],\n)",
@@ -2415,8 +2415,8 @@
         {
           "docstring": "Verifies the magic, the client-nonce echo, AEAD-opens (tampered \u2192 `Err`, never a panic), unpads.",
           "lines": [
-            1568,
-            1593
+            1571,
+            1596
           ],
           "name": "decrypt_response",
           "signature": "(\n    es_version: u16,\n    shared_key: &[u8; 32],\n    client_half: &[u8; HALF_NONCE_LEN],\n    rep...",
@@ -2425,8 +2425,8 @@
         {
           "docstring": "padding DNSCrypt mandates so the encrypted query length leaks no information below the block.",
           "lines": [
-            1598,
-            1612
+            1601,
+            1615
           ],
           "name": "pad_query",
           "signature": "(query: &[u8])",
@@ -2435,8 +2435,8 @@
         {
           "docstring": "exchange). Zero-copy on the hottest decrypt edge; the walk itself is unchanged.",
           "lines": [
-            1621,
-            1632
+            1624,
+            1635
           ],
           "name": "unpad_response",
           "signature": "(mut padded: Vec<u8>)",
@@ -2445,8 +2445,8 @@
         {
           "docstring": "exact signed cert AND this query's ciphertext \u2014 no byte of the exchange is outside the schedule.",
           "lines": [
-            1643,
-            1664
+            1646,
+            1667
           ],
           "name": "pq_derive_shared_key",
           "signature": "(\n    kem_ss: &[u8],\n    client_magic: &[u8; 8],\n    cert_context: &[u8],\n    ct: &[u8],\n)",
@@ -2455,8 +2455,8 @@
         {
           "docstring": "ciphertext already dominates the frame length ([`PQ_FRESH_PAD_FLOOR`]).",
           "lines": [
-            1670,
-            1680
+            1673,
+            1683
           ],
           "name": "pq_pad",
           "signature": "(packet: &[u8], floor: usize)",
@@ -2465,8 +2465,8 @@
         {
           "docstring": "prefix instead of copying the body.",
           "lines": [
-            1693,
-            1724
+            1696,
+            1727
           ],
           "name": "pq_strip_control",
           "signature": "(mut plaintext: Vec<u8>)",
@@ -2475,8 +2475,8 @@
         {
           "docstring": "strip control FIRST, then unpad).",
           "lines": [
-            1731,
-            1755
+            1734,
+            1758
           ],
           "name": "pq_decrypt_response",
           "signature": "(\n    shared_key: &[u8; 32],\n    client_half: &[u8; HALF_NONCE_LEN],\n    reply: &[u8],\n)",
@@ -2485,8 +2485,8 @@
         {
           "docstring": "core inline.",
           "lines": [
-            1762,
-            1802
+            1765,
+            1805
           ],
           "name": "hsalsa20",
           "signature": "(key: &[u8; 32], input: &[u8; 16])",
@@ -2494,8 +2494,8 @@
         },
         {
           "lines": [
-            1807,
-            1812
+            1810,
+            1815
           ],
           "name": "salsa_quarter",
           "signature": "(x: &mut [u32; 16], a: usize, b: usize, c: usize, d: usize)",
@@ -2504,8 +2504,8 @@
         {
           "docstring": "mirrors `chacha20::hchacha::<U10>` (a TRANSITIVE dep), implemented inline to avoid a Cargo.toml dep.",
           "lines": [
-            1817,
-            1849
+            1820,
+            1852
           ],
           "name": "hchacha20",
           "signature": "(key: &[u8; 32], input: &[u8; 16])",
@@ -2513,8 +2513,8 @@
         },
         {
           "lines": [
-            1853,
-            1862
+            1856,
+            1865
           ],
           "name": "chacha_quarter",
           "signature": "(x: &mut [u32; 16], a: usize, b: usize, c: usize, d: usize)",
@@ -2523,8 +2523,8 @@
         {
           "docstring": "or oversized field is a rejection, never a panic or OOB read.",
           "lines": [
-            1882,
-            1932
+            1885,
+            1935
           ],
           "name": "parse_dnscrypt_stamp",
           "signature": "(stamp: &str)",
@@ -2533,8 +2533,8 @@
         {
           "docstring": "`None` if not a relay stamp / malformed.",
           "lines": [
-            1939,
-            1951
+            1942,
+            1954
           ],
           "name": "parse_relay_stamp",
           "signature": "(stamp: &str)",
@@ -2543,8 +2543,8 @@
         {
           "docstring": "delegates to `parse_relay_stamp`. For DNSCrypt stamps, re-parses with the 0x01 layout.",
           "lines": [
-            1956,
-            1970
+            1959,
+            1973
           ],
           "name": "parse_stamp_addr",
           "signature": "(stamp: &str)",
@@ -2553,8 +2553,8 @@
         {
           "docstring": "but a bare relay stamp (0x81) has NO props word \u2014 its addr LP is the very next field.",
           "lines": [
-            1984,
-            2002
+            1987,
+            2005
           ],
           "name": "stamp_addr_family",
           "signature": "(stamp: &str)",
@@ -2563,8 +2563,8 @@
         {
           "docstring": "hostname (ODoH targets, hostname-addressed DoH) \u2014 is **Unknown** `(true,true)` and rides both.",
           "lines": [
-            2007,
-            2024
+            2010,
+            2035
           ],
           "name": "family_of_addr",
           "signature": "(addr: &str)",
@@ -2572,8 +2572,8 @@
         },
         {
           "lines": [
-            2038,
-            2054
+            2049,
+            2065
           ],
           "name": "parse_odoh_target_stamp",
           "signature": "(stamp: &str)",
@@ -2581,8 +2581,8 @@
         },
         {
           "lines": [
-            2069,
-            2084
+            2080,
+            2095
           ],
           "name": "parse_odoh_relay_stamp",
           "signature": "(stamp: &str)",
@@ -2590,8 +2590,8 @@
         },
         {
           "lines": [
-            2091,
-            2106
+            2102,
+            2117
           ],
           "name": "skip_vlp",
           "signature": "(bytes: &[u8], pos: &mut usize)",
@@ -2600,8 +2600,8 @@
         {
           "docstring": "advance `*pos` past it. Returns the field's bytes, or `None` if it runs off the end. Never panics.",
           "lines": [
-            2110,
-            2119
+            2121,
+            2130
           ],
           "name": "read_lp",
           "signature": "(bytes: &'a [u8], pos: &mut usize)",
@@ -2610,8 +2610,8 @@
         {
           "docstring": "Read a length-prefixed field as a UTF-8 `String`. `None` if it runs off the end or isn't UTF-8.",
           "lines": [
-            2122,
-            2125
+            2133,
+            2136
           ],
           "name": "read_lp_str",
           "signature": "(bytes: &[u8], pos: &mut usize)",
@@ -2620,8 +2620,8 @@
         {
           "docstring": "`None` for anything that is not an IP-literal address (DNS stamps carry IPs, never hostnames).",
           "lines": [
-            2130,
-            2146
+            2141,
+            2157
           ],
           "name": "parse_resolver_addr",
           "signature": "(addr: &str)",
@@ -2630,8 +2630,8 @@
         {
           "docstring": "`relay`/`odoh-relay` entries. Never panics.",
           "lines": [
-            2153,
-            2167
+            2164,
+            2178
           ],
           "name": "stamp_proto_label",
           "signature": "(stamp: &str)",
@@ -2640,8 +2640,8 @@
         {
           "docstring": "The DATA that makes the manual picker LIVE-WIRED \u2014 the host filters rows by the armed require_*.",
           "lines": [
-            2175,
-            2187
+            2186,
+            2198
           ],
           "name": "stamp_props",
           "signature": "(stamp: &str)",
@@ -2650,8 +2650,8 @@
         {
           "docstring": "character or a dangling 1-char tail (an impossible base64 length). Never panics.",
           "lines": [
-            2192,
-            2221
+            2203,
+            2232
           ],
           "name": "base64url_decode",
           "signature": "(s: &str)",
@@ -2662,8 +2662,8 @@
             {
               "docstring": "string, so the parser can be exercised without a network or a real provider.",
               "lines": [
-                2229,
-                2240
+                2240,
+                2251
               ],
               "name": "make_stamp",
               "signature": "(proto: u8, addr: &str, pk: &[u8], provider: &str)",
@@ -2672,8 +2672,8 @@
             {
               "docstring": "Test-only encoder mirroring `base64url_decode` (RFC 4648 url alphabet, no padding).",
               "lines": [
-                2243,
-                2261
+                2254,
+                2272
               ],
               "name": "base64url_encode",
               "signature": "(data: &[u8])",
@@ -2682,8 +2682,8 @@
             {
               "docstring": "window, the resolver pk + client-magic are all caller-controlled.",
               "lines": [
-                2266,
-                2293
+                2277,
+                2304
               ],
               "name": "make_signed_cert",
               "signature": "(\n        signing: &ed25519_dalek::SigningKey,\n        es_version: u16,\n        resolver_pk: &[u8...",
@@ -2692,8 +2692,8 @@
             {
               "docstring": "the FIX 3 freshness tests (highest serial among equal-es certs wins).",
               "lines": [
-                2297,
-                2323
+                2308,
+                2334
               ],
               "name": "make_signed_cert_serial",
               "signature": "(\n        signing: &ed25519_dalek::SigningKey,\n        es_version: u16,\n        resolver_pk: &[u8...",
@@ -2702,8 +2702,8 @@
             {
               "docstring": "cert is < 256 bytes so it fits one string.)",
               "lines": [
-                2328,
-                2353
+                2339,
+                2364
               ],
               "name": "make_txt_response",
               "signature": "(provider: &str, cert: &[u8])",
@@ -2711,8 +2711,8 @@
             },
             {
               "lines": [
-                2358,
-                2371
+                2369,
+                2382
               ],
               "name": "parses_a_well_formed_dnscrypt_stamp",
               "signature": "()",
@@ -2720,8 +2720,8 @@
             },
             {
               "lines": [
-                2374,
-                2378
+                2385,
+                2389
               ],
               "name": "bare_ip_addr_gets_default_dnscrypt_port",
               "signature": "()",
@@ -2729,8 +2729,8 @@
             },
             {
               "lines": [
-                2381,
-                2386
+                2392,
+                2397
               ],
               "name": "rejects_non_sdns_scheme",
               "signature": "()",
@@ -2738,8 +2738,8 @@
             },
             {
               "lines": [
-                2389,
-                2397
+                2400,
+                2408
               ],
               "name": "rejects_non_dnscrypt_protocol",
               "signature": "()",
@@ -2747,8 +2747,8 @@
             },
             {
               "lines": [
-                2400,
-                2406
+                2411,
+                2417
               ],
               "name": "rejects_pk_of_wrong_length",
               "signature": "()",
@@ -2756,8 +2756,8 @@
             },
             {
               "lines": [
-                2409,
-                2414
+                2420,
+                2425
               ],
               "name": "rejects_bad_base64",
               "signature": "()",
@@ -2765,8 +2765,8 @@
             },
             {
               "lines": [
-                2417,
-                2423
+                2428,
+                2434
               ],
               "name": "rejects_truncated_stamp",
               "signature": "()",
@@ -2775,8 +2775,8 @@
             {
               "docstring": "`stamp_addr_family` must position past differently from a resolver stamp.",
               "lines": [
-                2429,
-                2435
+                2440,
+                2446
               ],
               "name": "make_relay_stamp",
               "signature": "(addr: &str)",
@@ -2784,8 +2784,8 @@
             },
             {
               "lines": [
-                2438,
-                2448
+                2449,
+                2459
               ],
               "name": "family_of_v4_literals_is_ipv4_only",
               "signature": "()",
@@ -2793,8 +2793,8 @@
             },
             {
               "lines": [
-                2451,
-                2464
+                2462,
+                2480
               ],
               "name": "family_of_v6_literals_is_ipv6_only",
               "signature": "()",
@@ -2802,8 +2802,8 @@
             },
             {
               "lines": [
-                2467,
-                2474
+                2483,
+                2490
               ],
               "name": "family_of_hostname_or_empty_addr_is_unknown_both",
               "signature": "()",
@@ -2811,8 +2811,8 @@
             },
             {
               "lines": [
-                2477,
-                2484
+                2493,
+                2503
               ],
               "name": "family_of_garbage_fails_open_to_unknown",
               "signature": "()",
@@ -2820,8 +2820,8 @@
             },
             {
               "lines": [
-                2487,
-                2503
+                2506,
+                2522
               ],
               "name": "relay_stamp_parses_and_is_not_a_resolver_transport",
               "signature": "()",
@@ -2829,8 +2829,8 @@
             },
             {
               "lines": [
-                2517,
-                2540
+                2536,
+                2559
               ],
               "name": "relay_envelope_matches_go_prepare_for_relay_ipv4",
               "signature": "()",
@@ -2838,8 +2838,8 @@
             },
             {
               "lines": [
-                2544,
-                2558
+                2563,
+                2577
               ],
               "name": "relay_envelope_emits_native_ipv6_as_is",
               "signature": "()",
@@ -2847,8 +2847,8 @@
             },
             {
               "lines": [
-                2563,
-                2572
+                2582,
+                2591
               ],
               "name": "relay_chain_empty_is_byte_identical_to_direct",
               "signature": "()",
@@ -2856,8 +2856,8 @@
             },
             {
               "lines": [
-                2577,
-                2597
+                2596,
+                2616
               ],
               "name": "relay_chain_single_hop_wraps_once_and_dials_the_relay",
               "signature": "()",
@@ -2865,8 +2865,8 @@
             },
             {
               "lines": [
-                2603,
-                2643
+                2622,
+                2662
               ],
               "name": "relay_chain_multi_hop_nests_in_reverse_order",
               "signature": "()",
@@ -2874,8 +2874,8 @@
             },
             {
               "lines": [
-                2648,
-                2665
+                2667,
+                2684
               ],
               "name": "parse_relay_chain_drops_bad_stamps_and_empty_is_direct",
               "signature": "()",
@@ -2883,8 +2883,8 @@
             },
             {
               "lines": [
-                2670,
-                2689
+                2689,
+                2708
               ],
               "name": "set_relays_and_with_relays_attach_the_chain",
               "signature": "()",
@@ -2892,8 +2892,8 @@
             },
             {
               "lines": [
-                2694,
-                2703
+                2713,
+                2722
               ],
               "name": "rejects_expired_cert",
               "signature": "()",
@@ -2901,8 +2901,8 @@
             },
             {
               "lines": [
-                2706,
-                2715
+                2725,
+                2734
               ],
               "name": "rejects_not_yet_valid_cert",
               "signature": "()",
@@ -2910,8 +2910,8 @@
             },
             {
               "lines": [
-                2718,
-                2729
+                2737,
+                2748
               ],
               "name": "rejects_wrong_ed25519_signature",
               "signature": "()",
@@ -2919,8 +2919,8 @@
             },
             {
               "lines": [
-                2732,
-                2740
+                2751,
+                2759
               ],
               "name": "rejects_tampered_signed_region",
               "signature": "()",
@@ -2928,8 +2928,8 @@
             },
             {
               "lines": [
-                2743,
-                2758
+                2762,
+                2777
               ],
               "name": "es_version_selection_picks_the_highest_valid",
               "signature": "()",
@@ -2937,8 +2937,8 @@
             },
             {
               "lines": [
-                2761,
-                2772
+                2780,
+                2791
               ],
               "name": "cert_txt_round_trips_through_the_dns_walker",
               "signature": "()",
@@ -2946,8 +2946,8 @@
             },
             {
               "lines": [
-                2777,
-                2816
+                2796,
+                2835
               ],
               "name": "flipped_es_version_does_not_silently_downgrade_cipher",
               "signature": "()",
@@ -2955,8 +2955,8 @@
             },
             {
               "lines": [
-                2821,
-                2849
+                2840,
+                2868
               ],
               "name": "highest_serial_wins_among_equal_es_version_certs",
               "signature": "()",
@@ -2964,8 +2964,8 @@
             },
             {
               "lines": [
-                2854,
-                2901
+                2873,
+                2920
               ],
               "name": "validity_window_is_y2106_safe",
               "signature": "()",
@@ -2973,8 +2973,8 @@
             },
             {
               "lines": [
-                2906,
-                2930
+                2925,
+                2949
               ],
               "name": "pad_unpad_round_trips_and_is_block_aligned",
               "signature": "()",
@@ -2982,8 +2982,8 @@
             },
             {
               "lines": [
-                2933,
-                2936
+                2952,
+                2955
               ],
               "name": "unpad_rejects_all_zero_or_missing_delimiter",
               "signature": "()",
@@ -2991,8 +2991,8 @@
             },
             {
               "lines": [
-                2941,
-                2948
+                2960,
+                2967
               ],
               "name": "aead_seal_open_round_trips_xchacha",
               "signature": "()",
@@ -3000,8 +3000,8 @@
             },
             {
               "lines": [
-                2951,
-                2958
+                2970,
+                2977
               ],
               "name": "aead_seal_open_round_trips_xsalsa",
               "signature": "()",
@@ -3009,8 +3009,8 @@
             },
             {
               "lines": [
-                2961,
-                2977
+                2980,
+                2996
               ],
               "name": "aead_single_tampered_byte_fails_to_open",
               "signature": "()",
@@ -3018,8 +3018,8 @@
             },
             {
               "lines": [
-                2996,
-                3082
+                3015,
+                3101
               ],
               "name": "es_v2_seal_matches_libsodium_crypto_secretbox_xchacha20poly1305_kat",
               "signature": "()",
@@ -3027,8 +3027,8 @@
             },
             {
               "lines": [
-                3089,
-                3133
+                3108,
+                3152
               ],
               "name": "es_v1_seal_matches_nacl_crypto_secretbox_xsalsa20poly1305_kat",
               "signature": "()",
@@ -3036,8 +3036,8 @@
             },
             {
               "lines": [
-                3142,
-                3169
+                3161,
+                3188
               ],
               "name": "both_es_versions_prepend_the_tag_identically",
               "signature": "()",
@@ -3045,8 +3045,8 @@
             },
             {
               "lines": [
-                3179,
-                3217
+                3198,
+                3236
               ],
               "name": "encrypted_reply_is_never_treated_as_truncated",
               "signature": "()",
@@ -3054,8 +3054,8 @@
             },
             {
               "lines": [
-                3222,
-                3229
+                3241,
+                3248
               ],
               "name": "two_consecutive_client_nonces_differ",
               "signature": "()",
@@ -3063,8 +3063,8 @@
             },
             {
               "lines": [
-                3234,
-                3272
+                3253,
+                3291
               ],
               "name": "decrypt_response_round_trips_against_a_forged_resolver_reply",
               "signature": "()",
@@ -3072,8 +3072,8 @@
             },
             {
               "lines": [
-                3275,
-                3298
+                3294,
+                3317
               ],
               "name": "decrypt_response_rejects_bad_magic_and_nonce_echo",
               "signature": "()",
@@ -3081,8 +3081,8 @@
             },
             {
               "lines": [
-                3303,
-                3320
+                3322,
+                3339
               ],
               "name": "hchacha20_matches_rfc7539_test_vector",
               "signature": "()",
@@ -3090,8 +3090,8 @@
             },
             {
               "lines": [
-                3323,
-                3340
+                3342,
+                3359
               ],
               "name": "hsalsa20_matches_libsodium_test_vector",
               "signature": "()",
@@ -3099,8 +3099,8 @@
             },
             {
               "lines": [
-                3343,
-                3359
+                3362,
+                3378
               ],
               "name": "base64url_round_trips",
               "signature": "()",
@@ -3108,8 +3108,8 @@
             },
             {
               "lines": [
-                3365,
-                3368
+                3384,
+                3387
               ],
               "name": "push_lp",
               "signature": "(body: &mut Vec<u8>, s: &[u8])",
@@ -3117,8 +3117,8 @@
             },
             {
               "lines": [
-                3372,
-                3386
+                3391,
+                3405
               ],
               "name": "decodes_odoh_target_stamp",
               "signature": "()",
@@ -3126,8 +3126,8 @@
             },
             {
               "lines": [
-                3390,
-                3411
+                3409,
+                3431
               ],
               "name": "decodes_odoh_relay_stamp_skipping_hashes",
               "signature": "()",
@@ -3136,8 +3136,8 @@
             {
               "docstring": "`accept` flag. Mirrors the Kotlin `vpnService.protect(fd)` impl's contract.",
               "lines": [
-                3417,
-                3420
+                3437,
+                3440
               ],
               "name": "RecordingProtect",
               "type": "struct"
@@ -3146,8 +3146,8 @@
               "children": [
                 {
                   "lines": [
-                    3423,
-                    3426
+                    3443,
+                    3446
                   ],
                   "name": "protect_fd",
                   "signature": "(&self, fd: i32)",
@@ -3155,16 +3155,16 @@
                 }
               ],
               "lines": [
-                3422,
-                3427
+                3442,
+                3447
               ],
               "name": "ProtectCallback",
               "type": "impl"
             },
             {
               "lines": [
-                3433,
-                3451
+                3453,
+                3471
               ],
               "name": "protect_callback_install_and_clear_cycle",
               "signature": "()",
@@ -3172,8 +3172,8 @@
             },
             {
               "lines": [
-                3457,
-                3465
+                3477,
+                3485
               ],
               "name": "protect_raw_fd_is_noop_with_no_callback_installed",
               "signature": "()",
@@ -3182,8 +3182,8 @@
             {
               "docstring": "Test-only hex decoder (the vectors are pinned as hex strings, as in the draft's appendix).",
               "lines": [
-                3474,
-                3479
+                3494,
+                3499
               ],
               "name": "unhex",
               "signature": "(s: &str)",
@@ -3192,8 +3192,8 @@
             {
               "docstring": "(upstream `iotaBytes`, pq_test.go:15-21).",
               "lines": [
-                3483,
-                3489
+                3503,
+                3509
               ],
               "name": "iota_bytes",
               "signature": "(start: u8)",
@@ -3201,8 +3201,8 @@
             },
             {
               "lines": [
-                3495,
-                3526
+                3515,
+                3550
               ],
               "name": "make_signed_pq_cert",
               "signature": "(\n        signing: &ed25519_dalek::SigningKey,\n        es_version: u16,\n        xwing_pk: &[u8],\n...",
@@ -3210,8 +3210,8 @@
             },
             {
               "lines": [
-                3536,
-                3611
+                3560,
+                3633
               ],
               "name": "pq_appendix3_draft_vectors",
               "signature": "()",
@@ -3219,8 +3219,8 @@
             },
             {
               "lines": [
-                3615,
-                3644
+                3637,
+                3669
               ],
               "name": "pq_cert_parses_material_from_pq_offsets",
               "signature": "()",
@@ -3228,8 +3228,8 @@
             },
             {
               "lines": [
-                3650,
-                3673
+                3675,
+                3715
               ],
               "name": "pq_flipped_header_rejected_both_directions",
               "signature": "()",
@@ -3237,8 +3237,8 @@
             },
             {
               "lines": [
-                3679,
-                3707
+                3721,
+                3761
               ],
               "name": "pq_selection_beats_classic_and_gate_disables",
               "signature": "()",
@@ -3246,8 +3246,8 @@
             },
             {
               "lines": [
-                3711,
-                3726
+                3765,
+                3788
               ],
               "name": "pq_pad_floors_and_roundtrip",
               "signature": "()",
@@ -3255,8 +3255,8 @@
             },
             {
               "lines": [
-                3731,
-                3791
+                3793,
+                3853
               ],
               "name": "pq_control_strip_shapes",
               "signature": "()",
@@ -3264,8 +3264,8 @@
             },
             {
               "lines": [
-                3795,
-                3801
+                3857,
+                3863
               ],
               "name": "pq_derive_key_binds_ciphertext",
               "signature": "()",
@@ -3273,8 +3273,8 @@
             },
             {
               "lines": [
-                3809,
-                3898
+                3871,
+                3975
               ],
               "name": "pq_full_loopback_roundtrip",
               "signature": "()",
@@ -3283,8 +3283,8 @@
             {
               "docstring": "Serve exactly one RFC 7766-framed DNS-over-TCP reply, then close. Returns the bound addr.",
               "lines": [
-                3907,
-                3925
+                3984,
+                4002
               ],
               "name": "one_shot_tcp_server",
               "signature": "(reply: Vec<u8>)",
@@ -3293,8 +3293,8 @@
             {
               "docstring": "Serve exactly one UDP reply (echoed to whoever sends first), then exit.",
               "lines": [
-                3928,
-                3938
+                4005,
+                4015
               ],
               "name": "one_shot_udp_server",
               "signature": "(reply: Vec<u8>)",
@@ -3302,8 +3302,8 @@
             },
             {
               "lines": [
-                3941,
-                3951
+                4018,
+                4028
               ],
               "name": "pq_cert_lane_fetches_over_tcp_first",
               "signature": "()",
@@ -3311,8 +3311,8 @@
             },
             {
               "lines": [
-                3954,
-                3965
+                4031,
+                4045
               ],
               "name": "pq_cert_lane_falls_back_to_udp_when_tcp_is_dead",
               "signature": "()",
@@ -3320,8 +3320,8 @@
             }
           ],
           "lines": [
-            2224,
-            3966
+            2235,
+            4046
           ],
           "name": "tests",
           "type": "module"
@@ -3330,8 +3330,8 @@
           "children": [
             {
               "lines": [
-                3979,
-                3986
+                4059,
+                4070
               ],
               "name": "genuine_relay_stamps_parse_in_order",
               "signature": "()",
@@ -3339,8 +3339,8 @@
             },
             {
               "lines": [
-                3993,
-                4006
+                4077,
+                4091
               ],
               "name": "a_resolver_stamp_is_rejected_as_a_relay",
               "signature": "()",
@@ -3348,8 +3348,8 @@
             },
             {
               "lines": [
-                4011,
-                4023
+                4096,
+                4108
               ],
               "name": "malformed_entries_are_dropped_not_panicked",
               "signature": "()",
@@ -3357,8 +3357,8 @@
             },
             {
               "lines": [
-                4027,
-                4032
+                4112,
+                4117
               ],
               "name": "empty_input_is_direct",
               "signature": "()",
@@ -3366,8 +3366,8 @@
             },
             {
               "lines": [
-                4037,
-                4051
+                4122,
+                4136
               ],
               "name": "with_relays_and_set_relays_agree",
               "signature": "()",
@@ -3375,8 +3375,8 @@
             }
           ],
           "lines": [
-            3973,
-            4052
+            4053,
+            4137
           ],
           "name": "relay_validator_tests",
           "type": "module"
@@ -3384,12 +3384,12 @@
       ]
     },
     "dnscrypt_config.rs": {
-      "hash": "a44c30d80601",
-      "indexed_at": "2026-08-01T12:21:49.021310+00:00",
+      "hash": "444e09de690f",
+      "indexed_at": "2026-08-01T12:52:10.748666+00:00",
       "language": "rust",
-      "lines": 2059,
-      "mtime_ns": 1785586842911150000,
-      "size": 91828,
+      "lines": 2080,
+      "mtime_ns": 1785588611345044500,
+      "size": 92066,
       "symbols": [
         {
           "lines": [
@@ -4043,7 +4043,7 @@
             {
               "lines": [
                 1189,
-                1250
+                1268
               ],
               "name": "durable_persist_rehydrate_materialize_round_trip",
               "signature": "()",
@@ -4051,8 +4051,8 @@
             },
             {
               "lines": [
-                1255,
-                1306
+                1273,
+                1324
               ],
               "name": "round_trip_preserves_capabilities",
               "signature": "()",
@@ -4060,8 +4060,8 @@
             },
             {
               "lines": [
-                1312,
-                1360
+                1330,
+                1378
               ],
               "name": "bridge_to_toml_from_toml_round_trips",
               "signature": "()",
@@ -4069,8 +4069,8 @@
             },
             {
               "lines": [
-                1365,
-                1377
+                1383,
+                1395
               ],
               "name": "from_toml_or_default_fail_softs_but_typed_reports",
               "signature": "()",
@@ -4079,7 +4079,7 @@
           ],
           "lines": [
             1125,
-            1378
+            1396
           ],
           "name": "tests",
           "type": "module"
@@ -4089,8 +4089,8 @@
             {
               "docstring": "standard instead of a weaker hand-rolled comparison (checkpoint 100).",
               "lines": [
-                1613,
-                1693
+                1631,
+                1711
               ],
               "name": "assert_round_trip_eq",
               "signature": "(a: &DnscryptProxyConfig, b: &DnscryptProxyConfig)",
@@ -4098,8 +4098,8 @@
             },
             {
               "lines": [
-                1698,
-                1800
+                1716,
+                1818
               ],
               "name": "real_example_imports_active_fields",
               "signature": "()",
@@ -4107,8 +4107,8 @@
             },
             {
               "lines": [
-                1805,
-                1864
+                1823,
+                1882
               ],
               "name": "armed_example_imports_capability_tables",
               "signature": "()",
@@ -4116,8 +4116,8 @@
             },
             {
               "lines": [
-                1869,
-                1885
+                1887,
+                1903
               ],
               "name": "real_example_round_trips_through_the_bridge",
               "signature": "()",
@@ -4125,8 +4125,8 @@
             },
             {
               "lines": [
-                1891,
-                1923
+                1909,
+                1941
               ],
               "name": "armed_example_round_trips_capabilities_lossless",
               "signature": "()",
@@ -4134,8 +4134,8 @@
             },
             {
               "lines": [
-                1928,
-                1960
+                1946,
+                1978
               ],
               "name": "default_is_sane_and_matches_upstream_baseline",
               "signature": "()",
@@ -4143,8 +4143,8 @@
             },
             {
               "lines": [
-                1965,
-                1990
+                1983,
+                2008
               ],
               "name": "malformed_toml_fail_softs_to_default_no_panic",
               "signature": "()",
@@ -4152,8 +4152,8 @@
             }
           ],
           "lines": [
-            1381,
-            1991
+            1399,
+            2009
           ],
           "name": "real_example_tests",
           "type": "module"
@@ -4162,8 +4162,8 @@
           "children": [
             {
               "lines": [
-                2036,
-                2043
+                2054,
+                2061
               ],
               "name": "the_shipped_config_round_trips_through_the_live_model",
               "signature": "()",
@@ -4171,8 +4171,8 @@
             },
             {
               "lines": [
-                2049,
-                2058
+                2067,
+                2079
               ],
               "name": "the_shipped_config_is_not_an_empty_default",
               "signature": "()",
@@ -4180,8 +4180,8 @@
             }
           ],
           "lines": [
-            2027,
-            2059
+            2045,
+            2080
           ],
           "name": "shipped_asset",
           "type": "module"
@@ -4189,12 +4189,12 @@
       ]
     },
     "dnscrypt_update.rs": {
-      "hash": "b5982ba16d85",
-      "indexed_at": "2026-07-31T23:50:04.382703+00:00",
+      "hash": "e1f684baa466",
+      "indexed_at": "2026-08-01T12:52:11.049825+00:00",
       "language": "rust",
-      "lines": 914,
-      "mtime_ns": 1785541781212353900,
-      "size": 44346,
+      "lines": 918,
+      "mtime_ns": 1785588611350044200,
+      "size": 43526,
       "symbols": [
         {
           "docstring": "(Public so the UniFFI export + the tests can read it; the fields are read-only by construction.)",
@@ -4376,7 +4376,7 @@
             471
           ],
           "name": "parse_upstream_envelope",
-          "signature": "(\r\n    text: &str,\r\n)",
+          "signature": "(\n    text: &str,\n)",
           "type": "function"
         },
         {
@@ -4424,7 +4424,7 @@
             {
               "lines": [
                 563,
-                591
+                595
               ],
               "name": "max_sources_truncates_and_never_becomes_a_remote_kill_switch",
               "signature": "()",
@@ -4432,8 +4432,8 @@
             },
             {
               "lines": [
-                594,
-                602
+                598,
+                606
               ],
               "name": "temp_dir",
               "signature": "(tag: &str)",
@@ -4441,8 +4441,8 @@
             },
             {
               "lines": [
-                607,
-                611
+                611,
+                615
               ],
               "name": "semver_newer_basic",
               "signature": "()",
@@ -4450,8 +4450,8 @@
             },
             {
               "lines": [
-                614,
-                618
+                618,
+                622
               ],
               "name": "semver_newer_major_minor",
               "signature": "()",
@@ -4459,8 +4459,8 @@
             },
             {
               "lines": [
-                621,
-                625
+                625,
+                629
               ],
               "name": "semver_strips_prerelease_and_build",
               "signature": "()",
@@ -4468,8 +4468,8 @@
             },
             {
               "lines": [
-                628,
-                633
+                632,
+                637
               ],
               "name": "semver_handles_garbage_gracefully",
               "signature": "()",
@@ -4477,8 +4477,8 @@
             },
             {
               "lines": [
-                638,
-                651
+                642,
+                655
               ],
               "name": "parse_well_formed_envelope",
               "signature": "()",
@@ -4486,8 +4486,8 @@
             },
             {
               "lines": [
-                654,
-                663
+                658,
+                667
               ],
               "name": "parse_empty_envelope_is_malformed",
               "signature": "()",
@@ -4495,8 +4495,8 @@
             },
             {
               "lines": [
-                666,
-                672
+                670,
+                676
               ],
               "name": "parse_envelope_without_version_is_malformed",
               "signature": "()",
@@ -4504,8 +4504,8 @@
             },
             {
               "lines": [
-                675,
-                683
+                679,
+                687
               ],
               "name": "parse_envelope_is_bounded",
               "signature": "()",
@@ -4513,8 +4513,8 @@
             },
             {
               "lines": [
-                686,
-                692
+                690,
+                696
               ],
               "name": "parse_envelope_unknown_key_is_forward_tolerant",
               "signature": "()",
@@ -4522,8 +4522,8 @@
             },
             {
               "lines": [
-                697,
-                702
+                701,
+                706
               ],
               "name": "plan_for_older_upstream_is_noop",
               "signature": "()",
@@ -4531,8 +4531,8 @@
             },
             {
               "lines": [
-                705,
-                708
+                709,
+                712
               ],
               "name": "plan_for_equal_upstream_is_noop",
               "signature": "()",
@@ -4540,8 +4540,8 @@
             },
             {
               "lines": [
-                711,
-                736
+                715,
+                740
               ],
               "name": "plan_for_newer_upstream_flags_missing_capabilities",
               "signature": "()",
@@ -4549,8 +4549,8 @@
             },
             {
               "lines": [
-                739,
-                765
+                743,
+                769
               ],
               "name": "plan_for_distilled_2_1_18_envelope_names_zero_gaps_and_surfaces_the_surpass",
               "signature": "()",
@@ -4558,8 +4558,8 @@
             },
             {
               "lines": [
-                768,
-                776
+                772,
+                780
               ],
               "name": "plan_flags_new_sources",
               "signature": "()",
@@ -4567,8 +4567,8 @@
             },
             {
               "lines": [
-                779,
-                781
+                783,
+                785
               ],
               "name": "plan_malformed_upstream_is_err",
               "signature": "()",
@@ -4576,8 +4576,8 @@
             },
             {
               "lines": [
-                786,
-                792
+                790,
+                796
               ],
               "name": "sync_state_cold_is_zero",
               "signature": "()",
@@ -4585,8 +4585,8 @@
             },
             {
               "lines": [
-                795,
-                807
+                799,
+                811
               ],
               "name": "sync_state_rehydrate_on_cold_dir_is_cold",
               "signature": "()",
@@ -4594,8 +4594,8 @@
             },
             {
               "lines": [
-                810,
-                828
+                814,
+                832
               ],
               "name": "sync_state_round_trips_through_durable",
               "signature": "()",
@@ -4603,8 +4603,8 @@
             },
             {
               "lines": [
-                831,
-                838
+                835,
+                842
               ],
               "name": "sync_state_decode_tolerates_unknown_keys",
               "signature": "()",
@@ -4612,8 +4612,8 @@
             },
             {
               "lines": [
-                841,
-                855
+                845,
+                859
               ],
               "name": "sync_state_capabilities_escape_round_trip",
               "signature": "()",
@@ -4621,8 +4621,8 @@
             },
             {
               "lines": [
-                860,
-                870
+                864,
+                874
               ],
               "name": "apply_noop_plan_is_idempotent",
               "signature": "()",
@@ -4630,8 +4630,8 @@
             },
             {
               "lines": [
-                873,
-                892
+                877,
+                896
               ],
               "name": "apply_real_plan_advances_state_and_merges_capabilities",
               "signature": "()",
@@ -4639,8 +4639,8 @@
             },
             {
               "lines": [
-                897,
-                913
+                901,
+                917
               ],
               "name": "current_envelope_does_not_name_any_core_module",
               "signature": "()",
@@ -4649,7 +4649,7 @@
           ],
           "lines": [
             550,
-            914
+            918
           ],
           "name": "tests",
           "type": "module"
@@ -4887,12 +4887,12 @@
       ]
     },
     "doh_bypass.rs": {
-      "hash": "3d6accaa4f94",
-      "indexed_at": "2026-08-01T08:44:35.042071+00:00",
+      "hash": "08c0ee065eed",
+      "indexed_at": "2026-08-01T12:52:11.346325+00:00",
       "language": "rust",
-      "lines": 253,
-      "mtime_ns": 1785573009008823600,
-      "size": 11651,
+      "lines": 279,
+      "mtime_ns": 1785588611355043600,
+      "size": 11960,
       "symbols": [
         {
           "docstring": "Arm or disarm the sinkhole. Host-driven; never flipped by the datapath itself.",
@@ -5022,7 +5022,7 @@
             {
               "lines": [
                 205,
-                211
+                219
               ],
               "name": "torta_own_upstream_operators_are_not_in_the_set",
               "signature": "()",
@@ -5030,8 +5030,8 @@
             },
             {
               "lines": [
-                214,
-                223
+                222,
+                237
               ],
               "name": "off_by_default_so_arming_is_a_choice",
               "signature": "()",
@@ -5039,8 +5039,8 @@
             },
             {
               "lines": [
-                238,
-                247
+                252,
+                270
               ],
               "name": "the_arming_switch_is_reachable_from_the_host_surface",
               "signature": "()",
@@ -5048,8 +5048,8 @@
             },
             {
               "lines": [
-                250,
-                252
+                273,
+                278
               ],
               "name": "the_curated_set_is_non_empty",
               "signature": "()",
@@ -5058,7 +5058,7 @@
           ],
           "lines": [
             149,
-            253
+            279
           ],
           "name": "tests",
           "type": "module"
@@ -5066,25 +5066,25 @@
       ]
     },
     "listener.rs": {
-      "hash": "b34dda5c6e8a",
-      "indexed_at": "2026-08-01T04:01:08.461239+00:00",
+      "hash": "0b4d6fc4922c",
+      "indexed_at": "2026-08-01T12:52:11.639061+00:00",
       "language": "rust",
-      "lines": 617,
-      "mtime_ns": 1785556379714898900,
-      "size": 32478,
+      "lines": 616,
+      "mtime_ns": 1785588611368043500,
+      "size": 32477,
       "symbols": [
         {
           "lines": [
-            96,
-            105
+            95,
+            104
           ],
           "name": "ListenerStats",
           "type": "struct"
         },
         {
           "lines": [
-            110,
-            117
+            109,
+            116
           ],
           "name": "ListenerSnapshot",
           "type": "struct"
@@ -5092,8 +5092,8 @@
         {
           "docstring": "the already-bound port (idempotent).",
           "lines": [
-            122,
-            125
+            121,
+            124
           ],
           "name": "RunningListener",
           "type": "struct"
@@ -5101,8 +5101,8 @@
         {
           "docstring": "per-query runtime (`mod.rs:310`) \u2014 never shared, never nested.",
           "lines": [
-            141,
-            248
+            140,
+            247
           ],
           "name": "start_loopback",
           "signature": "(port: u16)",
@@ -5111,8 +5111,8 @@
         {
           "docstring": "the JNI surface mirrors `resolver_shutdown` (`mod.rs`).",
           "lines": [
-            256,
-            259
+            255,
+            258
           ],
           "name": "stop_loopback",
           "signature": "()",
@@ -5121,8 +5121,8 @@
         {
           "docstring": "this to learn where to retarget system DNS (`127.0.0.1:<port>`).",
           "lines": [
-            263,
-            265
+            262,
+            264
           ],
           "name": "loopback_port",
           "signature": "()",
@@ -5131,8 +5131,8 @@
         {
           "docstring": "A telemetry snapshot (counts only, T20). `port = 0` when no listener is running.",
           "lines": [
-            268,
-            279
+            267,
+            278
           ],
           "name": "loopback_snapshot",
           "signature": "()",
@@ -5141,8 +5141,8 @@
         {
           "docstring": "contract, `mirror/server.rs:214`). The bound socket's recv buffer is [`MAX_MESSAGE`] (T6 bound).",
           "lines": [
-            289,
-            331
+            288,
+            330
           ],
           "name": "serve_udp",
           "signature": "(sock: UdpSocket, stats: Arc<ListenerStats>)",
@@ -5151,8 +5151,8 @@
         {
           "docstring": "read/write mirror `do53.rs:116-151` `tcp_exchange` exactly \u2014 the SAME crate, the SAME wire.",
           "lines": [
-            341,
-            401
+            340,
+            400
           ],
           "name": "serve_tcp",
           "signature": "(listener: TcpListener, stats: Arc<ListenerStats>)",
@@ -5161,8 +5161,8 @@
         {
           "docstring": "tests that assert the listener never exposes a non-loopback address.",
           "lines": [
-            405,
-            410
+            404,
+            409
           ],
           "name": "is_loopback",
           "signature": "(ip: &IpAddr)",
@@ -5173,8 +5173,8 @@
             {
               "docstring": "A real wire-format DNS query for `example.com` A, built via the crate's own canonical builder.",
               "lines": [
-                419,
-                421
+                418,
+                420
               ],
               "name": "example_query",
               "signature": "()",
@@ -5182,8 +5182,8 @@
             },
             {
               "lines": [
-                426,
-                429
+                425,
+                428
               ],
               "name": "loopback_addr_is_exactly_127_0_0_1",
               "signature": "()",
@@ -5191,8 +5191,8 @@
             },
             {
               "lines": [
-                432,
-                440
+                431,
+                439
               ],
               "name": "is_loopback_classifies_both_families",
               "signature": "()",
@@ -5201,8 +5201,8 @@
             {
               "docstring": "response to our question. Uses a fresh ephemeral client socket + a short timeout.",
               "lines": [
-                446,
-                469
+                445,
+                468
               ],
               "name": "probe_udp",
               "signature": "(port: u16, query: &[u8])",
@@ -5211,8 +5211,8 @@
             {
               "docstring": "reply. Mirrors `do53.rs:116` `tcp_exchange` (the client side of the SAME framing).",
               "lines": [
-                473,
-                525
+                472,
+                524
               ],
               "name": "probe_tcp",
               "signature": "(port: u16, query: &[u8])",
@@ -5220,8 +5220,8 @@
             },
             {
               "lines": [
-                528,
-                543
+                527,
+                542
               ],
               "name": "start_loopback_binds_ephemeral_port_on_loopback",
               "signature": "()",
@@ -5229,8 +5229,8 @@
             },
             {
               "lines": [
-                546,
-                573
+                545,
+                572
               ],
               "name": "udp_loop_answers_a_query_when_resolver_configured",
               "signature": "()",
@@ -5238,8 +5238,8 @@
             },
             {
               "lines": [
-                576,
-                594
+                575,
+                593
               ],
               "name": "tcp_loop_reads_length_prefixed_query_and_replies_or_drops",
               "signature": "()",
@@ -5247,8 +5247,8 @@
             },
             {
               "lines": [
-                597,
-                610
+                596,
+                609
               ],
               "name": "snapshot_is_counts_only_no_qname_leak",
               "signature": "()",
@@ -5256,8 +5256,8 @@
             },
             {
               "lines": [
-                613,
-                616
+                612,
+                615
               ],
               "name": "max_message_bound_is_64k",
               "signature": "()",
@@ -5265,8 +5265,8 @@
             }
           ],
           "lines": [
-            413,
-            617
+            412,
+            616
           ],
           "name": "tests",
           "type": "module"
@@ -5274,12 +5274,12 @@
       ]
     },
     "local.rs": {
-      "hash": "3e731242f4c9",
-      "indexed_at": "2026-08-01T08:44:35.335682+00:00",
+      "hash": "3ed943583dd3",
+      "indexed_at": "2026-08-01T12:52:11.938096+00:00",
       "language": "rust",
-      "lines": 1018,
-      "mtime_ns": 1785573658881510700,
-      "size": 51602,
+      "lines": 1045,
+      "mtime_ns": 1785588611373043500,
+      "size": 51912,
       "symbols": [
         {
           "docstring": "pool. It cannot introduce a new leak.",
@@ -5518,7 +5518,7 @@
             {
               "lines": [
                 612,
-                649
+                653
               ],
               "name": "addn_hosts_is_additive_while_set_records_replaces",
               "signature": "()",
@@ -5527,8 +5527,8 @@
             {
               "docstring": "to echo \u2014 reuses the crate's own `dns::build_query` (the canonical builder, no hand-rolled wire).",
               "lines": [
-                653,
-                655
+                657,
+                659
               ],
               "name": "query_for",
               "signature": "(qname: &str, qtype: u16)",
@@ -5537,8 +5537,8 @@
             {
               "docstring": "(so a real client would accept it) AND `answer_records` reads back the synthesized records.",
               "lines": [
-                660,
-                690
+                664,
+                694
               ],
               "name": "assert_is_positive",
               "signature": "(query: &[u8], resp: &[u8], expected_answers: usize)",
@@ -5546,8 +5546,8 @@
             },
             {
               "lines": [
-                695,
-                732
+                699,
+                736
               ],
               "name": "local_record_pin_synthesizes_a_aaaa_with_local_ttl_zero_egress",
               "signature": "()",
@@ -5555,8 +5555,8 @@
             },
             {
               "lines": [
-                735,
-                751
+                739,
+                755
               ],
               "name": "pinned_name_answers_positively_through_the_oracle_not_a_denial",
               "signature": "()",
@@ -5564,8 +5564,8 @@
             },
             {
               "lines": [
-                759,
-                774
+                763,
+                778
               ],
               "name": "pins_are_visible_across_threads_d33",
               "signature": "()",
@@ -5573,8 +5573,8 @@
             },
             {
               "lines": [
-                777,
-                784
+                781,
+                788
               ],
               "name": "unpinned_name_falls_through_no_local_answer",
               "signature": "()",
@@ -5582,8 +5582,8 @@
             },
             {
               "lines": [
-                787,
-                796
+                791,
+                800
               ],
               "name": "non_address_qtype_falls_through",
               "signature": "()",
@@ -5591,8 +5591,8 @@
             },
             {
               "lines": [
-                799,
-                806
+                803,
+                810
               ],
               "name": "aaaa_query_of_ipv4_only_pin_falls_through_not_nodata",
               "signature": "()",
@@ -5600,8 +5600,8 @@
             },
             {
               "lines": [
-                811,
-                854
+                815,
+                858
               ],
               "name": "addn_hosts_import_reuses_blocklist_parse_line",
               "signature": "()",
@@ -5609,8 +5609,8 @@
             },
             {
               "lines": [
-                859,
-                868
+                863,
+                872
               ],
               "name": "pin_name_canonicalizes_like_a_qname",
               "signature": "()",
@@ -5618,8 +5618,8 @@
             },
             {
               "lines": [
-                871,
-                887
+                875,
+                891
               ],
               "name": "over_bound_pin_name_is_dropped_not_panicked",
               "signature": "()",
@@ -5627,8 +5627,8 @@
             },
             {
               "lines": [
-                890,
-                898
+                894,
+                902
               ],
               "name": "empty_pin_name_is_dropped",
               "signature": "()",
@@ -5636,8 +5636,8 @@
             },
             {
               "lines": [
-                901,
-                919
+                905,
+                923
               ],
               "name": "multiple_a_records_for_one_name_append_not_overwrite",
               "signature": "()",
@@ -5645,8 +5645,8 @@
             },
             {
               "lines": [
-                922,
-                931
+                926,
+                955
               ],
               "name": "nodata_is_noerror_with_no_answers_and_is_not_nxdomain",
               "signature": "()",
@@ -5654,8 +5654,8 @@
             },
             {
               "lines": [
-                934,
-                942
+                958,
+                966
               ],
               "name": "nodata_preserves_the_question_verbatim",
               "signature": "()",
@@ -5663,8 +5663,8 @@
             },
             {
               "lines": [
-                945,
-                949
+                969,
+                976
               ],
               "name": "nodata_on_a_malformed_query_yields_none_never_a_forged_reply",
               "signature": "()",
@@ -5672,8 +5672,8 @@
             },
             {
               "lines": [
-                952,
-                962
+                979,
+                989
               ],
               "name": "synth_address_on_malformed_query_yields_none_not_panic",
               "signature": "()",
@@ -5681,8 +5681,8 @@
             },
             {
               "lines": [
-                965,
-                975
+                992,
+                1002
               ],
               "name": "synthesized_multi_record_answer_validates_and_skims",
               "signature": "()",
@@ -5690,8 +5690,8 @@
             },
             {
               "lines": [
-                980,
-                1017
+                1007,
+                1044
               ],
               "name": "centauri_cloak_synth_points_a_aaaa_at_tun_sentinel_zero_egress",
               "signature": "()",
@@ -5700,7 +5700,7 @@
           ],
           "lines": [
             595,
-            1018
+            1045
           ],
           "name": "tests",
           "type": "module"
@@ -5708,12 +5708,12 @@
       ]
     },
     "log.rs": {
-      "hash": "50dcd05c8212",
-      "indexed_at": "2026-08-01T02:52:29.342892+00:00",
+      "hash": "bc0c8eb6e68c",
+      "indexed_at": "2026-08-01T12:52:12.234436+00:00",
       "language": "rust",
-      "lines": 305,
-      "mtime_ns": 1785551326743925400,
-      "size": 15303,
+      "lines": 314,
+      "mtime_ns": 1785588611375043500,
+      "size": 15400,
       "symbols": [
         {
           "lines": [
@@ -5767,7 +5767,7 @@
           "docstring": "can never be), and so the resolver hot path carries no formatting cost beyond the call.",
           "lines": [
             170,
-            172
+            174
           ],
           "name": "debug_v6_withheld",
           "signature": "()",
@@ -5775,8 +5775,8 @@
         },
         {
           "lines": [
-            186,
-            199
+            188,
+            201
           ],
           "name": "DenyGate",
           "type": "enum"
@@ -5786,8 +5786,8 @@
             {
               "docstring": "`fixed_labelling_is_never_empty`).",
               "lines": [
-                205,
-                213
+                207,
+                215
               ],
               "name": "label",
               "signature": "(self)",
@@ -5795,8 +5795,8 @@
             }
           ],
           "lines": [
-            201,
-            214
+            203,
+            216
           ],
           "name": "DenyGate",
           "type": "impl"
@@ -5805,8 +5805,8 @@
           "children": [
             {
               "lines": [
-                221,
-                225
+                223,
+                227
               ],
               "name": "format_hit_line_is_deterministic_no_upstream",
               "signature": "()",
@@ -5814,8 +5814,8 @@
             },
             {
               "lines": [
-                228,
-                238
+                230,
+                240
               ],
               "name": "format_solve_line_carries_transport_and_rtt",
               "signature": "()",
@@ -5823,8 +5823,8 @@
             },
             {
               "lines": [
-                241,
-                258
+                243,
+                260
               ],
               "name": "each_outcome_renders_its_token",
               "signature": "()",
@@ -5832,8 +5832,8 @@
             },
             {
               "lines": [
-                261,
-                265
+                263,
+                267
               ],
               "name": "blank_transport_renders_dash",
               "signature": "()",
@@ -5841,8 +5841,8 @@
             },
             {
               "lines": [
-                268,
-                304
+                270,
+                313
               ],
               "name": "round_trips_through_log_tier",
               "signature": "()",
@@ -5850,8 +5850,8 @@
             }
           ],
           "lines": [
-            217,
-            305
+            219,
+            314
           ],
           "name": "tests",
           "type": "module"
@@ -5859,12 +5859,12 @@
       ]
     },
     "mod.rs": {
-      "hash": "2eaf8b176fe4",
-      "indexed_at": "2026-08-01T10:16:43.548366+00:00",
+      "hash": "5322e9a195f3",
+      "indexed_at": "2026-08-01T12:52:12.550156+00:00",
       "language": "rust",
-      "lines": 5069,
-      "mtime_ns": 1785579189330442700,
-      "size": 278281,
+      "lines": 5105,
+      "mtime_ns": 1785588611414043400,
+      "size": 278812,
       "symbols": [
         {
           "docstring": "! *driver-task* panic \u21d2 a transport miss, same firewall outcome, never a process abort.",
@@ -6633,7 +6633,7 @@
           "docstring": "upstream set must never serve the previous resolver's answers).",
           "lines": [
             1127,
-            1323
+            1327
           ],
           "name": "configure",
           "signature": "(specs_json: &str, timeout_ms: u64, cache_cap: usize)",
@@ -6641,8 +6641,8 @@
         },
         {
           "lines": [
-            1346,
-            1389
+            1350,
+            1390
           ],
           "name": "resolve_uncloaked_addrs",
           "signature": "(host: &str)",
@@ -6651,8 +6651,8 @@
         {
           "docstring": "the block-check, the async exchange, or validation \u2014 is caught and turned into `None` + a counter.",
           "lines": [
-            1394,
-            1411
+            1395,
+            1416
           ],
           "name": "resolve",
           "signature": "(query_wire: &[u8])",
@@ -6661,8 +6661,8 @@
         {
           "docstring": "path. A log write NEVER changes the returned answer.",
           "lines": [
-            1420,
-            1452
+            1425,
+            1457
           ],
           "name": "resolve_logged",
           "signature": "(\n    query_wire: &[u8],\n    now_ms: u64,\n    log_path: &std::path::Path,\n)",
@@ -6670,8 +6670,8 @@
         },
         {
           "lines": [
-            1473,
-            1475
+            1478,
+            1480
           ],
           "name": "query_log_cell",
           "signature": "()",
@@ -6680,8 +6680,8 @@
         {
           "docstring": "gate stays as it was). Poison recovers via `into_inner` (the D22 crate idiom).",
           "lines": [
-            1480,
-            1491
+            1485,
+            1496
           ],
           "name": "arm_query_log",
           "signature": "(dir: &str)",
@@ -6690,8 +6690,8 @@
         {
           "docstring": "the host Beast governor; returns 0 until a live-forward completes on this thread.",
           "lines": [
-            1515,
-            1517
+            1520,
+            1522
           ],
           "name": "last_winner_family",
           "signature": "()",
@@ -6699,8 +6699,8 @@
         },
         {
           "lines": [
-            1522,
-            1524
+            1527,
+            1529
           ],
           "name": "query_feed_cell",
           "signature": "()",
@@ -6709,8 +6709,8 @@
         {
           "docstring": "logging ships OFF). Poison recovers via `into_inner` (the D22 crate idiom).",
           "lines": [
-            1531,
-            1544
+            1536,
+            1549
           ],
           "name": "arm_query_feed",
           "signature": "(file: &str)",
@@ -6719,8 +6719,8 @@
         {
           "docstring": "never split between the two seams.",
           "lines": [
-            1551,
-            1598
+            1556,
+            1599
           ],
           "name": "resolve_with_outcome",
           "signature": "(\n    query_wire: &[u8],\n)",
@@ -6729,8 +6729,8 @@
         {
           "docstring": "A clock fault degrades to `now_ms = 0`; a log/feed write is FAIL-OPEN \u2014 never a dropped answer.",
           "lines": [
-            1613,
-            1797
+            1614,
+            1798
           ],
           "name": "resolve_datapath",
           "signature": "(query_wire: &[u8])",
@@ -6741,8 +6741,8 @@
             {
               "docstring": "stack write, never IO, so the hot path stays byte-identical.",
               "lines": [
-                1805,
-                2408
+                1806,
+                2415
               ],
               "name": "resolve_inner",
               "signature": "(\n        &self,\n        query_wire: &[u8],\n        outcome: &mut log::ResolveOutcome,\n        cl...",
@@ -6750,8 +6750,8 @@
             }
           ],
           "lines": [
-            1799,
-            2409
+            1800,
+            2416
           ],
           "name": "Resolver",
           "type": "impl"
@@ -6761,8 +6761,8 @@
             {
               "docstring": "through to dnscrypt-proxy, never a half-built answer. Pure beyond the atomic count; never panics.",
               "lines": [
-                2428,
-                2470
+                2435,
+                2477
               ],
               "name": "synthesize_block_reply",
               "signature": "(\n        &self,\n        query_wire: &[u8],\n        action: crate::blocklist::BlockAction,\n    )",
@@ -6771,8 +6771,8 @@
             {
               "docstring": "filter must never drop a good answer). Pure beyond the atomic count; never panics.",
               "lines": [
-                2478,
-                2507
+                2485,
+                2514
               ],
               "name": "apply_filter_rr",
               "signature": "(&self, question: &dns::DnsQuestion, response: Vec<u8>)",
@@ -6781,8 +6781,8 @@
             {
               "docstring": "cross-context. No-op on a sub-header wire. Pure beyond the atomic count; never panics.",
               "lines": [
-                2515,
-                2532
+                2522,
+                2539
               ],
               "name": "apply_proxy_dnssec",
               "signature": "(&self, mut response: Vec<u8>)",
@@ -6791,8 +6791,8 @@
             {
               "docstring": "Pure beyond the atomics: no egress, no lock, never panics (bounded like `dns::answer_records`).",
               "lines": [
-                2547,
-                2565
+                2554,
+                2572
               ],
               "name": "rebind_reject",
               "signature": "(&self, question: &dns::DnsQuestion, response: &[u8])",
@@ -6801,8 +6801,8 @@
             {
               "docstring": "atomics: no egress, no lock, never panics (the decoder is `MAX_PUNYCODE_OUT`-bounded).",
               "lines": [
-                2580,
-                2592
+                2587,
+                2603
               ],
               "name": "homograph_reject",
               "signature": "(&self, question: &dns::DnsQuestion)",
@@ -6811,8 +6811,8 @@
             {
               "docstring": "or `None` on a full soft-fail exhaustion \u2014 the same `Option<Vec<u8>>` contract as `exchange`.",
               "lines": [
-                2601,
-                2617
+                2612,
+                2628
               ],
               "name": "solve_ladder_exchange",
               "signature": "(&self, query_wire: &[u8], pool: &Arc<Pool>)",
@@ -6821,8 +6821,8 @@
             {
               "docstring": "with DNS64 OFF (no prefix installed) is byte-identical in behaviour to pre-slice-4.",
               "lines": [
-                2637,
-                2702
+                2648,
+                2713
               ],
               "name": "try_dns64_synth",
               "signature": "(\n        &self,\n        query_wire: &[u8],\n        question: &dns::DnsQuestion,\n        aaaa_res...",
@@ -6830,8 +6830,8 @@
             }
           ],
           "lines": [
-            2411,
-            2703
+            2418,
+            2714
           ],
           "name": "Resolver",
           "type": "impl"
@@ -6839,8 +6839,8 @@
         {
           "docstring": "(P12_DNSMASQ_EVOKE.md:51), it becomes the authoritative oracle and this guard collapses into it.",
           "lines": [
-            2714,
-            2727
+            2725,
+            2738
           ],
           "name": "is_private_or_local_name",
           "signature": "(qname: &str)",
@@ -6849,8 +6849,8 @@
         {
           "docstring": "it would pin a denial forever. Pure + bounds-checked: never panics, never an OOB read.",
           "lines": [
-            2733,
-            2737
+            2744,
+            2748
           ],
           "name": "is_cacheable_positive",
           "signature": "(response: &[u8])",
@@ -6859,8 +6859,8 @@
         {
           "docstring": "Pure + bounds-checked: never panics, never an OOB read.",
           "lines": [
-            2758,
-            2766
+            2769,
+            2777
           ],
           "name": "is_cacheable_negative",
           "signature": "(response: &[u8])",
@@ -6869,8 +6869,8 @@
         {
           "docstring": "Pure + bounds-checked: never panics, never an OOB read.",
           "lines": [
-            2772,
-            2774
+            2783,
+            2785
           ],
           "name": "is_nxdomain_wire",
           "signature": "(response: &[u8])",
@@ -6879,8 +6879,8 @@
         {
           "docstring": "header is short or a label runs off the end. Never panics, never an OOB read.",
           "lines": [
-            2780,
-            2804
+            2791,
+            2815
           ],
           "name": "question_byte_len",
           "signature": "(wire: &[u8])",
@@ -6889,8 +6889,8 @@
         {
           "docstring": "`nativeResolverStats` core \u2014 a tiny hand-built JSON object (no serde for 2b). No qname ever (T20).",
           "lines": [
-            2807,
-            2952
+            2818,
+            2969
           ],
           "name": "stats",
           "signature": "()",
@@ -6899,8 +6899,8 @@
         {
           "docstring": "source behind [`object::MaskSolverSnapshot`]. Every field maps 1:1 to a `stats()` JSON field.",
           "lines": [
-            2964,
-            2991
+            2981,
+            3008
           ],
           "name": "ResolverStatsRaw",
           "type": "struct"
@@ -6908,8 +6908,8 @@
         {
           "docstring": "counter is a lock-free atomic load. Pure read, off the hot path.",
           "lines": [
-            2996,
-            3032
+            3013,
+            3049
           ],
           "name": "read_stats_raw",
           "signature": "()",
@@ -6918,8 +6918,8 @@
         {
           "docstring": "One transport's health view (the R7 RTT/loss EWMA twin) \u2014 the source behind [`object::MaskSolverTransport`].",
           "lines": [
-            3035,
-            3040
+            3052,
+            3057
           ],
           "name": "PoolTransportView",
           "type": "struct"
@@ -6927,8 +6927,8 @@
         {
           "docstring": "(dead-code-until-wired). Empty transports when unconfigured. Pure read, off the hot path.",
           "lines": [
-            3045,
-            3057
+            3062,
+            3074
           ],
           "name": "PoolView",
           "type": "struct"
@@ -6936,8 +6936,8 @@
         {
           "docstring": "deadline + miss-tally are read outside that lock. Pure read.",
           "lines": [
-            3061,
-            3115
+            3078,
+            3132
           ],
           "name": "pool_view",
           "signature": "()",
@@ -6946,8 +6946,8 @@
         {
           "docstring": "(parked) runtime so a later `configure` reuses it. Clearing twice is harmless (T26).",
           "lines": [
-            3119,
-            3123
+            3136,
+            3140
           ],
           "name": "shutdown",
           "signature": "()",
@@ -6956,8 +6956,8 @@
         {
           "docstring": "path. Call ONLY on the control plane (DNSCrypt stop, a periodic checkpoint), NEVER from `resolve()`.",
           "lines": [
-            3131,
-            3150
+            3148,
+            3167
           ],
           "name": "persist_cache",
           "signature": "(dir: &str)",
@@ -6966,8 +6966,8 @@
         {
           "docstring": "configure time (after the pool is up) \u2014 a pure NAND read on the hot path's behalf.",
           "lines": [
-            3157,
-            3205
+            3174,
+            3222
           ],
           "name": "rehydrate_cache",
           "signature": "(dir: &str)",
@@ -6976,8 +6976,8 @@
         {
           "docstring": "an unlearned transport contributes nothing (so a checkpoint never invents a hint).",
           "lines": [
-            3219,
-            3236
+            3236,
+            3253
           ],
           "name": "live_rtt_hints",
           "signature": "()",
@@ -6986,8 +6986,8 @@
         {
           "docstring": "(best-effort \u2014 the in-memory state is unaffected; the charter's FAIL-SAFE invariant).",
           "lines": [
-            3246,
-            3260
+            3263,
+            3277
           ],
           "name": "checkpoint_rotation",
           "signature": "(dir: &str)",
@@ -6996,8 +6996,8 @@
         {
           "docstring": "(default-OFF) `Strategy::Fastest` ranking reads; the default `StrictOrder` path never consults it.",
           "lines": [
-            3270,
-            3281
+            3287,
+            3298
           ],
           "name": "warm_start_pool_rtt",
           "signature": "(dir: &str)",
@@ -7006,8 +7006,8 @@
         {
           "docstring": "`Strategy::Fastest`/SOLVE-ladder ranking reads; the default `StrictOrder` path never consults it.",
           "lines": [
-            3296,
-            3311
+            3313,
+            3328
           ],
           "name": "seed_pool_rtt",
           "signature": "(hints: &[(String, u32)])",
@@ -7016,8 +7016,8 @@
         {
           "docstring": "remaining-secs \u2014 still bounded, never a panic).",
           "lines": [
-            3316,
-            3321
+            3333,
+            3338
           ],
           "name": "now_unix_secs",
           "signature": "()",
@@ -7026,8 +7026,8 @@
         {
           "docstring": "skipped, only the three fields we need are pulled. Returns whatever well-formed upstreams it found.",
           "lines": [
-            3326,
-            3383
+            3343,
+            3400
           ],
           "name": "parse_upstreams",
           "signature": "(json: &str)",
@@ -7036,8 +7036,8 @@
         {
           "docstring": "reads whichever it needs via `UpstreamSpec::stamp_or_url`.",
           "lines": [
-            3389,
-            3405
+            3406,
+            3422
           ],
           "name": "parse_upstream_obj",
           "signature": "(obj: &str)",
@@ -7045,8 +7045,8 @@
         },
         {
           "lines": [
-            3407,
-            3435
+            3424,
+            3452
           ],
           "name": "parse_relay_stamps_field",
           "signature": "(obj: &str)",
@@ -7055,8 +7055,8 @@
         {
           "docstring": "(`|sdns://\u2026`) collapses to `None` \u2014 no blank relay label leaks to the row.",
           "lines": [
-            3442,
-            3448
+            3459,
+            3465
           ],
           "name": "split_relay_label",
           "signature": "(s: &str)",
@@ -7065,8 +7065,8 @@
         {
           "docstring": "Find the byte index just after `\"<key>\"` in `json`, or `None`.",
           "lines": [
-            3451,
-            3454
+            3468,
+            3471
           ],
           "name": "find_key",
           "signature": "(json: &str, key: &str)",
@@ -7075,8 +7075,8 @@
         {
           "docstring": "escapes; returns the unescaped value. `None` if absent or not a string.",
           "lines": [
-            3458,
-            3499
+            3475,
+            3516
           ],
           "name": "string_field",
           "signature": "(obj: &str, key: &str)",
@@ -7086,8 +7086,8 @@
           "children": [
             {
               "lines": [
-                3515,
-                3540
+                3532,
+                3557
               ],
               "name": "the_global_reset_actually_clears_a_configured_pool",
               "signature": "()",
@@ -7095,8 +7095,8 @@
             },
             {
               "lines": [
-                3543,
-                3566
+                3560,
+                3583
               ],
               "name": "g5_split_relay_label_names_the_hop_and_stays_backward_compatible",
               "signature": "()",
@@ -7104,8 +7104,8 @@
             },
             {
               "lines": [
-                3569,
-                3604
+                3586,
+                3621
               ],
               "name": "picker_scan_names_protos_and_folds_extra_stamps",
               "signature": "()",
@@ -7113,8 +7113,8 @@
             },
             {
               "lines": [
-                3607,
-                3629
+                3624,
+                3646
               ],
               "name": "parses_upstreams_json_without_serde",
               "signature": "()",
@@ -7122,8 +7122,8 @@
             },
             {
               "lines": [
-                3632,
-                3643
+                3649,
+                3660
               ],
               "name": "drops_upstream_without_url_or_stamp",
               "signature": "()",
@@ -7131,8 +7131,8 @@
             },
             {
               "lines": [
-                3646,
-                3653
+                3663,
+                3670
               ],
               "name": "string_field_handles_escapes",
               "signature": "()",
@@ -7140,8 +7140,8 @@
             },
             {
               "lines": [
-                3656,
-                3659
+                3673,
+                3676
               ],
               "name": "configure_with_no_usable_upstream_returns_none",
               "signature": "()",
@@ -7149,8 +7149,8 @@
             },
             {
               "lines": [
-                3662,
-                3678
+                3679,
+                3695
               ],
               "name": "warm_start_pool_rtt_on_a_cold_dir_seeds_nothing",
               "signature": "()",
@@ -7158,8 +7158,8 @@
             },
             {
               "lines": [
-                3681,
-                3690
+                3698,
+                3707
               ],
               "name": "seed_pool_rtt_with_no_hints_seeds_nothing",
               "signature": "()",
@@ -7167,8 +7167,8 @@
             },
             {
               "lines": [
-                3693,
-                3711
+                3710,
+                3728
               ],
               "name": "seed_pool_rtt_unconfigured_resolver_seeds_nothing",
               "signature": "()",
@@ -7176,8 +7176,8 @@
             },
             {
               "lines": [
-                3726,
-                3744
+                3743,
+                3761
               ],
               "name": "configure_builds_loopback_do53_proxy_arm",
               "signature": "()",
@@ -7185,8 +7185,8 @@
             },
             {
               "lines": [
-                3747,
-                3774
+                3764,
+                3791
               ],
               "name": "configure_skips_non_loopback_do53_but_keeps_a_loopback_sibling",
               "signature": "()",
@@ -7194,8 +7194,8 @@
             },
             {
               "lines": [
-                3800,
-                3814
+                3817,
+                3832
               ],
               "name": "configure_builds_odoh_off_any_runtime",
               "signature": "()",
@@ -7203,8 +7203,8 @@
             },
             {
               "lines": [
-                3818,
-                3867
+                3836,
+                3886
               ],
               "name": "configure_builds_odoh_from_stamps_with_relay",
               "signature": "()",
@@ -7212,8 +7212,8 @@
             },
             {
               "lines": [
-                3870,
-                3876
+                3889,
+                3895
               ],
               "name": "stats_is_well_formed_json_when_unconfigured",
               "signature": "()",
@@ -7222,8 +7222,8 @@
             {
               "docstring": "padded to exactly 12 bytes so it parses as a header.",
               "lines": [
-                3882,
-                3888
+                3901,
+                3907
               ],
               "name": "header",
               "signature": "(rcode: u8, ancount: u16)",
@@ -7231,8 +7231,8 @@
             },
             {
               "lines": [
-                3891,
-                3895
+                3910,
+                3914
               ],
               "name": "cacheable_positive_true_for_noerror_with_answers",
               "signature": "()",
@@ -7240,8 +7240,8 @@
             },
             {
               "lines": [
-                3898,
-                3901
+                3917,
+                3920
               ],
               "name": "cacheable_positive_false_for_nxdomain",
               "signature": "()",
@@ -7249,8 +7249,8 @@
             },
             {
               "lines": [
-                3904,
-                3908
+                3923,
+                3927
               ],
               "name": "cacheable_positive_false_for_servfail",
               "signature": "()",
@@ -7258,8 +7258,8 @@
             },
             {
               "lines": [
-                3911,
-                3914
+                3930,
+                3933
               ],
               "name": "cacheable_positive_false_for_nodata",
               "signature": "()",
@@ -7267,8 +7267,8 @@
             },
             {
               "lines": [
-                3917,
-                3921
+                3936,
+                3940
               ],
               "name": "cacheable_positive_false_when_too_short",
               "signature": "()",
@@ -7276,8 +7276,8 @@
             },
             {
               "lines": [
-                3926,
-                3933
+                3945,
+                3952
               ],
               "name": "nxdomain_wire_classifier_reads_rcode3_only",
               "signature": "()",
@@ -7285,8 +7285,8 @@
             },
             {
               "lines": [
-                3936,
-                3976
+                3955,
+                4001
               ],
               "name": "armed_datapath_writes_a_classified_verdict_line",
               "signature": "()",
@@ -7294,8 +7294,8 @@
             },
             {
               "lines": [
-                3979,
-                3992
+                4004,
+                4017
               ],
               "name": "arm_query_log_with_a_blank_dir_is_a_noop",
               "signature": "()",
@@ -7303,8 +7303,8 @@
             },
             {
               "lines": [
-                3997,
-                4081
+                4022,
+                4106
               ],
               "name": "armed_feed_writes_a_go_shape_row_for_a_rust_answered_query",
               "signature": "()",
@@ -7312,8 +7312,8 @@
             },
             {
               "lines": [
-                4086,
-                4150
+                4111,
+                4175
               ],
               "name": "datapath_drive_climbs_the_ram_ledger_and_lands_the_nand_row",
               "signature": "()",
@@ -7321,8 +7321,8 @@
             },
             {
               "lines": [
-                4155,
-                4168
+                4180,
+                4193
               ],
               "name": "question_byte_len_round_trips_on_a_built_query",
               "signature": "()",
@@ -7330,8 +7330,8 @@
             },
             {
               "lines": [
-                4171,
-                4184
+                4196,
+                4209
               ],
               "name": "question_byte_len_is_safe_on_malformed_input",
               "signature": "()",
@@ -7339,8 +7339,8 @@
             }
           ],
           "lines": [
-            3502,
-            4185
+            3519,
+            4210
           ],
           "name": "tests",
           "type": "module"
@@ -7350,8 +7350,8 @@
             {
               "docstring": "Byte offset just past a single-question `build_query` message (12B header + qname + QTYPE/QCLASS).",
               "lines": [
-                4203,
-                4214
+                4228,
+                4239
               ],
               "name": "question_end",
               "signature": "(query: &[u8])",
@@ -7360,8 +7360,8 @@
             {
               "docstring": "accept it \u2014 the bytes are a genuinely well-formed answer, only the IP is the rebind subject.",
               "lines": [
-                4219,
-                4235
+                4244,
+                4260
               ],
               "name": "forge_a_response",
               "signature": "(query: &[u8], ip: [u8; 4])",
@@ -7370,8 +7370,8 @@
             {
               "docstring": "The caller must already hold [`REBIND_TEST_LOCK`] (serializing it against sibling tests).",
               "lines": [
-                4248,
-                4254
+                4273,
+                4279
               ],
               "name": "with_enforce",
               "signature": "(on: bool, f: impl FnOnce() -> R)",
@@ -7380,8 +7380,8 @@
             {
               "docstring": "closure so a test never leaks the flipped state. Caller must hold [`REBIND_TEST_LOCK`].",
               "lines": [
-                4258,
-                4264
+                4283,
+                4289
               ],
               "name": "with_homograph_enforce",
               "signature": "(on: bool, f: impl FnOnce() -> R)",
@@ -7389,8 +7389,8 @@
             },
             {
               "lines": [
-                4271,
-                4296
+                4296,
+                4321
               ],
               "name": "lookalike_name_is_denied_when_enforcing",
               "signature": "()",
@@ -7398,8 +7398,8 @@
             },
             {
               "lines": [
-                4301,
-                4321
+                4326,
+                4346
               ],
               "name": "lookalike_name_is_observed_but_kept_when_not_enforcing",
               "signature": "()",
@@ -7407,8 +7407,8 @@
             },
             {
               "lines": [
-                4326,
-                4341
+                4351,
+                4366
               ],
               "name": "plain_ascii_name_is_never_flagged",
               "signature": "()",
@@ -7416,8 +7416,8 @@
             },
             {
               "lines": [
-                4346,
-                4356
+                4371,
+                4381
               ],
               "name": "private_local_suffixes_are_allowlisted",
               "signature": "()",
@@ -7425,8 +7425,8 @@
             },
             {
               "lines": [
-                4359,
-                4367
+                4384,
+                4392
               ],
               "name": "public_names_are_not_allowlisted",
               "signature": "()",
@@ -7434,8 +7434,8 @@
             },
             {
               "lines": [
-                4372,
-                4400
+                4397,
+                4425
               ],
               "name": "public_to_private_is_rejected_when_enforcing",
               "signature": "()",
@@ -7443,8 +7443,8 @@
             },
             {
               "lines": [
-                4403,
-                4427
+                4428,
+                4452
               ],
               "name": "public_to_private_is_observed_but_kept_when_not_enforcing",
               "signature": "()",
@@ -7452,8 +7452,8 @@
             },
             {
               "lines": [
-                4430,
-                4446
+                4455,
+                4471
               ],
               "name": "public_to_public_is_clean_never_dropped",
               "signature": "()",
@@ -7461,8 +7461,8 @@
             },
             {
               "lines": [
-                4449,
-                4474
+                4474,
+                4499
               ],
               "name": "private_domain_answer_is_allowed_even_with_private_ip",
               "signature": "()",
@@ -7470,8 +7470,8 @@
             },
             {
               "lines": [
-                4477,
-                4486
+                4502,
+                4511
               ],
               "name": "no_answer_records_is_clean",
               "signature": "()",
@@ -7479,8 +7479,8 @@
             },
             {
               "lines": [
-                4489,
-                4509
+                4514,
+                4534
               ],
               "name": "set_rebind_enforce_flips_the_switch",
               "signature": "()",
@@ -7488,8 +7488,8 @@
             },
             {
               "lines": [
-                4512,
-                4524
+                4537,
+                4549
               ],
               "name": "stats_json_carries_the_rebind_counters",
               "signature": "()",
@@ -7497,8 +7497,8 @@
             },
             {
               "lines": [
-                4527,
-                4553
+                4552,
+                4578
               ],
               "name": "stats_json_carries_the_settings_control_plane_posture",
               "signature": "()",
@@ -7506,8 +7506,8 @@
             },
             {
               "lines": [
-                4556,
-                4578
+                4581,
+                4611
               ],
               "name": "settings_serve_stale_and_ttl_setters_record_durable_intent",
               "signature": "()",
@@ -7515,8 +7515,8 @@
             },
             {
               "lines": [
-                4581,
-                4601
+                4614,
+                4634
               ],
               "name": "settings_cache_cap_and_query_timeout_record_durable_intent",
               "signature": "()",
@@ -7524,8 +7524,8 @@
             },
             {
               "lines": [
-                4604,
-                4630
+                4637,
+                4663
               ],
               "name": "stats_json_carries_the_dnsmasq_telemetry_keys",
               "signature": "()",
@@ -7533,8 +7533,8 @@
             },
             {
               "lines": [
-                4635,
-                4647
+                4668,
+                4680
               ],
               "name": "solve_ladder_toggle_defaults_off_and_flips",
               "signature": "()",
@@ -7542,8 +7542,8 @@
             },
             {
               "lines": [
-                4650,
-                4664
+                4683,
+                4697
               ],
               "name": "stats_json_carries_the_solve_counters",
               "signature": "()",
@@ -7551,8 +7551,8 @@
             },
             {
               "lines": [
-                4667,
-                4698
+                4700,
+                4731
               ],
               "name": "stats_json_rates_match_the_typed_snapshot",
               "signature": "()",
@@ -7560,8 +7560,8 @@
             },
             {
               "lines": [
-                4701,
-                4708
+                4734,
+                4741
               ],
               "name": "solve_ranking_prefers_low_loss_then_low_rtt_stable",
               "signature": "()",
@@ -7569,8 +7569,8 @@
             },
             {
               "lines": [
-                4711,
-                4721
+                4744,
+                4754
               ],
               "name": "solve_ranking_cold_start_is_configured_order_no_promotion",
               "signature": "()",
@@ -7578,8 +7578,8 @@
             },
             {
               "lines": [
-                4724,
-                4729
+                4757,
+                4762
               ],
               "name": "solve_ranking_proven_fast_leads_an_untried_upstream",
               "signature": "()",
@@ -7587,8 +7587,8 @@
             },
             {
               "lines": [
-                4735,
-                4840
+                4768,
+                4873
               ],
               "name": "centauri_cloak_synthesizes_tun_sentinel_for_a_watched_cdn_host_only_when_armed",
               "signature": "()",
@@ -7596,8 +7596,8 @@
             }
           ],
           "lines": [
-            4197,
-            4841
+            4222,
+            4874
           ],
           "name": "rebind_tests",
           "type": "module"
@@ -7606,8 +7606,8 @@
           "children": [
             {
               "lines": [
-                4850,
-                4862
+                4883,
+                4895
               ],
               "name": "private_resolver",
               "signature": "()",
@@ -7615,8 +7615,8 @@
             },
             {
               "lines": [
-                4866,
-                4875
+                4899,
+                4908
               ],
               "name": "budget_uncapped_acquire_is_immediate_and_raii_counted",
               "signature": "()",
@@ -7624,8 +7624,8 @@
             },
             {
               "lines": [
-                4880,
-                4903
+                4913,
+                4936
               ],
               "name": "budget_full_window_fails_open_after_the_bounded_wait",
               "signature": "()",
@@ -7633,8 +7633,8 @@
             },
             {
               "lines": [
-                4907,
-                4918
+                4940,
+                4951
               ],
               "name": "budget_freed_slot_admits_immediately",
               "signature": "()",
@@ -7642,8 +7642,8 @@
             },
             {
               "lines": [
-                4923,
-                4953
+                4956,
+                4986
               ],
               "name": "apply_pool_budget_swaps_and_releases_the_deadline",
               "signature": "()",
@@ -7651,8 +7651,8 @@
             },
             {
               "lines": [
-                4958,
-                4963
+                4991,
+                4996
               ],
               "name": "stats_json_carries_the_budget_witness_keys",
               "signature": "()",
@@ -7660,8 +7660,8 @@
             },
             {
               "lines": [
-                4995,
-                4999
+                5028,
+                5032
               ],
               "name": "gap1_concurrency_safety_documented",
               "signature": "()",
@@ -7669,8 +7669,8 @@
             }
           ],
           "lines": [
-            4847,
-            5000
+            4880,
+            5033
           ],
           "name": "budget_tests",
           "type": "module"
@@ -7680,8 +7680,8 @@
             {
               "docstring": "Minimal 12-byte header with the given RCODE and ANCOUNT.",
               "lines": [
-                5010,
-                5016
+                5043,
+                5049
               ],
               "name": "hdr",
               "signature": "(rcode: u8, ancount: u16)",
@@ -7689,8 +7689,8 @@
             },
             {
               "lines": [
-                5019,
-                5025
+                5052,
+                5058
               ],
               "name": "nxdomain_is_negatively_cacheable",
               "signature": "()",
@@ -7698,8 +7698,8 @@
             },
             {
               "lines": [
-                5028,
-                5033
+                5061,
+                5066
               ],
               "name": "nodata_is_negatively_cacheable",
               "signature": "()",
@@ -7707,8 +7707,8 @@
             },
             {
               "lines": [
-                5038,
-                5045
+                5071,
+                5078
               ],
               "name": "transport_failures_are_never_negatively_cacheable",
               "signature": "()",
@@ -7716,8 +7716,8 @@
             },
             {
               "lines": [
-                5050,
-                5060
+                5083,
+                5093
               ],
               "name": "positives_and_negatives_never_overlap",
               "signature": "()",
@@ -7725,8 +7725,8 @@
             },
             {
               "lines": [
-                5064,
-                5068
+                5097,
+                5104
               ],
               "name": "short_wires_are_refused_not_panicked",
               "signature": "()",
@@ -7734,8 +7734,8 @@
             }
           ],
           "lines": [
-            5006,
-            5069
+            5039,
+            5105
           ],
           "name": "negative_cacheability_tests",
           "type": "module"
@@ -8592,12 +8592,12 @@
       ]
     },
     "odoh.rs": {
-      "hash": "8db58882f806",
-      "indexed_at": "2026-07-26T19:12:58.113318+00:00",
+      "hash": "52a732cbac69",
+      "indexed_at": "2026-08-01T12:52:12.843954+00:00",
       "language": "rust",
-      "lines": 552,
-      "mtime_ns": 1785030833072604500,
-      "size": 24664,
+      "lines": 559,
+      "mtime_ns": 1785588611430043600,
+      "size": 24781,
       "symbols": [
         {
           "docstring": "the ODoH ephemeral key MUST be strong, never a silently-weak zero key.",
@@ -8745,7 +8745,7 @@
               "docstring": "the target.",
               "lines": [
                 221,
-                237
+                240
               ],
               "name": "query_endpoint",
               "signature": "(&self)",
@@ -8754,8 +8754,8 @@
             {
               "docstring": "key is public); cached + refreshed by [`Self::config_contents`].",
               "lines": [
-                241,
-                243
+                244,
+                246
               ],
               "name": "config_endpoint",
               "signature": "(&self)",
@@ -8764,8 +8764,8 @@
             {
               "docstring": "await \u2014 only for the two micro-critical-sections (read the cached clone / store the new one).",
               "lines": [
-                248,
-                266
+                251,
+                269
               ],
               "name": "config_contents",
               "signature": "(&self)",
@@ -8774,8 +8774,8 @@
             {
               "docstring": "shipped.",
               "lines": [
-                271,
-                274
+                274,
+                277
               ],
               "name": "invalidate_config",
               "signature": "(&self)",
@@ -8784,8 +8784,8 @@
             {
               "docstring": "HPKE contents. Direct to the target (the config is public, out-of-band by design).",
               "lines": [
-                278,
-                309
+                281,
+                312
               ],
               "name": "fetch_config",
               "signature": "(&self)",
@@ -8794,7 +8794,7 @@
           ],
           "lines": [
             184,
-            310
+            313
           ],
           "name": "OdohTransport",
           "type": "impl"
@@ -8803,8 +8803,8 @@
           "children": [
             {
               "lines": [
-                313,
-                315
+                316,
+                318
               ],
               "name": "id",
               "signature": "(&self)",
@@ -8813,8 +8813,8 @@
             {
               "docstring": "only case that means \"key rotated\": invalidate + re-fetch + re-encrypt.",
               "lines": [
-                321,
-                404
+                324,
+                408
               ],
               "name": "exchange",
               "signature": "(&'a self, query_wire: &'a [u8])",
@@ -8823,8 +8823,8 @@
             {
               "docstring": "twin of `id()`'s target attribution (the obliviousness made visible). `None` = direct-to-target.",
               "lines": [
-                408,
-                410
+                412,
+                414
               ],
               "name": "relay_name",
               "signature": "(&self)",
@@ -8832,8 +8832,8 @@
             }
           ],
           "lines": [
-            312,
-            411
+            315,
+            415
           ],
           "name": "Transport",
           "type": "impl"
@@ -8841,8 +8841,8 @@
         {
           "docstring": "Shared shape with [`super::doh`]; kept local so ODoH stays self-contained.",
           "lines": [
-            415,
-            431
+            419,
+            437
           ],
           "name": "read_capped",
           "signature": "(mut body: B)",
@@ -8851,8 +8851,8 @@
         {
           "docstring": "contains `/`, `?` or `&` can't break out of its query slot.",
           "lines": [
-            436,
-            447
+            442,
+            453
           ],
           "name": "encode_component",
           "signature": "(s: &str)",
@@ -8862,8 +8862,8 @@
           "children": [
             {
               "lines": [
-                454,
-                458
+                460,
+                464
               ],
               "name": "parses_https_target_and_defaults_path",
               "signature": "()",
@@ -8871,8 +8871,8 @@
             },
             {
               "lines": [
-                461,
-                463
+                467,
+                469
               ],
               "name": "rejects_cleartext",
               "signature": "()",
@@ -8880,8 +8880,8 @@
             },
             {
               "lines": [
-                466,
-                470
+                472,
+                476
               ],
               "name": "keeps_explicit_path_and_port",
               "signature": "()",
@@ -8889,8 +8889,8 @@
             },
             {
               "lines": [
-                473,
-                477
+                479,
+                484
               ],
               "name": "direct_endpoint_has_no_relay_params",
               "signature": "()",
@@ -8898,8 +8898,8 @@
             },
             {
               "lines": [
-                480,
-                494
+                487,
+                501
               ],
               "name": "relayed_endpoint_encodes_target_into_query",
               "signature": "()",
@@ -8907,8 +8907,8 @@
             },
             {
               "lines": [
-                497,
-                501
+                504,
+                508
               ],
               "name": "encode_component_escapes_reserved",
               "signature": "()",
@@ -8917,8 +8917,8 @@
             {
               "docstring": "RFC 4648 base64url (no padding) \u2014 test-local, mirrors `dnscrypt::base64url_decode`.",
               "lines": [
-                504,
-                519
+                511,
+                526
               ],
               "name": "b64url",
               "signature": "(data: &[u8])",
@@ -8926,8 +8926,8 @@
             },
             {
               "lines": [
-                521,
-                524
+                528,
+                531
               ],
               "name": "lp",
               "signature": "(body: &mut Vec<u8>, s: &[u8])",
@@ -8935,8 +8935,8 @@
             },
             {
               "lines": [
-                527,
-                551
+                534,
+                558
               ],
               "name": "stamp_native_target_and_relay_build_and_keep_the_relay_path",
               "signature": "()",
@@ -8944,8 +8944,8 @@
             }
           ],
           "lines": [
-            450,
-            552
+            456,
+            559
           ],
           "name": "tests",
           "type": "module"
@@ -8953,12 +8953,12 @@
       ]
     },
     "pool.rs": {
-      "hash": "23a24aa11ece",
-      "indexed_at": "2026-07-29T00:46:26.411630+00:00",
+      "hash": "8822e8fb55e2",
+      "indexed_at": "2026-08-01T12:52:13.161840+00:00",
       "language": "rust",
-      "lines": 1472,
-      "mtime_ns": 1785284655327338300,
-      "size": 73720,
+      "lines": 1488,
+      "mtime_ns": 1785588611441044000,
+      "size": 72530,
       "symbols": [
         {
           "lines": [
@@ -9236,7 +9236,7 @@
               "docstring": "resolver runs `dns::validate_response` on whatever this returns \u2014 the pool never trusts it.",
               "lines": [
                 387,
-                416
+                418
               ],
               "name": "exchange",
               "signature": "(&self, query_wire: &[u8])",
@@ -9245,8 +9245,8 @@
             {
               "docstring": "name the transport that actually answered.",
               "lines": [
-                426,
-                456
+                428,
+                460
               ],
               "name": "exchange_round_robin",
               "signature": "(&self, query_wire: &[u8])",
@@ -9255,8 +9255,8 @@
             {
               "docstring": "between the router lookup and here), this is exactly `exchange()` \u2014 the default ladder.",
               "lines": [
-                467,
-                507
+                471,
+                515
               ],
               "name": "exchange_via",
               "signature": "(&self, query_wire: &[u8], upstream_id: &str)",
@@ -9265,8 +9265,8 @@
             {
               "docstring": "resolver egress (`mod.rs:614`) calls this when `pool::all_servers_enabled()` and no route is pinned.",
               "lines": [
-                526,
-                587
+                534,
+                601
               ],
               "name": "exchange_all",
               "signature": "(&self, query_wire: &[u8])",
@@ -9275,17 +9275,17 @@
             {
               "docstring": "fail `validate_response`, so returning one has no downstream value \u2014 `None` is the honest miss.",
               "lines": [
-                617,
-                687
+                631,
+                703
               ],
               "name": "solve_exchange",
-              "signature": "(\r\n        &self,\r\n        query_wire: &[u8],\r\n        order: &[usize],\r\n        verdict: &dyn Fn...",
+              "signature": "(\n        &self,\n        query_wire: &[u8],\n        order: &[usize],\n        verdict: &dyn Fn(&[u...",
               "type": "method"
             }
           ],
           "lines": [
             241,
-            688
+            704
           ],
           "name": "Pool",
           "type": "impl"
@@ -9295,8 +9295,8 @@
             {
               "docstring": "race fixture; it never parses DNS (the pool deals in opaque bytes, exactly like a real one).",
               "lines": [
-                704,
-                709
+                720,
+                725
               ],
               "name": "MockTransport",
               "type": "struct"
@@ -9305,8 +9305,8 @@
               "children": [
                 {
                   "lines": [
-                    712,
-                    719
+                    728,
+                    735
                   ],
                   "name": "ok",
                   "signature": "(id: &str, delay_ms: u64, body: &[u8])",
@@ -9314,8 +9314,8 @@
                 },
                 {
                   "lines": [
-                    720,
-                    727
+                    736,
+                    743
                   ],
                   "name": "err",
                   "signature": "(id: &str, delay_ms: u64)",
@@ -9323,8 +9323,8 @@
                 }
               ],
               "lines": [
-                711,
-                728
+                727,
+                744
               ],
               "name": "MockTransport",
               "type": "impl"
@@ -9333,8 +9333,8 @@
               "children": [
                 {
                   "lines": [
-                    731,
-                    733
+                    747,
+                    749
                   ],
                   "name": "id",
                   "signature": "(&self)",
@@ -9342,8 +9342,8 @@
                 },
                 {
                   "lines": [
-                    734,
-                    743
+                    750,
+                    759
                   ],
                   "name": "exchange",
                   "signature": "(&'a self, _query_wire: &'a [u8])",
@@ -9351,8 +9351,8 @@
                 }
               ],
               "lines": [
-                730,
-                744
+                746,
+                760
               ],
               "name": "Transport",
               "type": "impl"
@@ -9360,8 +9360,8 @@
             {
               "docstring": "A mock that marks itself as the loopback Go-proxy arm (the Do53 override).",
               "lines": [
-                749,
-                749
+                765,
+                765
               ],
               "name": "LoopbackMock",
               "type": "struct"
@@ -9370,8 +9370,8 @@
               "children": [
                 {
                   "lines": [
-                    751,
-                    753
+                    767,
+                    769
                   ],
                   "name": "id",
                   "signature": "(&self)",
@@ -9379,8 +9379,8 @@
                 },
                 {
                   "lines": [
-                    754,
-                    756
+                    770,
+                    772
                   ],
                   "name": "exchange",
                   "signature": "(&'a self, _query_wire: &'a [u8])",
@@ -9388,8 +9388,8 @@
                 },
                 {
                   "lines": [
-                    757,
-                    759
+                    773,
+                    775
                   ],
                   "name": "is_loopback_proxy",
                   "signature": "(&self)",
@@ -9397,16 +9397,16 @@
                 }
               ],
               "lines": [
-                750,
-                760
+                766,
+                776
               ],
               "name": "Transport",
               "type": "impl"
             },
             {
               "lines": [
-                763,
-                778
+                779,
+                794
               ],
               "name": "pool_flags_the_loopback_proxy_arm_at_construction",
               "signature": "()",
@@ -9414,8 +9414,8 @@
             },
             {
               "lines": [
-                783,
-                804
+                799,
+                820
               ],
               "name": "all_servers_race_first_ok_wins_each_still_validated",
               "signature": "()",
@@ -9423,8 +9423,8 @@
             },
             {
               "lines": [
-                807,
-                824
+                823,
+                840
               ],
               "name": "all_servers_race_a_slow_transport_never_blocks_a_fast_one",
               "signature": "()",
@@ -9432,8 +9432,8 @@
             },
             {
               "lines": [
-                827,
-                839
+                843,
+                855
               ],
               "name": "all_servers_race_all_error_yields_none_like_exchange",
               "signature": "()",
@@ -9441,8 +9441,8 @@
             },
             {
               "lines": [
-                842,
-                849
+                858,
+                865
               ],
               "name": "all_servers_race_empty_pool_is_none",
               "signature": "()",
@@ -9451,8 +9451,8 @@
             {
               "docstring": "Records the call ORDER: `warm_setup` pushes \"warm\", `exchange` pushes \"exchange\".",
               "lines": [
-                860,
-                862
+                876,
+                878
               ],
               "name": "SequenceMock",
               "type": "struct"
@@ -9461,8 +9461,8 @@
               "children": [
                 {
                   "lines": [
-                    864,
-                    866
+                    880,
+                    882
                   ],
                   "name": "id",
                   "signature": "(&self)",
@@ -9470,8 +9470,8 @@
                 },
                 {
                   "lines": [
-                    867,
-                    871
+                    883,
+                    887
                   ],
                   "name": "warm_setup",
                   "signature": "(&'a self)",
@@ -9479,8 +9479,8 @@
                 },
                 {
                   "lines": [
-                    872,
-                    877
+                    888,
+                    893
                   ],
                   "name": "exchange",
                   "signature": "(&'a self, _query_wire: &'a [u8])",
@@ -9488,16 +9488,16 @@
                 }
               ],
               "lines": [
-                863,
-                878
+                879,
+                894
               ],
               "name": "Transport",
               "type": "impl"
             },
             {
               "lines": [
-                881,
-                894
+                897,
+                910
               ],
               "name": "warm_setup_completes_before_the_timed_exchange_begins",
               "signature": "()",
@@ -9506,8 +9506,8 @@
             {
               "docstring": "server); the exchange itself is instant (the cert turned out to be cached, say).",
               "lines": [
-                898,
-                898
+                914,
+                914
               ],
               "name": "HungWarmMock",
               "type": "struct"
@@ -9516,8 +9516,8 @@
               "children": [
                 {
                   "lines": [
-                    900,
-                    902
+                    916,
+                    918
                   ],
                   "name": "id",
                   "signature": "(&self)",
@@ -9525,8 +9525,8 @@
                 },
                 {
                   "lines": [
-                    903,
-                    907
+                    919,
+                    923
                   ],
                   "name": "warm_setup",
                   "signature": "(&'a self)",
@@ -9534,8 +9534,8 @@
                 },
                 {
                   "lines": [
-                    908,
-                    910
+                    924,
+                    926
                   ],
                   "name": "exchange",
                   "signature": "(&'a self, _query_wire: &'a [u8])",
@@ -9543,16 +9543,16 @@
                 }
               ],
               "lines": [
-                899,
-                911
+                915,
+                927
               ],
               "name": "Transport",
               "type": "impl"
             },
             {
               "lines": [
-                914,
-                928
+                930,
+                944
               ],
               "name": "hung_warm_setup_is_abandoned_at_the_deadline_and_the_leg_still_answers",
               "signature": "()",
@@ -9560,8 +9560,8 @@
             },
             {
               "lines": [
-                941,
-                956
+                957,
+                972
               ],
               "name": "ewma_seeds_on_first_rtt_without_warmup_bias",
               "signature": "()",
@@ -9569,8 +9569,8 @@
             },
             {
               "lines": [
-                959,
-                982
+                975,
+                998
               ],
               "name": "ewma_rtt_is_bounded_by_the_observed_envelope_and_converges",
               "signature": "()",
@@ -9578,8 +9578,8 @@
             },
             {
               "lines": [
-                985,
-                1024
+                1001,
+                1040
               ],
               "name": "ewma_loss_stays_in_unit_interval_and_discriminates",
               "signature": "()",
@@ -9587,8 +9587,8 @@
             },
             {
               "lines": [
-                1027,
-                1037
+                1043,
+                1053
               ],
               "name": "ewma_samples_count_is_monotone_and_saturating",
               "signature": "()",
@@ -9596,8 +9596,8 @@
             },
             {
               "lines": [
-                1040,
-                1081
+                1056,
+                1097
               ],
               "name": "warm_start_seeds_unlearned_transports_and_spares_learned_ones",
               "signature": "()",
@@ -9605,8 +9605,8 @@
             },
             {
               "lines": [
-                1084,
-                1126
+                1100,
+                1142
               ],
               "name": "exchange_all_records_the_winner_on_the_live_path_loadrobust_smoke",
               "signature": "()",
@@ -9614,8 +9614,8 @@
             },
             {
               "lines": [
-                1129,
-                1133
+                1145,
+                1149
               ],
               "name": "strategy_default_is_strict_order",
               "signature": "()",
@@ -9623,8 +9623,8 @@
             },
             {
               "lines": [
-                1136,
-                1168
+                1152,
+                1184
               ],
               "name": "round_robin_walks_the_ring_naming_each_transport_in_turn",
               "signature": "()",
@@ -9632,8 +9632,8 @@
             },
             {
               "lines": [
-                1171,
-                1194
+                1187,
+                1210
               ],
               "name": "round_robin_falls_forward_past_a_dead_upstream",
               "signature": "()",
@@ -9641,8 +9641,8 @@
             },
             {
               "lines": [
-                1197,
-                1211
+                1213,
+                1227
               ],
               "name": "round_robin_toggle_takes_egress_precedence",
               "signature": "()",
@@ -9651,8 +9651,8 @@
             {
               "docstring": "the LADDER tests (ordering / retry / terminal-stop / exhaustion / EWMA) independent of the codec.",
               "lines": [
-                1219,
-                1226
+                1235,
+                1242
               ],
               "name": "mock_verdict",
               "signature": "(body: &[u8])",
@@ -9661,8 +9661,8 @@
             {
               "docstring": "Four zeroed atomics backing a `SolveCounters` \u2014 indexed retries[0] / soft_fails[1] / hard[2] / exh[3].",
               "lines": [
-                1229,
-                1236
+                1245,
+                1252
               ],
               "name": "counter_store",
               "signature": "()",
@@ -9670,8 +9670,8 @@
             },
             {
               "lines": [
-                1237,
-                1244
+                1253,
+                1260
               ],
               "name": "counters_of",
               "signature": "(store: &[AtomicU64; 4])",
@@ -9679,8 +9679,8 @@
             },
             {
               "lines": [
-                1247,
-                1274
+                1263,
+                1290
               ],
               "name": "solve_ladder_stops_at_first_got_through_and_counts_the_retry",
               "signature": "()",
@@ -9688,8 +9688,8 @@
             },
             {
               "lines": [
-                1277,
-                1313
+                1293,
+                1329
               ],
               "name": "solve_ladder_terminal_nxdomain_stops_before_the_rest",
               "signature": "()",
@@ -9697,8 +9697,8 @@
             },
             {
               "lines": [
-                1316,
-                1344
+                1332,
+                1360
               ],
               "name": "solve_ladder_all_soft_fails_exhausts_to_none_like_exchange",
               "signature": "()",
@@ -9706,8 +9706,8 @@
             },
             {
               "lines": [
-                1347,
-                1368
+                1363,
+                1384
               ],
               "name": "solve_ladder_transport_error_is_a_soft_fail_and_ladders_on",
               "signature": "()",
@@ -9715,8 +9715,8 @@
             },
             {
               "lines": [
-                1371,
-                1399
+                1387,
+                1415
               ],
               "name": "solve_ladder_penalizes_a_soft_fail_as_loss_not_rtt",
               "signature": "()",
@@ -9724,8 +9724,8 @@
             },
             {
               "lines": [
-                1402,
-                1416
+                1418,
+                1432
               ],
               "name": "solve_ladder_empty_pool_is_none",
               "signature": "()",
@@ -9733,8 +9733,8 @@
             },
             {
               "lines": [
-                1419,
-                1439
+                1435,
+                1455
               ],
               "name": "solve_ladder_head_leg_through_counts_no_retry",
               "signature": "()",
@@ -9742,8 +9742,8 @@
             },
             {
               "lines": [
-                1442,
-                1471
+                1458,
+                1487
               ],
               "name": "solve_ladder_honors_the_ranked_order",
               "signature": "()",
@@ -9751,8 +9751,8 @@
             }
           ],
           "lines": [
-            691,
-            1472
+            707,
+            1488
           ],
           "name": "tests",
           "type": "module"
@@ -9760,12 +9760,12 @@
       ]
     },
     "query_feed.rs": {
-      "hash": "17da0b63222a",
-      "indexed_at": "2026-08-01T09:56:56.176821+00:00",
+      "hash": "4788fa207b1d",
+      "indexed_at": "2026-08-01T12:52:13.454975+00:00",
       "language": "rust",
-      "lines": 630,
-      "mtime_ns": 1785578136442099200,
-      "size": 29578,
+      "lines": 646,
+      "mtime_ns": 1785588611445043400,
+      "size": 29811,
       "symbols": [
         {
           "docstring": "here would double-report the same query.",
@@ -9869,7 +9869,7 @@
             {
               "lines": [
                 356,
-                371
+                376
               ],
               "name": "status_tokens_match_the_go_vocabulary",
               "signature": "()",
@@ -9877,8 +9877,8 @@
             },
             {
               "lines": [
-                374,
-                398
+                379,
+                406
               ],
               "name": "feed_status_skips_live_forwards_only_in_loopback_mode",
               "signature": "()",
@@ -9886,8 +9886,8 @@
             },
             {
               "lines": [
-                401,
-                409
+                409,
+                417
               ],
               "name": "qtype_text_covers_the_common_set_with_the_miekg_fallback",
               "signature": "()",
@@ -9895,8 +9895,8 @@
             },
             {
               "lines": [
-                412,
-                423
+                420,
+                431
               ],
               "name": "civil_from_unix_spot_checks",
               "signature": "()",
@@ -9904,8 +9904,8 @@
             },
             {
               "lines": [
-                426,
-                458
+                434,
+                466
               ],
               "name": "format_feed_line_is_byte_exact_go_shape",
               "signature": "()",
@@ -9913,8 +9913,8 @@
             },
             {
               "lines": [
-                461,
-                468
+                469,
+                476
               ],
               "name": "hostile_qnames_cannot_inject_rows_or_columns",
               "signature": "()",
@@ -9922,8 +9922,8 @@
             },
             {
               "lines": [
-                478,
-                542
+                486,
+                555
               ],
               "name": "a_cache_hit_a_cloak_and_a_block_are_no_longer_the_same_row",
               "signature": "()",
@@ -9931,8 +9931,8 @@
             },
             {
               "lines": [
-                553,
-                586
+                566,
+                602
               ],
               "name": "every_deny_gate_reports_its_own_name_never_a_shared_one",
               "signature": "()",
@@ -9940,8 +9940,8 @@
             },
             {
               "lines": [
-                589,
-                597
+                605,
+                613
               ],
               "name": "a_hostile_qname_still_cannot_inject_a_column",
               "signature": "()",
@@ -9949,8 +9949,8 @@
             },
             {
               "lines": [
-                600,
-                621
+                616,
+                637
               ],
               "name": "append_row_roundtrips_plain_lines",
               "signature": "()",
@@ -9958,8 +9958,8 @@
             },
             {
               "lines": [
-                624,
-                629
+                640,
+                645
               ],
               "name": "local_offset_never_panics_and_is_bounded",
               "signature": "()",
@@ -9968,7 +9968,7 @@
           ],
           "lines": [
             352,
-            630
+            646
           ],
           "name": "tests",
           "type": "module"
@@ -10286,12 +10286,12 @@
       ]
     },
     "rotation.rs": {
-      "hash": "454aa1255a18",
-      "indexed_at": "2026-07-29T11:59:45.837204+00:00",
+      "hash": "038e3ea35af1",
+      "indexed_at": "2026-08-01T12:52:13.749595+00:00",
       "language": "rust",
-      "lines": 550,
-      "mtime_ns": 1785326350669790200,
-      "size": 25597,
+      "lines": 553,
+      "mtime_ns": 1785588611451044500,
+      "size": 25631,
       "symbols": [
         {
           "lines": [
@@ -10508,7 +10508,7 @@
             {
               "lines": [
                 401,
-                431
+                434
               ],
               "name": "decode_drops_hints_past_the_ceiling_however_large_the_record",
               "signature": "()",
@@ -10516,8 +10516,8 @@
             },
             {
               "lines": [
-                434,
-                448
+                437,
+                451
               ],
               "name": "decode_skips_malformed_fields_tolerantly",
               "signature": "()",
@@ -10525,8 +10525,8 @@
             },
             {
               "lines": [
-                451,
-                476
+                454,
+                479
               ],
               "name": "reboot_resumes_warm_not_cold_at_family_zero",
               "signature": "()",
@@ -10534,8 +10534,8 @@
             },
             {
               "lines": [
-                479,
-                516
+                482,
+                519
               ],
               "name": "a_flip_rehydrate_then_recursor_preserves_accumulated_rtt_hints",
               "signature": "()",
@@ -10543,8 +10543,8 @@
             },
             {
               "lines": [
-                519,
-                549
+                522,
+                552
               ],
               "name": "rehydrate_opt_signals_found_vs_absent",
               "signature": "()",
@@ -10553,7 +10553,7 @@
           ],
           "lines": [
             262,
-            550
+            553
           ],
           "name": "tests",
           "type": "module"
@@ -11145,6 +11145,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T12:21:49.022951+00:00",
+  "generated_at": "2026-08-01T12:52:13.751138+00:00",
   "version": "1.0"
 }

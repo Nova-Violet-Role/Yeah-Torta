@@ -15,8 +15,17 @@
 /// The rightmost record with `start <= key` claims the key; returns its payload slice.
 /// `None` only when the key precedes the first record (or the table is empty/fractured) — sentinel
 /// mapping is the CALLER's contract, this layer doesn't know one payload from another.
-pub(crate) fn lookup<'t>(table: &'t [u8], rec: usize, key_len: usize, key: &[u8]) -> Option<&'t [u8]> {
-    debug_assert_eq!(key.len(), key_len, "key width must match the table's key field");
+pub(crate) fn lookup<'t>(
+    table: &'t [u8],
+    rec: usize,
+    key_len: usize,
+    key: &[u8],
+) -> Option<&'t [u8]> {
+    debug_assert_eq!(
+        key.len(),
+        key_len,
+        "key width must match the table's key field"
+    );
     let n = table.len() / rec;
     // partition point of `start <= key` over record indices.
     let (mut lo, mut hi) = (0usize, n);

@@ -22,10 +22,10 @@
 
 #![cfg(unix)]
 
+use log::{error, warn};
 use std::net::SocketAddr;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
-use log::{error, warn};
 
 use ipstack::stream::IpStackStream;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
@@ -34,8 +34,8 @@ use super::session::{Proto, SessionKey};
 use super::shape::{tin_for_flow, FlowShaper};
 use super::tun_device::AsyncTunDevice;
 use super::upstream::{connect_tcp_protected, connect_udp_protected};
-use crate::beast::ProbePriority;
 use super::FlowKind;
+use crate::beast::ProbePriority;
 use crate::tunnel::ForwarderStats;
 
 /// The socket-protect hook (N4): `protect_fd(raw_fd) -> bool`. A thin `Fn` alias so the forwarder does not
@@ -96,11 +96,7 @@ pub(crate) async fn run_forwarder(
 /// pass). DENY is the ONLY blocking verdict — the additive-block contract: an unconfigured/absent Warden
 /// can never break forwarding, only an armed one can ADD a drop. The `:53` DNS-intercept path NEVER
 /// passes here — the resolver owns its own blocklist gate (NXDOMAIN), per the warden.rs charter.
-pub(crate) fn warden_allows(
-    key: &SessionKey,
-    uid: &Option<UidFn>,
-    fwd: &ForwarderStats,
-) -> bool {
+pub(crate) fn warden_allows(key: &SessionKey, uid: &Option<UidFn>, fwd: &ForwarderStats) -> bool {
     let owner = uid
         .as_ref()
         .map(|f| f(key.proto.ip_number(), key.src, key.dst))
@@ -318,7 +314,7 @@ async fn forward_udp(
         None => {
             error!("forward_udp: connect_udp_protected failed for dst={}", dst);
             return;
-        },
+        }
     };
     let mut cbuf = vec![0u8; 65535];
     let mut ubuf = vec![0u8; 65535];
@@ -366,9 +362,12 @@ async fn forward_udp_paced(
     let upstream = match connect_udp_protected(dst, &protect, fwd).await {
         Some(u) => u,
         None => {
-            error!("forward_udp_paced: connect_udp_protected failed for dst={}", dst);
+            error!(
+                "forward_udp_paced: connect_udp_protected failed for dst={}",
+                dst
+            );
             return;
-        },
+        }
     };
     let mut cbuf = vec![0u8; 65535];
     let mut ubuf = vec![0u8; 65535];
@@ -564,8 +563,7 @@ async fn centauri_serve_local_tls<S>(
     host: &str,
     live: &std::sync::Arc<crate::tunnel::FlowLive>,
     fwd: &ForwarderStats,
-)
-where
+) where
     S: tokio::io::AsyncRead + tokio::io::AsyncWrite + Unpin,
 {
     let Some(cfg) = crate::CENTAURI_TLS_CONFIG.get() else {
@@ -594,10 +592,7 @@ where
 
     // Loopback to our own listener — no `protect(fd)` needed (127.0.0.1 never enters the tun) and no
     // network involved at all.
-    let local = SocketAddr::new(
-        std::net::IpAddr::V4(std::net::Ipv4Addr::LOCALHOST),
-        port,
-    );
+    let local = SocketAddr::new(std::net::IpAddr::V4(std::net::Ipv4Addr::LOCALHOST), port);
     let Ok(mut mirror) = tokio::net::TcpStream::connect(local).await else {
         fwd.centauri_tls_failed.fetch_add(1, Ordering::Relaxed);
         return;
@@ -605,9 +600,9 @@ where
     fwd.centauri_tls_served.fetch_add(1, Ordering::Relaxed);
     if let Ok((up, down)) = tokio::io::copy_bidirectional(&mut tls, &mut mirror).await {
         fwd.bytes_up.fetch_add(up, Ordering::Relaxed);
-                    live.bytes_up.fetch_add(up, Ordering::Relaxed);
+        live.bytes_up.fetch_add(up, Ordering::Relaxed);
         fwd.bytes_down.fetch_add(down, Ordering::Relaxed);
-                    live.bytes_down.fetch_add(down, Ordering::Relaxed);
+        live.bytes_down.fetch_add(down, Ordering::Relaxed);
     }
 }
 
@@ -674,9 +669,7 @@ async fn centauri_https_seam(
     // ARMED alone is NOT enough: the leg must be able to serve. When it cannot (no CA config, mirror
     // not bound) the ClientHello is still unread, so the flow falls through to the splice below rather
     // than dying — the `lib.rs` fallback contract, which an unconditional `return` here used to break.
-    if crate::CENTAURI_TLS_ARMED.load(Ordering::Relaxed)
-        && super::centauri_local_serve_ready(fwd)
-    {
+    if crate::CENTAURI_TLS_ARMED.load(Ordering::Relaxed) && super::centauri_local_serve_ready(fwd) {
         // The peek above CONSUMED the ClientHello into `buf`. Hand the acceptor a stream that replays
         // those bytes first — without this it waits for a hello that has already been sent and the flow
         // hangs until the browser times out.
@@ -730,13 +723,13 @@ async fn centauri_https_seam(
         return;
     }
     fwd.bytes_up.fetch_add(buf.len() as u64, Ordering::Relaxed);
-                    live.bytes_up.fetch_add(buf.len() as u64, Ordering::Relaxed);
+    live.bytes_up.fetch_add(buf.len() as u64, Ordering::Relaxed);
     fwd.centauri_spliced.fetch_add(1, Ordering::Relaxed);
     if let Ok((up, down)) = tokio::io::copy_bidirectional(&mut client, &mut upstream).await {
         fwd.bytes_up.fetch_add(up, Ordering::Relaxed);
-                    live.bytes_up.fetch_add(up, Ordering::Relaxed);
+        live.bytes_up.fetch_add(up, Ordering::Relaxed);
         fwd.bytes_down.fetch_add(down, Ordering::Relaxed);
-                    live.bytes_down.fetch_add(down, Ordering::Relaxed);
+        live.bytes_down.fetch_add(down, Ordering::Relaxed);
     }
 }
 
@@ -764,7 +757,7 @@ async fn forward_tcp(
         None => {
             error!("forward_tcp: connect_tcp_protected failed for dst={}", dst);
             return;
-        },
+        }
     };
     // #3-EXT — the dial elapsed (SYN→established) IS this flow's TCP network RTT: feed the live
     // Beast's TCP display lane (base-RTT EWMA + true-min floor) — the YeAH TCP metrics' real food.
@@ -772,12 +765,15 @@ async fn forward_tcp(
     match tokio::io::copy_bidirectional(&mut client, &mut upstream).await {
         Ok((up, down)) => {
             fwd.bytes_up.fetch_add(up, Ordering::Relaxed);
-                        live.bytes_up.fetch_add(up, Ordering::Relaxed);
+            live.bytes_up.fetch_add(up, Ordering::Relaxed);
             fwd.bytes_down.fetch_add(down, Ordering::Relaxed);
-                        live.bytes_down.fetch_add(down, Ordering::Relaxed);
+            live.bytes_down.fetch_add(down, Ordering::Relaxed);
         }
         Err(e) => {
-            error!("forward_tcp: copy_bidirectional failed for dst={}: {:?}", dst, e);
+            error!(
+                "forward_tcp: copy_bidirectional failed for dst={}: {:?}",
+                dst, e
+            );
         }
     }
 }
@@ -810,9 +806,12 @@ async fn forward_tcp_paced(
     let mut upstream = match connect_tcp_protected(dst, &protect, fwd).await {
         Some(u) => u,
         None => {
-            error!("forward_tcp_paced: connect_tcp_protected failed for dst={}", dst);
+            error!(
+                "forward_tcp_paced: connect_tcp_protected failed for dst={}",
+                dst
+            );
             return;
-        },
+        }
     };
     // #3-EXT — same law as `forward_tcp`: the handshake elapsed feeds the TCP display lane.
     crate::beast::feed_live_tcp_dial(dial.elapsed().as_secs_f64() * 1000.0);
@@ -913,5 +912,4 @@ mod tests {
         assert!(out == dst || out.ip().is_loopback());
         assert_ne!(out.port(), 0, "never a rewrite to port 0");
     }
-
 }

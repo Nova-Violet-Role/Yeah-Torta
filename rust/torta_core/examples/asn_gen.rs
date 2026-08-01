@@ -75,7 +75,12 @@ fn insert(ranges: &mut Ranges, start: u128, end: u128, id: u32, dropped: &mut u6
 }
 
 /// Merge adjacent same-name ranges, then emit start records + gap sentinels.
-fn emit(path: &std::path::Path, ranges: &Ranges, key_bytes: usize, key_max: u128) -> (u64, u64, u64) {
+fn emit(
+    path: &std::path::Path,
+    ranges: &Ranges,
+    key_bytes: usize,
+    key_max: u128,
+) -> (u64, u64, u64) {
     let mut out = Vec::new();
     let mut write_rec = |start: u128, id: u32| {
         out.extend_from_slice(&start.to_be_bytes()[16 - key_bytes..]);
@@ -83,15 +88,16 @@ fn emit(path: &std::path::Path, ranges: &Ranges, key_bytes: usize, key_max: u128
     };
     let (mut merged, mut gaps) = (0u64, 0u64);
     let mut pending: Option<(u128, u128, u32)> = None;
-    let flush = |p: (u128, u128, u32), next_start: Option<u128>, write: &mut dyn FnMut(u128, u32)| {
-        write(p.0, p.2);
-        let contiguous = next_start == p.1.checked_add(1);
-        if !contiguous && p.1 < key_max {
-            write(p.1 + 1, SENTINEL);
-            return 1;
-        }
-        0
-    };
+    let flush =
+        |p: (u128, u128, u32), next_start: Option<u128>, write: &mut dyn FnMut(u128, u32)| {
+            write(p.0, p.2);
+            let contiguous = next_start == p.1.checked_add(1);
+            if !contiguous && p.1 < key_max {
+                write(p.1 + 1, SENTINEL);
+                return 1;
+            }
+            0
+        };
     for (&start, &(end, id)) in ranges {
         match pending {
             Some(p) if p.1 + 1 == start && p.2 == id => {
@@ -158,7 +164,13 @@ fn main() {
                 continue;
             };
             kept += 1;
-            insert(if is_v4 { &mut v4 } else { &mut v6 }, s, e, id, &mut dropped);
+            insert(
+                if is_v4 { &mut v4 } else { &mut v6 },
+                s,
+                e,
+                id,
+                &mut dropped,
+            );
         }
     }
     assert!(
@@ -189,7 +201,15 @@ fn main() {
         "kept={kept} skipped={skipped} overlaps_dropped={dropped} names={}",
         names.list.len()
     );
-    println!("v4: {} ranges -> {r4} records ({m4} merged, {g4} gaps) = {} bytes", v4.len(), r4 * 7);
-    println!("v6: {} ranges -> {r6} records ({m6} merged, {g6} gaps) = {} bytes", v6.len(), r6 * 19);
+    println!(
+        "v4: {} ranges -> {r4} records ({m4} merged, {g4} gaps) = {} bytes",
+        v4.len(),
+        r4 * 7
+    );
+    println!(
+        "v6: {} ranges -> {r6} records ({m6} merged, {g6} gaps) = {} bytes",
+        v6.len(),
+        r6 * 19
+    );
     println!("names blob = {} bytes", blob.len());
 }

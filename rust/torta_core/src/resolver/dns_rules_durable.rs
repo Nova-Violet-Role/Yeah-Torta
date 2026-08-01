@@ -176,11 +176,17 @@ mod tests {
     fn overwrites_a_stale_loose_file_in_place() {
         let dir = temp_dir("overwrite");
         let tier_dir = dir.join("runtime_tier");
-        let loose = dir.join("dnscrypt-proxy").join("forwarding-rules-single.txt");
+        let loose = dir
+            .join("dnscrypt-proxy")
+            .join("forwarding-rules-single.txt");
         std::fs::create_dir_all(loose.parent().unwrap()).unwrap();
         std::fs::write(&loose, b"stale garbage\n").unwrap();
         let lines = vec!["example.org 192.0.2.53".to_string()];
-        assert!(persist_list(&tier_dir, "dnscrypt-single-forwarding", &lines));
+        assert!(persist_list(
+            &tier_dir,
+            "dnscrypt-single-forwarding",
+            &lines
+        ));
         assert!(materialize_list(
             &tier_dir,
             "dnscrypt-single-forwarding",

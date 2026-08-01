@@ -136,10 +136,10 @@ pub mod inu;
 // runtime_tier + base uniffi only — no feature-gated dep) → byte-clean in the base `.so` AND under
 // `--features pure_rust`. Rust owns ONLY the durable codec + Object; the cache POLICY (LRU, TTL,
 // hit/miss) stays with the Kotlin `solver/BindingCache.kt` — one codec, one judge, never two.
-mod solver_bindings;
 /// #21 G7-RESIDUAL — the app-level typed DurableTier record (the last load-bearing
 /// SharedPreferences flags, folded onto the Inu store template).
 mod app_state;
+mod solver_bindings;
 
 // P9 FIX-2 — crate-level shared TLS seam: a thin re-export of the ONE cross-compile-proven, ring-pinned
 // `resolver::tls::client_tls_config` at a crate-reachable path, so the new `mirror` sibling can reuse the
@@ -1370,8 +1370,7 @@ pub fn warden_rule_probe(
         match warden_lock().as_ref() {
             Some(w) => {
                 let rs = w.rule_sets();
-                let hit =
-                    parsed.and_then(|addr| rs.cidr.lookup(uid_u, addr, dport_u, proto_u));
+                let hit = parsed.and_then(|addr| rs.cidr.lookup(uid_u, addr, dport_u, proto_u));
                 WardenRuleProbe {
                     configured: true,
                     domain_blocked: !qname.is_empty() && rs.domain.matches(uid_u, &qname),
@@ -2763,8 +2762,7 @@ pub fn blocklist_sources() -> Vec<BlocklistSourceRow> {
 /// worthless, when the truth is that nothing has been learned yet.
 #[uniffi::export]
 pub fn blocklist_resolve_source_reputations() -> i64 {
-    catch_unwind(AssertUnwindSafe(blocklist::resolve_source_reputations))
-        .unwrap_or(0) as i64
+    catch_unwind(AssertUnwindSafe(blocklist::resolve_source_reputations)).unwrap_or(0) as i64
 }
 
 /// A snapshot of the answer cache's real shape and policy — the CACHE panel's source of truth.
@@ -3067,9 +3065,11 @@ pub fn resolver_warden_denied() -> u64 {
 /// (zero egress). Critical (A/AAAA/HTTPS/SVCB) + High (NS/MX/SOA/…) are floor-protected and never shed.
 /// `None` on a malformed query. Panic-firewalled → None.
 pub fn synthesize_servfail(query_wire: Vec<u8>) -> Option<Vec<u8>> {
-    catch_unwind(AssertUnwindSafe(move || dns::build_servfail_response(&query_wire)))
-        .ok()
-        .flatten()
+    catch_unwind(AssertUnwindSafe(move || {
+        dns::build_servfail_response(&query_wire)
+    }))
+    .ok()
+    .flatten()
 }
 
 /// `resolverSetPoolBudget(cwndCap, timeoutMs, pacingQps)` — D10, the Beast→resolver budget push
@@ -3353,7 +3353,14 @@ pub fn underground_ingest_lane(
         let Some(lane) = catalogs::UndergroundLane::from_slug(&slug) else {
             return 0;
         };
-        match catalogs::ingest_lane_catalog(lane, &tcat, &sig, &pubkey, true, now_days.max(0) as u32) {
+        match catalogs::ingest_lane_catalog(
+            lane,
+            &tcat,
+            &sig,
+            &pubkey,
+            true,
+            now_days.max(0) as u32,
+        ) {
             Ok(taken) => taken.domains as i64,
             Err(_) => 0,
         }
@@ -3410,7 +3417,9 @@ pub fn beast_set_yeah_profile(id: i32) {
 /// swap). Crash-firewalled (fail-open).
 #[uniffi::export]
 pub fn beast_set_cake_profile(id: i32) {
-    let _ = catch_unwind(AssertUnwindSafe(|| beast::live_beast().set_cake_profile(id)));
+    let _ = catch_unwind(AssertUnwindSafe(|| {
+        beast::live_beast().set_cake_profile(id)
+    }));
 }
 
 /// `beastSetTunables(maxWindow, freeThreshMilli, competeThreshMilli)` — #49. Override the live YeAH Expert
@@ -4061,9 +4070,8 @@ pub fn centauri_tls_armed() -> bool {
 /// read per-flow by the forwarder. `OnceLock` (not a Mutex) because the CA is minted at arm time and
 /// never rotates within a process — the datapath read must be lock-free.
 #[cfg(feature = "mirror")]
-pub(crate) static CENTAURI_TLS_CONFIG: std::sync::OnceLock<
-    std::sync::Arc<rustls::ServerConfig>,
-> = std::sync::OnceLock::new();
+pub(crate) static CENTAURI_TLS_CONFIG: std::sync::OnceLock<std::sync::Arc<rustls::ServerConfig>> =
+    std::sync::OnceLock::new();
 
 /// The device CA material — PUBLIC certificate plus the PRIVATE key, handed to Kotlin ONCE at arm time
 /// so it can persist both to app-private storage and re-supply them on the next launch.
@@ -4089,7 +4097,10 @@ pub struct CentauriCaMaterial {
 #[cfg(feature = "mirror")]
 #[uniffi::export]
 pub fn centauri_tls_retrust() -> u32 {
-    catch_unwind(AssertUnwindSafe(|| mirror::localcdn::clear_tls_distrust() as u32)).unwrap_or(0)
+    catch_unwind(AssertUnwindSafe(|| {
+        mirror::localcdn::clear_tls_distrust() as u32
+    }))
+    .unwrap_or(0)
 }
 
 /// `centauriTlsDistrustCount()` — hosts currently un-cloaked because their client refused our leaf.
@@ -4097,7 +4108,10 @@ pub fn centauri_tls_retrust() -> u32 {
 #[cfg(feature = "mirror")]
 #[uniffi::export]
 pub fn centauri_tls_distrust_count() -> u32 {
-    catch_unwind(AssertUnwindSafe(|| mirror::localcdn::tls_distrust_count() as u32)).unwrap_or(0)
+    catch_unwind(AssertUnwindSafe(|| {
+        mirror::localcdn::tls_distrust_count() as u32
+    }))
+    .unwrap_or(0)
 }
 
 /// `centauriAbsorbCount()` — assets absorbed from a live CDN and written to the content-addressed
@@ -4114,7 +4128,10 @@ pub fn centauri_absorb_count() -> u32 {
 #[cfg(feature = "mirror")]
 #[uniffi::export]
 pub fn centauri_promoted_cloak_count() -> u32 {
-    catch_unwind(AssertUnwindSafe(|| mirror::localcdn::promoted_cloak_count() as u32)).unwrap_or(0)
+    catch_unwind(AssertUnwindSafe(|| {
+        mirror::localcdn::promoted_cloak_count() as u32
+    }))
+    .unwrap_or(0)
 }
 
 /// `centauriTlsArm(certPem, keyPem)` — arm the local HTTPS serve leg.
@@ -4128,7 +4145,10 @@ pub fn centauri_promoted_cloak_count() -> u32 {
 /// certificate, browsers reject the minted leaves and the fallback carries the flow.
 #[cfg(feature = "mirror")]
 #[uniffi::export]
-pub fn centauri_tls_arm(cert_pem: Option<String>, key_pem: Option<String>) -> Option<CentauriCaMaterial> {
+pub fn centauri_tls_arm(
+    cert_pem: Option<String>,
+    key_pem: Option<String>,
+) -> Option<CentauriCaMaterial> {
     catch_unwind(AssertUnwindSafe(move || {
         // Reload the persisted CA when both halves are present; otherwise mint. A reload FAILURE is not
         // silently papered over with a fresh mint — see `DeviceCa::from_pem`.
@@ -4506,14 +4526,12 @@ pub fn warden_is_armed() -> bool {
 /// revocation that never happened.
 #[uniffi::export]
 pub fn warden_clear_rule_sets() -> bool {
-    catch_unwind(AssertUnwindSafe(|| {
-        match warden_lock().as_mut() {
-            Some(w) => {
-                w.install_rule_sets(warden::WardenRuleSets::default());
-                true
-            }
-            None => false,
+    catch_unwind(AssertUnwindSafe(|| match warden_lock().as_mut() {
+        Some(w) => {
+            w.install_rule_sets(warden::WardenRuleSets::default());
+            true
         }
+        None => false,
     }))
     .unwrap_or(false)
 }
@@ -6394,7 +6412,15 @@ mod detection_probe_tests {
     /// A probe must never panic, whatever it is handed — it is reached from the UI thread.
     #[test]
     fn probe_never_panics_on_hostile_input() {
-        for h in ["", ".", "..", "xn--", "xn--zzzzzzzz", &"a".repeat(4096), "\u{202e}evil"] {
+        for h in [
+            "",
+            ".",
+            "..",
+            "xn--",
+            "xn--zzzzzzzz",
+            &"a".repeat(4096),
+            "\u{202e}evil",
+        ] {
             let _ = detection_probe(h.to_string());
         }
     }
@@ -6495,7 +6521,10 @@ mod warden_diagnostics_tests {
         clear_warden_for_test();
         let info = warden_rule_sets();
         assert!(!info.configured, "a disarmed Warden must say so");
-        assert!(info.domain_empty && info.cidr_empty, "no rules when disarmed");
+        assert!(
+            info.domain_empty && info.cidr_empty,
+            "no rules when disarmed"
+        );
         assert_eq!(info.domain_fingerprint, 0, "no fingerprint when disarmed");
         assert_eq!(info.cidr_fingerprint, 0, "no fingerprint when disarmed");
         assert!(info.toggles_empty && info.matrix_empty);
@@ -6506,7 +6535,13 @@ mod warden_diagnostics_tests {
     fn rule_probe_disarmed_blocks_nothing() {
         let _g = lock_warden_global();
         clear_warden_for_test();
-        let p = warden_rule_probe(1000, "ads.example".to_string(), "10.0.0.1".to_string(), 443, 6);
+        let p = warden_rule_probe(
+            1000,
+            "ads.example".to_string(),
+            "10.0.0.1".to_string(),
+            443,
+            6,
+        );
         assert!(!p.configured, "a disarmed Warden must say so");
         assert!(
             !p.domain_blocked && !p.cidr_blocked && !p.cidr_bypass,
@@ -6523,7 +6558,13 @@ mod warden_diagnostics_tests {
         clear_warden_for_test();
         let before = warden_stats_json();
         for _ in 0..25 {
-            let _ = warden_rule_probe(1000, "ads.example".to_string(), "10.0.0.1".to_string(), 443, 6);
+            let _ = warden_rule_probe(
+                1000,
+                "ads.example".to_string(),
+                "10.0.0.1".to_string(),
+                443,
+                6,
+            );
             let _ = warden_rule_sets();
         }
         assert_eq!(
@@ -6594,7 +6635,10 @@ mod warden_diagnostics_tests {
             *guard = Some(w);
         }
         let info = warden_rule_sets();
-        assert!(info.configured && !info.domain_empty, "the armed set is visible");
+        assert!(
+            info.configured && !info.domain_empty,
+            "the armed set is visible"
+        );
         assert_ne!(
             info.domain_fingerprint, 0,
             "an armed rule-set must fingerprint non-zero -- a constant 0 would hide every change"
@@ -6609,7 +6653,10 @@ mod warden_diagnostics_tests {
         clear_warden_for_test();
         for bad in ["", "not-an-ip", "999.999.999.999", "::gg"] {
             let p = warden_rule_probe(1000, "ads.example".to_string(), bad.to_string(), 443, 6);
-            assert!(!p.cidr_blocked && !p.cidr_bypass, "bad addr {bad} skips the CIDR leg");
+            assert!(
+                !p.cidr_blocked && !p.cidr_bypass,
+                "bad addr {bad} skips the CIDR leg"
+            );
         }
     }
 
@@ -6619,7 +6666,13 @@ mod warden_diagnostics_tests {
         let _g = lock_warden_global();
         clear_warden_for_test();
         let _ = warden_rule_probe(-1, "a.example".to_string(), "1.2.3.4".to_string(), -5, -7);
-        let _ = warden_rule_probe(i32::MAX, "a.example".to_string(), "1.2.3.4".to_string(), i32::MAX, i32::MAX);
+        let _ = warden_rule_probe(
+            i32::MAX,
+            "a.example".to_string(),
+            "1.2.3.4".to_string(),
+            i32::MAX,
+            i32::MAX,
+        );
         let _ = warden_rule_probe(i32::MIN, String::new(), String::new(), i32::MIN, i32::MIN);
     }
 }
@@ -6634,7 +6687,9 @@ mod blocklist_provenance_tests {
     /// An untagged / unblocked domain reports honest zeros — never a fabricated provenance.
     #[test]
     fn unknown_domain_has_no_provenance() {
-        let _g = blocklist::GLOBAL_TEST_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let _g = blocklist::GLOBAL_TEST_LOCK
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
         let p = blocklist_provenance("never-installed-anywhere.example".to_string(), 0);
         assert!(!p.tagged, "an unlisted domain has no source");
         assert_eq!(p.corroboration, 0);
@@ -6646,7 +6701,9 @@ mod blocklist_provenance_tests {
     /// tracks that source's registered weight.
     #[test]
     fn one_source_gives_corroboration_one() {
-        let _g = blocklist::GLOBAL_TEST_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let _g = blocklist::GLOBAL_TEST_LOCK
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
         blocklist::register_source_meta(
             blocklist::trust::SourceMeta::new(4101, 40, "test list A").with_reputation(40),
         );
@@ -6656,7 +6713,10 @@ mod blocklist_provenance_tests {
         let p = blocklist_provenance("ads.provenance-test.example".to_string(), 0);
         assert!(p.tagged, "the installed domain must carry its source bit");
         assert_eq!(p.corroboration, 1, "exactly one source installed it");
-        assert!(p.best_trust > 0, "a registered source contributes real trust");
+        assert!(
+            p.best_trust > 0,
+            "a registered source contributes real trust"
+        );
         assert!(
             !p.signed_backed,
             "an UNSIGNED source must never read as signature-backed"
@@ -6667,7 +6727,9 @@ mod blocklist_provenance_tests {
     /// mask popcount rather than reporting a constant.
     #[test]
     fn two_sources_corroborate() {
-        let _g = blocklist::GLOBAL_TEST_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let _g = blocklist::GLOBAL_TEST_LOCK
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
         blocklist::register_source_meta(blocklist::trust::SourceMeta::new(4201, 30, "list one"));
         blocklist::register_source_meta(blocklist::trust::SourceMeta::new(4202, 30, "list two"));
         let a = blocklist::compile_text("corro.provenance-test.example\n");
@@ -6688,7 +6750,9 @@ mod blocklist_provenance_tests {
     /// can only sample the space, the proof covers it.
     #[test]
     fn signed_source_outranks_unsigned_and_reads_as_signed() {
-        let _g = blocklist::GLOBAL_TEST_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let _g = blocklist::GLOBAL_TEST_LOCK
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
         blocklist::register_source_meta(
             blocklist::trust::SourceMeta::new(4301, 100, "unsigned but perfect")
                 .with_reputation(100),
@@ -6722,7 +6786,9 @@ mod blocklist_provenance_tests {
     /// Never panics, whatever the FFI hands over.
     #[test]
     fn provenance_never_panics_on_hostile_input() {
-        let _g = blocklist::GLOBAL_TEST_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let _g = blocklist::GLOBAL_TEST_LOCK
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
         for d in ["", ".", "..", &"a".repeat(4096), "\u{202e}evil"] {
             let _ = blocklist_provenance(d.to_string(), -1);
             let _ = blocklist_provenance(d.to_string(), i32::MAX);
@@ -6740,7 +6806,9 @@ mod blocklist_dedup_tests {
     /// The headline reports the installed set honestly, and nothing installed reads as nothing.
     #[test]
     fn list_trust_reports_the_installed_set() {
-        let _g = blocklist::GLOBAL_TEST_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let _g = blocklist::GLOBAL_TEST_LOCK
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
         blocklist::register_source_meta(
             blocklist::trust::SourceMeta::new(5101, 50, "dedup list A").with_reputation(50),
         );
@@ -6749,7 +6817,10 @@ mod blocklist_dedup_tests {
 
         let t = blocklist_list_trust(0);
         assert!(t.installed, "a list IS installed");
-        assert_ne!(t.fingerprint, 0, "an installed set has a content fingerprint");
+        assert_ne!(
+            t.fingerprint, 0,
+            "an installed set has a content fingerprint"
+        );
         assert_eq!(t.entries, 2, "two domains installed");
         assert!(t.trust > 0, "a registered source contributes real trust");
         assert_eq!(t.contributing_sources, 1, "one source produced this set");
@@ -6760,7 +6831,9 @@ mod blocklist_dedup_tests {
     /// pointless -- re-importing a list would manufacture certainty out of nothing.
     #[test]
     fn same_list_under_two_sources_does_not_inflate_trust() {
-        let _g = blocklist::GLOBAL_TEST_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let _g = blocklist::GLOBAL_TEST_LOCK
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
         let text = "dedup-same-1.example\ndedup-same-2.example\n";
 
         blocklist::register_source_meta(
@@ -6797,7 +6870,9 @@ mod blocklist_dedup_tests {
     /// only while its own fingerprint still matches it.
     #[test]
     fn source_backs_installed_goes_stale_when_replaced() {
-        let _g = blocklist::GLOBAL_TEST_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let _g = blocklist::GLOBAL_TEST_LOCK
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
         blocklist::register_source_meta(blocklist::trust::SourceMeta::new(5301, 50, "first"));
         blocklist::install_with_source(
             blocklist::compile_text("stale-test-one.example\n"),
@@ -6833,7 +6908,9 @@ mod blocklist_dedup_tests {
     /// Never panics on hostile FFI input.
     #[test]
     fn dedup_surfaces_never_panic() {
-        let _g = blocklist::GLOBAL_TEST_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        let _g = blocklist::GLOBAL_TEST_LOCK
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
         let _ = blocklist_list_trust(-1);
         let _ = blocklist_list_trust(i32::MAX);
         let _ = blocklist_source_backs_installed(-1);
@@ -6916,16 +6993,26 @@ mod temp_allow_tests {
         let _g = lock_warden_global();
         clear_warden_for_test();
         arm_warden();
-        assert!(warden_set_temp_allow(1000, 10 * HOUR_MS), "grant succeeds when armed");
+        assert!(
+            warden_set_temp_allow(1000, 10 * HOUR_MS),
+            "grant succeeds when armed"
+        );
 
         let s = warden_temp_allow_status(1000, 9 * HOUR_MS);
-        assert!(s.configured && s.active, "a pause an hour from expiry is active");
+        assert!(
+            s.configured && s.active,
+            "a pause an hour from expiry is active"
+        );
         assert_eq!(s.expires_at_ms, 10 * HOUR_MS);
         assert_eq!(s.remaining_ms, HOUR_MS, "one hour left");
 
         // ...and the countdown actually moves with the clock, so it is not a constant.
         let later = warden_temp_allow_status(1000, 9 * HOUR_MS + 1000);
-        assert_eq!(later.remaining_ms, HOUR_MS - 1000, "the countdown tracks the clock");
+        assert_eq!(
+            later.remaining_ms,
+            HOUR_MS - 1000,
+            "the countdown tracks the clock"
+        );
     }
 
     /// THE GAP. An expiry that has passed but has NOT yet been swept still sits non-zero in the row,
@@ -6964,7 +7051,10 @@ mod temp_allow_tests {
         clear_warden_for_test();
         arm_warden();
         warden_set_temp_allow(1000, HOUR_MS);
-        assert!(warden_temp_allow_status(1000, HOUR_MS - 1).active, "before: active");
+        assert!(
+            warden_temp_allow_status(1000, HOUR_MS - 1).active,
+            "before: active"
+        );
         assert!(
             !warden_temp_allow_status(1000, HOUR_MS).active,
             "AT the expiry instant the pause is already over (now < expires_at)"
@@ -6978,10 +7068,19 @@ mod temp_allow_tests {
         clear_warden_for_test();
         arm_warden();
         warden_set_temp_allow(1000, 10 * HOUR_MS);
-        assert!(warden_temp_allow_status(1000, HOUR_MS).configured, "granted");
-        assert!(warden_set_temp_allow(1000, 0), "revoke is the same call with 0");
+        assert!(
+            warden_temp_allow_status(1000, HOUR_MS).configured,
+            "granted"
+        );
+        assert!(
+            warden_set_temp_allow(1000, 0),
+            "revoke is the same call with 0"
+        );
         let s = warden_temp_allow_status(1000, HOUR_MS);
-        assert!(!s.configured && !s.active, "revoked reads as no pause at all");
+        assert!(
+            !s.configured && !s.active,
+            "revoked reads as no pause at all"
+        );
         assert_eq!(s.remaining_ms, 0);
     }
 
@@ -6992,7 +7091,10 @@ mod temp_allow_tests {
         clear_warden_for_test();
         arm_warden();
         warden_set_temp_allow(1000, 10 * HOUR_MS);
-        assert!(warden_temp_allow_status(1000, HOUR_MS).active, "the granted app is paused");
+        assert!(
+            warden_temp_allow_status(1000, HOUR_MS).active,
+            "the granted app is paused"
+        );
         assert!(
             !warden_temp_allow_status(1001, HOUR_MS).configured,
             "a DIFFERENT uid must not inherit the pause"
@@ -7034,8 +7136,14 @@ mod attribution_lookup_tests {
     fn an_unseen_ip_is_never_labelled() {
         // TEST-NET-3 (RFC 5737), reserved for documentation -- never a real resolved answer.
         let a = attribution_lookup("203.0.113.203".to_string());
-        assert!(!a.known, "an IP the loop never answered must not carry a label");
-        assert!(a.domain.is_empty(), "and the label must be empty, not a placeholder");
+        assert!(
+            !a.known,
+            "an IP the loop never answered must not carry a label"
+        );
+        assert!(
+            a.domain.is_empty(),
+            "and the label must be empty, not a placeholder"
+        );
     }
 
     /// A malformed address is refused, not errored, and never labelled.
@@ -7093,7 +7201,10 @@ mod lane_report_tests {
         for lane in &report {
             assert!(!lane.armed, "{} cannot arm from an empty dir", lane.slug);
             assert_eq!(lane.domains, 0);
-            assert_eq!(lane.fingerprint, 0, "a lane that did not arm has no set fingerprint");
+            assert_eq!(
+                lane.fingerprint, 0,
+                "a lane that did not arm has no set fingerprint"
+            );
             assert_eq!(
                 lane.failure, "absent-pair",
                 "{}: a cold start is an HONESTLY EMPTY lane, never a signature refusal",
@@ -7127,7 +7238,10 @@ mod lane_report_tests {
             .find(|l| l.slug == "malware")
             .expect("the malware lane is always reported");
         assert!(!malware.armed, "a forged pair must NEVER arm the lane");
-        assert_eq!(malware.domains, 0, "and must install nothing -- fail-closed");
+        assert_eq!(
+            malware.domains, 0,
+            "and must install nothing -- fail-closed"
+        );
         assert_ne!(
             malware.failure, "absent-pair",
             "a PRESENT but refused catalog is not a cold start -- that is the whole distinction"
@@ -7206,7 +7320,11 @@ mod centauri_discovery_tests {
                 "observed_total went negative: {}",
                 d.observed_total
             );
-            assert!(d.promotable >= 0, "promotable went negative: {}", d.promotable);
+            assert!(
+                d.promotable >= 0,
+                "promotable went negative: {}",
+                d.promotable
+            );
             assert!(
                 d.promotable <= d.hosts as i64,
                 "promotable ({}) exceeds the roster it is drawn from ({})",
@@ -7305,7 +7423,10 @@ mod warden_arm_seam_tests {
         let _g = lock_warden_global();
         clear_warden_for_test();
 
-        assert!(!warden_is_armed(), "baseline: the production posture is DISARMED");
+        assert!(
+            !warden_is_armed(),
+            "baseline: the production posture is DISARMED"
+        );
         assert!(warden_arm(), "first arm succeeds");
         assert!(warden_is_armed(), "and the engine reports it");
 
@@ -7384,7 +7505,10 @@ mod warden_arm_seam_tests {
             "NON-VACUITY: there is real policy to revoke"
         );
 
-        assert!(warden_clear_rule_sets(), "clearing an armed Warden succeeds");
+        assert!(
+            warden_clear_rule_sets(),
+            "clearing an armed Warden succeeds"
+        );
         assert_eq!(
             warden_rule_sets().domain_fingerprint,
             0,
@@ -7462,7 +7586,12 @@ mod source_provenance_tests {
 
         blocklist::register_source_meta(blocklist::trust::SourceMeta::new(9202, 70, "earner"));
         let mut m = blocklist::Matcher::new();
-        for d in ["bad-one.example", "bad-two.example", "lenient.example", "unknown.example"] {
+        for d in [
+            "bad-one.example",
+            "bad-two.example",
+            "lenient.example",
+            "unknown.example",
+        ] {
             m.insert(d);
         }
         m.finalize();
@@ -7561,7 +7690,10 @@ mod transport_shape_tests {
         if s.routes == 0 {
             assert!(s.routing_empty, "zero routes MUST read as empty routing");
         }
-        assert!(s.transports >= 0 && s.routes >= 0, "counts are never negative");
+        assert!(
+            s.transports >= 0 && s.routes >= 0,
+            "counts are never negative"
+        );
     }
 
     /// The two flags are the ENGINE's answers, not arithmetic restated. If a count is non-zero the
@@ -7619,7 +7751,10 @@ mod transport_shape_tests {
         } else {
             // The build already speaks that capability name; the assertion above would be vacuous,
             // so say so rather than passing silently.
-            assert_eq!(plan.not_needed_reason(), Some(resolver::dnscrypt_update::SyncNotNeeded::UpToDate));
+            assert_eq!(
+                plan.not_needed_reason(),
+                Some(resolver::dnscrypt_update::SyncNotNeeded::UpToDate)
+            );
         }
     }
 }

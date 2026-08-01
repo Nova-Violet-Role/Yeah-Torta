@@ -2,20 +2,28 @@
   "directory": "rust\\torta_core\\src\\tunnel",
   "files": {
     "mod.rs": {
-      "hash": "ee61e300f880",
-      "indexed_at": "2026-08-01T09:56:56.491828+00:00",
+      "hash": "9c2885fc6cd3",
+      "indexed_at": "2026-08-01T12:52:14.354183+00:00",
       "language": "rust",
-      "lines": 2244,
-      "mtime_ns": 1785578026671100300,
-      "size": 119384,
+      "lines": 2329,
+      "mtime_ns": 1785588611483043800,
+      "size": 120438,
       "symbols": [
         {
           "docstring": "! fd primitives (`dup`, `from_raw_fd`, `read`, `write`, `poll`) \u2014 every block has a SAFETY note.",
           "lines": [
+            67,
+            67
+          ],
+          "name": "parse",
+          "type": "module"
+        },
+        {
+          "lines": [
             68,
             68
           ],
-          "name": "parse",
+          "name": "synth",
           "type": "module"
         },
         {
@@ -23,37 +31,29 @@
             69,
             69
           ],
-          "name": "synth",
-          "type": "module"
-        },
-        {
-          "lines": [
-            70,
-            70
-          ],
           "name": "warden",
           "type": "module"
         },
         {
           "lines": [
-            106,
-            109
+            105,
+            108
           ],
           "name": "ProtectCallback",
           "type": "trait"
         },
         {
           "lines": [
-            121,
-            126
+            120,
+            131
           ],
           "name": "UidResolver",
           "type": "trait"
         },
         {
           "lines": [
-            155,
-            164
+            160,
+            169
           ],
           "name": "DialFailure",
           "type": "enum"
@@ -61,8 +61,8 @@
         {
           "docstring": "for (`upstream.rs` is UNIX-ONLY by its own module doc).",
           "lines": [
-            177,
-            186
+            182,
+            191
           ],
           "name": "classify_dial_failure",
           "signature": "(raw_errno: Option<i32>)",
@@ -71,8 +71,8 @@
         {
           "docstring": "`clamp_is_monotone`, `no_input_can_reach_the_link_mtu`.",
           "lines": [
-            224,
-            232
+            229,
+            237
           ],
           "name": "clamp_tun_mtu",
           "signature": "(requested: i32)",
@@ -80,8 +80,8 @@
         },
         {
           "lines": [
-            234,
-            240
+            239,
+            245
           ],
           "name": "sanitize_blocked_rcode",
           "signature": "(requested: i32)",
@@ -89,8 +89,8 @@
         },
         {
           "lines": [
-            245,
-            256
+            250,
+            261
           ],
           "name": "TunnelConfig",
           "type": "struct"
@@ -99,8 +99,8 @@
           "children": [
             {
               "lines": [
-                259,
-                266
+                264,
+                271
               ],
               "name": "default",
               "signature": "()",
@@ -108,32 +108,32 @@
             }
           ],
           "lines": [
-            258,
-            267
+            263,
+            272
           ],
           "name": "Default",
           "type": "impl"
         },
         {
           "lines": [
-            272,
-            292
+            277,
+            297
           ],
           "name": "TunnelStats",
           "type": "struct"
         },
         {
           "lines": [
-            298,
-            310
+            303,
+            315
           ],
           "name": "TunnelSnapshot",
           "type": "struct"
         },
         {
           "lines": [
-            325,
-            449
+            330,
+            454
           ],
           "name": "ForwarderStats",
           "type": "struct"
@@ -141,8 +141,8 @@
         {
           "docstring": "ONE live flow's mutable state, shared between its forwarder task and the docket reader.",
           "lines": [
-            481,
-            508
+            486,
+            513
           ],
           "name": "FlowLive",
           "type": "struct"
@@ -152,8 +152,8 @@
             {
               "docstring": "as a measured instant round trip).",
               "lines": [
-                513,
-                526
+                518,
+                531
               ],
               "name": "new",
               "signature": "(key: i64, proto: i32, tin: i32, paced: bool)",
@@ -162,8 +162,8 @@
             {
               "docstring": "Read this row into its wire twin.",
               "lines": [
-                529,
-                542
+                534,
+                547
               ],
               "name": "row",
               "signature": "(&self)",
@@ -171,8 +171,8 @@
             }
           ],
           "lines": [
-            510,
-            543
+            515,
+            548
           ],
           "name": "FlowLive",
           "type": "impl"
@@ -180,8 +180,8 @@
         {
           "docstring": "Proved for ALL inputs in `D:/Lean/proofs/Proofs/RttDisplay.lean`.",
           "lines": [
-            585,
-            595
+            590,
+            600
           ],
           "name": "rtt_display_ms",
           "signature": "(raw_ms: f64)",
@@ -190,8 +190,8 @@
         {
           "docstring": "forwarding regardless (telemetry NEVER gates the datapath), the flow simply goes unlisted.",
           "lines": [
-            603,
-            612
+            608,
+            617
           ],
           "name": "docket_register",
           "signature": "(row: &Arc<FlowLive>)",
@@ -200,8 +200,8 @@
         {
           "docstring": "hash, and removing \"a row with this key\" could retire the wrong one.",
           "lines": [
-            616,
-            620
+            621,
+            625
           ],
           "name": "docket_release",
           "signature": "(row: &Arc<FlowLive>)",
@@ -210,8 +210,8 @@
         {
           "docstring": "Enumerate every live flow. Wait-free for the datapath (the tasks never block on this lock).",
           "lines": [
-            623,
-            628
+            628,
+            633
           ],
           "name": "docket_rows",
           "signature": "()",
@@ -219,8 +219,8 @@
         },
         {
           "lines": [
-            633,
-            654
+            638,
+            659
           ],
           "name": "ForwarderFlowRow",
           "type": "struct"
@@ -230,8 +230,8 @@
             {
               "docstring": "controller-side state, not forwarder-side).",
               "lines": [
-                660,
-                697
+                665,
+                702
               ],
               "name": "snapshot_with",
               "signature": "(&self, armed: bool)",
@@ -239,24 +239,24 @@
             }
           ],
           "lines": [
-            656,
-            698
+            661,
+            703
           ],
           "name": "ForwarderStats",
           "type": "impl"
         },
         {
           "lines": [
-            705,
-            770
+            710,
+            775
           ],
           "name": "ForwarderSnapshot",
           "type": "struct"
         },
         {
           "lines": [
-            778,
-            798
+            783,
+            803
           ],
           "name": "TunnelController",
           "type": "struct"
@@ -266,8 +266,8 @@
             {
               "docstring": "resolver's transport layer so the upstream sockets call `protect_fd` before connect/sendto.",
               "lines": [
-                806,
-                808
+                811,
+                813
               ],
               "name": "set_protect_callback",
               "signature": "(&self, cb: Arc<dyn ProtectCallback>)",
@@ -276,8 +276,8 @@
             {
               "docstring": "the resolver). `None` when no Kotlin callback is wired yet.",
               "lines": [
-                812,
-                814
+                817,
+                819
               ],
               "name": "protect_callback",
               "signature": "(&self)",
@@ -286,8 +286,8 @@
             {
               "docstring": "Build the inner state (shared by the constructor + `Default`).",
               "lines": [
-                817,
-                826
+                822,
+                831
               ],
               "name": "build",
               "signature": "()",
@@ -296,8 +296,8 @@
           ],
           "docstring": "(start/stop/snapshot/is_running + the constructor). The Beast `attach_sink`/sink-arc precedent.",
           "lines": [
-            803,
-            827
+            808,
+            832
           ],
           "name": "TunnelController",
           "type": "impl"
@@ -306,8 +306,8 @@
           "children": [
             {
               "lines": [
-                842,
-                844
+                847,
+                849
               ],
               "name": "new",
               "signature": "()",
@@ -315,8 +315,8 @@
             },
             {
               "lines": [
-                856,
-                895
+                861,
+                900
               ],
               "name": "start",
               "signature": "(\n        &self,\n        tun_fd: i32,\n        mtu: i32,\n        virtual_dns_ip: String,\n        b...",
@@ -325,8 +325,8 @@
             {
               "docstring": "original `tun_fd` int (Kotlin-side) is untouched (R1 \u2014 neither side closes the original).",
               "lines": [
-                899,
-                904
+                904,
+                909
               ],
               "name": "stop",
               "signature": "(&self)",
@@ -335,8 +335,8 @@
             {
               "docstring": "(task 1B); `port`-equivalent `running` flag is `true` while the loop thread is alive.",
               "lines": [
-                908,
-                919
+                913,
+                924
               ],
               "name": "snapshot",
               "signature": "(&self)",
@@ -345,8 +345,8 @@
             {
               "docstring": "`true` while the loop thread is running.",
               "lines": [
-                922,
-                924
+                927,
+                929
               ],
               "name": "is_running",
               "signature": "(&self)",
@@ -354,8 +354,8 @@
             },
             {
               "lines": [
-                933,
-                936
+                938,
+                941
               ],
               "name": "set_netstack",
               "signature": "(&self, on: bool)",
@@ -364,8 +364,8 @@
             {
               "docstring": "a base (non-netstack) `.so` \u2014 the gate fail-safes to pass: the Warden can only ADD a block.",
               "lines": [
-                943,
-                945
+                948,
+                950
               ],
               "name": "set_uid_resolver",
               "signature": "(&self, resolver: Arc<dyn UidResolver>)",
@@ -374,8 +374,8 @@
             {
               "docstring": "renders DORMANT instead of fabricating motion.",
               "lines": [
-                951,
-                957
+                956,
+                962
               ],
               "name": "forwarder_snapshot",
               "signature": "(&self)",
@@ -384,8 +384,8 @@
             {
               "docstring": "`forwarder_snapshot().active_flows` to render \"N of M\" rather than implying completeness.",
               "lines": [
-                969,
-                971
+                974,
+                976
               ],
               "name": "forwarder_flow_docket",
               "signature": "(&self)",
@@ -393,8 +393,8 @@
             }
           ],
           "lines": [
-            837,
-            972
+            842,
+            977
           ],
           "name": "TunnelController",
           "type": "impl"
@@ -403,8 +403,8 @@
           "children": [
             {
               "lines": [
-                975,
-                977
+                980,
+                982
               ],
               "name": "default",
               "signature": "()",
@@ -412,8 +412,8 @@
             }
           ],
           "lines": [
-            974,
-            978
+            979,
+            983
           ],
           "name": "Default",
           "type": "impl"
@@ -423,8 +423,8 @@
             {
               "docstring": "the loop thread was spawned.",
               "lines": [
-                1002,
-                1076
+                1007,
+                1081
               ],
               "name": "start_unix",
               "signature": "(&self, tun_fd: i32, cfg: TunnelConfig)",
@@ -433,8 +433,8 @@
             {
               "docstring": "(Kotlin-side) is untouched. Private: the UniFFI-facing [`Self::stop`] dispatches here.",
               "lines": [
-                1081,
-                1088
+                1086,
+                1093
               ],
               "name": "stop_unix",
               "signature": "(&self)",
@@ -442,16 +442,16 @@
             }
           ],
           "lines": [
-            991,
-            1089
+            996,
+            1094
           ],
           "name": "TunnelController",
           "type": "impl"
         },
         {
           "lines": [
-            1104,
-            1106
+            1109,
+            1111
           ],
           "name": "netstack_enabled",
           "signature": "()",
@@ -459,8 +459,8 @@
         },
         {
           "lines": [
-            1111,
-            1113
+            1116,
+            1118
           ],
           "name": "set_netstack_enabled",
           "signature": "(on: bool)",
@@ -468,8 +468,8 @@
         },
         {
           "lines": [
-            1122,
-            1221
+            1127,
+            1226
           ],
           "name": "spawn_netstack_forwarder",
           "signature": "(\n    tun_mtu: usize,\n    owned: std::os::unix::io::OwnedFd,\n    protect: Option<Arc<dyn ProtectC...",
@@ -477,8 +477,8 @@
         },
         {
           "lines": [
-            1226,
-            1311
+            1231,
+            1316
           ],
           "name": "run_loop",
           "signature": "(\n    owned: std::os::unix::io::OwnedFd,\n    cfg: TunnelConfig,\n    running: Arc<AtomicBool>,\n   ...",
@@ -487,8 +487,8 @@
         {
           "docstring": "DENY; or a parse failure). This is the cross-platform core the loop thread calls.",
           "lines": [
-            1320,
-            1466
+            1325,
+            1474
           ],
           "name": "handle_packet",
           "signature": "(pkt: &[u8], cfg: &TunnelConfig, stats: &TunnelStats)",
@@ -497,8 +497,8 @@
         {
           "docstring": "Is `dns_payload` a standard query (qr==0, opcode==0, qdcount>0)? The udp.c:412 gate.",
           "lines": [
-            1469,
-            1478
+            1477,
+            1486
           ],
           "name": "is_standard_query",
           "signature": "(dns_payload: &[u8])",
@@ -508,8 +508,8 @@
           "children": [
             {
               "lines": [
-                1488,
-                1510
+                1496,
+                1518
               ],
               "name": "build_v4_udp_dns",
               "signature": "(\n        src_ip: [u8; 4],\n        dst_ip: [u8; 4],\n        sport: u16,\n        dport: u16,\n     ...",
@@ -517,8 +517,8 @@
             },
             {
               "lines": [
-                1512,
-                1520
+                1520,
+                1528
               ],
               "name": "example_dns_query",
               "signature": "()",
@@ -526,8 +526,8 @@
             },
             {
               "lines": [
-                1523,
-                1530
+                1531,
+                1538
               ],
               "name": "standard_query_classifier",
               "signature": "()",
@@ -535,8 +535,8 @@
             },
             {
               "lines": [
-                1533,
-                1539
+                1541,
+                1547
               ],
               "name": "handle_packet_drops_malformed_ip",
               "signature": "()",
@@ -544,8 +544,8 @@
             },
             {
               "lines": [
-                1542,
-                1562
+                1550,
+                1570
               ],
               "name": "handle_packet_servfails_when_resolver_unconfigured",
               "signature": "()",
@@ -553,8 +553,8 @@
             },
             {
               "lines": [
-                1565,
-                1577
+                1573,
+                1585
               ],
               "name": "handle_packet_short_circuits_when_fwd53_off",
               "signature": "()",
@@ -562,8 +562,8 @@
             },
             {
               "lines": [
-                1580,
-                1593
+                1588,
+                1601
               ],
               "name": "handle_packet_skips_lan_suffix_when_bypass_lan",
               "signature": "()",
@@ -571,8 +571,8 @@
             },
             {
               "lines": [
-                1596,
-                1602
+                1604,
+                1610
               ],
               "name": "controller_constructs_idle",
               "signature": "()",
@@ -581,8 +581,8 @@
             {
               "docstring": "A no-op ProtectCallback for the trait surface (1E wires the real Kotlin impl).",
               "lines": [
-                1605,
-                1605
+                1613,
+                1613
               ],
               "name": "NoopProtect",
               "type": "struct"
@@ -591,8 +591,8 @@
               "children": [
                 {
                   "lines": [
-                    1607,
-                    1609
+                    1615,
+                    1617
                   ],
                   "name": "protect_fd",
                   "signature": "(&self, _fd: i32)",
@@ -600,16 +600,16 @@
                 }
               ],
               "lines": [
-                1606,
-                1610
+                1614,
+                1618
               ],
               "name": "ProtectCallback",
               "type": "impl"
             },
             {
               "lines": [
-                1613,
-                1617
+                1621,
+                1625
               ],
               "name": "protect_callback_installs_and_retrieves",
               "signature": "()",
@@ -617,8 +617,8 @@
             },
             {
               "lines": [
-                1622,
-                1632
+                1630,
+                1640
               ],
               "name": "forwarder_snapshot_is_all_zero_and_disarmed_at_birth",
               "signature": "()",
@@ -626,8 +626,8 @@
             },
             {
               "lines": [
-                1647,
-                1653
+                1655,
+                1661
               ],
               "name": "docket_scrub",
               "signature": "()",
@@ -635,8 +635,8 @@
             },
             {
               "lines": [
-                1656,
-                1690
+                1664,
+                1698
               ],
               "name": "flow_docket_round_trips_one_live_flow_field_for_field",
               "signature": "()",
@@ -644,8 +644,8 @@
             },
             {
               "lines": [
-                1693,
-                1702
+                1701,
+                1710
               ],
               "name": "a_fresh_row_reports_rtt_unmeasured_not_zero",
               "signature": "()",
@@ -653,8 +653,8 @@
             },
             {
               "lines": [
-                1705,
-                1730
+                1713,
+                1738
               ],
               "name": "docket_refuses_past_cap_and_never_blocks_the_flow",
               "signature": "()",
@@ -662,8 +662,8 @@
             },
             {
               "lines": [
-                1733,
-                1750
+                1741,
+                1758
               ],
               "name": "release_retires_by_identity_not_by_colliding_key",
               "signature": "()",
@@ -671,8 +671,8 @@
             },
             {
               "lines": [
-                1753,
-                1795
+                1761,
+                1814
               ],
               "name": "forwarder_stats_snapshot_reads_every_counter",
               "signature": "()",
@@ -680,8 +680,8 @@
             },
             {
               "lines": [
-                1813,
-                1870
+                1832,
+                1889
               ],
               "name": "transport_miss_never_borrows_the_block_rcode",
               "signature": "()",
@@ -689,8 +689,8 @@
             }
           ],
           "lines": [
-            1485,
-            1871
+            1493,
+            1890
           ],
           "name": "tests",
           "type": "module"
@@ -699,8 +699,8 @@
           "children": [
             {
               "lines": [
-                1887,
-                1901
+                1906,
+                1920
               ],
               "name": "sixteen_no_longer_folds_onto_noerror",
               "signature": "()",
@@ -708,8 +708,8 @@
             },
             {
               "lines": [
-                1906,
-                1918
+                1925,
+                1937
               ],
               "name": "no_input_can_ever_produce_noerror",
               "signature": "()",
@@ -717,8 +717,8 @@
             },
             {
               "lines": [
-                1924,
-                1929
+                1943,
+                1952
               ],
               "name": "the_four_bit_stamp_never_alters_a_sanitized_value",
               "signature": "()",
@@ -726,8 +726,8 @@
             },
             {
               "lines": [
-                1935,
-                1946
+                1958,
+                1973
               ],
               "name": "every_legal_operator_choice_is_preserved_exactly",
               "signature": "()",
@@ -735,8 +735,8 @@
             }
           ],
           "lines": [
-            1878,
-            1947
+            1897,
+            1974
           ],
           "name": "blocked_rcode_tests",
           "type": "module"
@@ -745,8 +745,8 @@
           "children": [
             {
               "lines": [
-                1957,
-                1963
+                1984,
+                1990
               ],
               "name": "the_named_errnos_map_exactly",
               "signature": "()",
@@ -754,8 +754,8 @@
             },
             {
               "lines": [
-                1968,
-                1970
+                1995,
+                1997
               ],
               "name": "a_failure_with_no_errno_is_still_counted",
               "signature": "()",
@@ -763,8 +763,8 @@
             },
             {
               "lines": [
-                1980,
-                2024
+                2007,
+                2051
               ],
               "name": "the_shared_buckets_sum_to_both_totals_not_either_alone",
               "signature": "()",
@@ -772,8 +772,8 @@
             },
             {
               "lines": [
-                2030,
-                2042
+                2057,
+                2075
               ],
               "name": "udp_protect_refusal_is_its_own_counter_and_not_a_cause_bucket",
               "signature": "()",
@@ -781,8 +781,8 @@
             },
             {
               "lines": [
-                2047,
-                2054
+                2080,
+                2090
               ],
               "name": "the_three_causes_stay_distinguishable",
               "signature": "()",
@@ -790,8 +790,8 @@
             },
             {
               "lines": [
-                2060,
-                2081
+                2096,
+                2117
               ],
               "name": "every_errno_in_range_lands_in_exactly_one_bucket",
               "signature": "()",
@@ -799,8 +799,8 @@
             },
             {
               "lines": [
-                2086,
-                2094
+                2122,
+                2130
               ],
               "name": "out_of_range_errnos_still_classify",
               "signature": "()",
@@ -808,8 +808,8 @@
             }
           ],
           "lines": [
-            1953,
-            2095
+            1980,
+            2131
           ],
           "name": "dial_failure_tests",
           "type": "module"
@@ -818,8 +818,8 @@
           "children": [
             {
               "lines": [
-                2105,
-                2110
+                2141,
+                2154
               ],
               "name": "a_sub_millisecond_sample_never_reports_zero",
               "signature": "()",
@@ -827,8 +827,8 @@
             },
             {
               "lines": [
-                2114,
-                2119
+                2158,
+                2167
               ],
               "name": "an_ordinary_sample_is_passed_through_untouched",
               "signature": "()",
@@ -836,8 +836,8 @@
             },
             {
               "lines": [
-                2123,
-                2129
+                2171,
+                2181
               ],
               "name": "a_bad_reading_is_unmeasured_not_fast",
               "signature": "()",
@@ -845,8 +845,8 @@
             },
             {
               "lines": [
-                2133,
-                2136
+                2185,
+                2188
               ],
               "name": "an_absurd_magnitude_saturates_and_never_wraps",
               "signature": "()",
@@ -854,8 +854,8 @@
             },
             {
               "lines": [
-                2142,
-                2157
+                2194,
+                2223
               ],
               "name": "zero_is_unreachable_and_the_band_holds",
               "signature": "()",
@@ -863,8 +863,8 @@
             }
           ],
           "lines": [
-            2098,
-            2158
+            2134,
+            2224
           ],
           "name": "rtt_display_law_tests",
           "type": "module"
@@ -873,8 +873,8 @@
           "children": [
             {
               "lines": [
-                2171,
-                2173
+                2237,
+                2239
               ],
               "name": "the_shipped_defect_is_repaired",
               "signature": "()",
@@ -882,8 +882,8 @@
             },
             {
               "lines": [
-                2180,
-                2184
+                2246,
+                2258
               ],
               "name": "the_old_floor_only_guard_would_have_admitted_it",
               "signature": "()",
@@ -891,8 +891,8 @@
             },
             {
               "lines": [
-                2189,
-                2195
+                2263,
+                2269
               ],
               "name": "every_input_lands_in_the_window",
               "signature": "()",
@@ -900,8 +900,8 @@
             },
             {
               "lines": [
-                2200,
-                2204
+                2274,
+                2289
               ],
               "name": "headroom_is_always_positive",
               "signature": "()",
@@ -909,8 +909,8 @@
             },
             {
               "lines": [
-                2209,
-                2213
+                2294,
+                2298
               ],
               "name": "negatives_fold_to_the_floor_instead_of_wrapping",
               "signature": "()",
@@ -918,8 +918,8 @@
             },
             {
               "lines": [
-                2217,
-                2223
+                2302,
+                2308
               ],
               "name": "the_clamp_is_idempotent",
               "signature": "()",
@@ -927,8 +927,8 @@
             },
             {
               "lines": [
-                2228,
-                2232
+                2313,
+                2317
               ],
               "name": "values_inside_the_window_pass_through_untouched",
               "signature": "()",
@@ -936,8 +936,8 @@
             },
             {
               "lines": [
-                2236,
-                2243
+                2321,
+                2328
               ],
               "name": "the_clamp_is_monotone",
               "signature": "()",
@@ -945,8 +945,8 @@
             }
           ],
           "lines": [
-            2161,
-            2244
+            2227,
+            2329
           ],
           "name": "tun_mtu_headroom_tests",
           "type": "module"
@@ -954,12 +954,12 @@
       ]
     },
     "parse.rs": {
-      "hash": "bb06ad548cf8",
-      "indexed_at": "2026-08-01T00:12:24.797210+00:00",
+      "hash": "52c0c9c7a663",
+      "indexed_at": "2026-08-01T12:52:14.639876+00:00",
       "language": "rust",
-      "lines": 1033,
-      "mtime_ns": 1785543112778491500,
-      "size": 46197,
+      "lines": 1049,
+      "mtime_ns": 1785588611491043600,
+      "size": 46407,
       "symbols": [
         {
           "lines": [
@@ -1136,8 +1136,8 @@
             {
               "docstring": "next, terminating in the literal label `a` -- i.e. exactly `n` pointer follows.",
               "lines": [
-                619,
-                630
+                618,
+                629
               ],
               "name": "qname_pointer_chain",
               "signature": "(n: usize)",
@@ -1146,8 +1146,8 @@
             {
               "docstring": "name whose label chain runs past the cap must be refused rather than walked forever.",
               "lines": [
-                635,
-                643
+                634,
+                642
               ],
               "name": "label_chain",
               "signature": "(labels: usize)",
@@ -1155,8 +1155,8 @@
             },
             {
               "lines": [
-                646,
-                657
+                645,
+                656
               ],
               "name": "name_skip_cap_is_128_and_the_breach_is_loud",
               "signature": "()",
@@ -1164,8 +1164,8 @@
             },
             {
               "lines": [
-                660,
-                671
+                659,
+                670
               ],
               "name": "qname_pointer_cap_is_25_and_the_breach_is_loud",
               "signature": "()",
@@ -1173,8 +1173,8 @@
             },
             {
               "lines": [
-                674,
-                683
+                673,
+                682
               ],
               "name": "qname_self_referential_pointer_terminates",
               "signature": "()",
@@ -1183,8 +1183,8 @@
             {
               "docstring": "Build a minimal IPv4/UDP/DNS packet from scratch (the test scaffolding for the decision tree).",
               "lines": [
-                687,
-                713
+                686,
+                712
               ],
               "name": "build_v4_udp_dns",
               "signature": "(\n        src_ip: [u8; 4],\n        dst_ip: [u8; 4],\n        sport: u16,\n        dport: u16,\n     ...",
@@ -1193,8 +1193,8 @@
             {
               "docstring": "A minimal DNS query wire for `example.com` A (the dns.c shape, hand-built \u2014 no builder dep).",
               "lines": [
-                716,
-                725
+                715,
+                724
               ],
               "name": "example_dns_query",
               "signature": "()",
@@ -1203,8 +1203,8 @@
             {
               "docstring": "(0xC00C \u2192 the question qname), hand-built like [`example_dns_query`].",
               "lines": [
-                730,
-                749
+                729,
+                748
               ],
               "name": "example_dns_reply",
               "signature": "(rcode: u8, answers: &[(u16, u16, u32, &[u8])])",
@@ -1212,8 +1212,8 @@
             },
             {
               "lines": [
-                754,
-                762
+                753,
+                763
               ],
               "name": "answer_walk_extracts_a_and_aaaa",
               "signature": "()",
@@ -1221,8 +1221,8 @@
             },
             {
               "lines": [
-                765,
-                773
+                766,
+                777
               ],
               "name": "answer_walk_skips_cname_qname_stays_query",
               "signature": "()",
@@ -1230,8 +1230,8 @@
             },
             {
               "lines": [
-                776,
-                785
+                780,
+                791
               ],
               "name": "answer_walk_rejects_query_nxdomain_and_multi_question",
               "signature": "()",
@@ -1239,8 +1239,8 @@
             },
             {
               "lines": [
-                788,
-                798
+                794,
+                804
               ],
               "name": "answer_walk_truncation_is_none_not_partial",
               "signature": "()",
@@ -1248,8 +1248,8 @@
             },
             {
               "lines": [
-                801,
-                810
+                807,
+                820
               ],
               "name": "answer_walk_skips_non_in_class_and_odd_rdlen",
               "signature": "()",
@@ -1257,8 +1257,8 @@
             },
             {
               "lines": [
-                813,
-                821
+                823,
+                831
               ],
               "name": "answer_walk_caps_hostile_ancount",
               "signature": "()",
@@ -1266,8 +1266,8 @@
             },
             {
               "lines": [
-                824,
-                839
+                834,
+                849
               ],
               "name": "answer_walk_inline_owner_and_empty_answer_reply",
               "signature": "()",
@@ -1275,8 +1275,8 @@
             },
             {
               "lines": [
-                844,
-                848
+                854,
+                858
               ],
               "name": "unknown_version_drops",
               "signature": "()",
@@ -1284,8 +1284,8 @@
             },
             {
               "lines": [
-                851,
-                854
+                861,
+                864
               ],
               "name": "v4_too_short_drops",
               "signature": "()",
@@ -1293,8 +1293,8 @@
             },
             {
               "lines": [
-                857,
-                863
+                867,
+                873
               ],
               "name": "v4_ihl_below_minimum_drops",
               "signature": "()",
@@ -1302,8 +1302,8 @@
             },
             {
               "lines": [
-                866,
-                873
+                876,
+                883
               ],
               "name": "v4_tot_len_mismatch_drops",
               "signature": "()",
@@ -1311,8 +1311,8 @@
             },
             {
               "lines": [
-                876,
-                889
+                886,
+                902
               ],
               "name": "v4_udp_dns_parses",
               "signature": "()",
@@ -1320,8 +1320,8 @@
             },
             {
               "lines": [
-                892,
-                902
+                905,
+                915
               ],
               "name": "v4_non_udp_returns_proto_only",
               "signature": "()",
@@ -1329,8 +1329,8 @@
             },
             {
               "lines": [
-                907,
-                921
+                920,
+                934
               ],
               "name": "v4_tcp_dport_parses",
               "signature": "()",
@@ -1338,8 +1338,8 @@
             },
             {
               "lines": [
-                924,
-                936
+                937,
+                952
               ],
               "name": "v4_tcp_truncated_header_yields_no_dport",
               "signature": "()",
@@ -1347,8 +1347,8 @@
             },
             {
               "lines": [
-                939,
-                952
+                955,
+                968
               ],
               "name": "v6_tcp_dport_parses",
               "signature": "()",
@@ -1356,8 +1356,8 @@
             },
             {
               "lines": [
-                955,
-                977
+                971,
+                993
               ],
               "name": "v6_udp_dns_parses",
               "signature": "()",
@@ -1365,8 +1365,8 @@
             },
             {
               "lines": [
-                980,
-                989
+                996,
+                1005
               ],
               "name": "udp_too_short_drops",
               "signature": "()",
@@ -1374,8 +1374,8 @@
             },
             {
               "lines": [
-                992,
-                999
+                1008,
+                1015
               ],
               "name": "qname_extracts_from_real_query",
               "signature": "()",
@@ -1383,8 +1383,8 @@
             },
             {
               "lines": [
-                1002,
-                1010
+                1018,
+                1026
               ],
               "name": "qname_compression_pointer_cap",
               "signature": "()",
@@ -1392,8 +1392,8 @@
             },
             {
               "lines": [
-                1013,
-                1021
+                1029,
+                1037
               ],
               "name": "qname_empty_drops",
               "signature": "()",
@@ -1401,8 +1401,8 @@
             },
             {
               "lines": [
-                1024,
-                1032
+                1040,
+                1048
               ],
               "name": "lan_suffix_matches",
               "signature": "()",
@@ -1411,7 +1411,7 @@
           ],
           "lines": [
             539,
-            1033
+            1049
           ],
           "name": "tests",
           "type": "module"
@@ -1618,12 +1618,12 @@
       ]
     },
     "warden.rs": {
-      "hash": "aabc390d73f0",
-      "indexed_at": "2026-07-29T06:41:48.168867+00:00",
+      "hash": "d0a16f0805a8",
+      "indexed_at": "2026-08-01T12:52:14.924023+00:00",
       "language": "rust",
-      "lines": 537,
-      "mtime_ns": 1785306263481364900,
-      "size": 24291,
+      "lines": 597,
+      "mtime_ns": 1785588611497043600,
+      "size": 24991,
       "symbols": [
         {
           "lines": [
@@ -1733,7 +1733,7 @@
             {
               "lines": [
                 259,
-                283
+                286
               ],
               "name": "verdict_feeds_the_global_tracker_with_the_bridged_grain",
               "signature": "()",
@@ -1741,8 +1741,8 @@
             },
             {
               "lines": [
-                286,
-                302
+                289,
+                308
               ],
               "name": "verdict_with_carries_false_feeds_an_uncarried_row",
               "signature": "()",
@@ -1750,8 +1750,8 @@
             },
             {
               "lines": [
-                305,
-                324
+                311,
+                330
               ],
               "name": "verdict_abstains_on_unconfigured_singleton",
               "signature": "()",
@@ -1759,8 +1759,8 @@
             },
             {
               "lines": [
-                327,
-                366
+                333,
+                384
               ],
               "name": "verdict_attributes_a_nameless_flow_and_feeds_the_domain",
               "signature": "()",
@@ -1768,8 +1768,8 @@
             },
             {
               "lines": [
-                369,
-                423
+                387,
+                464
               ],
               "name": "attribution_only_deny_dies_on_the_bare_re_ask_but_a_facts_deny_stands",
               "signature": "()",
@@ -1777,8 +1777,8 @@
             },
             {
               "lines": [
-                433,
-                479
+                474,
+                520
               ],
               "name": "canonical_engine_rules_the_tunnel_when_enforced",
               "signature": "()",
@@ -1786,8 +1786,8 @@
             },
             {
               "lines": [
-                482,
-                536
+                523,
+                596
               ],
               "name": "canonical_attribution_only_deny_still_dies_on_the_bare_re_ask",
               "signature": "()",
@@ -1796,7 +1796,7 @@
           ],
           "lines": [
             233,
-            537
+            597
           ],
           "name": "tests",
           "type": "module"
@@ -1804,6 +1804,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T09:56:56.493574+00:00",
+  "generated_at": "2026-08-01T12:52:14.925625+00:00",
   "version": "1.0"
 }

@@ -391,13 +391,22 @@ mod tests {
     fn set_boot_reapply_writes_through_and_survives_reopen() {
         let dir = temp_dir("bootreapply");
         let store = InuStore::new(dir.to_string_lossy().into_owned());
-        assert!(store.persist(a_state()), "seed state (boot_reapply=true) persists");
+        assert!(
+            store.persist(a_state()),
+            "seed state (boot_reapply=true) persists"
+        );
         assert!(store.boot_reapply(), "RAM sees the armed seed");
-        assert!(store.set_boot_reapply(false), "the disarm write-through lands durably");
+        assert!(
+            store.set_boot_reapply(false),
+            "the disarm write-through lands durably"
+        );
         assert!(!store.boot_reapply(), "RAM sees the disarm");
         let reopened = InuStore::new(dir.to_string_lossy().into_owned());
         let state = reopened.rehydrate();
-        assert!(!state.boot_reapply, "the disarm survived process death (NAND read-back)");
+        assert!(
+            !state.boot_reapply,
+            "the disarm survived process death (NAND read-back)"
+        );
         let _ = std::fs::remove_dir_all(&dir);
     }
 

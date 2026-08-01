@@ -2,12 +2,12 @@
   "directory": "rust\\torta_core\\src\\detection",
   "files": {
     "beacon.rs": {
-      "hash": "1b0e39f86b39",
-      "indexed_at": "2026-07-28T21:45:16.672065+00:00",
+      "hash": "d1adcf6f97ff",
+      "indexed_at": "2026-08-01T12:52:02.600127+00:00",
       "language": "rust",
-      "lines": 280,
-      "mtime_ns": 1785275004124510000,
-      "size": 11921,
+      "lines": 308,
+      "mtime_ns": 1785588611004044600,
+      "size": 12224,
       "symbols": [
         {
           "lines": [
@@ -30,7 +30,7 @@
           "docstring": "the last [`MIN_TICKS`] inter-arrival gaps hold one fixed period \u2265 [`MIN_PERIOD_SECS`].",
           "lines": [
             53,
-            70
+            77
           ],
           "name": "beacon_signal_at",
           "signature": "(host: &str, now: u64)",
@@ -39,8 +39,8 @@
         {
           "docstring": "can never drift into disagreeing about the same arrivals (the REUSE law).",
           "lines": [
-            75,
-            92
+            82,
+            99
           ],
           "name": "cadence_verdict",
           "signature": "(tail: &[u64])",
@@ -49,8 +49,8 @@
         {
           "docstring": "Fail-open: a poisoned lock, or a host with no recorded arrivals, sees nothing.",
           "lines": [
-            103,
-            114
+            110,
+            128
           ],
           "name": "beacon_peek",
           "signature": "(host: &str)",
@@ -59,8 +59,8 @@
         {
           "docstring": "crosses [`NX_BURST`] (tunnel candidate \u2014 the caller files `Signal::Tunnel`).",
           "lines": [
-            135,
-            169
+            149,
+            183
           ],
           "name": "nx_burst",
           "signature": "(host: &str, qtype: u16, rcode: u8, now: u64)",
@@ -68,8 +68,8 @@
         },
         {
           "lines": [
-            180,
-            184
+            194,
+            198
           ],
           "name": "scrub_rhythms",
           "signature": "()",
@@ -79,8 +79,8 @@
           "children": [
             {
               "lines": [
-                191,
-                199
+                205,
+                220
               ],
               "name": "fixed_sixty_second_cadence_fires_at_six_ticks",
               "signature": "()",
@@ -88,8 +88,8 @@
             },
             {
               "lines": [
-                202,
-                214
+                223,
+                235
               ],
               "name": "jittered_cadence_within_tolerance_still_fires",
               "signature": "()",
@@ -97,8 +97,8 @@
             },
             {
               "lines": [
-                217,
-                229
+                238,
+                252
               ],
               "name": "fp_control_high_qps_cdn_stream_never_fires",
               "signature": "()",
@@ -106,8 +106,8 @@
             },
             {
               "lines": [
-                239,
-                263
+                262,
+                286
               ],
               "name": "speculative_qtype_negatives_never_convict_a_healthy_host",
               "signature": "()",
@@ -115,8 +115,8 @@
             },
             {
               "lines": [
-                266,
-                279
+                289,
+                307
               ],
               "name": "nx_burst_calls_the_tunnel_candidate_and_window_forgets",
               "signature": "()",
@@ -124,8 +124,8 @@
             }
           ],
           "lines": [
-            187,
-            280
+            201,
+            308
           ],
           "name": "tests",
           "type": "module"
@@ -133,12 +133,12 @@
       ]
     },
     "dga.rs": {
-      "hash": "11650038ce95",
-      "indexed_at": "2026-08-01T00:09:09.528508+00:00",
+      "hash": "ae205d93adc8",
+      "indexed_at": "2026-08-01T12:52:02.884001+00:00",
       "language": "rust",
-      "lines": 255,
-      "mtime_ns": 1785542916856418800,
-      "size": 11577,
+      "lines": 287,
+      "mtime_ns": 1785588611005044800,
+      "size": 11950,
       "symbols": [
         {
           "docstring": "too broadly; this is the same lesson applied in the opposite direction.",
@@ -174,7 +174,7 @@
           "docstring": "non [a-z0-9-] bytes are ignored (an IDN xn-- punycode label scores on its ASCII shape).",
           "lines": [
             102,
-            171
+            178
           ],
           "name": "dga_score",
           "signature": "(label: &str)",
@@ -184,8 +184,8 @@
           "children": [
             {
               "lines": [
-                185,
-                206
+                192,
+                213
               ],
               "name": "min_label_len_is_the_evidence_floor_for_a_dga_accusation",
               "signature": "()",
@@ -193,8 +193,8 @@
             },
             {
               "lines": [
-                211,
-                228
+                218,
+                240
               ],
               "name": "a_distribution_id_is_exempt_but_only_under_a_real_distribution_domain",
               "signature": "()",
@@ -202,8 +202,8 @@
             },
             {
               "lines": [
-                231,
-                239
+                243,
+                261
               ],
               "name": "alphabet_soup_fires_and_words_do_not",
               "signature": "()",
@@ -211,8 +211,8 @@
             },
             {
               "lines": [
-                242,
-                246
+                264,
+                268
               ],
               "name": "short_labels_are_never_accused",
               "signature": "()",
@@ -220,8 +220,8 @@
             },
             {
               "lines": [
-                249,
-                254
+                271,
+                286
               ],
               "name": "fp_control_legit_cdn_hosts_stay_quiet",
               "signature": "()",
@@ -229,8 +229,8 @@
             }
           ],
           "lines": [
-            174,
-            255
+            181,
+            287
           ],
           "name": "tests",
           "type": "module"
@@ -238,18 +238,18 @@
       ]
     },
     "homoglyph.rs": {
-      "hash": "56c2f8df4a8f",
-      "indexed_at": "2026-07-26T19:12:57.890760+00:00",
+      "hash": "18aa48162dac",
+      "indexed_at": "2026-08-01T12:52:03.165635+00:00",
       "language": "rust",
-      "lines": 213,
-      "mtime_ns": 1785030832549604300,
-      "size": 7785,
+      "lines": 236,
+      "mtime_ns": 1785588611007044800,
+      "size": 7915,
       "symbols": [
         {
           "docstring": "checked arithmetic, not process death.",
           "lines": [
-            30,
-            95
+            47,
+            115
           ],
           "name": "punycode_decode",
           "signature": "(input: &str)",
@@ -258,8 +258,8 @@
         {
           "docstring": "genuinely foreign word never collides with an ASCII brand skeleton.",
           "lines": [
-            101,
-            157
+            121,
+            177
           ],
           "name": "fold",
           "signature": "(text: &str)",
@@ -268,8 +268,8 @@
         {
           "docstring": "fail-open); everything else folds as-is. Pure \u2014 no state, no clock.",
           "lines": [
-            163,
-            171
+            183,
+            194
           ],
           "name": "homoglyph_hit",
           "signature": "(label: &str)",
@@ -279,8 +279,8 @@
           "children": [
             {
               "lines": [
-                178,
-                182
+                201,
+                205
               ],
               "name": "real_brand_labels_never_fire_on_themselves",
               "signature": "()",
@@ -288,8 +288,8 @@
             },
             {
               "lines": [
-                185,
-                191
+                208,
+                214
               ],
               "name": "ascii_confusable_forgeries_fire",
               "signature": "()",
@@ -297,8 +297,8 @@
             },
             {
               "lines": [
-                194,
-                197
+                217,
+                220
               ],
               "name": "punycode_homograph_fires",
               "signature": "()",
@@ -306,8 +306,8 @@
             },
             {
               "lines": [
-                200,
-                203
+                223,
+                226
               ],
               "name": "rfc3492_canonical_decode_round_trip",
               "signature": "()",
@@ -315,8 +315,8 @@
             },
             {
               "lines": [
-                206,
-                212
+                229,
+                235
               ],
               "name": "undecodable_and_bystander_labels_stay_quiet",
               "signature": "()",
@@ -324,8 +324,8 @@
             }
           ],
           "lines": [
-            174,
-            213
+            197,
+            236
           ],
           "name": "tests",
           "type": "module"
@@ -384,12 +384,12 @@
       ]
     },
     "newborn.rs": {
-      "hash": "ab0cec1eb09d",
-      "indexed_at": "2026-07-28T21:45:16.950458+00:00",
+      "hash": "b0a4c36c4bd6",
+      "indexed_at": "2026-08-01T12:52:03.444117+00:00",
       "language": "rust",
-      "lines": 136,
-      "mtime_ns": 1785275028428104400,
-      "size": 5691,
+      "lines": 145,
+      "mtime_ns": 1785588611008044300,
+      "size": 5793,
       "symbols": [
         {
           "lines": [
@@ -452,7 +452,7 @@
             {
               "lines": [
                 111,
-                119
+                125
               ],
               "name": "first_sight_probation_then_maturity",
               "signature": "()",
@@ -460,8 +460,8 @@
             },
             {
               "lines": [
-                122,
-                135
+                128,
+                144
               ],
               "name": "cap_evicts_oldest_registration_only",
               "signature": "()",
@@ -470,7 +470,7 @@
           ],
           "lines": [
             107,
-            136
+            145
           ],
           "name": "tests",
           "type": "module"
@@ -478,12 +478,12 @@
       ]
     },
     "tunnel.rs": {
-      "hash": "bf90ce69a0fa",
-      "indexed_at": "2026-08-01T00:09:09.801126+00:00",
+      "hash": "7e3c210c2c8e",
+      "indexed_at": "2026-08-01T12:52:03.720422+00:00",
       "language": "rust",
-      "lines": 206,
-      "mtime_ns": 1785542907712424200,
-      "size": 8366,
+      "lines": 212,
+      "mtime_ns": 1785588611009044600,
+      "size": 8446,
       "symbols": [
         {
           "lines": [
@@ -585,7 +585,7 @@
             {
               "lines": [
                 168,
-                178
+                184
               ],
               "name": "oversized_txt_burst_fires_within_window",
               "signature": "()",
@@ -593,8 +593,8 @@
             },
             {
               "lines": [
-                181,
-                193
+                187,
+                199
               ],
               "name": "window_prunes_and_a_slow_drip_never_fires",
               "signature": "()",
@@ -602,8 +602,8 @@
             },
             {
               "lines": [
-                196,
-                205
+                202,
+                211
               ],
               "name": "fp_control_normal_txt_and_fat_a_answers_stay_quiet",
               "signature": "()",
@@ -612,7 +612,7 @@
           ],
           "lines": [
             125,
-            206
+            212
           ],
           "name": "tests",
           "type": "module"
@@ -620,6 +620,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T00:09:09.802703+00:00",
+  "generated_at": "2026-08-01T12:52:03.721975+00:00",
   "version": "1.0"
 }

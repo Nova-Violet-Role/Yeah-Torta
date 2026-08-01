@@ -205,8 +205,16 @@ mod tests {
     fn torta_own_upstream_operators_are_not_in_the_set() {
         // A sinkhole that can deny the resolver's OWN transport bootstrap is an outage generator,
         // not a privacy feature. These are operator apexes Tortä's upstreams live under.
-        for own in ["dnscry.pt", "cs-montreal.dnscrypt.info", "serbica.info", "quad9.net"] {
-            assert!(!is_doh_bootstrap(own), "{own} is ours and must never be sinkholed");
+        for own in [
+            "dnscry.pt",
+            "cs-montreal.dnscrypt.info",
+            "serbica.info",
+            "quad9.net",
+        ] {
+            assert!(
+                !is_doh_bootstrap(own),
+                "{own} is ours and must never be sinkholed"
+            );
         }
     }
 
@@ -217,8 +225,14 @@ mod tests {
         set_enforce(false);
         assert!(!should_deny("dns.google"), "disarmed must never deny");
         set_enforce(true);
-        assert!(should_deny("dns.google"), "armed must deny a bootstrap name");
-        assert!(!should_deny("github.com"), "armed must NOT deny an ordinary name");
+        assert!(
+            should_deny("dns.google"),
+            "armed must deny a bootstrap name"
+        );
+        assert!(
+            !should_deny("github.com"),
+            "armed must NOT deny an ordinary name"
+        );
         set_enforce(false);
     }
 
@@ -238,16 +252,28 @@ mod tests {
     fn the_arming_switch_is_reachable_from_the_host_surface() {
         let before = enforce_on();
         set_enforce(true);
-        assert!(enforce_on(), "the public reader must observe the public writer");
-        assert!(should_deny("dns.google"), "the DATAPATH must see what the host armed");
+        assert!(
+            enforce_on(),
+            "the public reader must observe the public writer"
+        );
+        assert!(
+            should_deny("dns.google"),
+            "the DATAPATH must see what the host armed"
+        );
         set_enforce(false);
         assert!(!enforce_on());
-        assert!(!should_deny("dns.google"), "disarming must reach the datapath too");
+        assert!(
+            !should_deny("dns.google"),
+            "disarming must reach the datapath too"
+        );
         set_enforce(before);
     }
 
     #[test]
     fn the_curated_set_is_non_empty() {
-        assert!(apex_count() >= 8, "a set this small is the point, but it must not be empty");
+        assert!(
+            apex_count() >= 8,
+            "a set this small is the point, but it must not be empty"
+        );
     }
 }

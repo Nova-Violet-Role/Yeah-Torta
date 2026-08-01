@@ -147,8 +147,8 @@ const INFRA_TOKENS: &[&str] = &[
 
 /// Curated content-delivery LEADING-label words — the first dot-label that signals a CDN subdomain.
 const CDN_LABELS: &[&str] = &[
-    "cdn", "cdns", "static", "assets", "asset", "media", "img", "images", "content", "cache", "edge",
-    "js", "css", "fonts", "ajax", "static1", "static2",
+    "cdn", "cdns", "static", "assets", "asset", "media", "img", "images", "content", "cache",
+    "edge", "js", "css", "fonts", "ajax", "static1", "static2",
 ];
 
 struct Entry {
@@ -364,10 +364,7 @@ pub(crate) fn armed() -> bool {
 
 /// Distinct discovered hosts (the dashboard's "M discovered" count).
 pub(crate) fn count() -> u64 {
-    store()
-        .read()
-        .map(|g| g.by_host.len() as u64)
-        .unwrap_or(0)
+    store().read().map(|g| g.by_host.len() as u64).unwrap_or(0)
 }
 
 /// Cumulative cdn-shaped observations ever (the "grows with you" volume).
@@ -381,7 +378,11 @@ pub(crate) fn top(n: usize) -> Vec<(String, u64)> {
     let Ok(g) = store().read() else {
         return Vec::new();
     };
-    let mut rows: Vec<(String, u64)> = g.by_host.values().map(|e| (e.host.clone(), e.hits)).collect();
+    let mut rows: Vec<(String, u64)> = g
+        .by_host
+        .values()
+        .map(|e| (e.host.clone(), e.hits))
+        .collect();
     rows.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
     rows.truncate(n);
     rows
@@ -438,7 +439,11 @@ pub(crate) fn promotable_count() -> u64 {
 /// `[a-z0-9.-]` by construction (classify() rejects everything else) so the `|` separator can never collide
 /// with a host and the line is JSON-string-safe as-is. Empty when nothing has been observed yet.
 pub(crate) fn discovered_line(n: usize) -> String {
-    top(n).into_iter().map(|(h, _)| h).collect::<Vec<_>>().join("|")
+    top(n)
+        .into_iter()
+        .map(|(h, _)| h)
+        .collect::<Vec<_>>()
+        .join("|")
 }
 
 // ── Durability ──────────────────────────────────────────────────────────────────────────────────────
@@ -679,7 +684,10 @@ mod tests {
             .read()
             .map(|g| g.by_host.contains_key("brand-new-probe.cloudfront.net"))
             .unwrap_or(true);
-        assert!(!present, "the refused host must not be in the ledger at all");
+        assert!(
+            !present,
+            "the refused host must not be in the ledger at all"
+        );
 
         // (b) a host the ledger ALREADY holds still accrues hits when full.
         let hits_of = |h: &str| {
@@ -701,19 +709,22 @@ mod tests {
         ARMED.store(false, Ordering::Release);
     }
 
-
     #[test]
     fn a_non_delivery_service_is_never_promoted_however_cdn_its_operator_looks() {
         // ★ #87 — every one of these was MEASURED on the device roster as `infra`, purely because
         // INFRA_TOKENS carries the operator name `cloudflare`. None is content delivery.
         for host in [
-            "stun.cloudflare.com",             // not even HTTP
-            "a.nel.cloudflare.com",            // error-logging beacons
-            "challenges.cloudflare.com",       // Turnstile — the host that broke Hot & New (#78)
-            "static.cloudflareinsights.com",   // analytics, operator-fused label
-            "cloudflareinsights.com",          // its apex
+            "stun.cloudflare.com",           // not even HTTP
+            "a.nel.cloudflare.com",          // error-logging beacons
+            "challenges.cloudflare.com",     // Turnstile — the host that broke Hot & New (#78)
+            "static.cloudflareinsights.com", // analytics, operator-fused label
+            "cloudflareinsights.com",        // its apex
         ] {
-            assert_eq!(classify(host), None, "{host} must never be promoted to the cloak roster");
+            assert_eq!(
+                classify(host),
+                None,
+                "{host} must never be promoted to the cloak roster"
+            );
         }
 
         // THE OTHER DIRECTION — the veto must not cost us a single real CDN. `stun` may not match
@@ -826,7 +837,11 @@ mod tests {
             observe("cdn.restart.example", false);
         }
         persist();
-        assert_eq!(promotable_count(), 1, "the host earned its row before the restart");
+        assert_eq!(
+            promotable_count(),
+            1,
+            "the host earned its row before the restart"
+        );
 
         // Process #2: wipe RAM exactly as a fresh process would, leaving ONLY the on-disk ledger.
         crate::mirror::localcdn::publish_promoted_cloak(Vec::new());
@@ -869,7 +884,10 @@ mod tests {
 
         assert_eq!(
             promotable(),
-            vec!["cdn.busy.example".to_string(), "cdn.calm.example".to_string()],
+            vec![
+                "cdn.busy.example".to_string(),
+                "cdn.calm.example".to_string()
+            ],
             "hits-desc, and the sub-threshold host is excluded"
         );
         assert!(
@@ -896,7 +914,11 @@ mod tests {
         observe("www.example.com", false); // not cdn-shaped → ignored
         observe("d1.cloudfront.net", true); // already static (watched) → NOT a discovery
         assert_eq!(count(), 2, "two distinct discovered hosts");
-        assert_eq!(observed_total(), 3, "three cdn-shaped observations (static+non-cdn excluded)");
+        assert_eq!(
+            observed_total(),
+            3,
+            "three cdn-shaped observations (static+non-cdn excluded)"
+        );
         let top = top(2);
         assert_eq!(top[0].0, "cdn.jsdelivr.net");
         assert_eq!(top[0].1, 2, "the deduped host carries 2 hits");
@@ -910,8 +932,11 @@ mod tests {
         observe("cdn.jsdelivr.net", false); // 2 hits → ranks first
         observe("static.example.com", false); // 1 hit
         observe("assets.shop.co", false); // 1 hit → ties break by host name (assets < static)
-        // Full roster: hits-desc, then host-asc on ties. No collision risk: the `|` never appears in a host.
-        assert_eq!(discovered_line(9), "cdn.jsdelivr.net|assets.shop.co|static.example.com");
+                                          // Full roster: hits-desc, then host-asc on ties. No collision risk: the `|` never appears in a host.
+        assert_eq!(
+            discovered_line(9),
+            "cdn.jsdelivr.net|assets.shop.co|static.example.com"
+        );
         // Bounded by n — the header count still rides the uncapped `count()`, but the line is windowed.
         assert_eq!(discovered_line(1), "cdn.jsdelivr.net");
         // Empty store → empty line (never a stray separator).
@@ -936,10 +961,16 @@ mod tests {
         assert_eq!(entries.len(), 2);
         assert_eq!(observed, 3);
         // The rehydrated rows carry the hits + marker back.
-        let jsd = entries.iter().find(|e| e.host == "cdn.jsdelivr.net").unwrap();
+        let jsd = entries
+            .iter()
+            .find(|e| e.host == "cdn.jsdelivr.net")
+            .unwrap();
         assert_eq!(jsd.hits, 1);
         assert_eq!(jsd.marker, Marker::Infra);
-        let stx = entries.iter().find(|e| e.host == "static.example.com").unwrap();
+        let stx = entries
+            .iter()
+            .find(|e| e.host == "static.example.com")
+            .unwrap();
         assert_eq!(stx.hits, 2);
         assert_eq!(stx.marker, Marker::Label);
     }
@@ -949,7 +980,11 @@ mod tests {
         let (entries, observed) = parse_body(
             "#centauri-discovered v1\n#meta observed_total=9\nbad\trow\ncdn.ok.net\t1\t0\t0\tinfra\n",
         );
-        assert_eq!(entries.len(), 1, "the good row survives; the short row is skipped");
+        assert_eq!(
+            entries.len(),
+            1,
+            "the good row survives; the short row is skipped"
+        );
         assert_eq!(entries[0].host, "cdn.ok.net");
         assert_eq!(observed, 9);
     }
@@ -964,13 +999,23 @@ mod tests {
             for i in 0..MAX_DISCOVERED {
                 g.by_host.insert(
                     format!("cdn{i}.example.net"),
-                    Entry { host: format!("cdn{i}.example.net"), hits: 1, first_seen: 0, last_seen: 0, marker: Marker::Label },
+                    Entry {
+                        host: format!("cdn{i}.example.net"),
+                        hits: 1,
+                        first_seen: 0,
+                        last_seen: 0,
+                        marker: Marker::Label,
+                    },
                 );
             }
         }
         assert_eq!(count() as usize, MAX_DISCOVERED);
         observe("cdn-overflow.example.net", false);
-        assert_eq!(count() as usize, MAX_DISCOVERED, "capped: no new row stored");
+        assert_eq!(
+            count() as usize,
+            MAX_DISCOVERED,
+            "capped: no new row stored"
+        );
         assert_eq!(observed_total(), 1, "but the observation still counted");
     }
 }

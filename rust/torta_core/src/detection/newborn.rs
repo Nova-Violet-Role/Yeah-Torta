@@ -114,8 +114,14 @@ mod tests {
         let t0 = 1_000_000;
         assert!(newborn_at("fresh.example", t0), "first sight IS newborn");
         assert!(newborn_at("fresh.example", t0 + PROBATION_SECS - 1));
-        assert!(!newborn_at("fresh.example", t0 + PROBATION_SECS + 1), "matured");
-        assert!(!newborn_at("fresh.example", t0 + 10 * PROBATION_SECS), "stays matured");
+        assert!(
+            !newborn_at("fresh.example", t0 + PROBATION_SECS + 1),
+            "matured"
+        );
+        assert!(
+            !newborn_at("fresh.example", t0 + 10 * PROBATION_SECS),
+            "stays matured"
+        );
     }
 
     #[test]
@@ -131,6 +137,9 @@ mod tests {
         newborn_at("overflow.example", t0 + 1);
         let later = t0 + PROBATION_SECS + 10;
         assert!(!newborn_at("host-1.example", later), "survivor matured");
-        assert!(newborn_at("host-0.example", later), "evictee re-registers as newborn");
+        assert!(
+            newborn_at("host-0.example", later),
+            "evictee re-registers as newborn"
+        );
     }
 }

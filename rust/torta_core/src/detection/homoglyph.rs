@@ -19,9 +19,26 @@
 /// pure lowercase ASCII; a folded label must match EXACTLY (no substring scoring — a
 /// `googlemaps` bystander never fires).
 pub const BRAND_SKELETONS: &[&str] = &[
-    "amazon", "apple", "binance", "coinbase", "discord", "dnscrypt", "facebook", "github",
-    "gmail", "google", "instagram", "microsoft", "netflix", "paypal", "signal", "steam",
-    "telegram", "torproject", "whatsapp", "youtube",
+    "amazon",
+    "apple",
+    "binance",
+    "coinbase",
+    "discord",
+    "dnscrypt",
+    "facebook",
+    "github",
+    "gmail",
+    "google",
+    "instagram",
+    "microsoft",
+    "netflix",
+    "paypal",
+    "signal",
+    "steam",
+    "telegram",
+    "torproject",
+    "whatsapp",
+    "youtube",
 ];
 
 /// RFC 3492 §6.2 decode (decode-only). `None` on ANY irregularity — the fail-open law: an
@@ -44,7 +61,10 @@ pub(crate) fn punycode_decode(input: &str) -> Option<String> {
         k + (((BASE - TMIN + 1) * delta) / (delta + SKEW))
     }
     let (mut output, extended) = match input.rfind('-') {
-        Some(pos) => (input[..pos].chars().collect::<Vec<char>>(), &input[pos + 1..]),
+        Some(pos) => (
+            input[..pos].chars().collect::<Vec<char>>(),
+            &input[pos + 1..],
+        ),
         None => (Vec::new(), input),
     };
     if output.iter().any(|c| !c.is_ascii()) || extended.is_empty() {
@@ -167,7 +187,10 @@ pub fn homoglyph_hit(label: &str) -> Option<&'static str> {
         None => raw.clone(),
     };
     let folded = fold(&rendered);
-    BRAND_SKELETONS.iter().copied().find(|b| folded == *b && raw != *b)
+    BRAND_SKELETONS
+        .iter()
+        .copied()
+        .find(|b| folded == *b && raw != *b)
 }
 
 #[cfg(test)]

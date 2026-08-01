@@ -72,7 +72,6 @@
 //! dormant until a JNI export (`lib.rs`, a sibling slice) drives [`start_loopback`] — the base `.so`
 //! stays byte-identical until then (`#![cfg_attr(not(test), allow(dead_code))]`).
 
-
 use std::net::{IpAddr, Ipv4Addr};
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::{Arc, OnceLock};

@@ -2368,7 +2368,13 @@ mod tests {
     #[test]
     fn lru_eviction_removes_least_recently_used_non_immortal() {
         // Create cache with cap=2
-        let mut c = Cache::with_policy(2, 0, DEFAULT_TTL_CEILING_SECS, DEFAULT_NEG_TTL_CEILING_SECS, 0);
+        let mut c = Cache::with_policy(
+            2,
+            0,
+            DEFAULT_TTL_CEILING_SECS,
+            DEFAULT_NEG_TTL_CEILING_SECS,
+            0,
+        );
         let t0 = Instant::now();
         let epoch = current_epoch();
 
@@ -2380,17 +2386,32 @@ mod tests {
         c.put(&q("c.example"), positive_response("c.example", 300));
 
         // Verify h1 was evicted (LRU with lowest seq)
-        assert!(c.get_at(&q("a.example"), t0, epoch).is_none(), "h1 (LRU) should be evicted");
+        assert!(
+            c.get_at(&q("a.example"), t0, epoch).is_none(),
+            "h1 (LRU) should be evicted"
+        );
         // Verify h2 and h3 remain
-        assert!(c.get_at(&q("b.example"), t0, epoch).is_some(), "h2 should remain");
-        assert!(c.get_at(&q("c.example"), t0, epoch).is_some(), "h3 should remain");
+        assert!(
+            c.get_at(&q("b.example"), t0, epoch).is_some(),
+            "h2 should remain"
+        );
+        assert!(
+            c.get_at(&q("c.example"), t0, epoch).is_some(),
+            "h3 should remain"
+        );
     }
 
     /// GAP 3: LRU with immortal entries
     /// Proves: Eviction preserves immortal entries
     #[test]
     fn lru_eviction_preserves_immortal_entries() {
-        let mut c = Cache::with_policy(2, 0, DEFAULT_TTL_CEILING_SECS, DEFAULT_NEG_TTL_CEILING_SECS, 0);
+        let mut c = Cache::with_policy(
+            2,
+            0,
+            DEFAULT_TTL_CEILING_SECS,
+            DEFAULT_NEG_TTL_CEILING_SECS,
+            0,
+        );
         let t0 = Instant::now();
         let epoch = current_epoch();
 
@@ -2398,21 +2419,39 @@ mod tests {
         let h1 = q("immortal.example");
         c.put_immortal(&h1, positive_response("immortal.example", 300));
         // Insert normal h2
-        c.put(&q("normal1.example"), positive_response("normal1.example", 300));
+        c.put(
+            &q("normal1.example"),
+            positive_response("normal1.example", 300),
+        );
         // Insert normal h3 - should evict h2 (normal), NOT h1 (immortal)
-        c.put(&q("normal2.example"), positive_response("normal2.example", 300));
+        c.put(
+            &q("normal2.example"),
+            positive_response("normal2.example", 300),
+        );
 
         // Verify immortal h1 was NOT evicted
-        assert!(c.get_at(&h1, t0, epoch).is_some(), "immortal entry should never be evicted");
+        assert!(
+            c.get_at(&h1, t0, epoch).is_some(),
+            "immortal entry should never be evicted"
+        );
         // Verify one normal was evicted
-        assert!(c.len() == 2, "cache should have exactly 2 entries (1 immortal + 1 normal)");
+        assert!(
+            c.len() == 2,
+            "cache should have exactly 2 entries (1 immortal + 1 normal)"
+        );
     }
 
     /// GAP 3: Touch makes entry MRU
     /// Proves: Touch operation updates recency correctly
     #[test]
     fn touch_makes_entry_mru() {
-        let mut c = Cache::with_policy(3, 0, DEFAULT_TTL_CEILING_SECS, DEFAULT_NEG_TTL_CEILING_SECS, 0);
+        let mut c = Cache::with_policy(
+            3,
+            0,
+            DEFAULT_TTL_CEILING_SECS,
+            DEFAULT_NEG_TTL_CEILING_SECS,
+            0,
+        );
         let t0 = Instant::now();
         let epoch = current_epoch();
 
@@ -2428,9 +2467,15 @@ mod tests {
         c.put(&q("h4.example"), positive_response("h4.example", 300));
 
         // Verify h1 remains (was touched = MRU)
-        assert!(c.get_at(&q("h1.example"), t0, epoch).is_some(), "h1 (touched) should remain");
+        assert!(
+            c.get_at(&q("h1.example"), t0, epoch).is_some(),
+            "h1 (touched) should remain"
+        );
         // Verify h2 was evicted (was LRU before h1 was touched)
-        assert!(c.get_at(&q("h2.example"), t0, epoch).is_none(), "h2 (old LRU) should be evicted");
+        assert!(
+            c.get_at(&q("h2.example"), t0, epoch).is_none(),
+            "h2 (old LRU) should be evicted"
+        );
     }
 
     /// GAP 2: Cache Replay Correctness
@@ -2438,7 +2483,13 @@ mod tests {
     /// This is a simplified test - full proof would require modeling the entire verdict path
     #[test]
     fn cache_consistency_basic() {
-        let mut c = Cache::with_policy(4, 0, DEFAULT_TTL_CEILING_SECS, DEFAULT_NEG_TTL_CEILING_SECS, 0);
+        let mut c = Cache::with_policy(
+            4,
+            0,
+            DEFAULT_TTL_CEILING_SECS,
+            DEFAULT_NEG_TTL_CEILING_SECS,
+            0,
+        );
         let t0 = Instant::now();
         let epoch = current_epoch();
 
@@ -2449,13 +2500,23 @@ mod tests {
 
         let retrieved = c.get_at(&q, t0, epoch);
         assert!(retrieved.is_some(), "should find cached entry");
-        assert_eq!(retrieved.unwrap(), resp, "cached data should match original");
+        assert_eq!(
+            retrieved.unwrap(),
+            resp,
+            "cached data should match original"
+        );
     }
 
     /// GAP 2: Epoch gating prevents stale cache reads
     #[test]
     fn epoch_gating_prevents_stale_reads() {
-        let mut c = Cache::with_policy(4, 0, DEFAULT_TTL_CEILING_SECS, DEFAULT_NEG_TTL_CEILING_SECS, 0);
+        let mut c = Cache::with_policy(
+            4,
+            0,
+            DEFAULT_TTL_CEILING_SECS,
+            DEFAULT_NEG_TTL_CEILING_SECS,
+            0,
+        );
         let t0 = Instant::now();
         let epoch1 = current_epoch();
 
@@ -2463,13 +2524,19 @@ mod tests {
         c.put(&q("test.example"), positive_response("test.example", 300));
 
         // Verify readable in epoch1
-        assert!(c.get_at(&q("test.example"), t0, epoch1).is_some(), "should find in same epoch");
+        assert!(
+            c.get_at(&q("test.example"), t0, epoch1).is_some(),
+            "should find in same epoch"
+        );
 
         // Simulate epoch change (new blocklist fingerprint)
         let epoch2 = epoch1 + 1;
 
         // Should NOT find in different epoch (epoch gating)
-        assert!(c.get_at(&q("test.example"), t0, epoch2).is_none(), "should NOT find in different epoch");
+        assert!(
+            c.get_at(&q("test.example"), t0, epoch2).is_none(),
+            "should NOT find in different epoch"
+        );
     }
 }
 
@@ -2502,7 +2569,7 @@ mod negative_caching_tests {
         w[7] = 0; // ANCOUNT = 0
         w[8] = 0;
         w[9] = 1; // NSCOUNT = 1
-        // Authority RR: root name (0x00), TYPE=SOA(6), CLASS=IN(1), TTL, RDLENGTH, RDATA.
+                  // Authority RR: root name (0x00), TYPE=SOA(6), CLASS=IN(1), TTL, RDLENGTH, RDATA.
         w.push(0x00);
         w.extend_from_slice(&6u16.to_be_bytes());
         w.extend_from_slice(&1u16.to_be_bytes());
@@ -2544,7 +2611,8 @@ mod negative_caching_tests {
             30,
         );
         assert!(
-            c.get_at(&q("gone.example.com"), now, current_epoch()).is_some(),
+            c.get_at(&q("gone.example.com"), now, current_epoch())
+                .is_some(),
             "fresh denial is served"
         );
         let later = now + Duration::from_secs(61);
@@ -2570,7 +2638,8 @@ mod negative_caching_tests {
         );
         // NON-VACUITY FIRST: prove it WAS cached, or the absence assertion below proves nothing.
         assert!(
-            c.get_at(&q("evil.example.com"), now, current_epoch()).is_some(),
+            c.get_at(&q("evil.example.com"), now, current_epoch())
+                .is_some(),
             "the denial must actually be cached before its expiry can mean anything"
         );
         let past_ceiling = now + Duration::from_secs(DEFAULT_NEG_TTL_CEILING_SECS + 1);
@@ -2592,11 +2661,16 @@ mod negative_caching_tests {
         wire[3] = 0x83; // NXDOMAIN, no Authority section
         c.put_negative_from_response(&q("nosoa.example.com"), wire, 30);
         assert!(
-            c.get_at(&q("nosoa.example.com"), now, current_epoch()).is_some(),
+            c.get_at(&q("nosoa.example.com"), now, current_epoch())
+                .is_some(),
             "an SOA-less denial is still cached, on the bounded default"
         );
         assert_eq!(
-            c.get_at(&q("nosoa.example.com"), now + Duration::from_secs(31), current_epoch()),
+            c.get_at(
+                &q("nosoa.example.com"),
+                now + Duration::from_secs(31),
+                current_epoch()
+            ),
             None,
             "and it expires on that default -- 30s, not forever"
         );
@@ -2615,12 +2689,20 @@ mod negative_caching_tests {
         );
         // NON-VACUITY FIRST: it must be live at 9s, so the miss at 11s is a real expiry.
         assert!(
-            c.get_at(&q("small-min.example.com"), now + Duration::from_secs(9), current_epoch())
-                .is_some(),
+            c.get_at(
+                &q("small-min.example.com"),
+                now + Duration::from_secs(9),
+                current_epoch()
+            )
+            .is_some(),
             "the denial is still inside MINIMUM=10 at 9s"
         );
         assert_eq!(
-            c.get_at(&q("small-min.example.com"), now + Duration::from_secs(11), current_epoch()),
+            c.get_at(
+                &q("small-min.example.com"),
+                now + Duration::from_secs(11),
+                current_epoch()
+            ),
             None,
             "MINIMUM=10 must win over TTL=250 -- min(ttl, minimum), per RFC 2308 section 5"
         );
@@ -2665,7 +2747,7 @@ mod serve_stale_freshness_tests {
         let mut c = Cache::new(16);
         c.set_stale_mode_secs(600);
         c.put(&q("stale.example.com"), vec![9, 9, 9]); // fallback TTL 30s
-        // NON-VACUITY: it is genuinely fresh first, so the Stale below is a real transition.
+                                                       // NON-VACUITY: it is genuinely fresh first, so the Stale below is a real transition.
         assert_eq!(
             c.get_hit_at(&q("stale.example.com"), now, current_epoch())
                 .expect("fresh first")
@@ -2693,12 +2775,17 @@ mod serve_stale_freshness_tests {
         c.set_stale_mode_secs(0); // Off
         c.put(&q("off.example.com"), vec![4, 4, 4]);
         assert!(
-            c.get_hit_at(&q("off.example.com"), now, current_epoch()).is_some(),
+            c.get_hit_at(&q("off.example.com"), now, current_epoch())
+                .is_some(),
             "fresh is served"
         );
         assert!(
-            c.get_hit_at(&q("off.example.com"), now + Duration::from_secs(45), current_epoch())
-                .is_none(),
+            c.get_hit_at(
+                &q("off.example.com"),
+                now + Duration::from_secs(45),
+                current_epoch()
+            )
+            .is_none(),
             "with serve-stale OFF an expired entry is a hard miss -- the wire must not change this"
         );
     }
@@ -2748,8 +2835,12 @@ mod serve_stale_freshness_tests {
             "served under the epoch it was stored with"
         );
         assert!(
-            c.get_hit_at(&q("epoch.example.com"), now + Duration::from_secs(45), live + 1)
-                .is_none(),
+            c.get_hit_at(
+                &q("epoch.example.com"),
+                now + Duration::from_secs(45),
+                live + 1
+            )
+            .is_none(),
             "a NEW epoch invalidates even a stale-window entry -- serve-stale is not a hole in 2e"
         );
     }
@@ -2773,7 +2864,7 @@ mod cacheable_types_tests {
         w.extend_from_slice(&[0x00, 0x01]); // ancount 1
         w.extend_from_slice(&[0x00, 0x00]); // nscount
         w.extend_from_slice(&[0x00, 0x00]); // arcount
-        // QNAME "a.example"
+                                            // QNAME "a.example"
         w.push(1);
         w.extend_from_slice(b"a");
         w.push(7);
@@ -2781,7 +2872,7 @@ mod cacheable_types_tests {
         w.push(0);
         w.extend_from_slice(&rtype.to_be_bytes()); // qtype
         w.extend_from_slice(&[0x00, 0x01]); // qclass IN
-        // ANSWER: name pointer to offset 12, type, class, ttl, rdlen, rdata
+                                            // ANSWER: name pointer to offset 12, type, class, ttl, rdlen, rdata
         w.extend_from_slice(&[0xC0, 0x0C]);
         w.extend_from_slice(&rtype.to_be_bytes());
         w.extend_from_slice(&[0x00, 0x01]);
@@ -2854,7 +2945,10 @@ mod cacheable_types_tests {
             "an EMPTY chosen set is the cache-ALL sentinel -- reading it as cache-nothing would \
              disable the cache the moment a settings pane cleared its last checkbox"
         );
-        assert!(!intent_is_cache_all(&[1]), "a single chosen type genuinely narrows");
+        assert!(
+            !intent_is_cache_all(&[1]),
+            "a single chosen type genuinely narrows"
+        );
         assert!(
             !intent_is_cache_all(&DEFAULT_CACHEABLE_TYPES),
             "so does the measured default set"
@@ -2944,7 +3038,10 @@ mod rehydrate_gate_tests {
         let n_ungated = ungated.restore(&snap, now, now_unix);
         let n_gated = gated.restore_gated(&snap, now, now_unix, &|_| true);
 
-        assert_eq!(n_ungated, 3, "NON-VACUITY: the fixture must actually restore entries");
+        assert_eq!(
+            n_ungated, 3,
+            "NON-VACUITY: the fixture must actually restore entries"
+        );
         assert_eq!(
             n_gated, n_ungated,
             "observe-only mode must rehydrate EXACTLY as before — no cache-hit regression"
@@ -2965,7 +3062,11 @@ mod rehydrate_gate_tests {
         let mut c = Cache::new(16);
         c.put(&q("a.example.com"), vec![1, 2, 3]);
         c.put(&q("b.example.com"), vec![4, 5, 6]);
-        assert_eq!(c.len(), 2, "NON-VACUITY: entries must exist before clearing");
+        assert_eq!(
+            c.len(),
+            2,
+            "NON-VACUITY: entries must exist before clearing"
+        );
         c.clear();
         assert_eq!(c.len(), 0, "clear must drop every entry");
         assert_eq!(

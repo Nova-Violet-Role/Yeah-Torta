@@ -523,7 +523,9 @@ mod tests {
         // (c) a full store is still idempotent for an address it already holds.
         let again = b"asset-000000".to_vec();
         assert!(
-            store.try_insert_verified(content_hash(&again), again).is_ok(),
+            store
+                .try_insert_verified(content_hash(&again), again)
+                .is_ok(),
             "re-putting an asset the store ALREADY holds must succeed even when full"
         );
     }

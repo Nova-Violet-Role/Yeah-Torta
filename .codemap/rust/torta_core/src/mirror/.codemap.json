@@ -2,12 +2,12 @@
   "directory": "rust\\torta_core\\src\\mirror",
   "files": {
     "absorb.rs": {
-      "hash": "c107eff3ebe7",
-      "indexed_at": "2026-07-26T19:13:00.414977+00:00",
+      "hash": "ac80d202bc1a",
+      "indexed_at": "2026-08-01T12:52:06.905683+00:00",
       "language": "rust",
-      "lines": 390,
-      "mtime_ns": 1784951096339727100,
-      "size": 15677,
+      "lines": 400,
+      "mtime_ns": 1785588611108046300,
+      "size": 15799,
       "symbols": [
         {
           "lines": [
@@ -177,7 +177,7 @@
             {
               "lines": [
                 307,
-                318
+                322
               ],
               "name": "url_is_https_only_and_rejects_a_malformed_host",
               "signature": "()",
@@ -185,8 +185,8 @@
             },
             {
               "lines": [
-                321,
-                325
+                325,
+                333
               ],
               "name": "lookup_is_free_until_something_is_absorbed",
               "signature": "()",
@@ -194,8 +194,8 @@
             },
             {
               "lines": [
-                328,
-                344
+                336,
+                352
               ],
               "name": "remember_then_lookup_round_trips_and_revalidation_overwrites",
               "signature": "()",
@@ -203,8 +203,8 @@
             },
             {
               "lines": [
-                347,
-                370
+                355,
+                378
               ],
               "name": "bindings_round_trip_through_the_tsv",
               "signature": "()",
@@ -212,8 +212,8 @@
             },
             {
               "lines": [
-                373,
-                389
+                381,
+                399
               ],
               "name": "a_malformed_row_is_skipped_not_fatal",
               "signature": "()",
@@ -222,7 +222,7 @@
           ],
           "lines": [
             256,
-            390
+            400
           ],
           "name": "tests",
           "type": "module"
@@ -230,12 +230,12 @@
       ]
     },
     "cache.rs": {
-      "hash": "20f28a2320bb",
-      "indexed_at": "2026-07-31T23:37:04.099828+00:00",
+      "hash": "dc63c7dbd99f",
+      "indexed_at": "2026-08-01T12:52:07.202162+00:00",
       "language": "rust",
-      "lines": 985,
-      "mtime_ns": 1785540999434875000,
-      "size": 44796,
+      "lines": 987,
+      "mtime_ns": 1785588611113044700,
+      "size": 44830,
       "symbols": [
         {
           "lines": [
@@ -633,7 +633,7 @@
             {
               "lines": [
                 490,
-                529
+                531
               ],
               "name": "max_entries_refuses_fail_closed_and_never_evicts",
               "signature": "()",
@@ -642,8 +642,8 @@
             {
               "docstring": "A deterministic pseudo-asset of `len` bytes seeded by `seed` (no rng dep \u2014 host-pure + reproducible).",
               "lines": [
-                535,
-                539
+                537,
+                541
               ],
               "name": "asset",
               "signature": "(seed: u8, len: usize)",
@@ -651,8 +651,8 @@
             },
             {
               "lines": [
-                544,
-                550
+                546,
+                552
               ],
               "name": "content_hash_matches_blake2b",
               "signature": "()",
@@ -660,8 +660,8 @@
             },
             {
               "lines": [
-                553,
-                562
+                555,
+                564
               ],
               "name": "empty_asset_hashes_to_blake2b_of_empty",
               "signature": "()",
@@ -669,8 +669,8 @@
             },
             {
               "lines": [
-                567,
-                583
+                569,
+                585
               ],
               "name": "insert_verified_rejects_content_address_mismatch",
               "signature": "()",
@@ -678,8 +678,8 @@
             },
             {
               "lines": [
-                586,
-                600
+                588,
+                602
               ],
               "name": "insert_verified_accepts_matching_hash_and_serves_on_match",
               "signature": "()",
@@ -687,8 +687,8 @@
             },
             {
               "lines": [
-                603,
-                611
+                605,
+                613
               ],
               "name": "insert_verified_is_idempotent_on_repeat",
               "signature": "()",
@@ -696,8 +696,8 @@
             },
             {
               "lines": [
-                614,
-                628
+                616,
+                630
               ],
               "name": "insert_verified_rejects_oversized_asset",
               "signature": "()",
@@ -705,8 +705,8 @@
             },
             {
               "lines": [
-                633,
-                651
+                635,
+                653
               ],
               "name": "full_store_rejects_a_new_asset_fail_closed",
               "signature": "()",
@@ -714,8 +714,8 @@
             },
             {
               "lines": [
-                654,
-                663
+                656,
+                665
               ],
               "name": "full_store_still_accepts_an_already_present_asset",
               "signature": "()",
@@ -723,8 +723,8 @@
             },
             {
               "lines": [
-                666,
-                673
+                668,
+                675
               ],
               "name": "zero_capacity_is_clamped_so_one_asset_can_cache",
               "signature": "()",
@@ -732,8 +732,8 @@
             },
             {
               "lines": [
-                678,
-                699
+                680,
+                701
               ],
               "name": "lookup_miss_then_insert_then_hit",
               "signature": "()",
@@ -741,8 +741,8 @@
             },
             {
               "lines": [
-                704,
-                723
+                706,
+                725
               ],
               "name": "store_content_hashes_are_exactly_the_cached_addresses",
               "signature": "()",
@@ -750,8 +750,8 @@
             },
             {
               "lines": [
-                730,
-                757
+                732,
+                759
               ],
               "name": "prop_roundtrip_over_many_assets",
               "signature": "()",
@@ -759,8 +759,8 @@
             },
             {
               "lines": [
-                763,
-                779
+                765,
+                781
               ],
               "name": "prop_any_tampered_byte_is_rejected",
               "signature": "()",
@@ -768,8 +768,8 @@
             },
             {
               "lines": [
-                784,
-                798
+                786,
+                800
               ],
               "name": "prop_truncated_asset_is_rejected",
               "signature": "()",
@@ -777,8 +777,8 @@
             },
             {
               "lines": [
-                803,
-                822
+                805,
+                824
               ],
               "name": "prop_fetch_once_idempotency",
               "signature": "()",
@@ -787,8 +787,8 @@
             {
               "docstring": "the test's seed give a collision-free path). Returns the path; the test cleans it up at the end.",
               "lines": [
-                828,
-                836
+                830,
+                838
               ],
               "name": "temp_cache_dir",
               "signature": "(tag: &str)",
@@ -796,8 +796,8 @@
             },
             {
               "lines": [
-                839,
-                855
+                841,
+                857
               ],
               "name": "hex_roundtrip_is_faithful",
               "signature": "()",
@@ -805,8 +805,8 @@
             },
             {
               "lines": [
-                858,
-                882
+                860,
+                884
               ],
               "name": "disk_write_through_persists_under_the_content_address",
               "signature": "()",
@@ -814,8 +814,8 @@
             },
             {
               "lines": [
-                885,
-                899
+                887,
+                901
               ],
               "name": "disk_mismatch_is_never_written",
               "signature": "()",
@@ -823,8 +823,8 @@
             },
             {
               "lines": [
-                902,
-                927
+                904,
+                929
               ],
               "name": "load_from_disk_rehydrates_verified_assets",
               "signature": "()",
@@ -832,8 +832,8 @@
             },
             {
               "lines": [
-                930,
-                953
+                932,
+                955
               ],
               "name": "load_from_disk_rejects_a_tampered_file_fail_closed",
               "signature": "()",
@@ -841,8 +841,8 @@
             },
             {
               "lines": [
-                956,
-                966
+                958,
+                968
               ],
               "name": "load_from_disk_on_absent_dir_is_zero_not_error",
               "signature": "()",
@@ -850,8 +850,8 @@
             },
             {
               "lines": [
-                969,
-                984
+                971,
+                986
               ],
               "name": "insert_verified_entry_admits_and_persists",
               "signature": "()",
@@ -860,7 +860,7 @@
           ],
           "lines": [
             478,
-            985
+            987
           ],
           "name": "tests",
           "type": "module"
@@ -868,12 +868,12 @@
       ]
     },
     "catalog.rs": {
-      "hash": "6cf0433d2d52",
-      "indexed_at": "2026-08-01T08:44:34.438627+00:00",
+      "hash": "75fc679e1f2e",
+      "indexed_at": "2026-08-01T12:52:07.496865+00:00",
       "language": "rust",
-      "lines": 1072,
-      "mtime_ns": 1785573800150512300,
-      "size": 52644,
+      "lines": 1075,
+      "mtime_ns": 1785588611119044100,
+      "size": 51606,
       "symbols": [
         {
           "docstring": "Reader for [`LEGACY_ALGO_REJECTIONS`]. Honest zero is the expected reading.",
@@ -986,7 +986,7 @@
                 272
               ],
               "name": "parse_verified",
-              "signature": "(\r\n        bytes: &[u8],\r\n        sig_blob: &[u8],\r\n        pubkey_blob: &[u8],\r\n    )",
+              "signature": "(\n        bytes: &[u8],\n        sig_blob: &[u8],\n        pubkey_blob: &[u8],\n    )",
               "type": "method"
             },
             {
@@ -1285,7 +1285,7 @@
             {
               "lines": [
                 906,
-                974
+                977
               ],
               "name": "rejects_wrong_hash_algo_id",
               "signature": "()",
@@ -1293,8 +1293,8 @@
             },
             {
               "lines": [
-                977,
-                1001
+                980,
+                1004
               ],
               "name": "rejects_nonzero_reserved_fields",
               "signature": "()",
@@ -1302,8 +1302,8 @@
             },
             {
               "lines": [
-                1004,
-                1014
+                1007,
+                1017
               ],
               "name": "v1_catalog_still_parses_with_epoch_zero",
               "signature": "()",
@@ -1311,8 +1311,8 @@
             },
             {
               "lines": [
-                1017,
-                1021
+                1020,
+                1024
               ],
               "name": "rejects_unknown_entry_flag_bit",
               "signature": "()",
@@ -1320,8 +1320,8 @@
             },
             {
               "lines": [
-                1024,
-                1031
+                1027,
+                1034
               ],
               "name": "rejects_truncated_body",
               "signature": "()",
@@ -1329,8 +1329,8 @@
             },
             {
               "lines": [
-                1034,
-                1038
+                1037,
+                1041
               ],
               "name": "rejects_trailing_garbage",
               "signature": "()",
@@ -1338,8 +1338,8 @@
             },
             {
               "lines": [
-                1041,
-                1044
+                1044,
+                1047
               ],
               "name": "rejects_header_shorter_than_24_bytes",
               "signature": "()",
@@ -1347,8 +1347,8 @@
             },
             {
               "lines": [
-                1047,
-                1054
+                1050,
+                1057
               ],
               "name": "rejects_overlarge_entry_count_without_oom",
               "signature": "()",
@@ -1356,8 +1356,8 @@
             },
             {
               "lines": [
-                1057,
-                1071
+                1060,
+                1074
               ],
               "name": "rejects_zero_length_name_field",
               "signature": "()",
@@ -1366,7 +1366,7 @@
           ],
           "lines": [
             499,
-            1072
+            1075
           ],
           "name": "tests",
           "type": "module"
@@ -1573,12 +1573,12 @@
       ]
     },
     "fetch.rs": {
-      "hash": "376e29c52399",
-      "indexed_at": "2026-07-26T19:12:57.929476+00:00",
+      "hash": "1c048a103cb0",
+      "indexed_at": "2026-08-01T12:52:07.782853+00:00",
       "language": "rust",
-      "lines": 403,
-      "mtime_ns": 1785030832780604400,
-      "size": 20565,
+      "lines": 412,
+      "mtime_ns": 1785588611123043500,
+      "size": 20633,
       "symbols": [
         {
           "lines": [
@@ -1642,7 +1642,7 @@
           "docstring": "HTTP/2 GET over an established TLS stream (absolute-form URI \u2014 h2 carries `:authority`).",
           "lines": [
             266,
-            286
+            291
           ],
           "name": "get_h2",
           "signature": "(stream: S, uri: &Uri)",
@@ -1651,8 +1651,8 @@
         {
           "docstring": "HTTP/1.1 GET over an established TLS stream (origin-form path + an explicit `Host`).",
           "lines": [
-            289,
-            317
+            294,
+            326
           ],
           "name": "get_h1",
           "signature": "(stream: S, uri: &Uri, host: &str, port: u16)",
@@ -1661,8 +1661,8 @@
         {
           "docstring": "the stream stops the moment it would cross [`MAX_ASSET_BYTES`] rather than buffering unbounded.",
           "lines": [
-            321,
-            337
+            330,
+            346
           ],
           "name": "read_capped",
           "signature": "(resp: http::Response<hyper::body::Incoming>)",
@@ -1672,8 +1672,8 @@
           "children": [
             {
               "lines": [
-                352,
-                366
+                361,
+                375
               ],
               "name": "hash_gate_accepts_only_a_content_match",
               "signature": "()",
@@ -1681,8 +1681,8 @@
             },
             {
               "lines": [
-                371,
-                375
+                380,
+                384
               ],
               "name": "empty_body_has_a_deterministic_address",
               "signature": "()",
@@ -1690,8 +1690,8 @@
             },
             {
               "lines": [
-                381,
-                392
+                390,
+                401
               ],
               "name": "shared_tls_is_arc_shareable_in_the_fetch_shape",
               "signature": "()",
@@ -1699,8 +1699,8 @@
             },
             {
               "lines": [
-                397,
-                402
+                406,
+                411
               ],
               "name": "fetch_error_variants_are_distinct",
               "signature": "()",
@@ -1708,8 +1708,8 @@
             }
           ],
           "lines": [
-            340,
-            403
+            349,
+            412
           ],
           "name": "tests",
           "type": "module"
@@ -1717,12 +1717,12 @@
       ]
     },
     "localcdn.rs": {
-      "hash": "7b3e63e55b3e",
-      "indexed_at": "2026-07-30T00:28:00.288689+00:00",
+      "hash": "9dbd1b223da8",
+      "indexed_at": "2026-08-01T12:52:08.080024+00:00",
       "language": "rust",
-      "lines": 1971,
-      "mtime_ns": 1785371228449303100,
-      "size": 96781,
+      "lines": 2023,
+      "mtime_ns": 1785588611135043500,
+      "size": 97412,
       "symbols": [
         {
           "docstring": "(`\"3.6\"` \u2192 `(3, 6, 0)`, `\"3\"` \u2192 `(3, 0, 0)`); a non-numeric component ends the parse.",
@@ -1870,8 +1870,8 @@
         {
           "docstring": "store so a host that refused us in an earlier process is still un-cloaked on this one.",
           "lines": [
-            394,
-            426
+            393,
+            425
           ],
           "name": "arm_tls_distrust_store",
           "signature": "(dir: &std::path::Path)",
@@ -1880,8 +1880,8 @@
         {
           "docstring": "keeps working out of RAM exactly as it did before.",
           "lines": [
-            430,
-            451
+            429,
+            450
           ],
           "name": "persist_tls_distrust",
           "signature": "(set: &[String])",
@@ -1890,8 +1890,8 @@
         {
           "docstring": "How many hosts have refused our leaf \u2014 the dashboard's honest \"could not be served here\" count.",
           "lines": [
-            454,
-            459
+            453,
+            458
           ],
           "name": "tls_distrust_count",
           "signature": "()",
@@ -1900,8 +1900,8 @@
         {
           "docstring": "Returns how many hosts were forgiven, so the caller can log an honest number.",
           "lines": [
-            470,
-            486
+            469,
+            485
           ],
           "name": "clear_tls_distrust",
           "signature": "()",
@@ -1910,8 +1910,8 @@
         {
           "docstring": "query). `host` must already be normalized (trimmed, root-dot stripped, lowercase).",
           "lines": [
-            505,
-            513
+            504,
+            512
           ],
           "name": "is_promoted_cloak_host",
           "signature": "(host: &str)",
@@ -1920,8 +1920,8 @@
         {
           "docstring": "callers cannot publish an unsorted set that would break the `binary_search` consult.",
           "lines": [
-            518,
-            540
+            517,
+            541
           ],
           "name": "publish_promoted_cloak",
           "signature": "(hosts: Vec<String>)",
@@ -1930,8 +1930,8 @@
         {
           "docstring": "the absorb lane instead. Normalizes the host the same way the cloak consult does.",
           "lines": [
-            546,
-            556
+            547,
+            557
           ],
           "name": "is_promoted_host",
           "signature": "(host: &str)",
@@ -1940,8 +1940,8 @@
         {
           "docstring": "How many hosts the promoted cloak lane currently carries (the dashboard's absorbed-host tally).",
           "lines": [
-            559,
-            564
+            560,
+            565
           ],
           "name": "promoted_cloak_count",
           "signature": "()",
@@ -2087,7 +2087,7 @@
           "docstring": "NEVER become a leak. https-only is re-enforced downstream in [`super::serve::fetch_once`].",
           "lines": [
             929,
-            950
+            955
           ],
           "name": "upstream_url_for",
           "signature": "(host: &str, path: &str)",
@@ -2095,8 +2095,8 @@
         },
         {
           "lines": [
-            982,
-            994
+            987,
+            999
           ],
           "name": "AddressedResolution",
           "type": "struct"
@@ -2104,8 +2104,8 @@
         {
           "docstring": "here \u2014 [`best_bundled_version`] never returns it \u2014 but it floors defensively.)",
           "lines": [
-            999,
-            1006
+            1004,
+            1011
           ],
           "name": "substitution_quality",
           "signature": "(sub: Substitution)",
@@ -2114,8 +2114,8 @@
         {
           "docstring": "serve than an `Exact` one at equal corroboration \u2014 the properties the slice's tests pin.",
           "lines": [
-            1021,
-            1032
+            1026,
+            1037
           ],
           "name": "resolution_trust",
           "signature": "(\n    sub: Substitution,\n    corroboration: u32,\n    now_days: u32,\n    catalog_epoch_days: u32,\n)",
@@ -2124,8 +2124,8 @@
         {
           "docstring": "corroboration source. jQuery 3.6.0 mapped from `ajax.googleapis.com` AND `cdnjs.cloudflare.com` = 2.",
           "lines": [
-            1036,
-            1049
+            1041,
+            1054
           ],
           "name": "corroboration_for",
           "signature": "(library: &str, served_version: &str, maps: &[ResourceMap])",
@@ -2134,8 +2134,8 @@
         {
           "docstring": "entry point. `now_days` is the epoch-day clock for the recency axis (pass `0` to treat as fresh).",
           "lines": [
-            1054,
-            1067
+            1059,
+            1072
           ],
           "name": "resolve_addressed",
           "signature": "(\n    host: &str,\n    path: &str,\n    catalog: &Catalog,\n    now_days: u32,\n)",
@@ -2144,8 +2144,8 @@
         {
           "docstring": "resolver lacks (it picks a `served_version` from a static list divorced from real coverage).",
           "lines": [
-            1079,
-            1132
+            1084,
+            1137
           ],
           "name": "resolve_addressed_in",
           "signature": "(\n    host: &str,\n    path: &str,\n    maps: &[ResourceMap],\n    catalog: &Catalog,\n    now_days: ...",
@@ -2155,8 +2155,8 @@
           "children": [
             {
               "lines": [
-                1145,
-                1191
+                1150,
+                1205
               ],
               "name": "tls_refusal_uncloaks_the_host_and_survives_a_republish",
               "signature": "()",
@@ -2164,8 +2164,8 @@
             },
             {
               "lines": [
-                1205,
-                1232
+                1219,
+                1249
               ],
               "name": "refusal_survives_a_cold_start",
               "signature": "()",
@@ -2173,8 +2173,8 @@
             },
             {
               "lines": [
-                1241,
-                1266
+                1258,
+                1289
               ],
               "name": "reloading_the_ca_at_boot_does_not_forgive_the_ledger",
               "signature": "()",
@@ -2182,8 +2182,8 @@
             },
             {
               "lines": [
-                1269,
-                1275
+                1292,
+                1298
               ],
               "name": "substitution_classifies_semver",
               "signature": "()",
@@ -2191,8 +2191,8 @@
             },
             {
               "lines": [
-                1278,
-                1296
+                1301,
+                1319
               ],
               "name": "best_version_prefers_exact_then_smallest_newer_then_closest_older",
               "signature": "()",
@@ -2200,8 +2200,8 @@
             },
             {
               "lines": [
-                1299,
-                1310
+                1322,
+                1333
               ],
               "name": "resolve_maps_googleapis_jquery",
               "signature": "()",
@@ -2209,8 +2209,8 @@
             },
             {
               "lines": [
-                1313,
-                1323
+                1336,
+                1346
               ],
               "name": "resolve_falls_back_to_newer_bundled",
               "signature": "()",
@@ -2218,8 +2218,8 @@
             },
             {
               "lines": [
-                1326,
-                1342
+                1349,
+                1365
               ],
               "name": "resolve_captures_the_file_tail",
               "signature": "()",
@@ -2227,8 +2227,8 @@
             },
             {
               "lines": [
-                1345,
-                1353
+                1368,
+                1376
               ],
               "name": "canonical_name_is_library_servedversion_file",
               "signature": "()",
@@ -2236,8 +2236,8 @@
             },
             {
               "lines": [
-                1356,
-                1366
+                1379,
+                1389
               ],
               "name": "canonical_name_uses_the_served_version_after_fallback",
               "signature": "()",
@@ -2245,8 +2245,8 @@
             },
             {
               "lines": [
-                1369,
-                1384
+                1392,
+                1407
               ],
               "name": "canonical_name_is_host_independent_dedup",
               "signature": "()",
@@ -2254,8 +2254,8 @@
             },
             {
               "lines": [
-                1387,
-                1394
+                1410,
+                1417
               ],
               "name": "resolve_is_host_case_insensitive",
               "signature": "()",
@@ -2263,8 +2263,8 @@
             },
             {
               "lines": [
-                1397,
-                1425
+                1420,
+                1448
               ],
               "name": "full_map_is_populated_and_resolves_real_cdn_urls",
               "signature": "()",
@@ -2272,8 +2272,8 @@
             },
             {
               "lines": [
-                1428,
-                1446
+                1451,
+                1478
               ],
               "name": "upstream_url_for_reconstructs_the_served_version_leak_target",
               "signature": "()",
@@ -2281,8 +2281,8 @@
             },
             {
               "lines": [
-                1449,
-                1457
+                1481,
+                1495
               ],
               "name": "upstream_url_for_is_none_when_unfetchable",
               "signature": "()",
@@ -2290,8 +2290,8 @@
             },
             {
               "lines": [
-                1460,
-                1479
+                1498,
+                1517
               ],
               "name": "cdn_hosts_is_sorted_deduped_and_covers_the_majors",
               "signature": "()",
@@ -2299,8 +2299,8 @@
             },
             {
               "lines": [
-                1482,
-                1494
+                1520,
+                1532
               ],
               "name": "is_cdn_host_normalizes_and_rejects_unknowns",
               "signature": "()",
@@ -2308,8 +2308,8 @@
             },
             {
               "lines": [
-                1501,
-                1506
+                1539,
+                1544
               ],
               "name": "cloak_sentinel_ip_equals_resolver_sentinel_v4",
               "signature": "()",
@@ -2317,8 +2317,8 @@
             },
             {
               "lines": [
-                1509,
-                1550
+                1547,
+                1588
               ],
               "name": "cloaking_rules_fences_and_maps_every_host_to_loopback",
               "signature": "()",
@@ -2326,8 +2326,8 @@
             },
             {
               "lines": [
-                1553,
-                1567
+                1591,
+                1605
               ],
               "name": "resolve_rejects_unknown_host_and_crossmajor",
               "signature": "()",
@@ -2336,8 +2336,8 @@
             {
               "docstring": "like the on-device install path (the `server.rs`/`catalog.rs` test signer shape; no production key).",
               "lines": [
-                1574,
-                1607
+                1612,
+                1645
               ],
               "name": "signed_catalog_for",
               "signature": "(entries: &[(&str, ContentHash)])",
@@ -2345,8 +2345,8 @@
             },
             {
               "lines": [
-                1610,
-                1639
+                1648,
+                1677
               ],
               "name": "resolve_addressed_carries_the_catalog_hash_for_a_covered_url",
               "signature": "()",
@@ -2354,8 +2354,8 @@
             },
             {
               "lines": [
-                1642,
-                1657
+                1680,
+                1695
               ],
               "name": "resolve_addressed_is_none_for_a_mapped_but_uncatalogued_url",
               "signature": "()",
@@ -2363,8 +2363,8 @@
             },
             {
               "lines": [
-                1660,
-                1691
+                1698,
+                1729
               ],
               "name": "resolve_addressed_coverage_gate_picks_a_covered_fallback",
               "signature": "()",
@@ -2372,8 +2372,8 @@
             },
             {
               "lines": [
-                1694,
-                1710
+                1732,
+                1748
               ],
               "name": "resolution_trust_is_always_in_the_signed_band",
               "signature": "()",
@@ -2381,8 +2381,8 @@
             },
             {
               "lines": [
-                1713,
-                1729
+                1751,
+                1767
               ],
               "name": "resolution_trust_is_monotone_in_corroboration",
               "signature": "()",
@@ -2390,8 +2390,8 @@
             },
             {
               "lines": [
-                1732,
-                1741
+                1770,
+                1779
               ],
               "name": "resolution_trust_ranks_exact_above_riskyolder",
               "signature": "()",
@@ -2399,8 +2399,8 @@
             },
             {
               "lines": [
-                1744,
-                1752
+                1782,
+                1790
               ],
               "name": "corroboration_for_counts_distinct_cdn_hosts",
               "signature": "()",
@@ -2408,8 +2408,8 @@
             }
           ],
           "lines": [
-            1135,
-            1753
+            1140,
+            1791
           ],
           "name": "tests",
           "type": "module"
@@ -2419,8 +2419,8 @@
             {
               "docstring": "Extract the cloaked hosts back out of a rendered block, so the assertions are about the SET.",
               "lines": [
-                1764,
-                1770
+                1802,
+                1808
               ],
               "name": "hosts_in",
               "signature": "(block: &str)",
@@ -2428,8 +2428,8 @@
             },
             {
               "lines": [
-                1775,
-                1779
+                1813,
+                1817
               ],
               "name": "only_servable_hosts_are_cloaked",
               "signature": "()",
@@ -2437,8 +2437,8 @@
             },
             {
               "lines": [
-                1786,
-                1805
+                1824,
+                1843
               ],
               "name": "the_old_generator_overclaims_against_a_one_asset_store",
               "signature": "()",
@@ -2446,8 +2446,8 @@
             },
             {
               "lines": [
-                1810,
-                1828
+                1848,
+                1866
               ],
               "name": "a_complete_store_reproduces_the_corpus_block_byte_for_byte",
               "signature": "()",
@@ -2455,8 +2455,8 @@
             },
             {
               "lines": [
-                1833,
-                1839
+                1871,
+                1879
               ],
               "name": "an_empty_store_cloaks_nothing_but_still_writes_the_fence",
               "signature": "()",
@@ -2464,8 +2464,8 @@
             },
             {
               "lines": [
-                1844,
-                1848
+                1884,
+                1892
               ],
               "name": "the_block_is_order_and_duplicate_stable",
               "signature": "()",
@@ -2473,8 +2473,8 @@
             },
             {
               "lines": [
-                1853,
-                1856
+                1897,
+                1903
               ],
               "name": "an_empty_host_is_never_emitted",
               "signature": "()",
@@ -2482,8 +2482,8 @@
             }
           ],
           "lines": [
-            1760,
-            1857
+            1798,
+            1904
           ],
           "name": "cloak_servable_tests",
           "type": "module"
@@ -2492,8 +2492,8 @@
           "children": [
             {
               "lines": [
-                1874,
-                1889
+                1921,
+                1936
               ],
               "name": "an_unpublished_gate_cloaks_nothing_even_for_a_corpus_host",
               "signature": "()",
@@ -2501,8 +2501,8 @@
             },
             {
               "lines": [
-                1893,
-                1901
+                1940,
+                1948
               ],
               "name": "a_published_servable_corpus_host_is_cloaked",
               "signature": "()",
@@ -2510,8 +2510,8 @@
             },
             {
               "lines": [
-                1906,
-                1912
+                1953,
+                1961
               ],
               "name": "publishing_a_non_corpus_host_does_not_cloak_it",
               "signature": "()",
@@ -2519,8 +2519,8 @@
             },
             {
               "lines": [
-                1917,
-                1929
+                1966,
+                1978
               ],
               "name": "a_shrinking_store_stops_cloaking_immediately",
               "signature": "()",
@@ -2528,8 +2528,8 @@
             },
             {
               "lines": [
-                1938,
-                1955
+                1987,
+                2004
               ],
               "name": "an_untrusted_ca_cloaks_nothing_however_servable_the_host_is",
               "signature": "()",
@@ -2537,8 +2537,8 @@
             },
             {
               "lines": [
-                1960,
-                1970
+                2009,
+                2022
               ],
               "name": "the_gate_normalizes_case_and_the_fqdn_dot_like_is_cdn_host",
               "signature": "()",
@@ -2546,8 +2546,8 @@
             }
           ],
           "lines": [
-            1865,
-            1971
+            1912,
+            2023
           ],
           "name": "live_cloak_gate_tests",
           "type": "module"
@@ -2687,12 +2687,12 @@
       ]
     },
     "mod.rs": {
-      "hash": "a3ea18238094",
-      "indexed_at": "2026-08-01T03:38:25.911281+00:00",
+      "hash": "2eca667c5f85",
+      "indexed_at": "2026-08-01T12:52:08.368114+00:00",
       "language": "rust",
-      "lines": 114,
-      "mtime_ns": 1785554644850121800,
-      "size": 6900,
+      "lines": 118,
+      "mtime_ns": 1785588611226044900,
+      "size": 6915,
       "symbols": [
         {
           "lines": [
@@ -2802,12 +2802,12 @@
       ]
     },
     "object.rs": {
-      "hash": "e209ce66076e",
-      "indexed_at": "2026-08-01T09:56:54.963856+00:00",
+      "hash": "c5ee285e5cbb",
+      "indexed_at": "2026-08-01T12:52:08.669062+00:00",
       "language": "rust",
-      "lines": 3282,
-      "mtime_ns": 1785577967276100300,
-      "size": 177929,
+      "lines": 3346,
+      "mtime_ns": 1785588611253044100,
+      "size": 178729,
       "symbols": [
         {
           "lines": [
@@ -3100,7 +3100,7 @@
               "docstring": "surface's accounting). Panic-firewalled \u2192 `Err(Panic)`.",
               "lines": [
                 748,
-                809
+                810
               ],
               "name": "install_catalog",
               "signature": "(\n        &self,\n        bytes: Vec<u8>,\n        sig: Vec<u8>,\n        pubkey: Vec<u8>,\n    )",
@@ -3109,18 +3109,18 @@
             {
               "docstring": "\u2192 a zeroed report (`installed=false`, `key_id_hex=\"\"`).",
               "lines": [
-                842,
-                940
+                843,
+                945
               ],
               "name": "arm_device_catalog",
-              "signature": "(&self, content_dir: String, key_seed_dir: String)",
+              "signature": "(\n        &self,\n        content_dir: String,\n        key_seed_dir: String,\n    )",
               "type": "method"
             },
             {
               "docstring": "\u2192 an empty list.",
               "lines": [
-                947,
-                990
+                952,
+                996
               ],
               "name": "cdn_hosts",
               "signature": "(&self)",
@@ -3129,8 +3129,8 @@
             {
               "docstring": "\u2192 `null`.",
               "lines": [
-                998,
-                1008
+                1004,
+                1014
               ],
               "name": "resolve_cdn",
               "signature": "(&self, host: String, path: String)",
@@ -3139,8 +3139,8 @@
             {
               "docstring": "Panic-firewalled \u2192 an empty string.",
               "lines": [
-                1016,
-                1019
+                1022,
+                1024
               ],
               "name": "cloaking_rules",
               "signature": "(&self)",
@@ -3149,8 +3149,8 @@
             {
               "docstring": "missing manifest must never mean \"intercept the whole corpus\".",
               "lines": [
-                1038,
-                1041
+                1043,
+                1046
               ],
               "name": "servable_cloaking_rules",
               "signature": "(&self)",
@@ -3159,8 +3159,8 @@
             {
               "docstring": "mismatch, and a test over rendered text would not have caught it.",
               "lines": [
-                1047,
-                1071
+                1052,
+                1076
               ],
               "name": "servable_cloaked_hosts",
               "signature": "(&self)",
@@ -3169,8 +3169,8 @@
             {
               "docstring": "to this method on the Socio's bindgen regen. Panic-firewalled \u2192 `Err(Panic)`.",
               "lines": [
-                1087,
-                1221
+                1092,
+                1226
               ],
               "name": "start",
               "signature": "(&self)",
@@ -3179,8 +3179,8 @@
             {
               "docstring": "is 0 + the serve state is Stopped. Pure read; panic-firewalled \u2192 an empty/zero snapshot.",
               "lines": [
-                1228,
-                1230
+                1233,
+                1235
               ],
               "name": "status",
               "signature": "(&self)",
@@ -3189,8 +3189,8 @@
             {
               "docstring": "content-addressed store (rehydrated via the constructor's `load_from_disk`), NOT re-dumped here.",
               "lines": [
-                1247,
-                1290
+                1252,
+                1297
               ],
               "name": "rehydrate_from_signed",
               "signature": "(\n        &self,\n        base: String,\n        pubkey: Vec<u8>,\n    )",
@@ -3199,18 +3199,18 @@
             {
               "docstring": "no key, no possible author. Panic-firewalled by the delegate.",
               "lines": [
-                1304,
+                1311,
                 1385
               ],
               "name": "rehydrate_device_catalog",
-              "signature": "(\n        &self,\n        key_seed_dir: String,\n    )",
+              "signature": "(&self, key_seed_dir: String)",
               "type": "method"
             },
             {
               "docstring": "driven, not a hot streaming metric). Pure read; panic-firewalled \u2192 an empty/zero snapshot.",
               "lines": [
                 1390,
-                1469
+                1467
               ],
               "name": "snapshot",
               "signature": "(&self)",
@@ -3219,8 +3219,8 @@
             {
               "docstring": "ADDITIVE typed surface the Kotlin call-site adopts on the Socio's bindgen regen.",
               "lines": [
-                1485,
-                1493
+                1483,
+                1491
               ],
               "name": "resolve_cdn_typed",
               "signature": "(&self, host: String, path: String)",
@@ -3229,8 +3229,8 @@
             {
               "docstring": "[`CacheMode`] via the `From` cross) when it adopts the privacy flow (#85). Pure setter, never panics.",
               "lines": [
-                1499,
-                1501
+                1497,
+                1499
               ],
               "name": "set_cache_mode",
               "signature": "(&self, mode: CentauriCacheMode)",
@@ -3239,8 +3239,8 @@
             {
               "docstring": "Lock-free; an out-of-range stored code decodes to the safe `LeakOnMiss` default. Never panics.",
               "lines": [
-                1505,
-                1507
+                1503,
+                1505
               ],
               "name": "cache_mode",
               "signature": "(&self)",
@@ -3249,8 +3249,8 @@
             {
               "docstring": "embeds, never faked. Pure read; panic-firewalled \u2192 a zeroed stat.",
               "lines": [
-                1512,
-                1533
+                1510,
+                1531
               ],
               "name": "cache_stat",
               "signature": "(&self)",
@@ -3259,8 +3259,8 @@
             {
               "docstring": "(slice 6's `query-centauri.log`): a small glance feed. Pure read; panic-firewalled \u2192 an empty list.",
               "lines": [
-                1538,
-                1548
+                1536,
+                1546
               ],
               "name": "recent_serves",
               "signature": "(&self, max: u32)",
@@ -3269,8 +3269,8 @@
             {
               "docstring": "log-tail read path consumes it. Never panics (a pure join + lossless-enough lossy conversion).",
               "lines": [
-                1555,
-                1557
+                1553,
+                1555
               ],
               "name": "query_centauri_log_path",
               "signature": "(&self)",
@@ -3279,8 +3279,8 @@
             {
               "docstring": "clock-injection invariant \u2014 the Object never reads a wall clock in its methods).",
               "lines": [
-                1568,
-                1572
+                1566,
+                1570
               ],
               "name": "record_serve_logged",
               "signature": "(&self, rec: CentauriServeRecord)",
@@ -3289,8 +3289,8 @@
             {
               "docstring": "dashboard polls are no longer invisible). A re-attach REPLACES the previous reader. Never panics.",
               "lines": [
-                1577,
-                1581
+                1575,
+                1579
               ],
               "name": "attach_serve_sink",
               "signature": "(&self, sink: Arc<dyn CentauriServeSink>)",
@@ -3299,8 +3299,8 @@
             {
               "docstring": "stops pushing (counters/ring/log keep self-feeding). Never panics.",
               "lines": [
-                1585,
-                1589
+                1583,
+                1587
               ],
               "name": "detach_serve_sink",
               "signature": "(&self)",
@@ -3309,8 +3309,8 @@
             {
               "docstring": "batch is an honest zero-target no-op (no egress). Panic-firewalled \u2192 a zeroed report.",
               "lines": [
-                1601,
-                1665
+                1599,
+                1663
               ],
               "name": "warm_up",
               "signature": "(&self, max_targets: u32)",
@@ -3319,15 +3319,15 @@
           ],
           "lines": [
             698,
-            1666
+            1664
           ],
           "name": "Centauri",
           "type": "impl"
         },
         {
           "lines": [
-            1681,
-            1703
+            1679,
+            1701
           ],
           "name": "load_or_mint_device_key",
           "signature": "(dir: &str)",
@@ -3335,8 +3335,8 @@
         },
         {
           "lines": [
-            1718,
-            1732
+            1716,
+            1733
           ],
           "name": "persist_device_pair",
           "signature": "(dir: &std::path::Path, body: &[u8], sig: &[u8])",
@@ -3344,16 +3344,16 @@
         },
         {
           "lines": [
-            1740,
-            1751
+            1741,
+            1752
           ],
           "name": "ManifestRow",
           "type": "struct"
         },
         {
           "lines": [
-            1762,
-            1801
+            1763,
+            1804
           ],
           "name": "read_content_manifest",
           "signature": "(dir: &std::path::Path)",
@@ -3361,8 +3361,8 @@
         },
         {
           "lines": [
-            1806,
-            1814
+            1809,
+            1817
           ],
           "name": "hex_lower_key_id",
           "signature": "(id: &[u8; 8])",
@@ -3373,8 +3373,8 @@
             {
               "docstring": "- `NotInCatalog` / `FetchFailed` \u21d2 no counter (no asset was served).",
               "lines": [
-                1834,
-                1836
+                1837,
+                1839
               ],
               "name": "record_serve",
               "signature": "(&self, rec: CentauriServeRecord)",
@@ -3383,8 +3383,8 @@
             {
               "docstring": "(The exported String twin is [`Centauri::query_centauri_log_path`] \u2014 D29.)",
               "lines": [
-                1843,
-                1845
+                1846,
+                1848
               ],
               "name": "log_path",
               "signature": "(&self)",
@@ -3393,8 +3393,8 @@
             {
               "docstring": "clock-free (the #133/warden clock-injection invariant).",
               "lines": [
-                1852,
-                1864
+                1855,
+                1867
               ],
               "name": "serve_observer",
               "signature": "(&self)",
@@ -3403,8 +3403,8 @@
             {
               "docstring": "poisoned cache/stats lock still reports the honest current toggle), everything else zero.",
               "lines": [
-                1868,
-                1895
+                1871,
+                1898
               ],
               "name": "zeroed_snapshot",
               "signature": "(&self)",
@@ -3412,16 +3412,16 @@
             }
           ],
           "lines": [
-            1822,
-            1896
+            1825,
+            1899
           ],
           "name": "Centauri",
           "type": "impl"
         },
         {
           "lines": [
-            1908,
-            1936
+            1911,
+            1939
           ],
           "name": "apply_serve",
           "signature": "(\n    live: &CentauriLiveStats,\n    recent: &Mutex<VecDeque<CentauriServeRecord>>,\n    rec: Centa...",
@@ -3429,8 +3429,8 @@
         },
         {
           "lines": [
-            1941,
-            1953
+            1944,
+            1956
           ],
           "name": "tally_substitution",
           "signature": "(live: &CentauriLiveStats, sub: CentauriSubstitution)",
@@ -3438,8 +3438,8 @@
         },
         {
           "lines": [
-            1967,
-            2025
+            1970,
+            2028
           ],
           "name": "record_from_trace",
           "signature": "(\n    now_ms: u64,\n    trace: &mirror::server::ServeTrace<'_>,\n)",
@@ -3447,8 +3447,8 @@
         },
         {
           "lines": [
-            2033,
-            2067
+            2036,
+            2070
           ],
           "name": "observe_trace",
           "signature": "(\n    live: &CentauriLiveStats,\n    recent: &Mutex<VecDeque<CentauriServeRecord>>,\n    sink: &Mut...",
@@ -3456,8 +3456,8 @@
         },
         {
           "lines": [
-            2075,
-            2120
+            2078,
+            2123
           ],
           "name": "warm_targets",
           "signature": "(catalog: &Catalog, max: usize)",
@@ -3467,8 +3467,8 @@
           "children": [
             {
               "lines": [
-                2127,
-                2137
+                2130,
+                2140
               ],
               "name": "constructor_builds_empty_store_for_cold_dir",
               "signature": "()",
@@ -3476,8 +3476,8 @@
             },
             {
               "lines": [
-                2140,
-                2153
+                2143,
+                2156
               ],
               "name": "install_catalog_with_empty_sig_is_invalid_signature_err",
               "signature": "()",
@@ -3485,8 +3485,8 @@
             },
             {
               "lines": [
-                2156,
-                2164
+                2159,
+                2167
               ],
               "name": "cdn_hosts_is_non_empty_pure_set",
               "signature": "()",
@@ -3494,8 +3494,8 @@
             },
             {
               "lines": [
-                2167,
-                2172
+                2170,
+                2175
               ],
               "name": "cloaking_rules_is_fenced_block",
               "signature": "()",
@@ -3503,8 +3503,8 @@
             },
             {
               "lines": [
-                2175,
-                2183
+                2178,
+                2186
               ],
               "name": "resolve_cdn_unmapped_host_is_none",
               "signature": "()",
@@ -3512,8 +3512,8 @@
             },
             {
               "lines": [
-                2186,
-                2199
+                2189,
+                2202
               ],
               "name": "rehydrate_from_signed_absent_pair_is_rehydrate_failed_err",
               "signature": "()",
@@ -3521,8 +3521,8 @@
             },
             {
               "lines": [
-                2202,
-                2210
+                2205,
+                2213
               ],
               "name": "snapshot_is_consistent_across_reads",
               "signature": "()",
@@ -3530,8 +3530,8 @@
             },
             {
               "lines": [
-                2213,
-                2218
+                2216,
+                2221
               ],
               "name": "enum_codes_match_the_stable_ordinal_contract",
               "signature": "()",
@@ -3539,8 +3539,8 @@
             },
             {
               "lines": [
-                2223,
-                2270
+                2226,
+                2273
               ],
               "name": "record_serve_logged_writes_query_centauri_log_and_bumps_counters",
               "signature": "()",
@@ -3548,8 +3548,8 @@
             },
             {
               "lines": [
-                2273,
-                2286
+                2276,
+                2289
               ],
               "name": "query_centauri_log_path_sits_beside_the_cache_dir",
               "signature": "()",
@@ -3558,8 +3558,8 @@
             {
               "docstring": "`parse_verified`). Replicates the `catalog.rs` wire layout exactly.",
               "lines": [
-                2294,
-                2328
+                2297,
+                2331
               ],
               "name": "signed_one_entry_catalog",
               "signature": "(\n        name: &str,\n        hash: [u8; 32],\n        host: &str,\n    )",
@@ -3567,8 +3567,8 @@
             },
             {
               "lines": [
-                2331,
-                2358
+                2334,
+                2361
               ],
               "name": "install_catalog_retains_the_verified_catalog",
               "signature": "()",
@@ -3577,8 +3577,8 @@
             {
               "docstring": "A fresh per-test temp dir (process-id + tag suffixed) \u2014 rehydrate tests write real `.tcat` pairs.",
               "lines": [
-                2363,
-                2369
+                2366,
+                2375
               ],
               "name": "rehydrate_dir",
               "signature": "(tag: &str)",
@@ -3586,8 +3586,8 @@
             },
             {
               "lines": [
-                2372,
-                2398
+                2378,
+                2407
               ],
               "name": "rehydrate_from_signed_retains_the_verified_catalog",
               "signature": "()",
@@ -3595,8 +3595,8 @@
             },
             {
               "lines": [
-                2401,
-                2417
+                2410,
+                2426
               ],
               "name": "rehydrate_absent_pair_is_rehydrate_failed_typed",
               "signature": "()",
@@ -3604,8 +3604,8 @@
             },
             {
               "lines": [
-                2420,
-                2453
+                2429,
+                2466
               ],
               "name": "rehydrate_bad_signature_is_invalid_signature_and_never_clobbers_retained",
               "signature": "()",
@@ -3613,8 +3613,8 @@
             },
             {
               "lines": [
-                2456,
-                2484
+                2469,
+                2497
               ],
               "name": "rehydrate_malformed_signed_body_is_malformed_catalog",
               "signature": "()",
@@ -3623,8 +3623,8 @@
             {
               "docstring": "Build a serve record for the `record_serve` CROWN-counter tests (the clock is injected, not read).",
               "lines": [
-                2489,
-                2506
+                2502,
+                2519
               ],
               "name": "serve_record",
               "signature": "(\n        now_ms: u64,\n        outcome: CentauriServeOutcome,\n        substitution: CentauriSubst...",
@@ -3632,8 +3632,8 @@
             },
             {
               "lines": [
-                2509,
-                2580
+                2522,
+                2593
               ],
               "name": "new_enums_cross_their_internal_twins_both_ways",
               "signature": "()",
@@ -3641,8 +3641,8 @@
             },
             {
               "lines": [
-                2583,
-                2592
+                2596,
+                2605
               ],
               "name": "cache_mode_toggle_is_live_in_method_and_snapshot",
               "signature": "()",
@@ -3650,8 +3650,8 @@
             },
             {
               "lines": [
-                2595,
-                2612
+                2608,
+                2625
               ],
               "name": "centauri_resolution_from_carries_substitution_and_canonical_name",
               "signature": "()",
@@ -3659,8 +3659,8 @@
             },
             {
               "lines": [
-                2615,
-                2643
+                2628,
+                2656
               ],
               "name": "resolve_cdn_typed_resolves_a_mapped_url_and_tallies",
               "signature": "()",
@@ -3668,8 +3668,8 @@
             },
             {
               "lines": [
-                2646,
-                2682
+                2659,
+                2695
               ],
               "name": "record_serve_witnesses_the_crown_counters",
               "signature": "()",
@@ -3677,8 +3677,8 @@
             },
             {
               "lines": [
-                2685,
-                2711
+                2698,
+                2724
               ],
               "name": "recent_serves_is_bounded_and_newest_first",
               "signature": "()",
@@ -3686,8 +3686,8 @@
             },
             {
               "lines": [
-                2714,
-                2722
+                2727,
+                2735
               ],
               "name": "cache_stat_matches_the_snapshot_cache_fields",
               "signature": "()",
@@ -3696,8 +3696,8 @@
             {
               "docstring": "reader (D26 \u2014 the Beast one-reader discipline) without a socket or a Kotlin runtime.",
               "lines": [
-                2728,
-                2730
+                2741,
+                2743
               ],
               "name": "CountingSink",
               "type": "struct"
@@ -3706,8 +3706,8 @@
               "children": [
                 {
                   "lines": [
-                    2732,
-                    2736
+                    2745,
+                    2749
                   ],
                   "name": "on_serve",
                   "signature": "(&self, record: CentauriServeRecord)",
@@ -3715,16 +3715,16 @@
                 }
               ],
               "lines": [
-                2731,
-                2737
+                2744,
+                2750
               ],
               "name": "CentauriServeSink",
               "type": "impl"
             },
             {
               "lines": [
-                2740,
-                2826
+                2753,
+                2845
               ],
               "name": "observer_feeds_ring_counters_log_and_sink_from_a_served_trace",
               "signature": "()",
@@ -3732,8 +3732,8 @@
             },
             {
               "lines": [
-                2829,
-                2894
+                2848,
+                2922
               ],
               "name": "observer_resolve_tally_splits_hit_from_miss_and_ignores_owned",
               "signature": "()",
@@ -3741,8 +3741,8 @@
             },
             {
               "lines": [
-                2897,
-                2945
+                2925,
+                2977
               ],
               "name": "warm_targets_derive_from_catalog_intersect_map",
               "signature": "()",
@@ -3750,8 +3750,8 @@
             },
             {
               "lines": [
-                2948,
-                2956
+                2980,
+                2988
               ],
               "name": "warm_up_with_no_catalog_is_a_zero_target_no_op",
               "signature": "()",
@@ -3759,8 +3759,8 @@
             },
             {
               "lines": [
-                2959,
-                2976
+                2991,
+                3008
               ],
               "name": "start_marks_serving_and_snapshot_reflects_it",
               "signature": "()",
@@ -3768,8 +3768,8 @@
             },
             {
               "lines": [
-                2979,
-                3094
+                3011,
+                3143
               ],
               "name": "arm_device_catalog_seeds_owned_content_and_installs_a_device_signed_catalog",
               "signature": "()",
@@ -3777,8 +3777,8 @@
             },
             {
               "lines": [
-                3097,
-                3170
+                3146,
+                3222
               ],
               "name": "sovereign_loop_arm_persists_then_reboot_rehydrates_by_device_key",
               "signature": "()",
@@ -3786,8 +3786,8 @@
             }
           ],
           "lines": [
-            2123,
-            3171
+            2126,
+            3223
           ],
           "name": "tests",
           "type": "module"
@@ -3796,8 +3796,8 @@
           "children": [
             {
               "lines": [
-                3177,
-                3189
+                3229,
+                3241
               ],
               "name": "rec",
               "signature": "(i: u64)",
@@ -3805,8 +3805,8 @@
             },
             {
               "lines": [
-                3200,
-                3247
+                3252,
+                3311
               ],
               "name": "max_manifest_rows_caps_accepted_rows_not_skipped_lines",
               "signature": "()",
@@ -3814,8 +3814,8 @@
             },
             {
               "lines": [
-                3257,
-                3281
+                3321,
+                3345
               ],
               "name": "recent_serves_cap_is_64_and_the_breach_is_loud",
               "signature": "()",
@@ -3823,8 +3823,8 @@
             }
           ],
           "lines": [
-            3174,
-            3282
+            3226,
+            3346
           ],
           "name": "recent_ring_cap_tests",
           "type": "module"
@@ -3832,12 +3832,12 @@
       ]
     },
     "packaging.rs": {
-      "hash": "61b942568d3a",
-      "indexed_at": "2026-07-26T19:12:58.000128+00:00",
+      "hash": "fce2005198d2",
+      "indexed_at": "2026-08-01T12:52:08.959563+00:00",
       "language": "rust",
-      "lines": 662,
-      "mtime_ns": 1785030832847604300,
-      "size": 31868,
+      "lines": 668,
+      "mtime_ns": 1785588611257044800,
+      "size": 31948,
       "symbols": [
         {
           "lines": [
@@ -4107,7 +4107,7 @@
             {
               "lines": [
                 610,
-                649
+                653
               ],
               "name": "ladder_fails_over_to_the_next_cdn_and_exhaustion_is_err",
               "signature": "()",
@@ -4115,8 +4115,8 @@
             },
             {
               "lines": [
-                652,
-                661
+                656,
+                667
               ],
               "name": "with_alternates_re_truncates_past_the_privacy_cap",
               "signature": "()",
@@ -4125,7 +4125,7 @@
           ],
           "lines": [
             281,
-            662
+            668
           ],
           "name": "tests",
           "type": "module"
@@ -4463,12 +4463,12 @@
       ]
     },
     "server.rs": {
-      "hash": "e9d3a289629c",
-      "indexed_at": "2026-08-01T09:56:55.255139+00:00",
+      "hash": "d6085f78a188",
+      "indexed_at": "2026-08-01T12:52:09.247612+00:00",
       "language": "rust",
-      "lines": 1289,
-      "mtime_ns": 1785577967275100200,
-      "size": 72387,
+      "lines": 1296,
+      "mtime_ns": 1785588611279045300,
+      "size": 72483,
       "symbols": [
         {
           "docstring": "serve verdict. Borrowed \u2014 the observer copies what it keeps; the serve path allocates nothing for it.",
@@ -4644,7 +4644,7 @@
           "docstring": "held lock never spans an `.await`; serves are zero-copy (`Arc<[u8]>`, D24). Loopback-only, fail-closed.",
           "lines": [
             426,
-            602
+            603
           ],
           "name": "run_shared",
           "signature": "(\n    config: ServerConfig,\n    catalog: Catalog,\n    cache: Arc<Mutex<CacheStore>>,\n    observer...",
@@ -4653,8 +4653,8 @@
         {
           "docstring": "without owning the cache by value. Fail-closed: an unknown name is `NotInCatalog`, a miss is `CacheMiss`.",
           "lines": [
-            607,
-            617
+            608,
+            618
           ],
           "name": "serve_shared",
           "signature": "(catalog: &Catalog, cache: &CacheStore, name: &str)",
@@ -4662,8 +4662,8 @@
         },
         {
           "lines": [
-            656,
-            665
+            657,
+            666
           ],
           "name": "ServeBucket",
           "type": "enum"
@@ -4671,8 +4671,8 @@
         {
           "docstring": "measure \u2014 \"absorb once, serve forever\" is a claim about serves that cost NOTHING.",
           "lines": [
-            672,
-            679
+            673,
+            680
           ],
           "name": "classify_serve",
           "signature": "(outcome: &ServeOutcome)",
@@ -4680,8 +4680,8 @@
         },
         {
           "lines": [
-            681,
-            696
+            682,
+            697
           ],
           "name": "note_serve",
           "signature": "(outcome: ServeOutcome)",
@@ -4690,8 +4690,8 @@
         {
           "docstring": "Assets served locally, with zero egress.",
           "lines": [
-            699,
-            701
+            700,
+            702
           ],
           "name": "serve_hits",
           "signature": "()",
@@ -4700,8 +4700,8 @@
         {
           "docstring": "Bytes served locally.",
           "lines": [
-            704,
-            706
+            705,
+            707
           ],
           "name": "serve_bytes",
           "signature": "()",
@@ -4710,8 +4710,8 @@
         {
           "docstring": "Authorized-but-uncached requests (the fetch-once leg).",
           "lines": [
-            709,
-            711
+            710,
+            712
           ],
           "name": "serve_misses",
           "signature": "()",
@@ -4720,8 +4720,8 @@
         {
           "docstring": "Requests the signed catalog refused.",
           "lines": [
-            714,
-            716
+            715,
+            717
           ],
           "name": "serve_unauthorized",
           "signature": "()",
@@ -4730,8 +4730,8 @@
         {
           "docstring": "match `is_cdn_host`), so this never mis-splits on an IPv6 colon.",
           "lines": [
-            723,
-            732
+            724,
+            733
           ],
           "name": "host_without_port",
           "signature": "(host: &str)",
@@ -4740,8 +4740,8 @@
         {
           "docstring": "without standing up a socket.",
           "lines": [
-            743,
-            745
+            744,
+            746
           ],
           "name": "is_servable_method",
           "signature": "(method: &hyper::Method)",
@@ -4750,8 +4750,8 @@
         {
           "docstring": "unauthorized URL is `NotInCatalog`, an authorized-but-uncached one is `CacheMiss` (never unverified bytes).",
           "lines": [
-            755,
-            757
+            756,
+            758
           ],
           "name": "route_host_aware",
           "signature": "(catalog: &Catalog, cache: &CacheStore, host: &str, path: &str)",
@@ -4760,8 +4760,8 @@
         {
           "docstring": "byte-identical (one decision, two surfaces, never a drift).",
           "lines": [
-            763,
-            809
+            764,
+            810
           ],
           "name": "route_host_aware_traced",
           "signature": "(\n    catalog: &Catalog,\n    cache: &CacheStore,\n    host: &str,\n    path: &str,\n)",
@@ -4771,8 +4771,8 @@
           "children": [
             {
               "lines": [
-                820,
-                845
+                821,
+                846
               ],
               "name": "a_promoted_host_absorbs_instead_of_404",
               "signature": "()",
@@ -4780,8 +4780,8 @@
             },
             {
               "lines": [
-                858,
-                875
+                859,
+                879
               ],
               "name": "the_mirror_answers_reads_and_refuses_writes",
               "signature": "()",
@@ -4789,8 +4789,8 @@
             },
             {
               "lines": [
-                878,
-                885
+                882,
+                889
               ],
               "name": "unknown_name_is_not_served_fail_closed",
               "signature": "()",
@@ -4798,8 +4798,8 @@
             },
             {
               "lines": [
-                888,
-                922
+                892,
+                926
               ],
               "name": "fingerprinter_url_is_hard_blocked_not_served_not_leaked",
               "signature": "()",
@@ -4807,8 +4807,8 @@
             },
             {
               "lines": [
-                925,
-                927
+                929,
+                931
               ],
               "name": "default_config_is_loopback_ephemeral",
               "signature": "()",
@@ -4816,8 +4816,8 @@
             },
             {
               "lines": [
-                932,
-                943
+                936,
+                947
               ],
               "name": "cdn_url_unmapped_host_is_not_served",
               "signature": "()",
@@ -4825,8 +4825,8 @@
             },
             {
               "lines": [
-                946,
-                962
+                950,
+                966
               ],
               "name": "cdn_url_mapped_but_uncatalogued_is_not_served",
               "signature": "()",
@@ -4835,8 +4835,8 @@
             {
               "docstring": "on-device install path. Replicates the `catalog.rs` test signer (no production key involved).",
               "lines": [
-                977,
-                1008
+                981,
+                1012
               ],
               "name": "signed_catalog",
               "signature": "(name: &str, hash: ContentHash, host: &str)",
@@ -4844,8 +4844,8 @@
             },
             {
               "lines": [
-                1018,
-                1049
+                1022,
+                1053
               ],
               "name": "the_serve_ledger_counts_hits_misses_and_refusals_separately",
               "signature": "()",
@@ -4853,8 +4853,8 @@
             },
             {
               "lines": [
-                1055,
-                1089
+                1059,
+                1096
               ],
               "name": "the_serve_ledger_is_actually_wired_to_the_serve_path",
               "signature": "()",
@@ -4862,8 +4862,8 @@
             },
             {
               "lines": [
-                1092,
-                1111
+                1099,
+                1118
               ],
               "name": "cdn_url_served_end_to_end_when_catalogued_and_cached",
               "signature": "()",
@@ -4871,8 +4871,8 @@
             },
             {
               "lines": [
-                1116,
-                1167
+                1123,
+                1174
               ],
               "name": "route_host_aware_serves_by_cdn_host_header_else_by_path",
               "signature": "()",
@@ -4880,8 +4880,8 @@
             },
             {
               "lines": [
-                1170,
-                1185
+                1177,
+                1192
               ],
               "name": "cdn_url_catalogued_but_uncached_is_cache_miss_not_served",
               "signature": "()",
@@ -4889,8 +4889,8 @@
             },
             {
               "lines": [
-                1188,
-                1199
+                1195,
+                1206
               ],
               "name": "cache_miss_surfaces_the_expected_content_hash",
               "signature": "()",
@@ -4898,8 +4898,8 @@
             },
             {
               "lines": [
-                1204,
-                1214
+                1211,
+                1221
               ],
               "name": "request_name_strips_the_single_leading_slash",
               "signature": "()",
@@ -4907,8 +4907,8 @@
             },
             {
               "lines": [
-                1217,
-                1228
+                1224,
+                1235
               ],
               "name": "served_outcome_maps_to_200_octet_stream",
               "signature": "()",
@@ -4916,8 +4916,8 @@
             },
             {
               "lines": [
-                1231,
-                1244
+                1238,
+                1251
               ],
               "name": "leaked_then_served_maps_to_200_octet_stream_like_a_local_hit",
               "signature": "()",
@@ -4925,8 +4925,8 @@
             },
             {
               "lines": [
-                1247,
-                1251
+                1254,
+                1258
               ],
               "name": "not_in_catalog_maps_to_404_fail_closed",
               "signature": "()",
@@ -4934,8 +4934,8 @@
             },
             {
               "lines": [
-                1254,
-                1260
+                1261,
+                1267
               ],
               "name": "cache_miss_maps_to_503_not_404",
               "signature": "()",
@@ -4943,8 +4943,8 @@
             },
             {
               "lines": [
-                1263,
-                1288
+                1270,
+                1295
               ],
               "name": "bind_opens_a_loopback_ephemeral_port_and_reads_it_back",
               "signature": "()",
@@ -4952,8 +4952,8 @@
             }
           ],
           "lines": [
-            812,
-            1289
+            813,
+            1296
           ],
           "name": "tests",
           "type": "module"
@@ -4961,12 +4961,12 @@
       ]
     },
     "tlsca.rs": {
-      "hash": "7611ddfa4810",
-      "indexed_at": "2026-07-26T19:12:58.011963+00:00",
+      "hash": "e1f780d5e950",
+      "indexed_at": "2026-08-01T12:52:09.532671+00:00",
       "language": "rust",
-      "lines": 434,
-      "mtime_ns": 1785030832879604400,
-      "size": 22083,
+      "lines": 447,
+      "mtime_ns": 1785588611282045400,
+      "size": 22247,
       "symbols": [
         {
           "docstring": "outage waiting to happen \u2014 see [`CentauriResolver::leaf_for`].",
@@ -5032,7 +5032,7 @@
               "docstring": "enforces that on every path that reaches here.",
               "lines": [
                 159,
-                186
+                184
               ],
               "name": "mint_leaf",
               "signature": "(&self, host: &str)",
@@ -5041,7 +5041,7 @@
           ],
           "lines": [
             90,
-            187
+            185
           ],
           "name": "DeviceCa",
           "type": "impl"
@@ -5049,8 +5049,8 @@
         {
           "docstring": "disagree with the handshake it is answering.",
           "lines": [
-            195,
-            200
+            193,
+            198
           ],
           "name": "CentauriResolver",
           "type": "struct"
@@ -5060,8 +5060,8 @@
             {
               "docstring": "Hand-written so no derive can ever print key material.",
               "lines": [
-                204,
-                208
+                202,
+                209
               ],
               "name": "fmt",
               "signature": "(&self, f: &mut std::fmt::Formatter<'_>)",
@@ -5069,8 +5069,8 @@
             }
           ],
           "lines": [
-            202,
-            209
+            200,
+            210
           ],
           "name": "CentauriResolver",
           "type": "impl"
@@ -5079,8 +5079,8 @@
           "children": [
             {
               "lines": [
-                212,
-                217
+                213,
+                218
               ],
               "name": "new",
               "signature": "(ca: DeviceCa)",
@@ -5089,8 +5089,8 @@
             {
               "docstring": "exactly the signed catalog's reach and nothing more.",
               "lines": [
-                223,
-                262
+                224,
+                266
               ],
               "name": "leaf_for",
               "signature": "(&self, host: &str)",
@@ -5098,8 +5098,8 @@
             }
           ],
           "lines": [
-            211,
-            263
+            212,
+            267
           ],
           "name": "CentauriResolver",
           "type": "impl"
@@ -5108,8 +5108,8 @@
           "children": [
             {
               "lines": [
-                266,
-                270
+                270,
+                274
               ],
               "name": "resolve",
               "signature": "(&self, hello: ClientHello<'_>)",
@@ -5117,8 +5117,8 @@
             }
           ],
           "lines": [
-            265,
-            271
+            269,
+            275
           ],
           "name": "ResolvesServerCert",
           "type": "impl"
@@ -5126,8 +5126,8 @@
         {
           "docstring": "advertising h2 we do not speak would break every flow that accepted it.",
           "lines": [
-            276,
-            282
+            280,
+            286
           ],
           "name": "server_config",
           "signature": "(resolver: Arc<CentauriResolver>)",
@@ -5136,8 +5136,8 @@
         {
           "docstring": "device has no use for organizational fields, and every extra field is another thing to get wrong.",
           "lines": [
-            286,
-            290
+            290,
+            294
           ],
           "name": "distinguished_name",
           "signature": "(cn: &str)",
@@ -5146,8 +5146,8 @@
         {
           "docstring": "needs and keeps the anchor from landing exactly on a boundary.",
           "lines": [
-            311,
-            315
+            315,
+            320
           ],
           "name": "ca_not_before",
           "signature": "()",
@@ -5156,8 +5156,8 @@
         {
           "docstring": "Day-granular counterpart for leaf certificates (see [`ca_not_before`] for the reasoning).",
           "lines": [
-            318,
-            320
+            323,
+            329
           ],
           "name": "leaf_not_before",
           "signature": "()",
@@ -5166,8 +5166,8 @@
         {
           "docstring": "leaks nothing the anchor did not.",
           "lines": [
-            324,
-            326
+            333,
+            335
           ],
           "name": "plus_days",
           "signature": "(anchor: time::OffsetDateTime, days: i64)",
@@ -5177,8 +5177,8 @@
           "children": [
             {
               "lines": [
-                341,
-                363
+                350,
+                376
               ],
               "name": "certificate_validity_carries_no_sub_day_timestamp",
               "signature": "()",
@@ -5186,8 +5186,8 @@
             },
             {
               "lines": [
-                367,
-                374
+                380,
+                387
               ],
               "name": "device_ca_mints_and_exports_public_pem",
               "signature": "()",
@@ -5195,8 +5195,8 @@
             },
             {
               "lines": [
-                379,
-                389
+                392,
+                402
               ],
               "name": "device_ca_round_trips_through_pem",
               "signature": "()",
@@ -5204,8 +5204,8 @@
             },
             {
               "lines": [
-                396,
-                413
+                409,
+                426
               ],
               "name": "mints_only_for_catalog_watched_hosts",
               "signature": "()",
@@ -5213,8 +5213,8 @@
             },
             {
               "lines": [
-                418,
-                426
+                431,
+                439
               ],
               "name": "leaves_are_cached_per_host",
               "signature": "()",
@@ -5222,8 +5222,8 @@
             },
             {
               "lines": [
-                430,
-                433
+                443,
+                446
               ],
               "name": "host_matching_is_case_insensitive",
               "signature": "()",
@@ -5231,8 +5231,8 @@
             }
           ],
           "lines": [
-            329,
-            434
+            338,
+            447
           ],
           "name": "tests",
           "type": "module"
@@ -5240,6 +5240,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T09:56:55.257095+00:00",
+  "generated_at": "2026-08-01T12:52:09.534255+00:00",
   "version": "1.0"
 }

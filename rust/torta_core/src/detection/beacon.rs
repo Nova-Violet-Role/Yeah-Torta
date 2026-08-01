@@ -64,7 +64,14 @@ pub fn beacon_signal_at(host: &str, now: u64) -> Option<Signal> {
     }
     // The last MIN_TICKS arrivals → MIN_TICKS-1 gaps; a metronome holds every gap at the
     // median (poor man's autocorrelation lag-1 — exact for the fixed-period shape we hunt).
-    let tail: Vec<u64> = r.arrivals.iter().rev().take(MIN_TICKS).rev().copied().collect();
+    let tail: Vec<u64> = r
+        .arrivals
+        .iter()
+        .rev()
+        .take(MIN_TICKS)
+        .rev()
+        .copied()
+        .collect();
     drop(guard);
     cadence_verdict(&tail)
 }
@@ -108,7 +115,14 @@ pub fn beacon_peek(host: &str) -> Option<Signal> {
     if r.arrivals.len() < MIN_TICKS {
         return None;
     }
-    let tail: Vec<u64> = r.arrivals.iter().rev().take(MIN_TICKS).rev().copied().collect();
+    let tail: Vec<u64> = r
+        .arrivals
+        .iter()
+        .rev()
+        .take(MIN_TICKS)
+        .rev()
+        .copied()
+        .collect();
     drop(guard);
     cadence_verdict(&tail)
 }
@@ -193,9 +207,16 @@ mod tests {
         scrub_rhythms();
         let t0 = 1_000_000;
         for i in 0..5u64 {
-            assert_eq!(beacon_signal_at("c2.example", t0 + i * 60), None, "tick {i} early-fired");
+            assert_eq!(
+                beacon_signal_at("c2.example", t0 + i * 60),
+                None,
+                "tick {i} early-fired"
+            );
         }
-        assert_eq!(beacon_signal_at("c2.example", t0 + 5 * 60), Some(Signal::Beacon));
+        assert_eq!(
+            beacon_signal_at("c2.example", t0 + 5 * 60),
+            Some(Signal::Beacon)
+        );
     }
 
     #[test]
@@ -220,7 +241,9 @@ mod tests {
         let t0 = 3_000_000;
         // A busy browser session: dozens of sub-second/irregular arrivals — the MIN_PERIOD
         // floor holds the gate no matter how regular the burst.
-        let gaps = [0u64, 1, 0, 0, 2, 1, 0, 3, 0, 1, 1, 0, 2, 0, 1, 5, 1, 0, 0, 1];
+        let gaps = [
+            0u64, 1, 0, 0, 2, 1, 0, 3, 0, 1, 1, 0, 2, 0, 1, 5, 1, 0, 0, 1,
+        ];
         let mut t = t0;
         for g in gaps {
             t += g;
@@ -275,6 +298,11 @@ mod tests {
         // Non-NX rcodes never count.
         assert!(!nx_burst("clean.example", 1, 0, t0));
         // 61s later the window has forgotten the burst.
-        assert!(!nx_burst("probe.example", 1, 3, t0 + 40 + 61 + super::super::WINDOW_SECS));
+        assert!(!nx_burst(
+            "probe.example",
+            1,
+            3,
+            t0 + 40 + 61 + super::super::WINDOW_SECS
+        ));
     }
 }

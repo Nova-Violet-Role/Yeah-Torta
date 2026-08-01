@@ -120,7 +120,11 @@ pub fn dga_score(label: &str) -> f32 {
             }
         }
     }
-    let rare_frac = if pairs == 0 { 0.5 } else { rare as f32 / pairs as f32 };
+    let rare_frac = if pairs == 0 {
+        0.5
+    } else {
+        rare as f32 / pairs as f32
+    };
     // 2) Shannon entropy per byte, normalized against ~4.2 bits (uniform-random over the
     //    label alphabet runs ≥4.2; English words run ~2.6-3.2).
     let mut counts = [0u32; 38]; // 26 letters + 10 digits + '-' + spill
@@ -142,7 +146,10 @@ pub fn dga_score(label: &str) -> f32 {
     }
     let entropy_norm = (entropy / 4.2).clamp(0.0, 1.0);
     // 3) Structure: vowel starvation, digit load, longest consonant run.
-    let vowels = bytes.iter().filter(|b| matches!(b, b'a' | b'e' | b'i' | b'o' | b'u' | b'y')).count() as f32;
+    let vowels = bytes
+        .iter()
+        .filter(|b| matches!(b, b'a' | b'e' | b'i' | b'o' | b'u' | b'y'))
+        .count() as f32;
     let digits = bytes.iter().filter(|b| b.is_ascii_digit()).count() as f32;
     let mut run = 0u32;
     let mut worst_run = 0u32;
@@ -210,7 +217,10 @@ mod tests {
     #[test]
     fn a_distribution_id_is_exempt_but_only_under_a_real_distribution_domain() {
         // ★ #88 — the MEASURED host. Its leading label scores as pure DGA shape on its own...
-        assert!(dga_score("d17vo8z6jop21h") >= DGA_THRESHOLD, "premise: the label does read as DGA");
+        assert!(
+            dga_score("d17vo8z6jop21h") >= DGA_THRESHOLD,
+            "premise: the label does read as DGA"
+        );
         // ...and that is exactly why the structural exemption is needed.
         assert!(label_is_distribution_id("d17vo8z6jop21h.cloudfront.net"));
         assert!(label_is_distribution_id("a1b2c3d4e5f6g7.akamaized.net"));
@@ -224,7 +234,9 @@ mod tests {
         // A lookalike that merely CONTAINS the name must not slip through — match is on the
         // registrable domain, never a substring.
         assert!(!label_is_distribution_id("xkqzwtplv.notcloudfront.net"));
-        assert!(!label_is_distribution_id("xkqzwtplv.cloudfront.net.evil.tld"));
+        assert!(!label_is_distribution_id(
+            "xkqzwtplv.cloudfront.net.evil.tld"
+        ));
     }
 
     #[test]
@@ -233,8 +245,18 @@ mod tests {
         assert!(dga_score("xkqzwtplvmnrbds") >= DGA_THRESHOLD);
         assert!(dga_score("qwjzxkvbpfmtghd") >= DGA_THRESHOLD);
         // Real hostnames breathe — all far under the line.
-        for legit in ["wikipedia", "microsoft", "cloudfront", "telemetry", "appmeasurement"] {
-            assert!(dga_score(legit) < DGA_THRESHOLD, "{legit} misfired: {}", dga_score(legit));
+        for legit in [
+            "wikipedia",
+            "microsoft",
+            "cloudfront",
+            "telemetry",
+            "appmeasurement",
+        ] {
+            assert!(
+                dga_score(legit) < DGA_THRESHOLD,
+                "{legit} misfired: {}",
+                dga_score(legit)
+            );
         }
     }
 
@@ -248,8 +270,18 @@ mod tests {
     #[test]
     fn fp_control_legit_cdn_hosts_stay_quiet() {
         // The recipe's FP gate: high-QPS CDN label shapes must NOT fire.
-        for cdn in ["googleapis", "akamaiedge", "ecloudfront", "gstaticadssl", "amazonaws"] {
-            assert!(dga_score(cdn) < DGA_THRESHOLD, "{cdn} misfired: {}", dga_score(cdn));
+        for cdn in [
+            "googleapis",
+            "akamaiedge",
+            "ecloudfront",
+            "gstaticadssl",
+            "amazonaws",
+        ] {
+            assert!(
+                dga_score(cdn) < DGA_THRESHOLD,
+                "{cdn} misfired: {}",
+                dga_score(cdn)
+            );
         }
     }
 }

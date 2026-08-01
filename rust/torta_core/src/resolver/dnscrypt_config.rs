@@ -1218,19 +1218,34 @@ mod tests {
         //    did NOT stage stay upstream-default (B3 — never zeroed by a partial durable blob).
         let back = get();
         assert_eq!(back.server_names, vec!["durable-server".to_string()]);
-        assert!(back.require_dnssec, "require_dnssec survives the durable round trip");
+        assert!(
+            back.require_dnssec,
+            "require_dnssec survives the durable round trip"
+        );
         assert!(back.force_tcp, "force_tcp survives");
         assert_eq!(back.proxy.as_deref(), Some("socks5://198.51.100.9:9050"));
-        assert!(back.require_nolog, "unstated field stays upstream-default (true)");
+        assert!(
+            back.require_nolog,
+            "unstated field stays upstream-default (true)"
+        );
         assert!(back.cache, "unstated field stays upstream-default (true)");
 
         // 4) materialize_toml writes the loose compat view atomically; it re-imports equal, no orphan tmp.
         let toml_path = dir.join("dnscrypt-proxy.toml");
-        assert!(materialize_toml(&toml_path), "materialize writes the derived toml");
+        assert!(
+            materialize_toml(&toml_path),
+            "materialize writes the derived toml"
+        );
         let on_disk = std::fs::read_to_string(&toml_path).unwrap();
         let reparsed = from_toml_or_default(&on_disk);
-        assert!(reparsed.require_dnssec, "materialized toml carries require_dnssec");
-        assert_eq!(reparsed.proxy.as_deref(), Some("socks5://198.51.100.9:9050"));
+        assert!(
+            reparsed.require_dnssec,
+            "materialized toml carries require_dnssec"
+        );
+        assert_eq!(
+            reparsed.proxy.as_deref(),
+            Some("socks5://198.51.100.9:9050")
+        );
         assert!(
             !dir.join(".dnscrypt-proxy.toml.tmp").exists(),
             "no orphan tmp lingers after an atomic materialize"
@@ -1239,7 +1254,10 @@ mod tests {
         // 5) A COLD dir rehydrates FALSE and leaves the authority untouched (fail-safe cold start).
         let cold = std::env::temp_dir().join(format!("torta-w5-dnscfg-cold-{pid}-{n}"));
         let _ = std::fs::remove_dir_all(&cold);
-        assert!(!rehydrate(&cold), "an absent record rehydrates false (cold)");
+        assert!(
+            !rehydrate(&cold),
+            "an absent record rehydrates false (cold)"
+        );
         assert!(
             get().require_dnssec,
             "a cold rehydrate leaves the live authority untouched"
@@ -2053,7 +2071,10 @@ mod shipped_asset {
             "Tortä listens on 5354, not the upstream :53 default: {:?}",
             cfg.listen_addresses
         );
-        assert!(!cfg.server_names.is_empty(), "shipped config must name servers");
+        assert!(
+            !cfg.server_names.is_empty(),
+            "shipped config must name servers"
+        );
         assert!(cfg.ipv4_servers, "IPv4 servers must be enabled");
     }
 }

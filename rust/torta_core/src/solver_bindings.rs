@@ -211,15 +211,33 @@ pub(crate) fn decode_rows(payload: &[u8]) -> Vec<SolverBindingRow> {
     let capped = (count as usize).min(MAX_BINDING_ROWS);
     let mut rows = Vec::with_capacity(capped);
     for _ in 0..capped {
-        let Some(fp_key) = read_str(&mut cur) else { break };
-        let Some(transport_b) = take_one(&mut cur) else { break };
-        let Some(resolver_id) = read_str(&mut cur) else { break };
-        let Some(relay_id) = read_str(&mut cur) else { break };
-        let Some(tuned_cwnd) = read_i32_be(&mut cur) else { break };
-        let Some(tuned_codel_target_ms) = read_i64_be(&mut cur) else { break };
-        let Some(score) = read_f64_be(&mut cur) else { break };
-        let Some(locked_at_ms) = read_i64_be(&mut cur) else { break };
-        let Some(last_healthy_at_ms) = read_i64_be(&mut cur) else { break };
+        let Some(fp_key) = read_str(&mut cur) else {
+            break;
+        };
+        let Some(transport_b) = take_one(&mut cur) else {
+            break;
+        };
+        let Some(resolver_id) = read_str(&mut cur) else {
+            break;
+        };
+        let Some(relay_id) = read_str(&mut cur) else {
+            break;
+        };
+        let Some(tuned_cwnd) = read_i32_be(&mut cur) else {
+            break;
+        };
+        let Some(tuned_codel_target_ms) = read_i64_be(&mut cur) else {
+            break;
+        };
+        let Some(score) = read_f64_be(&mut cur) else {
+            break;
+        };
+        let Some(locked_at_ms) = read_i64_be(&mut cur) else {
+            break;
+        };
+        let Some(last_healthy_at_ms) = read_i64_be(&mut cur) else {
+            break;
+        };
         // The unknown-transport row is fully consumed above (alignment held) then skipped here.
         if let Some(transport) = SolverTransport::from_u8(transport_b) {
             rows.push(SolverBindingRow {
@@ -290,8 +308,7 @@ impl SolverBindingStore {
     /// updates so a later persist can retry the full set).
     pub fn persist(&self, rows: Vec<SolverBindingRow>) -> bool {
         catch_unwind(AssertUnwindSafe(|| {
-            let bounded: Vec<SolverBindingRow> =
-                rows.into_iter().take(MAX_BINDING_ROWS).collect();
+            let bounded: Vec<SolverBindingRow> = rows.into_iter().take(MAX_BINDING_ROWS).collect();
             let ok = self.nand.write_through(&encode_rows(&bounded)).is_ok();
             if let Ok(mut g) = self.ram.lock() {
                 *g = bounded;
@@ -371,7 +388,10 @@ mod tests {
         // A FRESH store over the SAME dir — a "reboot" (new process). Empty before rehydrate (no
         // boot IO), then the persisted rows come back field-for-field.
         let reborn = SolverBindingStore::new(dir.to_string_lossy().into_owned());
-        assert!(reborn.snapshot().is_empty(), "cold before rehydrate (no boot IO)");
+        assert!(
+            reborn.snapshot().is_empty(),
+            "cold before rehydrate (no boot IO)"
+        );
         assert_eq!(
             reborn.rehydrate(),
             rows,
@@ -386,7 +406,10 @@ mod tests {
         let dir = temp_dir("cold");
         let store = SolverBindingStore::new(dir.to_string_lossy().into_owned());
         assert!(store.rehydrate().is_empty(), "absent record ⇒ cold start");
-        assert!(!dir.exists(), "the no-IO ctor + a cold rehydrate touch no disk");
+        assert!(
+            !dir.exists(),
+            "the no-IO ctor + a cold rehydrate touch no disk"
+        );
         let _ = std::fs::remove_dir_all(&dir);
     }
 
@@ -398,15 +421,24 @@ mod tests {
         store.clear();
         assert!(store.snapshot().is_empty(), "clear resets RAM");
         let reborn = SolverBindingStore::new(dir.to_string_lossy().into_owned());
-        assert!(reborn.rehydrate().is_empty(), "clear removed the durable record");
+        assert!(
+            reborn.rehydrate().is_empty(),
+            "clear removed the durable record"
+        );
         let _ = std::fs::remove_dir_all(&dir);
     }
 
     #[test]
     fn decode_of_garbage_is_empty_not_panic() {
         assert!(decode_rows(b"").is_empty());
-        assert!(decode_rows(b"\xff\xff\xff").is_empty(), "foreign version ⇒ cold");
-        assert!(decode_rows(&[BINDINGS_SNAP_VERSION]).is_empty(), "no count ⇒ cold");
+        assert!(
+            decode_rows(b"\xff\xff\xff").is_empty(),
+            "foreign version ⇒ cold"
+        );
+        assert!(
+            decode_rows(&[BINDINGS_SNAP_VERSION]).is_empty(),
+            "no count ⇒ cold"
+        );
         // A claimed-huge count over a truncated body keeps only what parses (here: nothing).
         let mut lying = vec![BINDINGS_SNAP_VERSION];
         lying.extend_from_slice(&u32::MAX.to_be_bytes());
@@ -425,7 +457,10 @@ mod tests {
         payload[off] = 7;
         let decoded = decode_rows(&payload);
         rows.remove(0);
-        assert_eq!(decoded, rows, "unknown-transport row skipped, later rows intact");
+        assert_eq!(
+            decoded, rows,
+            "unknown-transport row skipped, later rows intact"
+        );
         assert_eq!(decoded, vec![good]);
     }
 
@@ -436,7 +471,11 @@ mod tests {
         let payload = encode_rows(&rows);
         let decoded = decode_rows(&payload);
         assert_eq!(decoded.len(), MAX_BINDING_ROWS, "encode caps at the bound");
-        assert_eq!(&decoded[..], &rows[..MAX_BINDING_ROWS], "the first N survive");
+        assert_eq!(
+            &decoded[..],
+            &rows[..MAX_BINDING_ROWS],
+            "the first N survive"
+        );
     }
 
     #[test]
@@ -447,7 +486,10 @@ mod tests {
         for _ in 0..64 {
             let _ = store.snapshot();
         }
-        assert!(!dir.exists(), "snapshot is RAM-only (F16 no-hot-path-write)");
+        assert!(
+            !dir.exists(),
+            "snapshot is RAM-only (F16 no-hot-path-write)"
+        );
         let _ = std::fs::remove_dir_all(&dir);
     }
 }

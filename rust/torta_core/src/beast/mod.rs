@@ -31,12 +31,12 @@ pub mod yeah;
 pub mod log;
 
 #[cfg(test)]
+mod beastsim;
+#[cfg(test)]
 #[cfg(test)]
 mod linksim;
 #[cfg(test)]
 mod spec_binding;
-#[cfg(test)]
-mod beastsim;
 mod tests;
 
 use std::sync::atomic::{AtomicI32, AtomicU64, Ordering};
@@ -374,7 +374,11 @@ pub(crate) fn store_live_yeah_profile(id: i32) {
 
 /// Broadcast the user's live Expert tunables (each 0 = leave the profile default). Called by
 /// [`crate::beast_set_tunables`] on the settings-apply / restore path.
-pub(crate) fn store_live_tunables(max_window: i32, free_thresh_milli: i32, compete_thresh_milli: i32) {
+pub(crate) fn store_live_tunables(
+    max_window: i32,
+    free_thresh_milli: i32,
+    compete_thresh_milli: i32,
+) {
     TUNE_MAX_WINDOW.store(max_window, Ordering::Relaxed);
     TUNE_FREE_MILLI.store(free_thresh_milli, Ordering::Relaxed);
     TUNE_COMPETE_MILLI.store(compete_thresh_milli, Ordering::Relaxed);
@@ -421,7 +425,10 @@ const AQM_PUMP_MS: u64 = 100;
 /// `beast_gov::now_ms`.
 fn now_ms_monotonic() -> i64 {
     static START: std::sync::OnceLock<std::time::Instant> = std::sync::OnceLock::new();
-    START.get_or_init(std::time::Instant::now).elapsed().as_millis() as i64
+    START
+        .get_or_init(std::time::Instant::now)
+        .elapsed()
+        .as_millis() as i64
 }
 
 /// Session high-water / lifetime RETENTION for the live Beast's Soft-cake AQM — the Android edition of
@@ -880,7 +887,6 @@ impl Beast {
         Self::snapshot_of(&self.lock_inner())
     }
 
-
     /// Attach (or replace) the metric sink. Rust will call `on_metrics` once per cycle after this.
     pub fn attach_sink(&self, sink: Arc<dyn BeastMetricSink>) {
         self.lock_inner().sink = Some(sink);
@@ -1098,7 +1104,10 @@ impl Beast {
     /// half-life), so a quiet box (valve ≈ 0) never sheds. NEVER mutates — the valve moves only through
     /// the real `on_success`/`on_timeout_or_fail` outcome path.
     pub fn would_shed_normal(&self, now_ms: i64) -> bool {
-        let valve = self.lock_inner().sched.valve_prob_tin(ProbePriority::Normal);
+        let valve = self
+            .lock_inner()
+            .sched
+            .valve_prob_tin(ProbePriority::Normal);
         valve > 0.0 && crate::beast::scheduler::pseudo_rand(now_ms) < valve
     }
 

@@ -561,11 +561,15 @@ mod tests {
     /// because those are the ones the operator's envelope leads with.
     #[test]
     fn max_sources_truncates_and_never_becomes_a_remote_kill_switch() {
-        let mut env = String::from("version=9.9.9
-");
+        let mut env = String::from(
+            "version=9.9.9
+",
+        );
         for i in 0..(MAX_SOURCES * 10) {
-            env.push_str(&format!("source=src{i:04}.example
-"));
+            env.push_str(&format!(
+                "source=src{i:04}.example
+"
+            ));
         }
 
         let parsed = parse_upstream_envelope(&env);

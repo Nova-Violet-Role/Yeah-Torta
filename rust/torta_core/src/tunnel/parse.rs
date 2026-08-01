@@ -609,7 +609,6 @@ mod tests {
         }
     }
 
-
     /// A5 GUARD -- the decompression-pointer budget has a NUMBER (`QNAME_PTR_CAP` = 25) and this
     /// makes breaching it LOUD. Both arms are asserted, so lowering OR raising the cap turns it red:
     /// a chain strictly under the cap must still resolve, a chain at the cap must be refused.
@@ -752,7 +751,9 @@ mod tests {
 
     #[test]
     fn answer_walk_extracts_a_and_aaaa() {
-        let v6 = [0x20, 0x01, 0x0d, 0xb8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x53];
+        let v6 = [
+            0x20, 0x01, 0x0d, 0xb8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0x53,
+        ];
         let d = example_dns_reply(0, &[(1, 1, 300, &[203, 0, 113, 7]), (28, 1, 600, &v6)]);
         let (qname, addrs) = extract_answer_addrs(&d).expect("valid reply walks");
         assert_eq!(qname, "example.com");
@@ -766,7 +767,10 @@ mod tests {
         // A CNAME (type 5) answer, then the A record for the target — the attribution qname is
         // the QUERY's, never the chain's intermediate owner (the A4 spec's CDN-collapse law).
         let cname_rdata = b"\x03cdn\x07example\x03com\x00";
-        let d = example_dns_reply(0, &[(5, 1, 300, cname_rdata), (1, 1, 300, &[203, 0, 113, 8])]);
+        let d = example_dns_reply(
+            0,
+            &[(5, 1, 300, cname_rdata), (1, 1, 300, &[203, 0, 113, 8])],
+        );
         let (qname, addrs) = extract_answer_addrs(&d).expect("cname reply walks");
         assert_eq!(qname, "example.com");
         assert_eq!(addrs, vec![("203.0.113.8".parse().unwrap(), 300)]);
@@ -777,7 +781,9 @@ mod tests {
         // qr=0 — a QUERY never attributes.
         assert!(extract_answer_addrs(&example_dns_query()).is_none());
         // rcode=3 (NXDOMAIN) — no address truth.
-        assert!(extract_answer_addrs(&example_dns_reply(3, &[(1, 1, 60, &[1, 2, 3, 4])])).is_none());
+        assert!(
+            extract_answer_addrs(&example_dns_reply(3, &[(1, 1, 60, &[1, 2, 3, 4])])).is_none()
+        );
         // qdcount=2 — the loop only answers single-question queries.
         let mut d = example_dns_reply(0, &[(1, 1, 60, &[1, 2, 3, 4])]);
         d[4..6].copy_from_slice(&2u16.to_be_bytes());
@@ -803,7 +809,11 @@ mod tests {
         // the trailing well-formed record still lands.
         let d = example_dns_reply(
             0,
-            &[(1, 3, 60, &[1, 1, 1, 1]), (1, 1, 60, &[2, 2, 2, 2, 2]), (1, 1, 60, &[8, 8, 8, 8])],
+            &[
+                (1, 3, 60, &[1, 1, 1, 1]),
+                (1, 1, 60, &[2, 2, 2, 2, 2]),
+                (1, 1, 60, &[8, 8, 8, 8]),
+            ],
         );
         let (_, addrs) = extract_answer_addrs(&d).expect("skips are not errors");
         assert_eq!(addrs, vec![("8.8.8.8".parse().unwrap(), 60)]);
@@ -885,7 +895,10 @@ mod tests {
         assert_eq!(udp.sport, 5353);
         assert_eq!(udp.dport, 53);
         assert_eq!(udp.payload, &dns[..]);
-        assert_eq!(parsed.tcp_dport, None, "a UDP packet never carries a TCP dport (#20)");
+        assert_eq!(
+            parsed.tcp_dport, None,
+            "a UDP packet never carries a TCP dport (#20)"
+        );
     }
 
     #[test]
@@ -932,7 +945,10 @@ mod tests {
         let t = IP4_HEADER_LEN;
         p[t + 2..t + 4].copy_from_slice(&443u16.to_be_bytes());
         let parsed = parse_ip_udp(&p).expect("parses");
-        assert_eq!(parsed.tcp_dport, None, "a truncated TCP header never yields a port");
+        assert_eq!(
+            parsed.tcp_dport, None,
+            "a truncated TCP header never yields a port"
+        );
     }
 
     #[test]

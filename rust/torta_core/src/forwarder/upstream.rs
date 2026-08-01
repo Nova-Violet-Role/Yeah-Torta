@@ -17,8 +17,8 @@
 
 use std::net::SocketAddr;
 
-use socket2::{Domain, Protocol, Socket, Type};
 use log::{error, warn};
+use socket2::{Domain, Protocol, Socket, Type};
 use std::os::unix::io::AsRawFd;
 
 use super::run::ProtectFn;
@@ -72,7 +72,7 @@ pub(crate) async fn connect_udp_protected(
             error!("upstream: UDP Socket::new failed for dst={}: {:?}", dst, e);
             witness(fwd, e.raw_os_error());
             return None;
-        },
+        }
     };
     // ★ THE KEYSTONE — protect BEFORE any egress. protect(fd) excludes the fd from the tun.
     if !protect(sock.as_raw_fd()) {
@@ -81,7 +81,10 @@ pub(crate) async fn connect_udp_protected(
         return None; // never dial an unprotected socket
     }
     if let Err(e) = sock.set_nonblocking(true) {
-        error!("upstream: UDP set_nonblocking failed for dst={}: {:?}", dst, e);
+        error!(
+            "upstream: UDP set_nonblocking failed for dst={}: {:?}",
+            dst, e
+        );
         witness(fwd, e.raw_os_error());
         return None;
     }
@@ -98,7 +101,7 @@ pub(crate) async fn connect_udp_protected(
             error!("upstream: UDP from_std failed for dst={}: {:?}", dst, e);
             witness(fwd, e.raw_os_error());
             None
-        },
+        }
     }
 }
 
@@ -219,7 +222,10 @@ pub(crate) async fn connect_tcp_protected(
     //   `a_live_network_dials_v6_freely`        -- this is not "IPv6 off" by another route
     // 13/13 mutants killed, 0 survived, 0 discarded; leanchecker exit 0 / zero bytes.
     if dst.is_ipv6() && !crate::egress::v6_should_attempt() {
-        warn!("upstream: skipping IPv6 dial for dst={} -- v6 egress presumed dead, awaiting probe", dst);
+        warn!(
+            "upstream: skipping IPv6 dial for dst={} -- v6 egress presumed dead, awaiting probe",
+            dst
+        );
         fwd.dial_connect_failed.fetch_add(1, Ordering::Relaxed);
         // ★ SUPPRESSION IS NOT UNREACHABILITY. This used to bump `dial_unreachable`, so the ENGINE
         // ROOM panel reported "dial unreachable 126" for dials TORTA ITSELF declined to make. That
@@ -321,7 +327,10 @@ mod udp_dial_witness_tests {
             + fwd.dial_unreachable.load(Ordering::Relaxed)
             + fwd.dial_timed_out.load(Ordering::Relaxed)
             + fwd.dial_other.load(Ordering::Relaxed);
-        assert_eq!(buckets, 0, "a seam refusal is not a network cause and must not fill a bucket");
+        assert_eq!(
+            buckets, 0,
+            "a seam refusal is not a network cause and must not fill a bucket"
+        );
     }
 
     /// ★ THE LIMIT OF THIS INSTRUMENT, pinned deliberately — and it is load-bearing knowledge for the

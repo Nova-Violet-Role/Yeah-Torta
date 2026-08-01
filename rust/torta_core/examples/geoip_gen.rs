@@ -44,8 +44,7 @@ fn main() {
     let (mut kept, mut skipped, mut overlaps) = (0u64, 0u64, 0u64);
 
     for path in &args[1..] {
-        let text = std::fs::read_to_string(path)
-            .unwrap_or_else(|e| panic!("read {path}: {e}"));
+        let text = std::fs::read_to_string(path).unwrap_or_else(|e| panic!("read {path}: {e}"));
         for line in text.lines() {
             let f: Vec<&str> = line.split('|').collect();
             if f.len() < 7 {
@@ -67,7 +66,9 @@ fn main() {
             let cc2 = [cc_b[0].to_ascii_lowercase(), cc_b[1].to_ascii_lowercase()];
             match typ {
                 "ipv4" => {
-                    let (Ok(ip), Ok(count)) = (start.parse::<std::net::Ipv4Addr>(), value.parse::<u64>()) else {
+                    let (Ok(ip), Ok(count)) =
+                        (start.parse::<std::net::Ipv4Addr>(), value.parse::<u64>())
+                    else {
                         skipped += 1;
                         continue;
                     };
@@ -83,7 +84,8 @@ fn main() {
                     kept += 1;
                 }
                 "ipv6" => {
-                    let (Ok(ip), Ok(prefix)) = (start.parse::<Ipv6Addr>(), value.parse::<u32>()) else {
+                    let (Ok(ip), Ok(prefix)) = (start.parse::<Ipv6Addr>(), value.parse::<u32>())
+                    else {
                         skipped += 1;
                         continue;
                     };
@@ -111,7 +113,14 @@ fn main() {
         "kept={kept} skipped={skipped} overlaps_dropped={overlaps}\n\
          v4: {} allocations -> {} merged ranges + {} gap sentinels = {} bytes\n\
          v6: {} allocations -> {} merged ranges + {} gap sentinels = {} bytes",
-        v4.len(), m4, g4, t4.len(), v6.len(), m6, g6, t6.len(),
+        v4.len(),
+        m4,
+        g4,
+        t4.len(),
+        v6.len(),
+        m6,
+        g6,
+        t6.len(),
     );
 }
 
@@ -163,5 +172,9 @@ fn emit(map: &Ranges, key_bytes: usize) -> (Vec<u8>, u64, u64) {
 }
 
 fn key_max(key_bytes: usize) -> u64 {
-    if key_bytes == 4 { u32::MAX as u64 } else { u64::MAX }
+    if key_bytes == 4 {
+        u32::MAX as u64
+    } else {
+        u64::MAX
+    }
 }

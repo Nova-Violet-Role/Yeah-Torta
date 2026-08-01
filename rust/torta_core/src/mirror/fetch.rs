@@ -230,8 +230,8 @@ async fn fetch_via_addrs(
     let mut cfg = (*tls).clone();
     cfg.alpn_protocols = vec![b"h2".to_vec(), b"http/1.1".to_vec()];
     let connector = tokio_rustls::TlsConnector::from(Arc::new(cfg));
-    let server_name = rustls::pki_types::ServerName::try_from(host.to_string())
-        .map_err(|_| FetchError::Tls)?;
+    let server_name =
+        rustls::pki_types::ServerName::try_from(host.to_string()).map_err(|_| FetchError::Tls)?;
 
     // Try each address in answer order (A before AAAA) — a phone on a v4-only carrier must not be
     // stranded by a AAAA that cannot be reached.
@@ -267,10 +267,12 @@ async fn get_h2<S>(stream: S, uri: &Uri) -> Result<Vec<u8>, FetchError>
 where
     S: tokio::io::AsyncRead + tokio::io::AsyncWrite + Unpin + Send + 'static,
 {
-    let (mut sender, conn) =
-        hyper::client::conn::http2::handshake(TokioExecutor::new(), hyper_util::rt::TokioIo::new(stream))
-            .await
-            .map_err(|_| FetchError::Http)?;
+    let (mut sender, conn) = hyper::client::conn::http2::handshake(
+        TokioExecutor::new(),
+        hyper_util::rt::TokioIo::new(stream),
+    )
+    .await
+    .map_err(|_| FetchError::Http)?;
     // The connection future must be driven for the request to make progress; it ends when the response
     // completes and the sender drops.
     tokio::spawn(async move {
@@ -281,7 +283,10 @@ where
         .uri(uri.clone())
         .body(Empty::<Bytes>::new())
         .map_err(|_| FetchError::Http)?;
-    let resp = sender.send_request(req).await.map_err(|_| FetchError::Http)?;
+    let resp = sender
+        .send_request(req)
+        .await
+        .map_err(|_| FetchError::Http)?;
     read_capped(resp).await
 }
 
@@ -290,9 +295,10 @@ async fn get_h1<S>(stream: S, uri: &Uri, host: &str, port: u16) -> Result<Vec<u8
 where
     S: tokio::io::AsyncRead + tokio::io::AsyncWrite + Unpin + Send + 'static,
 {
-    let (mut sender, conn) = hyper::client::conn::http1::handshake(hyper_util::rt::TokioIo::new(stream))
-        .await
-        .map_err(|_| FetchError::Http)?;
+    let (mut sender, conn) =
+        hyper::client::conn::http1::handshake(hyper_util::rt::TokioIo::new(stream))
+            .await
+            .map_err(|_| FetchError::Http)?;
     tokio::spawn(async move {
         let _ = conn.await;
     });
@@ -312,7 +318,10 @@ where
         .header(hyper::header::HOST, authority)
         .body(Empty::<Bytes>::new())
         .map_err(|_| FetchError::Http)?;
-    let resp = sender.send_request(req).await.map_err(|_| FetchError::Http)?;
+    let resp = sender
+        .send_request(req)
+        .await
+        .map_err(|_| FetchError::Http)?;
     read_capped(resp).await
 }
 

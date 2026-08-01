@@ -272,7 +272,11 @@ mod tests {
             }
         }
         // Negative control: if the loop never ran, the assertion above proves nothing.
-        assert_eq!(checked, 65536 * 2, "the exhaustive sweep did not cover the port space");
+        assert_eq!(
+            checked,
+            65536 * 2,
+            "the exhaustive sweep did not cover the port space"
+        );
     }
 
     /// ★ IPv4/IPv6 SEPARATION — a v4 flow and a v6 flow must not share a shaping identity.
@@ -396,30 +400,61 @@ mod tests {
     #[test]
     fn tin_classifier_matches_the_diffserv_law() {
         // DNS plane — CRITICAL on both transports (53 demux + 853 DoT).
-        assert_eq!(tin_for_flow(&key_to(53, Proto::Udp)), ProbePriority::Critical);
-        assert_eq!(tin_for_flow(&key_to(53, Proto::Tcp)), ProbePriority::Critical);
-        assert_eq!(tin_for_flow(&key_to(853, Proto::Tcp)), ProbePriority::Critical);
+        assert_eq!(
+            tin_for_flow(&key_to(53, Proto::Udp)),
+            ProbePriority::Critical
+        );
+        assert_eq!(
+            tin_for_flow(&key_to(53, Proto::Tcp)),
+            ProbePriority::Critical
+        );
+        assert_eq!(
+            tin_for_flow(&key_to(853, Proto::Tcp)),
+            ProbePriority::Critical
+        );
         // Interactive page-load class — HIGH (TLS/QUIC, HTTP, SSH).
         assert_eq!(tin_for_flow(&key_to(443, Proto::Tcp)), ProbePriority::High);
         assert_eq!(tin_for_flow(&key_to(443, Proto::Udp)), ProbePriority::High); // QUIC
         assert_eq!(tin_for_flow(&key_to(80, Proto::Tcp)), ProbePriority::High);
         assert_eq!(tin_for_flow(&key_to(22, Proto::Tcp)), ProbePriority::High);
         // Bulk — NORMAL.
-        assert_eq!(tin_for_flow(&key_to(8080, Proto::Tcp)), ProbePriority::Normal);
-        assert_eq!(tin_for_flow(&key_to(6881, Proto::Tcp)), ProbePriority::Normal);
+        assert_eq!(
+            tin_for_flow(&key_to(8080, Proto::Tcp)),
+            ProbePriority::Normal
+        );
+        assert_eq!(
+            tin_for_flow(&key_to(6881, Proto::Tcp)),
+            ProbePriority::Normal
+        );
     }
 
     #[test]
     fn widened_flow_key_is_deterministic_and_sport_distinct() {
-        let a = SessionKey::new(Proto::Tcp, v4([10, 1, 10, 1], 44321), v4([140, 82, 121, 3], 443));
-        let a2 = SessionKey::new(Proto::Tcp, v4([10, 1, 10, 1], 44321), v4([140, 82, 121, 3], 443));
+        let a = SessionKey::new(
+            Proto::Tcp,
+            v4([10, 1, 10, 1], 44321),
+            v4([140, 82, 121, 3], 443),
+        );
+        let a2 = SessionKey::new(
+            Proto::Tcp,
+            v4([10, 1, 10, 1], 44321),
+            v4([140, 82, 121, 3], 443),
+        );
         // Deterministic: the same 5-tuple keys the same flow across calls.
         assert_eq!(flow_key(&a), flow_key(&a2));
         // A different sport is a DIFFERENT flow (the NAT-correctness law from session.rs).
-        let b = SessionKey::new(Proto::Tcp, v4([10, 1, 10, 1], 44322), v4([140, 82, 121, 3], 443));
+        let b = SessionKey::new(
+            Proto::Tcp,
+            v4([10, 1, 10, 1], 44322),
+            v4([140, 82, 121, 3], 443),
+        );
         assert_ne!(flow_key(&a), flow_key(&b));
         // A different proto over the same addresses is a different flow.
-        let c = SessionKey::new(Proto::Udp, v4([10, 1, 10, 1], 44321), v4([140, 82, 121, 3], 443));
+        let c = SessionKey::new(
+            Proto::Udp,
+            v4([10, 1, 10, 1], 44321),
+            v4([140, 82, 121, 3], 443),
+        );
         assert_ne!(flow_key(&a), flow_key(&c));
     }
 
@@ -465,7 +500,11 @@ mod tests {
         assert_eq!(s.write_budget(), grown as usize * SHAPE_SEGMENT_BYTES);
         // A stall sheds window (the LineRate loss rule) — never below the floor.
         s.on_stall();
-        assert!(s.cwnd() < grown, "stall did not shed: {} !< {grown}", s.cwnd());
+        assert!(
+            s.cwnd() < grown,
+            "stall did not shed: {} !< {grown}",
+            s.cwnd()
+        );
         assert!(s.cwnd() >= 1);
     }
     /// ★ Rung D — THE PLANE YOU FEED IS THE PLANE YOU PACE.
@@ -498,7 +537,11 @@ mod tests {
         u.on_stall();
         assert!(u.cwnd() < grown, "a UDP stall did not shed the UDP window");
         assert!(u.cwnd() >= 1, "never below the floor");
-        assert_eq!(u.yeah.cwnd(), 1, "a UDP stall must not touch the TCP-family window");
+        assert_eq!(
+            u.yeah.cwnd(),
+            1,
+            "a UDP stall must not touch the TCP-family window"
+        );
     }
     /// EXHAUSTIVE over the whole u16 destination-port space: the tin demux and the pacing
     /// predicate obey the routing law for EVERY port, on BOTH transports.
@@ -529,7 +572,10 @@ mod tests {
             if matches!(tcp, ProbePriority::Critical | ProbePriority::High) {
                 assert!(!paced, "a latency-class flow on port {port} would be paced");
             } else {
-                assert!(paced, "a bulk flow on port {port} would escape the logarithm");
+                assert!(
+                    paced,
+                    "a bulk flow on port {port} would escape the logarithm"
+                );
             }
         }
         // NEGATIVE CONTROL: the law is not vacuous -- both branches were actually taken.

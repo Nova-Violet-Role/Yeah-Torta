@@ -45,8 +45,8 @@ use rand_core_09::{CryptoRng, RngCore};
 use tokio::sync::Mutex;
 
 use odoh_rs::{
-    compose, decrypt_response, encrypt_query, parse, ObliviousDoHConfigContents, ObliviousDoHConfigs,
-    ObliviousDoHMessage, ObliviousDoHMessagePlaintext, ODOH_HTTP_HEADER,
+    compose, decrypt_response, encrypt_query, parse, ObliviousDoHConfigContents,
+    ObliviousDoHConfigs, ObliviousDoHMessage, ObliviousDoHMessagePlaintext, ODOH_HTTP_HEADER,
 };
 
 use super::transport::{ExchangeFuture, Transport, TransportError};
@@ -232,7 +232,10 @@ impl OdohTransport {
                 encode_component(&self.target.authority),
                 encode_component(&self.target.path_and_query),
             ),
-            None => format!("https://{}{}", self.target.authority, self.target.path_and_query),
+            None => format!(
+                "https://{}{}",
+                self.target.authority, self.target.path_and_query
+            ),
         }
     }
 
@@ -298,8 +301,8 @@ impl OdohTransport {
         }
         let body = read_capped(resp.into_body()).await?;
         let mut buf = Bytes::from(body);
-        let configs: ObliviousDoHConfigs =
-            parse(&mut buf).map_err(|e| TransportError::Connect(format!("odoh config parse: {e}")))?;
+        let configs: ObliviousDoHConfigs = parse(&mut buf)
+            .map_err(|e| TransportError::Connect(format!("odoh config parse: {e}")))?;
         configs
             .supported()
             .into_iter()
@@ -385,8 +388,9 @@ impl Transport for OdohTransport {
                 }
 
                 let mut rbuf = Bytes::from(raw);
-                let resp_msg: ObliviousDoHMessage = parse(&mut rbuf)
-                    .map_err(|e| TransportError::BadResponse(format!("odoh response parse: {e}")))?;
+                let resp_msg: ObliviousDoHMessage = parse(&mut rbuf).map_err(|e| {
+                    TransportError::BadResponse(format!("odoh response parse: {e}"))
+                })?;
                 let opened = decrypt_response(&plaintext, &resp_msg, secret)
                     .map_err(|e| TransportError::BadResponse(format!("odoh decrypt: {e}")))?;
 
@@ -422,7 +426,9 @@ where
         let frame = frame.map_err(|e| TransportError::Exchange(format!("odoh body: {e}")))?;
         if let Some(chunk) = frame.data_ref() {
             if buf.len() + chunk.len() > MAX_BODY {
-                return Err(TransportError::BadResponse("odoh body exceeds 64KiB cap".into()));
+                return Err(TransportError::BadResponse(
+                    "odoh body exceeds 64KiB cap".into(),
+                ));
             }
             buf.extend_from_slice(chunk);
         }
@@ -471,7 +477,8 @@ mod tests {
 
     #[test]
     fn direct_endpoint_has_no_relay_params() {
-        let t = OdohTransport::new("odoh:direct", "https://odoh.example.net/dns-query", None).unwrap();
+        let t =
+            OdohTransport::new("odoh:direct", "https://odoh.example.net/dns-query", None).unwrap();
         assert_eq!(t.query_endpoint(), "https://odoh.example.net/dns-query");
         assert!(t.relay_name().is_none());
     }

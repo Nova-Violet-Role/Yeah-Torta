@@ -174,9 +174,7 @@ impl DeviceCa {
             .signed_by(&leaf_key, &self.ca, &self.key_pair)
             .map_err(|e| format!("leaf sign: {e}"))?;
 
-        let key_der = PrivateKeyDer::Pkcs8(PrivatePkcs8KeyDer::from(
-            leaf_key.serialize_der(),
-        ));
+        let key_der = PrivateKeyDer::Pkcs8(PrivatePkcs8KeyDer::from(leaf_key.serialize_der()));
         let signing_key = rustls::crypto::ring::sign::any_supported_type(&key_der)
             .map_err(|e| format!("leaf signing key: {e}"))?;
         // The chain is leaf-then-CA so a client that trusts the CA can build the path without having to
@@ -203,7 +201,10 @@ impl std::fmt::Debug for CentauriResolver {
     /// Hand-written so no derive can ever print key material.
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("CentauriResolver")
-            .field("leaves_cached", &self.leaves.lock().map(|m| m.len()).unwrap_or(0))
+            .field(
+                "leaves_cached",
+                &self.leaves.lock().map(|m| m.len()).unwrap_or(0),
+            )
             .finish_non_exhaustive()
     }
 }
@@ -250,7 +251,10 @@ impl CentauriResolver {
         let minted = self.ca.mint_leaf(&host).ok()?;
         // Renew with margin so a leaf is replaced BEFORE it expires, never after: a client that starts a
         // handshake moments before the boundary must still get a certificate valid for that handshake.
-        let renew_after = plus_days(leaf_not_before(), LEAF_VALIDITY_DAYS - LEAF_RENEW_MARGIN_DAYS);
+        let renew_after = plus_days(
+            leaf_not_before(),
+            LEAF_VALIDITY_DAYS - LEAF_RENEW_MARGIN_DAYS,
+        );
         cache.insert(
             host,
             CachedLeaf {
@@ -310,13 +314,18 @@ fn distinguished_name(cn: &str) -> rcgen::DistinguishedName {
 /// needs and keeps the anchor from landing exactly on a boundary.
 fn ca_not_before() -> time::OffsetDateTime {
     let today = time::OffsetDateTime::now_utc().date();
-    let month_start = time::Date::from_calendar_date(today.year(), today.month(), 1).unwrap_or(today);
+    let month_start =
+        time::Date::from_calendar_date(today.year(), today.month(), 1).unwrap_or(today);
     month_start.midnight().assume_utc() - time::Duration::days(1)
 }
 
 /// Day-granular counterpart for leaf certificates (see [`ca_not_before`] for the reasoning).
 fn leaf_not_before() -> time::OffsetDateTime {
-    time::OffsetDateTime::now_utc().date().midnight().assume_utc() - time::Duration::days(1)
+    time::OffsetDateTime::now_utc()
+        .date()
+        .midnight()
+        .assume_utc()
+        - time::Duration::days(1)
 }
 
 /// `anchor + days` — derived from an already-coarsened anchor, so the expiry is equally coarse and
@@ -343,7 +352,11 @@ mod tests {
             assert_eq!(anchor.hour(), 0, "hour must be zeroed: {anchor}");
             assert_eq!(anchor.minute(), 0, "minute must be zeroed: {anchor}");
             assert_eq!(anchor.second(), 0, "second must be zeroed: {anchor}");
-            assert_eq!(anchor.nanosecond(), 0, "nanosecond must be zeroed: {anchor}");
+            assert_eq!(
+                anchor.nanosecond(),
+                0,
+                "nanosecond must be zeroed: {anchor}"
+            );
             assert!(
                 anchor < time::OffsetDateTime::now_utc(),
                 "anchor must be backdated for clock-skew tolerance: {anchor}"

@@ -42,12 +42,23 @@ for (const f of files.sort()) {
   const rust = c.filter((l) => /^warning: /.test(l)).length;
   const kotlin = c.filter((l) => /^w: file/.test(l)).length;
   const err = c.filter((l) => /^##\[error\]/.test(l)).length;
-  total += rust + kotlin + err;
-  rows.push({ f, rust, kotlin, err, bytes: raw.length });
+  // ##[warning] -- the GitHub ANNOTATION channel, which this sweep did not count until
+  // 2026-08-01. `echo "::warning::..."` from a step, and the runner's own notices, surface only
+  // here: they are not `warning:` and not `w: file`, so every one of them was invisible while the
+  // sweep reported "TOTAL: 0". Measured on run 30699550890, which had SIX -- one of them
+  // "rustfmt differences present", i.e. a standing warning about the crate's 573 formatting
+  // diffs that I had been reporting as a clean run.
+  //
+  // A sweep is only as honest as the channels it reads. Counting two out of three and printing a
+  // total is the same defect as a gate that passes on an empty log.
+  const ann = c.filter((l) => /^##\[warning\]/.test(l)).length;
+  total += rust + kotlin + err + ann;
+  rows.push({ f, rust, kotlin, err, ann, bytes: raw.length });
 }
 
 for (const r of rows) {
-  console.log("  " + r.f.padEnd(42) + " rust=" + r.rust + " kotlin=" + r.kotlin + " err=" + r.err + "  (" + r.bytes + "B)");
+  console.log("  " + r.f.padEnd(42) + " rust=" + r.rust + " kotlin=" + r.kotlin +
+    " err=" + r.err + " annot=" + r.ann + "  (" + r.bytes + "B)");
 }
 if (tiny > 0) {
   console.log("  FAIL: " + tiny + " job log(s) under 200 bytes -- truncated or empty, so the sweep proves nothing.");

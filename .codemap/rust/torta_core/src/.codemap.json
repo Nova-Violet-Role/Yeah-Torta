@@ -2,12 +2,12 @@
   "directory": "rust\\torta_core\\src",
   "files": {
     "app_state.rs": {
-      "hash": "8e7485eb6385",
-      "indexed_at": "2026-07-26T19:12:57.759564+00:00",
+      "hash": "d37206659b1a",
+      "indexed_at": "2026-08-01T12:51:59.396655+00:00",
       "language": "rust",
-      "lines": 411,
-      "mtime_ns": 1785030832353605600,
-      "size": 17795,
+      "lines": 433,
+      "mtime_ns": 1785588610921044400,
+      "size": 18046,
       "symbols": [
         {
           "lines": [
@@ -41,7 +41,7 @@
           "docstring": "truncated on encode (and refused on decode) so the blob is bounded from both sides.",
           "lines": [
             103,
-            117
+            118
           ],
           "name": "encode_app_state",
           "signature": "(state: &AppState)",
@@ -50,8 +50,8 @@
         {
           "docstring": "foreign/forward version yields [`AppState::cold`] (never an OOB read, never a panic).",
           "lines": [
-            122,
-            145
+            123,
+            146
           ],
           "name": "decode_app_state",
           "signature": "(payload: &[u8])",
@@ -60,8 +60,8 @@
         {
           "docstring": "safe: a token here is ASCII in practice, but a multi-byte tail is dropped whole, never split).",
           "lines": [
-            149,
-            157
+            150,
+            158
           ],
           "name": "put_bounded_str",
           "signature": "(buf: &mut Vec<u8>, s: &str)",
@@ -70,8 +70,8 @@
         {
           "docstring": "Read one length-prefixed string; `None` on truncation, over-bound length, or invalid UTF-8.",
           "lines": [
-            160,
-            172
+            161,
+            173
           ],
           "name": "read_bounded_str",
           "signature": "(cur: &mut &[u8])",
@@ -80,8 +80,8 @@
         {
           "docstring": "Take one byte off the cursor.",
           "lines": [
-            175,
-            179
+            176,
+            180
           ],
           "name": "take_one",
           "signature": "(cur: &mut &[u8])",
@@ -89,8 +89,8 @@
         },
         {
           "lines": [
-            188,
-            193
+            189,
+            194
           ],
           "name": "AppStateStore",
           "type": "struct"
@@ -99,8 +99,8 @@
           "children": [
             {
               "lines": [
-                201,
-                210
+                202,
+                211
               ],
               "name": "new",
               "signature": "(durable_dir: String)",
@@ -109,8 +109,8 @@
             {
               "docstring": "ONCE at boot. Panic-firewalled \u2192 cold.",
               "lines": [
-                215,
-                227
+                216,
+                228
               ],
               "name": "rehydrate",
               "signature": "(&self)",
@@ -119,8 +119,8 @@
             {
               "docstring": "The current RAM-tier [`AppState`] \u2014 a one-glance read, NO disk IO. Panic/poison \u2192 cold.",
               "lines": [
-                230,
-                236
+                231,
+                237
               ],
               "name": "snapshot",
               "signature": "(&self)",
@@ -129,8 +129,8 @@
             {
               "docstring": "absent-key read). RAM read, no disk IO.",
               "lines": [
-                240,
-                246
+                241,
+                247
               ],
               "name": "saved_dnscrypt_state",
               "signature": "(&self)",
@@ -139,8 +139,8 @@
             {
               "docstring": "(best-effort durability, the persist contract).",
               "lines": [
-                251,
-                253
+                252,
+                254
               ],
               "name": "set_saved_dnscrypt_state",
               "signature": "(&self, token: String)",
@@ -149,8 +149,8 @@
             {
               "docstring": "The operation-mode token (`\"\"` when never written). RAM read, no disk IO.",
               "lines": [
-                256,
-                262
+                257,
+                263
               ],
               "name": "operation_mode",
               "signature": "(&self)",
@@ -159,8 +159,8 @@
             {
               "docstring": "Persist the operation-mode token \u2014 CONTROL-PLANE write-through.",
               "lines": [
-                265,
-                267
+                266,
+                268
               ],
               "name": "set_operation_mode",
               "signature": "(&self, token: String)",
@@ -169,8 +169,8 @@
             {
               "docstring": "armed service).",
               "lines": [
-                271,
-                277
+                272,
+                278
               ],
               "name": "vpn_service_enabled",
               "signature": "(&self)",
@@ -179,8 +179,8 @@
             {
               "docstring": "Persist the service-armed latch \u2014 CONTROL-PLANE write-through.",
               "lines": [
-                280,
-                282
+                281,
+                283
               ],
               "name": "set_vpn_service_enabled",
               "signature": "(&self, on: bool)",
@@ -189,8 +189,8 @@
             {
               "docstring": "(worst case the seeder re-checks \u2014 it is idempotent by design).",
               "lines": [
-                286,
-                292
+                287,
+                293
               ],
               "name": "default_preset_seeded",
               "signature": "(&self)",
@@ -199,8 +199,8 @@
             {
               "docstring": "Persist the seeded latch \u2014 CONTROL-PLANE write-through (fires once per install).",
               "lines": [
-                295,
-                297
+                296,
+                298
               ],
               "name": "set_default_preset_seeded",
               "signature": "(&self, on: bool)",
@@ -209,8 +209,8 @@
             {
               "docstring": "forget-path. Best-effort + non-failing. Panic \u2192 no-op.",
               "lines": [
-                301,
-                308
+                302,
+                309
               ],
               "name": "clear",
               "signature": "(&self)",
@@ -218,8 +218,8 @@
             }
           ],
           "lines": [
-            196,
-            309
+            197,
+            310
           ],
           "name": "AppStateStore",
           "type": "impl"
@@ -229,8 +229,8 @@
             {
               "docstring": "on a durable write; `false` on reject/poison/panic (RAM still updates when lockable).",
               "lines": [
-                315,
-                329
+                316,
+                330
               ],
               "name": "mutate",
               "signature": "(&self, f: impl FnOnce(&mut AppState))",
@@ -238,8 +238,8 @@
             }
           ],
           "lines": [
-            311,
-            330
+            312,
+            331
           ],
           "name": "AppStateStore",
           "type": "impl"
@@ -249,8 +249,8 @@
             {
               "docstring": "A unique-per-test temp dir (process-unique counter + tag \u2014 the inu/object.rs pattern).",
               "lines": [
-                337,
-                345
+                338,
+                346
               ],
               "name": "temp_dir",
               "signature": "(tag: &str)",
@@ -258,8 +258,8 @@
             },
             {
               "lines": [
-                347,
-                354
+                348,
+                355
               ],
               "name": "a_state",
               "signature": "()",
@@ -267,8 +267,8 @@
             },
             {
               "lines": [
-                357,
-                362
+                358,
+                366
               ],
               "name": "codec_round_trips_every_field",
               "signature": "()",
@@ -276,8 +276,8 @@
             },
             {
               "lines": [
-                365,
-                380
+                369,
+                387
               ],
               "name": "hostile_blobs_decode_cold_never_panic",
               "signature": "()",
@@ -285,8 +285,8 @@
             },
             {
               "lines": [
-                383,
-                389
+                390,
+                399
               ],
               "name": "over_long_token_is_truncated_on_encode_and_still_decodes",
               "signature": "()",
@@ -294,8 +294,8 @@
             },
             {
               "lines": [
-                392,
-                410
+                402,
+                432
               ],
               "name": "store_writes_through_and_survives_reopen",
               "signature": "()",
@@ -303,8 +303,8 @@
             }
           ],
           "lines": [
-            333,
-            411
+            334,
+            433
           ],
           "name": "tests",
           "type": "module"
@@ -312,12 +312,12 @@
       ]
     },
     "blocklist.rs": {
-      "hash": "e86d315ea4ba",
-      "indexed_at": "2026-08-01T09:56:53.781014+00:00",
+      "hash": "b1e53d0328af",
+      "indexed_at": "2026-08-01T12:52:01.731428+00:00",
       "language": "rust",
-      "lines": 1803,
-      "mtime_ns": 1785578159568099800,
-      "size": 84047,
+      "lines": 1813,
+      "mtime_ns": 1785588610727043500,
+      "size": 84139,
       "symbols": [
         {
           "lines": [
@@ -726,7 +726,7 @@
           "docstring": "Read-only: takes read locks on both stores and releases them. Never panics (poison-recovering).",
           "lines": [
             977,
-            993
+            998
           ],
           "name": "domain_provenance",
           "signature": "(domain: &str, now_days: u32)",
@@ -735,8 +735,8 @@
         {
           "docstring": "Returns `(trust, contributing_sources)`.",
           "lines": [
-            1005,
-            1017
+            1010,
+            1024
           ],
           "name": "list_trust_of",
           "signature": "(fp: u64, active_mask: trust::SourceMask, now_days: u32)",
@@ -745,8 +745,8 @@
         {
           "docstring": "keeps corroboration honest.",
           "lines": [
-            1025,
-            1036
+            1032,
+            1046
           ],
           "name": "installed_active_mask",
           "signature": "()",
@@ -755,8 +755,8 @@
         {
           "docstring": "currently backing?\" without re-reading the set.",
           "lines": [
-            1041,
-            1044
+            1051,
+            1054
           ],
           "name": "source_fingerprint",
           "signature": "(source_id: u32)",
@@ -764,8 +764,8 @@
         },
         {
           "lines": [
-            1046,
-            1049
+            1056,
+            1059
           ],
           "name": "installed_count",
           "signature": "()",
@@ -774,8 +774,8 @@
         {
           "docstring": "fails to load.",
           "lines": [
-            1064,
-            1067
+            1074,
+            1077
           ],
           "name": "export_installed_artifact",
           "signature": "()",
@@ -784,8 +784,8 @@
         {
           "docstring": "and it is worth surfacing on device precisely because a decode-only build can never notice it.",
           "lines": [
-            1074,
-            1092
+            1084,
+            1102
           ],
           "name": "verify_artifact_round_trip",
           "signature": "()",
@@ -794,8 +794,8 @@
         {
           "docstring": "The installed list's set-deterministic content fingerprint (0 if none) \u2014 P8's trust/dedup handle.",
           "lines": [
-            1095,
-            1098
+            1105,
+            1108
           ],
           "name": "installed_fingerprint",
           "signature": "()",
@@ -805,8 +805,8 @@
           "children": [
             {
               "lines": [
-                1113,
-                1115
+                1123,
+                1125
               ],
               "name": "lock_global",
               "signature": "()",
@@ -814,8 +814,8 @@
             },
             {
               "lines": [
-                1117,
-                1124
+                1127,
+                1134
               ],
               "name": "compiled",
               "signature": "(domains: &[&str])",
@@ -823,8 +823,8 @@
             },
             {
               "lines": [
-                1127,
-                1136
+                1137,
+                1146
               ],
               "name": "blocks_exact_and_subdomains_but_never_overblocks",
               "signature": "()",
@@ -832,8 +832,8 @@
             },
             {
               "lines": [
-                1139,
-                1145
+                1149,
+                1155
               ],
               "name": "case_dot_and_unicode_insensitive",
               "signature": "()",
@@ -841,8 +841,8 @@
             },
             {
               "lines": [
-                1148,
-                1176
+                1158,
+                1186
               ],
               "name": "d21_zero_alloc_walk_matches_normalize_exactly",
               "signature": "()",
@@ -850,8 +850,8 @@
             },
             {
               "lines": [
-                1179,
-                1189
+                1189,
+                1199
               ],
               "name": "wildcard_entries_block_the_zone",
               "signature": "()",
@@ -859,8 +859,8 @@
             },
             {
               "lines": [
-                1192,
-                1207
+                1202,
+                1217
               ],
               "name": "parse_host_adblock_ip_and_junk",
               "signature": "()",
@@ -868,8 +868,8 @@
             },
             {
               "lines": [
-                1210,
-                1213
+                1220,
+                1223
               ],
               "name": "rejects_over_deep_names",
               "signature": "()",
@@ -877,8 +877,8 @@
             },
             {
               "lines": [
-                1216,
-                1235
+                1226,
+                1245
               ],
               "name": "fingerprint_and_count_are_order_and_format_independent",
               "signature": "()",
@@ -886,8 +886,8 @@
             },
             {
               "lines": [
-                1238,
-                1248
+                1248,
+                1258
               ],
               "name": "compile_text_and_bounded_lines",
               "signature": "()",
@@ -895,8 +895,8 @@
             },
             {
               "lines": [
-                1251,
-                1259
+                1261,
+                1269
               ],
               "name": "merge_stacks_lists",
               "signature": "()",
@@ -904,8 +904,8 @@
             },
             {
               "lines": [
-                1264,
-                1290
+                1274,
+                1300
               ],
               "name": "artifact_roundtrip_preserves_count_fp_and_verdicts",
               "signature": "()",
@@ -913,8 +913,8 @@
             },
             {
               "lines": [
-                1293,
-                1312
+                1303,
+                1322
               ],
               "name": "artifact_header_layout_is_exact",
               "signature": "()",
@@ -922,8 +922,8 @@
             },
             {
               "lines": [
-                1315,
-                1324
+                1325,
+                1334
               ],
               "name": "empty_set_artifact_roundtrips",
               "signature": "()",
@@ -931,8 +931,8 @@
             },
             {
               "lines": [
-                1327,
-                1331
+                1337,
+                1341
               ],
               "name": "bad_magic_is_rejected",
               "signature": "()",
@@ -940,8 +940,8 @@
             },
             {
               "lines": [
-                1334,
-                1338
+                1344,
+                1348
               ],
               "name": "wrong_version_is_rejected",
               "signature": "()",
@@ -949,8 +949,8 @@
             },
             {
               "lines": [
-                1341,
-                1349
+                1351,
+                1359
               ],
               "name": "wrong_algo_and_nonzero_flags_are_rejected",
               "signature": "()",
@@ -958,8 +958,8 @@
             },
             {
               "lines": [
-                1352,
-                1362
+                1362,
+                1372
               ],
               "name": "truncated_artifacts_are_rejected",
               "signature": "()",
@@ -967,8 +967,8 @@
             },
             {
               "lines": [
-                1365,
-                1370
+                1375,
+                1380
               ],
               "name": "fingerprint_mismatch_is_rejected",
               "signature": "()",
@@ -976,8 +976,8 @@
             },
             {
               "lines": [
-                1373,
-                1380
+                1383,
+                1390
               ],
               "name": "over_long_record_len_is_rejected",
               "signature": "()",
@@ -985,8 +985,8 @@
             },
             {
               "lines": [
-                1383,
-                1397
+                1393,
+                1407
               ],
               "name": "artifact_installs_into_global_and_query_sees_it",
               "signature": "()",
@@ -994,8 +994,8 @@
             },
             {
               "lines": [
-                1400,
-                1412
+                1410,
+                1422
               ],
               "name": "artifact_merges_onto_a_text_list",
               "signature": "()",
@@ -1003,8 +1003,8 @@
             },
             {
               "lines": [
-                1415,
-                1419
+                1425,
+                1429
               ],
               "name": "bad_artifact_does_not_arm_and_returns_none",
               "signature": "()",
@@ -1012,8 +1012,8 @@
             },
             {
               "lines": [
-                1422,
-                1440
+                1432,
+                1450
               ],
               "name": "adversarial_domains_survive_with_stable_fingerprint",
               "signature": "()",
@@ -1021,8 +1021,8 @@
             },
             {
               "lines": [
-                1446,
-                1470
+                1456,
+                1480
               ],
               "name": "a2_two_sources_record_both_bits",
               "signature": "()",
@@ -1030,8 +1030,8 @@
             },
             {
               "lines": [
-                1475,
-                1518
+                1485,
+                1528
               ],
               "name": "a2_provenance_never_perturbs_the_fingerprint",
               "signature": "()",
@@ -1039,8 +1039,8 @@
             },
             {
               "lines": [
-                1523,
-                1541
+                1533,
+                1551
               ],
               "name": "a2_legacy_compile_text_fingerprint_byte_identical",
               "signature": "()",
@@ -1048,8 +1048,8 @@
             },
             {
               "lines": [
-                1546,
-                1579
+                1556,
+                1589
               ],
               "name": "a2_is_blocked_verdicts_unchanged_by_provenance",
               "signature": "()",
@@ -1057,8 +1057,8 @@
             },
             {
               "lines": [
-                1584,
-                1623
+                1594,
+                1633
               ],
               "name": "a2_install_with_source_merges_provenance",
               "signature": "()",
@@ -1066,8 +1066,8 @@
             },
             {
               "lines": [
-                1628,
-                1650
+                1638,
+                1660
               ],
               "name": "a2_source_aware_walk_matches_source_mask",
               "signature": "()",
@@ -1076,8 +1076,8 @@
             {
               "docstring": "test and an install test cannot interleave a `query_action` against a mid-swap GLOBAL.",
               "lines": [
-                1659,
-                1661
+                1669,
+                1671
               ],
               "name": "reset_block_action",
               "signature": "()",
@@ -1085,8 +1085,8 @@
             },
             {
               "lines": [
-                1665,
-                1670
+                1675,
+                1680
               ],
               "name": "block_action_defaults_to_nxdomain",
               "signature": "()",
@@ -1094,8 +1094,8 @@
             },
             {
               "lines": [
-                1675,
-                1700
+                1685,
+                1710
               ],
               "name": "block_action_selector_round_trips_each_variant",
               "signature": "()",
@@ -1103,8 +1103,8 @@
             },
             {
               "lines": [
-                1705,
-                1726
+                1715,
+                1736
               ],
               "name": "block_action_zerosink_clears_a_prior_custom_pin",
               "signature": "()",
@@ -1112,8 +1112,8 @@
             },
             {
               "lines": [
-                1731,
-                1761
+                1741,
+                1771
               ],
               "name": "query_action_returns_active_action_only_for_blocked_names",
               "signature": "()",
@@ -1121,8 +1121,8 @@
             },
             {
               "lines": [
-                1766,
-                1781
+                1776,
+                1791
               ],
               "name": "custom_ip_without_a_pin_degrades_to_nxdomain",
               "signature": "()",
@@ -1130,8 +1130,8 @@
             },
             {
               "lines": [
-                1786,
-                1802
+                1796,
+                1812
               ],
               "name": "block_action_survives_a_blocklist_reinstall",
               "signature": "()",
@@ -1139,8 +1139,8 @@
             }
           ],
           "lines": [
-            1110,
-            1803
+            1120,
+            1813
           ],
           "name": "tests",
           "type": "module"
@@ -1148,12 +1148,12 @@
       ]
     },
     "centauri_discovery.rs": {
-      "hash": "f40622037b54",
-      "indexed_at": "2026-08-01T00:01:32.673664+00:00",
+      "hash": "9f71ddcd4939",
+      "indexed_at": "2026-08-01T12:52:02.309925+00:00",
       "language": "rust",
-      "lines": 976,
-      "mtime_ns": 1785542463126433900,
-      "size": 45378,
+      "lines": 1021,
+      "mtime_ns": 1785588611002046000,
+      "size": 45049,
       "symbols": [
         {
           "lines": [
@@ -1289,7 +1289,7 @@
           "docstring": "Distinct discovered hosts (the dashboard's \"M discovered\" count).",
           "lines": [
             366,
-            371
+            368
           ],
           "name": "count",
           "signature": "()",
@@ -1298,8 +1298,8 @@
         {
           "docstring": "Cumulative cdn-shaped observations ever (the \"grows with you\" volume).",
           "lines": [
-            374,
-            376
+            371,
+            373
           ],
           "name": "observed_total",
           "signature": "()",
@@ -1308,8 +1308,8 @@
         {
           "docstring": "the order is deterministic + host-testable.",
           "lines": [
-            380,
-            388
+            377,
+            389
           ],
           "name": "top",
           "signature": "(n: usize)",
@@ -1318,8 +1318,8 @@
         {
           "docstring": "discovered set on its own, and the corpus union happens at the single roster choke point.",
           "lines": [
-            416,
-            429
+            417,
+            430
           ],
           "name": "promotable",
           "signature": "()",
@@ -1328,8 +1328,8 @@
         {
           "docstring": "How many discovered hosts currently satisfy the promotion law (the dashboard's \"absorbed\" tally).",
           "lines": [
-            432,
-            434
+            433,
+            435
           ],
           "name": "promotable_count",
           "signature": "()",
@@ -1338,8 +1338,8 @@
         {
           "docstring": "with a host and the line is JSON-string-safe as-is. Empty when nothing has been observed yet.",
           "lines": [
-            440,
-            442
+            441,
+            447
           ],
           "name": "discovered_line",
           "signature": "(n: usize)",
@@ -1348,8 +1348,8 @@
         {
           "docstring": "\u2500\u2500 Durability \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
           "lines": [
-            446,
-            451
+            451,
+            456
           ],
           "name": "store_path",
           "signature": "()",
@@ -1358,8 +1358,8 @@
         {
           "docstring": "change the signature. The change gate for [`persist`].",
           "lines": [
-            455,
-            475
+            460,
+            480
           ],
           "name": "store_signature",
           "signature": "(s: &Store)",
@@ -1368,8 +1368,8 @@
         {
           "docstring": "entry (host \u00b7 hits \u00b7 first_seen \u00b7 last_seen \u00b7 marker-slug).",
           "lines": [
-            479,
-            498
+            484,
+            503
           ],
           "name": "serialize_store",
           "signature": "(s: &Store)",
@@ -1378,8 +1378,8 @@
         {
           "docstring": "SKIPPED, never an error \u2014 a half-good store rehydrates its good half.",
           "lines": [
-            502,
-            537
+            507,
+            542
           ],
           "name": "parse_body",
           "signature": "(body: &str)",
@@ -1388,8 +1388,8 @@
         {
           "docstring": "empty store). Missing file = clean cold start. Honors the [`MAX_DISCOVERED`] cap on rehydrate.",
           "lines": [
-            541,
-            563
+            546,
+            568
           ],
           "name": "load_store",
           "signature": "()",
@@ -1398,8 +1398,8 @@
         {
           "docstring": "Persist the store atomically iff its signature changed (change-gated tmp + rename).",
           "lines": [
-            566,
-            584
+            571,
+            589
           ],
           "name": "persist",
           "signature": "()",
@@ -1408,8 +1408,8 @@
         {
           "docstring": "re-binds the dir but the merge-by-key load never duplicates rows.",
           "lines": [
-            589,
-            619
+            594,
+            624
           ],
           "name": "arm",
           "signature": "(dir: &str)",
@@ -1419,8 +1419,8 @@
           "children": [
             {
               "lines": [
-                630,
-                643
+                635,
+                648
               ],
               "name": "scrub",
               "signature": "()",
@@ -1428,8 +1428,8 @@
             },
             {
               "lines": [
-                654,
-                702
+                659,
+                710
               ],
               "name": "max_discovered_bounds_new_hosts_but_never_freezes_the_known_ones",
               "signature": "()",
@@ -1437,8 +1437,8 @@
             },
             {
               "lines": [
-                706,
-                728
+                713,
+                739
               ],
               "name": "a_non_delivery_service_is_never_promoted_however_cdn_its_operator_looks",
               "signature": "()",
@@ -1446,8 +1446,8 @@
             },
             {
               "lines": [
-                731,
-                760
+                742,
+                771
               ],
               "name": "classify_catches_infra_and_leading_label_but_not_plain_hosts",
               "signature": "()",
@@ -1455,8 +1455,8 @@
             },
             {
               "lines": [
-                764,
-                786
+                775,
+                797
               ],
               "name": "promotion_requires_the_recurrence_threshold",
               "signature": "()",
@@ -1464,8 +1464,8 @@
             },
             {
               "lines": [
-                791,
-                810
+                802,
+                821
               ],
               "name": "registrable_domain_cdn_is_classified",
               "signature": "()",
@@ -1473,8 +1473,8 @@
             },
             {
               "lines": [
-                817,
-                853
+                828,
+                868
               ],
               "name": "rehydrated_promotion_republishes_the_cloak",
               "signature": "()",
@@ -1482,8 +1482,8 @@
             },
             {
               "lines": [
-                857,
-                879
+                872,
+                897
               ],
               "name": "promotion_is_deterministic_and_bounded",
               "signature": "()",
@@ -1491,8 +1491,8 @@
             },
             {
               "lines": [
-                882,
-                887
+                900,
+                905
               ],
               "name": "observe_is_noop_until_armed",
               "signature": "()",
@@ -1500,8 +1500,8 @@
             },
             {
               "lines": [
-                890,
-                903
+                908,
+                925
               ],
               "name": "observe_grows_dedupes_and_skips_static_and_non_cdn",
               "signature": "()",
@@ -1509,8 +1509,8 @@
             },
             {
               "lines": [
-                906,
-                922
+                928,
+                947
               ],
               "name": "discovered_line_is_pipe_delimited_hits_desc_and_bounded",
               "signature": "()",
@@ -1518,8 +1518,8 @@
             },
             {
               "lines": [
-                925,
-                945
+                950,
+                976
               ],
               "name": "round_trips_through_the_tsv",
               "signature": "()",
@@ -1527,8 +1527,8 @@
             },
             {
               "lines": [
-                948,
-                955
+                979,
+                990
               ],
               "name": "legacy_short_row_is_skipped_not_fatal",
               "signature": "()",
@@ -1536,8 +1536,8 @@
             },
             {
               "lines": [
-                958,
-                975
+                993,
+                1020
               ],
               "name": "cap_bounds_distinct_hosts_but_still_counts_observations",
               "signature": "()",
@@ -1545,8 +1545,8 @@
             }
           ],
           "lines": [
-            622,
-            976
+            627,
+            1021
           ],
           "name": "tests",
           "type": "module"
@@ -2438,12 +2438,12 @@
       ]
     },
     "egress.rs": {
-      "hash": "874a4b47f848",
-      "indexed_at": "2026-08-01T10:16:46.499412+00:00",
+      "hash": "a81c3a56c729",
+      "indexed_at": "2026-08-01T12:52:04.003941+00:00",
       "language": "rust",
-      "lines": 466,
-      "mtime_ns": 1785579374843026000,
-      "size": 21568,
+      "lines": 487,
+      "mtime_ns": 1785588692920733200,
+      "size": 21830,
       "symbols": [
         {
           "docstring": "mistake already cost one false failure this project).",
@@ -2529,7 +2529,7 @@
             {
               "lines": [
                 215,
-                218
+                221
               ],
               "name": "a_zero_gap_still_probes_never_divides_by_zero",
               "signature": "()",
@@ -2537,8 +2537,8 @@
             },
             {
               "lines": [
-                221,
-                228
+                224,
+                233
               ],
               "name": "every_window_of_the_gap_contains_exactly_one_probe",
               "signature": "()",
@@ -2546,8 +2546,8 @@
             },
             {
               "lines": [
-                231,
-                235
+                236,
+                247
               ],
               "name": "the_gap_is_capped_so_probing_never_becomes_never",
               "signature": "()",
@@ -2555,8 +2555,8 @@
             },
             {
               "lines": [
-                238,
-                242
+                250,
+                257
               ],
               "name": "backoff_widens_the_gap_monotonically",
               "signature": "()",
@@ -2564,8 +2564,8 @@
             },
             {
               "lines": [
-                245,
-                251
+                260,
+                266
               ],
               "name": "an_alive_family_ignores_the_gap_entirely",
               "signature": "()",
@@ -2574,7 +2574,7 @@
           ],
           "lines": [
             211,
-            252
+            267
           ],
           "name": "backoff_tests",
           "type": "module"
@@ -2584,8 +2584,8 @@
             {
               "docstring": "reset_for_new_network().",
               "lines": [
-                283,
-                285
+                298,
+                300
               ],
               "name": "serialized",
               "signature": "()",
@@ -2593,8 +2593,8 @@
             },
             {
               "lines": [
-                288,
-                293
+                303,
+                308
               ],
               "name": "a_fresh_network_always_attempts_v6",
               "signature": "()",
@@ -2602,8 +2602,8 @@
             },
             {
               "lines": [
-                296,
-                303
+                311,
+                318
               ],
               "name": "v4_outcomes_never_move_the_v6_verdict",
               "signature": "()",
@@ -2611,8 +2611,8 @@
             },
             {
               "lines": [
-                306,
-                315
+                321,
+                333
               ],
               "name": "it_takes_exactly_dead_after_consecutive_failures",
               "signature": "()",
@@ -2620,8 +2620,8 @@
             },
             {
               "lines": [
-                321,
-                336
+                339,
+                354
               ],
               "name": "one_success_does_not_lift_the_latch_hysteresis",
               "signature": "()",
@@ -2629,8 +2629,8 @@
             },
             {
               "lines": [
-                339,
-                351
+                357,
+                372
               ],
               "name": "enough_successes_do_lift_the_latch",
               "signature": "()",
@@ -2638,8 +2638,8 @@
             },
             {
               "lines": [
-                354,
-                371
+                375,
+                392
               ],
               "name": "a_failure_destroys_accumulated_revival_credit",
               "signature": "()",
@@ -2647,8 +2647,8 @@
             },
             {
               "lines": [
-                381,
-                395
+                402,
+                416
               ],
               "name": "a_failing_majority_condemns_even_when_successes_interleave",
               "signature": "()",
@@ -2656,8 +2656,8 @@
             },
             {
               "lines": [
-                398,
-                408
+                419,
+                429
               ],
               "name": "a_healthy_path_never_condemns_however_long_it_runs",
               "signature": "()",
@@ -2665,8 +2665,8 @@
             },
             {
               "lines": [
-                411,
-                421
+                432,
+                442
               ],
               "name": "the_bucket_is_capped_so_recovery_is_bounded",
               "signature": "()",
@@ -2674,8 +2674,8 @@
             },
             {
               "lines": [
-                424,
-                427
+                445,
+                448
               ],
               "name": "a_success_drains_but_never_erases",
               "signature": "()",
@@ -2683,8 +2683,8 @@
             },
             {
               "lines": [
-                430,
-                440
+                451,
+                461
               ],
               "name": "suppression_is_never_total_the_probe_cadence_never_stops",
               "signature": "()",
@@ -2692,8 +2692,8 @@
             },
             {
               "lines": [
-                443,
-                447
+                464,
+                468
               ],
               "name": "an_alive_family_is_attempted_at_every_index",
               "signature": "()",
@@ -2701,8 +2701,8 @@
             },
             {
               "lines": [
-                450,
-                465
+                471,
+                486
               ],
               "name": "a_new_network_forgets_the_old_verdict",
               "signature": "()",
@@ -2710,8 +2710,8 @@
             }
           ],
           "lines": [
-            255,
-            466
+            270,
+            487
           ],
           "name": "tests",
           "type": "module"
@@ -2719,12 +2719,12 @@
       ]
     },
     "lib.rs": {
-      "hash": "9fd1bcb9fdc5",
-      "indexed_at": "2026-08-01T07:00:59.299878+00:00",
+      "hash": "29665d37cee2",
+      "indexed_at": "2026-08-01T12:52:06.609603+00:00",
       "language": "rust",
-      "lines": 7740,
-      "mtime_ns": 1785567370139187300,
-      "size": 384544,
+      "lines": 7875,
+      "mtime_ns": 1785588611103043000,
+      "size": 386102,
       "symbols": [
         {
           "lines": [
@@ -2862,21 +2862,20 @@
           "type": "module"
         },
         {
-          "docstring": "hit/miss) stays with the Kotlin `solver/BindingCache.kt` \u2014 one codec, one judge, never two.",
+          "docstring": "SharedPreferences flags, folded onto the Inu store template).",
           "lines": [
-            139,
-            139
+            141,
+            141
           ],
-          "name": "solver_bindings",
+          "name": "app_state",
           "type": "module"
         },
         {
-          "docstring": "SharedPreferences flags, folded onto the Inu store template).",
           "lines": [
             142,
             142
           ],
-          "name": "app_state",
+          "name": "solver_bindings",
           "type": "module"
         },
         {
@@ -3256,7 +3255,7 @@
         {
           "lines": [
             1352,
-            1396
+            1395
           ],
           "name": "warden_rule_probe",
           "signature": "(\n    uid: i32,\n    qname: String,\n    ip: String,\n    dport: i32,\n    proto: i32,\n)",
@@ -3264,16 +3263,16 @@
         },
         {
           "lines": [
-            1405,
-            1422
+            1404,
+            1421
           ],
           "name": "DetectionProbe",
           "type": "struct"
         },
         {
           "lines": [
-            1445,
-            1465
+            1444,
+            1464
           ],
           "name": "detection_probe",
           "signature": "(host: String)",
@@ -3281,16 +3280,16 @@
         },
         {
           "lines": [
-            1471,
-            1475
+            1470,
+            1474
           ],
           "name": "BlocklistPreview",
           "type": "struct"
         },
         {
           "lines": [
-            1478,
-            1493
+            1477,
+            1492
           ],
           "name": "blocklist_preview_text",
           "signature": "(text: String)",
@@ -3298,16 +3297,16 @@
         },
         {
           "lines": [
-            1501,
-            1504
+            1500,
+            1503
           ],
           "name": "BlocklistCompileReport",
           "type": "struct"
         },
         {
           "lines": [
-            1510,
-            1521
+            1509,
+            1520
           ],
           "name": "blocklist_compile_file_typed",
           "signature": "(path: String, merge: bool)",
@@ -3315,8 +3314,8 @@
         },
         {
           "lines": [
-            1526,
-            1535
+            1525,
+            1534
           ],
           "name": "blocklist_compile_text_typed",
           "signature": "(text: String, merge: bool)",
@@ -3324,8 +3323,8 @@
         },
         {
           "lines": [
-            1541,
-            1554
+            1540,
+            1553
           ],
           "name": "blocklist_compile_artifact_typed",
           "signature": "(\n    artifact: Vec<u8>,\n    merge: bool,\n)",
@@ -3333,8 +3332,8 @@
         },
         {
           "lines": [
-            1563,
-            1569
+            1562,
+            1568
           ],
           "name": "blocklist_compile_artifact",
           "signature": "(artifact: Vec<u8>, merge: bool)",
@@ -3342,8 +3341,8 @@
         },
         {
           "lines": [
-            1578,
-            1583
+            1577,
+            1582
           ],
           "name": "blocklist_verify_artifact",
           "signature": "(artifact: Vec<u8>, sig: Vec<u8>, pubkey: Vec<u8>)",
@@ -3351,8 +3350,8 @@
         },
         {
           "lines": [
-            1588,
-            1590
+            1587,
+            1589
           ],
           "name": "blocklist_is_blocked",
           "signature": "(domain: String)",
@@ -3360,8 +3359,8 @@
         },
         {
           "lines": [
-            1594,
-            1596
+            1593,
+            1595
           ],
           "name": "blocklist_count",
           "signature": "()",
@@ -3369,8 +3368,8 @@
         },
         {
           "lines": [
-            1601,
-            1603
+            1600,
+            1602
           ],
           "name": "blocklist_fingerprint",
           "signature": "()",
@@ -3378,8 +3377,8 @@
         },
         {
           "lines": [
-            1618,
-            1633
+            1617,
+            1632
           ],
           "name": "resolver_configure",
           "signature": "(specs_json: String, timeout_ms: i64, cache_cap: i32)",
@@ -3387,8 +3386,8 @@
         },
         {
           "lines": [
-            1648,
-            1664
+            1647,
+            1663
           ],
           "name": "TransportKind",
           "type": "enum"
@@ -3398,8 +3397,8 @@
             {
               "docstring": "The JSON `transport` token `resolver::configure` matches on.",
               "lines": [
-                1668,
-                1677
+                1667,
+                1676
               ],
               "name": "as_json_token",
               "signature": "(self)",
@@ -3407,40 +3406,40 @@
             }
           ],
           "lines": [
-            1666,
-            1678
+            1665,
+            1677
           ],
           "name": "TransportKind",
           "type": "impl"
         },
         {
           "lines": [
-            1685,
-            1694
+            1684,
+            1693
           ],
           "name": "UpstreamSpec",
           "type": "struct"
         },
         {
           "lines": [
-            1701,
-            1705
+            1700,
+            1704
           ],
           "name": "ConfigureReport",
           "type": "struct"
         },
         {
           "lines": [
-            1714,
-            1721
+            1713,
+            1720
           ],
           "name": "RouteSpec",
           "type": "struct"
         },
         {
           "lines": [
-            1730,
-            1763
+            1729,
+            1762
           ],
           "name": "resolver_configure_typed",
           "signature": "(\n    specs: Vec<UpstreamSpec>,\n    routes: Vec<RouteSpec>,\n    timeout_ms: i64,\n    cache_cap: i...",
@@ -3449,8 +3448,8 @@
         {
           "docstring": "`upstream`/`address`).",
           "lines": [
-            1772,
-            1846
+            1771,
+            1845
           ],
           "name": "build_specs_json",
           "signature": "(specs: &[UpstreamSpec], routes: &[RouteSpec])",
@@ -3459,8 +3458,8 @@
         {
           "docstring": "prior hand-built Kotlin JSON exactly. `pub(crate)`: the ONE crate escaper \u2014 `routes_store` reuses it.",
           "lines": [
-            1852,
-            1860
+            1851,
+            1859
           ],
           "name": "json_escape_into",
           "signature": "(out: &mut String, s: &str)",
@@ -3469,8 +3468,8 @@
         {
           "docstring": "typed `(ready, transports)` pair. A malformed summary degrades to `(0, \"\")` (never a panic).",
           "lines": [
-            1864,
-            1875
+            1863,
+            1874
           ],
           "name": "parse_configure_summary",
           "signature": "(summary: &str)",
@@ -3478,8 +3477,8 @@
         },
         {
           "lines": [
-            1924,
-            1935
+            1923,
+            1934
           ],
           "name": "dnscrypt_config_from_toml",
           "signature": "(\n    toml: String,\n)",
@@ -3487,8 +3486,8 @@
         },
         {
           "lines": [
-            1941,
-            1946
+            1940,
+            1945
           ],
           "name": "dnscrypt_config_import_or_default",
           "signature": "(toml: String)",
@@ -3496,16 +3495,16 @@
         },
         {
           "lines": [
-            1952,
-            1964
+            1951,
+            1963
           ],
           "name": "PickerEntry",
           "type": "struct"
         },
         {
           "lines": [
-            1971,
-            1988
+            1970,
+            1987
           ],
           "name": "resolver_list_picker_entries",
           "signature": "(md_path: String)",
@@ -3514,8 +3513,8 @@
         {
           "docstring": "hostname/empty/undecodable \u2192 `(true,true)` = Unknown (never family-hidden). Panic-firewalled.",
           "lines": [
-            1997,
-            2002
+            1996,
+            2001
           ],
           "name": "stamp_addr_family",
           "signature": "(stamp: &str)",
@@ -3523,8 +3522,8 @@
         },
         {
           "lines": [
-            2008,
-            2019
+            2007,
+            2018
           ],
           "name": "dnscrypt_config_to_toml",
           "signature": "(\n    cfg: resolver::DnscryptProxyConfig,\n)",
@@ -3532,8 +3531,8 @@
         },
         {
           "lines": [
-            2025,
-            2027
+            2024,
+            2026
           ],
           "name": "dnscrypt_config_get",
           "signature": "()",
@@ -3541,8 +3540,8 @@
         },
         {
           "lines": [
-            2033,
-            2037
+            2032,
+            2036
           ],
           "name": "dnscrypt_config_set",
           "signature": "(cfg: resolver::DnscryptProxyConfig)",
@@ -3550,8 +3549,8 @@
         },
         {
           "lines": [
-            2047,
-            2053
+            2046,
+            2052
           ],
           "name": "dnscrypt_config_apply",
           "signature": "(cfg: resolver::DnscryptProxyConfig)",
@@ -3559,8 +3558,8 @@
         },
         {
           "lines": [
-            2073,
-            2078
+            2072,
+            2077
           ],
           "name": "persist_dnscrypt_config",
           "signature": "(dir: String)",
@@ -3568,8 +3567,8 @@
         },
         {
           "lines": [
-            2088,
-            2093
+            2087,
+            2092
           ],
           "name": "rehydrate_dnscrypt_config",
           "signature": "(dir: String)",
@@ -3577,8 +3576,8 @@
         },
         {
           "lines": [
-            2103,
-            2108
+            2102,
+            2107
           ],
           "name": "materialize_dnscrypt_toml",
           "signature": "(path: String)",
@@ -3586,8 +3585,8 @@
         },
         {
           "lines": [
-            2127,
-            2132
+            2126,
+            2131
           ],
           "name": "persist_dns_rule_list",
           "signature": "(dir: String, record: String, lines: Vec<String>)",
@@ -3595,8 +3594,8 @@
         },
         {
           "lines": [
-            2140,
-            2149
+            2139,
+            2148
           ],
           "name": "materialize_dns_rule_list",
           "signature": "(dir: String, record: String, path: String)",
@@ -3604,8 +3603,8 @@
         },
         {
           "lines": [
-            2156,
-            2158
+            2155,
+            2157
           ],
           "name": "resolver_resolve",
           "signature": "(query: Vec<u8>)",
@@ -3613,8 +3612,8 @@
         },
         {
           "lines": [
-            2167,
-            2177
+            2166,
+            2176
           ],
           "name": "log_tail_recent",
           "signature": "(path: String, max_lines: i32)",
@@ -3622,8 +3621,8 @@
         },
         {
           "lines": [
-            2183,
-            2185
+            2182,
+            2184
           ],
           "name": "log_started_ok",
           "signature": "(path: String)",
@@ -3631,8 +3630,8 @@
         },
         {
           "lines": [
-            2195,
-            2197
+            2194,
+            2196
           ],
           "name": "log_stale_secs",
           "signature": "(path: String)",
@@ -3640,8 +3639,8 @@
         },
         {
           "lines": [
-            2206,
-            2208
+            2205,
+            2207
           ],
           "name": "log_append",
           "signature": "(path: String, line: String)",
@@ -3649,8 +3648,8 @@
         },
         {
           "lines": [
-            2215,
-            2217
+            2214,
+            2216
           ],
           "name": "resolver_set_rebind_enforce",
           "signature": "(on: bool)",
@@ -3658,8 +3657,8 @@
         },
         {
           "lines": [
-            2223,
-            2227
+            2222,
+            2226
           ],
           "name": "resolver_set_homograph_enforce",
           "signature": "(on: bool)",
@@ -3667,8 +3666,8 @@
         },
         {
           "lines": [
-            2232,
-            2234
+            2231,
+            2233
           ],
           "name": "resolver_homograph_enforce_on",
           "signature": "()",
@@ -3676,8 +3675,8 @@
         },
         {
           "lines": [
-            2258,
-            2262
+            2257,
+            2261
           ],
           "name": "centauri_publish_cloak_tls_trust",
           "signature": "(trusted: bool)",
@@ -3685,8 +3684,8 @@
         },
         {
           "lines": [
-            2268,
-            2270
+            2267,
+            2269
           ],
           "name": "centauri_cloak_tls_trusted",
           "signature": "()",
@@ -3694,8 +3693,8 @@
         },
         {
           "lines": [
-            2285,
-            2290
+            2284,
+            2289
           ],
           "name": "centauri_serve_hits",
           "signature": "()",
@@ -3703,8 +3702,8 @@
         },
         {
           "lines": [
-            2295,
-            2300
+            2294,
+            2299
           ],
           "name": "centauri_serve_bytes",
           "signature": "()",
@@ -3712,8 +3711,8 @@
         },
         {
           "lines": [
-            2307,
-            2312
+            2306,
+            2311
           ],
           "name": "centauri_serve_misses",
           "signature": "()",
@@ -3721,8 +3720,8 @@
         },
         {
           "lines": [
-            2319,
-            2324
+            2318,
+            2323
           ],
           "name": "centauri_serve_unauthorized",
           "signature": "()",
@@ -3730,8 +3729,8 @@
         },
         {
           "lines": [
-            2331,
-            2336
+            2330,
+            2335
           ],
           "name": "centauri_servable_cloak_count",
           "signature": "()",
@@ -3739,8 +3738,8 @@
         },
         {
           "lines": [
-            2350,
-            2354
+            2349,
+            2353
           ],
           "name": "resolver_set_doh_sinkhole",
           "signature": "(on: bool)",
@@ -3748,8 +3747,8 @@
         },
         {
           "lines": [
-            2359,
-            2361
+            2358,
+            2360
           ],
           "name": "resolver_doh_sinkhole_on",
           "signature": "()",
@@ -3757,8 +3756,8 @@
         },
         {
           "lines": [
-            2367,
-            2372
+            2366,
+            2371
           ],
           "name": "resolver_doh_sinkhole_denied",
           "signature": "()",
@@ -3766,8 +3765,8 @@
         },
         {
           "lines": [
-            2378,
-            2383
+            2377,
+            2382
           ],
           "name": "resolver_is_doh_bootstrap",
           "signature": "(qname: String)",
@@ -3775,8 +3774,8 @@
         },
         {
           "lines": [
-            2387,
-            2389
+            2386,
+            2388
           ],
           "name": "resolver_set_bogus_priv",
           "signature": "(on: bool)",
@@ -3784,8 +3783,8 @@
         },
         {
           "lines": [
-            2398,
-            2400
+            2397,
+            2399
           ],
           "name": "resolver_set_centauri_cloak",
           "signature": "(on: bool)",
@@ -3793,8 +3792,8 @@
         },
         {
           "lines": [
-            2404,
-            2406
+            2403,
+            2405
           ],
           "name": "resolver_set_proxy_dnssec",
           "signature": "(on: bool)",
@@ -3802,8 +3801,8 @@
         },
         {
           "lines": [
-            2414,
-            2418
+            2413,
+            2417
           ],
           "name": "resolver_set_dns64_prefixes",
           "signature": "(prefixes_csv: String)",
@@ -3811,8 +3810,8 @@
         },
         {
           "lines": [
-            2424,
-            2432
+            2423,
+            2431
           ],
           "name": "resolver_set_filter_rr",
           "signature": "(drop_types_csv: String, any_defang: bool)",
@@ -3820,8 +3819,8 @@
         },
         {
           "lines": [
-            2439,
-            2451
+            2438,
+            2450
           ],
           "name": "resolver_set_cloak_action",
           "signature": "(action: i32, custom_ip: String)",
@@ -3829,16 +3828,16 @@
         },
         {
           "lines": [
-            2459,
-            2466
+            2458,
+            2465
           ],
           "name": "CloakAction",
           "type": "enum"
         },
         {
           "lines": [
-            2473,
-            2485
+            2472,
+            2484
           ],
           "name": "resolver_set_cloak_action_typed",
           "signature": "(action: CloakAction, custom_ip: String)",
@@ -3846,8 +3845,8 @@
         },
         {
           "lines": [
-            2492,
-            2496
+            2491,
+            2495
           ],
           "name": "resolver_set_filter_rr_typed",
           "signature": "(drop_types: Vec<u16>, any_defang: bool)",
@@ -3855,8 +3854,8 @@
         },
         {
           "lines": [
-            2503,
-            2507
+            2502,
+            2506
           ],
           "name": "resolver_set_dns64_prefixes_typed",
           "signature": "(prefixes: Vec<String>)",
@@ -3864,16 +3863,16 @@
         },
         {
           "lines": [
-            2511,
-            2533
+            2510,
+            2532
           ],
           "name": "IntegrityAlarms",
           "type": "struct"
         },
         {
           "lines": [
-            2537,
-            2565
+            2536,
+            2564
           ],
           "name": "integrity_alarms",
           "signature": "()",
@@ -3881,8 +3880,8 @@
         },
         {
           "lines": [
-            2570,
-            2575
+            2569,
+            2574
           ],
           "name": "blocklist_export_artifact",
           "signature": "()",
@@ -3890,16 +3889,16 @@
         },
         {
           "lines": [
-            2579,
-            2596
+            2578,
+            2595
           ],
           "name": "TinWeightRow",
           "type": "struct"
         },
         {
           "lines": [
-            2600,
-            2613
+            2599,
+            2612
           ],
           "name": "beast_tin_weights",
           "signature": "()",
@@ -3907,16 +3906,16 @@
         },
         {
           "lines": [
-            2617,
-            2627
+            2616,
+            2626
           ],
           "name": "FlowCensus",
           "type": "struct"
         },
         {
           "lines": [
-            2631,
-            2645
+            2630,
+            2644
           ],
           "name": "beast_flow_census",
           "signature": "()",
@@ -3924,16 +3923,16 @@
         },
         {
           "lines": [
-            2649,
-            2666
+            2648,
+            2665
           ],
           "name": "TransportShape",
           "type": "struct"
         },
         {
           "lines": [
-            2673,
-            2692
+            2672,
+            2691
           ],
           "name": "resolver_transport_shape",
           "signature": "()",
@@ -3941,16 +3940,16 @@
         },
         {
           "lines": [
-            2696,
-            2719
+            2695,
+            2718
           ],
           "name": "BlocklistSourceRow",
           "type": "struct"
         },
         {
           "lines": [
-            2727,
-            2752
+            2726,
+            2751
           ],
           "name": "blocklist_sources",
           "signature": "()",
@@ -3958,8 +3957,8 @@
         },
         {
           "lines": [
-            2765,
-            2768
+            2764,
+            2766
           ],
           "name": "blocklist_resolve_source_reputations",
           "signature": "()",
@@ -3967,16 +3966,16 @@
         },
         {
           "lines": [
-            2775,
-            2799
+            2773,
+            2797
           ],
           "name": "CacheDiagnostics",
           "type": "struct"
         },
         {
           "lines": [
-            2804,
-            2834
+            2802,
+            2832
           ],
           "name": "cache_diagnostics",
           "signature": "()",
@@ -3984,8 +3983,8 @@
         },
         {
           "lines": [
-            2845,
-            2847
+            2843,
+            2845
           ],
           "name": "resolver_set_honor_zero_ttl",
           "signature": "(on: bool)",
@@ -3993,8 +3992,8 @@
         },
         {
           "lines": [
-            2851,
-            2853
+            2849,
+            2851
           ],
           "name": "resolver_honor_zero_ttl",
           "signature": "()",
@@ -4002,8 +4001,8 @@
         },
         {
           "lines": [
-            2869,
-            2878
+            2867,
+            2876
           ],
           "name": "resolver_set_cacheable_types",
           "signature": "(types: Vec<i32>)",
@@ -4011,8 +4010,8 @@
         },
         {
           "lines": [
-            2883,
-            2885
+            2881,
+            2883
           ],
           "name": "resolver_set_cacheable_types_default",
           "signature": "()",
@@ -4020,8 +4019,8 @@
         },
         {
           "lines": [
-            2892,
-            2900
+            2890,
+            2898
           ],
           "name": "resolver_cacheable_types",
           "signature": "()",
@@ -4029,8 +4028,8 @@
         },
         {
           "lines": [
-            2904,
-            2906
+            2902,
+            2904
           ],
           "name": "resolver_set_cache_rr",
           "signature": "(on: bool)",
@@ -4038,8 +4037,8 @@
         },
         {
           "lines": [
-            2910,
-            2912
+            2908,
+            2910
           ],
           "name": "resolver_set_all_servers",
           "signature": "(on: bool)",
@@ -4047,8 +4046,8 @@
         },
         {
           "lines": [
-            2916,
-            2920
+            2914,
+            2918
           ],
           "name": "resolver_set_never_forward",
           "signature": "(on: bool)",
@@ -4056,8 +4055,8 @@
         },
         {
           "lines": [
-            2927,
-            2929
+            2925,
+            2927
           ],
           "name": "resolver_set_solve_ladder",
           "signature": "(on: bool)",
@@ -4065,8 +4064,8 @@
         },
         {
           "lines": [
-            2936,
-            2940
+            2934,
+            2938
           ],
           "name": "resolver_set_serve_stale",
           "signature": "(secs: i32)",
@@ -4074,8 +4073,8 @@
         },
         {
           "lines": [
-            2945,
-            2949
+            2943,
+            2947
           ],
           "name": "resolver_set_ttl_floor",
           "signature": "(secs: i32)",
@@ -4083,8 +4082,8 @@
         },
         {
           "lines": [
-            2955,
-            2959
+            2953,
+            2957
           ],
           "name": "resolver_set_ttl_ceiling",
           "signature": "(secs: i32)",
@@ -4092,8 +4091,8 @@
         },
         {
           "lines": [
-            2966,
-            2970
+            2964,
+            2968
           ],
           "name": "resolver_set_cache_cap",
           "signature": "(cap: i32)",
@@ -4101,8 +4100,8 @@
         },
         {
           "lines": [
-            2977,
-            2981
+            2975,
+            2979
           ],
           "name": "resolver_set_query_timeout",
           "signature": "(ms: i32)",
@@ -4111,8 +4110,8 @@
         {
           "docstring": "read-only Android side. Panic-firewalled like every sibling setter.",
           "lines": [
-            2989,
-            2991
+            2987,
+            2989
           ],
           "name": "resolver_set_round_robin",
           "signature": "(on: bool)",
@@ -4121,8 +4120,8 @@
         {
           "docstring": "read-only Android side. Panic-firewalled like every sibling arm.",
           "lines": [
-            3000,
-            3002
+            2998,
+            3000
           ],
           "name": "resolver_arm_warden",
           "signature": "(domains: Vec<String>)",
@@ -4130,8 +4129,8 @@
         },
         {
           "lines": [
-            3038,
-            3043
+            3036,
+            3041
           ],
           "name": "resolver_arm_warden_domains",
           "signature": "(domains: Vec<String>)",
@@ -4139,8 +4138,8 @@
         },
         {
           "lines": [
-            3050,
-            3052
+            3048,
+            3050
           ],
           "name": "resolver_warden_denied_count",
           "signature": "()",
@@ -4149,8 +4148,8 @@
         {
           "docstring": "`pub fn`, host-only, zero UniFFI drift. Panic-firewalled \u2192 0.",
           "lines": [
-            3057,
-            3059
+            3055,
+            3057
           ],
           "name": "resolver_warden_denied",
           "signature": "()",
@@ -4159,7 +4158,7 @@
         {
           "docstring": "`None` on a malformed query. Panic-firewalled \u2192 None.",
           "lines": [
-            3069,
+            3067,
             3073
           ],
           "name": "synthesize_servfail",
@@ -4306,7 +4305,7 @@
         {
           "lines": [
             3345,
-            3362
+            3369
           ],
           "name": "underground_ingest_lane",
           "signature": "(\n    slug: String,\n    tcat: Vec<u8>,\n    sig: Vec<u8>,\n    pubkey: Vec<u8>,\n    now_days: i32,\n)",
@@ -4314,8 +4313,8 @@
         },
         {
           "lines": [
-            3372,
-            3376
+            3379,
+            3383
           ],
           "name": "beast_live_snapshot",
           "signature": "()",
@@ -4323,8 +4322,8 @@
         },
         {
           "lines": [
-            3386,
-            3388
+            3393,
+            3395
           ],
           "name": "beast_live_aqm_retention",
           "signature": "()",
@@ -4332,8 +4331,8 @@
         },
         {
           "lines": [
-            3398,
-            3405
+            3405,
+            3412
           ],
           "name": "beast_set_yeah_profile",
           "signature": "(id: i32)",
@@ -4341,8 +4340,8 @@
         },
         {
           "lines": [
-            3412,
-            3414
+            3419,
+            3423
           ],
           "name": "beast_set_cake_profile",
           "signature": "(id: i32)",
@@ -4350,8 +4349,8 @@
         },
         {
           "lines": [
-            3423,
-            3430
+            3432,
+            3439
           ],
           "name": "beast_set_tunables",
           "signature": "(max_window: i32, free_thresh_milli: i32, compete_thresh_milli: i32)",
@@ -4359,8 +4358,8 @@
         },
         {
           "lines": [
-            3440,
-            3445
+            3449,
+            3454
           ],
           "name": "underground_set_verdict",
           "signature": "(host: String, verdict: u8)",
@@ -4368,8 +4367,8 @@
         },
         {
           "lines": [
-            3457,
-            3461
+            3466,
+            3470
           ],
           "name": "resolver_arm_query_feed",
           "signature": "(file: String)",
@@ -4377,24 +4376,24 @@
         },
         {
           "lines": [
-            3477,
-            3481
+            3486,
+            3490
           ],
           "name": "LocalRecordsReport",
           "type": "struct"
         },
         {
           "lines": [
-            3488,
-            3492
+            3497,
+            3501
           ],
           "name": "RouteLinesReport",
           "type": "struct"
         },
         {
           "lines": [
-            3502,
-            3524
+            3511,
+            3533
           ],
           "name": "resolver_local_records_set",
           "signature": "(\n    text: String,\n    ttl_secs: i64,\n    durable_dir: String,\n)",
@@ -4402,8 +4401,8 @@
         },
         {
           "lines": [
-            3529,
-            3534
+            3538,
+            3543
           ],
           "name": "resolver_local_records_text",
           "signature": "(durable_dir: String)",
@@ -4411,8 +4410,8 @@
         },
         {
           "lines": [
-            3540,
-            3564
+            3549,
+            3573
           ],
           "name": "resolver_local_records_rehydrate",
           "signature": "(durable_dir: String)",
@@ -4420,8 +4419,8 @@
         },
         {
           "lines": [
-            3569,
-            3571
+            3578,
+            3580
           ],
           "name": "resolver_local_records_count",
           "signature": "()",
@@ -4429,8 +4428,8 @@
         },
         {
           "lines": [
-            3584,
-            3595
+            3593,
+            3604
           ],
           "name": "resolver_routes_set",
           "signature": "(text: String, durable_dir: String)",
@@ -4438,8 +4437,8 @@
         },
         {
           "lines": [
-            3600,
-            3605
+            3609,
+            3614
           ],
           "name": "resolver_routes_text",
           "signature": "(durable_dir: String)",
@@ -4447,8 +4446,8 @@
         },
         {
           "lines": [
-            3612,
-            3632
+            3621,
+            3641
           ],
           "name": "resolver_routes_list",
           "signature": "(durable_dir: String)",
@@ -4456,8 +4455,8 @@
         },
         {
           "lines": [
-            3640,
-            3650
+            3649,
+            3659
           ],
           "name": "resolver_routes_json",
           "signature": "(durable_dir: String)",
@@ -4466,8 +4465,8 @@
         {
           "docstring": "D33b helper \u2014 fold parsed routes + the skipped count into the typed report.",
           "lines": [
-            3653,
-            3666
+            3662,
+            3675
           ],
           "name": "report_route_lines",
           "signature": "(\n    routes: &[resolver::routes_store::StoredRoute],\n    skipped: usize,\n)",
@@ -4475,8 +4474,8 @@
         },
         {
           "lines": [
-            3676,
-            3681
+            3685,
+            3690
           ],
           "name": "build_query",
           "signature": "(qname: String, qtype: i32)",
@@ -4484,8 +4483,8 @@
         },
         {
           "lines": [
-            3687,
-            3689
+            3696,
+            3698
           ],
           "name": "resolver_stats",
           "signature": "()",
@@ -4493,16 +4492,16 @@
         },
         {
           "lines": [
-            3702,
-            3709
+            3711,
+            3718
           ],
           "name": "ListenerSnapshot",
           "type": "struct"
         },
         {
           "lines": [
-            3716,
-            3726
+            3725,
+            3735
           ],
           "name": "resolver_start_loopback",
           "signature": "(port: i32)",
@@ -4510,8 +4509,8 @@
         },
         {
           "lines": [
-            3732,
-            3734
+            3741,
+            3743
           ],
           "name": "resolver_stop_loopback",
           "signature": "()",
@@ -4519,8 +4518,8 @@
         },
         {
           "lines": [
-            3748,
-            3750
+            3757,
+            3759
           ],
           "name": "resolver_loopback_port",
           "signature": "()",
@@ -4528,8 +4527,8 @@
         },
         {
           "lines": [
-            3756,
-            3774
+            3765,
+            3783
           ],
           "name": "resolver_loopback_snapshot",
           "signature": "()",
@@ -4537,8 +4536,8 @@
         },
         {
           "lines": [
-            3802,
-            3805
+            3811,
+            3814
           ],
           "name": "tunnel_create",
           "signature": "()",
@@ -4546,8 +4545,8 @@
         },
         {
           "lines": [
-            3810,
-            3812
+            3819,
+            3821
           ],
           "name": "resolver_shutdown",
           "signature": "()",
@@ -4555,8 +4554,8 @@
         },
         {
           "lines": [
-            3829,
-            3834
+            3838,
+            3843
           ],
           "name": "fortress_verify_file",
           "signature": "(bytes: Vec<u8>, sig: Vec<u8>, pubkey: Vec<u8>)",
@@ -4564,8 +4563,8 @@
         },
         {
           "lines": [
-            3840,
-            3845
+            3849,
+            3854
           ],
           "name": "fortress_verify_list",
           "signature": "(bytes: Vec<u8>, sig: Vec<u8>, pubkey: Vec<u8>)",
@@ -4573,8 +4572,8 @@
         },
         {
           "lines": [
-            3852,
-            3857
+            3861,
+            3866
           ],
           "name": "fortress_verify_dnscrypt_proxy",
           "signature": "(bin: Vec<u8>, sig: Vec<u8>, pubkey: Vec<u8>)",
@@ -4582,8 +4581,8 @@
         },
         {
           "lines": [
-            3894,
-            3928
+            3903,
+            3937
           ],
           "name": "torta_resolve",
           "signature": "(\n    query_ptr: *const u8,\n    query_len: usize,\n    out_ptr: *mut u8,\n    out_cap: usize,\n)",
@@ -4591,8 +4590,8 @@
         },
         {
           "lines": [
-            3948,
-            3956
+            3957,
+            3965
           ],
           "name": "mirror_install_catalog",
           "signature": "(bytes: Vec<u8>, sig: Vec<u8>, pubkey: Vec<u8>)",
@@ -4600,8 +4599,8 @@
         },
         {
           "lines": [
-            3968,
-            3973
+            3977,
+            3982
           ],
           "name": "centauri_cdn_hosts",
           "signature": "()",
@@ -4609,8 +4608,8 @@
         },
         {
           "lines": [
-            3984,
-            3989
+            3993,
+            3998
           ],
           "name": "centauri_resolve_cdn",
           "signature": "(host: String, path: String)",
@@ -4618,8 +4617,8 @@
         },
         {
           "lines": [
-            4000,
-            4002
+            4009,
+            4011
           ],
           "name": "centauri_cloaking_rules",
           "signature": "()",
@@ -4627,16 +4626,16 @@
         },
         {
           "lines": [
-            4014,
-            4020
+            4023,
+            4029
           ],
           "name": "MirrorRuntime",
           "type": "struct"
         },
         {
           "lines": [
-            4053,
-            4058
+            4062,
+            4067
           ],
           "name": "centauri_tls_armed",
           "signature": "()",
@@ -4644,16 +4643,16 @@
         },
         {
           "lines": [
-            4077,
-            4082
+            4085,
+            4090
           ],
           "name": "CentauriCaMaterial",
           "type": "struct"
         },
         {
           "lines": [
-            4091,
-            4093
+            4099,
+            4104
           ],
           "name": "centauri_tls_retrust",
           "signature": "()",
@@ -4661,8 +4660,8 @@
         },
         {
           "lines": [
-            4099,
-            4101
+            4110,
+            4115
           ],
           "name": "centauri_tls_distrust_count",
           "signature": "()",
@@ -4670,8 +4669,8 @@
         },
         {
           "lines": [
-            4107,
-            4109
+            4121,
+            4123
           ],
           "name": "centauri_absorb_count",
           "signature": "()",
@@ -4679,8 +4678,8 @@
         },
         {
           "lines": [
-            4116,
-            4118
+            4130,
+            4135
           ],
           "name": "centauri_promoted_cloak_count",
           "signature": "()",
@@ -4688,17 +4687,17 @@
         },
         {
           "lines": [
-            4131,
-            4171
+            4148,
+            4191
           ],
           "name": "centauri_tls_arm",
-          "signature": "(cert_pem: Option<String>, key_pem: Option<String>)",
+          "signature": "(\n    cert_pem: Option<String>,\n    key_pem: Option<String>,\n)",
           "type": "function"
         },
         {
           "lines": [
-            4178,
-            4185
+            4198,
+            4205
           ],
           "name": "mirror_hairpin_port",
           "signature": "()",
@@ -4706,8 +4705,8 @@
         },
         {
           "lines": [
-            4202,
-            4286
+            4222,
+            4306
           ],
           "name": "centauri_mirror_start",
           "signature": "(cache_dir: String)",
@@ -4715,8 +4714,8 @@
         },
         {
           "lines": [
-            4295,
-            4297
+            4315,
+            4317
           ],
           "name": "mirror_store_with_dir",
           "signature": "(dir: std::path::PathBuf)",
@@ -4724,8 +4723,8 @@
         },
         {
           "lines": [
-            4305,
-            4307
+            4325,
+            4327
           ],
           "name": "mirror_load_from_disk",
           "signature": "(store: &mut mirror::CacheStore, dir: &std::path::Path)",
@@ -4733,8 +4732,8 @@
         },
         {
           "lines": [
-            4314,
-            4324
+            4334,
+            4344
           ],
           "name": "mirror_clone_store",
           "signature": "(src: &mirror::CacheStore)",
@@ -4742,8 +4741,8 @@
         },
         {
           "lines": [
-            4337,
-            4367
+            4357,
+            4387
           ],
           "name": "mirror_status",
           "signature": "()",
@@ -4752,8 +4751,8 @@
         {
           "docstring": "through the recording `warden::verdict` path (see `tunnel/mod.rs`, the T20 note).",
           "lines": [
-            4394,
-            4399
+            4414,
+            4419
           ],
           "name": "warden_lock",
           "signature": "()",
@@ -4761,8 +4760,8 @@
         },
         {
           "lines": [
-            4420,
-            4422
+            4440,
+            4442
           ],
           "name": "arm_warden",
           "signature": "()",
@@ -4771,8 +4770,8 @@
         {
           "docstring": "JNI export wraps it in `catch_unwind` for the FFI boundary.",
           "lines": [
-            4434,
-            4444
+            4454,
+            4464
           ],
           "name": "warden_stats_json",
           "signature": "()",
@@ -4780,8 +4779,8 @@
         },
         {
           "lines": [
-            4449,
-            4451
+            4469,
+            4471
           ],
           "name": "clear_warden_for_test",
           "signature": "()",
@@ -4789,8 +4788,8 @@
         },
         {
           "lines": [
-            4467,
-            4476
+            4487,
+            4496
           ],
           "name": "warden_arm",
           "signature": "()",
@@ -4798,8 +4797,8 @@
         },
         {
           "lines": [
-            4483,
-            4489
+            4503,
+            4509
           ],
           "name": "warden_disarm",
           "signature": "()",
@@ -4807,8 +4806,8 @@
         },
         {
           "lines": [
-            4493,
-            4495
+            4513,
+            4515
           ],
           "name": "warden_is_armed",
           "signature": "()",
@@ -4816,8 +4815,8 @@
         },
         {
           "lines": [
-            4508,
-            4519
+            4528,
+            4537
           ],
           "name": "warden_clear_rule_sets",
           "signature": "()",
@@ -4825,8 +4824,8 @@
         },
         {
           "lines": [
-            4538,
-            4542
+            4556,
+            4560
           ],
           "name": "lock_warden_global",
           "signature": "()",
@@ -4834,8 +4833,8 @@
         },
         {
           "lines": [
-            4557,
-            4561
+            4575,
+            4579
           ],
           "name": "lock_resolver_global",
           "signature": "()",
@@ -4843,8 +4842,8 @@
         },
         {
           "lines": [
-            4576,
-            4580
+            4594,
+            4598
           ],
           "name": "lock_detection_global",
           "signature": "()",
@@ -4852,8 +4851,8 @@
         },
         {
           "lines": [
-            4602,
-            4681
+            4620,
+            4699
           ],
           "name": "torta_firewall_verdict",
           "signature": "(\n    uid: i32,\n    ip_version: i32,\n    protocol: i32,\n    daddr_ptr: *const u8,\n    daddr_len: ...",
@@ -4862,8 +4861,8 @@
         {
           "docstring": "to W4; this is the C-local-only approximation the charter documents.)",
           "lines": [
-            4688,
-            4698
+            4706,
+            4716
           ],
           "name": "is_lan_addr",
           "signature": "(ip: &std::net::IpAddr)",
@@ -4871,8 +4870,8 @@
         },
         {
           "lines": [
-            4715,
-            4717
+            4733,
+            4735
           ],
           "name": "warden_stats",
           "signature": "()",
@@ -4881,8 +4880,8 @@
         {
           "docstring": "verify gate downstream, never here \u2014 this helper only fetches, it never trusts.",
           "lines": [
-            4766,
-            4772
+            4784,
+            4790
           ],
           "name": "read_signed_pair",
           "signature": "(dir: &std::path::Path, base: &str)",
@@ -4891,8 +4890,8 @@
         {
           "docstring": "is best-effort). NO raw NAND dump of the trie \u2014 the signed `.tblk` already IS the durable tier.",
           "lines": [
-            4785,
-            4804
+            4803,
+            4822
           ],
           "name": "load_blocklist_from_signed",
           "signature": "(\n    dir: &std::path::Path,\n    base: &str,\n    pubkey: &[u8],\n    merge: bool,\n)",
@@ -4900,16 +4899,16 @@
         },
         {
           "lines": [
-            4813,
-            4821
+            4831,
+            4839
           ],
           "name": "CentauriRehydrateFail",
           "type": "enum"
         },
         {
           "lines": [
-            4830,
-            4844
+            4848,
+            4862
           ],
           "name": "load_centauri_catalog_from_signed",
           "signature": "(\n    dir: &std::path::Path,\n    base: &str,\n    pubkey: &[u8],\n)",
@@ -4917,8 +4916,8 @@
         },
         {
           "lines": [
-            4851,
-            4853
+            4869,
+            4871
           ],
           "name": "load_centauri_from_signed",
           "signature": "(dir: &std::path::Path, base: &str, pubkey: &[u8])",
@@ -4926,8 +4925,8 @@
         },
         {
           "lines": [
-            4865,
-            4876
+            4883,
+            4894
           ],
           "name": "rehydrate_blocklist_from_signed",
           "signature": "(\n    dir: String,\n    base: String,\n    pubkey: Vec<u8>,\n    merge: bool,\n)",
@@ -4935,8 +4934,8 @@
         },
         {
           "lines": [
-            4889,
-            4895
+            4907,
+            4913
           ],
           "name": "rehydrate_centauri_from_signed",
           "signature": "(dir: String, base: String, pubkey: Vec<u8>)",
@@ -4944,8 +4943,8 @@
         },
         {
           "lines": [
-            4918,
-            4931
+            4936,
+            4949
           ],
           "name": "rehydrate_resolver_rotation",
           "signature": "(dir: String)",
@@ -4953,8 +4952,8 @@
         },
         {
           "lines": [
-            4947,
-            4981
+            4965,
+            4999
           ],
           "name": "persist_resolver_rotation",
           "signature": "(\n    dir: String,\n    last_family: String,\n    cadence_secs: i64,\n    rotation_index: i64,\n    r...",
@@ -4962,8 +4961,8 @@
         },
         {
           "lines": [
-            4993,
-            4998
+            5011,
+            5016
           ],
           "name": "checkpoint_resolver_rotation",
           "signature": "(dir: String)",
@@ -4971,8 +4970,8 @@
         },
         {
           "lines": [
-            5009,
-            5014
+            5027,
+            5032
           ],
           "name": "warm_start_resolver_rtt",
           "signature": "(dir: String)",
@@ -4980,8 +4979,8 @@
         },
         {
           "lines": [
-            5029,
-            5038
+            5047,
+            5056
           ],
           "name": "seed_resolver_rtt",
           "signature": "(hints: Vec<resolver::object::RttHint>)",
@@ -4989,8 +4988,8 @@
         },
         {
           "lines": [
-            5057,
-            5068
+            5075,
+            5086
           ],
           "name": "current_dnscrypt_envelope",
           "signature": "()",
@@ -4998,8 +4997,8 @@
         },
         {
           "lines": [
-            5080,
-            5103
+            5098,
+            5121
           ],
           "name": "build_dnscrypt_sync_plan",
           "signature": "(upstream_envelope: String)",
@@ -5007,8 +5006,8 @@
         },
         {
           "lines": [
-            5112,
-            5125
+            5130,
+            5143
           ],
           "name": "rehydrate_dnscrypt_sync",
           "signature": "(dir: String)",
@@ -5016,8 +5015,8 @@
         },
         {
           "lines": [
-            5136,
-            5147
+            5154,
+            5165
           ],
           "name": "apply_dnscrypt_sync_plan",
           "signature": "(dir: String, upstream_envelope: String, now_secs: i64)",
@@ -5025,8 +5024,8 @@
         },
         {
           "lines": [
-            5162,
-            5166
+            5180,
+            5184
           ],
           "name": "DnscryptEnvelope",
           "type": "struct"
@@ -5035,8 +5034,8 @@
           "children": [
             {
               "lines": [
-                5169,
-                5175
+                5187,
+                5193
               ],
               "name": "from",
               "signature": "(e: resolver::dnscrypt_update::Envelope)",
@@ -5044,16 +5043,16 @@
             }
           ],
           "lines": [
-            5168,
-            5176
+            5186,
+            5194
           ],
           "name": "DnscryptEnvelope",
           "type": "impl"
         },
         {
           "lines": [
-            5181,
-            5187
+            5199,
+            5205
           ],
           "name": "DnscryptSyncPlan",
           "type": "struct"
@@ -5062,8 +5061,8 @@
           "children": [
             {
               "lines": [
-                5190,
-                5198
+                5208,
+                5216
               ],
               "name": "from",
               "signature": "(p: resolver::dnscrypt_update::SyncPlan)",
@@ -5071,16 +5070,16 @@
             }
           ],
           "lines": [
-            5189,
-            5199
+            5207,
+            5217
           ],
           "name": "DnscryptSyncPlan",
           "type": "impl"
         },
         {
           "lines": [
-            5205,
-            5210
+            5223,
+            5228
           ],
           "name": "DnscryptSyncState",
           "type": "struct"
@@ -5089,8 +5088,8 @@
           "children": [
             {
               "lines": [
-                5213,
-                5220
+                5231,
+                5238
               ],
               "name": "from",
               "signature": "(s: resolver::dnscrypt_update::SyncState)",
@@ -5098,24 +5097,24 @@
             }
           ],
           "lines": [
-            5212,
-            5221
+            5230,
+            5239
           ],
           "name": "DnscryptSyncState",
           "type": "impl"
         },
         {
           "lines": [
-            5230,
-            5238
+            5248,
+            5256
           ],
           "name": "DnscryptSyncError",
           "type": "enum"
         },
         {
           "lines": [
-            5244,
-            5253
+            5262,
+            5271
           ],
           "name": "current_dnscrypt_envelope_typed",
           "signature": "()",
@@ -5123,8 +5122,8 @@
         },
         {
           "lines": [
-            5261,
-            5286
+            5279,
+            5304
           ],
           "name": "build_dnscrypt_sync_plan_typed",
           "signature": "(\n    upstream_envelope: String,\n)",
@@ -5132,8 +5131,8 @@
         },
         {
           "lines": [
-            5294,
-            5304
+            5312,
+            5322
           ],
           "name": "rehydrate_dnscrypt_sync_typed",
           "signature": "(dir: String)",
@@ -5143,8 +5142,8 @@
           "children": [
             {
               "lines": [
-                5314,
-                5322
+                5332,
+                5340
               ],
               "name": "temp_dir",
               "signature": "(tag: &str)",
@@ -5152,8 +5151,8 @@
             },
             {
               "lines": [
-                5325,
-                5335
+                5343,
+                5353
               ],
               "name": "typed_envelope_mirrors_the_internal_self_description",
               "signature": "()",
@@ -5161,8 +5160,8 @@
             },
             {
               "lines": [
-                5338,
-                5349
+                5356,
+                5367
               ],
               "name": "typed_plan_names_the_genuinely_missing_capability",
               "signature": "()",
@@ -5170,8 +5169,8 @@
             },
             {
               "lines": [
-                5352,
-                5357
+                5370,
+                5375
               ],
               "name": "typed_plan_malformed_upstream_is_a_typed_error",
               "signature": "()",
@@ -5179,8 +5178,8 @@
             },
             {
               "lines": [
-                5360,
-                5381
+                5378,
+                5399
               ],
               "name": "typed_rehydrate_is_cold_then_reflects_an_apply",
               "signature": "()",
@@ -5188,8 +5187,8 @@
             }
           ],
           "lines": [
-            5307,
-            5382
+            5325,
+            5400
           ],
           "name": "d14_typed_sync_tests",
           "type": "module"
@@ -5199,8 +5198,8 @@
             {
               "docstring": "guard type/poison-recovery is unchanged, so every `let _g = lock_w5();` call-site below is untouched.",
               "lines": [
-                5410,
-                5412
+                5428,
+                5430
               ],
               "name": "lock_w5",
               "signature": "()",
@@ -5209,8 +5208,8 @@
             {
               "docstring": "Home VM, CHARTER \u00a76). Distinct seed from the warden/signature test keys for independence.",
               "lines": [
-                5419,
-                5421
+                5437,
+                5439
               ],
               "name": "w5_signing_key",
               "signature": "()",
@@ -5219,8 +5218,8 @@
             {
               "docstring": "`verify_minisign` expects (`signature.rs:37-40`).",
               "lines": [
-                5425,
-                5431
+                5443,
+                5449
               ],
               "name": "w5_pubkey_blob",
               "signature": "(pk: &[u8; 32], key_id: &[u8; 8])",
@@ -5229,8 +5228,8 @@
             {
               "docstring": "over the RAW `artifact` (`signature.rs:28-35`).",
               "lines": [
-                5435,
-                5442
+                5453,
+                5460
               ],
               "name": "w5_sign_legacy",
               "signature": "(sk: &SigningKey, key_id: &[u8; 8], artifact: &[u8])",
@@ -5239,8 +5238,8 @@
             {
               "docstring": "is the app-private durable tier stand-in; the test cleans it up at the end.",
               "lines": [
-                5447,
-                5456
+                5465,
+                5474
               ],
               "name": "temp_dir",
               "signature": "(tag: &str)",
@@ -5249,8 +5248,8 @@
             {
               "docstring": "reads. Returns the pinned pubkey blob the rehydrate caller passes.",
               "lines": [
-                5461,
-                5468
+                5479,
+                5486
               ],
               "name": "write_signed_pair",
               "signature": "(dir: &std::path::Path, base: &str, artifact: &[u8])",
@@ -5259,8 +5258,8 @@
             {
               "docstring": "so each case starts from a known cold baseline.",
               "lines": [
-                5472,
-                5475
+                5490,
+                5493
               ],
               "name": "reset_blocklist",
               "signature": "()",
@@ -5269,8 +5268,8 @@
             {
               "docstring": "name fail-closed `NotInCatalog`), and it `parse_verified`s cleanly once signed.",
               "lines": [
-                5481,
-                5491
+                5499,
+                5509
               ],
               "name": "empty_tcat_body",
               "signature": "()",
@@ -5278,8 +5277,8 @@
             },
             {
               "lines": [
-                5496,
-                5520
+                5514,
+                5538
               ],
               "name": "blocklist_genuine_signed_source_rehydrates_and_arms",
               "signature": "()",
@@ -5287,8 +5286,8 @@
             },
             {
               "lines": [
-                5523,
-                5564
+                5541,
+                5582
               ],
               "name": "blocklist_tampered_source_is_rejected_and_leaves_matcher_untouched",
               "signature": "()",
@@ -5296,8 +5295,8 @@
             },
             {
               "lines": [
-                5567,
-                5584
+                5585,
+                5602
               ],
               "name": "blocklist_wrong_key_is_rejected",
               "signature": "()",
@@ -5305,8 +5304,8 @@
             },
             {
               "lines": [
-                5587,
-                5598
+                5605,
+                5616
               ],
               "name": "blocklist_absent_pair_is_a_nonfailing_noop",
               "signature": "()",
@@ -5314,8 +5313,8 @@
             },
             {
               "lines": [
-                5604,
-                5612
+                5622,
+                5630
               ],
               "name": "centauri_genuine_signed_source_rehydrates",
               "signature": "()",
@@ -5323,8 +5322,8 @@
             },
             {
               "lines": [
-                5616,
-                5629
+                5634,
+                5647
               ],
               "name": "centauri_tampered_source_is_rejected",
               "signature": "()",
@@ -5332,8 +5331,8 @@
             },
             {
               "lines": [
-                5633,
-                5643
+                5651,
+                5661
               ],
               "name": "centauri_absent_pair_is_a_nonfailing_noop",
               "signature": "()",
@@ -5341,8 +5340,8 @@
             },
             {
               "lines": [
-                5648,
-                5658
+                5666,
+                5676
               ],
               "name": "read_signed_pair_returns_none_when_sig_sidecar_missing",
               "signature": "()",
@@ -5350,8 +5349,8 @@
             }
           ],
           "lines": [
-            5385,
-            5659
+            5403,
+            5677
           ],
           "name": "w5_rehydrate_from_signed_tests",
           "type": "module"
@@ -5361,8 +5360,8 @@
             {
               "docstring": "configured transport, so it's our handle on the `> 0` write branch.",
               "lines": [
-                5675,
-                5682
+                5693,
+                5700
               ],
               "name": "install_blocked",
               "signature": "(name: &str)",
@@ -5370,8 +5369,8 @@
             },
             {
               "lines": [
-                5685,
-                5692
+                5703,
+                5710
               ],
               "name": "null_query_ptr_returns_minus_one",
               "signature": "()",
@@ -5379,8 +5378,8 @@
             },
             {
               "lines": [
-                5695,
-                5699
+                5713,
+                5717
               ],
               "name": "null_out_ptr_returns_minus_one",
               "signature": "()",
@@ -5388,8 +5387,8 @@
             },
             {
               "lines": [
-                5702,
-                5707
+                5720,
+                5725
               ],
               "name": "zero_len_query_returns_minus_one",
               "signature": "()",
@@ -5397,8 +5396,8 @@
             },
             {
               "lines": [
-                5710,
-                5725
+                5728,
+                5743
               ],
               "name": "blocked_name_writes_nxdomain_and_returns_positive",
               "signature": "()",
@@ -5406,8 +5405,8 @@
             },
             {
               "lines": [
-                5728,
-                5742
+                5746,
+                5760
               ],
               "name": "too_small_out_buffer_falls_through_without_writing",
               "signature": "()",
@@ -5415,8 +5414,8 @@
             },
             {
               "lines": [
-                5745,
-                5758
+                5763,
+                5776
               ],
               "name": "unblocked_unconfigured_name_returns_zero",
               "signature": "()",
@@ -5424,8 +5423,8 @@
             }
           ],
           "lines": [
-            5662,
-            5759
+            5680,
+            5777
           ],
           "name": "wave3a_cabi_tests",
           "type": "module"
@@ -5434,8 +5433,8 @@
           "children": [
             {
               "lines": [
-                5771,
-                5788
+                5789,
+                5806
               ],
               "name": "d15_typed_configure_builds_a_loopback_pool_identically",
               "signature": "()",
@@ -5443,8 +5442,8 @@
             },
             {
               "lines": [
-                5793,
-                5805
+                5811,
+                5823
               ],
               "name": "d15_typed_configure_counts_unusable_specs_rejected",
               "signature": "()",
@@ -5452,8 +5451,8 @@
             },
             {
               "lines": [
-                5812,
-                5826
+                5830,
+                5844
               ],
               "name": "odoh_typed_spec_serializes_transport_stamp_and_relay",
               "signature": "()",
@@ -5461,8 +5460,8 @@
             },
             {
               "lines": [
-                5830,
-                5834
+                5848,
+                5852
               ],
               "name": "d15_json_escape_neutralizes_quote_and_backslash",
               "signature": "()",
@@ -5470,8 +5469,8 @@
             },
             {
               "lines": [
-                5839,
-                5875
+                5857,
+                5893
               ],
               "name": "d33_typed_configure_emits_the_routes_key",
               "signature": "()",
@@ -5479,8 +5478,8 @@
             },
             {
               "lines": [
-                5880,
-                5930
+                5898,
+                5948
               ],
               "name": "d33_routes_set_list_json_round_trip",
               "signature": "()",
@@ -5488,8 +5487,8 @@
             },
             {
               "lines": [
-                5936,
-                5981
+                5954,
+                5999
               ],
               "name": "d33_local_records_set_persist_rehydrate_count",
               "signature": "()",
@@ -5497,8 +5496,8 @@
             },
             {
               "lines": [
-                5985,
-                5994
+                6003,
+                6012
               ],
               "name": "d35_typed_toggles_are_panic_free",
               "signature": "()",
@@ -5506,8 +5505,8 @@
             },
             {
               "lines": [
-                5998,
-                6006
+                6016,
+                6024
               ],
               "name": "d36_typed_compile_report_matches_the_flat_summary",
               "signature": "()",
@@ -5515,8 +5514,8 @@
             },
             {
               "lines": [
-                6011,
-                6026
+                6029,
+                6044
               ],
               "name": "d28_loopback_seam_binds_reports_and_snapshots",
               "signature": "()",
@@ -5524,8 +5523,8 @@
             }
           ],
           "lines": [
-            5762,
-            6027
+            5780,
+            6045
           ],
           "name": "masksolver_typed_surface_tests",
           "type": "module"
@@ -5535,8 +5534,8 @@
             {
               "docstring": "mutexes guarding the SAME singleton). Poison-recovering (the `warden.rs:1281` idiom).",
               "lines": [
-                6048,
-                6050
+                6066,
+                6068
               ],
               "name": "lock_warden",
               "signature": "()",
@@ -5545,8 +5544,8 @@
             {
               "docstring": "Call the bridge for a non-DNS (qname-less, the W3 firewall seam) connection to `daddr` for `uid`.",
               "lines": [
-                6056,
-                6067
+                6074,
+                6085
               ],
               "name": "verdict_for",
               "signature": "(uid: i32, daddr: &[u8])",
@@ -5554,8 +5553,8 @@
             },
             {
               "lines": [
-                6072,
-                6080
+                6090,
+                6098
               ],
               "name": "none_singleton_abstains",
               "signature": "()",
@@ -5563,8 +5562,8 @@
             },
             {
               "lines": [
-                6083,
-                6094
+                6101,
+                6112
               ],
               "name": "negative_uid_abstains_even_when_configured",
               "signature": "()",
@@ -5572,8 +5571,8 @@
             },
             {
               "lines": [
-                6097,
-                6103
+                6115,
+                6121
               ],
               "name": "null_daddr_abstains",
               "signature": "()",
@@ -5581,8 +5580,8 @@
             },
             {
               "lines": [
-                6106,
-                6113
+                6124,
+                6131
               ],
               "name": "empty_daddr_abstains",
               "signature": "()",
@@ -5590,8 +5589,8 @@
             },
             {
               "lines": [
-                6116,
-                6125
+                6134,
+                6143
               ],
               "name": "unparsable_daddr_abstains",
               "signature": "()",
@@ -5599,8 +5598,8 @@
             },
             {
               "lines": [
-                6130,
-                6141
+                6148,
+                6159
               ],
               "name": "configured_allow_returns_one",
               "signature": "()",
@@ -5608,8 +5607,8 @@
             },
             {
               "lines": [
-                6148,
-                6160
+                6166,
+                6178
               ],
               "name": "repeated_calls_are_stable_cache_hit",
               "signature": "()",
@@ -5617,8 +5616,8 @@
             },
             {
               "lines": [
-                6165,
-                6182
+                6183,
+                6200
               ],
               "name": "arming_flips_the_bridge_from_abstain",
               "signature": "()",
@@ -5626,8 +5625,8 @@
             },
             {
               "lines": [
-                6187,
-                6195
+                6205,
+                6213
               ],
               "name": "stats_json_disarmed_singleton_is_honest_off",
               "signature": "()",
@@ -5635,8 +5634,8 @@
             },
             {
               "lines": [
-                6198,
-                6225
+                6216,
+                6243
               ],
               "name": "stats_json_tracks_live_bridge_verdicts",
               "signature": "()",
@@ -5644,8 +5643,8 @@
             },
             {
               "lines": [
-                6228,
-                6244
+                6246,
+                6262
               ],
               "name": "stats_json_is_aggregate_counts_only_no_address",
               "signature": "()",
@@ -5653,8 +5652,8 @@
             },
             {
               "lines": [
-                6249,
-                6296
+                6267,
+                6314
               ],
               "name": "is_lan_addr_classifies_ranges",
               "signature": "()",
@@ -5662,8 +5661,8 @@
             },
             {
               "lines": [
-                6305,
-                6333
+                6323,
+                6351
               ],
               "name": "bridge_composes_against_the_live_blocklist_global",
               "signature": "()",
@@ -5671,8 +5670,8 @@
             }
           ],
           "lines": [
-            6030,
-            6334
+            6048,
+            6352
           ],
           "name": "warden_bridge_tests",
           "type": "module"
@@ -5681,8 +5680,8 @@
           "children": [
             {
               "lines": [
-                6346,
-                6353
+                6364,
+                6371
               ],
               "name": "probe_convicts_a_brand_forgery",
               "signature": "()",
@@ -5690,8 +5689,8 @@
             },
             {
               "lines": [
-                6358,
-                6364
+                6376,
+                6382
               ],
               "name": "probe_never_convicts_the_real_brand",
               "signature": "()",
@@ -5699,8 +5698,8 @@
             },
             {
               "lines": [
-                6368,
-                6377
+                6386,
+                6395
               ],
               "name": "probe_is_clean_for_an_ordinary_host",
               "signature": "()",
@@ -5708,8 +5707,8 @@
             },
             {
               "lines": [
-                6383,
-                6392
+                6401,
+                6410
               ],
               "name": "probe_dga_score_discriminates",
               "signature": "()",
@@ -5717,8 +5716,8 @@
             },
             {
               "lines": [
-                6396,
-                6400
+                6414,
+                6426
               ],
               "name": "probe_never_panics_on_hostile_input",
               "signature": "()",
@@ -5726,8 +5725,8 @@
             }
           ],
           "lines": [
-            6340,
-            6401
+            6358,
+            6427
           ],
           "name": "detection_probe_tests",
           "type": "module"
@@ -5737,8 +5736,8 @@
             {
               "docstring": "witness supplies its own clock through the explicit `_at` seam, exactly as the datapath does.",
               "lines": [
-                6415,
-                6420
+                6441,
+                6446
               ],
               "name": "probe_test_now",
               "signature": "()",
@@ -5746,8 +5745,8 @@
             },
             {
               "lines": [
-                6426,
-                6452
+                6452,
+                6478
               ],
               "name": "probing_does_not_register_the_host",
               "signature": "()",
@@ -5755,8 +5754,8 @@
             },
             {
               "lines": [
-                6457,
-                6466
+                6483,
+                6492
               ],
               "name": "repeated_probing_never_fabricates_a_beacon",
               "signature": "()",
@@ -5764,8 +5763,8 @@
             },
             {
               "lines": [
-                6470,
-                6479
+                6496,
+                6505
               ],
               "name": "repeated_probing_never_fabricates_a_tunnel",
               "signature": "()",
@@ -5773,8 +5772,8 @@
             }
           ],
           "lines": [
-            6409,
-            6480
+            6435,
+            6506
           ],
           "name": "detection_probe_purity_tests",
           "type": "module"
@@ -5783,8 +5782,8 @@
           "children": [
             {
               "lines": [
-                6493,
-                6502
+                6519,
+                6531
               ],
               "name": "rule_sets_disarmed_is_honest_off",
               "signature": "()",
@@ -5792,8 +5791,8 @@
             },
             {
               "lines": [
-                6506,
-                6515
+                6535,
+                6550
               ],
               "name": "rule_probe_disarmed_blocks_nothing",
               "signature": "()",
@@ -5801,8 +5800,8 @@
             },
             {
               "lines": [
-                6521,
-                6534
+                6556,
+                6575
               ],
               "name": "probing_never_moves_the_verdict_counters",
               "signature": "()",
@@ -5810,8 +5809,8 @@
             },
             {
               "lines": [
-                6541,
-                6572
+                6582,
+                6613
               ],
               "name": "rule_probe_discriminates_against_an_armed_ruleset",
               "signature": "()",
@@ -5819,8 +5818,8 @@
             },
             {
               "lines": [
-                6577,
-                6603
+                6618,
+                6647
               ],
               "name": "rule_sets_reports_the_armed_shape",
               "signature": "()",
@@ -5828,8 +5827,8 @@
             },
             {
               "lines": [
-                6607,
-                6614
+                6651,
+                6661
               ],
               "name": "rule_probe_tolerates_a_bad_address",
               "signature": "()",
@@ -5837,8 +5836,8 @@
             },
             {
               "lines": [
-                6618,
-                6624
+                6665,
+                6677
               ],
               "name": "rule_probe_clamps_hostile_ffi_integers",
               "signature": "()",
@@ -5846,8 +5845,8 @@
             }
           ],
           "lines": [
-            6487,
-            6625
+            6513,
+            6678
           ],
           "name": "warden_diagnostics_tests",
           "type": "module"
@@ -5856,8 +5855,8 @@
           "children": [
             {
               "lines": [
-                6636,
-                6643
+                6689,
+                6698
               ],
               "name": "unknown_domain_has_no_provenance",
               "signature": "()",
@@ -5865,8 +5864,8 @@
             },
             {
               "lines": [
-                6648,
-                6664
+                6703,
+                6724
               ],
               "name": "one_source_gives_corroboration_one",
               "signature": "()",
@@ -5874,8 +5873,8 @@
             },
             {
               "lines": [
-                6669,
-                6683
+                6729,
+                6745
               ],
               "name": "two_sources_corroborate",
               "signature": "()",
@@ -5883,8 +5882,8 @@
             },
             {
               "lines": [
-                6690,
-                6720
+                6752,
+                6784
               ],
               "name": "signed_source_outranks_unsigned_and_reads_as_signed",
               "signature": "()",
@@ -5892,8 +5891,8 @@
             },
             {
               "lines": [
-                6724,
-                6730
+                6788,
+                6796
               ],
               "name": "provenance_never_panics_on_hostile_input",
               "signature": "()",
@@ -5901,8 +5900,8 @@
             }
           ],
           "lines": [
-            6631,
-            6731
+            6684,
+            6797
           ],
           "name": "blocklist_provenance_tests",
           "type": "module"
@@ -5911,8 +5910,8 @@
           "children": [
             {
               "lines": [
-                6742,
-                6756
+                6808,
+                6827
               ],
               "name": "list_trust_reports_the_installed_set",
               "signature": "()",
@@ -5920,8 +5919,8 @@
             },
             {
               "lines": [
-                6762,
-                6794
+                6833,
+                6867
               ],
               "name": "same_list_under_two_sources_does_not_inflate_trust",
               "signature": "()",
@@ -5929,8 +5928,8 @@
             },
             {
               "lines": [
-                6799,
-                6831
+                6872,
+                6906
               ],
               "name": "source_backs_installed_goes_stale_when_replaced",
               "signature": "()",
@@ -5938,8 +5937,8 @@
             },
             {
               "lines": [
-                6835,
-                6841
+                6910,
+                6918
               ],
               "name": "dedup_surfaces_never_panic",
               "signature": "()",
@@ -5947,8 +5946,8 @@
             }
           ],
           "lines": [
-            6737,
-            6842
+            6803,
+            6919
           ],
           "name": "blocklist_dedup_tests",
           "type": "module"
@@ -5957,8 +5956,8 @@
           "children": [
             {
               "lines": [
-                6854,
-                6861
+                6931,
+                6938
               ],
               "name": "empty_input_is_not_all_valid",
               "signature": "()",
@@ -5966,8 +5965,8 @@
             },
             {
               "lines": [
-                6865,
-                6880
+                6942,
+                6957
               ],
               "name": "junk_is_rejected_and_the_arithmetic_closes",
               "signature": "()",
@@ -5975,8 +5974,8 @@
             },
             {
               "lines": [
-                6884,
-                6886
+                6961,
+                6963
               ],
               "name": "relay_check_never_panics",
               "signature": "()",
@@ -5984,8 +5983,8 @@
             }
           ],
           "lines": [
-            6848,
-            6887
+            6925,
+            6964
           ],
           "name": "relay_check_ffi_tests",
           "type": "module"
@@ -5994,8 +5993,8 @@
           "children": [
             {
               "lines": [
-                6902,
-                6912
+                6979,
+                6989
               ],
               "name": "disarmed_warden_reports_honest_zeros",
               "signature": "()",
@@ -6003,8 +6002,8 @@
             },
             {
               "lines": [
-                6915,
-                6929
+                6992,
+                7016
               ],
               "name": "a_granted_pause_is_active_and_counts_down",
               "signature": "()",
@@ -6012,8 +6011,8 @@
             },
             {
               "lines": [
-                6935,
-                6957
+                7022,
+                7044
               ],
               "name": "a_lapsed_pause_reads_inactive_before_any_sweep_runs",
               "signature": "()",
@@ -6021,8 +6020,8 @@
             },
             {
               "lines": [
-                6962,
-                6972
+                7049,
+                7062
               ],
               "name": "expiry_is_exclusive_at_the_boundary",
               "signature": "()",
@@ -6030,8 +6029,8 @@
             },
             {
               "lines": [
-                6976,
-                6986
+                7066,
+                7085
               ],
               "name": "zero_revokes_the_pause",
               "signature": "()",
@@ -6039,8 +6038,8 @@
             },
             {
               "lines": [
-                6990,
-                7000
+                7089,
+                7102
               ],
               "name": "a_pause_does_not_leak_to_another_app",
               "signature": "()",
@@ -6048,8 +6047,8 @@
             },
             {
               "lines": [
-                7004,
-                7019
+                7106,
+                7121
               ],
               "name": "hostile_ffi_integers_are_clamped",
               "signature": "()",
@@ -6057,8 +6056,8 @@
             }
           ],
           "lines": [
-            6896,
-            7020
+            6973,
+            7122
           ],
           "name": "temp_allow_tests",
           "type": "module"
@@ -6067,8 +6066,8 @@
           "children": [
             {
               "lines": [
-                7034,
-                7039
+                7136,
+                7147
               ],
               "name": "an_unseen_ip_is_never_labelled",
               "signature": "()",
@@ -6076,8 +6075,8 @@
             },
             {
               "lines": [
-                7043,
-                7049
+                7151,
+                7157
               ],
               "name": "a_malformed_address_reads_unknown",
               "signature": "()",
@@ -6085,8 +6084,8 @@
             },
             {
               "lines": [
-                7054,
-                7062
+                7162,
+                7170
               ],
               "name": "the_entries_gauge_agrees_with_the_rule_sets_surface",
               "signature": "()",
@@ -6094,8 +6093,8 @@
             },
             {
               "lines": [
-                7066,
-                7070
+                7174,
+                7178
               ],
               "name": "attribution_lookup_never_panics",
               "signature": "()",
@@ -6103,8 +6102,8 @@
             }
           ],
           "lines": [
-            7028,
-            7071
+            7130,
+            7179
           ],
           "name": "attribution_lookup_tests",
           "type": "module"
@@ -6113,8 +6112,8 @@
           "children": [
             {
               "lines": [
-                7084,
-                7104
+                7192,
+                7215
               ],
               "name": "a_cold_start_reports_absent_pair_not_tampering",
               "signature": "()",
@@ -6122,8 +6121,8 @@
             },
             {
               "lines": [
-                7109,
-                7137
+                7220,
+                7251
               ],
               "name": "a_forged_pair_is_reported_as_bad_signature_not_absent",
               "signature": "()",
@@ -6131,8 +6130,8 @@
             },
             {
               "lines": [
-                7141,
-                7152
+                7255,
+                7266
               ],
               "name": "lane_report_never_panics_or_invents_an_armed_lane",
               "signature": "()",
@@ -6140,8 +6139,8 @@
             }
           ],
           "lines": [
-            7079,
-            7153
+            7187,
+            7267
           ],
           "name": "lane_report_tests",
           "type": "module"
@@ -6150,8 +6149,8 @@
           "children": [
             {
               "lines": [
-                7163,
-                7178
+                7277,
+                7292
               ],
               "name": "discovery_tallies_are_coherent",
               "signature": "()",
@@ -6159,8 +6158,8 @@
             },
             {
               "lines": [
-                7199,
-                7219
+                7313,
+                7337
               ],
               "name": "centauri_discovery_never_panics",
               "signature": "()",
@@ -6168,8 +6167,8 @@
             }
           ],
           "lines": [
-            7157,
-            7220
+            7271,
+            7338
           ],
           "name": "centauri_discovery_tests",
           "type": "module"
@@ -6178,8 +6177,8 @@
           "children": [
             {
               "lines": [
-                7234,
-                7236
+                7352,
+                7354
               ],
               "name": "knob_guard",
               "signature": "()",
@@ -6187,8 +6186,8 @@
             },
             {
               "lines": [
-                7239,
-                7250
+                7357,
+                7368
               ],
               "name": "honor_zero_ttl_round_trips_through_the_ffi",
               "signature": "()",
@@ -6196,8 +6195,8 @@
             },
             {
               "lines": [
-                7254,
-                7274
+                7372,
+                7392
               ],
               "name": "cacheable_types_round_trip_preserves_the_empty_sentinel",
               "signature": "()",
@@ -6205,8 +6204,8 @@
             },
             {
               "lines": [
-                7278,
-                7290
+                7396,
+                7408
               ],
               "name": "hostile_rr_types_are_dropped_not_wrapped",
               "signature": "()",
@@ -6214,8 +6213,8 @@
             }
           ],
           "lines": [
-            7226,
-            7291
+            7344,
+            7409
           ],
           "name": "expert_cache_knob_tests",
           "type": "module"
@@ -6224,8 +6223,8 @@
           "children": [
             {
               "lines": [
-                7304,
-                7340
+                7422,
+                7461
               ],
               "name": "arming_is_idempotent_and_does_not_wipe_installed_policy",
               "signature": "()",
@@ -6233,8 +6232,8 @@
             },
             {
               "lines": [
-                7343,
-                7356
+                7464,
+                7477
               ],
               "name": "disarm_returns_the_engine_to_the_abstain_posture",
               "signature": "()",
@@ -6242,8 +6241,8 @@
             },
             {
               "lines": [
-                7359,
-                7400
+                7480,
+                7524
               ],
               "name": "clearing_rule_sets_revokes_policy_but_keeps_the_warden_armed",
               "signature": "()",
@@ -6251,8 +6250,8 @@
             }
           ],
           "lines": [
-            7300,
-            7401
+            7418,
+            7525
           ],
           "name": "warden_arm_seam_tests",
           "type": "module"
@@ -6261,8 +6260,8 @@
           "children": [
             {
               "lines": [
-                7412,
-                7447
+                7536,
+                7571
               ],
               "name": "an_empty_reputation_store_resolves_nothing_rather_than_zeroing_every_source",
               "signature": "()",
@@ -6270,8 +6269,8 @@
             },
             {
               "lines": [
-                7450,
-                7486
+                7574,
+                7615
               ],
               "name": "a_source_earns_reputation_from_the_boxs_own_corroboration",
               "signature": "()",
@@ -6279,8 +6278,8 @@
             },
             {
               "lines": [
-                7490,
-                7524
+                7619,
+                7653
               ],
               "name": "the_panel_reports_contribution_to_the_installed_set",
               "signature": "()",
@@ -6288,8 +6287,8 @@
             },
             {
               "lines": [
-                7527,
-                7540
+                7656,
+                7669
               ],
               "name": "the_panel_never_panics_and_orders_stably",
               "signature": "()",
@@ -6297,8 +6296,8 @@
             }
           ],
           "lines": [
-            7408,
-            7541
+            7532,
+            7670
           ],
           "name": "source_provenance_tests",
           "type": "module"
@@ -6307,8 +6306,8 @@
           "children": [
             {
               "lines": [
-                7551,
-                7565
+                7680,
+                7697
               ],
               "name": "an_unconfigured_resolver_reports_an_honestly_empty_shape",
               "signature": "()",
@@ -6316,8 +6315,8 @@
             },
             {
               "lines": [
-                7570,
-                7578
+                7702,
+                7710
               ],
               "name": "nonzero_counts_never_report_empty",
               "signature": "()",
@@ -6325,8 +6324,8 @@
             },
             {
               "lines": [
-                7581,
-                7585
+                7713,
+                7717
               ],
               "name": "the_shape_never_panics_across_repeated_reads",
               "signature": "()",
@@ -6334,8 +6333,8 @@
             },
             {
               "lines": [
-                7590,
-                7602
+                7722,
+                7734
               ],
               "name": "a_noop_plan_reports_up_to_date_as_a_typed_verdict",
               "signature": "()",
@@ -6343,8 +6342,8 @@
             },
             {
               "lines": [
-                7607,
-                7624
+                7739,
+                7759
               ],
               "name": "a_plan_with_work_reports_no_not_needed_reason",
               "signature": "()",
@@ -6352,8 +6351,8 @@
             }
           ],
           "lines": [
-            7545,
-            7625
+            7674,
+            7760
           ],
           "name": "transport_shape_tests",
           "type": "module"
@@ -6362,8 +6361,8 @@
           "children": [
             {
               "lines": [
-                7634,
-                7652
+                7769,
+                7787
               ],
               "name": "the_installed_set_round_trips_through_its_own_encoder",
               "signature": "()",
@@ -6371,8 +6370,8 @@
             },
             {
               "lines": [
-                7657,
-                7675
+                7792,
+                7810
               ],
               "name": "the_exported_artifact_decodes_back_to_the_installed_set",
               "signature": "()",
@@ -6380,8 +6379,8 @@
             },
             {
               "lines": [
-                7679,
-                7684
+                7814,
+                7819
               ],
               "name": "the_alarms_are_honestly_zero_and_never_panic",
               "signature": "()",
@@ -6389,8 +6388,8 @@
             },
             {
               "lines": [
-                7702,
-                7739
+                7837,
+                7874
               ],
               "name": "the_fingerprint_discriminates_where_a_count_cannot",
               "signature": "()",
@@ -6398,8 +6397,8 @@
             }
           ],
           "lines": [
-            7629,
-            7740
+            7764,
+            7875
           ],
           "name": "integrity_alarms_tests",
           "type": "module"
@@ -7477,12 +7476,12 @@
       ]
     },
     "solver_bindings.rs": {
-      "hash": "ff5593b2b856",
-      "indexed_at": "2026-07-26T19:12:57.822080+00:00",
+      "hash": "9338e8d35a30",
+      "indexed_at": "2026-08-01T12:52:14.048690+00:00",
       "language": "rust",
-      "lines": 453,
-      "mtime_ns": 1785030833196605400,
-      "size": 19234,
+      "lines": 495,
+      "mtime_ns": 1785588611470044300,
+      "size": 19691,
       "symbols": [
         {
           "lines": [
@@ -7616,7 +7615,7 @@
           "docstring": "what parsed cleanly (fail-safe); an unknown transport byte skips THAT row (cursor stays aligned).",
           "lines": [
             200,
-            239
+            257
           ],
           "name": "decode_rows",
           "signature": "(payload: &[u8])",
@@ -7624,8 +7623,8 @@
         },
         {
           "lines": [
-            246,
-            249
+            264,
+            267
           ],
           "name": "SolverBindingStore",
           "type": "struct"
@@ -7634,8 +7633,8 @@
           "children": [
             {
               "lines": [
-                257,
-                266
+                275,
+                284
               ],
               "name": "new",
               "signature": "(durable_dir: String)",
@@ -7644,8 +7643,8 @@
             {
               "docstring": "boundary). Call ONCE at manager start. Panic-firewalled \u2192 empty.",
               "lines": [
-                272,
-                284
+                290,
+                302
               ],
               "name": "rehydrate",
               "signature": "(&self)",
@@ -7654,8 +7653,8 @@
             {
               "docstring": "updates so a later persist can retry the full set).",
               "lines": [
-                291,
-                302
+                309,
+                319
               ],
               "name": "persist",
               "signature": "(&self, rows: Vec<SolverBindingRow>)",
@@ -7664,8 +7663,8 @@
             {
               "docstring": "\u2192 empty.",
               "lines": [
-                306,
-                312
+                323,
+                329
               ],
               "name": "snapshot",
               "signature": "(&self)",
@@ -7674,8 +7673,8 @@
             {
               "docstring": "networks\" action (`BindingCache.clear` durable twin). Best-effort + non-failing. Panic \u2192 no-op.",
               "lines": [
-                316,
-                323
+                333,
+                340
               ],
               "name": "clear",
               "signature": "(&self)",
@@ -7683,8 +7682,8 @@
             }
           ],
           "lines": [
-            252,
-            324
+            270,
+            341
           ],
           "name": "SolverBindingStore",
           "type": "impl"
@@ -7694,8 +7693,8 @@
             {
               "docstring": "A unique-per-test temp dir (process-unique counter + tag \u2192 collision-free; no rng dep).",
               "lines": [
-                331,
-                339
+                348,
+                356
               ],
               "name": "temp_dir",
               "signature": "(tag: &str)",
@@ -7703,8 +7702,8 @@
             },
             {
               "lines": [
-                341,
-                353
+                358,
+                370
               ],
               "name": "a_row",
               "signature": "(fp: &str, resolver: &str, healthy_at: i64)",
@@ -7712,8 +7711,8 @@
             },
             {
               "lines": [
-                358,
-                382
+                375,
+                402
               ],
               "name": "persist_then_a_fresh_store_rehydrates_the_same_rows",
               "signature": "()",
@@ -7721,8 +7720,8 @@
             },
             {
               "lines": [
-                385,
-                391
+                405,
+                414
               ],
               "name": "cold_rehydrate_on_absent_record",
               "signature": "()",
@@ -7730,8 +7729,8 @@
             },
             {
               "lines": [
-                394,
-                403
+                417,
+                429
               ],
               "name": "clear_forgets_the_rows",
               "signature": "()",
@@ -7739,8 +7738,8 @@
             },
             {
               "lines": [
-                406,
-                414
+                432,
+                446
               ],
               "name": "decode_of_garbage_is_empty_not_panic",
               "signature": "()",
@@ -7748,8 +7747,8 @@
             },
             {
               "lines": [
-                417,
-                430
+                449,
+                465
               ],
               "name": "unknown_transport_row_is_skipped_alignment_held",
               "signature": "()",
@@ -7757,8 +7756,8 @@
             },
             {
               "lines": [
-                433,
-                440
+                468,
+                479
               ],
               "name": "row_bound_is_enforced_both_directions",
               "signature": "()",
@@ -7766,8 +7765,8 @@
             },
             {
               "lines": [
-                443,
-                452
+                482,
+                494
               ],
               "name": "snapshot_does_not_write_disk",
               "signature": "()",
@@ -7775,8 +7774,8 @@
             }
           ],
           "lines": [
-            327,
-            453
+            344,
+            495
           ],
           "name": "tests",
           "type": "module"
@@ -7831,12 +7830,12 @@
       ]
     },
     "ui_text.rs": {
-      "hash": "3e34f62d25a2",
-      "indexed_at": "2026-07-26T19:12:57.823953+00:00",
+      "hash": "a273337372d3",
+      "indexed_at": "2026-08-01T12:52:15.209209+00:00",
       "language": "rust",
-      "lines": 160,
-      "mtime_ns": 1785030833257604800,
-      "size": 15135,
+      "lines": 163,
+      "mtime_ns": 1785588611498044500,
+      "size": 15169,
       "symbols": [
         {
           "lines": [
@@ -7852,7 +7851,7 @@
             {
               "lines": [
                 151,
-                159
+                162
               ],
               "name": "known_keys_resolve_and_unknown_is_empty",
               "signature": "()",
@@ -7861,7 +7860,7 @@
           ],
           "lines": [
             147,
-            160
+            163
           ],
           "name": "tests",
           "type": "module"
@@ -7869,12 +7868,12 @@
       ]
     },
     "underground.rs": {
-      "hash": "2cb4a8731764",
-      "indexed_at": "2026-07-30T03:57:55.926931+00:00",
+      "hash": "9bf907b9a75c",
+      "indexed_at": "2026-08-01T12:52:15.516049+00:00",
       "language": "rust",
-      "lines": 3332,
-      "mtime_ns": 1785380160186635700,
-      "size": 150723,
+      "lines": 3552,
+      "mtime_ns": 1785588611524043500,
+      "size": 153540,
       "symbols": [
         {
           "lines": [
@@ -7899,7 +7898,7 @@
             {
               "lines": [
                 129,
-                146
+                148
               ],
               "name": "from_slug",
               "signature": "(s: &str)",
@@ -7908,8 +7907,8 @@
             {
               "docstring": "Graduated licence penalty \u2014 active hostility bleeds fast, mere presence bleeds slow.",
               "lines": [
-                149,
-                163
+                151,
+                165
               ],
               "name": "base_penalty",
               "signature": "(&self)",
@@ -7918,8 +7917,8 @@
             {
               "docstring": "The mitigation ceiling \u2014 the tier that NEVER heals its licence back.",
               "lines": [
-                166,
-                168
+                168,
+                173
               ],
               "name": "is_active_destroy",
               "signature": "(&self)",
@@ -7927,8 +7926,8 @@
             },
             {
               "lines": [
-                170,
-                184
+                175,
+                189
               ],
               "name": "lane_index",
               "signature": "(&self)",
@@ -7937,15 +7936,15 @@
           ],
           "lines": [
             110,
-            185
+            190
           ],
           "name": "Risk",
           "type": "impl"
         },
         {
           "lines": [
-            189,
-            202
+            194,
+            207
           ],
           "name": "Source",
           "type": "enum"
@@ -7954,8 +7953,8 @@
           "children": [
             {
               "lines": [
-                205,
-                213
+                210,
+                218
               ],
               "name": "slug",
               "signature": "(self)",
@@ -7963,8 +7962,8 @@
             },
             {
               "lines": [
-                215,
-                224
+                220,
+                229
               ],
               "name": "from_slug",
               "signature": "(s: &str)",
@@ -7972,8 +7971,8 @@
             },
             {
               "lines": [
-                226,
-                234
+                231,
+                239
               ],
               "name": "lane_index",
               "signature": "(self)",
@@ -7981,16 +7980,16 @@
             }
           ],
           "lines": [
-            204,
-            235
+            209,
+            240
           ],
           "name": "Source",
           "type": "impl"
         },
         {
           "lines": [
-            247,
-            255
+            252,
+            260
           ],
           "name": "Verdict",
           "type": "enum"
@@ -8000,8 +7999,8 @@
             {
               "docstring": "Stable lower-case wire slug (ledger column 11 + the top-row's 7th field).",
               "lines": [
-                259,
-                265
+                264,
+                270
               ],
               "name": "slug",
               "signature": "(self)",
@@ -8010,8 +8009,8 @@
             {
               "docstring": "\"let the automatic engine decide\", never to a spurious block).",
               "lines": [
-                269,
-                275
+                274,
+                280
               ],
               "name": "from_slug",
               "signature": "(s: &str)",
@@ -8020,8 +8019,8 @@
             {
               "docstring": "Any other code fails safe to `Neutral`.",
               "lines": [
-                279,
-                285
+                284,
+                290
               ],
               "name": "from_code",
               "signature": "(code: u8)",
@@ -8029,40 +8028,40 @@
             }
           ],
           "lines": [
-            257,
-            286
+            262,
+            291
           ],
           "name": "Verdict",
           "type": "impl"
         },
         {
           "lines": [
-            292,
-            301
+            297,
+            306
           ],
           "name": "NavEvent",
           "type": "enum"
         },
         {
           "lines": [
-            305,
-            324
+            310,
+            329
           ],
           "name": "Entry",
           "type": "struct"
         },
         {
           "lines": [
-            328,
-            336
+            333,
+            341
           ],
           "name": "Store",
           "type": "struct"
         },
         {
           "lines": [
-            348,
-            350
+            353,
+            355
           ],
           "name": "store",
           "signature": "()",
@@ -8070,8 +8069,8 @@
         },
         {
           "lines": [
-            352,
-            354
+            357,
+            359
           ],
           "name": "ledger_dir_cell",
           "signature": "()",
@@ -8080,8 +8079,8 @@
         {
           "docstring": "Wall-clock unix seconds; 0 on a clock before the epoch (fail-safe, never a panic).",
           "lines": [
-            357,
-            362
+            362,
+            367
           ],
           "name": "now_secs",
           "signature": "()",
@@ -8090,8 +8089,8 @@
         {
           "docstring": "Canonical store key: lower-cased, trailing root-dot stripped, surrounding space trimmed.",
           "lines": [
-            365,
-            367
+            370,
+            372
           ],
           "name": "normalize",
           "signature": "(host: &str)",
@@ -8100,8 +8099,8 @@
         {
           "docstring": "True iff `host` IS `suffix` or ends with `.suffix` (case handled by [`normalize`] upstream).",
           "lines": [
-            398,
-            402
+            403,
+            407
           ],
           "name": "suffix_hit",
           "signature": "(host: &str, suffixes: &[&str])",
@@ -8110,8 +8109,8 @@
         {
           "docstring": "NOWHERE (the post-filter law: the store is a threat ledger, never a browsing mirror).",
           "lines": [
-            406,
-            443
+            411,
+            452
           ],
           "name": "classify",
           "signature": "(host: &str, qtype: u16, event: NavEvent)",
@@ -8119,32 +8118,32 @@
         },
         {
           "lines": [
-            459,
-            482
+            468,
+            491
           ],
           "name": "Signal",
           "type": "enum"
         },
         {
           "lines": [
-            489,
-            498
+            498,
+            507
           ],
           "name": "ThreatScore",
           "type": "struct"
         },
         {
           "lines": [
-            505,
-            510
+            514,
+            519
           ],
           "name": "ScoringCfg",
           "type": "struct"
         },
         {
           "lines": [
-            516,
-            522
+            525,
+            531
           ],
           "name": "DetectionCfg",
           "type": "struct"
@@ -8153,8 +8152,8 @@
           "children": [
             {
               "lines": [
-                525,
-                527
+                534,
+                542
               ],
               "name": "default",
               "signature": "()",
@@ -8162,8 +8161,8 @@
             }
           ],
           "lines": [
-            524,
-            528
+            533,
+            543
           ],
           "name": "Default",
           "type": "impl"
@@ -8171,8 +8170,8 @@
         {
           "docstring": "The runtime detection-toggle read (`[detection]` in scoring.toml; defaults = all ON).",
           "lines": [
-            531,
-            533
+            546,
+            551
           ],
           "name": "detection_cfg",
           "signature": "()",
@@ -8180,8 +8179,8 @@
         },
         {
           "lines": [
-            538,
-            542
+            556,
+            560
           ],
           "name": "QuarantineCfg",
           "type": "struct"
@@ -8190,8 +8189,8 @@
           "children": [
             {
               "lines": [
-                545,
-                547
+                563,
+                567
               ],
               "name": "default",
               "signature": "()",
@@ -8199,8 +8198,8 @@
             }
           ],
           "lines": [
-            544,
-            548
+            562,
+            568
           ],
           "name": "Default",
           "type": "impl"
@@ -8208,8 +8207,8 @@
         {
           "docstring": "The runtime quarantine TTL (scoring.toml `[quarantine] ttl_secs`, else the 24h constant).",
           "lines": [
-            551,
-            556
+            571,
+            576
           ],
           "name": "quarantine_ttl_secs",
           "signature": "()",
@@ -8217,8 +8216,8 @@
         },
         {
           "lines": [
-            561,
-            566
+            581,
+            586
           ],
           "name": "LicenceCfg",
           "type": "struct"
@@ -8227,8 +8226,8 @@
           "children": [
             {
               "lines": [
-                569,
-                571
+                589,
+                594
               ],
               "name": "default",
               "signature": "()",
@@ -8236,16 +8235,16 @@
             }
           ],
           "lines": [
-            568,
-            572
+            588,
+            595
           ],
           "name": "Default",
           "type": "impl"
         },
         {
           "lines": [
-            578,
-            589
+            601,
+            612
           ],
           "name": "PenaltyCfg",
           "type": "struct"
@@ -8254,8 +8253,8 @@
           "children": [
             {
               "lines": [
-                592,
-                605
+                615,
+                628
               ],
               "name": "default",
               "signature": "()",
@@ -8263,24 +8262,24 @@
             }
           ],
           "lines": [
-            591,
-            606
+            614,
+            629
           ],
           "name": "Default",
           "type": "impl"
         },
         {
           "lines": [
-            612,
-            620
+            635,
+            643
           ],
           "name": "Rep",
           "type": "struct"
         },
         {
           "lines": [
-            634,
-            636
+            657,
+            659
           ],
           "name": "scoring_cell",
           "signature": "()",
@@ -8288,8 +8287,8 @@
         },
         {
           "lines": [
-            638,
-            640
+            661,
+            663
           ],
           "name": "reputation_cell",
           "signature": "()",
@@ -8297,8 +8296,8 @@
         },
         {
           "lines": [
-            642,
-            647
+            665,
+            670
           ],
           "name": "scoring_path",
           "signature": "()",
@@ -8306,8 +8305,8 @@
         },
         {
           "lines": [
-            649,
-            654
+            672,
+            677
           ],
           "name": "reputation_path",
           "signature": "()",
@@ -8316,8 +8315,8 @@
         {
           "docstring": "an operator's half-saved edit cannot zero the economy.",
           "lines": [
-            659,
-            683
+            682,
+            706
           ],
           "name": "maybe_reload_scoring",
           "signature": "(force: bool)",
@@ -8326,8 +8325,8 @@
         {
           "docstring": "The RUNTIME licence penalty for a lane (the [`Risk::base_penalty`] surpass point).",
           "lines": [
-            686,
-            707
+            709,
+            730
           ],
           "name": "penalty_for",
           "signature": "(risk: &Risk)",
@@ -8336,8 +8335,8 @@
         {
           "docstring": "a cloud, and a box with no history corroborates NOTHING rather than guessing \u2014 an honest zero.",
           "lines": [
-            718,
-            728
+            741,
+            751
           ],
           "name": "corroborates_bad",
           "signature": "(host: &str)",
@@ -8345,8 +8344,8 @@
         },
         {
           "lines": [
-            738,
-            742
+            761,
+            765
           ],
           "name": "reputation_clear_for_test",
           "signature": "()",
@@ -8355,8 +8354,8 @@
         {
           "docstring": "this to report \"not yet judged\" instead of a misleading zero.",
           "lines": [
-            749,
-            751
+            772,
+            774
           ],
           "name": "reputation_rows",
           "signature": "()",
@@ -8365,8 +8364,8 @@
         {
           "docstring": "The host's licence ceiling: reputation override, else the runtime law, else the constant.",
           "lines": [
-            754,
-            766
+            777,
+            789
           ],
           "name": "licence_start_for",
           "signature": "(host: &str)",
@@ -8375,8 +8374,8 @@
         {
           "docstring": "The host's probation floor: reputation override, else the runtime law, else the constant.",
           "lines": [
-            769,
-            781
+            792,
+            804
           ],
           "name": "probation_at_for",
           "signature": "(host: &str)",
@@ -8384,8 +8383,8 @@
         },
         {
           "lines": [
-            800,
-            817
+            823,
+            840
           ],
           "name": "reputation_set",
           "signature": "(host: &str, baseline: i32, confidence: f32)",
@@ -8394,8 +8393,8 @@
         {
           "docstring": "now literally user-taught. Dirty-bit + the same NAND mirror as [`reputation_set`].",
           "lines": [
-            822,
-            840
+            845,
+            863
           ],
           "name": "reputation_learn",
           "signature": "(host: &str, baseline_delta: i32, confidence_bump: f32)",
@@ -8404,8 +8403,8 @@
         {
           "docstring": "host, host-sorted (stable diffs, the ledger idiom).",
           "lines": [
-            845,
-            858
+            868,
+            890
           ],
           "name": "serialize_reputation",
           "signature": "(map: &HashMap<String, Rep>)",
@@ -8414,8 +8413,8 @@
         {
           "docstring": "(the [`persist_ledger`] idiom), gated on the dirty bit so an unchanged map costs zero IO.",
           "lines": [
-            862,
-            879
+            894,
+            911
           ],
           "name": "persist_reputation",
           "signature": "()",
@@ -8424,8 +8423,8 @@
         {
           "docstring": "fail-open (the [`parse_body`] law) \u2014 one bad row never blanks the map.",
           "lines": [
-            883,
-            921
+            915,
+            959
           ],
           "name": "load_reputation",
           "signature": "()",
@@ -8434,8 +8433,8 @@
         {
           "docstring": "`resolve_datapath` CP-U seam; hosts the resolver never answered feed the rings nothing).",
           "lines": [
-            933,
-            1036
+            971,
+            1088
           ],
           "name": "score_host",
           "signature": "(\n    host: &str,\n    qtype: u16,\n    event: NavEvent,\n    answer_len: u32,\n    rcode: u8,\n)",
@@ -8444,8 +8443,8 @@
         {
           "docstring": "`None` = the store never saw it (benign is recorded nowhere) or the store is disarmed.",
           "lines": [
-            1040,
-            1069
+            1092,
+            1130
           ],
           "name": "score_of",
           "signature": "(host: &str)",
@@ -8456,8 +8455,8 @@
             {
               "docstring": "Stable wire slug for the event stream (the [`Risk::slug`] idiom).",
               "lines": [
-                1075,
-                1088
+                1136,
+                1149
               ],
               "name": "slug",
               "signature": "(&self)",
@@ -8466,24 +8465,24 @@
           ],
           "docstring": "\u2500\u2500 The G rung: correction log + live verdict event ring \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
           "lines": [
-            1073,
-            1089
+            1134,
+            1150
           ],
           "name": "Signal",
           "type": "impl"
         },
         {
           "lines": [
-            1094,
-            1099
+            1155,
+            1160
           ],
           "name": "Correction",
           "type": "struct"
         },
         {
           "lines": [
-            1108,
-            1110
+            1169,
+            1171
           ],
           "name": "corrections_cell",
           "signature": "()",
@@ -8491,8 +8490,8 @@
         },
         {
           "lines": [
-            1112,
-            1117
+            1173,
+            1178
           ],
           "name": "corrections_path",
           "signature": "()",
@@ -8501,8 +8500,8 @@
         {
           "docstring": "[`persist_reputation`] idiom \u2014 corrections arrive at user-tap cadence, IO is negligible).",
           "lines": [
-            1121,
-            1140
+            1182,
+            1207
           ],
           "name": "log_correction",
           "signature": "(c: Correction)",
@@ -8511,8 +8510,8 @@
         {
           "docstring": "Rehydrate the correction ring from its NAND log (fail-open per row, the [`parse_body`] law).",
           "lines": [
-            1143,
-            1172
+            1210,
+            1239
           ],
           "name": "load_corrections",
           "signature": "()",
@@ -8520,16 +8519,16 @@
         },
         {
           "lines": [
-            1177,
-            1187
+            1244,
+            1254
           ],
           "name": "VerdictEvent",
           "type": "struct"
         },
         {
           "lines": [
-            1196,
-            1198
+            1263,
+            1265
           ],
           "name": "events_cell",
           "signature": "()",
@@ -8538,8 +8537,8 @@
         {
           "docstring": "live telemetry, not a record; the ledger/corrections/reputation mirrors are the record.",
           "lines": [
-            1202,
-            1217
+            1269,
+            1284
           ],
           "name": "push_event",
           "signature": "(host: &str, verdict: &Verdict, score_delta: i32, signal: &str, ts: u64)",
@@ -8548,8 +8547,8 @@
         {
           "docstring": "rows). The Kotlin Flow polls this and forwards only seq-fresh rows; unarmed \u21d2 empty.",
           "lines": [
-            1221,
-            1226
+            1288,
+            1296
           ],
           "name": "events_snapshot",
           "signature": "()",
@@ -8558,8 +8557,8 @@
         {
           "docstring": "LEDGER \u2014 hits/licences/verdicts \u2014 is untouched). True iff anything was actually forgotten.",
           "lines": [
-            1231,
-            1254
+            1301,
+            1324
           ],
           "name": "reputation_reset",
           "signature": "()",
@@ -8568,8 +8567,8 @@
         {
           "docstring": "the user has manually pinned a verdict (the Trust bands OVERRIDE the automatic licence).",
           "lines": [
-            1261,
-            1327
+            1331,
+            1397
           ],
           "name": "deduct",
           "signature": "(e: &mut Entry, weight: i32, now: u64)",
@@ -8578,8 +8577,8 @@
         {
           "docstring": "and a strictly-later second is always a fresh charge.",
           "lines": [
-            1353,
-            1355
+            1423,
+            1425
           ],
           "name": "is_duplicate_probe",
           "signature": "(first_witness: bool, prior_seen: u64, now: u64)",
@@ -8588,8 +8587,8 @@
         {
           "docstring": "the accident, pin the licence.",
           "lines": [
-            1371,
-            1373
+            1441,
+            1443
           ],
           "name": "cloak_is_immune",
           "signature": "(source: Source)",
@@ -8597,8 +8596,8 @@
         },
         {
           "lines": [
-            1388,
-            1396
+            1458,
+            1466
           ],
           "name": "record_at",
           "signature": "(host: &str, risk: Risk, source: Source, now: u64)",
@@ -8607,8 +8606,8 @@
         {
           "docstring": "only the licence bleeds).",
           "lines": [
-            1402,
-            1462
+            1472,
+            1535
           ],
           "name": "record_scored_at",
           "signature": "(host: &str, score: &ThreatScore, source: Source, now: u64)",
@@ -8617,8 +8616,8 @@
         {
           "docstring": "user\"). FAIL-OPEN false: unarmed / empty host / poisoned lock, never a panic.",
           "lines": [
-            1471,
-            1538
+            1544,
+            1616
           ],
           "name": "set_verdict",
           "signature": "(host: &str, code: u8)",
@@ -8627,8 +8626,8 @@
         {
           "docstring": "accident and the last heal (so healing paces itself, one step per idle window).",
           "lines": [
-            1543,
-            1584
+            1621,
+            1662
           ],
           "name": "settle_recovery_at",
           "signature": "(now: u64)",
@@ -8637,8 +8636,8 @@
         {
           "docstring": "Fast armed check for the datapath seams (Acquire pairs with [`arm`]'s Release).",
           "lines": [
-            1589,
-            1591
+            1667,
+            1669
           ],
           "name": "armed",
           "signature": "()",
@@ -8647,8 +8646,8 @@
         {
           "docstring": "licence PROVABLY drained to 0.",
           "lines": [
-            1597,
-            1620
+            1675,
+            1698
           ],
           "name": "teeth_gate",
           "signature": "(host: &str)",
@@ -8657,8 +8656,8 @@
         {
           "docstring": "content (no packet payload is retained anywhere in the Underground).",
           "lines": [
-            1628,
-            1676
+            1706,
+            1754
           ],
           "name": "feed",
           "signature": "(qname: &str, qtype: u16, event: NavEvent, answer_len: u32, rcode: u8)",
@@ -8666,8 +8665,8 @@
         },
         {
           "lines": [
-            1701,
-            1709
+            1779,
+            1787
           ],
           "name": "UndergroundVerb",
           "type": "enum"
@@ -8676,8 +8675,8 @@
           "children": [
             {
               "lines": [
-                1712,
-                1721
+                1790,
+                1799
               ],
               "name": "token",
               "signature": "(self)",
@@ -8685,16 +8684,16 @@
             }
           ],
           "lines": [
-            1711,
-            1722
+            1789,
+            1800
           ],
           "name": "UndergroundVerb",
           "type": "impl"
         },
         {
           "lines": [
-            1727,
-            1741
+            1805,
+            1819
           ],
           "name": "UndergroundJudgement",
           "type": "struct"
@@ -8702,8 +8701,8 @@
         {
           "docstring": "```",
           "lines": [
-            1749,
-            1761
+            1827,
+            1847
           ],
           "name": "format_underground_line",
           "signature": "(j: &UndergroundJudgement)",
@@ -8712,8 +8711,8 @@
         {
           "docstring": "so the log and the ledger can never disagree about where \"durable\" is).",
           "lines": [
-            1765,
-            1770
+            1851,
+            1856
           ],
           "name": "underground_log_path",
           "signature": "()",
@@ -8722,8 +8721,8 @@
         {
           "docstring": "because before arming there is no file and a guessed path would send the reader somewhere empty.",
           "lines": [
-            1775,
-            1777
+            1861,
+            1863
           ],
           "name": "log_path_string",
           "signature": "()",
@@ -8732,8 +8731,8 @@
         {
           "docstring": "stops narrating. Bounded by the same T20 discipline as its siblings (device-local, never exported).",
           "lines": [
-            1782,
-            1790
+            1868,
+            1880
           ],
           "name": "append_underground_log",
           "signature": "(j: &UndergroundJudgement)",
@@ -8742,8 +8741,8 @@
         {
           "docstring": "The armed ledger file path; `None` until [`arm`] binds a dir.",
           "lines": [
-            1793,
-            1798
+            1883,
+            1888
           ],
           "name": "ledger_path",
           "signature": "()",
@@ -8752,8 +8751,8 @@
         {
           "docstring": "HashMap walk) cannot change the signature. The change gate for [`persist_ledger`].",
           "lines": [
-            1802,
-            1829
+            1892,
+            1919
           ],
           "name": "store_signature",
           "signature": "(s: &Store)",
@@ -8762,8 +8761,8 @@
         {
           "docstring": "same-version rehydrate round-trips the pin (forward-compatible within v1).",
           "lines": [
-            1836,
-            1869
+            1926,
+            1959
           ],
           "name": "serialize_store",
           "signature": "(s: &Store)",
@@ -8772,8 +8771,8 @@
         {
           "docstring": "row is SKIPPED, never an error \u2014 a half-good ledger rehydrates its good half.",
           "lines": [
-            1873,
-            1987
+            1963,
+            2077
           ],
           "name": "parse_body",
           "signature": "(body: &str)",
@@ -8782,8 +8781,8 @@
         {
           "docstring": "may carry a sequestrated Centauri row \u2014 heal it back to a metered, reachable content host.",
           "lines": [
-            1991,
-            2001
+            2081,
+            2091
           ],
           "name": "content_lane_defang",
           "signature": "(e: &mut Entry)",
@@ -8792,8 +8791,8 @@
         {
           "docstring": "boot order calls this on an empty store). Missing file = clean cold start.",
           "lines": [
-            2005,
-            2025
+            2095,
+            2115
           ],
           "name": "load_ledger",
           "signature": "()",
@@ -8802,8 +8801,8 @@
         {
           "docstring": "(a torn write can never destroy the previous good ledger). Fail-open on any IO error.",
           "lines": [
-            2029,
-            2047
+            2119,
+            2137
           ],
           "name": "persist_ledger",
           "signature": "()",
@@ -8812,8 +8811,8 @@
         {
           "docstring": "Idempotent: a re-arm re-binds the dir but the merge-by-key load never duplicates rows.",
           "lines": [
-            2052,
-            2068
+            2142,
+            2158
           ],
           "name": "arm",
           "signature": "(dir: &str)",
@@ -8821,8 +8820,8 @@
         },
         {
           "lines": [
-            2074,
-            2113
+            2164,
+            2203
           ],
           "name": "UndergroundSnapshot",
           "type": "struct"
@@ -8830,8 +8829,8 @@
         {
           "docstring": "panel still shows licences healing. Fail-open: a poisoned lock renders the DORMANT shape.",
           "lines": [
-            2117,
-            2247
+            2207,
+            2349
           ],
           "name": "snapshot",
           "signature": "(top_n: u32)",
@@ -8841,8 +8840,8 @@
           "children": [
             {
               "lines": [
-                2270,
-                2310
+                2372,
+                2412
               ],
               "name": "scrub",
               "signature": "()",
@@ -8850,8 +8849,8 @@
             },
             {
               "lines": [
-                2312,
-                2314
+                2414,
+                2416
               ],
               "name": "points_of",
               "signature": "(host: &str)",
@@ -8859,8 +8858,8 @@
             },
             {
               "lines": [
-                2317,
-                2352
+                2419,
+                2454
               ],
               "name": "classify_ladder_covers_every_event",
               "signature": "()",
@@ -8868,8 +8867,8 @@
             },
             {
               "lines": [
-                2355,
-                2365
+                2457,
+                2467
               ],
               "name": "record_grows_dedupes_and_normalizes",
               "signature": "()",
@@ -8877,8 +8876,8 @@
             },
             {
               "lines": [
-                2368,
-                2382
+                2470,
+                2484
               ],
               "name": "probation_doubles_and_drain_sequestrates",
               "signature": "()",
@@ -8886,8 +8885,8 @@
             },
             {
               "lines": [
-                2385,
-                2405
+                2487,
+                2514
               ],
               "name": "content_lane_never_sequestrates",
               "signature": "()",
@@ -8895,8 +8894,8 @@
             },
             {
               "lines": [
-                2420,
-                2440
+                2529,
+                2557
               ],
               "name": "one_navigation_costs_one_licence_not_three",
               "signature": "()",
@@ -8904,8 +8903,8 @@
             },
             {
               "lines": [
-                2445,
-                2457
+                2562,
+                2583
               ],
               "name": "the_charge_gates_are_exact",
               "signature": "()",
@@ -8913,8 +8912,8 @@
             },
             {
               "lines": [
-                2464,
-                2487
+                2590,
+                2622
               ],
               "name": "a_sequestrated_hosts_own_block_never_re_bumps_its_clock",
               "signature": "()",
@@ -8922,8 +8921,8 @@
             },
             {
               "lines": [
-                2490,
-                2511
+                2625,
+                2654
               ],
               "name": "recovery_heals_idle_but_never_active_destroy_or_sequestrated",
               "signature": "()",
@@ -8931,8 +8930,8 @@
             },
             {
               "lines": [
-                2514,
-                2528
+                2657,
+                2671
               ],
               "name": "teeth_bite_only_sequestrated_and_count_bites",
               "signature": "()",
@@ -8940,8 +8939,8 @@
             },
             {
               "lines": [
-                2531,
-                2538
+                2674,
+                2681
               ],
               "name": "feed_is_noop_until_armed",
               "signature": "()",
@@ -8949,8 +8948,8 @@
             },
             {
               "lines": [
-                2541,
-                2572
+                2684,
+                2715
               ],
               "name": "ledger_round_trips_and_change_gate_holds",
               "signature": "()",
@@ -8958,8 +8957,8 @@
             },
             {
               "lines": [
-                2575,
-                2592
+                2718,
+                2735
               ],
               "name": "rehydrate_defangs_wrongly_sequestrated_content_lane",
               "signature": "()",
@@ -8967,8 +8966,8 @@
             },
             {
               "lines": [
-                2595,
-                2631
+                2738,
+                2774
               ],
               "name": "snapshot_populates_every_panel_lane",
               "signature": "()",
@@ -8976,8 +8975,8 @@
             },
             {
               "lines": [
-                2636,
-                2652
+                2779,
+                2795
               ],
               "name": "manual_trust_immunizes_against_teeth_and_bleed",
               "signature": "()",
@@ -8985,8 +8984,8 @@
             },
             {
               "lines": [
-                2655,
-                2669
+                2798,
+                2812
               ],
               "name": "manual_distrust_condemns_even_a_never_seen_host",
               "signature": "()",
@@ -8994,8 +8993,8 @@
             },
             {
               "lines": [
-                2672,
-                2690
+                2815,
+                2833
               ],
               "name": "neutral_clears_the_pin_and_resumes_the_automatic_engine",
               "signature": "()",
@@ -9003,8 +9002,8 @@
             },
             {
               "lines": [
-                2693,
-                2721
+                2836,
+                2863
               ],
               "name": "verdict_round_trips_through_the_ledger_column_eleven",
               "signature": "()",
@@ -9012,8 +9011,8 @@
             },
             {
               "lines": [
-                2724,
-                2733
+                2866,
+                2876
               ],
               "name": "legacy_ten_column_row_reads_back_neutral",
               "signature": "()",
@@ -9021,8 +9020,8 @@
             },
             {
               "lines": [
-                2736,
-                2756
+                2879,
+                2899
               ],
               "name": "snapshot_counts_trust_bands_and_top_row_carries_the_verdict",
               "signature": "()",
@@ -9030,8 +9029,8 @@
             },
             {
               "lines": [
-                2761,
-                2784
+                2904,
+                2932
               ],
               "name": "score_host_fuses_multi_signal_weights",
               "signature": "()",
@@ -9039,8 +9038,8 @@
             },
             {
               "lines": [
-                2787,
-                2815
+                2935,
+                2963
               ],
               "name": "scoring_toml_hot_reload_overrides_the_penalty_law",
               "signature": "()",
@@ -9048,8 +9047,8 @@
             },
             {
               "lines": [
-                2818,
-                2846
+                2966,
+                3000
               ],
               "name": "reputation_ram_nand_round_trip",
               "signature": "()",
@@ -9057,8 +9056,8 @@
             },
             {
               "lines": [
-                2849,
-                2863
+                3003,
+                3033
               ],
               "name": "escalation_curve_neutral_to_sequestrated_under_weighted_scores",
               "signature": "()",
@@ -9066,8 +9065,8 @@
             },
             {
               "lines": [
-                2866,
-                2887
+                3036,
+                3057
               ],
               "name": "snapshot_score_order_outranks_hits_order_and_means_honestly",
               "signature": "()",
@@ -9075,8 +9074,8 @@
             },
             {
               "lines": [
-                2892,
-                2907
+                3062,
+                3077
               ],
               "name": "dga_qname_earns_a_custom_lane_no_suffix_list_needed",
               "signature": "()",
@@ -9084,8 +9083,8 @@
             },
             {
               "lines": [
-                2910,
-                2922
+                3080,
+                3097
               ],
               "name": "homoglyph_forgery_earns_its_lane_and_newborn_rides_beside_it",
               "signature": "()",
@@ -9093,8 +9092,8 @@
             },
             {
               "lines": [
-                2925,
-                2934
+                3100,
+                3109
               ],
               "name": "newborn_never_testifies_alone_or_beside_curated_lists",
               "signature": "()",
@@ -9102,8 +9101,8 @@
             },
             {
               "lines": [
-                2937,
-                2948
+                3112,
+                3128
               ],
               "name": "tunnel_burst_through_score_host_coins_the_tunnel_lane",
               "signature": "()",
@@ -9111,8 +9110,8 @@
             },
             {
               "lines": [
-                2951,
-                2961
+                3131,
+                3146
               ],
               "name": "nx_burst_files_under_the_tunnel_signal",
               "signature": "()",
@@ -9120,8 +9119,8 @@
             },
             {
               "lines": [
-                2964,
-                2975
+                3149,
+                3160
               ],
               "name": "fp_control_high_qps_benign_host_stays_unrecorded",
               "signature": "()",
@@ -9129,8 +9128,8 @@
             },
             {
               "lines": [
-                2978,
-                3002
+                3163,
+                3190
               ],
               "name": "custom_slug_round_trips_through_the_ledger",
               "signature": "()",
@@ -9139,8 +9138,8 @@
             {
               "docstring": "\u2500\u2500 G rung: quarantine TTL + the learning loop + the live event stream \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500",
               "lines": [
-                3006,
-                3020
+                3194,
+                3211
               ],
               "name": "drain_to_sequestration",
               "signature": "(host: &str)",
@@ -9148,8 +9147,8 @@
             },
             {
               "lines": [
-                3023,
-                3046
+                3214,
+                3242
               ],
               "name": "quarantine_ttl_expiry_retests_and_restores_the_licence",
               "signature": "()",
@@ -9157,8 +9156,8 @@
             },
             {
               "lines": [
-                3049,
-                3079
+                3245,
+                3278
               ],
               "name": "active_destroy_and_hot_hosts_stay_terminal_across_ttl",
               "signature": "()",
@@ -9166,8 +9165,8 @@
             },
             {
               "lines": [
-                3082,
-                3126
+                3281,
+                3328
               ],
               "name": "a_correction_teaches_the_reputation_and_logs_to_nand",
               "signature": "()",
@@ -9175,8 +9174,8 @@
             },
             {
               "lines": [
-                3129,
-                3143
+                3331,
+                3351
               ],
               "name": "event_ring_drops_oldest_at_cap",
               "signature": "()",
@@ -9184,8 +9183,8 @@
             },
             {
               "lines": [
-                3146,
-                3175
+                3354,
+                3389
               ],
               "name": "ttl_clock_and_corrections_survive_reboot_via_nand",
               "signature": "()",
@@ -9193,8 +9192,8 @@
             },
             {
               "lines": [
-                3180,
-                3203
+                3394,
+                3417
               ],
               "name": "detection_toggle_disables_the_dga_faculty",
               "signature": "()",
@@ -9202,8 +9201,8 @@
             },
             {
               "lines": [
-                3206,
-                3222
+                3420,
+                3436
               ],
               "name": "snapshot_rows_carry_score_and_ttl_countdown_columns",
               "signature": "()",
@@ -9211,8 +9210,8 @@
             },
             {
               "lines": [
-                3225,
-                3246
+                3439,
+                3463
               ],
               "name": "reputation_reset_forgets_the_learned_law_but_not_the_ledger",
               "signature": "()",
@@ -9220,8 +9219,8 @@
             }
           ],
           "lines": [
-            2252,
-            3247
+            2354,
+            3464
           ],
           "name": "tests",
           "type": "module"
@@ -9230,8 +9229,8 @@
           "children": [
             {
               "lines": [
-                3261,
-                3291
+                3478,
+                3511
               ],
               "name": "the_review_channel_names_the_lane_that_convicted_the_host",
               "signature": "()",
@@ -9239,8 +9238,8 @@
             }
           ],
           "lines": [
-            3250,
-            3292
+            3467,
+            3512
           ],
           "name": "review_channel_tests",
           "type": "module"
@@ -9249,8 +9248,8 @@
           "children": [
             {
               "lines": [
-                3305,
-                3331
+                3525,
+                3551
               ],
               "name": "the_epoch_amnesty_frees_a_host_the_old_build_wrongly_sequestrated",
               "signature": "()",
@@ -9258,8 +9257,8 @@
             }
           ],
           "lines": [
-            3295,
-            3332
+            3515,
+            3552
           ],
           "name": "amnesty_tests",
           "type": "module"
@@ -9267,6 +9266,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T10:16:49.002888+00:00",
+  "generated_at": "2026-08-01T12:52:15.517936+00:00",
   "version": "1.0"
 }

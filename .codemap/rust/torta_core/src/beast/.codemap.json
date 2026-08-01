@@ -2,12 +2,12 @@
   "directory": "rust\\torta_core\\src\\beast",
   "files": {
     "beastsim.rs": {
-      "hash": "28566c458ab8",
-      "indexed_at": "2026-08-01T08:44:33.483323+00:00",
+      "hash": "c4cfdd5d96ff",
+      "indexed_at": "2026-08-01T12:51:59.689575+00:00",
       "language": "rust",
-      "lines": 524,
-      "mtime_ns": 1785573699282512300,
-      "size": 23452,
+      "lines": 570,
+      "mtime_ns": 1785588610923045300,
+      "size": 23795,
       "symbols": [
         {
           "lines": [
@@ -47,7 +47,7 @@
           "docstring": "`rtt_ms` is fed to the window brain each round so `cwnd` evolves exactly as it does live.",
           "lines": [
             96,
-            145
+            148
           ],
           "name": "run",
           "signature": "(\n    yeah: YeahProfile,\n    sched: TortaProfile,\n    arrivals: Arrivals,\n    rounds: usize,\n    ...",
@@ -55,8 +55,8 @@
         },
         {
           "lines": [
-            151,
-            238
+            154,
+            248
           ],
           "name": "the_real_datapath_under_overload",
           "signature": "()",
@@ -64,8 +64,8 @@
         },
         {
           "lines": [
-            249,
-            273
+            259,
+            299
           ],
           "name": "the_aqm_path_does_not_starve_the_bulk_tin",
           "signature": "()",
@@ -73,8 +73,8 @@
         },
         {
           "lines": [
-            284,
-            312
+            310,
+            348
           ],
           "name": "a_purely_critical_workload_never_fills_the_window",
           "signature": "()",
@@ -82,8 +82,8 @@
         },
         {
           "lines": [
-            328,
-            408
+            364,
+            447
           ],
           "name": "tcp_and_udp_run_together_and_alone_on_every_profile",
           "signature": "()",
@@ -91,8 +91,8 @@
         },
         {
           "lines": [
-            416,
-            449
+            455,
+            495
           ],
           "name": "the_enqueue_path_has_no_per_tin_bound_on_any_profile",
           "signature": "()",
@@ -100,8 +100,8 @@
         },
         {
           "lines": [
-            474,
-            524
+            520,
+            570
           ],
           "name": "the_resolver_path_does_move_the_window",
           "signature": "()",
@@ -110,12 +110,12 @@
       ]
     },
     "linksim.rs": {
-      "hash": "e031730f5a61",
-      "indexed_at": "2026-08-01T08:44:33.815518+00:00",
+      "hash": "af14eb096e39",
+      "indexed_at": "2026-08-01T12:51:59.972747+00:00",
       "language": "rust",
-      "lines": 671,
-      "mtime_ns": 1785573768576513500,
-      "size": 31523,
+      "lines": 747,
+      "mtime_ns": 1785588610927043900,
+      "size": 32518,
       "symbols": [
         {
           "lines": [
@@ -138,7 +138,7 @@
             {
               "lines": [
                 77,
-                79
+                84
               ],
               "name": "new",
               "signature": "(capacity_per_round: u64, prop_delay_ms: f64, queue_limit: u64)",
@@ -147,8 +147,8 @@
             {
               "docstring": "queued_before + accepted`, and the queue stays within `[0, queue_limit]`.",
               "lines": [
-                86,
-                103
+                91,
+                115
               ],
               "name": "step",
               "signature": "(&mut self, offered: u64)",
@@ -157,7 +157,7 @@
           ],
           "lines": [
             76,
-            104
+            116
           ],
           "name": "Link",
           "type": "impl"
@@ -165,8 +165,8 @@
         {
           "docstring": "is told what happened.",
           "lines": [
-            108,
-            113
+            120,
+            125
           ],
           "name": "Sender",
           "type": "trait"
@@ -174,8 +174,8 @@
         {
           "docstring": "The REAL shipped controller, TCP family.",
           "lines": [
-            116,
-            119
+            128,
+            131
           ],
           "name": "YeahTcp",
           "type": "struct"
@@ -184,8 +184,8 @@
           "children": [
             {
               "lines": [
-                122,
-                124
+                134,
+                136
               ],
               "name": "window_segments",
               "signature": "(&self)",
@@ -193,8 +193,8 @@
             },
             {
               "lines": [
-                125,
-                127
+                137,
+                139
               ],
               "name": "on_sample",
               "signature": "(&mut self, rtt_ms: f64)",
@@ -202,8 +202,8 @@
             },
             {
               "lines": [
-                128,
-                130
+                140,
+                142
               ],
               "name": "on_loss",
               "signature": "(&mut self)",
@@ -211,8 +211,8 @@
             },
             {
               "lines": [
-                131,
-                133
+                143,
+                145
               ],
               "name": "name",
               "signature": "(&self)",
@@ -220,8 +220,8 @@
             }
           ],
           "lines": [
-            121,
-            134
+            133,
+            146
           ],
           "name": "Sender",
           "type": "impl"
@@ -229,8 +229,8 @@
         {
           "docstring": "The REAL shipped controller, independent UDP family \u2014 the thing this whole rung is about.",
           "lines": [
-            137,
-            140
+            149,
+            152
           ],
           "name": "YeahUdp",
           "type": "struct"
@@ -239,8 +239,8 @@
           "children": [
             {
               "lines": [
-                143,
-                145
+                155,
+                157
               ],
               "name": "window_segments",
               "signature": "(&self)",
@@ -248,8 +248,8 @@
             },
             {
               "lines": [
-                146,
-                148
+                158,
+                160
               ],
               "name": "on_sample",
               "signature": "(&mut self, rtt_ms: f64)",
@@ -257,8 +257,8 @@
             },
             {
               "lines": [
-                149,
-                151
+                161,
+                163
               ],
               "name": "on_loss",
               "signature": "(&mut self)",
@@ -266,8 +266,8 @@
             },
             {
               "lines": [
-                152,
-                154
+                164,
+                166
               ],
               "name": "name",
               "signature": "(&self)",
@@ -275,8 +275,8 @@
             }
           ],
           "lines": [
-            142,
-            155
+            154,
+            167
           ],
           "name": "Sender",
           "type": "impl"
@@ -284,8 +284,8 @@
         {
           "docstring": "point of comparison: it will fill whatever buffer it is given.",
           "lines": [
-            161,
-            163
+            173,
+            175
           ],
           "name": "RenoRef",
           "type": "struct"
@@ -294,8 +294,8 @@
           "children": [
             {
               "lines": [
-                166,
-                168
+                178,
+                180
               ],
               "name": "window_segments",
               "signature": "(&self)",
@@ -303,8 +303,8 @@
             },
             {
               "lines": [
-                169,
-                171
+                181,
+                183
               ],
               "name": "on_sample",
               "signature": "(&mut self, _rtt_ms: f64)",
@@ -312,8 +312,8 @@
             },
             {
               "lines": [
-                172,
-                174
+                184,
+                186
               ],
               "name": "on_loss",
               "signature": "(&mut self)",
@@ -321,8 +321,8 @@
             },
             {
               "lines": [
-                175,
-                177
+                187,
+                189
               ],
               "name": "name",
               "signature": "(&self)",
@@ -330,16 +330,16 @@
             }
           ],
           "lines": [
-            165,
-            178
+            177,
+            190
           ],
           "name": "Sender",
           "type": "impl"
         },
         {
           "lines": [
-            182,
-            197
+            194,
+            209
           ],
           "name": "Outcome",
           "type": "struct"
@@ -349,8 +349,8 @@
             {
               "docstring": "bottleneck perfectly busy.",
               "lines": [
-                202,
-                207
+                214,
+                219
               ],
               "name": "link_utilisation",
               "signature": "(&self, link_capacity_per_round: u64)",
@@ -358,8 +358,8 @@
             }
           ],
           "lines": [
-            199,
-            208
+            211,
+            220
           ],
           "name": "Outcome",
           "type": "impl"
@@ -367,8 +367,8 @@
         {
           "docstring": "Run one sender over one link for `rounds` rounds, fully deterministically.",
           "lines": [
-            211,
-            247
+            223,
+            265
           ],
           "name": "run",
           "signature": "(sender: &mut dyn Sender, link: &mut Link, rounds: u64)",
@@ -378,8 +378,8 @@
           "children": [
             {
               "lines": [
-                266,
-                292
+                284,
+                313
               ],
               "name": "the_link_ledger_balances_for_every_offer",
               "signature": "()",
@@ -387,8 +387,8 @@
             },
             {
               "lines": [
-                298,
-                305
+                319,
+                330
               ],
               "name": "a_dead_link_drops_all_of_it_and_says_so",
               "signature": "()",
@@ -396,8 +396,8 @@
             },
             {
               "lines": [
-                321,
-                377
+                346,
+                419
               ],
               "name": "the_run_ledger_adds_up_for_every_sender",
               "signature": "()",
@@ -405,8 +405,8 @@
             },
             {
               "lines": [
-                383,
-                392
+                425,
+                437
               ],
               "name": "a_zero_round_run_is_empty_not_nan",
               "signature": "()",
@@ -415,8 +415,8 @@
             {
               "docstring": "canonical bufferbloat setup \u2014 a dumb oversized FIFO on the last mile.",
               "lines": [
-                396,
-                399
+                441,
+                444
               ],
               "name": "bloated_link",
               "signature": "()",
@@ -424,8 +424,8 @@
             },
             {
               "lines": [
-                401,
-                403
+                446,
+                451
               ],
               "name": "yeah_udp",
               "signature": "(p: YeahProfile)",
@@ -433,8 +433,8 @@
             },
             {
               "lines": [
-                405,
-                407
+                453,
+                458
               ],
               "name": "yeah_tcp",
               "signature": "(p: YeahProfile)",
@@ -442,8 +442,8 @@
             },
             {
               "lines": [
-                413,
-                440
+                464,
+                507
               ],
               "name": "the_link_conserves_every_byte",
               "signature": "()",
@@ -451,8 +451,8 @@
             },
             {
               "lines": [
-                454,
-                545
+                521,
+                618
               ],
               "name": "bufferbloat_and_speed_measured_together_on_a_bloated_link",
               "signature": "()",
@@ -460,8 +460,8 @@
             },
             {
               "lines": [
-                553,
-                589
+                626,
+                662
               ],
               "name": "the_window_ceiling_is_measured_against_a_small_buffer_link",
               "signature": "()",
@@ -469,8 +469,8 @@
             },
             {
               "lines": [
-                603,
-                670
+                676,
+                746
               ],
               "name": "a_capacity_sweep_shows_where_each_profile_bloats",
               "signature": "()",
@@ -478,8 +478,8 @@
             }
           ],
           "lines": [
-            250,
-            671
+            268,
+            747
           ],
           "name": "tests",
           "type": "module"
@@ -591,12 +591,12 @@
       ]
     },
     "mod.rs": {
-      "hash": "3b5cd5f6dd60",
-      "indexed_at": "2026-07-31T10:54:19.330819+00:00",
+      "hash": "75698da25b1e",
+      "indexed_at": "2026-08-01T12:52:00.261723+00:00",
       "language": "rust",
-      "lines": 1225,
-      "mtime_ns": 1785490235286871200,
-      "size": 65043,
+      "lines": 1234,
+      "mtime_ns": 1785588610933044200,
+      "size": 65123,
       "symbols": [
         {
           "lines": [
@@ -625,10 +625,10 @@
         },
         {
           "lines": [
-            35,
-            35
+            34,
+            34
           ],
-          "name": "linksim",
+          "name": "beastsim",
           "type": "module"
         },
         {
@@ -636,7 +636,7 @@
             37,
             37
           ],
-          "name": "spec_binding",
+          "name": "linksim",
           "type": "module"
         },
         {
@@ -644,7 +644,7 @@
             39,
             39
           ],
-          "name": "beastsim",
+          "name": "spec_binding",
           "type": "module"
         },
         {
@@ -800,16 +800,16 @@
           "docstring": "[`crate::beast_set_tunables`] on the settings-apply / restore path.",
           "lines": [
             377,
-            381
+            385
           ],
           "name": "store_live_tunables",
-          "signature": "(max_window: i32, free_thresh_milli: i32, compete_thresh_milli: i32)",
+          "signature": "(\n    max_window: i32,\n    free_thresh_milli: i32,\n    compete_thresh_milli: i32,\n)",
           "type": "function"
         },
         {
           "lines": [
-            388,
-            394
+            392,
+            398
           ],
           "name": "live_yeah_profile",
           "signature": "()",
@@ -817,8 +817,8 @@
         },
         {
           "lines": [
-            401,
-            407
+            405,
+            411
           ],
           "name": "apply_live_tune",
           "signature": "(yeah: &mut YeahController)",
@@ -827,8 +827,8 @@
         {
           "docstring": "`beast_gov::now_ms`.",
           "lines": [
-            422,
-            425
+            426,
+            432
           ],
           "name": "now_ms_monotonic",
           "signature": "()",
@@ -837,8 +837,8 @@
         {
           "docstring": "of A/AAAA queries PROVES the tin filled instead of vanishing between two polls.",
           "lines": [
-            437,
-            449
+            444,
+            456
           ],
           "name": "AqmRetention",
           "type": "struct"
@@ -847,8 +847,8 @@
           "children": [
             {
               "lines": [
-                452,
-                460
+                459,
+                467
               ],
               "name": "new",
               "signature": "()",
@@ -857,8 +857,8 @@
             {
               "docstring": "pane's three tin rows render, so the getters map straight to the display).",
               "lines": [
-                464,
-                470
+                471,
+                477
               ],
               "name": "idx",
               "signature": "(priority: ProbePriority)",
@@ -867,8 +867,8 @@
             {
               "docstring": "Count one real classified query into its tin's lifetime throughput.",
               "lines": [
-                473,
-                475
+                480,
+                482
               ],
               "name": "record",
               "signature": "(&self, priority: ProbePriority)",
@@ -877,8 +877,8 @@
             {
               "docstring": "tick never lowers a peak).",
               "lines": [
-                480,
-                486
+                487,
+                493
               ],
               "name": "sample_depth",
               "signature": "(&self, critical: i32, high: i32, normal: i32)",
@@ -887,8 +887,8 @@
             {
               "docstring": "count) \u2014 same `fetch_max`, same ignore-non-positive discipline.",
               "lines": [
-                490,
-                500
+                497,
+                507
               ],
               "name": "sample_yeah",
               "signature": "(&self, zeta: i32, shed: i32, reno: i32)",
@@ -897,8 +897,8 @@
             {
               "docstring": "Lifetime per-tin throughput [Critical, High, Normal].",
               "lines": [
-                503,
-                509
+                510,
+                516
               ],
               "name": "throughput",
               "signature": "(&self)",
@@ -907,8 +907,8 @@
             {
               "docstring": "Session-peak per-tin depth [Critical, High, Normal].",
               "lines": [
-                512,
-                518
+                519,
+                525
               ],
               "name": "peak_depth",
               "signature": "(&self)",
@@ -917,8 +917,8 @@
             {
               "docstring": "Session-peak YeAH triple (zeta streak, shed streak, reno count).",
               "lines": [
-                521,
-                527
+                528,
+                534
               ],
               "name": "peak_yeah",
               "signature": "(&self)",
@@ -926,8 +926,8 @@
             }
           ],
           "lines": [
-            451,
-            528
+            458,
+            535
           ],
           "name": "AqmRetention",
           "type": "impl"
@@ -935,8 +935,8 @@
         {
           "docstring": "never touches JNI, so it is safe to run for the process life.",
           "lines": [
-            542,
-            556
+            549,
+            563
           ],
           "name": "spawn_aqm_pump",
           "signature": "(beast: Arc<Beast>)",
@@ -945,8 +945,8 @@
         {
           "docstring": "to shed under CoDel pressure): everything else.",
           "lines": [
-            563,
-            569
+            570,
+            576
           ],
           "name": "classify_priority",
           "signature": "(qtype: u16)",
@@ -955,8 +955,8 @@
         {
           "docstring": "FAIL-OPEN + in-RAM alongside [`feed_live_rtt`]: it can never change \u2014 or panic \u2014 the answer it rides.",
           "lines": [
-            579,
-            581
+            586,
+            588
           ],
           "name": "feed_live_aqm",
           "signature": "(qtype: u16, domain: &str, is_udp: bool, ok: bool)",
@@ -965,8 +965,8 @@
         {
           "docstring": "valve move are unit-testable without mutating the process-globals [`LIVE_BEAST`]/[`LIVE_RETENTION`].",
           "lines": [
-            585,
-            611
+            592,
+            618
           ],
           "name": "feed_aqm_into",
           "signature": "(\n    beast: &Beast,\n    retain: &AqmRetention,\n    qtype: u16,\n    domain: &str,\n    is_udp: boo...",
@@ -975,8 +975,8 @@
         {
           "docstring": "any traffic. See [`AqmRetention`].",
           "lines": [
-            618,
-            633
+            625,
+            640
           ],
           "name": "live_beast_aqm_retention",
           "signature": "()",
@@ -985,8 +985,8 @@
         {
           "docstring": "panic \u2014 the resolve it rides alongside (the same law as the sibling `underground::feed`).",
           "lines": [
-            643,
-            645
+            650,
+            652
           ],
           "name": "feed_live_rtt",
           "signature": "(family: i32, rtt_ms: f64)",
@@ -995,8 +995,8 @@
         {
           "docstring": "pacing stays untouched. The sample gate inside the fold drops non-finite/non-positive values.",
           "lines": [
-            652,
-            654
+            659,
+            661
           ],
           "name": "feed_live_tcp_dial",
           "signature": "(rtt_ms: f64)",
@@ -1005,8 +1005,8 @@
         {
           "docstring": "already pays per flow \u2014 not per packet.",
           "lines": [
-            667,
-            669
+            674,
+            676
           ],
           "name": "feed_live_flow_shape",
           "signature": "(rtt_ms: f64, cwnd: i32)",
@@ -1015,8 +1015,8 @@
         {
           "docstring": "congestion, not merely that an I/O error occurred.",
           "lines": [
-            674,
-            676
+            681,
+            683
           ],
           "name": "feed_live_flow_loss",
           "signature": "()",
@@ -1025,8 +1025,8 @@
         {
           "docstring": "network RTT, ignored. A non-finite or negative sample is dropped before it can poison an EWMA.",
           "lines": [
-            682,
-            691
+            689,
+            698
           ],
           "name": "feed_rtt_into",
           "signature": "(beast: &Beast, family: i32, rtt_ms: f64)",
@@ -1035,8 +1035,8 @@
         {
           "docstring": "`apply_*` (the D22 idiom), so this can never change \u2014 or panic \u2014 the flow it rides.",
           "lines": [
-            727,
-            729
+            734,
+            736
           ],
           "name": "feed_live_flow_rtt",
           "signature": "(rtt_ms: f64, is_udp: bool)",
@@ -1046,8 +1046,8 @@
           "children": [
             {
               "lines": [
-                735,
-                754
+                742,
+                761
               ],
               "name": "new",
               "signature": "(yeah_profile: YeahProfile, sched_profile: TortaProfile)",
@@ -1056,8 +1056,8 @@
             {
               "docstring": "paces the next dispatch. Pushes a snapshot to the attached sink if any.",
               "lines": [
-                758,
-                764
+                765,
+                771
               ],
               "name": "apply_sample",
               "signature": "(&self, rtt_ms: f64)",
@@ -1066,8 +1066,8 @@
             {
               "docstring": "An empty batch is a no-op (nothing changed \u21d2 nothing pushed).",
               "lines": [
-                772,
-                782
+                779,
+                789
               ],
               "name": "apply_samples",
               "signature": "(&self, rtt_ms: Vec<f64>)",
@@ -1076,8 +1076,8 @@
             {
               "docstring": "the UDP base_rtt is tracked separately for the dual-line dashboard.",
               "lines": [
-                786,
-                799
+                793,
+                806
               ],
               "name": "apply_udp_sample",
               "signature": "(&self, rtt_ms: f64)",
@@ -1086,8 +1086,8 @@
             {
               "docstring": "samples into the EWMA in ONE call, ONE snapshot push after the batch. Empty batch \u21d2 no-op.",
               "lines": [
-                803,
-                814
+                810,
+                821
               ],
               "name": "apply_udp_samples",
               "signature": "(&self, rtt_ms: Vec<f64>)",
@@ -1096,8 +1096,8 @@
             {
               "docstring": "Signal a loss/timeout to the YeAH controller (the H2/M1 canonical reaction or the Legacy penalty).",
               "lines": [
-                817,
-                821
+                824,
+                828
               ],
               "name": "on_loss",
               "signature": "(&self)",
@@ -1106,8 +1106,8 @@
             {
               "docstring": "Hard failover (relay switch) \u2014 collapse the window + re-learn the floor.",
               "lines": [
-                824,
-                828
+                831,
+                835
               ],
               "name": "on_failover",
               "signature": "(&self)",
@@ -1116,8 +1116,8 @@
             {
               "docstring": "Enqueue a probe into the Tort\u00e4 scheduler.",
               "lines": [
-                831,
-                833
+                838,
+                840
               ],
               "name": "enqueue_probe",
               "signature": "(&self, req: ProbeRequest)",
@@ -1126,8 +1126,8 @@
             {
               "docstring": "tear apart (the old two-lock read could race a concurrent `apply_sample` between them).",
               "lines": [
-                838,
-                842
+                845,
+                849
               ],
               "name": "dispatch",
               "signature": "(&self, now_ms: i64)",
@@ -1136,8 +1136,8 @@
             {
               "docstring": "Notify the adaptive valve of a timeout/fail for a tin (the Kotlin `onTimeoutOrFail`).",
               "lines": [
-                845,
-                847
+                852,
+                854
               ],
               "name": "on_timeout_or_fail",
               "signature": "(&self, priority: ProbePriority)",
@@ -1146,8 +1146,8 @@
             {
               "docstring": "Notify the adaptive valve of a success for a tin (the Kotlin `onSuccess`).",
               "lines": [
-                850,
-                852
+                857,
+                859
               ],
               "name": "on_success",
               "signature": "(&self, priority: ProbePriority)",
@@ -1156,8 +1156,8 @@
             {
               "docstring": "The current YeAH congestion window (1..16) \u2014 pacing for the next dispatch.",
               "lines": [
-                855,
-                857
+                862,
+                864
               ],
               "name": "cwnd",
               "signature": "(&self)",
@@ -1166,8 +1166,8 @@
             {
               "docstring": "on every profile. Proof of the law it obeys: `Proofs/YeahUdpIndependence.lean`.",
               "lines": [
-                861,
-                863
+                868,
+                870
               ],
               "name": "udp_cwnd",
               "signature": "(&self)",
@@ -1176,8 +1176,8 @@
             {
               "docstring": "The UDP family's own fair-share estimate.",
               "lines": [
-                866,
-                868
+                873,
+                875
               ],
               "name": "udp_fair_cwnd",
               "signature": "(&self)",
@@ -1186,8 +1186,8 @@
             {
               "docstring": "The adaptive read timeout (ms) given a jitter estimate.",
               "lines": [
-                871,
-                873
+                878,
+                880
               ],
               "name": "adaptive_timeout_ms",
               "signature": "(&self, jitter_ms: f64)",
@@ -1196,8 +1196,8 @@
             {
               "docstring": "[`snapshot_of`](Self::snapshot_of) reader (no push\u2194pull drift). Pure surface \u2014 no engine math.",
               "lines": [
-                879,
-                881
+                886,
+                888
               ],
               "name": "snapshot",
               "signature": "(&self)",
@@ -1206,8 +1206,8 @@
             {
               "docstring": "Attach (or replace) the metric sink. Rust will call `on_metrics` once per cycle after this.",
               "lines": [
-                885,
-                887
+                891,
+                893
               ],
               "name": "attach_sink",
               "signature": "(&self, sink: Arc<dyn BeastMetricSink>)",
@@ -1216,8 +1216,8 @@
             {
               "docstring": "review-channel seam [`log_event`](Self::log_event) is a silent no-op (no dir \u2192 no path \u2192 no log).",
               "lines": [
-                892,
-                894
+                898,
+                900
               ],
               "name": "bind_log_dir",
               "signature": "(&self, dir: String)",
@@ -1226,8 +1226,8 @@
             {
               "docstring": "The guard is dropped BEFORE the file append \u2014 the engine lock never spans IO.",
               "lines": [
-                903,
-                913
+                909,
+                919
               ],
               "name": "log_event",
               "signature": "(\n        &self,\n        now_ms: u64,\n        kind: log::BeastLogKind,\n        snapshot: BeastSna...",
@@ -1235,8 +1235,8 @@
             }
           ],
           "lines": [
-            732,
-            914
+            739,
+            920
           ],
           "name": "Beast",
           "type": "impl"
@@ -1246,8 +1246,8 @@
             {
               "docstring": "InternalException storm into the Kotlin engine loop) rather than self-healing.",
               "lines": [
-                924,
-                926
+                930,
+                932
               ],
               "name": "lock_inner",
               "signature": "(&self)",
@@ -1256,8 +1256,8 @@
             {
               "docstring": "(fail-safe). Pushes a fresh snapshot so the dashboard reflects the reset at once.",
               "lines": [
-                940,
-                949
+                946,
+                955
               ],
               "name": "set_yeah_profile",
               "signature": "(&self, id: i32)",
@@ -1266,8 +1266,8 @@
             {
               "docstring": "honest cost of a queue swap). Any other id -> Legacy.",
               "lines": [
-                955,
-                963
+                961,
+                969
               ],
               "name": "set_cake_profile",
               "signature": "(&self, id: i32)",
@@ -1276,8 +1276,8 @@
             {
               "docstring": "seam lands. Pushes a fresh snapshot.",
               "lines": [
-                970,
-                976
+                976,
+                982
               ],
               "name": "set_tunables",
               "signature": "(&self, max_window: i32, free_thresh_milli: i32, compete_thresh_milli: i32)",
@@ -1286,8 +1286,8 @@
             {
               "docstring": "Fold one UDP RTT sample into the EWMA (same alpha as the TCP estimator; first sample seeds).",
               "lines": [
-                979,
-                991
+                985,
+                997
               ],
               "name": "fold_udp_sample",
               "signature": "(inner: &mut BeastInner, rtt_ms: f64)",
@@ -1296,8 +1296,8 @@
             {
               "docstring": "conflicting window update. Empty batch \u21d2 no-op (no push). ONE snapshot push after the batch (D12).",
               "lines": [
-                1000,
-                1010
+                1006,
+                1016
               ],
               "name": "fold_udp_display_samples",
               "signature": "(&self, rtt_ms: Vec<f64>)",
@@ -1306,8 +1306,8 @@
             {
               "docstring": "push after the batch (D12).",
               "lines": [
-                1021,
-                1045
+                1027,
+                1051
               ],
               "name": "fold_tcp_display_samples",
               "signature": "(&self, rtt_ms: Vec<f64>)",
@@ -1316,8 +1316,8 @@
             {
               "docstring": "would bias the mean toward whichever flows happen to be slow.",
               "lines": [
-                1062,
-                1080
+                1068,
+                1086
               ],
               "name": "fold_shaped_sample",
               "signature": "(&self, rtt_ms: f64, cwnd: i32)",
@@ -1326,8 +1326,8 @@
             {
               "docstring": "CONGESTION REACTION the shaper took because of it. They can legitimately differ.",
               "lines": [
-                1085,
-                1089
+                1091,
+                1095
               ],
               "name": "fold_shaped_loss",
               "signature": "(&self)",
@@ -1336,8 +1336,8 @@
             {
               "docstring": "the real `on_success`/`on_timeout_or_fail` outcome path.",
               "lines": [
-                1100,
-                1103
+                1106,
+                1112
               ],
               "name": "would_shed_normal",
               "signature": "(&self, now_ms: i64)",
@@ -1346,8 +1346,8 @@
             {
               "docstring": "the engine lock (a re-entrant `snapshot()`/`log_event` from inside the callback cannot deadlock).",
               "lines": [
-                1109,
-                1116
+                1118,
+                1125
               ],
               "name": "push_metrics",
               "signature": "(inner: MutexGuard<'_, BeastInner>)",
@@ -1356,8 +1356,8 @@
             {
               "docstring": "existing accessors + the pub `profile` fields; touches ZERO Tort\u00e4/YeAH algorithm.",
               "lines": [
-                1123,
-                1179
+                1132,
+                1188
               ],
               "name": "snapshot_of",
               "signature": "(inner: &BeastInner)",
@@ -1366,8 +1366,8 @@
             {
               "docstring": "`None` when UNBOUND (RAM-only; the engine still runs, it simply writes no review log \u2014 the fail-safe).",
               "lines": [
-                1183,
-                1188
+                1192,
+                1197
               ],
               "name": "query_beast_log_path",
               "signature": "(&self)",
@@ -1376,8 +1376,8 @@
           ],
           "docstring": "`query_warden_log_path`).",
           "lines": [
-            919,
-            1189
+            925,
+            1198
           ],
           "name": "Beast",
           "type": "impl"
@@ -1385,8 +1385,8 @@
         {
           "docstring": "Pacing rate (probes/sec) = cwnd / base_rtt_seconds. 0 before any sample.",
           "lines": [
-            1192,
-            1198
+            1201,
+            1207
           ],
           "name": "pacing_rate",
           "signature": "(cwnd: i32, base_rtt_ms: f64)",
@@ -1397,8 +1397,8 @@
             {
               "docstring": "`heavier_tin_never_waits_longer`.",
               "lines": [
-                1214,
-                1216
+                1223,
+                1225
               ],
               "name": "tin_weight_table",
               "signature": "(&self)",
@@ -1407,8 +1407,8 @@
             {
               "docstring": "once\" \u2014 two states that want opposite responses and look identical in a total-depth number.",
               "lines": [
-                1222,
-                1224
+                1231,
+                1233
               ],
               "name": "flow_census",
               "signature": "(&self)",
@@ -1417,8 +1417,8 @@
           ],
           "docstring": "to compile, which is how this was found.",
           "lines": [
-            1204,
-            1225
+            1213,
+            1234
           ],
           "name": "Beast",
           "type": "impl"
@@ -1426,12 +1426,12 @@
       ]
     },
     "scheduler.rs": {
-      "hash": "884b2add0b01",
-      "indexed_at": "2026-07-31T23:18:18.533395+00:00",
+      "hash": "764daa007d7f",
+      "indexed_at": "2026-08-01T12:52:00.547758+00:00",
       "language": "rust",
-      "lines": 1392,
-      "mtime_ns": 1785539866240565100,
-      "size": 62493,
+      "lines": 1397,
+      "mtime_ns": 1785588610942043500,
+      "size": 62588,
       "symbols": [
         {
           "docstring": "Legacy keeps the ladder, because there the per-tin trim really is the governing bound.",
@@ -1869,7 +1869,7 @@
               "docstring": "Flows emptied here are lazily retired by dispatch (`retire_flow_if_empty`).",
               "lines": [
                 918,
-                961
+                963
               ],
               "name": "overload_shed",
               "signature": "(&mut self)",
@@ -1878,8 +1878,8 @@
             {
               "docstring": "Uses an explicit `now_ms` for deterministic AQM sojourn (the Kotlin `dispatchAt` test seam).",
               "lines": [
-                967,
-                972
+                969,
+                974
               ],
               "name": "dispatch",
               "signature": "(&mut self, cwnd: i32, now_ms: i64)",
@@ -1887,8 +1887,8 @@
             },
             {
               "lines": [
-                974,
-                996
+                976,
+                998
               ],
               "name": "dispatch_legacy",
               "signature": "(&mut self, cwnd: i32)",
@@ -1896,8 +1896,8 @@
             },
             {
               "lines": [
-                998,
-                1056
+                1000,
+                1058
               ],
               "name": "dispatch_aqm",
               "signature": "(&mut self, cwnd: i32, now_ms: i64)",
@@ -1906,8 +1906,8 @@
             {
               "docstring": "\u2014 but only droppable probes (CRITICAL real queries are floor-protected).",
               "lines": [
-                1061,
-                1165
+                1063,
+                1167
               ],
               "name": "serve_one_from_tin",
               "signature": "(&mut self, tin: usize, now_ms: i64)",
@@ -1916,8 +1916,8 @@
             {
               "docstring": "Pop the head probe off a flow's queue (returns None if flow/queue absent).",
               "lines": [
-                1168,
-                1172
+                1170,
+                1174
               ],
               "name": "pop_head_of_flow",
               "signature": "(&mut self, tin: usize, key: i64)",
@@ -1926,8 +1926,8 @@
             {
               "docstring": "round-robin. Still-backlogged served flows demote to the tail of old-flows.",
               "lines": [
-                1176,
-                1210
+                1178,
+                1212
               ],
               "name": "advance_flow",
               "signature": "(&mut self, tin: usize, key: i64, was_sparse: bool)",
@@ -1936,8 +1936,8 @@
             {
               "docstring": "`retireFlowIfEmpty` (CakeScheduler.kt:431-438): remove an empty flow from its lists + bucket.",
               "lines": [
-                1213,
-                1239
+                1215,
+                1241
               ],
               "name": "retire_flow_if_empty",
               "signature": "(&mut self, tin: usize, key: i64)",
@@ -1945,8 +1945,8 @@
             },
             {
               "lines": [
-                1241,
-                1245
+                1243,
+                1247
               ],
               "name": "remove_new",
               "signature": "(&mut self, tin: usize, key: i64)",
@@ -1954,8 +1954,8 @@
             },
             {
               "lines": [
-                1246,
-                1250
+                1248,
+                1252
               ],
               "name": "remove_old",
               "signature": "(&mut self, tin: usize, key: i64)",
@@ -1963,8 +1963,8 @@
             },
             {
               "lines": [
-                1252,
-                1258
+                1254,
+                1260
               ],
               "name": "purge_stale_list_entry",
               "signature": "(&mut self, tin: usize, key: i64, from_new: bool)",
@@ -1973,8 +1973,8 @@
             {
               "docstring": "with no cross-class view) and the YeAH failover machinery owns the real problem.",
               "lines": [
-                1268,
-                1288
+                1270,
+                1290
               ],
               "name": "on_timeout_or_fail",
               "signature": "(&mut self, priority: ProbePriority)",
@@ -1982,8 +1982,8 @@
             },
             {
               "lines": [
-                1289,
-                1294
+                1291,
+                1296
               ],
               "name": "on_success",
               "signature": "(&mut self, priority: ProbePriority)",
@@ -1992,7 +1992,7 @@
           ],
           "lines": [
             577,
-            1295
+            1297
           ],
           "name": "TortaScheduler",
           "type": "impl"
@@ -2001,8 +2001,8 @@
           "children": [
             {
               "lines": [
-                1298,
-                1300
+                1300,
+                1302
               ],
               "name": "default",
               "signature": "()",
@@ -2010,8 +2010,8 @@
             }
           ],
           "lines": [
-            1297,
-            1301
+            1299,
+            1303
           ],
           "name": "Default",
           "type": "impl"
@@ -2019,8 +2019,8 @@
         {
           "docstring": "(endpoint_idx, qname) -> 64-bit flow key (CakeScheduler.kt:454-459). FNV-ish, exact.",
           "lines": [
-            1304,
-            1311
+            1306,
+            1313
           ],
           "name": "flow_key",
           "signature": "(endpoint_idx: i32, qname: &str)",
@@ -2029,8 +2029,8 @@
         {
           "docstring": "is droppable; a CRITICAL real query is floor-protected.",
           "lines": [
-            1315,
-            1317
+            1317,
+            1319
           ],
           "name": "is_droppable",
           "signature": "(req: &ProbeRequest)",
@@ -2040,8 +2040,8 @@
           "children": [
             {
               "lines": [
-                1329,
-                1331
+                1331,
+                1333
               ],
               "name": "sched_with",
               "signature": "(weights: [i64; TIN_COUNT])",
@@ -2049,8 +2049,8 @@
             },
             {
               "lines": [
-                1336,
-                1345
+                1338,
+                1350
               ],
               "name": "a_zero_weight_does_not_panic_and_clamps_to_one",
               "signature": "()",
@@ -2058,8 +2058,8 @@
             },
             {
               "lines": [
-                1349,
-                1356
+                1354,
+                1361
               ],
               "name": "negative_weights_clamp_to_one",
               "signature": "()",
@@ -2067,8 +2067,8 @@
             },
             {
               "lines": [
-                1360,
-                1366
+                1365,
+                1371
               ],
               "name": "valid_weights_pass_through_untouched",
               "signature": "()",
@@ -2076,8 +2076,8 @@
             },
             {
               "lines": [
-                1371,
-                1384
+                1376,
+                1389
               ],
               "name": "heavier_tins_never_wait_longer",
               "signature": "()",
@@ -2085,8 +2085,8 @@
             },
             {
               "lines": [
-                1388,
-                1391
+                1393,
+                1396
               ],
               "name": "an_idle_scheduler_reports_an_empty_census",
               "signature": "()",
@@ -2094,8 +2094,8 @@
             }
           ],
           "lines": [
-            1326,
-            1392
+            1328,
+            1397
           ],
           "name": "tin_weight_clamp_tests",
           "type": "module"
@@ -2103,12 +2103,12 @@
       ]
     },
     "spec_binding.rs": {
-      "hash": "cd6b7ecd8ed5",
-      "indexed_at": "2026-08-01T04:01:07.724985+00:00",
+      "hash": "1ae2b18da3c0",
+      "indexed_at": "2026-08-01T12:52:00.831913+00:00",
       "language": "rust",
-      "lines": 416,
-      "mtime_ns": 1785556379689898600,
-      "size": 21089,
+      "lines": 429,
+      "mtime_ns": 1785588610946043500,
+      "size": 21237,
       "symbols": [
         {
           "docstring": "Repository root, derived from this crate's manifest dir (`rust/torta_core`).",
@@ -2133,7 +2133,7 @@
         {
           "lines": [
             86,
-            109
+            113
           ],
           "name": "the_kotlin_tin_ladder_matches_the_engine",
           "signature": "()",
@@ -2141,8 +2141,8 @@
         },
         {
           "lines": [
-            115,
-            145
+            119,
+            149
           ],
           "name": "the_slint_basin_caps_match_the_engine",
           "signature": "()",
@@ -2150,8 +2150,8 @@
         },
         {
           "lines": [
-            153,
-            174
+            157,
+            178
           ],
           "name": "the_slint_caps_cite_a_file_that_exists",
           "signature": "()",
@@ -2159,8 +2159,8 @@
         },
         {
           "lines": [
-            192,
-            251
+            196,
+            255
           ],
           "name": "the_torta_ui_fill_denominators_match_the_engine",
           "signature": "()",
@@ -2168,8 +2168,8 @@
         },
         {
           "lines": [
-            258,
-            267
+            262,
+            271
           ],
           "name": "the_tin_ladder_is_strictly_increasing",
           "signature": "()",
@@ -2177,8 +2177,8 @@
         },
         {
           "lines": [
-            323,
-            416
+            327,
+            429
           ],
           "name": "the_netstack_forwarder_is_not_wired_to_the_beast",
           "signature": "()",
@@ -2187,12 +2187,12 @@
       ]
     },
     "tests.rs": {
-      "hash": "8d5dc3e67ffa",
-      "indexed_at": "2026-07-31T23:18:18.829970+00:00",
+      "hash": "c591f1a7c6ff",
+      "indexed_at": "2026-08-01T12:52:01.141146+00:00",
       "language": "rust",
-      "lines": 2478,
-      "mtime_ns": 1785539837225118500,
-      "size": 106590,
+      "lines": 2743,
+      "mtime_ns": 1785588610960045000,
+      "size": 108675,
       "symbols": [
         {
           "lines": [
@@ -2551,7 +2551,7 @@
         {
           "lines": [
             602,
-            625
+            631
           ],
           "name": "tcp_display_lane_fed_by_dials_only_and_never_drives_the_window",
           "signature": "()",
@@ -2559,8 +2559,8 @@
         },
         {
           "lines": [
-            631,
-            673
+            637,
+            700
           ],
           "name": "shaped_plane_reports_real_flow_windows_and_never_drives_the_window",
           "signature": "()",
@@ -2568,8 +2568,8 @@
         },
         {
           "lines": [
-            677,
-            688
+            704,
+            718
           ],
           "name": "shaped_losses_count_the_reaction_not_the_io_event",
           "signature": "()",
@@ -2577,8 +2577,8 @@
         },
         {
           "lines": [
-            693,
-            703
+            723,
+            733
           ],
           "name": "snapshot_carries_both_profiles",
           "signature": "()",
@@ -2586,8 +2586,8 @@
         },
         {
           "lines": [
-            707,
-            715
+            737,
+            745
           ],
           "name": "snapshot_carries_canonical_rtt_base_floor",
           "signature": "()",
@@ -2595,8 +2595,8 @@
         },
         {
           "lines": [
-            721,
-            732
+            751,
+            762
           ],
           "name": "snapshot_carries_per_tin_valve",
           "signature": "()",
@@ -2604,8 +2604,8 @@
         },
         {
           "lines": [
-            736,
-            744
+            766,
+            774
           ],
           "name": "snapshot_legacy_aqm_has_no_valve",
           "signature": "()",
@@ -2613,8 +2613,8 @@
         },
         {
           "lines": [
-            753,
-            793
+            783,
+            823
           ],
           "name": "log_event_writes_query_beast_log_when_bound",
           "signature": "()",
@@ -2622,8 +2622,8 @@
         },
         {
           "lines": [
-            798,
-            823
+            828,
+            853
           ],
           "name": "log_event_unbound_is_silent_noop",
           "signature": "()",
@@ -2631,8 +2631,8 @@
         },
         {
           "lines": [
-            827,
-            838
+            857,
+            868
           ],
           "name": "query_beast_log_path_is_under_the_bound_dir",
           "signature": "()",
@@ -2640,8 +2640,8 @@
         },
         {
           "lines": [
-            849,
-            872
+            879,
+            902
           ],
           "name": "apply_samples_batch_pushes_once_and_matches_per_sample_state",
           "signature": "()",
@@ -2649,8 +2649,8 @@
         },
         {
           "lines": [
-            876,
-            887
+            906,
+            917
           ],
           "name": "apply_samples_empty_batch_is_a_no_op",
           "signature": "()",
@@ -2658,8 +2658,8 @@
         },
         {
           "lines": [
-            891,
-            911
+            921,
+            941
           ],
           "name": "apply_udp_samples_batch_folds_ewma_once_pushed",
           "signature": "()",
@@ -2667,8 +2667,8 @@
         },
         {
           "lines": [
-            927,
-            929
+            957,
+            959
           ],
           "name": "soft_sched",
           "signature": "()",
@@ -2676,8 +2676,8 @@
         },
         {
           "lines": [
-            935,
-            956
+            965,
+            986
           ],
           "name": "softcake_hard_ceiling_sheds_stale_head_baseline_serves_it",
           "signature": "()",
@@ -2685,8 +2685,8 @@
         },
         {
           "lines": [
-            964,
-            1003
+            994,
+            1033
           ],
           "name": "softcake_count_memory_reconverges_faster_after_brief_dip",
           "signature": "()",
@@ -2694,8 +2694,8 @@
         },
         {
           "lines": [
-            1009,
-            1030
+            1039,
+            1060
           ],
           "name": "mochi_freeze_window_absorbs_correlated_fail_burst",
           "signature": "()",
@@ -2703,8 +2703,8 @@
         },
         {
           "lines": [
-            1043,
-            1063
+            1073,
+            1093
           ],
           "name": "mochi_streak_cap_is_8_and_the_breach_is_loud",
           "signature": "()",
@@ -2712,8 +2712,8 @@
         },
         {
           "lines": [
-            1069,
-            1099
+            1099,
+            1129
           ],
           "name": "mochi_escalation_opens_faster_under_sustained_failure",
           "signature": "()",
@@ -2721,8 +2721,8 @@
         },
         {
           "lines": [
-            1106,
-            1139
+            1136,
+            1169
           ],
           "name": "mochi_idle_decay_recovers_valve_baseline_stays_stuck",
           "signature": "()",
@@ -2730,8 +2730,8 @@
         },
         {
           "lines": [
-            1144,
-            1156
+            1174,
+            1186
           ],
           "name": "mochi_success_decay_matches_baseline_law",
           "signature": "()",
@@ -2739,8 +2739,8 @@
         },
         {
           "lines": [
-            1161,
-            1167
+            1191,
+            1197
           ],
           "name": "softcake_critical_floor_protection_holds",
           "signature": "()",
@@ -2748,8 +2748,8 @@
         },
         {
           "lines": [
-            1173,
-            1217
+            1203,
+            1247
           ],
           "name": "softcake_ab_post_outage_recovery_surpasses_baseline",
           "signature": "()",
@@ -2757,8 +2757,8 @@
         },
         {
           "lines": [
-            1221,
-            1228
+            1251,
+            1258
           ],
           "name": "softcake_snapshot_reports_profile",
           "signature": "()",
@@ -2767,8 +2767,8 @@
         {
           "docstring": "=====================================================================================",
           "lines": [
-            1235,
-            1237
+            1265,
+            1267
           ],
           "name": "linerate",
           "signature": "()",
@@ -2776,8 +2776,8 @@
         },
         {
           "lines": [
-            1242,
-            1255
+            1272,
+            1285
           ],
           "name": "linerate_udp_fast_samples_grow_cwnd_canonical_stays_blind",
           "signature": "()",
@@ -2785,8 +2785,8 @@
         },
         {
           "lines": [
-            1260,
-            1275
+            1290,
+            1305
           ],
           "name": "linerate_udp_congestion_sheds_canonical_ignores",
           "signature": "()",
@@ -2794,8 +2794,8 @@
         },
         {
           "lines": [
-            1280,
-            1296
+            1310,
+            1326
           ],
           "name": "linerate_single_spike_holds_window_canonical_sheds",
           "signature": "()",
@@ -2803,8 +2803,8 @@
         },
         {
           "lines": [
-            1301,
-            1311
+            1331,
+            1341
           ],
           "name": "linerate_sustained_congestion_still_sheds",
           "signature": "()",
@@ -2812,8 +2812,8 @@
         },
         {
           "lines": [
-            1317,
-            1332
+            1347,
+            1362
           ],
           "name": "linerate_random_loss_keeps_seven_eighths_canonical_halves",
           "signature": "()",
@@ -2821,8 +2821,8 @@
         },
         {
           "lines": [
-            1338,
-            1361
+            1368,
+            1391
           ],
           "name": "linerate_big_queue_loss_drains_half_canonical_barely_reduces",
           "signature": "()",
@@ -2830,8 +2830,8 @@
         },
         {
           "lines": [
-            1367,
-            1394
+            1397,
+            1424
           ],
           "name": "linerate_zeta_hysteresis_keeps_competition_memory",
           "signature": "()",
@@ -2839,8 +2839,8 @@
         },
         {
           "lines": [
-            1399,
-            1413
+            1429,
+            1443
           ],
           "name": "linerate_loss_halves_memory_canonical_resets",
           "signature": "()",
@@ -2848,8 +2848,8 @@
         },
         {
           "lines": [
-            1419,
-            1433
+            1449,
+            1467
           ],
           "name": "linerate_per_family_floors_no_cross_poison",
           "signature": "()",
@@ -2857,8 +2857,8 @@
         },
         {
           "lines": [
-            1439,
-            1462
+            1473,
+            1504
           ],
           "name": "linerate_failover_clears_all_linerate_state",
           "signature": "()",
@@ -2866,8 +2866,8 @@
         },
         {
           "lines": [
-            1474,
-            1497
+            1516,
+            1555
           ],
           "name": "linerate_fair_share_floor_parks_sustained_congestion_loss_still_pierces",
           "signature": "()",
@@ -2875,8 +2875,8 @@
         },
         {
           "lines": [
-            1502,
-            1515
+            1560,
+            1573
           ],
           "name": "linerate_fair_share_zeta_unlearns",
           "signature": "()",
@@ -2884,8 +2884,8 @@
         },
         {
           "lines": [
-            1520,
-            1538
+            1578,
+            1604
           ],
           "name": "linerate_fair_share_loss_decay_floors_at_min_unlearned_stays_zero",
           "signature": "()",
@@ -2893,8 +2893,8 @@
         },
         {
           "lines": [
-            1548,
-            1576
+            1614,
+            1663
           ],
           "name": "linerate_rho_interrupted_congestion_takes_the_surgical_backoff",
           "signature": "()",
@@ -2902,8 +2902,8 @@
         },
         {
           "lines": [
-            1584,
-            1605
+            1671,
+            1712
           ],
           "name": "linerate_rho_sustained_congestion_halves_and_the_counter_survives_the_loss",
           "signature": "()",
@@ -2911,8 +2911,8 @@
         },
         {
           "lines": [
-            1612,
-            1631
+            1719,
+            1754
           ],
           "name": "linerate_rho_counter_snaps_on_fast_and_middle_zone_but_memory_survives",
           "signature": "()",
@@ -2920,8 +2920,8 @@
         },
         {
           "lines": [
-            1639,
-            1656
+            1762,
+            1791
           ],
           "name": "linerate_udp_fair_share_parks_and_loss_pierces",
           "signature": "()",
@@ -2929,8 +2929,8 @@
         },
         {
           "lines": [
-            1673,
-            1688
+            1808,
+            1835
           ],
           "name": "linerate_mixed_family_fair_shares_are_per_family",
           "signature": "()",
@@ -2938,8 +2938,8 @@
         },
         {
           "lines": [
-            1695,
-            1707
+            1842,
+            1862
           ],
           "name": "linerate_alternating_jitter_never_sheds_growth_survives",
           "signature": "()",
@@ -2947,8 +2947,8 @@
         },
         {
           "lines": [
-            1714,
-            1731
+            1869,
+            1898
           ],
           "name": "linerate_udp_floor_releases_after_improvement",
           "signature": "()",
@@ -2956,8 +2956,8 @@
         },
         {
           "lines": [
-            1738,
-            1765
+            1905,
+            1942
           ],
           "name": "yeah_nonfinite_samples_are_noops_both_ears",
           "signature": "()",
@@ -2965,8 +2965,8 @@
         },
         {
           "lines": [
-            1771,
-            1793
+            1948,
+            1978
           ],
           "name": "beast_linerate_udp_fair_share_end_to_end_batch_agrees",
           "signature": "()",
@@ -2974,8 +2974,8 @@
         },
         {
           "lines": [
-            1799,
-            1827
+            1984,
+            2012
           ],
           "name": "beast_linerate_udp_drives_cwnd_batch_twin_agrees",
           "signature": "()",
@@ -2983,8 +2983,8 @@
         },
         {
           "lines": [
-            1834,
-            1890
+            2019,
+            2075
           ],
           "name": "wiring_snapshot_carries_linerate_softcake_telemetry",
           "signature": "()",
@@ -2992,8 +2992,8 @@
         },
         {
           "lines": [
-            1897,
-            1916
+            2082,
+            2101
           ],
           "name": "live_feed_udp_family_moves_the_udp_lane",
           "signature": "()",
@@ -3001,8 +3001,8 @@
         },
         {
           "lines": [
-            1919,
-            1932
+            2104,
+            2117
           ],
           "name": "live_feed_tcp_family_moves_the_shared_window",
           "signature": "()",
@@ -3010,8 +3010,8 @@
         },
         {
           "lines": [
-            1935,
-            1952
+            2120,
+            2134
           ],
           "name": "live_feed_ignores_no_forward_and_poison_samples",
           "signature": "()",
@@ -3019,8 +3019,8 @@
         },
         {
           "lines": [
-            1959,
-            1985
+            2141,
+            2167
           ],
           "name": "classify_priority_matches_nautilus_diffserv_map",
           "signature": "()",
@@ -3028,8 +3028,8 @@
         },
         {
           "lines": [
-            1988,
-            2012
+            2170,
+            2194
           ],
           "name": "feed_aqm_into_enqueues_by_tin_and_tallies_throughput",
           "signature": "()",
@@ -3037,8 +3037,8 @@
         },
         {
           "lines": [
-            2015,
-            2035
+            2197,
+            2217
           ],
           "name": "aqm_retention_fetch_max_holds_the_session_high_water",
           "signature": "()",
@@ -3046,8 +3046,8 @@
         },
         {
           "lines": [
-            2038,
-            2048
+            2220,
+            2241
           ],
           "name": "feed_aqm_into_fail_outcome_takes_the_timeout_path_without_panic",
           "signature": "()",
@@ -3055,8 +3055,8 @@
         },
         {
           "lines": [
-            2051,
-            2062
+            2244,
+            2259
           ],
           "name": "live_beast_aqm_retention_export_is_nine_slots",
           "signature": "()",
@@ -3064,8 +3064,8 @@
         },
         {
           "lines": [
-            2065,
-            2105
+            2262,
+            2305
           ],
           "name": "live_tune_surface_swaps_profiles_and_tunables",
           "signature": "()",
@@ -3073,8 +3073,8 @@
         },
         {
           "lines": [
-            2120,
-            2137
+            2320,
+            2337
           ],
           "name": "rungd_rtt_coupled_interval_stretches_grace_softcake_only",
           "signature": "()",
@@ -3082,8 +3082,8 @@
         },
         {
           "lines": [
-            2146,
-            2167
+            2346,
+            2380
           ],
           "name": "rungd_rtt_interval_clamped_floor_and_cap",
           "signature": "()",
@@ -3091,8 +3091,8 @@
         },
         {
           "lines": [
-            2174,
-            2202
+            2387,
+            2431
           ],
           "name": "rungd_dango_outage_cross_tin_fails_absorbed_softcake",
           "signature": "()",
@@ -3100,8 +3100,8 @@
         },
         {
           "lines": [
-            2207,
-            2217
+            2436,
+            2446
           ],
           "name": "rungd_dango_outage_law_inert_under_baseline",
           "signature": "()",
@@ -3109,8 +3109,8 @@
         },
         {
           "lines": [
-            2225,
-            2240
+            2454,
+            2477
           ],
           "name": "rungd_beast_facade_udp_rtt_feed_couples_codel_clock",
           "signature": "()",
@@ -3118,8 +3118,8 @@
         },
         {
           "lines": [
-            2250,
-            2272
+            2487,
+            2521
           ],
           "name": "runge_overload_cap_sheds_fattest_flow_head_not_the_arrival",
           "signature": "()",
@@ -3127,8 +3127,8 @@
         },
         {
           "lines": [
-            2278,
-            2298
+            2527,
+            2551
           ],
           "name": "runge_overload_tiebreak_sheds_the_stalest_head",
           "signature": "()",
@@ -3136,8 +3136,8 @@
         },
         {
           "lines": [
-            2303,
-            2310
+            2556,
+            2567
           ],
           "name": "runge_overload_law_inert_under_baseline",
           "signature": "()",
@@ -3145,8 +3145,8 @@
         },
         {
           "lines": [
-            2321,
-            2341
+            2578,
+            2606
           ],
           "name": "linerate_local_echo_never_poisons_floors_or_window",
           "signature": "()",
@@ -3154,8 +3154,8 @@
         },
         {
           "lines": [
-            2356,
-            2378
+            2621,
+            2643
           ],
           "name": "snapshot_carries_live_doing_reno_now",
           "signature": "()",
@@ -3163,8 +3163,8 @@
         },
         {
           "lines": [
-            2383,
-            2393
+            2648,
+            2658
           ],
           "name": "snapshot_doing_reno_now_is_honest_zero_when_calm",
           "signature": "()",
@@ -3172,8 +3172,8 @@
         },
         {
           "lines": [
-            2400,
-            2415
+            2665,
+            2680
           ],
           "name": "canonical_brain_leaves_linerate_only_metrics_at_zero",
           "signature": "()",
@@ -3181,8 +3181,8 @@
         },
         {
           "lines": [
-            2428,
-            2478
+            2693,
+            2743
           ],
           "name": "every_profile_has_an_independent_udp_congestion_algorithm",
           "signature": "()",
@@ -3191,12 +3191,12 @@
       ]
     },
     "yeah.rs": {
-      "hash": "0a486cb2910c",
-      "indexed_at": "2026-07-31T23:02:57.962967+00:00",
+      "hash": "c061469dfc85",
+      "indexed_at": "2026-08-01T12:52:01.440135+00:00",
       "language": "rust",
-      "lines": 978,
-      "mtime_ns": 1785537635088593100,
-      "size": 46350,
+      "lines": 983,
+      "mtime_ns": 1785588610966044700,
+      "size": 46389,
       "symbols": [
         {
           "lines": [
@@ -3308,17 +3308,17 @@
               "docstring": "whole-number stepper can carry the 1.05 / 1.25 ratios as 1050 / 1250.",
               "lines": [
                 319,
-                329
+                334
               ],
               "name": "set_tunables",
-              "signature": "(&mut self, max_window: i32, free_thresh_milli: i32, compete_thresh_milli: i32)",
+              "signature": "(\n        &mut self,\n        max_window: i32,\n        free_thresh_milli: i32,\n        compete_thr...",
               "type": "method"
             },
             {
               "docstring": "---- Read accessors (the @Volatile var ... private set surface) ----",
               "lines": [
-                332,
-                334
+                337,
+                339
               ],
               "name": "max_window",
               "signature": "(&self)",
@@ -3326,8 +3326,8 @@
             },
             {
               "lines": [
-                335,
-                337
+                340,
+                342
               ],
               "name": "cwnd",
               "signature": "(&self)",
@@ -3335,8 +3335,8 @@
             },
             {
               "lines": [
-                338,
-                340
+                343,
+                345
               ],
               "name": "mode",
               "signature": "(&self)",
@@ -3344,8 +3344,8 @@
             },
             {
               "lines": [
-                341,
-                343
+                346,
+                348
               ],
               "name": "base_rtt",
               "signature": "(&self)",
@@ -3354,8 +3354,8 @@
             {
               "docstring": "gated by `dead_code` because the non-test lib build only reads it via the canonical path.",
               "lines": [
-                346,
-                348
+                351,
+                353
               ],
               "name": "rtt_base_floor",
               "signature": "(&self)",
@@ -3363,8 +3363,8 @@
             },
             {
               "lines": [
-                349,
-                351
+                354,
+                356
               ],
               "name": "q_packets",
               "signature": "(&self)",
@@ -3372,8 +3372,8 @@
             },
             {
               "lines": [
-                352,
-                354
+                357,
+                359
               ],
               "name": "reno_count",
               "signature": "(&self)",
@@ -3381,8 +3381,8 @@
             },
             {
               "lines": [
-                355,
-                357
+                360,
+                362
               ],
               "name": "fast_mode",
               "signature": "(&self)",
@@ -3391,8 +3391,8 @@
             {
               "docstring": "rule's actual input.",
               "lines": [
-                365,
-                367
+                370,
+                372
               ],
               "name": "q_smooth",
               "signature": "(&self)",
@@ -3401,8 +3401,8 @@
             {
               "docstring": "floor (`rtt_base_floor` doubles as the TCP floor).",
               "lines": [
-                370,
-                372
+                375,
+                377
               ],
               "name": "udp_floor",
               "signature": "(&self)",
@@ -3411,8 +3411,8 @@
             {
               "docstring": "memory (`reno_count`) survives until it fills.",
               "lines": [
-                375,
-                377
+                380,
+                382
               ],
               "name": "fast_streak",
               "signature": "(&self)",
@@ -3421,8 +3421,8 @@
             {
               "docstring": "one spike holds the window.",
               "lines": [
-                380,
-                382
+                385,
+                387
               ],
               "name": "congest_streak",
               "signature": "(&self)",
@@ -3431,8 +3431,8 @@
             {
               "docstring": "0 the instant any non-congested sample lands. The #25 Beast dashboard lift will consume this.",
               "lines": [
-                386,
-                388
+                391,
+                393
               ],
               "name": "doing_reno_now",
               "signature": "(&self)",
@@ -3441,8 +3441,8 @@
             {
               "docstring": "competing (tcp_yeah.c:37); 0 = unlearned. WIRED: carried by `BeastSnapshot::fair_cwnd`.",
               "lines": [
-                391,
-                393
+                396,
+                398
               ],
               "name": "fair_cwnd",
               "signature": "(&self)",
@@ -3451,8 +3451,8 @@
             {
               "docstring": "alone, so it can never be seeded or floored by what the TCP flow saw.",
               "lines": [
-                397,
-                399
+                402,
+                404
               ],
               "name": "udp_fair_cwnd",
               "signature": "(&self)",
@@ -3461,8 +3461,8 @@
             {
               "docstring": "canonical). Samples arriving here are TCP-family (probe transactions).",
               "lines": [
-                403,
-                411
+                408,
+                416
               ],
               "name": "apply",
               "signature": "(&mut self, rtt: f64)",
@@ -3471,8 +3471,8 @@
             {
               "docstring": "result does not depend on WHICH profile computed it).",
               "lines": [
-                419,
-                483
+                424,
+                488
               ],
               "name": "apply_family",
               "signature": "(&mut self, rtt: f64, family: SampleFamily)",
@@ -3481,8 +3481,8 @@
             {
               "docstring": "just LineRate \u2014 the formulae differ between profiles, the independence law does not.",
               "lines": [
-                489,
-                567
+                494,
+                572
               ],
               "name": "apply_canonical_family",
               "signature": "(&mut self, rtt: f64, family: SampleFamily)",
@@ -3491,8 +3491,8 @@
             {
               "docstring": "is stored, so it can never re-enter a decision.",
               "lines": [
-                578,
-                584
+                583,
+                589
               ],
               "name": "feed_metric_base_rtt",
               "signature": "(&mut self, rtt: f64)",
@@ -3500,8 +3500,8 @@
             },
             {
               "lines": [
-                586,
-                591
+                591,
+                596
               ],
               "name": "family_floor",
               "signature": "(&self, family: SampleFamily)",
@@ -3509,8 +3509,8 @@
             },
             {
               "lines": [
-                593,
-                598
+                598,
+                603
               ],
               "name": "set_family_floor",
               "signature": "(&mut self, family: SampleFamily, v: f64)",
@@ -3519,8 +3519,8 @@
             {
               "docstring": "inputs, judged against their OWN true-min floor.",
               "lines": [
-                606,
-                619
+                611,
+                624
               ],
               "name": "apply_udp",
               "signature": "(&mut self, rtt: f64)",
@@ -3529,8 +3529,8 @@
             {
               "docstring": "true-min, the FLOOR_LEAK law (identical to the Udp branch of `apply_linerate`, but nothing else).",
               "lines": [
-                627,
-                636
+                632,
+                641
               ],
               "name": "observe_udp_floor",
               "signature": "(&mut self, rtt: f64)",
@@ -3539,8 +3539,8 @@
             {
               "docstring": "`on_loss_linerate` (Canonical feeds one raw sample into an inverted clamp).",
               "lines": [
-                649,
-                828
+                654,
+                833
               ],
               "name": "apply_linerate",
               "signature": "(&mut self, rtt: f64, family: SampleFamily)",
@@ -3549,8 +3549,8 @@
             {
               "docstring": "Canonical loss/timeout reaction (YeahController.kt:273-296) \u2014 the H2/M1 fix.",
               "lines": [
-                831,
-                857
+                836,
+                862
               ],
               "name": "on_loss_or_timeout",
               "signature": "(&mut self)",
@@ -3559,8 +3559,8 @@
             {
               "docstring": "HIGHER post-loss window) \u2014 kept there untouched, its pins depend on it; the fix lives here.",
               "lines": [
-                864,
-                866
+                869,
+                871
               ],
               "name": "on_loss_linerate",
               "signature": "(&mut self)",
@@ -3569,8 +3569,8 @@
             {
               "docstring": "cross-talk on the way down that `udp_tick` growth was on the way up.",
               "lines": [
-                871,
-                908
+                876,
+                913
               ],
               "name": "on_loss_linerate_family",
               "signature": "(&mut self, family: SampleFamily)",
@@ -3579,8 +3579,8 @@
             {
               "docstring": "no profile silently ignores a loss.",
               "lines": [
-                914,
-                920
+                919,
+                925
               ],
               "name": "on_udp_loss_or_timeout",
               "signature": "(&mut self)",
@@ -3589,8 +3589,8 @@
             {
               "docstring": "Timeout penalty (YeahController.kt:299-305) \u2014 Legacy signals competition.",
               "lines": [
-                923,
-                931
+                928,
+                936
               ],
               "name": "apply_timeout_penalty",
               "signature": "(&mut self)",
@@ -3599,8 +3599,8 @@
             {
               "docstring": "Hard failover penalty (YeahController.kt:308-321) \u2014 relay-switch hard reset.",
               "lines": [
-                934,
-                962
+                939,
+                967
               ],
               "name": "apply_failover_penalty",
               "signature": "(&mut self)",
@@ -3609,8 +3609,8 @@
             {
               "docstring": "(YeahController.kt:324-327).",
               "lines": [
-                966,
-                971
+                971,
+                976
               ],
               "name": "adaptive_timeout_ms",
               "signature": "(&self, jitter_ms: f64)",
@@ -3619,7 +3619,7 @@
           ],
           "lines": [
             214,
-            972
+            977
           ],
           "name": "YeahController",
           "type": "impl"
@@ -3628,8 +3628,8 @@
           "children": [
             {
               "lines": [
-                975,
-                977
+                980,
+                982
               ],
               "name": "default",
               "signature": "()",
@@ -3637,8 +3637,8 @@
             }
           ],
           "lines": [
-            974,
-            978
+            979,
+            983
           ],
           "name": "Default",
           "type": "impl"
@@ -3646,6 +3646,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T08:44:33.817404+00:00",
+  "generated_at": "2026-08-01T12:52:01.441781+00:00",
   "version": "1.0"
 }

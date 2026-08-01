@@ -316,7 +316,12 @@ impl YeahController {
     /// algorithm — `max_window` caps every cwnd growth, `free_thresh`/`compete_thresh` gate the phase logic).
     /// The free-flow / competing thresholds arrive in milli-units from the host (beast_clamp field 2/3) so a
     /// whole-number stepper can carry the 1.05 / 1.25 ratios as 1050 / 1250.
-    pub fn set_tunables(&mut self, max_window: i32, free_thresh_milli: i32, compete_thresh_milli: i32) {
+    pub fn set_tunables(
+        &mut self,
+        max_window: i32,
+        free_thresh_milli: i32,
+        compete_thresh_milli: i32,
+    ) {
         if max_window > 0 {
             self.max_window = max_window;
         }

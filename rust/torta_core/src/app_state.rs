@@ -101,7 +101,8 @@ impl AppState {
 /// ~10-70 B — far under the durable tier's ceiling. Strings over [`MAX_STATE_STR`] are
 /// truncated on encode (and refused on decode) so the blob is bounded from both sides.
 pub(crate) fn encode_app_state(state: &AppState) -> Vec<u8> {
-    let mut out = Vec::with_capacity(8 + state.saved_dnscrypt_state.len() + state.operation_mode.len());
+    let mut out =
+        Vec::with_capacity(8 + state.saved_dnscrypt_state.len() + state.operation_mode.len());
     out.push(APP_STATE_SNAP_VERSION);
     let mut flags = 0u8;
     if state.vpn_service_enabled {
@@ -358,7 +359,10 @@ mod tests {
         let state = a_state();
         assert_eq!(decode_app_state(&encode_app_state(&state)), state);
         // And the cold state round-trips too (the fresh-install identity).
-        assert_eq!(decode_app_state(&encode_app_state(&AppState::cold())), AppState::cold());
+        assert_eq!(
+            decode_app_state(&encode_app_state(&AppState::cold())),
+            AppState::cold()
+        );
     }
 
     #[test]
@@ -366,8 +370,11 @@ mod tests {
         // Truncated, foreign-version, over-bound length, garbage UTF-8 — all cold, no panic.
         assert_eq!(decode_app_state(&[]), AppState::cold());
         assert_eq!(decode_app_state(&[99, 0]), AppState::cold()); // forward version
-        assert_eq!(decode_app_state(&[APP_STATE_SNAP_VERSION]), AppState::cold()); // no flags
-        // Over-bound string length claim (0xFFFF) with a short tail.
+        assert_eq!(
+            decode_app_state(&[APP_STATE_SNAP_VERSION]),
+            AppState::cold()
+        ); // no flags
+           // Over-bound string length claim (0xFFFF) with a short tail.
         assert_eq!(
             decode_app_state(&[APP_STATE_SNAP_VERSION, 0, 0xFF, 0xFF, b'x']),
             AppState::cold()
@@ -385,14 +392,21 @@ mod tests {
         state.saved_dnscrypt_state = "S".repeat(MAX_STATE_STR + 50);
         let back = decode_app_state(&encode_app_state(&state));
         assert_eq!(back.saved_dnscrypt_state.len(), MAX_STATE_STR);
-        assert_eq!(back.operation_mode, state.operation_mode, "the tail field survives the bound");
+        assert_eq!(
+            back.operation_mode, state.operation_mode,
+            "the tail field survives the bound"
+        );
     }
 
     #[test]
     fn store_writes_through_and_survives_reopen() {
         let dir = temp_dir("reopen");
         let store = AppStateStore::new(dir.to_string_lossy().into_owned());
-        assert_eq!(store.rehydrate(), AppState::cold(), "fresh dir rehydrates cold");
+        assert_eq!(
+            store.rehydrate(),
+            AppState::cold(),
+            "fresh dir rehydrates cold"
+        );
         assert!(store.set_saved_dnscrypt_state("RUNNING".into()));
         assert!(store.set_operation_mode("VPN_MODE".into()));
         assert!(store.set_vpn_service_enabled(true));
@@ -400,12 +414,20 @@ mod tests {
         assert_eq!(store.snapshot(), a_state(), "RAM sees every write");
         // Process death: a REOPENED store rehydrates the full state from NAND.
         let reopened = AppStateStore::new(dir.to_string_lossy().into_owned());
-        assert_eq!(reopened.rehydrate(), a_state(), "NAND read-back after reopen");
+        assert_eq!(
+            reopened.rehydrate(),
+            a_state(),
+            "NAND read-back after reopen"
+        );
         // The forget-path.
         reopened.clear();
         assert_eq!(reopened.snapshot(), AppState::cold());
         let cleared = AppStateStore::new(dir.to_string_lossy().into_owned());
-        assert_eq!(cleared.rehydrate(), AppState::cold(), "clear removed the record");
+        assert_eq!(
+            cleared.rehydrate(),
+            AppState::cold(),
+            "clear removed the record"
+        );
         let _ = std::fs::remove_dir_all(&dir);
     }
 }

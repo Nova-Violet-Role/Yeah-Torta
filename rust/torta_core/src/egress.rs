@@ -213,7 +213,10 @@ mod backoff_tests {
 
     #[test]
     fn a_zero_gap_still_probes_never_divides_by_zero() {
-        assert!(should_attempt_with_gap(true, 0, 0), "gap 0 must behave as 1, never as never");
+        assert!(
+            should_attempt_with_gap(true, 0, 0),
+            "gap 0 must behave as 1, never as never"
+        );
         assert!(should_attempt_with_gap(true, 7, 0));
     }
 
@@ -221,7 +224,9 @@ mod backoff_tests {
     fn every_window_of_the_gap_contains_exactly_one_probe() {
         for shift in 0..=BACKOFF_MAX_SHIFT {
             let g = cadence_gap(shift);
-            let hits = (0..(g * 3)).filter(|&n| should_attempt_with_gap(true, n, g)).count();
+            let hits = (0..(g * 3))
+                .filter(|&n| should_attempt_with_gap(true, n, g))
+                .count();
             assert_eq!(hits, 3, "one probe per window at shift {shift}");
             assert!(hits > 0, "probing must stay inevitable at shift {shift}");
         }
@@ -230,14 +235,24 @@ mod backoff_tests {
     #[test]
     fn the_gap_is_capped_so_probing_never_becomes_never() {
         let capped = cadence_gap(BACKOFF_MAX_SHIFT);
-        assert_eq!(cadence_gap(BACKOFF_MAX_SHIFT + 50), capped, "shift must saturate");
-        assert!(capped < u64::MAX, "a finite gap is what keeps rediscovery possible");
+        assert_eq!(
+            cadence_gap(BACKOFF_MAX_SHIFT + 50),
+            capped,
+            "shift must saturate"
+        );
+        assert!(
+            capped < u64::MAX,
+            "a finite gap is what keeps rediscovery possible"
+        );
     }
 
     #[test]
     fn backoff_widens_the_gap_monotonically() {
         for s in 0..BACKOFF_MAX_SHIFT {
-            assert!(cadence_gap(s) < cadence_gap(s + 1), "each step must be strictly rarer");
+            assert!(
+                cadence_gap(s) < cadence_gap(s + 1),
+                "each step must be strictly rarer"
+            );
         }
     }
 
@@ -309,7 +324,10 @@ mod tests {
         for _ in 0..(DEAD_AFTER - 1) {
             record_dial(true, false);
         }
-        assert!(!v6_presumed_dead(), "one short of the threshold is still alive");
+        assert!(
+            !v6_presumed_dead(),
+            "one short of the threshold is still alive"
+        );
         record_dial(true, false);
         assert!(v6_presumed_dead());
     }
@@ -346,7 +364,10 @@ mod tests {
         for _ in 0..REVIVE_AFTER {
             record_dial(true, true);
         }
-        assert!(!v6_presumed_dead(), "revival must remain POSSIBLE, only not instant");
+        assert!(
+            !v6_presumed_dead(),
+            "revival must remain POSSIBLE, only not instant"
+        );
         assert!(v6_should_attempt());
     }
 

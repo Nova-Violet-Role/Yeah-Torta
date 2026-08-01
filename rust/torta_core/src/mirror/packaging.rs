@@ -645,7 +645,11 @@ mod tests {
         let out = block(fetch_via_ladder(&all_dead, [9u8; 32], |_u, _h| async {
             Err::<Vec<u8>, ()>(())
         }));
-        assert_eq!(out, Err(()), "exhaustion is an honest Err — the batch's `failed`");
+        assert_eq!(
+            out,
+            Err(()),
+            "exhaustion is an honest Err — the batch's `failed`"
+        );
     }
 
     #[test]
@@ -654,7 +658,9 @@ mod tests {
         let t = WarmUpTarget::with_alternates(
             "x/1/f.js",
             "https://p.example/f.js",
-            (0..9).map(|i| format!("https://a{i}.example/f.js")).collect(),
+            (0..9)
+                .map(|i| format!("https://a{i}.example/f.js"))
+                .collect(),
         );
         assert_eq!(t.alt_urls.len(), MAX_ALT_UPSTREAMS);
         assert_eq!(t.ladder().count(), 1 + MAX_ALT_UPSTREAMS);

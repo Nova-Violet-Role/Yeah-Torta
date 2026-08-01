@@ -74,10 +74,10 @@ pub(crate) fn hairpin_dst(dst: std::net::SocketAddr) -> std::net::SocketAddr {
 mod session; // N1 — the SessionKey 5-tuple (cross-platform, pure SocketAddr)
 mod shape; // N5 — Tortä shaping over REAL flows: widened CAKE key + tin classifier + per-flow YeAH pacer (cross-platform, host-testable)
 mod sni; // ★ #66-A — the SNI peek: recover the hostname the DNS cloak collapsed into ONE sentinel IP (cross-platform, host-testable)
-             // N1 — the AsyncRead+AsyncWrite adapter over the raw tun fd. UNIX-ONLY (libc + std::os::unix +
-             // tokio::io::unix::AsyncFd) — the SAME cfg-gate the sync tun loop uses (`tunnel/mod.rs:271`). On the Windows
-             // HOST the tun fd path does not exist; the forwarder engine construction still type-checks (host build proves
-             // the API), the AVD (android = unix) supplies the real fd.
+         // N1 — the AsyncRead+AsyncWrite adapter over the raw tun fd. UNIX-ONLY (libc + std::os::unix +
+         // tokio::io::unix::AsyncFd) — the SAME cfg-gate the sync tun loop uses (`tunnel/mod.rs:271`). On the Windows
+         // HOST the tun fd path does not exist; the forwarder engine construction still type-checks (host build proves
+         // the API), the AVD (android = unix) supplies the real fd.
 #[cfg(unix)]
 mod tun_device;
 // N3/N4 — the async forwarder loop + the protected upstream. UNIX-ONLY (drive the real tun fd + open
@@ -287,7 +287,10 @@ mod netstack_mtu_tests {
     #[test]
     fn the_bare_cast_would_have_truncated() {
         assert_eq!(65536usize as u16, 0, "the naive cast collapses to zero");
-        assert_eq!(65600usize as u16, 64, "the naive cast shrinks catastrophically");
+        assert_eq!(
+            65600usize as u16, 64,
+            "the naive cast shrinks catastrophically"
+        );
         assert_eq!(netstack_mtu(65536), u16::MAX);
         assert_eq!(netstack_mtu(65600), u16::MAX);
     }
@@ -367,7 +370,11 @@ mod tests {
         ];
         for (i, a) in all.iter().enumerate() {
             for (j, b) in all.iter().enumerate() {
-                assert_eq!(i == j, a == b, "FlowKind variants must be pairwise distinct");
+                assert_eq!(
+                    i == j,
+                    a == b,
+                    "FlowKind variants must be pairwise distinct"
+                );
             }
         }
     }
@@ -469,7 +476,11 @@ mod tests {
     /// as this engine endorsing a public resolver. Tortä resolves ONLY over its own DNSCrypt pool.
     #[test]
     fn real_destinations_route_direct() {
-        for (addr, port) in [("203.0.113.10", 443), ("203.0.113.10", 80), ("198.51.100.7", 53)] {
+        for (addr, port) in [
+            ("203.0.113.10", 443),
+            ("203.0.113.10", 80),
+            ("198.51.100.7", 53),
+        ] {
             let dst = std::net::SocketAddr::new(addr.parse().unwrap(), port);
             assert_eq!(
                 classify_tcp(dst),
@@ -496,15 +507,19 @@ mod hairpin_tests {
     fn a_sentinel_dial_with_no_mirror_listening_is_left_unroutable() {
         // An ordinary destination is never rewritten.
         let ordinary = SocketAddr::new(IpAddr::V4(Ipv4Addr::new(93, 184, 216, 34)), 443);
-        assert_eq!(hairpin_dst(ordinary), ordinary, "a normal dial must pass through untouched");
+        assert_eq!(
+            hairpin_dst(ordinary),
+            ordinary,
+            "a normal dial must pass through untouched"
+        );
 
         // The sentinel with the mirror NOT serving (port 0 is the default in a host test): unchanged.
         // The address is intentionally unroutable, so the connect fails — by design, not by accident.
-        let sentinel = SocketAddr::new(
-            IpAddr::V4(crate::resolver::local::CLOAK_SENTINEL_V4),
-            443,
+        let sentinel = SocketAddr::new(IpAddr::V4(crate::resolver::local::CLOAK_SENTINEL_V4), 443);
+        assert!(
+            is_cloak_sentinel(sentinel),
+            "the fixture must actually BE the sentinel"
         );
-        assert!(is_cloak_sentinel(sentinel), "the fixture must actually BE the sentinel");
         let routed = hairpin_dst(sentinel);
         if crate::mirror_hairpin_port() == 0 {
             assert_eq!(

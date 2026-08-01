@@ -101,7 +101,10 @@ fn run(
     rtt_ms: f64,
 ) -> Outcome {
     let beast = Beast::new(yeah, sched);
-    let mut out = Outcome { rounds, ..Default::default() };
+    let mut out = Outcome {
+        rounds,
+        ..Default::default()
+    };
     let mut seq: u64 = 0;
 
     for r in 0..rounds {
@@ -149,11 +152,18 @@ fn run(
 /// This is the run `linksim.rs` could not perform, because it had no tins to overload.
 #[test]
 fn the_real_datapath_under_overload() {
-    let arrivals = Arrivals { critical: 2, high: 4, normal: 8 };
+    let arrivals = Arrivals {
+        critical: 2,
+        high: 4,
+        normal: 8,
+    };
     let rounds = 500;
 
     println!("\n=== THE REAL BEAST under sustained overload (arrivals 2/4/8 per round) ===");
-    println!("{:<12} {:>8} {:>10} {:>7} {:>18} {:>22}", "profile", "offered", "dispatched", "shed", "peak depth C/H/N", "dispatched C/H/N");
+    println!(
+        "{:<12} {:>8} {:>10} {:>7} {:>18} {:>22}",
+        "profile", "offered", "dispatched", "shed", "peak depth C/H/N", "dispatched C/H/N"
+    );
 
     for (label, yp, tp) in [
         ("Legacy", YeahProfile::Legacy, TortaProfile::Legacy),
@@ -247,11 +257,27 @@ fn the_real_datapath_under_overload() {
 /// and if it received zero under every profile the test would be measuring nothing.
 #[test]
 fn the_aqm_path_does_not_starve_the_bulk_tin() {
-    let arrivals = Arrivals { critical: 4, high: 0, normal: 8 };
+    let arrivals = Arrivals {
+        critical: 4,
+        high: 0,
+        normal: 8,
+    };
     let rounds = 400;
 
-    let legacy = run(YeahProfile::Legacy, TortaProfile::Legacy, arrivals, rounds, 30.0);
-    let soft = run(YeahProfile::LineRate, TortaProfile::SoftCake, arrivals, rounds, 30.0);
+    let legacy = run(
+        YeahProfile::Legacy,
+        TortaProfile::Legacy,
+        arrivals,
+        rounds,
+        30.0,
+    );
+    let soft = run(
+        YeahProfile::LineRate,
+        TortaProfile::SoftCake,
+        arrivals,
+        rounds,
+        30.0,
+    );
 
     println!("\n=== STARVATION: critical-heavy load (4 critical + 8 normal per round) ===");
     println!("Legacy   dispatched C/H/N = {:?}", legacy.per_tin);
@@ -282,8 +308,18 @@ fn the_aqm_path_does_not_starve_the_bulk_tin() {
 /// the tin actually reaches.
 #[test]
 fn a_purely_critical_workload_never_fills_the_window() {
-    let arrivals = Arrivals { critical: 16, high: 0, normal: 0 };
-    let o = run(YeahProfile::LineRate, TortaProfile::SoftCake, arrivals, 300, 30.0);
+    let arrivals = Arrivals {
+        critical: 16,
+        high: 0,
+        normal: 0,
+    };
+    let o = run(
+        YeahProfile::LineRate,
+        TortaProfile::SoftCake,
+        arrivals,
+        300,
+        30.0,
+    );
 
     println!(
         "\n=== CRITICAL-ONLY: offered 16/round, peak critical depth = {} (cap {}) ===",
@@ -327,7 +363,10 @@ fn a_purely_critical_workload_never_fills_the_window() {
 #[test]
 fn tcp_and_udp_run_together_and_alone_on_every_profile() {
     println!("\n=== TCP/UDP INDEPENDENCE through the whole Beast ===");
-    println!("{:<12} {:>18} {:>18} {:>18}", "profile", "together T/U", "udp-only T/U", "tcp-only T/U");
+    println!(
+        "{:<12} {:>18} {:>18} {:>18}",
+        "profile", "together T/U", "udp-only T/U", "tcp-only T/U"
+    );
 
     for (label, yp) in [
         ("Legacy", YeahProfile::Legacy),
@@ -414,9 +453,16 @@ fn tcp_and_udp_run_together_and_alone_on_every_profile() {
 /// first-class finding rather than a footnote inside another test.
 #[test]
 fn the_enqueue_path_has_no_per_tin_bound_on_any_profile() {
-    let arrivals = Arrivals { critical: 8, high: 8, normal: 8 };
+    let arrivals = Arrivals {
+        critical: 8,
+        high: 8,
+        normal: 8,
+    };
     println!("\n=== ENQUEUE BOUND: is any tin held to TIN_MAX_DEPTH at enqueue? ===");
-    println!("{:<12} {:>18} {:>16}", "profile", "peak depth C/H/N", "caps C/H/N");
+    println!(
+        "{:<12} {:>18} {:>16}",
+        "profile", "peak depth C/H/N", "caps C/H/N"
+    );
 
     let mut any_exceeded = false;
     for (label, yp, tp) in [

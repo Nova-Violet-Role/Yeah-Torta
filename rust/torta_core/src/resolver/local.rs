@@ -639,9 +639,13 @@ mod tests {
         );
 
         // Comments and blanks are not errors and must not inflate either counter.
-        let (added2, skipped2) = import_addn_hosts("# a comment\n\n! another\n10.0.0.4 fourth.example\n", 60);
+        let (added2, skipped2) =
+            import_addn_hosts("# a comment\n\n! another\n10.0.0.4 fourth.example\n", 60);
         assert_eq!(added2, 1, "comments/blanks were counted as applied records");
-        assert_eq!(skipped2, 0, "comments/blanks were counted as skipped LINES -- they are neither");
+        assert_eq!(
+            skipped2, 0,
+            "comments/blanks were counted as skipped LINES -- they are neither"
+        );
         assert_eq!(records_count(), 2);
 
         // Leave the store empty so no later test inherits these pins.
@@ -923,11 +927,31 @@ nonsense-no-ip-here
         let q = query_for("example.com", QTYPE_AAAA);
         let resp = synth_nodata(&q).expect("a well-formed question must yield a canvas");
         assert_eq!(resp[2] & 0x80, 0x80, "QR must be set (it is a response)");
-        assert_eq!(resp[3] & 0x0F, 0, "RCODE must be NOERROR(0), never NXDOMAIN(3)");
-        assert_eq!(u16::from_be_bytes([resp[6], resp[7]]), 0, "ANCOUNT must be 0 -- that is NODATA");
-        assert_eq!(u16::from_be_bytes([resp[4], resp[5]]), 1, "QDCOUNT must stay 1");
-        assert_eq!(u16::from_be_bytes([resp[8], resp[9]]), 0, "NSCOUNT must be 0");
-        assert_eq!(u16::from_be_bytes([resp[10], resp[11]]), 0, "ARCOUNT must be 0");
+        assert_eq!(
+            resp[3] & 0x0F,
+            0,
+            "RCODE must be NOERROR(0), never NXDOMAIN(3)"
+        );
+        assert_eq!(
+            u16::from_be_bytes([resp[6], resp[7]]),
+            0,
+            "ANCOUNT must be 0 -- that is NODATA"
+        );
+        assert_eq!(
+            u16::from_be_bytes([resp[4], resp[5]]),
+            1,
+            "QDCOUNT must stay 1"
+        );
+        assert_eq!(
+            u16::from_be_bytes([resp[8], resp[9]]),
+            0,
+            "NSCOUNT must be 0"
+        );
+        assert_eq!(
+            u16::from_be_bytes([resp[10], resp[11]]),
+            0,
+            "ARCOUNT must be 0"
+        );
     }
 
     #[test]
@@ -945,7 +969,10 @@ nonsense-no-ip-here
     fn nodata_on_a_malformed_query_yields_none_never_a_forged_reply() {
         assert!(synth_nodata(&[]).is_none(), "empty");
         assert!(synth_nodata(&[0u8; 4]).is_none(), "truncated header");
-        assert!(synth_nodata(&[0xFFu8; 12]).is_none(), "header with no question");
+        assert!(
+            synth_nodata(&[0xFFu8; 12]).is_none(),
+            "header with no question"
+        );
     }
 
     #[test]

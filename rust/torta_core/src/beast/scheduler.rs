@@ -924,7 +924,9 @@ impl TortaScheduler {
                 for tin in 0..TIN_COUNT {
                     for bucket in &self.tin_buckets[tin] {
                         for (key, flow) in bucket {
-                            let Some(head) = flow.queue.front() else { continue };
+                            let Some(head) = flow.queue.front() else {
+                                continue;
+                            };
                             if droppable_only && !is_droppable(head) {
                                 continue;
                             }
@@ -1337,7 +1339,10 @@ mod tin_weight_clamp_tests {
         let s = sched_with([0, 50, 12]);
         let t = s.tin_weight_table();
         assert_eq!(t[0].0, 0, "the CONFIGURED weight is reported unchanged");
-        assert_eq!(t[0].1, 1, "the clamp floors it at 1 -- this is what averts the panic");
+        assert_eq!(
+            t[0].1, 1,
+            "the clamp floors it at 1 -- this is what averts the panic"
+        );
         assert_eq!(
             t[0].2, STRIDE_UNIT,
             "a rescued weight gets the MAXIMUM stride: de-prioritised, never dropped"

@@ -268,7 +268,10 @@ mod tests {
         let snap = g.snapshot();
         assert_eq!(snap.len(), 1, "ONE judgment ⇒ ONE ring record");
         let f = &snap[0];
-        assert_eq!((f.uid, f.port, f.proto, f.ip.as_str()), (1000, 443, 6, "8.8.4.4"));
+        assert_eq!(
+            (f.uid, f.port, f.proto, f.ip.as_str()),
+            (1000, 443, 6, "8.8.4.4")
+        );
         assert_eq!(
             (f.cc.as_str(), f.asn.as_str()),
             ("us", "GOOGLE"),
@@ -291,7 +294,10 @@ mod tests {
         let g = crate::warden::tracker::global();
         g.clear();
         let v = verdict(1000, 4, 6, &IpAddrBytes::V4([8, 8, 4, 4]), 443, None, false);
-        assert!(!v.is_deny(), "unconfigured singleton abstains — the flow is allowed");
+        assert!(
+            !v.is_deny(),
+            "unconfigured singleton abstains — the flow is allowed"
+        );
         let snap = g.snapshot();
         assert_eq!(snap.len(), 1);
         assert!(
@@ -337,8 +343,20 @@ mod tests {
         let dst = std::net::IpAddr::V4(std::net::Ipv4Addr::new(198, 51, 100, 9));
         crate::warden::attribution::global().record(dst, "cdn.example", 300);
 
-        let v = verdict(1000, 4, 6, &IpAddrBytes::V4([198, 51, 100, 9]), 443, None, true);
-        assert_eq!(v, Verdict::Abstain, "attribution never manufactures a verdict on its own");
+        let v = verdict(
+            1000,
+            4,
+            6,
+            &IpAddrBytes::V4([198, 51, 100, 9]),
+            443,
+            None,
+            true,
+        );
+        assert_eq!(
+            v,
+            Verdict::Abstain,
+            "attribution never manufactures a verdict on its own"
+        );
         let snap = g.snapshot();
         assert_eq!(snap.len(), 1);
         assert_eq!(
@@ -391,14 +409,26 @@ mod tests {
 
         let g = crate::warden::tracker::global();
         g.clear(); // process-global ring (test-threads=1 law)
-        let v = verdict(UID as i32, 4, 6, &IpAddrBytes::V4([198, 51, 100, 7]), 443, None, true);
+        let v = verdict(
+            UID as i32,
+            4,
+            6,
+            &IpAddrBytes::V4([198, 51, 100, 7]),
+            443,
+            None,
+            true,
+        );
         assert_eq!(
             v,
             Verdict::Allow,
             "an attribution-ONLY deny is re-asked bare and dies — a guessed label never drives DENY"
         );
         let snap = g.snapshot();
-        assert_eq!(snap.len(), 1, "the guard's re-ask feeds NO second row — one judgment, one record");
+        assert_eq!(
+            snap.len(),
+            1,
+            "the guard's re-ask feeds NO second row — one judgment, one record"
+        );
         assert_eq!(
             snap[0].domain, "tracker.example",
             "the label still INFORMS the row it failed to deny"
@@ -414,8 +444,19 @@ mod tests {
         w.set_app_row(row);
         *crate::warden_lock() = Some(w);
         g.clear();
-        let v = verdict(UID as i32, 4, 6, &IpAddrBytes::V4([198, 51, 100, 7]), 443, None, true);
-        assert!(v.is_deny(), "a facts-based deny is NOT rescued by the attribution guard");
+        let v = verdict(
+            UID as i32,
+            4,
+            6,
+            &IpAddrBytes::V4([198, 51, 100, 7]),
+            443,
+            None,
+            true,
+        );
+        assert!(
+            v.is_deny(),
+            "a facts-based deny is NOT rescued by the attribution guard"
+        );
         assert!(!g.snapshot()[0].carried, "a denied flow is never carried");
 
         crate::clear_warden_for_test();
@@ -501,14 +542,26 @@ mod tests {
 
         // Nameless flow → attributed to the blocked apex → canonical DENY → BARE re-ask on the
         // canonical engine allows (facts alone don't deny) → the label's deny is DISCARDED.
-        let v = verdict(97_912, 4, 6, &IpAddrBytes::V4([198, 51, 100, 41]), 443, None, true);
+        let v = verdict(
+            97_912,
+            4,
+            6,
+            &IpAddrBytes::V4([198, 51, 100, 41]),
+            443,
+            None,
+            true,
+        );
         assert_eq!(
             v,
             Verdict::Allow,
             "an attribution-only canonical deny dies on the bare re-ask (A4 fail-open law)"
         );
         let snap = g.snapshot();
-        assert_eq!(snap.len(), 1, "one judgment, one ring record — the re-ask feeds no second row");
+        assert_eq!(
+            snap.len(),
+            1,
+            "one judgment, one ring record — the re-ask feeds no second row"
+        );
         assert_eq!(
             snap[0].domain, "a6-evil.example.net",
             "the label still informs the row it failed to deny"
@@ -526,12 +579,19 @@ mod tests {
             Some("a6-evil.example.net"),
             true,
         );
-        assert_eq!(v, Verdict::Deny, "a caller-known blocked qname denies authoritatively");
+        assert_eq!(
+            v,
+            Verdict::Deny,
+            "a caller-known blocked qname denies authoritatively"
+        );
         assert!(!g.snapshot()[0].carried, "a denied flow is never carried");
 
         crate::warden::object::warden_set_datapath_enforced(false);
         let cleared = w.install_domain_rules(vec![]);
-        assert_eq!(cleared.accepted, 0, "replace semantics ⇒ the armed set is now empty");
+        assert_eq!(
+            cleared.accepted, 0,
+            "replace semantics ⇒ the armed set is now empty"
+        );
         g.clear(); // leave no residue
     }
 }

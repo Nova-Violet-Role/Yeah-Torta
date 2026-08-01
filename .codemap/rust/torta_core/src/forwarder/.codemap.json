@@ -2,12 +2,12 @@
   "directory": "rust\\torta_core\\src\\forwarder",
   "files": {
     "icmp.rs": {
-      "hash": "a33a7e69b8d4",
-      "indexed_at": "2026-07-29T08:39:01.677317+00:00",
+      "hash": "98e11d8fee51",
+      "indexed_at": "2026-08-01T12:52:04.302246+00:00",
       "language": "rust",
-      "lines": 506,
-      "mtime_ns": 1785312825868533300,
-      "size": 24537,
+      "lines": 504,
+      "mtime_ns": 1785588611028043500,
+      "size": 24511,
       "symbols": [
         {
           "docstring": "the kind of bug that only ever shows up against one particular `ping -s`.",
@@ -182,7 +182,7 @@
             {
               "lines": [
                 485,
-                505
+                503
               ],
               "name": "gap4_parse_icmp_exceeding_maximum_payload",
               "signature": "()",
@@ -191,7 +191,7 @@
           ],
           "lines": [
             320,
-            506
+            504
           ],
           "name": "tests",
           "type": "module"
@@ -199,12 +199,12 @@
       ]
     },
     "mod.rs": {
-      "hash": "df5915c9e353",
-      "indexed_at": "2026-07-30T03:57:54.304594+00:00",
+      "hash": "4589ca4c9025",
+      "indexed_at": "2026-08-01T12:52:04.584685+00:00",
       "language": "rust",
-      "lines": 566,
-      "mtime_ns": 1785382980005803100,
-      "size": 28623,
+      "lines": 581,
+      "mtime_ns": 1785588611030043700,
+      "size": 28811,
       "symbols": [
         {
           "docstring": "fast and the client falls back to TCP, which lands here.",
@@ -372,7 +372,7 @@
             {
               "lines": [
                 288,
-                293
+                296
               ],
               "name": "the_bare_cast_would_have_truncated",
               "signature": "()",
@@ -380,8 +380,8 @@
             },
             {
               "lines": [
-                297,
-                301
+                300,
+                304
               ],
               "name": "values_inside_u16_pass_through_exactly",
               "signature": "()",
@@ -389,8 +389,8 @@
             },
             {
               "lines": [
-                305,
-                313
+                308,
+                316
               ],
               "name": "the_derivation_is_monotone_and_idempotent",
               "signature": "()",
@@ -398,8 +398,8 @@
             },
             {
               "lines": [
-                317,
-                321
+                320,
+                324
               ],
               "name": "a_live_tun_never_yields_a_zero_mtu",
               "signature": "()",
@@ -408,7 +408,7 @@
           ],
           "lines": [
             255,
-            322
+            325
           ],
           "name": "netstack_mtu_tests",
           "type": "module"
@@ -416,8 +416,8 @@
         {
           "docstring": "forwarder successfully served as unparseable traffic.",
           "lines": [
-            331,
-            333
+            334,
+            336
           ],
           "name": "counts_as_other",
           "signature": "(kind: FlowKind)",
@@ -426,8 +426,8 @@
         {
           "docstring": "twice \u2014 and the two copies had already diverged, this one being the stale half.",
           "lines": [
-            342,
-            351
+            345,
+            354
           ],
           "name": "classify",
           "signature": "(stream: &IpStackStream)",
@@ -437,8 +437,8 @@
           "children": [
             {
               "lines": [
-                361,
-                373
+                364,
+                380
               ],
               "name": "flowkind_is_a_real_four_way",
               "signature": "()",
@@ -446,8 +446,8 @@
             },
             {
               "lines": [
-                381,
-                388
+                388,
+                395
               ],
               "name": "icmp_is_not_the_unparseable_remainder",
               "signature": "()",
@@ -455,8 +455,8 @@
             },
             {
               "lines": [
-                397,
-                409
+                404,
+                416
               ],
               "name": "cloaked_https_takes_the_seam_not_the_plain_mirror",
               "signature": "()",
@@ -464,8 +464,8 @@
             },
             {
               "lines": [
-                414,
-                420
+                421,
+                427
               ],
               "name": "cloaked_http_still_hairpins_to_the_mirror",
               "signature": "()",
@@ -473,8 +473,8 @@
             },
             {
               "lines": [
-                429,
-                442
+                436,
+                449
               ],
               "name": "armed_but_unready_local_serve_yields_the_flow_to_the_splice",
               "signature": "()",
@@ -482,8 +482,8 @@
             },
             {
               "lines": [
-                451,
-                464
+                458,
+                471
               ],
               "name": "the_armed_branch_stays_gated_on_readiness",
               "signature": "()",
@@ -491,8 +491,8 @@
             },
             {
               "lines": [
-                471,
-                480
+                478,
+                491
               ],
               "name": "real_destinations_route_direct",
               "signature": "()",
@@ -500,8 +500,8 @@
             }
           ],
           "lines": [
-            354,
-            481
+            357,
+            492
           ],
           "name": "tests",
           "type": "module"
@@ -510,8 +510,8 @@
           "children": [
             {
               "lines": [
-                496,
-                522
+                507,
+                537
               ],
               "name": "a_sentinel_dial_with_no_mirror_listening_is_left_unroutable",
               "signature": "()",
@@ -519,8 +519,8 @@
             }
           ],
           "lines": [
-            484,
-            523
+            495,
+            538
           ],
           "name": "hairpin_tests",
           "type": "module"
@@ -529,8 +529,8 @@
           "children": [
             {
               "lines": [
-                536,
-                548
+                551,
+                563
               ],
               "name": "only_unparseable_network_counts_as_other",
               "signature": "()",
@@ -538,8 +538,8 @@
             },
             {
               "lines": [
-                553,
-                565
+                568,
+                580
               ],
               "name": "exactly_one_shape_is_the_remainder",
               "signature": "()",
@@ -547,8 +547,8 @@
             }
           ],
           "lines": [
-            531,
-            566
+            546,
+            581
           ],
           "name": "remainder_rule_tests",
           "type": "module"
@@ -556,12 +556,12 @@
       ]
     },
     "run.rs": {
-      "hash": "dac6ad2216bd",
-      "indexed_at": "2026-08-01T09:56:54.669448+00:00",
+      "hash": "435809e735b0",
+      "indexed_at": "2026-08-01T12:52:04.869211+00:00",
       "language": "rust",
-      "lines": 917,
-      "mtime_ns": 1785577798950585700,
-      "size": 48384,
+      "lines": 915,
+      "mtime_ns": 1785588611035044200,
+      "size": 48379,
       "symbols": [
         {
           "docstring": "tokio gives us free). NEVER returns on a single-flow error (a bad flow is dropped, the loop continues).",
@@ -577,17 +577,17 @@
           "docstring": "passes here \u2014 the resolver owns its own blocklist gate (NXDOMAIN), per the warden.rs charter.",
           "lines": [
             99,
-            125
+            121
           ],
           "name": "warden_allows",
-          "signature": "(\n    key: &SessionKey,\n    uid: &Option<UidFn>,\n    fwd: &ForwarderStats,\n)",
+          "signature": "(key: &SessionKey, uid: &Option<UidFn>, fwd: &ForwarderStats)",
           "type": "function"
         },
         {
           "docstring": "N6 \u2014 count a flow into its Tort\u00e4 tin (the fountain's per-tin totals).",
           "lines": [
-            128,
-            135
+            124,
+            131
           ],
           "name": "note_tin",
           "signature": "(fwd: &ForwarderStats, tin: ProbePriority)",
@@ -596,8 +596,8 @@
         {
           "docstring": "N6 counts every arm into [`ForwarderStats`] (accepted/tin at entry, active gauge across the flow's life).",
           "lines": [
-            140,
-            238
+            136,
+            234
           ],
           "name": "handle_flow",
           "signature": "(\n    stream: IpStackStream,\n    protect: ProtectFn,\n    fwd: Arc<ForwarderStats>,\n    uid: Optio...",
@@ -606,8 +606,8 @@
         {
           "docstring": "an unlisted flow is a reporting gap, and a dropped flow would be a user-visible outage.",
           "lines": [
-            249,
-            260
+            245,
+            256
           ],
           "name": "docket_enroll",
           "signature": "(\n    shaper: &FlowShaper,\n    proto: i32,\n    paced: bool,\n)",
@@ -616,8 +616,8 @@
         {
           "docstring": "registration path, two ways to reach it, so the two can never drift.",
           "lines": [
-            270,
-            279
+            266,
+            275
           ],
           "name": "docket_enroll_raw",
           "signature": "(\n    key: i64,\n    proto: i32,\n    tin: i32,\n    paced: bool,\n)",
@@ -626,8 +626,8 @@
         {
           "docstring": "This is why turning the forwarder on does NOT break DNS \u2014 a :53 flow is resolved, never forwarded.",
           "lines": [
-            283,
-            305
+            279,
+            301
           ],
           "name": "answer_dns_udp",
           "signature": "(udp: &mut ipstack::stream::IpStackUdpStream, fwd: &ForwarderStats)",
@@ -636,8 +636,8 @@
         {
           "docstring": "idle/EOF. The first witness: a QUIC/HTTP3 (or plain UDP) app flows through the tun.",
           "lines": [
-            309,
-            345
+            305,
+            341
           ],
           "name": "forward_udp",
           "signature": "(\n    mut client: ipstack::stream::IpStackUdpStream,\n    dst: SocketAddr,\n    protect: ProtectFn,...",
@@ -646,8 +646,8 @@
         {
           "docstring": "A send error stalls + ends the flow (N5 parity).",
           "lines": [
-            358,
-            454
+            354,
+            453
           ],
           "name": "forward_udp_paced",
           "signature": "(\n    mut client: ipstack::stream::IpStackUdpStream,\n    dst: SocketAddr,\n    protect: ProtectFn,...",
@@ -655,8 +655,8 @@
         },
         {
           "lines": [
-            503,
-            509
+            502,
+            508
           ],
           "name": "ReplayStream",
           "type": "struct"
@@ -665,8 +665,8 @@
           "children": [
             {
               "lines": [
-                516,
-                532
+                515,
+                531
               ],
               "name": "poll_read",
               "signature": "(\n        mut self: std::pin::Pin<&mut Self>,\n        cx: &mut std::task::Context<'_>,\n        bu...",
@@ -674,8 +674,8 @@
             }
           ],
           "lines": [
-            512,
-            533
+            511,
+            532
           ],
           "name": "<anonymous>",
           "type": "impl"
@@ -684,8 +684,8 @@
           "children": [
             {
               "lines": [
-                540,
-                546
+                539,
+                545
               ],
               "name": "poll_write",
               "signature": "(\n        mut self: std::pin::Pin<&mut Self>,\n        cx: &mut std::task::Context<'_>,\n        bu...",
@@ -693,8 +693,8 @@
             },
             {
               "lines": [
-                547,
-                552
+                546,
+                551
               ],
               "name": "poll_flush",
               "signature": "(\n        mut self: std::pin::Pin<&mut Self>,\n        cx: &mut std::task::Context<'_>,\n    )",
@@ -702,8 +702,8 @@
             },
             {
               "lines": [
-                553,
-                558
+                552,
+                557
               ],
               "name": "poll_shutdown",
               "signature": "(\n        mut self: std::pin::Pin<&mut Self>,\n        cx: &mut std::task::Context<'_>,\n    )",
@@ -711,16 +711,16 @@
             }
           ],
           "lines": [
-            536,
-            559
+            535,
+            558
           ],
           "name": "<anonymous>",
           "type": "impl"
         },
         {
           "lines": [
-            562,
-            612
+            561,
+            607
           ],
           "name": "centauri_serve_local_tls",
           "signature": "(\n    client: S,\n    host: &str,\n    live: &std::sync::Arc<crate::tunnel::FlowLive>,\n    fwd: &Fo...",
@@ -728,8 +728,8 @@
         },
         {
           "lines": [
-            641,
-            741
+            636,
+            734
           ],
           "name": "centauri_https_seam",
           "signature": "(\n    mut client: ipstack::stream::IpStackTcpStream,\n    protect: ProtectFn,\n    live: &std::sync...",
@@ -738,8 +738,8 @@
         {
           "docstring": "the PAGE-LOAD path (the North Star: a real page renders when these flow).",
           "lines": [
-            745,
-            783
+            738,
+            779
           ],
           "name": "forward_tcp",
           "signature": "(\n    mut client: ipstack::stream::IpStackTcpStream,\n    dst: SocketAddr,\n    protect: ProtectFn,...",
@@ -748,8 +748,8 @@
         {
           "docstring": "it and our uplink is the queue we own. A write error is a stall (the YeAH loss reaction) + flow end.",
           "lines": [
-            791,
-            877
+            787,
+            876
           ],
           "name": "forward_tcp_paced",
           "signature": "(\n    mut client: ipstack::stream::IpStackTcpStream,\n    dst: SocketAddr,\n    protect: ProtectFn,...",
@@ -759,8 +759,8 @@
           "children": [
             {
               "lines": [
-                889,
-                894
+                888,
+                893
               ],
               "name": "hairpin_sentinel_matches_localcdn_string",
               "signature": "()",
@@ -768,8 +768,8 @@
             },
             {
               "lines": [
-                898,
-                901
+                897,
+                900
               ],
               "name": "hairpin_leaves_real_flows_untouched",
               "signature": "()",
@@ -777,8 +777,8 @@
             },
             {
               "lines": [
-                907,
-                915
+                906,
+                914
               ],
               "name": "hairpin_without_mirror_leaves_sentinel_alone",
               "signature": "()",
@@ -786,8 +786,8 @@
             }
           ],
           "lines": [
-            880,
-            917
+            879,
+            915
           ],
           "name": "tests",
           "type": "module"
@@ -917,12 +917,12 @@
       ]
     },
     "shape.rs": {
-      "hash": "487df4a4d633",
-      "indexed_at": "2026-07-31T10:54:22.707205+00:00",
+      "hash": "3b66ccbc9947",
+      "indexed_at": "2026-08-01T12:52:05.157152+00:00",
       "language": "rust",
-      "lines": 539,
-      "mtime_ns": 1785485539168412500,
-      "size": 27281,
+      "lines": 585,
+      "mtime_ns": 1785588611038043500,
+      "size": 27835,
       "symbols": [
         {
           "docstring": "NORMAL \u2014 everything else: bulk transfer, torrents, updates. Only this tin is budget-paced.",
@@ -1093,7 +1093,7 @@
             {
               "lines": [
                 253,
-                276
+                280
               ],
               "name": "the_tin_law_is_identical_for_ipv4_and_ipv6_on_every_port",
               "signature": "()",
@@ -1101,8 +1101,8 @@
             },
             {
               "lines": [
-                294,
-                356
+                298,
+                360
               ],
               "name": "ipv4_and_ipv6_flows_keep_separate_shaping_identities",
               "signature": "()",
@@ -1110,8 +1110,8 @@
             },
             {
               "lines": [
-                362,
-                394
+                366,
+                398
               ],
               "name": "a_v6_udp_flow_paces_off_the_udp_window_like_v4",
               "signature": "()",
@@ -1119,8 +1119,8 @@
             },
             {
               "lines": [
-                397,
-                410
+                401,
+                429
               ],
               "name": "tin_classifier_matches_the_diffserv_law",
               "signature": "()",
@@ -1128,8 +1128,8 @@
             },
             {
               "lines": [
-                413,
-                424
+                432,
+                459
               ],
               "name": "widened_flow_key_is_deterministic_and_sport_distinct",
               "signature": "()",
@@ -1137,8 +1137,8 @@
             },
             {
               "lines": [
-                427,
-                450
+                462,
+                485
               ],
               "name": "live_settings_tune_governs_a_fresh_flow_shaper",
               "signature": "()",
@@ -1146,8 +1146,8 @@
             },
             {
               "lines": [
-                453,
-                470
+                488,
+                509
               ],
               "name": "shaper_budget_grows_on_free_bandwidth_and_sheds_on_stall",
               "signature": "()",
@@ -1155,8 +1155,8 @@
             },
             {
               "lines": [
-                478,
-                502
+                517,
+                545
               ],
               "name": "a_udp_flow_paces_off_the_udp_window_it_feeds",
               "signature": "()",
@@ -1164,8 +1164,8 @@
             },
             {
               "lines": [
-                513,
-                538
+                556,
+                584
               ],
               "name": "the_tin_demux_obeys_the_routing_law_for_every_port",
               "signature": "()",
@@ -1174,7 +1174,7 @@
           ],
           "lines": [
             220,
-            539
+            585
           ],
           "name": "tests",
           "type": "module"
@@ -1182,12 +1182,12 @@
       ]
     },
     "sni.rs": {
-      "hash": "e8adbead7a5f",
-      "indexed_at": "2026-07-26T19:12:57.905040+00:00",
+      "hash": "21b470bec09c",
+      "indexed_at": "2026-08-01T12:52:05.441839+00:00",
       "language": "rust",
-      "lines": 439,
-      "mtime_ns": 1785030832657605000,
-      "size": 19559,
+      "lines": 456,
+      "mtime_ns": 1785588611041043800,
+      "size": 19789,
       "symbols": [
         {
           "lines": [
@@ -1395,7 +1395,7 @@
             {
               "lines": [
                 370,
-                372
+                375
               ],
               "name": "plain_http_is_not_tls",
               "signature": "()",
@@ -1403,8 +1403,8 @@
             },
             {
               "lines": [
-                378,
-                381
+                381,
+                384
               ],
               "name": "hello_without_sni_is_terminal_not_incomplete",
               "signature": "()",
@@ -1412,8 +1412,8 @@
             },
             {
               "lines": [
-                385,
-                407
+                388,
+                410
               ],
               "name": "skips_other_extensions_to_find_server_name",
               "signature": "()",
@@ -1421,8 +1421,8 @@
             },
             {
               "lines": [
-                412,
-                421
+                415,
+                431
               ],
               "name": "refuses_a_hostile_host_name",
               "signature": "()",
@@ -1430,8 +1430,8 @@
             },
             {
               "lines": [
-                426,
-                438
+                436,
+                455
               ],
               "name": "malformed_records_never_panic",
               "signature": "()",
@@ -1440,7 +1440,7 @@
           ],
           "lines": [
             275,
-            439
+            456
           ],
           "name": "tests",
           "type": "module"
@@ -1543,18 +1543,18 @@
       ]
     },
     "upstream.rs": {
-      "hash": "d5f1d7f28144",
-      "indexed_at": "2026-07-31T15:59:52.679226+00:00",
+      "hash": "87846fe4e7c8",
+      "indexed_at": "2026-08-01T12:52:05.727345+00:00",
       "language": "rust",
-      "lines": 387,
-      "mtime_ns": 1785512881077597900,
-      "size": 22929,
+      "lines": 396,
+      "mtime_ns": 1785588611044043400,
+      "size": 23029,
       "symbols": [
         {
           "docstring": "refused + unreachable + timed_out + other == dial_connect_failed + udp_dial_connect_failed",
           "lines": [
             46,
-            103
+            106
           ],
           "name": "connect_udp_protected",
           "signature": "(\n    dst: SocketAddr,\n    protect: &ProtectFn,\n    fwd: &crate::tunnel::ForwarderStats,\n)",
@@ -1563,8 +1563,8 @@
         {
           "docstring": "asymmetry is the tell), the second means the destination is unreachable.",
           "lines": [
-            117,
-            279
+            120,
+            285
           ],
           "name": "connect_tcp_protected",
           "signature": "(\n    dst: SocketAddr,\n    protect: &ProtectFn,\n    fwd: &crate::tunnel::ForwarderStats,\n)",
@@ -1574,8 +1574,8 @@
           "children": [
             {
               "lines": [
-                297,
-                325
+                303,
+                334
               ],
               "name": "a_refused_protect_witnesses_the_udp_seam_counter",
               "signature": "()",
@@ -1583,8 +1583,8 @@
             },
             {
               "lines": [
-                349,
-                386
+                358,
+                395
               ],
               "name": "a_udp_dial_cannot_witness_an_unreachable_peer_because_connect_does_not_probe",
               "signature": "()",
@@ -1592,8 +1592,8 @@
             }
           ],
           "lines": [
-            288,
-            387
+            294,
+            396
           ],
           "name": "udp_dial_witness_tests",
           "type": "module"
@@ -1601,6 +1601,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T09:56:54.671074+00:00",
+  "generated_at": "2026-08-01T12:52:05.728875+00:00",
   "version": "1.0"
 }

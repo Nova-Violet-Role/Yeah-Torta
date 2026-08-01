@@ -362,7 +362,12 @@ mod tests {
             Some("NXDOMAIN")
         );
         assert_eq!(status_token(ResolveOutcome::LocalAnswer), Some("CLOAK"));
-        assert_eq!(status_token(ResolveOutcome::Blocked(crate::resolver::log::DenyGate::Blocklist)), Some("REJECT"));
+        assert_eq!(
+            status_token(ResolveOutcome::Blocked(
+                crate::resolver::log::DenyGate::Blocklist
+            )),
+            Some("REJECT")
+        );
         assert_eq!(status_token(ResolveOutcome::Guarded), Some("REJECT"));
         // No-answer arms fall through to the Go proxy, which owns their rows.
         assert_eq!(status_token(ResolveOutcome::RebindReject), None);
@@ -385,7 +390,10 @@ mod tests {
         for mode in [true, false] {
             assert_eq!(feed_status(ResolveOutcome::CacheHit, mode), Some("PASS"));
             assert_eq!(
-                feed_status(ResolveOutcome::Blocked(crate::resolver::log::DenyGate::Underground), mode),
+                feed_status(
+                    ResolveOutcome::Blocked(crate::resolver::log::DenyGate::Underground),
+                    mode
+                ),
                 Some("REJECT")
             );
             assert_eq!(feed_status(ResolveOutcome::Guarded, mode), Some("REJECT"));
@@ -513,10 +521,15 @@ mod tests {
             1,
             "REJECT",
             0,
-            zero_egress_server(ResolveOutcome::Blocked(crate::resolver::log::DenyGate::Blocklist)),
+            zero_egress_server(ResolveOutcome::Blocked(
+                crate::resolver::log::DenyGate::Blocklist,
+            )),
             None,
         );
-        assert!(hit.ends_with("\t0ms\tcache\t-"), "cache hit names itself: {hit}");
+        assert!(
+            hit.ends_with("\t0ms\tcache\t-"),
+            "cache hit names itself: {hit}"
+        );
         assert!(
             stale.ends_with("\t0ms\tcache:stale\t-"),
             "a stale serve is a DIFFERENT win: {stale}"
@@ -565,7 +578,10 @@ mod tests {
                 Some(g.label()),
                 "the feed dropped the gate's identity for {g:?}"
             );
-            assert!(!g.label().is_empty(), "a gate rendered as the empty string: {g:?}");
+            assert!(
+                !g.label().is_empty(),
+                "a gate rendered as the empty string: {g:?}"
+            );
         }
         // PAIRWISE DISTINCT -- the property that actually makes attribution possible.
         for (i, a) in gates.iter().enumerate() {

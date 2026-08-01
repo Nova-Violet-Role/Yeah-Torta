@@ -86,8 +86,8 @@ pub fn tunnel_signal_at(host: &str, qtype: u16, answer_len: u32, now: u64) -> Op
 /// [`tunnel_peek`] so the two can never drift (the REUSE law). A DGA-hot first label lowers the
 /// burst bar by one, exactly as on the witnessing path.
 fn exfil_verdict(host: &str, oversized: usize) -> Option<Signal> {
-    let hot_label = super::dga::dga_score(host.split('.').next().unwrap_or(""))
-        >= super::dga::DGA_THRESHOLD;
+    let hot_label =
+        super::dga::dga_score(host.split('.').next().unwrap_or("")) >= super::dga::DGA_THRESHOLD;
     if oversized >= TUNNEL_BURST || (hot_label && oversized >= TUNNEL_BURST - 1) {
         Some(Signal::Tunnel)
     } else {
@@ -171,10 +171,16 @@ mod tests {
         let t0 = 1_000_000;
         // Four oversized TXT answers inside 60s: still quiet…
         for i in 0..4u64 {
-            assert_eq!(tunnel_signal_at("exfil.example", 16, 400, t0 + i * 10), None);
+            assert_eq!(
+                tunnel_signal_at("exfil.example", 16, 400, t0 + i * 10),
+                None
+            );
         }
         // …the fifth crosses TUNNEL_BURST — the shape is called.
-        assert_eq!(tunnel_signal_at("exfil.example", 16, 400, t0 + 45), Some(Signal::Tunnel));
+        assert_eq!(
+            tunnel_signal_at("exfil.example", 16, 400, t0 + 45),
+            Some(Signal::Tunnel)
+        );
     }
 
     #[test]

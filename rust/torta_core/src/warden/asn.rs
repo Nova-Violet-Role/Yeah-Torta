@@ -101,7 +101,12 @@ mod tests {
     /// [10,20) = ALPHA · [20,30) = SENTINEL gap · [30,50) = BETA · [50,∞) = SENTINEL tail.
     fn fixture() -> (Vec<u8>, Vec<u8>) {
         let mut t = Vec::new();
-        for (start, id) in [(10u32, [0, 0, 0]), (20, [0xFF; 3]), (30, [0, 0, 1]), (50, [0xFF; 3])] {
+        for (start, id) in [
+            (10u32, [0, 0, 0]),
+            (20, [0xFF; 3]),
+            (30, [0, 0, 1]),
+            (50, [0xFF; 3]),
+        ] {
             t.extend_from_slice(&start.to_be_bytes());
             t.extend_from_slice(&id);
         }
@@ -125,24 +130,39 @@ mod tests {
         assert_eq!(probe(30).as_deref(), Some("BETA"));
         assert_eq!(probe(49).as_deref(), Some("BETA"));
         assert_eq!(probe(50), None, "tail sentinel claims the rest");
-        assert_eq!(lookup(&[], REC4, &42u32.to_be_bytes()), None, "empty table never panics");
+        assert_eq!(
+            lookup(&[], REC4, &42u32.to_be_bytes()),
+            None,
+            "empty table never panics"
+        );
         // Corrupt-blob degradation: id past count, truncated blob.
-        assert_eq!(name_at(&names, 2), None, "id past count is blank, not a panic");
-        assert_eq!(name_at(&names[..6], 0), None, "truncated blob is blank, not a panic");
+        assert_eq!(
+            name_at(&names, 2),
+            None,
+            "id past count is blank, not a panic"
+        );
+        assert_eq!(
+            name_at(&names[..6], 0),
+            None,
+            "truncated blob is blank, not a panic"
+        );
     }
 
     #[test]
     fn embedded_tables_are_well_formed() {
         let count = u32::from_be_bytes(NAMES[0..4].try_into().unwrap());
         assert!(count > 50_000, "implausibly few AS names ({count})");
-        for (table, rec, floor, label) in [(TABLE4, REC4, 300_000, "v4"), (TABLE6, REC6, 100_000, "v6")] {
+        for (table, rec, floor, label) in
+            [(TABLE4, REC4, 300_000, "v4"), (TABLE6, REC6, 100_000, "v6")]
+        {
             assert_eq!(table.len() % rec, 0, "{label}: fractured record");
             let n = table.len() / rec;
             assert!(n > floor, "{label}: implausibly small table ({n} records)");
             let key_len = rec - 3;
             for i in 1..n {
                 assert!(
-                    table[(i - 1) * rec..(i - 1) * rec + key_len] < table[i * rec..i * rec + key_len],
+                    table[(i - 1) * rec..(i - 1) * rec + key_len]
+                        < table[i * rec..i * rec + key_len],
                     "{label}: starts not strictly increasing at record {i}"
                 );
                 let id = &table[i * rec + key_len..(i + 1) * rec];
@@ -165,7 +185,10 @@ mod tests {
         // THE sub-/64 witness — the measured range that forced full u128 keys: UNIVHAWAII owns
         // exactly `2001:388:cf0e::`–`::1`; AARNET takes over at `::2`. High-64 keys could not
         // tell these apart.
-        assert_eq!(as_name(ip("2001:388:cf0e::1")).as_deref(), Some("UNIVHAWAII"));
+        assert_eq!(
+            as_name(ip("2001:388:cf0e::1")).as_deref(),
+            Some("UNIVHAWAII")
+        );
         assert!(
             as_name(ip("2001:388:cf0e::2")).is_some_and(|n| n.starts_with("AARNET")),
             "the other side of the sub-/64 cut"
@@ -174,7 +197,14 @@ mod tests {
 
     #[test]
     fn unrouted_space_is_unknown_never_a_guess() {
-        for s in ["10.0.0.1", "192.168.1.1", "127.0.0.1", "0.0.0.0", "::1", "fe80::1"] {
+        for s in [
+            "10.0.0.1",
+            "192.168.1.1",
+            "127.0.0.1",
+            "0.0.0.0",
+            "::1",
+            "fe80::1",
+        ] {
             assert_eq!(as_name(ip(s)), None, "{s} must be unknown");
         }
     }

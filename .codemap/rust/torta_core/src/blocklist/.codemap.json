@@ -2,12 +2,12 @@
   "directory": "rust\\torta_core\\src\\blocklist",
   "files": {
     "catalogs.rs": {
-      "hash": "0136a9bc40c0",
-      "indexed_at": "2026-07-29T02:01:19.640340+00:00",
+      "hash": "d62eb3a62538",
+      "indexed_at": "2026-08-01T12:52:02.025940+00:00",
       "language": "rust",
-      "lines": 388,
-      "mtime_ns": 1785289733729251900,
-      "size": 16953,
+      "lines": 404,
+      "mtime_ns": 1785588610969043500,
+      "size": 17163,
       "symbols": [
         {
           "lines": [
@@ -115,7 +115,7 @@
           "docstring": "(an honestly empty lane); a refused signature stays refused \u2014 NOTHING silently degrades.",
           "lines": [
             212,
-            227
+            229
           ],
           "name": "load_lanes_from_dir",
           "signature": "(\n    dir: &std::path::Path,\n    pubkey: &[u8],\n    now_days: u32,\n)",
@@ -124,8 +124,8 @@
         {
           "docstring": "Reads the counters [`ingest_lane_catalog`] alone writes \u2014 never derived, never fabricated.",
           "lines": [
-            231,
-            238
+            233,
+            240
           ],
           "name": "lane_counts",
           "signature": "()",
@@ -135,8 +135,8 @@
           "children": [
             {
               "lines": [
-                255,
-                261
+                257,
+                263
               ],
               "name": "make_pubkey_blob",
               "signature": "(pk: &[u8; 32], key_id: &[u8; 8])",
@@ -144,8 +144,8 @@
             },
             {
               "lines": [
-                263,
-                270
+                265,
+                272
               ],
               "name": "sign_legacy",
               "signature": "(sk: &SigningKey, key_id: &[u8; 8], bytes: &[u8])",
@@ -153,8 +153,8 @@
             },
             {
               "lines": [
-                272,
-                280
+                274,
+                282
               ],
               "name": "signed",
               "signature": "(bytes: &[u8])",
@@ -163,8 +163,8 @@
             {
               "docstring": "([`encode_catalog`], the production author), so the byte layout can never drift.",
               "lines": [
-                284,
-                295
+                286,
+                297
               ],
               "name": "lane_catalog",
               "signature": "(hosts: &[&str])",
@@ -172,8 +172,8 @@
             },
             {
               "lines": [
-                298,
-                308
+                300,
+                310
               ],
               "name": "slug_and_source_id_are_stable_and_distinct",
               "signature": "()",
@@ -181,8 +181,8 @@
             },
             {
               "lines": [
-                311,
-                333
+                313,
+                342
               ],
               "name": "verified_catalog_arms_the_lane_truthfully",
               "signature": "()",
@@ -190,8 +190,8 @@
             },
             {
               "lines": [
-                336,
-                350
+                345,
+                366
               ],
               "name": "tampered_signature_fails_closed_and_counts_nothing",
               "signature": "()",
@@ -199,8 +199,8 @@
             },
             {
               "lines": [
-                353,
-                361
+                369,
+                377
               ],
               "name": "absent_dir_leaves_every_lane_honestly_empty",
               "signature": "()",
@@ -208,8 +208,8 @@
             },
             {
               "lines": [
-                364,
-                387
+                380,
+                403
               ],
               "name": "on_disk_signed_pair_rehydrates_offline",
               "signature": "()",
@@ -217,8 +217,8 @@
             }
           ],
           "lines": [
-            241,
-            388
+            243,
+            404
           ],
           "name": "tests",
           "type": "module"
@@ -1208,6 +1208,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T00:18:40.772122+00:00",
+  "generated_at": "2026-08-01T12:52:02.027631+00:00",
   "version": "1.0"
 }

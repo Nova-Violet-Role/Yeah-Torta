@@ -539,7 +539,8 @@ pub async fn run_shared(
                             }
                         }
                         (ServeOutcome::CacheMiss(hash), Some(fc)) => {
-                            match super::localcdn::upstream_url_for(host_without_port(&host), &path) {
+                            match super::localcdn::upstream_url_for(host_without_port(&host), &path)
+                            {
                                 Some(url) => {
                                     let tls = Arc::clone(&fc.tls);
                                     let verdict = super::serve::serve_addressed(
@@ -856,7 +857,10 @@ mod tests {
     /// the honest answer: it fails loudly at the caller instead of corrupting its state.
     #[test]
     fn the_mirror_answers_reads_and_refuses_writes() {
-        assert!(is_servable_method(&hyper::Method::GET), "GET is the serve case");
+        assert!(
+            is_servable_method(&hyper::Method::GET),
+            "GET is the serve case"
+        );
         assert!(
             is_servable_method(&hyper::Method::HEAD),
             "HEAD is GET without the body — same cached resource, safe to answer"
@@ -1085,7 +1089,10 @@ mod tests {
             empty.serve_name("not-authorized/evil.js"),
             ServeOutcome::NotInCatalog
         ));
-        assert!(serve_unauthorized() > u0, "a real refusal must reach the ledger");
+        assert!(
+            serve_unauthorized() > u0,
+            "a real refusal must reach the ledger"
+        );
     }
 
     #[test]

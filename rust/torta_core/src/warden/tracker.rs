@@ -266,7 +266,9 @@ impl ConnTracker {
     pub fn record(&self, rec: FlowRecord) {
         let mut rec = rec;
         let dest = rec.ip.parse::<std::net::IpAddr>().ok();
-        rec.cc = dest.and_then(super::geoip::country_code).unwrap_or_default();
+        rec.cc = dest
+            .and_then(super::geoip::country_code)
+            .unwrap_or_default();
         rec.asn = dest.and_then(super::asn::as_name).unwrap_or_default();
         rec.flag = flag_emoji(&rec.cc);
         self.push(rec);
@@ -671,10 +673,19 @@ mod tests {
         t.record(u);
         let snap = t.snapshot(); // newest first: [unparseable, 8.8.8.8]
         assert_eq!(snap.len(), 2);
-        assert_eq!((snap[1].cc.as_str(), snap[1].flag.as_str()), ("us", "\u{1F1FA}\u{1F1F8}"));
+        assert_eq!(
+            (snap[1].cc.as_str(), snap[1].flag.as_str()),
+            ("us", "\u{1F1FA}\u{1F1F8}")
+        );
         assert_eq!(snap[1].asn, "GOOGLE");
-        assert_eq!((snap[0].cc.as_str(), snap[0].flag.as_str()), ("", "\u{1F310}"));
-        assert_eq!(snap[0].asn, "", "unparseable ip yields the honest blank, not a stale lie");
+        assert_eq!(
+            (snap[0].cc.as_str(), snap[0].flag.as_str()),
+            ("", "\u{1F310}")
+        );
+        assert_eq!(
+            snap[0].asn, "",
+            "unparseable ip yields the honest blank, not a stale lie"
+        );
     }
 
     #[test]
@@ -751,7 +762,11 @@ mod tests {
         assert_eq!(s.len(), 3);
         assert_eq!((s[0].cc.as_str(), s[0].count), ("us", 3));
         assert_eq!((s[1].cc.as_str(), s[1].count), ("de", 2));
-        assert_eq!((s[2].cc.as_str(), s[2].count), ("", 1), "unknown bucket kept");
+        assert_eq!(
+            (s[2].cc.as_str(), s[2].count),
+            ("", 1),
+            "unknown bucket kept"
+        );
         assert_eq!(s[0].flag, "\u{1F1FA}\u{1F1F8}");
         assert_eq!(s[2].flag, "\u{1F310}");
         // byte sums fold per group: 3 allowed US flows × (100 up, 1000 down).
@@ -801,7 +816,10 @@ mod tests {
         assert_eq!((f.uid, f.port, f.proto), (1000, 443, 6));
         assert_eq!((f.cc.as_str(), f.asn.as_str()), ("us", "GOOGLE"));
         assert_eq!(f.app, "", "uid→name is Kotlin's — the engine never guesses");
-        assert_eq!(f.domain, "dns.google", "the A4 domain rides the fed row verbatim");
+        assert_eq!(
+            f.domain, "dns.google",
+            "the A4 domain rides the fed row verbatim"
+        );
         assert_eq!((f.up, f.down), (0, 0), "judge-time feed predates the bytes");
         assert!(
             f.ts_ms > 1_700_000_000_000,
@@ -830,7 +848,14 @@ mod tests {
 
     /// A flow authored for the PER-APP folds — full control of uid/ip/app/verdict/ts (hand-pushed via
     /// [`ConnTracker::push`], so the fold logic is under test, not the GeoIP derivation).
-    fn app_flow(uid: i32, ip: &str, app: &str, cc: &str, verdict: WardenVerdict, ts: i64) -> FlowRecord {
+    fn app_flow(
+        uid: i32,
+        ip: &str,
+        app: &str,
+        cc: &str,
+        verdict: WardenVerdict,
+        ts: i64,
+    ) -> FlowRecord {
         let mut r = flow(cc, verdict);
         r.uid = uid;
         r.ip = ip.into();
@@ -845,10 +870,38 @@ mod tests {
         // W-D #79: two apps. uid 10001 (chrome) — 2 IPs (one hit twice), 1 denied, 2 countries.
         // uid 10002 (maps) — 1 IP, all allowed, newest ts (sorts FIRST).
         let t = ConnTracker::new();
-        t.push(app_flow(10_001, "8.8.8.8", "chrome", "us", WardenVerdict::Allow, 100));
-        t.push(app_flow(10_001, "8.8.8.8", "chrome", "us", WardenVerdict::Allow, 200));
-        t.push(app_flow(10_001, "1.1.1.1", "chrome", "au", WardenVerdict::DenyByFirewall, 300));
-        t.push(app_flow(10_002, "9.9.9.9", "maps", "us", WardenVerdict::Allow, 900));
+        t.push(app_flow(
+            10_001,
+            "8.8.8.8",
+            "chrome",
+            "us",
+            WardenVerdict::Allow,
+            100,
+        ));
+        t.push(app_flow(
+            10_001,
+            "8.8.8.8",
+            "chrome",
+            "us",
+            WardenVerdict::Allow,
+            200,
+        ));
+        t.push(app_flow(
+            10_001,
+            "1.1.1.1",
+            "chrome",
+            "au",
+            WardenVerdict::DenyByFirewall,
+            300,
+        ));
+        t.push(app_flow(
+            10_002,
+            "9.9.9.9",
+            "maps",
+            "us",
+            WardenVerdict::Allow,
+            900,
+        ));
         let s = t.app_flow_summary();
         assert_eq!(s.len(), 2);
         // most-recently-active first: maps (ts 900) before chrome (ts 300).
@@ -858,7 +911,11 @@ mod tests {
         let c = &s[1];
         assert_eq!((c.uid, c.app.as_str()), (10_001, "chrome"));
         assert_eq!((c.flows, c.allowed, c.denied), (3, 2, 1));
-        assert_eq!((c.distinct_ips, c.countries), (2, 2), "2 distinct IPs, 2 distinct countries");
+        assert_eq!(
+            (c.distinct_ips, c.countries),
+            (2, 2),
+            "2 distinct IPs, 2 distinct countries"
+        );
         assert_eq!(c.last_ts, 300, "the newest flow's ts wins");
         // byte sums fold across the app's flows (3 × 100 up, 3 × 1000 down).
         assert_eq!((c.up, c.down), (300, 3_000));
@@ -873,21 +930,56 @@ mod tests {
         a1.domain = "old.example".into();
         a1.port = 80;
         t.push(a1);
-        let mut a2 = app_flow(10_001, "8.8.8.8", "chrome", "us", WardenVerdict::DenyByFirewall, 200);
+        let mut a2 = app_flow(
+            10_001,
+            "8.8.8.8",
+            "chrome",
+            "us",
+            WardenVerdict::DenyByFirewall,
+            200,
+        );
         a2.domain = "dns.google".into();
         a2.port = 443;
         t.push(a2);
-        t.push(app_flow(10_001, "1.1.1.1", "chrome", "au", WardenVerdict::Allow, 150));
-        t.push(app_flow(10_002, "8.8.8.8", "maps", "us", WardenVerdict::Allow, 300)); // other app
+        t.push(app_flow(
+            10_001,
+            "1.1.1.1",
+            "chrome",
+            "au",
+            WardenVerdict::Allow,
+            150,
+        ));
+        t.push(app_flow(
+            10_002,
+            "8.8.8.8",
+            "maps",
+            "us",
+            WardenVerdict::Allow,
+            300,
+        )); // other app
         let d = t.app_destinations(10_001);
-        assert_eq!(d.len(), 2, "only chrome's two distinct endpoints — maps excluded");
+        assert_eq!(
+            d.len(),
+            2,
+            "only chrome's two distinct endpoints — maps excluded"
+        );
         // hits DESC: 8.8.8.8 (2 hits) before 1.1.1.1 (1 hit).
         assert_eq!((d[0].ip.as_str(), d[0].hits), ("8.8.8.8", 2));
-        assert!(d[0].denied, "one flow to 8.8.8.8 was denied → endpoint reads denied");
+        assert!(
+            d[0].denied,
+            "one flow to 8.8.8.8 was denied → endpoint reads denied"
+        );
         assert_eq!(d[0].domain, "dns.google", "newest non-empty domain wins");
         assert_eq!(d[0].port, 443, "newest port wins");
-        assert_eq!((d[0].up, d[0].down), (200, 2_000), "byte sums fold across the two hits");
-        assert_eq!((d[1].ip.as_str(), d[1].hits, d[1].denied), ("1.1.1.1", 1, false));
+        assert_eq!(
+            (d[0].up, d[0].down),
+            (200, 2_000),
+            "byte sums fold across the two hits"
+        );
+        assert_eq!(
+            (d[1].ip.as_str(), d[1].hits, d[1].denied),
+            ("1.1.1.1", 1, false)
+        );
         // an app with no flows folds to nothing (never a panic).
         assert!(t.app_destinations(99_999).is_empty());
     }

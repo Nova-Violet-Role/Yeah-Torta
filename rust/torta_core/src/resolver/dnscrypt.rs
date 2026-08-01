@@ -427,9 +427,10 @@ impl DnsCrypt {
         let certs = parse_cert_txts(&response)
             .ok_or_else(|| TransportError::BadResponse("cert response unparseable".into()))?;
 
-        let best = select_best_cert(&certs, &self.provider_pk, now, self.pq_enabled).ok_or_else(
-            || TransportError::BadResponse("no valid Ed25519-signed cert in window".into()),
-        )?;
+        let best =
+            select_best_cert(&certs, &self.provider_pk, now, self.pq_enabled).ok_or_else(|| {
+                TransportError::BadResponse("no valid Ed25519-signed cert in window".into())
+            })?;
 
         // FIX 3, extended ACROSS refreshes. `select_best_cert` already picks the highest serial
         // WITHIN one fetch, but this replace path is reached after the cached cert expired, so a
@@ -571,8 +572,7 @@ impl DnsCrypt {
         let sealed = aead_seal(ES_XCHACHA, &shared_key, &full_nonce, &padded)?;
 
         // Frame: <client-magic(8)><x-wing ct(1120)><client-nonce-half(12)><AEAD(pq-padded query)>.
-        let mut frame =
-            Vec::with_capacity(8 + PQ_XWING_CT_LEN + HALF_NONCE_LEN + sealed.len());
+        let mut frame = Vec::with_capacity(8 + PQ_XWING_CT_LEN + HALF_NONCE_LEN + sealed.len());
         frame.extend_from_slice(&cert.client_magic);
         frame.extend_from_slice(&ct[..]);
         frame.extend_from_slice(&half_nonce);
@@ -1115,8 +1115,10 @@ fn parse_cert(bytes: &[u8]) -> Option<ParsedCert> {
         let mut client_magic = [0u8; 8];
         client_magic.copy_from_slice(&bytes[1288..1296]);
         let serial = u32::from_be_bytes([bytes[1296], bytes[1297], bytes[1298], bytes[1299]]);
-        let ts_start = u32::from_be_bytes([bytes[1300], bytes[1301], bytes[1302], bytes[1303]]) as u64;
-        let ts_end = u32::from_be_bytes([bytes[1304], bytes[1305], bytes[1306], bytes[1307]]) as u64;
+        let ts_start =
+            u32::from_be_bytes([bytes[1300], bytes[1301], bytes[1302], bytes[1303]]) as u64;
+        let ts_end =
+            u32::from_be_bytes([bytes[1304], bytes[1305], bytes[1306], bytes[1307]]) as u64;
         return Some(ParsedCert {
             es_version,
             // Zero placeholder — the real peer key is the 1216-byte X-Wing pk in `pq`. All-zero is
@@ -1175,7 +1177,8 @@ fn parse_cert(bytes: &[u8]) -> Option<ParsedCert> {
 /// bound to the exact signed certificate — a swapped pk, serial, window, or extension changes the key
 /// and the resolver's decrypt fails, closing any mix-and-match splice across certs.
 fn build_pq_cert_context(cert: &[u8]) -> Vec<u8> {
-    let mut ctx = Vec::with_capacity(PQ_CONTEXT_LABEL.len() + 2 + 2 + PQ_XWING_PK_LEN + 8 + 4 + 4 + 4 + 12);
+    let mut ctx =
+        Vec::with_capacity(PQ_CONTEXT_LABEL.len() + 2 + 2 + PQ_XWING_PK_LEN + 8 + 4 + 4 + 4 + 12);
     ctx.extend_from_slice(PQ_CONTEXT_LABEL); // "DNSCrypt-PQ-v1"
     ctx.extend_from_slice(&cert[4..6]); // es-version (header echo — the signed ext pins it too)
     ctx.extend_from_slice(&cert[6..8]); // protocol-minor-version
@@ -2010,10 +2013,18 @@ fn family_of_addr(addr: &str) -> (bool, bool) {
         return (true, true);
     }
     if let Ok(sa) = a.parse::<SocketAddr>() {
-        return if sa.is_ipv6() { (false, true) } else { (true, false) };
+        return if sa.is_ipv6() {
+            (false, true)
+        } else {
+            (true, false)
+        };
     }
     if let Ok(ip) = a.parse::<std::net::IpAddr>() {
-        return if ip.is_ipv6() { (false, true) } else { (true, false) };
+        return if ip.is_ipv6() {
+            (false, true)
+        } else {
+            (true, false)
+        };
     }
     if let Some(inner) = a.strip_prefix('[').and_then(|s| s.strip_suffix(']')) {
         if inner.parse::<std::net::Ipv6Addr>().is_ok() {
@@ -2456,7 +2467,12 @@ mod tests {
                 &[1u8; 32],
                 "p.example",
             ),
-            make_stamp(0x02, "[2001:4860:4860::8888]:443", &[0u8; 32], "doh.example"),
+            make_stamp(
+                0x02,
+                "[2001:4860:4860::8888]:443",
+                &[0u8; 32],
+                "doh.example",
+            ),
             make_relay_stamp("[2001:19f0::1]:443"),
         ] {
             assert_eq!(stamp_addr_family(&stamp), (false, true), "stamp: {stamp}");
@@ -2477,7 +2493,10 @@ mod tests {
     fn family_of_garbage_fails_open_to_unknown() {
         // Non-sdns, bad base64, truncated — all fail OPEN to Unknown so a decode fault never silently
         // hides an otherwise-pickable server.
-        assert_eq!(stamp_addr_family("https://not-a-stamp.example/"), (true, true));
+        assert_eq!(
+            stamp_addr_family("https://not-a-stamp.example/"),
+            (true, true)
+        );
         assert_eq!(stamp_addr_family("sdns://!!!not base64!!!"), (true, true));
         let truncated = format!("{SDNS_PREFIX}{}", base64url_encode(&[STAMP_PROTO_DNSCRYPT]));
         assert_eq!(stamp_addr_family(&truncated), (true, true));
@@ -2746,8 +2765,8 @@ mod tests {
         let v1 = make_signed_cert(&signing, ES_XSALSA, &[0x01; 32], b"v1magic_", 0, 9999);
         let v2 = make_signed_cert(&signing, ES_XCHACHA, &[0x02; 32], b"v2magic_", 0, 9999);
         // Both valid + in-window; the highest es_version (2 = XChaCha20) must win, regardless of order.
-        let best =
-            select_best_cert(&[v1.clone(), v2.clone()], &provider_pk, 100, true).expect("a valid cert");
+        let best = select_best_cert(&[v1.clone(), v2.clone()], &provider_pk, 100, true)
+            .expect("a valid cert");
         assert_eq!(best.es_version, ES_XCHACHA);
         assert_eq!(best.resolver_pk, [0x02; 32]);
         let best_rev = select_best_cert(&[v2, v1], &provider_pk, 100, true).expect("a valid cert");
@@ -3392,7 +3411,7 @@ mod tests {
         let mut body = vec![0x85u8];
         body.extend_from_slice(&0u64.to_le_bytes());
         push_lp(&mut body, b""); // empty bootstrap addr (dial by hostname)
-                                  // VLP hashes: first entry has the 0x80 continuation bit set, second clears it.
+                                 // VLP hashes: first entry has the 0x80 continuation bit set, second clears it.
         let h = [0xABu8; 32];
         body.push(0x80 | 32);
         body.extend_from_slice(&h);
@@ -3403,7 +3422,8 @@ mod tests {
         let stamp = format!("{SDNS_PREFIX}{}", base64url_encode(&body));
 
         assert_eq!(stamp_proto_label(&stamp), "odoh-relay");
-        let (host, path) = parse_odoh_relay_stamp(&stamp).expect("0x85 must decode past the hashes");
+        let (host, path) =
+            parse_odoh_relay_stamp(&stamp).expect("0x85 must decode past the hashes");
         assert_eq!(host, "odoh1.surfdomeinen.nl");
         assert_eq!(path, "/proxy");
         // A 0x85 relay stamp is NOT a target.
@@ -3503,7 +3523,11 @@ mod tests {
         ext: &[u8; 12],
     ) -> Vec<u8> {
         use ed25519_dalek::Signer;
-        assert_eq!(xwing_pk.len(), PQ_XWING_PK_LEN, "test pk must be X-Wing sized");
+        assert_eq!(
+            xwing_pk.len(),
+            PQ_XWING_PK_LEN,
+            "test pk must be X-Wing sized"
+        );
         // Signed region: pk(1216) || client-magic(8) || serial(4) || ts_start(4) || ts_end(4) || ext(12).
         let mut signed = Vec::with_capacity(PQ_CERT_LEN - 72);
         signed.extend_from_slice(xwing_pk);
@@ -3535,11 +3559,10 @@ mod tests {
     #[test]
     fn pq_appendix3_draft_vectors() {
         use sha2::Digest;
-        use x_wing::{Decapsulator, DecapsulationKey, KeyExport};
+        use x_wing::{DecapsulationKey, Decapsulator, KeyExport};
 
         let client_magic: [u8; 8] = [0xa1, 0xb2, 0xc3, 0xd4, 0xe5, 0xf6, 0x07, 0x18];
-        let dns_query =
-            unhex("12340100000100000000000003777777076578616d706c6503636f6d0000010001");
+        let dns_query = unhex("12340100000100000000000003777777076578616d706c6503636f6d0000010001");
 
         // X-Wing keygen from the deterministic 32-byte seed (draft: rseed = 0x20..0x3f).
         let dk = DecapsulationKey::from(iota_bytes::<32>(0x20));
@@ -3586,8 +3609,7 @@ mod tests {
         let q_nonce = iota_bytes::<12>(0xb0);
         let mut nonce24 = [0u8; FULL_NONCE_LEN];
         nonce24[..HALF_NONCE_LEN].copy_from_slice(&q_nonce);
-        let enc_query =
-            aead_seal(ES_XCHACHA, &shared_key, &nonce24, &padded).expect("seal");
+        let enc_query = aead_seal(ES_XCHACHA, &shared_key, &nonce24, &padded).expect("seal");
         assert_eq!(
             enc_query[..],
             unhex(
@@ -3613,7 +3635,7 @@ mod tests {
     /// A validly-signed PQ cert parses with its material intact, from the PQ offsets.
     #[test]
     fn pq_cert_parses_material_from_pq_offsets() {
-        use x_wing::{Decapsulator, DecapsulationKey, KeyExport};
+        use x_wing::{DecapsulationKey, Decapsulator, KeyExport};
         let signing = ed25519_dalek::SigningKey::from_bytes(&[9u8; 32]);
         let dk = DecapsulationKey::from(iota_bytes::<32>(0x20));
         let pk = dk.encapsulation_key().to_bytes();
@@ -3633,7 +3655,10 @@ mod tests {
         assert_eq!(parsed.client_magic, *b"PQMAGIC!");
         assert_eq!(parsed.serial, 7);
         assert_eq!((parsed.ts_start, parsed.ts_end), (50, 150));
-        assert_eq!(parsed.resolver_pk, [0u8; 32], "classic pk slot is the zero placeholder");
+        assert_eq!(
+            parsed.resolver_pk, [0u8; 32],
+            "classic pk slot is the zero placeholder"
+        );
         let pq = parsed.pq.expect("PQ material present");
         assert_eq!(pq.pk[..], pk[..]);
         assert_eq!(
@@ -3648,14 +3673,22 @@ mod tests {
     /// (b) a header claiming es-0x0003 without the signed PQ profile behind it.
     #[test]
     fn pq_flipped_header_rejected_both_directions() {
-        use x_wing::{Decapsulator, DecapsulationKey, KeyExport};
+        use x_wing::{DecapsulationKey, Decapsulator, KeyExport};
         let signing = ed25519_dalek::SigningKey::from_bytes(&[9u8; 32]);
         let dk = DecapsulationKey::from(iota_bytes::<32>(0x20));
         let pk = dk.encapsulation_key().to_bytes();
 
         // (a) genuine PQ cert, header flipped to es-2 AFTER signing (the flip is unsigned).
-        let mut flipped =
-            make_signed_pq_cert(&signing, ES_XWING_PQ, &pk[..], b"PQMAGIC!", 7, 50, 150, &PQ_PROFILE_EXT);
+        let mut flipped = make_signed_pq_cert(
+            &signing,
+            ES_XWING_PQ,
+            &pk[..],
+            b"PQMAGIC!",
+            7,
+            50,
+            150,
+            &PQ_PROFILE_EXT,
+        );
         flipped[4..6].copy_from_slice(&ES_XCHACHA.to_be_bytes());
         assert!(
             parse_cert(&flipped).is_none(),
@@ -3665,7 +3698,16 @@ mod tests {
         // (b) PQ-claiming header with a corrupted profile extension.
         let mut bad_ext = PQ_PROFILE_EXT;
         bad_ext[6] = 0x02; // wrong KDF id
-        let cert = make_signed_pq_cert(&signing, ES_XWING_PQ, &pk[..], b"PQMAGIC!", 7, 50, 150, &bad_ext);
+        let cert = make_signed_pq_cert(
+            &signing,
+            ES_XWING_PQ,
+            &pk[..],
+            b"PQMAGIC!",
+            7,
+            50,
+            150,
+            &bad_ext,
+        );
         assert!(
             parse_cert(&cert).is_none(),
             "es-0x0003 header without the exact signed PQ profile → reject"
@@ -3677,7 +3719,7 @@ mod tests {
     /// classic without touching the certs.
     #[test]
     fn pq_selection_beats_classic_and_gate_disables() {
-        use x_wing::{Decapsulator, DecapsulationKey, KeyExport};
+        use x_wing::{DecapsulationKey, Decapsulator, KeyExport};
         let signing = ed25519_dalek::SigningKey::from_bytes(&[9u8; 32]);
         let provider_pk = signing.verifying_key().to_bytes();
         let dk = DecapsulationKey::from(iota_bytes::<32>(0x20));
@@ -3692,7 +3734,16 @@ mod tests {
             50,
             150,
         );
-        let pq = make_signed_pq_cert(&signing, ES_XWING_PQ, &xpk[..], b"PQMAGIC!", 1, 50, 150, &PQ_PROFILE_EXT);
+        let pq = make_signed_pq_cert(
+            &signing,
+            ES_XWING_PQ,
+            &xpk[..],
+            b"PQMAGIC!",
+            1,
+            50,
+            150,
+            &PQ_PROFILE_EXT,
+        );
 
         let best = select_best_cert(&[classic.clone(), pq.clone()], &provider_pk, 100, true)
             .expect("a valid cert");
@@ -3702,7 +3753,10 @@ mod tests {
 
         let gated = select_best_cert(&[classic, pq], &provider_pk, 100, false)
             .expect("classic cert still valid with PQ gated off");
-        assert_eq!(gated.es_version, ES_XCHACHA, "pqdnscrypt=false skips es-0x0003");
+        assert_eq!(
+            gated.es_version, ES_XCHACHA,
+            "pqdnscrypt=false skips es-0x0003"
+        );
         assert!(gated.pq.is_none());
     }
 
@@ -3719,10 +3773,18 @@ mod tests {
         assert_eq!(unpad_response(resumed_floor).expect("roundtrip"), q);
 
         let exact = pq_pad(&vec![1u8; 63], PQ_FRESH_PAD_FLOOR);
-        assert_eq!(exact.len(), 64, "63 + delimiter = exactly one block, no extra block");
+        assert_eq!(
+            exact.len(),
+            64,
+            "63 + delimiter = exactly one block, no extra block"
+        );
 
         let spill = pq_pad(&vec![1u8; 64], PQ_FRESH_PAD_FLOOR);
-        assert_eq!(spill.len(), 128, "64 + delimiter spills into the next block");
+        assert_eq!(
+            spill.len(),
+            128,
+            "64 + delimiter spills into the next block"
+        );
     }
 
     /// Control-block strip: empty control, a ticket-bearing control (ignored but correctly
@@ -3807,15 +3869,23 @@ mod tests {
     /// (encapsulate → HKDF → seal → open → control-strip → unpad), on top of the Appendix-3 pins.
     #[test]
     fn pq_full_loopback_roundtrip() {
-        use x_wing::{Decapsulate, Decapsulator, DecapsulationKey, KeyExport};
+        use x_wing::{Decapsulate, DecapsulationKey, Decapsulator, KeyExport};
         let signing = ed25519_dalek::SigningKey::from_bytes(&[9u8; 32]);
         let provider_pk = signing.verifying_key().to_bytes();
 
         // Resolver keypair + published, signed PQ cert.
         let dk = DecapsulationKey::from(iota_bytes::<32>(0x77));
         let xpk = dk.encapsulation_key().to_bytes();
-        let cert_bytes =
-            make_signed_pq_cert(&signing, ES_XWING_PQ, &xpk[..], b"PQMAGIC!", 1, 50, 150, &PQ_PROFILE_EXT);
+        let cert_bytes = make_signed_pq_cert(
+            &signing,
+            ES_XWING_PQ,
+            &xpk[..],
+            b"PQMAGIC!",
+            1,
+            50,
+            150,
+            &PQ_PROFILE_EXT,
+        );
         let cert = select_best_cert(&[cert_bytes.clone()], &provider_pk, 100, true)
             .expect("PQ cert selected");
         let pq = cert.pq.as_ref().expect("material");
@@ -3825,7 +3895,8 @@ mod tests {
         let half_nonce = iota_bytes::<12>(0xC0);
         let ek = XWingEncapsulationKey::try_from(pq.pk.as_slice()).expect("pk parses");
         let (ct, kem_ss) = ek.encapsulate_deterministic(&iota_bytes::<64>(0x55).into());
-        let client_key = pq_derive_shared_key(&kem_ss[..], &cert.client_magic, &pq.cert_context, &ct[..]);
+        let client_key =
+            pq_derive_shared_key(&kem_ss[..], &cert.client_magic, &pq.cert_context, &ct[..]);
         let mut nonce24 = [0u8; FULL_NONCE_LEN];
         nonce24[..HALF_NONCE_LEN].copy_from_slice(&half_nonce);
         let sealed = aead_seal(
@@ -3848,7 +3919,10 @@ mod tests {
         let srv_ss = dk.decapsulate(&srv_ct);
         let srv_ctx = build_pq_cert_context(&cert_bytes);
         let srv_key = pq_derive_shared_key(&srv_ss[..], b"PQMAGIC!", &srv_ctx, ct_wire);
-        assert_eq!(client_key, srv_key, "both sides derive the SAME cert-bound key");
+        assert_eq!(
+            client_key, srv_key,
+            "both sides derive the SAME cert-bound key"
+        );
         let srv_half: &[u8] = &frame[8 + PQ_XWING_CT_LEN..8 + PQ_XWING_CT_LEN + HALF_NONCE_LEN];
         let mut srv_nonce = [0u8; FULL_NONCE_LEN];
         srv_nonce[..HALF_NONCE_LEN].copy_from_slice(srv_half);
@@ -3886,7 +3960,10 @@ mod tests {
 
         // CLIENT — the production decrypt leg accepts it and yields the bare answer.
         let got = pq_decrypt_response(&client_key, &half_nonce, &reply).expect("decrypt");
-        assert_eq!(got, answer, "control stripped, ticket ignored, padding removed");
+        assert_eq!(
+            got, answer,
+            "control stripped, ticket ignored, padding removed"
+        );
 
         // Tampers die: a flipped ciphertext byte fails the tag; a wrong echo fails before the AEAD.
         let mut bad = reply.clone();
@@ -3961,7 +4038,10 @@ mod tests {
         let got = relayed_tcp_then_udp(&[], &udp_addr, &[0x00, 0x00, 0x01, 0x00])
             .await
             .expect("UDP fallback answers when TCP is dead");
-        assert_eq!(got, reply, "the classic ladder still delivers the cert reply");
+        assert_eq!(
+            got, reply,
+            "the classic ladder still delivers the cert reply"
+        );
     }
 }
 
@@ -3981,7 +4061,11 @@ mod relay_validator_tests {
         let b = make_relay_stamp("1.2.3.4:443");
         let chain = DnsCrypt::parse_relay_chain(&[a.as_str(), b.as_str()]);
         assert_eq!(chain.len(), 2, "both relays are accepted");
-        assert_eq!(chain[0].to_string(), "45.32.55.94:443", "the chain keeps its order");
+        assert_eq!(
+            chain[0].to_string(),
+            "45.32.55.94:443",
+            "the chain keeps its order"
+        );
         assert_eq!(chain[1].to_string(), "1.2.3.4:443");
     }
 
@@ -3991,7 +4075,8 @@ mod relay_validator_tests {
     /// anonymizes NOTHING, and only the strict reading can say so.
     #[test]
     fn a_resolver_stamp_is_rejected_as_a_relay() {
-        let resolver_stamp = make_stamp(STAMP_PROTO_DNSCRYPT, "9.9.9.9:443", &[1u8; 32], "p.example");
+        let resolver_stamp =
+            make_stamp(STAMP_PROTO_DNSCRYPT, "9.9.9.9:443", &[1u8; 32], "p.example");
         // The LENIENT configure path accepts it -- documented behaviour, asserted so this test fails
         // loudly if that leniency is ever changed, rather than silently losing its own premise.
         assert!(

@@ -75,7 +75,12 @@ pub(crate) struct Round {
 
 impl Link {
     pub(crate) fn new(capacity_per_round: u64, prop_delay_ms: f64, queue_limit: u64) -> Self {
-        Self { capacity_per_round, prop_delay_ms, queue_limit, queued: 0 }
+        Self {
+            capacity_per_round,
+            prop_delay_ms,
+            queue_limit,
+            queued: 0,
+        }
     }
 
     /// Offer `offered` bytes. Tail-drop what will not fit, drain one round's capacity, and
@@ -99,7 +104,14 @@ impl Link {
             (self.queued as f64 / self.capacity_per_round as f64) * (2.0 * self.prop_delay_ms)
         };
         let rtt_ms = 2.0 * self.prop_delay_ms + queue_delay_ms;
-        Round { offered, accepted, dropped, delivered, queue_delay_ms, rtt_ms }
+        Round {
+            offered,
+            accepted,
+            dropped,
+            delivered,
+            queue_delay_ms,
+            rtt_ms,
+        }
     }
 }
 
@@ -217,7 +229,9 @@ pub(crate) fn run(sender: &mut dyn Sender, link: &mut Link, rounds: u64) -> Outc
     let mut peak_window = 0u64;
     for _ in 0..rounds {
         let w = sender.window_segments();
-        if w > peak_window { peak_window = w; }
+        if w > peak_window {
+            peak_window = w;
+        }
         let offered = w * SEG;
         let r = link.step(offered);
         delivered += r.delivered;
@@ -239,7 +253,11 @@ pub(crate) fn run(sender: &mut dyn Sender, link: &mut Link, rounds: u64) -> Outc
         offered: offered_total,
         dropped: dropped_total,
         rounds,
-        mean_queue_delay_ms: if rounds == 0 { 0.0 } else { delay_sum / rounds as f64 },
+        mean_queue_delay_ms: if rounds == 0 {
+            0.0
+        } else {
+            delay_sum / rounds as f64
+        },
         max_queue_delay_ms: delay_max,
         final_window: sender.window_segments(),
         peak_window,
@@ -274,7 +292,10 @@ mod tests {
                         r.offered,
                         "CONSERVATION broken: cap={cap} limit={limit} offered={offered} -> {r:?}"
                     );
-                    assert_eq!(r.offered, offered, "step() must report the offer it was given");
+                    assert_eq!(
+                        r.offered, offered,
+                        "step() must report the offer it was given"
+                    );
                     assert!(
                         r.delivered <= r.accepted,
                         "CAUSALITY broken: delivered {} > accepted {} ({r:?})",
@@ -299,7 +320,11 @@ mod tests {
         let mut link = Link::new(0, 20.0, 0);
         let r = link.step(10 * SEG);
         assert_eq!(r.offered, 10 * SEG);
-        assert_eq!(r.dropped, 10 * SEG, "a link with no capacity and no buffer must drop the lot");
+        assert_eq!(
+            r.dropped,
+            10 * SEG,
+            "a link with no capacity and no buffer must drop the lot"
+        );
         assert_eq!(r.accepted, 0);
         assert_eq!(r.delivered, 0);
     }
@@ -345,12 +370,18 @@ mod tests {
                 let mut l = bloated_link();
                 let o = run(s, &mut l, 200);
                 let who = format!("{pname}/{}", s.name());
-                assert_eq!(o.rounds, 200, "{who}: run reported {} rounds, 200 were asked for", o.rounds);
+                assert_eq!(
+                    o.rounds, 200,
+                    "{who}: run reported {} rounds, 200 were asked for",
+                    o.rounds
+                );
                 assert!(o.offered > 0, "{who}: a 200-round run offered nothing");
                 assert!(
                     o.delivered + o.dropped <= o.offered,
                     "{who}: delivered {} + dropped {} exceeds offered {}",
-                    o.delivered, o.dropped, o.offered
+                    o.delivered,
+                    o.dropped,
+                    o.offered
                 );
                 assert_eq!(
                     o.offered - o.delivered - o.dropped,
@@ -366,14 +397,25 @@ mod tests {
         }
         // Six identities expected: 3 profiles x 2 YeAH families. If any two collide, a result
         // cannot be attributed to the profile/family that produced it.
-        assert_eq!(names.len(), 6, "expected 3 profiles x 2 YeAH families, got {names:?}");
+        assert_eq!(
+            names.len(),
+            6,
+            "expected 3 profiles x 2 YeAH families, got {names:?}"
+        );
         for n in &names {
-            assert!(!n.is_empty(), "a sender reported an empty name -- results cannot be attributed");
+            assert!(
+                !n.is_empty(),
+                "a sender reported an empty name -- results cannot be attributed"
+            );
         }
         let mut uniq = names.clone();
         uniq.sort_unstable();
         uniq.dedup();
-        assert_eq!(uniq.len(), names.len(), "two profile/family pairs share a name: {names:?}");
+        assert_eq!(
+            uniq.len(),
+            names.len(),
+            "two profile/family pairs share a name: {names:?}"
+        );
     }
 
     /// A zero-round run must produce an all-zero ledger rather than a division by `rounds`.
@@ -388,7 +430,10 @@ mod tests {
         assert_eq!(o.offered, 0);
         assert_eq!(o.dropped, 0);
         assert_eq!(o.delivered, 0);
-        assert!(o.mean_queue_delay_ms.is_finite(), "mean delay went NaN on a zero-round run");
+        assert!(
+            o.mean_queue_delay_ms.is_finite(),
+            "mean delay went NaN on a zero-round run"
+        );
     }
 
     /// A deliberately BLOATED link: 100 rounds' worth of buffer at the bottleneck. This is the
@@ -399,11 +444,17 @@ mod tests {
     }
 
     fn yeah_udp(p: YeahProfile) -> YeahUdp {
-        YeahUdp { c: YeahController::with_profile(p), label: "YeAH-UDP" }
+        YeahUdp {
+            c: YeahController::with_profile(p),
+            label: "YeAH-UDP",
+        }
     }
 
     fn yeah_tcp(p: YeahProfile) -> YeahTcp {
-        YeahTcp { c: YeahController::with_profile(p), label: "YeAH-TCP" }
+        YeahTcp {
+            c: YeahController::with_profile(p),
+            label: "YeAH-TCP",
+        }
     }
 
     /// THE LEDGER: the simulator cannot create or destroy bytes. If this fails, every number
@@ -420,10 +471,20 @@ mod tests {
         for i in 0..500u64 {
             let offered = (i % 37) * SEG;
             let r = link.step(offered);
-            assert_eq!(r.accepted + r.dropped, r.offered, "round {i}: accepted+dropped != offered");
+            assert_eq!(
+                r.accepted + r.dropped,
+                r.offered,
+                "round {i}: accepted+dropped != offered"
+            );
             queued_expected = queued_expected + r.accepted - r.delivered;
-            assert_eq!(link.queued, queued_expected, "round {i}: queue ledger diverged");
-            assert!(link.queued <= link.queue_limit, "round {i}: queue exceeded its depth");
+            assert_eq!(
+                link.queued, queued_expected,
+                "round {i}: queue ledger diverged"
+            );
+            assert!(
+                link.queued <= link.queue_limit,
+                "round {i}: queue exceeded its depth"
+            );
             total_delivered += r.delivered;
             total_dropped += r.dropped;
             total_offered += r.offered;
@@ -435,8 +496,14 @@ mod tests {
         );
         // NEGATIVE CONTROL: the run actually exercised both drop and delivery, so the ledger
         // above was not trivially satisfied by an idle link.
-        assert!(total_dropped > 0, "the ledger test never dropped a byte -- it proved nothing");
-        assert!(total_delivered > 0, "the ledger test never delivered a byte");
+        assert!(
+            total_dropped > 0,
+            "the ledger test never dropped a byte -- it proved nothing"
+        );
+        assert!(
+            total_delivered > 0,
+            "the ledger test never delivered a byte"
+        );
     }
 
     /// MEASURED, NOT PROVED — the headline comparison, on a bloated link.
@@ -470,10 +537,16 @@ mod tests {
         }
         let mut l3 = bloated_link();
         let mut reno = RenoRef { cwnd: 1 };
-        results.push(("Reno (reference)".to_string(), run(&mut reno, &mut l3, rounds)));
+        results.push((
+            "Reno (reference)".to_string(),
+            run(&mut reno, &mut l3, rounds),
+        ));
 
         println!("\n=== MEASURED on a bloated link (cap {cap} B/round, 100-round buffer, {rounds} rounds) ===");
-        println!("{:<22} {:>10} {:>14} {:>14} {:>8}", "sender", "util", "mean qdelay", "max qdelay", "cwnd");
+        println!(
+            "{:<22} {:>10} {:>14} {:>14} {:>8}",
+            "sender", "util", "mean qdelay", "max qdelay", "cwnd"
+        );
         for (n, o) in &results {
             println!(
                 "{:<22} {:>9.3} {:>12.1}ms {:>12.1}ms {:>8}",
@@ -603,7 +676,10 @@ mod tests {
     fn a_capacity_sweep_shows_where_each_profile_bloats() {
         let rounds = 2000u64;
         println!("\n=== CAPACITY SWEEP: where does each profile bloat? ===");
-        println!("{:<11} {:>4} {:>6} {:>12} {:>7}", "profile", "cap", "peak", "max qdelay", "util");
+        println!(
+            "{:<11} {:>4} {:>6} {:>12} {:>7}",
+            "profile", "cap", "peak", "max qdelay", "util"
+        );
         let mut legacy_bloats_somewhere = false;
         let mut bloated_at_ceiling = 0u32;
         for cap_seg in [2u64, 4, 6, 8, 10, 14, 20] {

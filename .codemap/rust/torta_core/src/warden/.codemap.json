@@ -2,12 +2,12 @@
   "directory": "rust\\torta_core\\src\\warden",
   "files": {
     "asn.rs": {
-      "hash": "3b4433b0edfa",
-      "indexed_at": "2026-07-26T19:12:58.157388+00:00",
+      "hash": "232296c2a7c2",
+      "indexed_at": "2026-08-01T12:52:15.807320+00:00",
       "language": "rust",
-      "lines": 187,
-      "mtime_ns": 1785030833278604300,
-      "size": 8545,
+      "lines": 217,
+      "mtime_ns": 1785588611527044200,
+      "size": 8903,
       "symbols": [
         {
           "docstring": "the tracker's `asn = \"\"`, which the ASN fold skips (the `asName != ''` Dao discipline).",
@@ -54,7 +54,7 @@
               "docstring": "[10,20) = ALPHA \u00b7 [20,30) = SENTINEL gap \u00b7 [30,50) = BETA \u00b7 [50,\u221e) = SENTINEL tail.",
               "lines": [
                 102,
-                115
+                120
               ],
               "name": "fixture",
               "signature": "()",
@@ -62,8 +62,8 @@
             },
             {
               "lines": [
-                118,
-                132
+                123,
+                149
               ],
               "name": "lookup_and_name_boundary_semantics_on_a_synthetic_table",
               "signature": "()",
@@ -71,8 +71,8 @@
             },
             {
               "lines": [
-                135,
-                158
+                152,
+                178
               ],
               "name": "embedded_tables_are_well_formed",
               "signature": "()",
@@ -80,8 +80,8 @@
             },
             {
               "lines": [
-                161,
-                173
+                181,
+                196
               ],
               "name": "stable_anchors_resolve_to_their_networks",
               "signature": "()",
@@ -89,8 +89,8 @@
             },
             {
               "lines": [
-                176,
-                180
+                199,
+                210
               ],
               "name": "unrouted_space_is_unknown_never_a_guess",
               "signature": "()",
@@ -98,8 +98,8 @@
             },
             {
               "lines": [
-                183,
-                186
+                213,
+                216
               ],
               "name": "v4_mapped_v6_routes_to_the_v4_table",
               "signature": "()",
@@ -108,7 +108,7 @@
           ],
           "lines": [
             93,
-            187
+            217
           ],
           "name": "tests",
           "type": "module"
@@ -116,12 +116,12 @@
       ]
     },
     "attribution.rs": {
-      "hash": "b70edb08ad8e",
-      "indexed_at": "2026-07-28T23:13:00.023074+00:00",
+      "hash": "78d128261e79",
+      "indexed_at": "2026-08-01T12:52:16.096621+00:00",
       "language": "rust",
-      "lines": 329,
-      "mtime_ns": 1785280235878395000,
-      "size": 15555,
+      "lines": 371,
+      "mtime_ns": 1785588611530044200,
+      "size": 16072,
       "symbols": [
         {
           "docstring": "One remembered attribution: the query qname + the instant it stops being trustworthy.",
@@ -146,7 +146,7 @@
             {
               "lines": [
                 68,
-                70
+                72
               ],
               "name": "new",
               "signature": "()",
@@ -154,8 +154,8 @@
             },
             {
               "lines": [
-                93,
-                95
+                95,
+                97
               ],
               "name": "record",
               "signature": "(&self, ip: IpAddr, domain: &str, ttl_secs: u32)",
@@ -163,8 +163,8 @@
             },
             {
               "lines": [
-                105,
-                107
+                107,
+                109
               ],
               "name": "record_at",
               "signature": "(&self, ip: IpAddr, domain: &str, ttl_secs: u32, now: Instant)",
@@ -173,8 +173,8 @@
             {
               "docstring": "shared across the reply's addresses.",
               "lines": [
-                111,
-                118
+                113,
+                120
               ],
               "name": "record_reply",
               "signature": "(&self, qname: &str, addrs: &[(IpAddr, u32)], now: Instant)",
@@ -183,8 +183,8 @@
             {
               "docstring": "The one insert path: clamp the TTL, sweep/evict at cap, insert.",
               "lines": [
-                121,
-                134
+                123,
+                136
               ],
               "name": "record_at_shared",
               "signature": "(&self, ip: IpAddr, domain: Arc<str>, ttl_secs: u32, now: Instant)",
@@ -193,8 +193,8 @@
             {
               "docstring": "next at-cap sweep.",
               "lines": [
-                140,
-                142
+                142,
+                144
               ],
               "name": "lookup",
               "signature": "(&self, ip: &IpAddr)",
@@ -202,8 +202,8 @@
             },
             {
               "lines": [
-                144,
-                147
+                146,
+                151
               ],
               "name": "lookup_at",
               "signature": "(&self, ip: &IpAddr, now: Instant)",
@@ -212,8 +212,8 @@
             {
               "docstring": "truth gauge).",
               "lines": [
-                151,
-                153
+                155,
+                157
               ],
               "name": "len",
               "signature": "(&self)",
@@ -221,8 +221,8 @@
             },
             {
               "lines": [
-                155,
-                157
+                159,
+                161
               ],
               "name": "is_empty",
               "signature": "(&self)",
@@ -231,7 +231,7 @@
           ],
           "lines": [
             67,
-            158
+            162
           ],
           "name": "AttributionMap",
           "type": "impl"
@@ -240,8 +240,8 @@
           "children": [
             {
               "lines": [
-                161,
-                163
+                165,
+                167
               ],
               "name": "default",
               "signature": "()",
@@ -249,8 +249,8 @@
             }
           ],
           "lines": [
-            160,
-            164
+            164,
+            168
           ],
           "name": "Default",
           "type": "impl"
@@ -258,8 +258,8 @@
         {
           "docstring": "The process-global attribution map \u2014 the resolve hooks write here, verdict() reads here.",
           "lines": [
-            173,
-            175
+            177,
+            179
           ],
           "name": "global",
           "signature": "()",
@@ -268,8 +268,8 @@
         {
           "docstring": "malformed, negative, or address-free \u2014 never an error: attribution is best-effort by law).",
           "lines": [
-            181,
-            189
+            185,
+            193
           ],
           "name": "record_from_reply",
           "signature": "(reply: &[u8])",
@@ -278,8 +278,8 @@
         {
           "docstring": "Global-map lookup \u2014 the verdict() seam.",
           "lines": [
-            192,
-            194
+            196,
+            198
           ],
           "name": "lookup",
           "signature": "(ip: &IpAddr)",
@@ -289,8 +289,8 @@
           "children": [
             {
               "lines": [
-                205,
-                207
+                209,
+                211
               ],
               "name": "ip",
               "signature": "(s: &str)",
@@ -298,8 +298,8 @@
             },
             {
               "lines": [
-                210,
-                217
+                214,
+                226
               ],
               "name": "record_then_lookup_roundtrip",
               "signature": "()",
@@ -307,8 +307,8 @@
             },
             {
               "lines": [
-                220,
-                226
+                229,
+                239
               ],
               "name": "entry_expires_at_its_deadline",
               "signature": "()",
@@ -316,8 +316,8 @@
             },
             {
               "lines": [
-                229,
-                240
+                242,
+                261
               ],
               "name": "ttl_clamps_floor_and_ceiling",
               "signature": "()",
@@ -325,8 +325,8 @@
             },
             {
               "lines": [
-                243,
-                252
+                264,
+                278
               ],
               "name": "rerecord_replaces_domain_and_refreshes_deadline",
               "signature": "()",
@@ -334,8 +334,8 @@
             },
             {
               "lines": [
-                255,
-                270
+                281,
+                301
               ],
               "name": "at_cap_sweeps_expired_first",
               "signature": "()",
@@ -343,8 +343,8 @@
             },
             {
               "lines": [
-                273,
-                290
+                304,
+                329
               ],
               "name": "at_cap_with_no_corpses_evicts_earliest_deadline",
               "signature": "()",
@@ -352,8 +352,8 @@
             },
             {
               "lines": [
-                293,
-                302
+                332,
+                344
               ],
               "name": "record_reply_shares_one_domain_across_addrs",
               "signature": "()",
@@ -361,8 +361,8 @@
             },
             {
               "lines": [
-                305,
-                328
+                347,
+                370
               ],
               "name": "record_from_reply_end_to_end_and_rejects_junk",
               "signature": "()",
@@ -370,8 +370,8 @@
             }
           ],
           "lines": [
-            202,
-            329
+            206,
+            371
           ],
           "name": "tests",
           "type": "module"
@@ -511,12 +511,12 @@
       ]
     },
     "geoip.rs": {
-      "hash": "4ad7b6591354",
-      "indexed_at": "2026-07-26T19:12:58.162437+00:00",
+      "hash": "52af9b03d085",
+      "indexed_at": "2026-08-01T12:52:16.382259+00:00",
       "language": "rust",
-      "lines": 172,
-      "mtime_ns": 1785030833309604800,
-      "size": 8705,
+      "lines": 187,
+      "mtime_ns": 1785588611533043600,
+      "size": 8870,
       "symbols": [
         {
           "docstring": "`None` is the tracker's `cc = \"\"` \u2192 the \ud83c\udf10 globe: unknown renders as unknown, never as a guess.",
@@ -542,7 +542,7 @@
           "docstring": "precedes the first record or lands on a `[0,0]` UNKNOWN sentinel.",
           "lines": [
             78,
-            83
+            87
           ],
           "name": "lookup",
           "signature": "(table: &[u8], rec: usize, key: u64)",
@@ -552,8 +552,8 @@
           "children": [
             {
               "lines": [
-                89,
-                91
+                93,
+                95
               ],
               "name": "ip",
               "signature": "(s: &str)",
@@ -562,8 +562,8 @@
             {
               "docstring": "[10,20) = aa \u00b7 [20,30) = SENTINEL gap \u00b7 [30,50) = bb \u00b7 [50,\u221e) = SENTINEL tail.",
               "lines": [
-                95,
-                102
+                99,
+                106
               ],
               "name": "fixture",
               "signature": "()",
@@ -571,8 +571,8 @@
             },
             {
               "lines": [
-                105,
-                118
+                109,
+                122
               ],
               "name": "lookup_boundary_semantics_on_a_synthetic_table",
               "signature": "()",
@@ -580,8 +580,8 @@
             },
             {
               "lines": [
-                121,
-                144
+                125,
+                151
               ],
               "name": "embedded_tables_are_well_formed",
               "signature": "()",
@@ -589,8 +589,8 @@
             },
             {
               "lines": [
-                147,
-                156
+                154,
+                163
               ],
               "name": "stable_anchors_resolve_to_their_registries",
               "signature": "()",
@@ -598,8 +598,8 @@
             },
             {
               "lines": [
-                159,
-                163
+                166,
+                178
               ],
               "name": "unrouted_space_is_unknown_never_a_guess",
               "signature": "()",
@@ -607,8 +607,8 @@
             },
             {
               "lines": [
-                166,
-                171
+                181,
+                186
               ],
               "name": "v4_mapped_v6_routes_to_the_v4_table",
               "signature": "()",
@@ -616,8 +616,8 @@
             }
           ],
           "lines": [
-            86,
-            172
+            90,
+            187
           ],
           "name": "tests",
           "type": "module"
@@ -720,12 +720,12 @@
       ]
     },
     "mod.rs": {
-      "hash": "9fb592c429b9",
-      "indexed_at": "2026-08-01T10:16:44.182500+00:00",
+      "hash": "5f8c0f82b7e1",
+      "indexed_at": "2026-08-01T12:52:16.688085+00:00",
       "language": "rust",
-      "lines": 4557,
-      "mtime_ns": 1785579347489026100,
-      "size": 220024,
+      "lines": 4699,
+      "mtime_ns": 1785588611557043200,
+      "size": 217457,
       "symbols": [
         {
           "docstring": "[`object`] for the why. Always-built (NOT feature-gated \u2014 the Warden ships in every config).",
@@ -1539,7 +1539,7 @@
                 1573
               ],
               "name": "check_universal_toggles",
-              "signature": "(\r\n        &self,\r\n        conn: &ConnFacts,\r\n        app_mode: AppFirewallMode,\r\n    )",
+              "signature": "(\n        &self,\n        conn: &ConnFacts,\n        app_mode: AppFirewallMode,\n    )",
               "type": "method"
             },
             {
@@ -2372,7 +2372,7 @@
             {
               "lines": [
                 2898,
-                2933
+                2941
               ],
               "name": "geo_family_block_denies_the_country_at_tier4",
               "signature": "()",
@@ -2380,8 +2380,8 @@
             },
             {
               "lines": [
-                2936,
-                2965
+                2944,
+                2991
               ],
               "name": "add_cidr_rule_is_additive_and_blocks_the_host",
               "signature": "()",
@@ -2389,8 +2389,8 @@
             },
             {
               "lines": [
-                2968,
-                2992
+                2994,
+                3018
               ],
               "name": "app_mode_isolate_denies_non_lan_allows_lan",
               "signature": "()",
@@ -2398,8 +2398,8 @@
             },
             {
               "lines": [
-                2995,
-                3018
+                3021,
+                3044
               ],
               "name": "app_meteredness_blocks_metered_passes_unmetered",
               "signature": "()",
@@ -2407,8 +2407,8 @@
             },
             {
               "lines": [
-                3021,
-                3035
+                3047,
+                3061
               ],
               "name": "app_temp_allow_pauses_per_app_denies",
               "signature": "()",
@@ -2417,8 +2417,8 @@
             {
               "docstring": "dep). Mirrors `runtime_tier.rs:271` / `resolver/cache.rs` `temp_cache_dir`.",
               "lines": [
-                3041,
-                3049
+                3067,
+                3075
               ],
               "name": "temp_dir",
               "signature": "(tag: &str)",
@@ -2426,8 +2426,8 @@
             },
             {
               "lines": [
-                3058,
-                3077
+                3084,
+                3116
               ],
               "name": "bind_log_dir_writes_the_review_log_without_binding_durable",
               "signature": "()",
@@ -2435,8 +2435,8 @@
             },
             {
               "lines": [
-                3083,
-                3099
+                3122,
+                3145
               ],
               "name": "an_unbound_warden_writes_no_review_log",
               "signature": "()",
@@ -2444,8 +2444,8 @@
             },
             {
               "lines": [
-                3102,
-                3137
+                3148,
+                3183
               ],
               "name": "dns_verdict_logged_writes_query_warden_log",
               "signature": "()",
@@ -2453,8 +2453,8 @@
             },
             {
               "lines": [
-                3140,
-                3158
+                3186,
+                3204
               ],
               "name": "dns_verdict_logged_unbound_is_silent_noop",
               "signature": "()",
@@ -2462,8 +2462,8 @@
             },
             {
               "lines": [
-                3161,
-                3169
+                3207,
+                3215
               ],
               "name": "query_warden_log_path_sits_beside_the_matrix_blob",
               "signature": "()",
@@ -2471,8 +2471,8 @@
             },
             {
               "lines": [
-                3172,
-                3213
+                3218,
+                3259
               ],
               "name": "temp_allow_ttl_sweep_resumes_per_app_deny",
               "signature": "()",
@@ -2480,8 +2480,8 @@
             },
             {
               "lines": [
-                3216,
-                3254
+                3262,
+                3300
               ],
               "name": "matrix_durable_round_trips_through_bind",
               "signature": "()",
@@ -2489,8 +2489,8 @@
             },
             {
               "lines": [
-                3257,
-                3293
+                3303,
+                3339
               ],
               "name": "temp_allow_expires_across_reboot",
               "signature": "()",
@@ -2498,8 +2498,8 @@
             },
             {
               "lines": [
-                3296,
-                3334
+                3342,
+                3380
               ],
               "name": "snapshot_restore_codec_is_faithful",
               "signature": "()",
@@ -2507,8 +2507,8 @@
             },
             {
               "lines": [
-                3337,
-                3379
+                3383,
+                3425
               ],
               "name": "restore_state_is_failsafe_on_corrupt_input",
               "signature": "()",
@@ -2516,8 +2516,8 @@
             },
             {
               "lines": [
-                3382,
-                3501
+                3428,
+                3558
               ],
               "name": "v2_rulesets_round_trip_across_a_restart",
               "signature": "()",
@@ -2525,8 +2525,8 @@
             },
             {
               "lines": [
-                3504,
-                3542
+                3561,
+                3605
               ],
               "name": "v1_matrix_only_blob_still_restores_under_v2_codec",
               "signature": "()",
@@ -2534,8 +2534,8 @@
             },
             {
               "lines": [
-                3545,
-                3584
+                3608,
+                3647
               ],
               "name": "every_truncation_of_a_v2_blob_is_panic_free",
               "signature": "()",
@@ -2543,8 +2543,8 @@
             },
             {
               "lines": [
-                3587,
-                3601
+                3650,
+                3664
               ],
               "name": "unbound_matrix_is_ram_only_and_touches_no_disk",
               "signature": "()",
@@ -2552,8 +2552,8 @@
             },
             {
               "lines": [
-                3604,
-                3628
+                3667,
+                3691
               ],
               "name": "convenience_predicates",
               "signature": "()",
@@ -2562,8 +2562,8 @@
             {
               "docstring": "Used only by the exhaustive codec tests below.",
               "lines": [
-                3632,
-                3644
+                3695,
+                3707
               ],
               "name": "toggles_from_index",
               "signature": "(i: u16)",
@@ -2571,8 +2571,8 @@
             },
             {
               "lines": [
-                3647,
-                3676
+                3710,
+                3743
               ],
               "name": "universal_toggle_codec_round_trips_every_one_of_the_512_combinations",
               "signature": "()",
@@ -2580,8 +2580,8 @@
             },
             {
               "lines": [
-                3679,
-                3706
+                3746,
+                3839
               ],
               "name": "universal_toggle_bit_order_is_the_documented_format_contract",
               "signature": "()",
@@ -2589,8 +2589,8 @@
             },
             {
               "lines": [
-                3709,
-                3784
+                3842,
+                3924
               ],
               "name": "arming_a_universal_toggle_never_turns_a_deny_into_an_allow",
               "signature": "()",
@@ -2598,8 +2598,8 @@
             },
             {
               "lines": [
-                3787,
-                3802
+                3927,
+                3942
               ],
               "name": "universal_toggle_decoder_ignores_unknown_high_bits",
               "signature": "()",
@@ -2607,8 +2607,8 @@
             },
             {
               "lines": [
-                3805,
-                3825
+                3945,
+                3965
               ],
               "name": "universal_toggle_lockdown_inert_until_rule_armed",
               "signature": "()",
@@ -2616,8 +2616,8 @@
             },
             {
               "lines": [
-                3828,
-                3849
+                3968,
+                3989
               ],
               "name": "bypass_universal_skips_tier4_universal_rules",
               "signature": "()",
@@ -2625,8 +2625,8 @@
             },
             {
               "lines": [
-                3852,
-                3866
+                3992,
+                4006
               ],
               "name": "bypass_dns_firewall_skips_tier5_seam",
               "signature": "()",
@@ -2634,8 +2634,8 @@
             },
             {
               "lines": [
-                3869,
-                3891
+                4009,
+                4031
               ],
               "name": "install_rule_sets_whole_unit_arms_the_cascade",
               "signature": "()",
@@ -2643,8 +2643,8 @@
             },
             {
               "lines": [
-                3896,
-                3925
+                4036,
+                4065
               ],
               "name": "cache_hit_equals_fresh_compute",
               "signature": "()",
@@ -2652,8 +2652,8 @@
             },
             {
               "lines": [
-                3928,
-                3949
+                4068,
+                4089
               ],
               "name": "cache_epoch_change_invalidates",
               "signature": "()",
@@ -2661,8 +2661,8 @@
             },
             {
               "lines": [
-                3954,
-                3980
+                4094,
+                4120
               ],
               "name": "cache_is_bounded_and_evicts_lru",
               "signature": "()",
@@ -2670,8 +2670,8 @@
             },
             {
               "lines": [
-                3983,
-                3991
+                4123,
+                4131
               ],
               "name": "zero_cap_clamps_to_one",
               "signature": "()",
@@ -2679,8 +2679,8 @@
             },
             {
               "lines": [
-                3996,
-                4010
+                4136,
+                4150
               ],
               "name": "stats_zero_on_fresh_warden",
               "signature": "()",
@@ -2688,8 +2688,8 @@
             },
             {
               "lines": [
-                4013,
-                4071
+                4153,
+                4211
               ],
               "name": "stats_tally_allow_and_the_deny_tier_split",
               "signature": "()",
@@ -2697,8 +2697,8 @@
             },
             {
               "lines": [
-                4074,
-                4092
+                4214,
+                4232
               ],
               "name": "stats_first_match_attribution",
               "signature": "()",
@@ -2706,8 +2706,8 @@
             },
             {
               "lines": [
-                4095,
-                4108
+                4235,
+                4248
               ],
               "name": "stats_cache_hit_does_not_recount",
               "signature": "()",
@@ -2715,8 +2715,8 @@
             },
             {
               "lines": [
-                4111,
-                4127
+                4251,
+                4267
               ],
               "name": "stats_json_carries_no_qname_or_domain",
               "signature": "()",
@@ -2724,8 +2724,8 @@
             },
             {
               "lines": [
-                4136,
-                4165
+                4276,
+                4305
               ],
               "name": "public_verdict_is_pure_firewall_at_the_live_epoch",
               "signature": "()",
@@ -2734,7 +2734,7 @@
           ],
           "lines": [
             2711,
-            4166
+            4306
           ],
           "name": "tests",
           "type": "module"
@@ -2744,8 +2744,8 @@
             {
               "docstring": "same big-endian/host-order convention the rules' `net: u32` uses).",
               "lines": [
-                4182,
-                4184
+                4322,
+                4324
               ],
               "name": "v4",
               "signature": "(ip: u32)",
@@ -2753,8 +2753,8 @@
             },
             {
               "lines": [
-                4186,
-                4192
+                4326,
+                4332
               ],
               "name": "dom",
               "signature": "(domain: &str, uid: u32)",
@@ -2762,8 +2762,8 @@
             },
             {
               "lines": [
-                4195,
-                4207
+                4335,
+                4347
               ],
               "name": "empty_rule_sets_match_nothing_and_have_zero_fingerprint",
               "signature": "()",
@@ -2771,8 +2771,8 @@
             },
             {
               "lines": [
-                4210,
-                4221
+                4350,
+                4361
               ],
               "name": "domain_rule_matches_apex_and_every_subdomain",
               "signature": "()",
@@ -2780,8 +2780,8 @@
             },
             {
               "lines": [
-                4224,
-                4230
+                4364,
+                4370
               ],
               "name": "domain_rule_is_case_insensitive_and_dot_trimmed",
               "signature": "()",
@@ -2789,8 +2789,8 @@
             },
             {
               "lines": [
-                4233,
-                4245
+                4373,
+                4385
               ],
               "name": "domain_universal_tier_applies_to_every_app_but_per_app_is_isolated",
               "signature": "()",
@@ -2798,8 +2798,8 @@
             },
             {
               "lines": [
-                4248,
-                4255
+                4388,
+                4395
               ],
               "name": "domain_canonical_parent_subsumes_children",
               "signature": "()",
@@ -2807,8 +2807,8 @@
             },
             {
               "lines": [
-                4258,
-                4273
+                4398,
+                4413
               ],
               "name": "domain_fingerprint_is_order_independent",
               "signature": "()",
@@ -2816,8 +2816,8 @@
             },
             {
               "lines": [
-                4276,
-                4306
+                4416,
+                4446
               ],
               "name": "cidr_fingerprint_folds_high_octet_ips_d39",
               "signature": "()",
@@ -2825,8 +2825,8 @@
             },
             {
               "lines": [
-                4309,
-                4332
+                4449,
+                4474
               ],
               "name": "cidr_contains_honors_prefix_boundaries",
               "signature": "()",
@@ -2834,8 +2834,8 @@
             },
             {
               "lines": [
-                4335,
-                4348
+                4477,
+                4490
               ],
               "name": "proto_and_port_filters_accept_correctly",
               "signature": "()",
@@ -2843,17 +2843,17 @@
             },
             {
               "lines": [
-                4350,
-                4365
+                4492,
+                4507
               ],
               "name": "ip_rule",
-              "signature": "(\r\n        uid: u32,\r\n        net: u32,\r\n        prefix: u8,\r\n        port: PortSpec,\r\n        pr...",
+              "signature": "(\n        uid: u32,\n        net: u32,\n        prefix: u8,\n        port: PortSpec,\n        proto: ...",
               "type": "method"
             },
             {
               "lines": [
-                4368,
-                4404
+                4510,
+                4546
               ],
               "name": "cidr_lookup_block_bypass_and_filters",
               "signature": "()",
@@ -2861,8 +2861,8 @@
             },
             {
               "lines": [
-                4407,
-                4420
+                4549,
+                4562
               ],
               "name": "cidr_inert_none_status_is_skipped",
               "signature": "()",
@@ -2870,8 +2870,8 @@
             },
             {
               "lines": [
-                4423,
-                4460
+                4565,
+                4602
               ],
               "name": "most_specific_rule_wins_regardless_of_insertion_order",
               "signature": "()",
@@ -2879,8 +2879,8 @@
             },
             {
               "lines": [
-                4463,
-                4487
+                4605,
+                4629
               ],
               "name": "v6_rule_matches_v6_and_never_v4",
               "signature": "()",
@@ -2888,8 +2888,8 @@
             },
             {
               "lines": [
-                4490,
-                4517
+                4632,
+                4659
               ],
               "name": "fingerprint_separates_v4_and_v6_rules_with_equal_net_bits",
               "signature": "()",
@@ -2897,8 +2897,8 @@
             },
             {
               "lines": [
-                4520,
-                4538
+                4662,
+                4680
               ],
               "name": "cidr_dedup_drops_identical_rule",
               "signature": "()",
@@ -2906,8 +2906,8 @@
             },
             {
               "lines": [
-                4541,
-                4549
+                4683,
+                4691
               ],
               "name": "temp_allow_ttl_is_active_window_only",
               "signature": "()",
@@ -2915,8 +2915,8 @@
             },
             {
               "lines": [
-                4552,
-                4556
+                4694,
+                4698
               ],
               "name": "universal_rule_variants_are_distinct",
               "signature": "()",
@@ -2924,8 +2924,8 @@
             }
           ],
           "lines": [
-            4176,
-            4557
+            4316,
+            4699
           ],
           "name": "wa_tests",
           "type": "module"
@@ -2933,12 +2933,12 @@
       ]
     },
     "object.rs": {
-      "hash": "22190d6aed5b",
-      "indexed_at": "2026-07-29T00:46:28.800161+00:00",
+      "hash": "0c187b820969",
+      "indexed_at": "2026-08-01T12:52:16.984165+00:00",
       "language": "rust",
-      "lines": 2461,
-      "mtime_ns": 1785284655689338300,
-      "size": 117771,
+      "lines": 2467,
+      "mtime_ns": 1785588611574042900,
+      "size": 115390,
       "symbols": [
         {
           "lines": [
@@ -3776,7 +3776,7 @@
             {
               "lines": [
                 1597,
-                1645
+                1647
               ],
               "name": "domain_rules_enumerates_trie_and_globs_round_trip",
               "signature": "()",
@@ -3784,8 +3784,8 @@
             },
             {
               "lines": [
-                1648,
-                1693
+                1650,
+                1699
               ],
               "name": "cidr_rules_enumerates_round_trip",
               "signature": "()",
@@ -3793,8 +3793,8 @@
             },
             {
               "lines": [
-                1696,
-                1732
+                1702,
+                1738
               ],
               "name": "rule_remove_by_index_is_enumerate_drop_reinstall",
               "signature": "()",
@@ -3802,8 +3802,8 @@
             },
             {
               "lines": [
-                1735,
-                1787
+                1741,
+                1793
               ],
               "name": "install_domain_rules_rejects_poisoned_overbroad_rules",
               "signature": "()",
@@ -3811,8 +3811,8 @@
             },
             {
               "lines": [
-                1790,
-                1815
+                1796,
+                1821
               ],
               "name": "warden_validate_pattern_is_a_typed_preflight_d27",
               "signature": "()",
@@ -3820,8 +3820,8 @@
             },
             {
               "lines": [
-                1818,
-                1877
+                1824,
+                1883
               ],
               "name": "dns_verdict_denies_name_and_address_through_the_object",
               "signature": "()",
@@ -3829,8 +3829,8 @@
             },
             {
               "lines": [
-                1880,
-                1932
+                1886,
+                1938
               ],
               "name": "cidr_wire_shows_v6_and_remove_at_drops_by_index",
               "signature": "()",
@@ -3838,8 +3838,8 @@
             },
             {
               "lines": [
-                1935,
-                1963
+                1941,
+                1969
               ],
               "name": "install_cidr_rules_arms_the_cascade_and_counts",
               "signature": "()",
@@ -3847,8 +3847,8 @@
             },
             {
               "lines": [
-                1966,
-                1975
+                1972,
+                1981
               ],
               "name": "set_universal_rules_counts_in_snapshot",
               "signature": "()",
@@ -3856,8 +3856,8 @@
             },
             {
               "lines": [
-                1978,
-                1998
+                1984,
+                2004
               ],
               "name": "universal_toggle_plus_rule_denies_through_the_object",
               "signature": "()",
@@ -3865,8 +3865,8 @@
             },
             {
               "lines": [
-                2001,
-                2031
+                2007,
+                2037
               ],
               "name": "universal_toggles_read_back_round_trips_a6",
               "signature": "()",
@@ -3874,8 +3874,8 @@
             },
             {
               "lines": [
-                2034,
-                2058
+                2040,
+                2064
               ],
               "name": "app_row_isolate_denies_and_counts",
               "signature": "()",
@@ -3883,8 +3883,8 @@
             },
             {
               "lines": [
-                2061,
-                2095
+                2067,
+                2101
               ],
               "name": "app_rows_reads_back_the_held_matrix_f1_efix2",
               "signature": "()",
@@ -3892,8 +3892,8 @@
             },
             {
               "lines": [
-                2098,
-                2122
+                2104,
+                2128
               ],
               "name": "bypass_universal_skips_tier4_through_the_object",
               "signature": "()",
@@ -3901,8 +3901,8 @@
             },
             {
               "lines": [
-                2125,
-                2133
+                2131,
+                2139
               ],
               "name": "snapshot_is_consistent_across_reads",
               "signature": "()",
@@ -3910,8 +3910,8 @@
             },
             {
               "lines": [
-                2136,
-                2145
+                2142,
+                2151
               ],
               "name": "enum_codes_match_the_stable_ordinal_contract",
               "signature": "()",
@@ -3919,8 +3919,8 @@
             },
             {
               "lines": [
-                2148,
-                2158
+                2154,
+                2164
               ],
               "name": "pure_firewall_never_attributes_a_blocklist_deny_without_the_seam",
               "signature": "()",
@@ -3928,8 +3928,8 @@
             },
             {
               "lines": [
-                2161,
-                2231
+                2167,
+                2237
               ],
               "name": "object_bind_durable_round_trips_and_expires_temp_allow",
               "signature": "()",
@@ -3937,8 +3937,8 @@
             },
             {
               "lines": [
-                2234,
-                2291
+                2240,
+                2297
               ],
               "name": "rule19_verdict_edge_sweep_clears_lapsed_pause_and_rate_limits",
               "signature": "()",
@@ -3946,8 +3946,8 @@
             },
             {
               "lines": [
-                2294,
-                2318
+                2300,
+                2324
               ],
               "name": "rule19_edge_sweep_covers_the_tunnel_datapath_verdict_internal",
               "signature": "()",
@@ -3955,8 +3955,8 @@
             },
             {
               "lines": [
-                2321,
-                2367
+                2327,
+                2373
               ],
               "name": "log_dns_verdict_writes_through_the_ffi_surface",
               "signature": "()",
@@ -3964,8 +3964,8 @@
             },
             {
               "lines": [
-                2370,
-                2387
+                2376,
+                2393
               ],
               "name": "log_dns_verdict_unbound_is_panic_safe_noop",
               "signature": "()",
@@ -3974,8 +3974,8 @@
             {
               "docstring": "An internal-facts WAN connection (the tunnel hot-path shape \u2014 no FFI twin).",
               "lines": [
-                2397,
-                2407
+                2403,
+                2413
               ],
               "name": "dp_conn",
               "signature": "(uid: u32)",
@@ -3983,8 +3983,8 @@
             },
             {
               "lines": [
-                2410,
-                2427
+                2416,
+                2433
               ],
               "name": "datapath_disarmed_abstains_and_instance_is_canonical",
               "signature": "()",
@@ -3992,8 +3992,8 @@
             },
             {
               "lines": [
-                2430,
-                2460
+                2436,
+                2466
               ],
               "name": "datapath_enforced_rules_through_the_canonical_engine",
               "signature": "()",
@@ -4002,7 +4002,7 @@
           ],
           "lines": [
             1470,
-            2461
+            2467
           ],
           "name": "tests",
           "type": "module"
@@ -4177,32 +4177,32 @@
       ]
     },
     "start_table.rs": {
-      "hash": "d37f5a8304bd",
-      "indexed_at": "2026-07-26T19:12:58.198743+00:00",
+      "hash": "9ecfc33d4a88",
+      "indexed_at": "2026-08-01T12:52:17.272959+00:00",
       "language": "rust",
-      "lines": 35,
-      "mtime_ns": 1785030833363604600,
-      "size": 1555,
+      "lines": 44,
+      "mtime_ns": 1785588611576044600,
+      "size": 1604,
       "symbols": [
         {
           "docstring": "mapping is the CALLER's contract, this layer doesn't know one payload from another.",
           "lines": [
             18,
-            35
+            44
           ],
           "name": "lookup",
-          "signature": "(table: &'t [u8], rec: usize, key_len: usize, key: &[u8])",
+          "signature": "(\n    table: &'t [u8],\n    rec: usize,\n    key_len: usize,\n    key: &[u8],\n)",
           "type": "function"
         }
       ]
     },
     "tracker.rs": {
-      "hash": "2e9671032366",
-      "indexed_at": "2026-08-01T09:56:56.778152+00:00",
+      "hash": "ad4c42a9f4d2",
+      "indexed_at": "2026-08-01T12:52:17.566623+00:00",
       "language": "rust",
-      "lines": 894,
-      "mtime_ns": 1785577967275100200,
-      "size": 39792,
+      "lines": 986,
+      "mtime_ns": 1785588611583043600,
+      "size": 40842,
       "symbols": [
         {
           "docstring": "output is a real flag or the globe, never tofu-adjacent garbage.",
@@ -4297,7 +4297,7 @@
               "docstring": "ring is a live panel, not a ledger).",
               "lines": [
                 266,
-                273
+                275
               ],
               "name": "record",
               "signature": "(&self, rec: FlowRecord)",
@@ -4306,8 +4306,8 @@
             {
               "docstring": "only for the clone, never across the FFI render.",
               "lines": [
-                277,
-                280
+                279,
+                282
               ],
               "name": "snapshot",
               "signature": "(&self)",
@@ -4316,8 +4316,8 @@
             {
               "docstring": "Retained flow count (`0..=`[`FLOW_CAP`]).",
               "lines": [
-                283,
-                286
+                285,
+                288
               ],
               "name": "count",
               "signature": "(&self)",
@@ -4326,8 +4326,8 @@
             {
               "docstring": "Drop every retained flow (the panel's \"clear log\").",
               "lines": [
-                289,
-                292
+                291,
+                294
               ],
               "name": "clear",
               "signature": "(&self)",
@@ -4336,8 +4336,8 @@
             {
               "docstring": "top [`SUMMARY_LIMIT`]. Unknown-country flows (`cc == \"\"`) stay as the \ud83c\udf10 bucket, per the Dao.",
               "lines": [
-                296,
-                322
+                298,
+                324
               ],
               "name": "country_summary",
               "signature": "(&self)",
@@ -4346,8 +4346,8 @@
             {
               "docstring": "count DESC (ties: `asn` ASC), top [`SUMMARY_LIMIT`].",
               "lines": [
-                326,
-                351
+                328,
+                353
               ],
               "name": "asn_summary",
               "signature": "(&self)",
@@ -4356,8 +4356,8 @@
             {
               "docstring": "fields naturally. Capped at [`INSPECTOR_LIMIT`].",
               "lines": [
-                359,
-                430
+                361,
+                432
               ],
               "name": "app_flow_summary",
               "signature": "(&self)",
@@ -4366,8 +4366,8 @@
             {
               "docstring": "most-recent domain/port/proto/carried fields. Capped at [`INSPECTOR_LIMIT`].",
               "lines": [
-                437,
-                514
+                439,
+                516
               ],
               "name": "app_destinations",
               "signature": "(&self, uid: i32)",
@@ -4376,7 +4376,7 @@
           ],
           "lines": [
             252,
-            515
+            517
           ],
           "name": "ConnTracker",
           "type": "impl"
@@ -4384,8 +4384,8 @@
         {
           "docstring": "The process-wide tracker \u2014 lazily built on first touch, then one `Arc` clone per call.",
           "lines": [
-            526,
-            528
+            528,
+            530
           ],
           "name": "global",
           "signature": "()",
@@ -4393,8 +4393,8 @@
         },
         {
           "lines": [
-            534,
-            536
+            536,
+            538
           ],
           "name": "conn_tracker",
           "signature": "()",
@@ -4403,8 +4403,8 @@
         {
           "docstring": "table); on the forwarder per-FLOW \u2014 session-collapse is future polish, [`FLOW_CAP`] bounds it.",
           "lines": [
-            550,
-            579
+            552,
+            581
           ],
           "name": "feed",
           "signature": "(\n    uid: i32,\n    ip: std::net::IpAddr,\n    port: u16,\n    proto: u8,\n    verdict: WardenVerdic...",
@@ -4415,8 +4415,8 @@
             {
               "docstring": "A minimal allowed flow for `cc` \u2014 the fold tests vary only what they assert on.",
               "lines": [
-                586,
-                603
+                588,
+                605
               ],
               "name": "flow",
               "signature": "(cc: &str, verdict: WardenVerdict)",
@@ -4424,8 +4424,8 @@
             },
             {
               "lines": [
-                614,
-                643
+                616,
+                645
               ],
               "name": "inspector_limit_is_128_and_keeps_the_newest_apps",
               "signature": "()",
@@ -4433,8 +4433,8 @@
             },
             {
               "lines": [
-                646,
-                655
+                648,
+                657
               ],
               "name": "flag_emoji_maps_iso_codes_and_falls_back_to_globe",
               "signature": "()",
@@ -4442,8 +4442,8 @@
             },
             {
               "lines": [
-                658,
-                678
+                660,
+                689
               ],
               "name": "record_derives_cc_flag_and_asn_from_ip_never_the_wire",
               "signature": "()",
@@ -4451,8 +4451,8 @@
             },
             {
               "lines": [
-                681,
-                702
+                692,
+                713
               ],
               "name": "record_folds_live_derived_countries_and_networks",
               "signature": "()",
@@ -4460,8 +4460,8 @@
             },
             {
               "lines": [
-                705,
-                717
+                716,
+                728
               ],
               "name": "ring_evicts_oldest_past_the_cap",
               "signature": "()",
@@ -4469,8 +4469,8 @@
             },
             {
               "lines": [
-                720,
-                735
+                731,
+                746
               ],
               "name": "snapshot_is_newest_first_and_clear_empties",
               "signature": "()",
@@ -4478,8 +4478,8 @@
             },
             {
               "lines": [
-                738,
-                772
+                749,
+                787
               ],
               "name": "country_summary_folds_allowed_flows_only_sorted_and_capped",
               "signature": "()",
@@ -4487,8 +4487,8 @@
             },
             {
               "lines": [
-                775,
-                782
+                790,
+                797
               ],
               "name": "global_ring_is_one_instance_shared_with_the_ffi_accessor",
               "signature": "()",
@@ -4496,8 +4496,8 @@
             },
             {
               "lines": [
-                785,
-                812
+                800,
+                830
               ],
               "name": "feed_stamps_the_clock_and_derives_attribution",
               "signature": "()",
@@ -4505,8 +4505,8 @@
             },
             {
               "lines": [
-                815,
-                829
+                833,
+                847
               ],
               "name": "asn_summary_skips_unknown_asn_and_denied_flows",
               "signature": "()",
@@ -4515,17 +4515,17 @@
             {
               "docstring": "[`ConnTracker::push`], so the fold logic is under test, not the GeoIP derivation).",
               "lines": [
-                833,
-                841
+                851,
+                866
               ],
               "name": "app_flow",
-              "signature": "(uid: i32, ip: &str, app: &str, cc: &str, verdict: WardenVerdict, ts: i64)",
+              "signature": "(\n        uid: i32,\n        ip: &str,\n        app: &str,\n        cc: &str,\n        verdict: Warde...",
               "type": "method"
             },
             {
               "lines": [
-                844,
-                865
+                869,
+                922
               ],
               "name": "app_flow_summary_groups_by_uid_counts_verdicts_and_distincts",
               "signature": "()",
@@ -4533,8 +4533,8 @@
             },
             {
               "lines": [
-                868,
-                893
+                925,
+                985
               ],
               "name": "app_destinations_folds_one_apps_endpoints_by_ip",
               "signature": "()",
@@ -4542,8 +4542,8 @@
             }
           ],
           "lines": [
-            582,
-            894
+            584,
+            986
           ],
           "name": "tests",
           "type": "module"
@@ -4662,6 +4662,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T10:16:44.184314+00:00",
+  "generated_at": "2026-08-01T12:52:17.568191+00:00",
   "version": "1.0"
 }

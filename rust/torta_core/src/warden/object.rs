@@ -1639,7 +1639,9 @@ mod tests {
             .iter()
             .any(|r| r.domain == "tracker.test" && r.uid == 10_001));
         assert!(
-            rules.iter().any(|r| r.domain == "*.metrics.net" && r.uid == 0),
+            rules
+                .iter()
+                .any(|r| r.domain == "*.metrics.net" && r.uid == 0),
             "the glob round-trips its source string"
         );
     }
@@ -1669,7 +1671,11 @@ mod tests {
         ]);
         assert_eq!(n, 2, "two CIDR rules armed");
         let mut rules = w.cidr_rules();
-        assert_eq!(rules.len(), 2, "the enumerator returns every armed CIDR rule");
+        assert_eq!(
+            rules.len(),
+            2,
+            "the enumerator returns every armed CIDR rule"
+        );
         assert_eq!(
             rules.len() as i64,
             w.snapshot().cidr_rules,

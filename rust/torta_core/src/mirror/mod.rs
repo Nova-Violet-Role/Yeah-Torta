@@ -69,13 +69,17 @@ pub use catalog::{encode_catalog, Catalog, CatalogEntry, CatalogError};
 // local content-authority. Same app, different key per install (the Underground Layer one-user-one-database
 // model). Reuses `signature::verify_minisign` verbatim — no duplicate Ed25519.
 #[allow(unused_imports)]
-pub use devkey::{DeviceKey, DeviceKeyError, DEVICE_PUBKEY_BLOB_LEN, DEVICE_SEED_LEN, DEVICE_SIG_BLOB_LEN};
+pub use devkey::{
+    DeviceKey, DeviceKeyError, DEVICE_PUBKEY_BLOB_LEN, DEVICE_SEED_LEN, DEVICE_SIG_BLOB_LEN,
+};
 #[allow(unused_imports)]
 pub use fetch::{fetch_once, FetchError};
 #[allow(unused_imports)]
 pub use localcdn::{
-    best_bundled_version, cdn_hosts, cloaking_rules, cloaking_rules_for, is_cdn_host, promoted_cloak_hosts, publish_servable_cloak, publish_cloak_tls_trust, cloak_tls_trusted, is_servable_cloak_host, servable_cloak_count, resolve, resolve_full,
-    Resolution, ResourceMap, Substitution, SEED_MAPS,
+    best_bundled_version, cdn_hosts, cloak_tls_trusted, cloaking_rules, cloaking_rules_for,
+    is_cdn_host, is_servable_cloak_host, promoted_cloak_hosts, publish_cloak_tls_trust,
+    publish_servable_cloak, resolve, resolve_full, servable_cloak_count, Resolution, ResourceMap,
+    Substitution, SEED_MAPS,
 };
 #[allow(unused_imports)]
 pub use localcdn_maps::FULL_MAPS;
@@ -100,12 +104,12 @@ pub use packaging::{
     fetch_via_ladder, is_packageable, warm_up, SeedPolicy, WarmUpReport, WarmUpTarget,
     LOCALCDN_SEED_TREE_BYTES, MAX_ALT_UPSTREAMS, MAX_PACKAGEABLE_BYTES,
 };
-#[allow(unused_imports)]
-pub use server::{FetchCtx, MirrorServer, ServeOutcome, ServerConfig};
 /// The SERVE LEDGER — the production instrument for "absorb once, serve forever". Before it
 /// existed the only counter reached for (`cloak_actions`) measured blocklist sinkholes and could
 /// never move for Centauri, so the pillar's central claim had no honest denominator.
 pub use server::{serve_bytes, serve_hits, serve_misses, serve_unauthorized};
+#[allow(unused_imports)]
+pub use server::{FetchCtx, MirrorServer, ServeOutcome, ServerConfig};
 // The per-pillar serve log (slice 6 — the #133 `query-centauri.log`): the human-legible, greppable serve feed
 // written through the shared RAM⊗NAND `crate::log_tier` substrate (the `query-warden.log` precedent). The
 // Centauri Object's `record_serve_logged` seam appends one line per serve via `log::append_serve`, the durable

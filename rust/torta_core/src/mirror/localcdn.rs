@@ -386,8 +386,7 @@ pub fn note_tls_rejected(host: &str) {
 // A refusal is a permanent fact about a client, so it belongs on disk.
 
 /// Where the refusal ledger is written; `None` until the discovery layer arms with the durable dir.
-static DISTRUST_STORE: std::sync::RwLock<Option<std::path::PathBuf>> =
-    std::sync::RwLock::new(None);
+static DISTRUST_STORE: std::sync::RwLock<Option<std::path::PathBuf>> = std::sync::RwLock::new(None);
 
 /// Bind the durable dir and rehydrate the ledger ONCE. Rides the same boot edge as the discovery
 /// store so a host that refused us in an earlier process is still un-cloaked on this one.
@@ -525,7 +524,9 @@ pub fn publish_promoted_cloak(hosts: Vec<String>) {
         //   · a host the STATIC corpus already covers must never also sit in the promoted set, or
         //     `cloaking_rules` emits two rules for one name (caught by the one-rule-per-host test).
         .filter(|h| {
-            !h.is_empty() && !is_tls_distrusted(h) && cdn_hosts().binary_search(&h.as_str()).is_err()
+            !h.is_empty()
+                && !is_tls_distrusted(h)
+                && cdn_hosts().binary_search(&h.as_str()).is_err()
         })
         .collect();
     sorted.sort_unstable();
@@ -590,8 +591,7 @@ static SERVABLE_ANY: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBo
 /// intercept", so forgetting to publish trust can only cost a dark optimisation, never a dropped
 /// connection. See `is_servable_cloak_host` for the measurement that forced this
 /// (`centauri_cloak_sinkholes = 3`, `cloak_actions = 0`).
-static CLOAK_TLS_TRUSTED: std::sync::atomic::AtomicBool =
-    std::sync::atomic::AtomicBool::new(false);
+static CLOAK_TLS_TRUSTED: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
 
 /// Publish whether the Centauri CA is client-trusted. Only a POSITIVE, externally verified
 /// observation may pass `true` here — never an assumption that installation succeeded.
@@ -944,7 +944,12 @@ pub fn upstream_url_for(host: &str, path: &str) -> Option<String> {
             continue;
         }
         let (served, _sub) = best_bundled_version(requested, m.bundled_versions)?;
-        return Some(super::serve::upstream_url(m.host, m.base_path, served, file));
+        return Some(super::serve::upstream_url(
+            m.host,
+            m.base_path,
+            served,
+            file,
+        ));
     }
     None
 }
@@ -1165,7 +1170,10 @@ mod tests {
         // The roster is recomputed from the discovery ledger on every arm and knows nothing about
         // refusals — republishing it must NOT put the host back on the DNS plane.
         publish_promoted_cloak(vec![H.to_string()]);
-        assert!(!is_cdn_host(H), "a re-arm must not resurrect a refused host");
+        assert!(
+            !is_cdn_host(H),
+            "a re-arm must not resurrect a refused host"
+        );
 
         // ★ #78 — the SERVE-MISS twin must ride this exact ledger, not a parallel one. Different
         // cause (our catalog had nothing to give) but byte-identical remedy: hand the name back.
@@ -1175,13 +1183,19 @@ mod tests {
         publish_promoted_cloak(vec![H.to_string(), U.to_string()]);
         assert!(is_cdn_host(U), "the probe host must start cloaked");
         note_unservable(U);
-        assert!(is_tls_distrusted(U), "#78 must land in the ONE distrust ledger");
+        assert!(
+            is_tls_distrusted(U),
+            "#78 must land in the ONE distrust ledger"
+        );
         assert!(
             !is_cdn_host(U),
             "a host we cloaked but cannot serve must return to the real CDN"
         );
         publish_promoted_cloak(vec![H.to_string(), U.to_string()]);
-        assert!(!is_cdn_host(U), "a re-arm must not resurrect an unservable host");
+        assert!(
+            !is_cdn_host(U),
+            "a re-arm must not resurrect an unservable host"
+        );
 
         // Case folding travels the same path.
         assert!(!is_cdn_host("DISTRUST-PROBE.EXAMPLE.NET"));
@@ -1225,7 +1239,10 @@ mod tests {
             is_tls_distrusted(H),
             "re-arming must rehydrate the refusal, or the app that refused us breaks again"
         );
-        assert!(tls_distrust_count() >= 1, "the dashboard's count must see it");
+        assert!(
+            tls_distrust_count() >= 1,
+            "the dashboard's count must see it"
+        );
 
         let _ = clear_tls_distrust();
         let _ = std::fs::remove_file(dir.join("centauri-tls-distrust.tsv"));
@@ -1254,12 +1271,18 @@ mod tests {
 
         // Every later boot re-arms from that SAME persisted pair. The user's trust situation has not
         // changed, so the refusal still describes something true and must survive.
-        let _ = crate::centauri_tls_arm(Some(material.cert_pem.clone()), Some(material.key_pem.clone()));
+        let _ = crate::centauri_tls_arm(
+            Some(material.cert_pem.clone()),
+            Some(material.key_pem.clone()),
+        );
         assert!(
             is_tls_distrusted(H),
             "a reload-arm must not forgive — this is the #21 wipe that emptied the ledger every boot"
         );
-        assert!(tls_distrust_count() >= 1, "the dashboard count must still see it");
+        assert!(
+            tls_distrust_count() >= 1,
+            "the dashboard count must still see it"
+        );
 
         let _ = clear_tls_distrust();
         let _ = std::fs::remove_file(dir.join("centauri-tls-distrust.tsv"));
@@ -1429,16 +1452,25 @@ mod tests {
         // #85 — the fetch-on-miss twin of resolve_full: an exact bundled hit reconstructs the ORIGINAL CDN
         // https URL for the SERVED version, so fetch_once GETs the exact bytes the signed catalog pinned.
         assert_eq!(
-            upstream_url_for("ajax.googleapis.com", "/ajax/libs/jquery/3.7.1/jquery.min.js"),
+            upstream_url_for(
+                "ajax.googleapis.com",
+                "/ajax/libs/jquery/3.7.1/jquery.min.js"
+            ),
             Some("https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js".to_string())
         );
         // host is case-insensitive + carries the SAME served version resolve_full serves under (agreement
         // with canonical_name is the sig-gate invariant).
-        let served = resolve_full("cdnjs.cloudflare.com", "/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css")
-            .unwrap()
-            .served_version;
+        let served = resolve_full(
+            "cdnjs.cloudflare.com",
+            "/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css",
+        )
+        .unwrap()
+        .served_version;
         assert_eq!(
-            upstream_url_for("CDNJS.Cloudflare.COM", "/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css"),
+            upstream_url_for(
+                "CDNJS.Cloudflare.COM",
+                "/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css"
+            ),
             Some(format!(
                 "https://cdnjs.cloudflare.com/ajax/libs/bootstrap/{served}/css/bootstrap.min.css"
             ))
@@ -1448,12 +1480,18 @@ mod tests {
     #[test]
     fn upstream_url_for_is_none_when_unfetchable() {
         // An unwatched host has no reconstructable origin — NEVER a leak target (fail-closed).
-        assert!(upstream_url_for("evil.example.com", "/ajax/libs/jquery/3.7.1/jquery.min.js").is_none());
+        assert!(
+            upstream_url_for("evil.example.com", "/ajax/libs/jquery/3.7.1/jquery.min.js").is_none()
+        );
         // A bare directory hit (no file segment) is not fetchable — a version with no file → None.
         assert!(upstream_url_for("ajax.googleapis.com", "/ajax/libs/jquery/3.7.1/").is_none());
         assert!(upstream_url_for("ajax.googleapis.com", "/ajax/libs/jquery/3.7.1").is_none());
         // A watched host but an unmapped library path (no base_path matches) → None, never a leak.
-        assert!(upstream_url_for("ajax.googleapis.com", "/ajax/libs/not-a-real-lib/9.9.9/x.js").is_none());
+        assert!(upstream_url_for(
+            "ajax.googleapis.com",
+            "/ajax/libs/not-a-real-lib/9.9.9/x.js"
+        )
+        .is_none());
     }
 
     #[test]
@@ -1834,15 +1872,21 @@ mod cloak_servable_tests {
         let none: [String; 0] = [];
         let block = cloaking_rules_for(&none);
         assert!(hosts_in(&block).is_empty(), "no content ⇒ no cloak");
-        assert!(block.contains(CLOAK_BLOCK_BEGIN) && block.contains(CLOAK_BLOCK_END),
-            "the fence must still be written so a writer can replace the block");
+        assert!(
+            block.contains(CLOAK_BLOCK_BEGIN) && block.contains(CLOAK_BLOCK_END),
+            "the fence must still be written so a writer can replace the block"
+        );
     }
 
     /// The block is byte-stable across argument order, so arming twice does not churn the file and
     /// force a needless dnscrypt reload.
     #[test]
     fn the_block_is_order_and_duplicate_stable() {
-        let a = ["b.example".to_string(), "a.example".to_string(), "b.example".to_string()];
+        let a = [
+            "b.example".to_string(),
+            "a.example".to_string(),
+            "b.example".to_string(),
+        ];
         let b = ["a.example".to_string(), "b.example".to_string()];
         assert_eq!(cloaking_rules_for(&a), cloaking_rules_for(&b));
     }
@@ -1852,7 +1896,10 @@ mod cloak_servable_tests {
     #[test]
     fn an_empty_host_is_never_emitted() {
         let hosts = ["".to_string(), "a.example".to_string()];
-        assert_eq!(hosts_in(&cloaking_rules_for(&hosts)), vec!["a.example".to_string()]);
+        assert_eq!(
+            hosts_in(&cloaking_rules_for(&hosts)),
+            vec!["a.example".to_string()]
+        );
     }
 }
 
@@ -1907,7 +1954,9 @@ mod live_cloak_gate_tests {
         let _g = GATE_LOCK.lock().unwrap();
         crate::mirror::publish_cloak_tls_trust(true);
         publish_servable_cloak(&["definitely-not-in-the-corpus.example".to_string()]);
-        assert!(!is_servable_cloak_host("definitely-not-in-the-corpus.example"));
+        assert!(!is_servable_cloak_host(
+            "definitely-not-in-the-corpus.example"
+        ));
         publish_servable_cloak(&[]);
     }
 
@@ -1965,7 +2014,10 @@ mod live_cloak_gate_tests {
         let upper = host.to_ascii_uppercase();
         let dotted = format!("{host}.");
         assert!(is_servable_cloak_host(&upper), "uppercase must match");
-        assert!(is_servable_cloak_host(&dotted), "trailing FQDN dot must match");
+        assert!(
+            is_servable_cloak_host(&dotted),
+            "trailing FQDN dot must match"
+        );
         publish_servable_cloak(&[]);
     }
 }

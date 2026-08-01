@@ -494,9 +494,7 @@ mod tests {
         );
 
         // Exceeding maximum: should also be rejected
-        let data: Vec<u8> = (0..MAX_ECHO_PAYLOAD + 100)
-            .map(|i| i as u8)
-            .collect();
+        let data: Vec<u8> = (0..MAX_ECHO_PAYLOAD + 100).map(|i| i as u8).collect();
         let wire = build_echo(ICMP_ECHO_REQUEST, 1, 1, &data);
         assert!(
             parse_echo_request(&wire).is_none(),

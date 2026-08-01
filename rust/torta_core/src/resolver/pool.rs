@@ -396,7 +396,9 @@ impl Pool {
             let _ = tokio::time::timeout(self.effective_timeout(), transport.warm_setup()).await;
             // R7: time the exchange and fold the RTT (Ok) or a loss sample (Err/timeout) into the EWMA.
             let started = Instant::now();
-            match tokio::time::timeout(self.effective_timeout(), transport.exchange(query_wire)).await {
+            match tokio::time::timeout(self.effective_timeout(), transport.exchange(query_wire))
+                .await
+            {
                 Ok(Ok(response)) => {
                     self.record(transport.id(), Some(started.elapsed()));
                     self.last_winner.store(idx, Ordering::Relaxed); // ★ GENESIS A2 — attribute the row
@@ -436,7 +438,9 @@ impl Pool {
             // ★ 2.1.18-absorb — untimed setup before the stopwatch (see `exchange` for the law).
             let _ = tokio::time::timeout(self.effective_timeout(), transport.warm_setup()).await;
             let started = Instant::now();
-            match tokio::time::timeout(self.effective_timeout(), transport.exchange(query_wire)).await {
+            match tokio::time::timeout(self.effective_timeout(), transport.exchange(query_wire))
+                .await
+            {
                 Ok(Ok(response)) => {
                     self.record(transport.id(), Some(started.elapsed()));
                     self.last_winner.store(idx, Ordering::Relaxed); // ★ GENESIS A2 — attribute the row
@@ -475,7 +479,9 @@ impl Pool {
             // ★ 2.1.18-absorb — untimed setup before the stopwatch (see `exchange` for the law).
             let _ = tokio::time::timeout(self.effective_timeout(), preferred.warm_setup()).await;
             let started = Instant::now();
-            match tokio::time::timeout(self.effective_timeout(), preferred.exchange(query_wire)).await {
+            match tokio::time::timeout(self.effective_timeout(), preferred.exchange(query_wire))
+                .await
+            {
                 Ok(Ok(response)) => {
                     self.record(preferred.id(), Some(started.elapsed()));
                     self.last_winner.store(pidx, Ordering::Relaxed); // ★ GENESIS A2
@@ -493,7 +499,9 @@ impl Pool {
             // ★ 2.1.18-absorb — untimed setup before the stopwatch (see `exchange` for the law).
             let _ = tokio::time::timeout(self.effective_timeout(), transport.warm_setup()).await;
             let started = Instant::now();
-            match tokio::time::timeout(self.effective_timeout(), transport.exchange(query_wire)).await {
+            match tokio::time::timeout(self.effective_timeout(), transport.exchange(query_wire))
+                .await
+            {
                 Ok(Ok(response)) => {
                     self.record(transport.id(), Some(started.elapsed()));
                     self.last_winner.store(idx, Ordering::Relaxed); // ★ GENESIS A2
@@ -537,9 +545,15 @@ impl Pool {
             .map(|(idx, transport)| {
                 let fut = async move {
                     // ★ 2.1.18-absorb — untimed setup before the stopwatch (see `exchange`).
-                    let _ = tokio::time::timeout(self.effective_timeout(), transport.warm_setup()).await;
+                    let _ = tokio::time::timeout(self.effective_timeout(), transport.warm_setup())
+                        .await;
                     let started = Instant::now();
-                    match tokio::time::timeout(self.effective_timeout(), transport.exchange(query_wire)).await {
+                    match tokio::time::timeout(
+                        self.effective_timeout(),
+                        transport.exchange(query_wire),
+                    )
+                    .await
+                    {
                         Ok(Ok(response)) => {
                             self.record(transport.id(), Some(started.elapsed()));
                             self.last_winner.store(idx, Ordering::Relaxed); // ★ GENESIS A2
@@ -633,7 +647,9 @@ impl Pool {
             // ★ 2.1.18-absorb — untimed setup before the stopwatch (see `exchange` for the law).
             let _ = tokio::time::timeout(self.effective_timeout(), transport.warm_setup()).await;
             let started = Instant::now();
-            match tokio::time::timeout(self.effective_timeout(), transport.exchange(query_wire)).await {
+            match tokio::time::timeout(self.effective_timeout(), transport.exchange(query_wire))
+                .await
+            {
                 Ok(Ok(bytes)) => match verdict(&bytes) {
                     SolveVerdict::GotThrough => {
                         // Got through — reward the upstream (real RTT), count a retry if we laddered here.

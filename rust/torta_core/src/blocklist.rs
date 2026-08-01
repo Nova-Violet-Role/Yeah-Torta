@@ -989,7 +989,12 @@ pub fn domain_provenance(domain: &str, now_days: u32) -> (u64, u32, u8, bool) {
             .max()
             .unwrap_or(0)
     });
-    (mask as u64, corroboration, best, best >= trust::SIGNED_FLOOR)
+    (
+        mask as u64,
+        corroboration,
+        best,
+        best >= trust::SIGNED_FLOOR,
+    )
 }
 
 /// The trust of a LIST identified by its content fingerprint, and the source that vouches for it.
@@ -1008,7 +1013,9 @@ pub fn list_trust_of(fp: u64, active_mask: trust::SourceMask, now_days: u32) -> 
     }
     let guard = REGISTRY.read().unwrap_or_else(|e| e.into_inner());
     guard.as_ref().map_or((0, 0), |reg| {
-        let contributors = reg.ids_for_fingerprint(fp).map_or(0, |ids| ids.len() as u32);
+        let contributors = reg
+            .ids_for_fingerprint(fp)
+            .map_or(0, |ids| ids.len() as u32);
         (
             trust::list_trust(reg, fp, active_mask, now_days),
             contributors,
@@ -1031,7 +1038,10 @@ pub fn installed_active_mask() -> trust::SourceMask {
     let Some(reg) = guard.as_mut() else {
         return 0;
     };
-    let ids: Vec<u32> = reg.ids_for_fingerprint(fp).map(<[u32]>::to_vec).unwrap_or_default();
+    let ids: Vec<u32> = reg
+        .ids_for_fingerprint(fp)
+        .map(<[u32]>::to_vec)
+        .unwrap_or_default();
     ids.into_iter().fold(0, |acc, id| acc | reg.mask_for(id))
 }
 

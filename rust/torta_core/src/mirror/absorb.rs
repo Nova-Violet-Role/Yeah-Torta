@@ -309,7 +309,11 @@ mod tests {
             absorb_url("cdn.example.com", "/x.js").as_deref(),
             Some("https://cdn.example.com/x.js")
         );
-        assert_eq!(absorb_url("", "/x.js"), None, "an empty host never becomes a fetch");
+        assert_eq!(
+            absorb_url("", "/x.js"),
+            None,
+            "an empty host never becomes a fetch"
+        );
         assert_eq!(
             absorb_url("evil.com/../", "/x.js"),
             None,
@@ -320,7 +324,11 @@ mod tests {
     #[test]
     fn lookup_is_free_until_something_is_absorbed() {
         let _s = scrub();
-        assert_eq!(lookup("cdn.example.com/x.js"), None, "nothing absorbed ⇒ a gated miss");
+        assert_eq!(
+            lookup("cdn.example.com/x.js"),
+            None,
+            "nothing absorbed ⇒ a gated miss"
+        );
         assert_eq!(count(), 0);
     }
 
@@ -378,7 +386,9 @@ mod tests {
         let good = "f".repeat(64);
         std::fs::write(
             dir.join(STORE_FILE_NAME),
-            format!("#version\tv1\nbroken-row-no-tab\ncdn.example.com/ok.js\t{good}\nbad\tnothex\n"),
+            format!(
+                "#version\tv1\nbroken-row-no-tab\ncdn.example.com/ok.js\t{good}\nbad\tnothex\n"
+            ),
         )
         .expect("seed");
         arm(dir.clone());

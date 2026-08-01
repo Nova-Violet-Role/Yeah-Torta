@@ -117,12 +117,37 @@ jobs:
             exit 1
           fi
 
-      - name: cargo fmt / clippy (advisory)
+      # PROMOTED FROM ADVISORY TO A GATE (2026-08-01), because advisory meant invisible.
+      #
+      # This step used to be `continue-on-error: true` with `cargo fmt --check || echo
+      # "::warning::rustfmt differences present"`. The crate carried 572 formatting hunks across 66
+      # files and that warning fired on EVERY run -- and I never saw it, because my own run-log
+      # sweep counted `warning:` and `w: file` and `##[error]` but not `##[warning]`, which is the
+      # only channel a `::warning::` annotation appears on. Three green runs were reported as
+      # "0 warnings" while this one sat in the log untouched.
+      #
+      # `cargo fmt` has now been applied (semantics-preserving; 1375 tests still pass, clippy on the
+      # ship ABI still 0 under -D warnings), so the gate starts from a clean tree.
+      #
+      # An EQUALITY gate is right here, unlike the deprecation ceiling: "formatted" is binary and
+      # every correctly-formatted future passes it. It forbids no correct change.
+      #
+      # clippy stays out of this step -- it is hard-gated per shipped ABI in rust-abi-warnings,
+      # where the TARGET is right. Running it here on the host would re-report host-only findings.
+      - name: rustfmt must stay clean
         working-directory: rust/torta_core
-        continue-on-error: true
         run: |
-          cargo fmt --check || echo "::warning::rustfmt differences present"
-          cargo clippy --lib --features mirror,pure_rust,netstack -- -W clippy::all || true
+          set +e
+          out="$(cargo fmt --check 2>&1)"
+          code=$?
+          set -e
+          if [ "$code" -ne 0 ]; then
+            echo "$out" | head -60
+            hunks=$(echo "$out" | grep -c '^Diff in' || true)
+            echo "::error::rustfmt differences present ($hunks hunk(s)). Run 'cargo fmt' in rust/torta_core."
+            exit 1
+          fi
+          echo "rustfmt clean"
 
   # ---------------------------------------------------------------------------------------------
   # 1b. ZERO WARNINGS ON THE ABIs THAT SHIP — a separate job because it needs the NDK.

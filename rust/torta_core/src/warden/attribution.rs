@@ -66,7 +66,9 @@ pub struct AttributionMap {
 
 impl AttributionMap {
     pub fn new() -> Self {
-        Self { map: RwLock::new(HashMap::new()) }
+        Self {
+            map: RwLock::new(HashMap::new()),
+        }
     }
 
     /// Remember `ip → domain` until `now + clamp(ttl)`, on the wall clock. At [`ATTRIBUTION_CAP`],
@@ -143,7 +145,9 @@ impl AttributionMap {
 
     fn lookup_at(&self, ip: &IpAddr, now: Instant) -> Option<Arc<str>> {
         let m = self.map.read().unwrap_or_else(|e| e.into_inner());
-        m.get(ip).filter(|e| e.expires > now).map(|e| Arc::clone(&e.domain))
+        m.get(ip)
+            .filter(|e| e.expires > now)
+            .map(|e| Arc::clone(&e.domain))
     }
 
     /// Live entry count (expired-but-unswept corpses included — this is a capacity gauge, not a
@@ -211,9 +215,14 @@ mod tests {
         let m = AttributionMap::new();
         let now = Instant::now();
         m.record_at(ip("203.0.113.7"), "torta.example", 300, now);
-        let got = m.lookup_at(&ip("203.0.113.7"), now).expect("recorded ⇒ found");
+        let got = m
+            .lookup_at(&ip("203.0.113.7"), now)
+            .expect("recorded ⇒ found");
         assert_eq!(&*got, "torta.example");
-        assert!(m.lookup_at(&ip("203.0.113.8"), now).is_none(), "unknown ip is None");
+        assert!(
+            m.lookup_at(&ip("203.0.113.8"), now).is_none(),
+            "unknown ip is None"
+        );
     }
 
     #[test]
@@ -221,8 +230,12 @@ mod tests {
         let m = AttributionMap::new();
         let now = Instant::now();
         m.record_at(ip("203.0.113.7"), "torta.example", 300, now);
-        assert!(m.lookup_at(&ip("203.0.113.7"), now + Duration::from_secs(299)).is_some());
-        assert!(m.lookup_at(&ip("203.0.113.7"), now + Duration::from_secs(301)).is_none());
+        assert!(m
+            .lookup_at(&ip("203.0.113.7"), now + Duration::from_secs(299))
+            .is_some());
+        assert!(m
+            .lookup_at(&ip("203.0.113.7"), now + Duration::from_secs(301))
+            .is_none());
     }
 
     #[test]
@@ -231,12 +244,20 @@ mod tests {
         let now = Instant::now();
         // TTL=0 floors to 60 s — the app dials right after resolving.
         m.record_at(ip("203.0.113.1"), "zero.example", 0, now);
-        assert!(m.lookup_at(&ip("203.0.113.1"), now + Duration::from_secs(59)).is_some());
-        assert!(m.lookup_at(&ip("203.0.113.1"), now + Duration::from_secs(61)).is_none());
+        assert!(m
+            .lookup_at(&ip("203.0.113.1"), now + Duration::from_secs(59))
+            .is_some());
+        assert!(m
+            .lookup_at(&ip("203.0.113.1"), now + Duration::from_secs(61))
+            .is_none());
         // TTL=86400 ceils to 7200 s — stale mislabels age out.
         m.record_at(ip("203.0.113.2"), "day.example", 86_400, now);
-        assert!(m.lookup_at(&ip("203.0.113.2"), now + Duration::from_secs(7199)).is_some());
-        assert!(m.lookup_at(&ip("203.0.113.2"), now + Duration::from_secs(7201)).is_none());
+        assert!(m
+            .lookup_at(&ip("203.0.113.2"), now + Duration::from_secs(7199))
+            .is_some());
+        assert!(m
+            .lookup_at(&ip("203.0.113.2"), now + Duration::from_secs(7201))
+            .is_none());
     }
 
     #[test]
@@ -244,7 +265,12 @@ mod tests {
         let m = AttributionMap::new();
         let now = Instant::now();
         m.record_at(ip("203.0.113.7"), "old.example", 60, now);
-        m.record_at(ip("203.0.113.7"), "new.example", 60, now + Duration::from_secs(50));
+        m.record_at(
+            ip("203.0.113.7"),
+            "new.example",
+            60,
+            now + Duration::from_secs(50),
+        );
         let at = now + Duration::from_secs(90); // past the first deadline, inside the second
         let got = m.lookup_at(&ip("203.0.113.7"), at).expect("refreshed");
         assert_eq!(&*got, "new.example");
@@ -262,7 +288,12 @@ mod tests {
         }
         assert_eq!(m.len(), ATTRIBUTION_CAP);
         // Insert one more AFTER they expired: the sweep reclaims all corpses.
-        m.record_at(ip("203.0.113.7"), "alive.example", 300, now + Duration::from_secs(100));
+        m.record_at(
+            ip("203.0.113.7"),
+            "alive.example",
+            300,
+            now + Duration::from_secs(100),
+        );
         assert_eq!(m.len(), 1, "sweep reclaimed the expired fill");
         assert!(m
             .lookup_at(&ip("203.0.113.7"), now + Duration::from_secs(101))
@@ -280,13 +311,21 @@ mod tests {
             m.record_at(IpAddr::V4(a), "filler.example", 7200, now);
         }
         assert_eq!(m.len(), ATTRIBUTION_CAP);
-        m.record_at(ip("203.0.113.7"), "newcomer.example", 300, now + Duration::from_secs(1));
+        m.record_at(
+            ip("203.0.113.7"),
+            "newcomer.example",
+            300,
+            now + Duration::from_secs(1),
+        );
         assert_eq!(m.len(), ATTRIBUTION_CAP, "cap holds");
         assert!(
-            m.lookup_at(&ip("10.9.9.9"), now + Duration::from_secs(2)).is_none(),
+            m.lookup_at(&ip("10.9.9.9"), now + Duration::from_secs(2))
+                .is_none(),
             "earliest-deadline entry evicted"
         );
-        assert!(m.lookup_at(&ip("203.0.113.7"), now + Duration::from_secs(2)).is_some());
+        assert!(m
+            .lookup_at(&ip("203.0.113.7"), now + Duration::from_secs(2))
+            .is_some());
     }
 
     #[test]
@@ -298,7 +337,10 @@ mod tests {
         let a = m.lookup_at(&ip("203.0.113.10"), now).unwrap();
         let b = m.lookup_at(&ip("2001:db8::10"), now).unwrap();
         assert_eq!(&*a, "multi.example");
-        assert!(Arc::ptr_eq(&a, &b), "one shared Arc across the reply's addresses");
+        assert!(
+            Arc::ptr_eq(&a, &b),
+            "one shared Arc across the reply's addresses"
+        );
     }
 
     #[test]

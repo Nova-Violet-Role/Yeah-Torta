@@ -77,13 +77,13 @@ use std::panic::{catch_unwind, AssertUnwindSafe};
 use std::sync::atomic::{AtomicI64, AtomicU16, AtomicU8, Ordering};
 use std::sync::{Arc, Mutex};
 
-use crate::{load_centauri_catalog_from_signed, CentauriRehydrateFail};
 use crate::mirror::cache::content_hash;
 use crate::mirror::{
-    self, cdn_hosts, cloaking_rules_for, encode_catalog, resolve_full, CacheMode, CacheStore, Catalog,
-    CatalogEntry, Resolution, ServeVerdict, Substitution,
+    self, cdn_hosts, cloaking_rules_for, encode_catalog, resolve_full, CacheMode, CacheStore,
+    Catalog, CatalogEntry, Resolution, ServeVerdict, Substitution,
 };
 use crate::mirror::{fetch_leg, upstream_url, InFlight, ServeOutcome, WarmUpTarget};
+use crate::{load_centauri_catalog_from_signed, CentauriRehydrateFail};
 
 /// The bounded depth of the recent-serve ring the dashboard reads (the "what the mirror just served" feed).
 /// Small + fixed: a glance feed, NOT the durable record (that is slice 6's `query-centauri.log`).
@@ -789,9 +789,10 @@ impl Centauri {
             // does not exist.
             Ok(Err(crate::mirror::CatalogError::LegacyHashAlgo)) => {
                 Err(CentauriError::MalformedCatalog {
-                    reason: "catalog uses the RETIRED SHA-256 content-address id (hash_algo_id=1); \
+                    reason:
+                        "catalog uses the RETIRED SHA-256 content-address id (hash_algo_id=1); \
                              the spine moved to BLAKE2b-256 — re-fetch a current catalog"
-                        .to_string(),
+                            .to_string(),
                 })
             }
             Err(_panic) => Err(CentauriError::Panic {
@@ -839,7 +840,11 @@ impl Centauri {
     /// not seen until restart). Idempotent + reversible: re-arming re-mints nothing (deterministic key),
     /// re-admits identical bytes as no-ops, and re-installs the SAME device-signed catalog. Panic-firewalled
     /// → a zeroed report (`installed=false`, `key_id_hex=""`).
-    pub fn arm_device_catalog(&self, content_dir: String, key_seed_dir: String) -> CentauriArmReport {
+    pub fn arm_device_catalog(
+        &self,
+        content_dir: String,
+        key_seed_dir: String,
+    ) -> CentauriArmReport {
         fn zeroed() -> CentauriArmReport {
             CentauriArmReport {
                 key_id_hex: String::new(),
@@ -969,7 +974,8 @@ impl Centauri {
             // reproducible across arms — a catalog that reshuffled every boot would re-sign for nothing.
             let promoted = crate::centauri_discovery::promotable();
             if !promoted.is_empty() {
-                let known: std::collections::HashSet<&str> = hosts.iter().map(|h| h.as_str()).collect();
+                let known: std::collections::HashSet<&str> =
+                    hosts.iter().map(|h| h.as_str()).collect();
                 let fresh: Vec<String> = promoted
                     .into_iter()
                     .filter(|h| !known.contains(h.as_str()))
@@ -1014,8 +1020,7 @@ impl Centauri {
     /// write + dnscrypt reload is the arming step, kept separate — reversible-by-construction).
     /// Panic-firewalled → an empty string.
     pub fn cloaking_rules(&self) -> String {
-        catch_unwind(AssertUnwindSafe(|| self.servable_cloaking_rules()))
-            .unwrap_or_default()
+        catch_unwind(AssertUnwindSafe(|| self.servable_cloaking_rules())).unwrap_or_default()
     }
 
     /// ★ CLOAK⊆SERVABLE — the cloak block for exactly the hosts THIS Centauri can serve.
@@ -1270,7 +1275,9 @@ impl Centauri {
                 ),
             }),
             Ok(Err(CentauriRehydrateFail::BadSignature)) => Err(CentauriError::InvalidSignature {
-                reason: format!("durable '{base}' .tcat signature did not verify (forged/tampered/wrong key)"),
+                reason: format!(
+                    "durable '{base}' .tcat signature did not verify (forged/tampered/wrong key)"
+                ),
             }),
             Ok(Err(CentauriRehydrateFail::Malformed)) => Err(CentauriError::MalformedCatalog {
                 reason: format!("durable '{base}' .tcat verified but its body is malformed"),
@@ -1301,22 +1308,18 @@ impl Centauri {
     /// `RehydrateFailed` (mint leaves no pair; the caller falls back to the arming pass, which
     /// now persists). An unavailable device key (entropy/IO failure) is `RehydrateFailed` too —
     /// no key, no possible author. Panic-firewalled by the delegate.
-    pub fn rehydrate_device_catalog(
-        &self,
-        key_seed_dir: String,
-    ) -> Result<(), CentauriError> {
+    pub fn rehydrate_device_catalog(&self, key_seed_dir: String) -> Result<(), CentauriError> {
         let key = match load_or_mint_device_key(&key_seed_dir) {
             Some((key, _minted)) => key,
             None => {
                 return Err(CentauriError::RehydrateFailed {
-                    reason: "device key unavailable (entropy/IO failure) — no device lane".to_string(),
+                    reason: "device key unavailable (entropy/IO failure) — no device lane"
+                        .to_string(),
                 })
             }
         };
-        let rehydrated = self.rehydrate_from_signed(
-            DEVICE_CATALOG_BASE.to_string(),
-            key.pubkey_blob().to_vec(),
-        );
+        let rehydrated =
+            self.rehydrate_from_signed(DEVICE_CATALOG_BASE.to_string(), key.pubkey_blob().to_vec());
 
         // ★ #65 ROSTER FRESHNESS — a rehydrated catalog is only the truth while it still describes this
         // device's roster.
@@ -1347,16 +1350,13 @@ impl Centauri {
                 let covered = self
                     .catalog
                     .lock()
-                    .map(|c| {
-                        promoted
-                            .iter()
-                            .all(|h| c.content_hash_for(h).is_some())
-                    })
+                    .map(|c| promoted.iter().all(|h| c.content_hash_for(h).is_some()))
                     .unwrap_or(true); // a poisoned lock keeps the rehydrated catalog (never re-author on a fault)
                 if !covered {
                     return Err(CentauriError::RehydrateFailed {
-                        reason: "persisted catalog predates a promoted CDN — re-authoring the roster"
-                            .to_string(),
+                        reason:
+                            "persisted catalog predates a promoted CDN — re-authoring the roster"
+                                .to_string(),
                     });
                 }
                 // ★ #65 — MEASURED BUG: the catalog covered the promoted hosts, so this fast lane kept
@@ -1413,21 +1413,17 @@ impl Centauri {
             // (a port-only inference could only ever show Stopped/Serving).
             let serve_state =
                 CentauriServeState::from_code(self.serve_state.load(Ordering::Acquire));
-            let (
-                installs_attempted,
-                installs_verified,
-                rehydrates_attempted,
-                rehydrates_verified,
-            ) = if let Ok(stats) = self.stats.lock() {
-                (
-                    stats.catalog_installs_attempted,
-                    stats.catalog_installs_verified,
-                    stats.rehydrates_attempted,
-                    stats.rehydrates_verified,
-                )
-            } else {
-                (0, 0, 0, 0)
-            };
+            let (installs_attempted, installs_verified, rehydrates_attempted, rehydrates_verified) =
+                if let Ok(stats) = self.stats.lock() {
+                    (
+                        stats.catalog_installs_attempted,
+                        stats.catalog_installs_verified,
+                        stats.rehydrates_attempted,
+                        stats.rehydrates_verified,
+                    )
+                } else {
+                    (0, 0, 0, 0)
+                };
             // resolve_queries/hits are now lock-free atomics in `live` — the accept-loop observer tallies the
             // serve-path resolve there, the query-time `resolve_cdn*` entrypoints bump the SAME atomics.
             let resolve_queries = self.live.resolve_queries.load(Ordering::Relaxed);
@@ -1462,7 +1458,9 @@ impl Centauri {
                 discovered_observed: crate::centauri_discovery::observed_total() as i64,
                 // The living roster itself — top DISCOVERED_ROSTER_SHOWN hosts, pipe-delimited, bounded so
                 // the flat-JSON crossing stays lean. Empty when nothing has been observed yet.
-                discovered_hosts: crate::centauri_discovery::discovered_line(DISCOVERED_ROSTER_SHOWN),
+                discovered_hosts: crate::centauri_discovery::discovered_line(
+                    DISCOVERED_ROSTER_SHOWN,
+                ),
             }
         }))
         .unwrap_or_else(|_| self.zeroed_snapshot())
@@ -1728,7 +1726,10 @@ fn persist_device_pair(dir: &std::path::Path, body: &[u8], sig: &[u8]) -> bool {
         std::fs::write(&tmp, bytes).is_ok() && std::fs::rename(&tmp, &dst).is_ok()
     };
     write_atomic(DEVICE_CATALOG_BASE, body)
-        && write_atomic(&format!("{DEVICE_CATALOG_BASE}{}", crate::SIGNED_SIG_SUFFIX), sig)
+        && write_atomic(
+            &format!("{DEVICE_CATALOG_BASE}{}", crate::SIGNED_SIG_SUFFIX),
+            sig,
+        )
 }
 
 /// One row of the content manifest: a shipped asset the arming hashes + admits, then authorizes in the
@@ -1775,7 +1776,9 @@ fn read_content_manifest(dir: &std::path::Path) -> Vec<ManifestRow> {
         let cols: Vec<&str> = line.split('\t').map(str::trim).collect();
         let row = match cols.as_slice() {
             // Full form: name · host · cloaked · file.
-            [name, host, cloaked, file] if !name.is_empty() && !host.is_empty() && !file.is_empty() => {
+            [name, host, cloaked, file]
+                if !name.is_empty() && !host.is_empty() && !file.is_empty() =>
+            {
                 ManifestRow {
                     name: (*name).to_string(),
                     host: (*host).to_string(),
@@ -2362,7 +2365,10 @@ mod tests {
     /// A fresh per-test temp dir (process-id + tag suffixed) — rehydrate tests write real `.tcat` pairs.
     fn rehydrate_dir(tag: &str) -> std::path::PathBuf {
         let mut dir = std::env::temp_dir();
-        dir.push(format!("torta-centauri-rehydrate-{tag}-{}", std::process::id()));
+        dir.push(format!(
+            "torta-centauri-rehydrate-{tag}-{}",
+            std::process::id()
+        ));
         let _ = std::fs::remove_dir_all(&dir);
         std::fs::create_dir_all(&dir).expect("create rehydrate test dir");
         dir
@@ -2392,7 +2398,10 @@ mod tests {
             "rehydrate RETAINS the boot-verified catalog (the loopback would serve it after start)"
         );
         let snap = c.snapshot();
-        assert_eq!(snap.catalog_assets, 1, "the snapshot witnesses the retained set");
+        assert_eq!(
+            snap.catalog_assets, 1,
+            "the snapshot witnesses the retained set"
+        );
         assert_eq!(snap.rehydrates_attempted, 1, "attempt tallied");
         assert_eq!(snap.rehydrates_verified, 1, "verified outcome tallied");
     }
@@ -2430,7 +2439,11 @@ mod tests {
         let c = Centauri::new(dir.to_string_lossy().to_string());
         c.install_catalog(body.clone(), sig.clone(), pubkey.clone())
             .expect("live install Ok");
-        assert_eq!(c.catalog.lock().unwrap().len(), 1, "live serving set retained");
+        assert_eq!(
+            c.catalog.lock().unwrap().len(),
+            1,
+            "live serving set retained"
+        );
         // Tamper ONE body byte on disk — the sig no longer verifies over these bytes.
         let mut tampered = body;
         let last = tampered.len() - 1;
@@ -2773,8 +2786,14 @@ mod tests {
         assert_eq!(snap.fallback_serves, 1, "SafeNewer ⇒ the fallback split");
         // (1b) the serve-path resolve tally: a CDN-routed serve that MATCHED ⇒ one query + one hit — the
         // dashboard's resolve-hits tile now populates from the LIVE loopback, not just a direct resolve_cdn.
-        assert_eq!(snap.resolve_queries, 1, "CDN-routed serve ⇒ one resolve query");
-        assert_eq!(snap.resolve_hits, 1, "the serve resolved to a known library ⇒ one hit");
+        assert_eq!(
+            snap.resolve_queries, 1,
+            "CDN-routed serve ⇒ one resolve query"
+        );
+        assert_eq!(
+            snap.resolve_hits, 1,
+            "the serve resolved to a known library ⇒ one hit"
+        );
         // (2) the recent ring self-fed (the on-device recentServes is no longer empty-forever).
         let recent = c.recent_serves(10);
         assert_eq!(recent.len(), 1);
@@ -2832,7 +2851,10 @@ mod tests {
         //   (b) a watched CDN host + an UNMAPPED path      ⇒ query +1, hit +0 (resolved as a miss)
         //   (c) an owned / path-keyed serve (non-CDN host) ⇒ query +0, hit +0 (never a resolve)
         let mut dir = std::env::temp_dir();
-        dir.push(format!("torta-centauri-resolve-tally-{}", std::process::id()));
+        dir.push(format!(
+            "torta-centauri-resolve-tally-{}",
+            std::process::id()
+        ));
         let _ = std::fs::remove_dir_all(&dir);
         let c = Centauri::new(dir.to_string_lossy().to_string());
         let observer = c.serve_observer();
@@ -2866,7 +2888,10 @@ mod tests {
         });
         let s = c.snapshot();
         assert_eq!(s.resolve_queries, 2, "(b) unmapped CDN path still queries");
-        assert_eq!(s.resolve_hits, 1, "(b) an unmapped path is a MISS, not a hit");
+        assert_eq!(
+            s.resolve_hits, 1,
+            "(b) an unmapped path is a MISS, not a hit"
+        );
         // The miss is ringed with NO substitution verdict — never a phantom `Exact` the dashboard would
         // print beside a 404. `recent_serves` is newest-first, so [0] is this miss.
         let miss = c.recent_serves(10);
@@ -2889,7 +2914,10 @@ mod tests {
         assert_eq!(s.resolve_queries, 2, "(c) an owned serve is NOT a resolve");
         assert_eq!(s.resolve_hits, 1, "(c) owned ⇒ no new hit");
         // Sanity: the owned page DID serve locally (it is a real serve, just not a resolve).
-        assert_eq!(s.served_locally, 2, "both Served traces fed the serve counter");
+        assert_eq!(
+            s.served_locally, 2,
+            "both Served traces fed the serve counter"
+        );
         let _ = std::fs::remove_dir_all(&dir);
     }
 
@@ -2937,7 +2965,11 @@ mod tests {
         let mut dedup = hosts.clone();
         dedup.sort();
         dedup.dedup();
-        assert_eq!(hosts.len(), dedup.len(), "ladder hosts are distinct: {hosts:?}");
+        assert_eq!(
+            hosts.len(),
+            dedup.len(),
+            "ladder hosts are distinct: {hosts:?}"
+        );
         // The cap is honored.
         assert!(warm_targets(&catalog, 0).is_empty());
         // An empty catalog derives zero targets (the honest no-op batch).
@@ -2995,7 +3027,8 @@ mod tests {
         //   • a cloaked CDN LIBRARY named by its canonical CDN path (full form → real host, cloaked) —
         //     the SURPASS: the real bytes ship, so it serves 0-egress under the CDN name with NO fetch.
         let owned: &[u8] = b"<!doctype html><title>Torta offline</title><h1>served 0-egress</h1>";
-        let lib: &[u8] = b"/*! curated CDN library bytes - served locally, the CDN never contacted */\n";
+        let lib: &[u8] =
+            b"/*! curated CDN library bytes - served locally, the CDN never contacted */\n";
         fs::write(content_dir.join("index.html"), owned).expect("write owned asset");
         fs::write(content_dir.join("lib.min.js"), lib).expect("write lib asset");
         fs::write(
@@ -3021,11 +3054,21 @@ mod tests {
         );
 
         // BOTH shipped assets were hashed + admitted into the LIVE shared cache — the honest libraries=2.
-        assert_eq!(report.cached_assets, 2, "the owned page + the cloaked CDN library both admitted");
-        assert_eq!(c.snapshot().libraries, 2, "the LIVE cache holds both shipped assets");
+        assert_eq!(
+            report.cached_assets, 2,
+            "the owned page + the cloaked CDN library both admitted"
+        );
+        assert_eq!(
+            c.snapshot().libraries,
+            2,
+            "the LIVE cache holds both shipped assets"
+        );
 
         // The GROWING cloak roster was authored (one entry per live CDN host) + the catalog installed.
-        assert!(report.cloak_hosts > 0, "the live cdn_hosts roster is non-empty");
+        assert!(
+            report.cloak_hosts > 0,
+            "the live cdn_hosts roster is non-empty"
+        );
         assert_eq!(
             report.catalog_entries,
             report.cached_assets + report.cloak_hosts,
@@ -3077,8 +3120,14 @@ mod tests {
 
         // 3c — the RAM⊗NAND half: the arming pass PERSISTED its own device-signed pair (the pillar
         // authors the durable artifact itself; no host-side producer exists on a phone).
-        assert!(report.persisted, "the device-signed pair persisted to the cache dir");
-        assert!(report2.persisted, "re-arm re-persists (overwrite of an identical authority)");
+        assert!(
+            report.persisted,
+            "the device-signed pair persisted to the cache dir"
+        );
+        assert!(
+            report2.persisted,
+            "re-arm re-persists (overwrite of an identical authority)"
+        );
         assert!(
             cache_dir.join(DEVICE_CATALOG_BASE).is_file(),
             "device-catalog.tcat exists in the durable cache dir"
@@ -3118,7 +3167,10 @@ mod tests {
             content_dir.to_string_lossy().into_owned(),
             key_dir.to_string_lossy().into_owned(),
         );
-        assert!(report.installed && report.persisted, "boot 1 authors + persists");
+        assert!(
+            report.installed && report.persisted,
+            "boot 1 authors + persists"
+        );
 
         // Boot 2 (the fast lane): a FRESH Object rehydrates the persisted pair against the device
         // key alone — content_dir untouched, no re-hash, the catalog RETAINS as serve authority.
@@ -3204,8 +3256,10 @@ mod recent_ring_cap_tests {
         // (a) far more valid rows than the cap -> exactly the cap, and the FIRST rows survive.
         let mut tsv = String::new();
         for i in 0..(512 * 3) {
-            tsv.push_str(&format!("name{i:05}	cdn.example	1	f{i:05}.js
-"));
+            tsv.push_str(&format!(
+                "name{i:05}	cdn.example	1	f{i:05}.js
+"
+            ));
         }
         std::fs::write(dir.join("content.tsv"), &tsv).expect("write");
         let rows = read_content_manifest(&dir);
@@ -3219,13 +3273,19 @@ mod recent_ring_cap_tests {
         // (b) comments and malformed lines are SKIPPED, not counted against the cap.
         let mut tsv2 = String::new();
         for i in 0..1200 {
-            tsv2.push_str(&format!("# comment {i}
-"));
-            tsv2.push_str("junk-with-no-tabs
-");
+            tsv2.push_str(&format!(
+                "# comment {i}
+"
+            ));
+            tsv2.push_str(
+                "junk-with-no-tabs
+",
+            );
         }
-        tsv2.push_str("real	cdn.example	1	real.js
-");
+        tsv2.push_str(
+            "real	cdn.example	1	real.js
+",
+        );
         std::fs::write(dir.join("content.tsv"), &tsv2).expect("write");
         let rows2 = read_content_manifest(&dir);
         assert_eq!(
@@ -3236,8 +3296,12 @@ mod recent_ring_cap_tests {
         assert_eq!(rows2[0].name, "real");
 
         // (c) the short form is accepted and defaults to the owned host.
-        std::fs::write(dir.join("content.tsv"), "page	index.html
-").expect("write");
+        std::fs::write(
+            dir.join("content.tsv"),
+            "page	index.html
+",
+        )
+        .expect("write");
         let rows3 = read_content_manifest(&dir);
         assert_eq!(rows3.len(), 1);
         assert_eq!(rows3[0].host, "torta.local");

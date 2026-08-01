@@ -168,7 +168,9 @@ pub fn append_resolve(
 /// exactly one place and is greppable INSIDE the shipped `.so` (the artifact witness a doc comment
 /// can never be), and so the resolver hot path carries no formatting cost beyond the call.
 pub(crate) fn debug_v6_withheld() {
-    ::log::warn!("resolver: AAAA withheld as NODATA -- v6 egress presumed dead, probe cadence live");
+    ::log::warn!(
+        "resolver: AAAA withheld as NODATA -- v6 egress presumed dead, probe cadence live"
+    );
 }
 
 /// WHICH gate denied a query. Four distinct gates synthesize the same NXDOMAIN, and before this
@@ -285,7 +287,14 @@ mod tests {
             Some(12),
             28,
         );
-        append_resolve(&p, 102, ResolveOutcome::Blocked(DenyGate::Blocklist), None, None, 1);
+        append_resolve(
+            &p,
+            102,
+            ResolveOutcome::Blocked(DenyGate::Blocklist),
+            None,
+            None,
+            1,
+        );
 
         let got = crate::log_tier::log_tail_recent(&p.to_string_lossy(), 10);
         assert!(

@@ -141,7 +141,9 @@ impl Risk {
             // The F escape hatch: any other non-empty slug is a detector-coined lane, kept
             // whole (fail-open — a future detector's rows survive a downgrade round-trip).
             "" | "-" => return None,
-            other => Risk::Custom { slug: other.to_string() },
+            other => Risk::Custom {
+                slug: other.to_string(),
+            },
         })
     }
 
@@ -164,7 +166,10 @@ impl Risk {
 
     /// The mitigation ceiling — the tier that NEVER heals its licence back.
     fn is_active_destroy(&self) -> bool {
-        matches!(self, Risk::Malware | Risk::Spoof | Risk::Mitm | Risk::Custom { .. })
+        matches!(
+            self,
+            Risk::Malware | Risk::Spoof | Risk::Mitm | Risk::Custom { .. }
+        )
     }
 
     fn lane_index(&self) -> usize {
@@ -420,7 +425,11 @@ fn classify(host: &str, qtype: u16, event: NavEvent) -> Option<(Risk, Source)> {
         // The guard fires on exactly two shapes: a private-PTR stop (qtype 12 ⇒ the reverse
         // lookup would have leaked private address space) or a special-use zone (LAN sonar).
         NavEvent::Guarded => Some((
-            if qtype == 12 { Risk::IpLeak } else { Risk::Sonar },
+            if qtype == 12 {
+                Risk::IpLeak
+            } else {
+                Risk::Sonar
+            },
             Source::Guard,
         )),
         NavEvent::RebindReject => Some((Risk::Spoof, Source::Rebind)),
@@ -523,13 +532,22 @@ struct DetectionCfg {
 
 impl Default for DetectionCfg {
     fn default() -> Self {
-        DetectionCfg { dga: true, tunnel: true, beacon: true, homoglyph: true, newborn: true }
+        DetectionCfg {
+            dga: true,
+            tunnel: true,
+            beacon: true,
+            homoglyph: true,
+            newborn: true,
+        }
     }
 }
 
 /// The runtime detection-toggle read (`[detection]` in scoring.toml; defaults = all ON).
 fn detection_cfg() -> DetectionCfg {
-    scoring_cell().read().map(|g| g.detection.clone()).unwrap_or_default()
+    scoring_cell()
+        .read()
+        .map(|g| g.detection.clone())
+        .unwrap_or_default()
 }
 
 /// `[quarantine]` — the G-rung TTL circuit-breaker on earned sequestration.
@@ -543,7 +561,9 @@ struct QuarantineCfg {
 
 impl Default for QuarantineCfg {
     fn default() -> Self {
-        QuarantineCfg { ttl_secs: QUARANTINE_TTL_SECS }
+        QuarantineCfg {
+            ttl_secs: QUARANTINE_TTL_SECS,
+        }
     }
 }
 
@@ -567,7 +587,10 @@ struct LicenceCfg {
 
 impl Default for LicenceCfg {
     fn default() -> Self {
-        LicenceCfg { start: LICENCE_START, probation_at: PROBATION_AT }
+        LicenceCfg {
+            start: LICENCE_START,
+            probation_at: PROBATION_AT,
+        }
     }
 }
 
@@ -849,10 +872,19 @@ fn serialize_reputation(map: &HashMap<String, Rep>) -> String {
     hosts.sort();
     for h in hosts {
         let r = &map[h];
-        let ls = r.licence_start.map(|v| v.to_string()).unwrap_or_else(|| "-".into());
-        let pa = r.probation_at.map(|v| v.to_string()).unwrap_or_else(|| "-".into());
+        let ls = r
+            .licence_start
+            .map(|v| v.to_string())
+            .unwrap_or_else(|| "-".into());
+        let pa = r
+            .probation_at
+            .map(|v| v.to_string())
+            .unwrap_or_else(|| "-".into());
         let co = if r.corrected { "c" } else { "-" };
-        out.push_str(&format!("{h}\t{}\t{:.3}\t{ls}\t{pa}\t{co}\n", r.baseline, r.confidence));
+        out.push_str(&format!(
+            "{h}\t{}\t{:.3}\t{ls}\t{pa}\t{co}\n",
+            r.baseline, r.confidence
+        ));
     }
     out
 }
@@ -906,7 +938,13 @@ fn load_reputation() {
         let Ok(confidence) = f[2].parse::<f32>() else {
             continue;
         };
-        let opt = |s: &str| if s == "-" { None } else { s.parse::<i32>().ok() };
+        let opt = |s: &str| {
+            if s == "-" {
+                None
+            } else {
+                s.parse::<i32>().ok()
+            }
+        };
         guard.insert(
             f[0].to_string(),
             Rep {
@@ -992,7 +1030,10 @@ pub(crate) fn score_host(
     // first-install noise, not evidence.
     if newborn
         && signals.iter().any(|s| {
-            matches!(s, Signal::Dga | Signal::Tunnel | Signal::Beacon | Signal::Homoglyph)
+            matches!(
+                s,
+                Signal::Dga | Signal::Tunnel | Signal::Beacon | Signal::Homoglyph
+            )
         })
     {
         signals.push(Signal::Newborn);
@@ -1013,7 +1054,9 @@ pub(crate) fn score_host(
             } else {
                 return None;
             };
-            Risk::Custom { slug: slug.to_string() }
+            Risk::Custom {
+                slug: slug.to_string(),
+            }
         }
     };
     let mut weight = penalty_for(&risk);
@@ -1024,15 +1067,24 @@ pub(crate) fn score_host(
                 weight = (weight + r.baseline).max(0);
                 rep_conf = r.confidence;
                 // G rung: a user-taught row testifies AS the user's correction.
-                signals.push(if r.corrected { Signal::Correction } else { Signal::Reputation });
+                signals.push(if r.corrected {
+                    Signal::Correction
+                } else {
+                    Signal::Reputation
+                });
             }
         }
     }
     // Honesty scalar: one witness = 0.4; each further independent faculty +0.15; a confident
     // reputation row adds up to +0.3 of its own confidence. Deterministic, test-asserted.
-    let confidence = (0.4 + 0.15 * signals.len().saturating_sub(1) as f32 + 0.3 * rep_conf)
-        .clamp(0.0, 1.0);
-    Some(ThreatScore { risk, weight, confidence, signals })
+    let confidence =
+        (0.4 + 0.15 * signals.len().saturating_sub(1) as f32 + 0.3 * rep_conf).clamp(0.0, 1.0);
+    Some(ThreatScore {
+        risk,
+        weight,
+        confidence,
+        signals,
+    })
 }
 
 /// The CURRENT fused score of an already-witnessed host — the `underground_score` read export.
@@ -1059,13 +1111,22 @@ pub(crate) fn score_of(host: &str) -> Option<ThreatScore> {
                 weight = (weight + r.baseline).max(0);
                 rep_conf = r.confidence;
                 // G rung: a user-taught row testifies AS the user's correction.
-                signals.push(if r.corrected { Signal::Correction } else { Signal::Reputation });
+                signals.push(if r.corrected {
+                    Signal::Correction
+                } else {
+                    Signal::Reputation
+                });
             }
         }
     }
-    let confidence = (0.4 + 0.15 * signals.len().saturating_sub(1) as f32 + 0.3 * rep_conf)
-        .clamp(0.0, 1.0);
-    Some(ThreatScore { risk, weight, confidence, signals })
+    let confidence =
+        (0.4 + 0.15 * signals.len().saturating_sub(1) as f32 + 0.3 * rep_conf).clamp(0.0, 1.0);
+    Some(ThreatScore {
+        risk,
+        weight,
+        confidence,
+        signals,
+    })
 }
 
 // ── The G rung: correction log + live verdict event ring ────────────────────────────────────────
@@ -1130,7 +1191,13 @@ fn log_correction(c: Correction) {
         let mut body = String::with_capacity(32 + guard.len() * 48);
         body.push_str("#underground-corrections v1\n");
         for c in guard.iter() {
-            body.push_str(&format!("{}\t{}\t{}\t{}\n", c.host, c.from.slug(), c.to.slug(), c.ts));
+            body.push_str(&format!(
+                "{}\t{}\t{}\t{}\n",
+                c.host,
+                c.from.slug(),
+                c.to.slug(),
+                c.ts
+            ));
         }
         let tmp = path.with_extension("tsv.tmp");
         if std::fs::write(&tmp, body.as_bytes()).is_ok() {
@@ -1222,7 +1289,10 @@ pub(crate) fn events_snapshot() -> Vec<VerdictEvent> {
     if !armed() {
         return Vec::new();
     }
-    events_cell().read().map(|g| g.iter().cloned().collect()).unwrap_or_default()
+    events_cell()
+        .read()
+        .map(|g| g.iter().cloned().collect())
+        .unwrap_or_default()
 }
 
 /// H rung — the settings-pane RESET button: forget every learned reputation row AND the
@@ -1454,8 +1524,11 @@ fn record_scored_at(host: &str, score: &ThreatScore, source: Source, now: u64) {
     // after probation doubling; the primary witness names itself, a bare lane hit names the
     // lane).
     let delta = entry.points - before;
-    let signal =
-        score.signals.first().map(|s| s.slug().to_string()).unwrap_or_else(|| entry.risk.slug());
+    let signal = score
+        .signals
+        .first()
+        .map(|s| s.slug().to_string())
+        .unwrap_or_else(|| entry.risk.slug());
     let (host_ev, verdict_ev) = (entry.host.clone(), entry.verdict);
     drop(guard);
     push_event(&host_ev, &verdict_ev, delta, &signal, now);
@@ -1523,7 +1596,12 @@ pub(crate) fn set_verdict(host: &str, code: u8) -> bool {
     // teaches nothing.
     if from != verdict {
         let key = normalize(host);
-        log_correction(Correction { host: key.clone(), from, to: verdict, ts: now });
+        log_correction(Correction {
+            host: key.clone(),
+            from,
+            to: verdict,
+            ts: now,
+        });
         let (delta, bump) = match verdict {
             Verdict::Trusted => (-3, 0.25),
             Verdict::Distrusted => (3, 0.25),
@@ -1747,8 +1825,16 @@ pub struct UndergroundJudgement {
 /// <ts> <VERB> <host> <lane> -<penalty> licence=<points>
 /// ```
 pub fn format_underground_line(j: &UndergroundJudgement) -> String {
-    let host = if j.host.trim().is_empty() { "-" } else { j.host.trim() };
-    let lane = if j.lane.trim().is_empty() { "-" } else { j.lane.trim() };
+    let host = if j.host.trim().is_empty() {
+        "-"
+    } else {
+        j.host.trim()
+    };
+    let lane = if j.lane.trim().is_empty() {
+        "-"
+    } else {
+        j.lane.trim()
+    };
     format!(
         "{} {} {} {} -{} licence={}\n",
         j.ts,
@@ -1784,7 +1870,11 @@ fn append_underground_log(j: &UndergroundJudgement) {
         return;
     };
     use std::io::Write as _;
-    if let Ok(mut f) = std::fs::OpenOptions::new().create(true).append(true).open(&path) {
+    if let Ok(mut f) = std::fs::OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(&path)
+    {
         let _ = f.write_all(format_underground_line(j).as_bytes());
     }
 }
@@ -2186,7 +2276,9 @@ pub(crate) fn snapshot(top_n: u32) -> UndergroundSnapshot {
             && e.verdict == Verdict::Neutral
             && e.seq_at > 0
         {
-            e.seq_at.saturating_add(quarantine_ttl_secs()).saturating_sub(now)
+            e.seq_at
+                .saturating_add(quarantine_ttl_secs())
+                .saturating_sub(now)
         } else {
             0
         };
@@ -2226,13 +2318,23 @@ pub(crate) fn snapshot(top_n: u32) -> UndergroundSnapshot {
             (s, *e)
         })
         .collect();
-    snap.top =
-        scored.iter().take(top_n as usize).map(|(s, e)| format_row(e, *s, row_now)).collect();
+    snap.top = scored
+        .iter()
+        .take(top_n as usize)
+        .map(|(s, e)| format_row(e, *s, row_now))
+        .collect();
     // E rung: the score-ordered ranking — a heavy lane with few hits outranks a light lane
     // with many — plus the store-wide mean of the same live score.
-    scored.sort_by(|a, b| b.0.cmp(&a.0).then(b.1.hits.cmp(&a.1.hits)).then(a.1.host.cmp(&b.1.host)));
-    snap.top_by_score =
-        scored.iter().take(top_n as usize).map(|(s, e)| format_row(e, *s, row_now)).collect();
+    scored.sort_by(|a, b| {
+        b.0.cmp(&a.0)
+            .then(b.1.hits.cmp(&a.1.hits))
+            .then(a.1.host.cmp(&b.1.host))
+    });
+    snap.top_by_score = scored
+        .iter()
+        .take(top_n as usize)
+        .map(|(s, e)| format_row(e, *s, row_now))
+        .collect();
     snap.mean_score = if rows.is_empty() {
         0.0
     } else {
@@ -2399,8 +2501,15 @@ mod tests {
         }
         let guard = store().read().unwrap();
         let e = guard.by_host.get("cdn.example").unwrap();
-        assert_eq!(e.hits, 40, "every accident is still WITNESSED — immunity is not blindness");
-        assert_eq!(e.points, licence_start_for("cdn.example"), "#84-B: the cloak pins the licence");
+        assert_eq!(
+            e.hits, 40,
+            "every accident is still WITNESSED — immunity is not blindness"
+        );
+        assert_eq!(
+            e.points,
+            licence_start_for("cdn.example"),
+            "#84-B: the cloak pins the licence"
+        );
         assert!(!e.sequestrated);
     }
 
@@ -2432,11 +2541,19 @@ mod tests {
         );
         {
             let guard = store().read().unwrap();
-            assert_eq!(guard.by_host.get("probe.example").unwrap().hits, 3, "all 3 still witnessed");
+            assert_eq!(
+                guard.by_host.get("probe.example").unwrap().hits,
+                3,
+                "all 3 still witnessed"
+            );
         }
         // A genuinely NEW second is a genuinely new accident — the gate must not become a mute.
         record_at("probe.example", Risk::Tracker, Source::Blocklist, 501);
-        assert_eq!(points_of("probe.example"), Some(start - 6), "a later second charges again");
+        assert_eq!(
+            points_of("probe.example"),
+            Some(start - 6),
+            "a later second charges again"
+        );
     }
 
     /// #84 — the two pure gates, exhaustively. Total functions, so a new [`Source`] variant that
@@ -2451,8 +2568,17 @@ mod tests {
         assert!(!is_duplicate_probe(false, 100, 101));
         // Only the offline CDN is immune; every other provenance still pays.
         assert!(cloak_is_immune(Source::Centauri));
-        for s in [Source::Blocklist, Source::Guard, Source::Rebind, Source::Suffix] {
-            assert!(!cloak_is_immune(s), "{:?} must still be chargeable", s.slug());
+        for s in [
+            Source::Blocklist,
+            Source::Guard,
+            Source::Rebind,
+            Source::Suffix,
+        ] {
+            assert!(
+                !cloak_is_immune(s),
+                "{:?} must still be chargeable",
+                s.slug()
+            );
         }
     }
 
@@ -2470,7 +2596,10 @@ mod tests {
         let before = {
             let guard = store().read().unwrap();
             let e = guard.by_host.get("drained.example").unwrap();
-            assert!(e.sequestrated, "precondition: the host must be sequestrated");
+            assert!(
+                e.sequestrated,
+                "precondition: the host must be sequestrated"
+            );
             assert_eq!(e.verdict, Verdict::Neutral);
             e.last_seen
         };
@@ -2478,7 +2607,13 @@ mod tests {
         ARMED.store(true, Ordering::Release);
         feed("drained.example", 1, NavEvent::Blocked, 0, 3);
         ARMED.store(false, Ordering::Release);
-        let after = store().read().unwrap().by_host.get("drained.example").unwrap().last_seen;
+        let after = store()
+            .read()
+            .unwrap()
+            .by_host
+            .get("drained.example")
+            .unwrap()
+            .last_seen;
         assert_eq!(
             after, before,
             "the engine recorded its OWN block as a new accident — the retest clock is now hot \
@@ -2494,7 +2629,15 @@ mod tests {
         for i in 0..7 {
             record_at("drained.example", Risk::Tracker, Source::Blocklist, 100 + i);
         }
-        assert!(store().read().unwrap().by_host.get("drained.example").unwrap().sequestrated);
+        assert!(
+            store()
+                .read()
+                .unwrap()
+                .by_host
+                .get("drained.example")
+                .unwrap()
+                .sequestrated
+        );
         // Not yet idle long enough — nothing moves.
         settle_recovery_at(100 + RECOVERY_IDLE_SECS - 1);
         assert_eq!(points_of("track.example"), Some(17));
@@ -2574,10 +2717,10 @@ mod tests {
     #[test]
     fn rehydrate_defangs_wrongly_sequestrated_content_lane() {
         let _serial = scrub();
-        let dir =
-            std::env::temp_dir().join(format!("torta-underground-df-{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("torta-underground-df-{}", std::process::id()));
         std::fs::create_dir_all(&dir).unwrap();
-        let old = "#underground-ledger v1\n#meta recorded_total=9 recovered_total=0 teeth_total=0\n\
+        let old =
+            "#underground-ledger v1\n#meta recorded_total=9 recovered_total=0 teeth_total=0\n\
                    cdn.example\tmitm\tcentauri\t9\t0\t100\t200\t100\t-\t1\n";
         std::fs::write(dir.join(LEDGER_FILE_NAME), old).unwrap();
         arm(dir.to_str().unwrap());
@@ -2623,7 +2766,7 @@ mod tests {
         assert_eq!(worst[0], "track.example");
         assert_eq!(worst[3], "7");
         assert_eq!(worst[5], "1"); // sequestrated flag
-        // Disarmed ⇒ the DORMANT shape, zeros everywhere (honesty law).
+                                   // Disarmed ⇒ the DORMANT shape, zeros everywhere (honesty law).
         ARMED.store(false, Ordering::Release);
         let cold = snapshot(5);
         assert!(!cold.armed);
@@ -2638,7 +2781,7 @@ mod tests {
         ARMED.store(true, Ordering::Release);
         record_at("vouched.example", Risk::Tracker, Source::Suffix, 100);
         assert!(set_verdict("vouched.example", 1)); // Trusted
-        // Hammer with the harshest accidents: a vouched host must NOT bleed and NEVER sequestrate.
+                                                    // Hammer with the harshest accidents: a vouched host must NOT bleed and NEVER sequestrate.
         for i in 0..12 {
             record_at("vouched.example", Risk::Malware, Source::Blocklist, 100 + i);
         }
@@ -2693,8 +2836,7 @@ mod tests {
     fn verdict_round_trips_through_the_ledger_column_eleven() {
         let _serial = scrub();
         ARMED.store(true, Ordering::Release);
-        let dir =
-            std::env::temp_dir().join(format!("torta-underground-vd-{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("torta-underground-vd-{}", std::process::id()));
         std::fs::create_dir_all(&dir).unwrap();
         {
             let mut d = ledger_dir_cell().write().unwrap();
@@ -2724,7 +2866,8 @@ mod tests {
     fn legacy_ten_column_row_reads_back_neutral() {
         let _serial = scrub();
         // A pre-Trust-bands row (exactly 10 columns) MUST rehydrate as Neutral, never a spurious pin.
-        let old = "#underground-ledger v1\n#meta recorded_total=1 recovered_total=0 teeth_total=0\n\
+        let old =
+            "#underground-ledger v1\n#meta recorded_total=1 recovered_total=0 teeth_total=0\n\
                    old.example\ttracker\tblocklist\t3\t8\t100\t200\t100\t-\t0\n";
         let (entries, _, _, _) = parse_body(old);
         assert_eq!(entries.len(), 1);
@@ -2774,7 +2917,12 @@ mod tests {
         assert!(s2.confidence > s.confidence);
         // Reputation can pardon but never invert into a reward (floor 0).
         reputation_set("ads.doubleclick.net", -99, 0.5);
-        assert_eq!(score_host("ads.doubleclick.net", 1, NavEvent::Answered, 0, 0).unwrap().weight, 0);
+        assert_eq!(
+            score_host("ads.doubleclick.net", 1, NavEvent::Answered, 0, 0)
+                .unwrap()
+                .weight,
+            0
+        );
         // A rebind rejection carries the GeoRebind witness on the Spoof lane.
         let s3 = score_host("rebind.example", 1, NavEvent::RebindReject, 0, 0).unwrap();
         assert_eq!(s3.risk, Risk::Spoof);
@@ -2836,10 +2984,16 @@ mod tests {
         assert_eq!(rep.get("pardoned.example").unwrap().baseline, -3);
         drop(rep);
         // The dirty gate: an unchanged map persists ZERO further IO (idempotence witness).
-        let mtime_before = std::fs::metadata(dir.join(REPUTATION_FILE_NAME)).unwrap().modified().unwrap();
+        let mtime_before = std::fs::metadata(dir.join(REPUTATION_FILE_NAME))
+            .unwrap()
+            .modified()
+            .unwrap();
         persist_reputation();
         assert_eq!(
-            std::fs::metadata(dir.join(REPUTATION_FILE_NAME)).unwrap().modified().unwrap(),
+            std::fs::metadata(dir.join(REPUTATION_FILE_NAME))
+                .unwrap()
+                .modified()
+                .unwrap(),
             mtime_before
         );
         let _ = std::fs::remove_dir_all(&dir);
@@ -2856,10 +3010,26 @@ mod tests {
             record_at("probe.lan", Risk::Sonar, Source::Guard, now + i);
         }
         assert_eq!(points_of("probe.lan"), Some(5));
-        assert!(!store().read().unwrap().by_host.get("probe.lan").unwrap().sequestrated);
+        assert!(
+            !store()
+                .read()
+                .unwrap()
+                .by_host
+                .get("probe.lan")
+                .unwrap()
+                .sequestrated
+        );
         record_at("probe.lan", Risk::Sonar, Source::Guard, now);
         assert_eq!(points_of("probe.lan"), Some(0));
-        assert!(store().read().unwrap().by_host.get("probe.lan").unwrap().sequestrated);
+        assert!(
+            store()
+                .read()
+                .unwrap()
+                .by_host
+                .get("probe.lan")
+                .unwrap()
+                .sequestrated
+        );
     }
 
     #[test]
@@ -2913,7 +3083,12 @@ mod tests {
         // Cyrillic-а "аpple" — no list knows it; the rendered-shape faculty convicts it,
         // and the first-sight probation mark joins BESIDE the shape witness (61F).
         let s = score_host("xn--pple-43d.example", 1, NavEvent::Answered, 0, 0).unwrap();
-        assert_eq!(s.risk, Risk::Custom { slug: "homoglyph".into() });
+        assert_eq!(
+            s.risk,
+            Risk::Custom {
+                slug: "homoglyph".into()
+            }
+        );
         assert_eq!(s.weight, 10); // a forged brand is a malware SHAPE — top tier
         assert!(s.signals.contains(&Signal::Homoglyph));
         assert!(s.signals.contains(&Signal::Newborn));
@@ -2943,7 +3118,12 @@ mod tests {
         }
         // The fifth crosses TUNNEL_BURST — the shape is called + coined.
         let s = score_host("exfil2.example", 16, NavEvent::Answered, 400, 0).unwrap();
-        assert_eq!(s.risk, Risk::Custom { slug: "tunnel".into() });
+        assert_eq!(
+            s.risk,
+            Risk::Custom {
+                slug: "tunnel".into()
+            }
+        );
         assert!(s.signals.contains(&Signal::Tunnel));
     }
 
@@ -2956,7 +3136,12 @@ mod tests {
             assert!(score_host("probe9.example", 1, NavEvent::Answered, 30, 3).is_none());
         }
         let s = score_host("probe9.example", 1, NavEvent::Answered, 30, 3).unwrap();
-        assert_eq!(s.risk, Risk::Custom { slug: "tunnel".into() });
+        assert_eq!(
+            s.risk,
+            Risk::Custom {
+                slug: "tunnel".into()
+            }
+        );
         assert!(s.signals.contains(&Signal::Tunnel));
     }
 
@@ -2985,7 +3170,10 @@ mod tests {
         feed("xkqzwtplvmnrbds.tld", 1, NavEvent::Answered, 64, 0);
         persist_ledger();
         let on_disk = std::fs::read_to_string(dir.join(LEDGER_FILE_NAME)).unwrap();
-        assert!(on_disk.contains("xkqzwtplvmnrbds.tld\tdga\t"), "raw slug missing: {on_disk}");
+        assert!(
+            on_disk.contains("xkqzwtplvmnrbds.tld\tdga\t"),
+            "raw slug missing: {on_disk}"
+        );
         // …RAM blanked, NAND rehydrates: the coined lane comes back WHOLE (the from_slug
         // catch-all — no round-trip downgrade, no dropped row).
         {
@@ -3016,7 +3204,10 @@ mod tests {
             record_at(host, Risk::Sonar, Source::Guard, now - i);
         }
         let g = store().read().unwrap();
-        assert!(g.by_host.get(host).unwrap().sequestrated, "drain failed for {host}");
+        assert!(
+            g.by_host.get(host).unwrap().sequestrated,
+            "drain failed for {host}"
+        );
     }
 
     #[test]
@@ -3028,7 +3219,10 @@ mod tests {
         {
             let mut g = store().write().unwrap();
             let e = g.by_host.get_mut("ads.doubleclick.net").unwrap();
-            assert!(e.seq_at > 0, "the close edge must stamp the quarantine clock");
+            assert!(
+                e.seq_at > 0,
+                "the close edge must stamp the quarantine clock"
+            );
             // Warp: the TTL served in full AND the recent window ran clean.
             e.seq_at = now - QUARANTINE_TTL_SECS - 10;
             e.last_seen = now - QUARANTINE_TTL_SECS / 4 - 10;
@@ -3042,7 +3236,9 @@ mod tests {
         drop(g);
         // …and the restore streamed live.
         let ev = events_snapshot();
-        assert!(ev.iter().any(|e| e.signal == "retest" && e.score_delta == LICENCE_START));
+        assert!(ev
+            .iter()
+            .any(|e| e.signal == "retest" && e.score_delta == LICENCE_START));
     }
 
     #[test]
@@ -3063,7 +3259,10 @@ mod tests {
         {
             let g = store().read().unwrap();
             let e = g.by_host.get("ads.doubleclick.net").unwrap();
-            assert!(e.sequestrated, "Malware NEVER walks on TTL — earned-terminal is law");
+            assert!(
+                e.sequestrated,
+                "Malware NEVER walks on TTL — earned-terminal is law"
+            );
             assert_eq!(e.points, 0);
         }
         // A non-active-destroy host still HAMMERING (fresh last_seen) doesn't walk either.
@@ -3088,7 +3287,10 @@ mod tests {
         // Neutral → Distrusted: a REAL flip. The log records it, the row learns severity.
         assert!(set_verdict("shady.example", 2));
         let log = std::fs::read_to_string(dir.join(CORRECTIONS_FILE_NAME)).unwrap();
-        assert!(log.contains("shady.example\tneutral\tdistrusted\t"), "log row missing: {log}");
+        assert!(
+            log.contains("shady.example\tneutral\tdistrusted\t"),
+            "log row missing: {log}"
+        );
         {
             let rep = reputation_cell().read().unwrap();
             let r = rep.get("shady.example").unwrap();
@@ -3133,10 +3335,16 @@ mod tests {
             feed("ads.doubleclick.net", 1, NavEvent::Answered, 0, 0);
         }
         let ev = events_snapshot();
-        assert_eq!(ev.len(), EVENT_RING_CAP, "the ring holds exactly the newest 64");
+        assert_eq!(
+            ev.len(),
+            EVENT_RING_CAP,
+            "the ring holds exactly the newest 64"
+        );
         assert_eq!(ev[0].seq, 6, "the first six accidents fell off the back");
         assert_eq!(ev[63].seq, 69);
-        assert!(ev.iter().all(|e| e.host == "ads.doubleclick.net" && e.signal == "suffix"));
+        assert!(ev
+            .iter()
+            .all(|e| e.host == "ads.doubleclick.net" && e.signal == "suffix"));
         // The bleed is honest: the first surviving rows still carry negative deltas; the
         // floor-0 tail carries 0 (a drained licence bleeds no further).
         assert_eq!(ev[63].score_delta, 0);
@@ -3165,11 +3373,17 @@ mod tests {
         let g = store().read().unwrap();
         let e = g.by_host.get("ads.doubleclick.net").unwrap();
         assert!(e.sequestrated);
-        assert_eq!(e.seq_at, seq_at_before, "column 12 must round-trip the quarantine clock");
+        assert_eq!(
+            e.seq_at, seq_at_before,
+            "column 12 must round-trip the quarantine clock"
+        );
         drop(g);
         assert_eq!(corrections_cell().read().unwrap().len(), 1);
         let rep = reputation_cell().read().unwrap();
-        assert!(rep.get("shady.example").unwrap().corrected, "the c flag survives the mirror");
+        assert!(
+            rep.get("shady.example").unwrap().corrected,
+            "the c flag survives the mirror"
+        );
         drop(rep);
         let _ = std::fs::remove_dir_all(&dir);
     }
@@ -3239,7 +3453,10 @@ mod tests {
         let log_disk = std::fs::read_to_string(dir.join(CORRECTIONS_FILE_NAME)).unwrap();
         assert_eq!(log_disk.trim(), "#underground-corrections v1");
         // The ledger is UNTOUCHED — the licence economy survives the amnesty.
-        assert_eq!(points_of("probe.lan"), Some(LICENCE_START - Risk::Sonar.base_penalty()));
+        assert_eq!(
+            points_of("probe.lan"),
+            Some(LICENCE_START - Risk::Sonar.base_penalty())
+        );
         // …and a second reset finds nothing to forget.
         assert!(!reputation_reset());
         let _ = std::fs::remove_dir_all(&dir);
@@ -3267,7 +3484,10 @@ mod review_channel_tests {
             penalty: 8,
             points: 0,
         });
-        assert_eq!(line, "1785028019 SEQUESTRATE wildriftfire.cc tunnel -8 licence=0\n");
+        assert_eq!(
+            line,
+            "1785028019 SEQUESTRATE wildriftfire.cc tunnel -8 licence=0\n"
+        );
         // The descent must be legible too, not just the final verdict.
         let mid = format_underground_line(&UndergroundJudgement {
             ts: 1_785_028_017,

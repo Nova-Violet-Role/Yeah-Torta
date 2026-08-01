@@ -950,7 +950,10 @@ mod tests {
         // NON-VACUITY: the accepted id genuinely parses, so the sweep above is not passing merely
         // because every catalog this fixture builds is broken.
         let good = build_catalog(&sample_entries());
-        assert_eq!(good[6], 0x02, "the fixture must build a BLAKE2b-tagged catalog");
+        assert_eq!(
+            good[6], 0x02,
+            "the fixture must build a BLAKE2b-tagged catalog"
+        );
         assert!(
             parse_resigned(&good).is_ok(),
             "BLAKE2b must be ACCEPTED, or the rejection sweep proves nothing"

@@ -422,7 +422,10 @@ mod tests {
         // And the retained ones are the FIRST seen, which is the documented drop policy (rotation.rs:87
         // -- a full set drops the newcomer). Pinned so a change of policy has to be deliberate.
         assert_eq!(s.rtt_hints[0].0, "u0");
-        assert_eq!(s.rtt_hints[MAX_RTT_HINTS - 1].0, format!("u{}", MAX_RTT_HINTS - 1));
+        assert_eq!(
+            s.rtt_hints[MAX_RTT_HINTS - 1].0,
+            format!("u{}", MAX_RTT_HINTS - 1)
+        );
 
         // An encode of that state re-emits at most the ceiling, so the file cannot grow across a
         // save/load cycle either -- the composition the app performs on every restart.

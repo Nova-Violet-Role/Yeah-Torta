@@ -86,8 +86,12 @@ fn ints_in(s: &str) -> Vec<usize> {
 fn the_kotlin_tin_ladder_matches_the_engine() {
     let p = repo_root()
         .join("libumdnscrypt/src/main/kotlin/pillar/kuma_saimono/libumdnscrypt/dns_engine/EngineConfig.kt");
-    let src = std::fs::read_to_string(&p)
-        .unwrap_or_else(|e| panic!("cannot read the Kotlin engine config at {}: {e}", p.display()));
+    let src = std::fs::read_to_string(&p).unwrap_or_else(|e| {
+        panic!(
+            "cannot read the Kotlin engine config at {}: {e}",
+            p.display()
+        )
+    });
 
     let line = src
         .lines()
@@ -129,9 +133,9 @@ fn the_slint_basin_caps_match_the_engine() {
             });
         // Slice off the comment so a `// TIN_MAX_DEPTH[0]` trailer cannot be parsed as the value.
         let code = line.split("//").next().unwrap_or(line);
-        *ints_in(code).last().unwrap_or_else(|| {
-            panic!("`{prop}` in beast.slint has no numeric default: {line:?}")
-        })
+        *ints_in(code)
+            .last()
+            .unwrap_or_else(|| panic!("`{prop}` in beast.slint has no numeric default: {line:?}"))
     };
 
     let found = [grab("cap-critical"), grab("cap-high"), grab("cap-normal")];
@@ -327,11 +331,20 @@ fn the_netstack_forwarder_is_not_wired_to_the_beast() {
         ("forwarder/run.rs", include_str!("../forwarder/run.rs")),
         ("forwarder/mod.rs", include_str!("../forwarder/mod.rs")),
         ("forwarder/icmp.rs", include_str!("../forwarder/icmp.rs")),
-        ("forwarder/session.rs", include_str!("../forwarder/session.rs")),
+        (
+            "forwarder/session.rs",
+            include_str!("../forwarder/session.rs"),
+        ),
         ("forwarder/shape.rs", include_str!("../forwarder/shape.rs")),
         ("forwarder/sni.rs", include_str!("../forwarder/sni.rs")),
-        ("forwarder/upstream.rs", include_str!("../forwarder/upstream.rs")),
-        ("forwarder/tun_device.rs", include_str!("../forwarder/tun_device.rs")),
+        (
+            "forwarder/upstream.rs",
+            include_str!("../forwarder/upstream.rs"),
+        ),
+        (
+            "forwarder/tun_device.rs",
+            include_str!("../forwarder/tun_device.rs"),
+        ),
         ("tunnel/mod.rs", include_str!("../tunnel/mod.rs")),
     ];
 

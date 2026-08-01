@@ -79,7 +79,11 @@ fn lookup(table: &[u8], rec: usize, key: u64) -> Option<[u8; 2]> {
     let key_len = rec - 2;
     let key = &key.to_be_bytes()[8 - key_len..];
     let cc = super::start_table::lookup(table, rec, key_len, key)?;
-    if cc == [0, 0] { None } else { Some([cc[0], cc[1]]) }
+    if cc == [0, 0] {
+        None
+    } else {
+        Some([cc[0], cc[1]])
+    }
 }
 
 #[cfg(test)]
@@ -125,7 +129,10 @@ mod tests {
         for (table, rec, label) in [(TABLE4, REC4, "v4"), (TABLE6, REC6, "v6")] {
             assert_eq!(table.len() % rec, 0, "{label}: fractured record");
             let n = table.len() / rec;
-            assert!(n > 100_000, "{label}: implausibly small table ({n} records)");
+            assert!(
+                n > 100_000,
+                "{label}: implausibly small table ({n} records)"
+            );
             let key_len = rec - 2;
             let start_of = |i: usize| {
                 table[i * rec..i * rec + key_len]
@@ -157,7 +164,15 @@ mod tests {
 
     #[test]
     fn unrouted_space_is_unknown_never_a_guess() {
-        for s in ["10.0.0.1", "192.168.1.1", "127.0.0.1", "0.0.0.0", "::1", "fe80::1", "ff02::fb"] {
+        for s in [
+            "10.0.0.1",
+            "192.168.1.1",
+            "127.0.0.1",
+            "0.0.0.0",
+            "::1",
+            "fe80::1",
+            "ff02::fb",
+        ] {
             assert_eq!(country_code(ip(s)), None, "{s} must be unknown");
         }
     }

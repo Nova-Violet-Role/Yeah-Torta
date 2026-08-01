@@ -19,15 +19,23 @@ fn the_capability_query_matches_the_features_this_binary_was_built_with() {
 /// user asked for it AND this binary can actually do it.
 #[test]
 fn armed_implies_compiled_for_every_combination_of_preference_and_capability() {
-    fn armed(wants: bool, can: bool) -> bool { wants && can }
+    fn armed(wants: bool, can: bool) -> bool {
+        wants && can
+    }
     for wants in [false, true] {
         for can in [false, true] {
             if armed(wants, can) {
-                assert!(can, "armed was reported while the capability was absent (wants={wants}, can={can})");
+                assert!(
+                    can,
+                    "armed was reported while the capability was absent (wants={wants}, can={can})"
+                );
             }
         }
     }
-    assert!(!armed(true, false), "a preference alone must never render as ARMED");
+    assert!(
+        !armed(true, false),
+        "a preference alone must never render as ARMED"
+    );
 }
 
 /// The feature half, which is testable on EVERY host -- unlike the conjunction above, whose

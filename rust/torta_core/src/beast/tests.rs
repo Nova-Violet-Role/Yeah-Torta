@@ -609,13 +609,19 @@ fn tcp_display_lane_fed_by_dials_only_and_never_drives_the_window() {
     // UDP traffic (the tunnel's dominant family) must NEVER light the TCP lane.
     beast.apply_udp_samples(vec![368.0, 370.0]);
     let s1 = beast.snapshot();
-    assert_eq!(s1.tcp_base_rtt_ms, 0.0, "UDP samples never touch the TCP display lane");
+    assert_eq!(
+        s1.tcp_base_rtt_ms, 0.0,
+        "UDP samples never touch the TCP display lane"
+    );
     assert_eq!(s1.tcp_floor_ms, 0.0);
 
     // Dial samples: 42 seeds both; NaN/negative are gated; 40 folds the EWMA + takes the floor.
     beast.fold_tcp_display_samples(vec![42.0, f64::NAN, -1.0, 40.0]);
     let s2 = beast.snapshot();
-    assert!((s2.tcp_floor_ms - 40.0).abs() < 1e-9, "leaky true-min floor takes the lower dial");
+    assert!(
+        (s2.tcp_floor_ms - 40.0).abs() < 1e-9,
+        "leaky true-min floor takes the lower dial"
+    );
     // EWMA: seed 42, then (1-0.125)*42 + 0.125*40 = 41.75 — alpha parity with every family lane.
     assert!((s2.tcp_base_rtt_ms - 41.75).abs() < 1e-9);
     // Distinct families can never render identical values off one shared estimator again.
@@ -635,7 +641,10 @@ fn shaped_plane_reports_real_flow_windows_and_never_drives_the_window() {
     // instead of claiming the window is zero (two different assertions — the #98 law).
     let s0 = beast.snapshot();
     assert_eq!(s0.shaped_samples, 0, "no flow shaped yet");
-    assert_eq!(s0.shaped_cwnd_mean, 0.0, "a mean over zero samples is not 0 windows, it is no data");
+    assert_eq!(
+        s0.shaped_cwnd_mean, 0.0,
+        "a mean over zero samples is not 0 windows, it is no data"
+    );
     assert_eq!(s0.shaped_rtt_ms, 0.0);
     assert_eq!(s0.shaped_losses, 0);
 
@@ -644,7 +653,10 @@ fn shaped_plane_reports_real_flow_windows_and_never_drives_the_window() {
     beast.apply_udp_samples(vec![368.0]);
     beast.fold_tcp_display_samples(vec![42.0]);
     let s1 = beast.snapshot();
-    assert_eq!(s1.shaped_samples, 0, "probe + dial samples never touch the shaped plane");
+    assert_eq!(
+        s1.shaped_samples, 0,
+        "probe + dial samples never touch the shaped plane"
+    );
     assert_eq!(s1.shaped_rtt_ms, 0.0);
 
     // Two real flow observations: seed 80, then EWMA toward 40 with alpha parity (0.125):
@@ -652,9 +664,15 @@ fn shaped_plane_reports_real_flow_windows_and_never_drives_the_window() {
     beast.fold_shaped_sample(80.0, 4);
     beast.fold_shaped_sample(40.0, 8);
     let s2 = beast.snapshot();
-    assert!((s2.shaped_rtt_ms - 75.0).abs() < 1e-9, "EWMA alpha parity with every family lane");
+    assert!(
+        (s2.shaped_rtt_ms - 75.0).abs() < 1e-9,
+        "EWMA alpha parity with every family lane"
+    );
     assert_eq!(s2.shaped_cwnd_last, 8, "the freshest real window");
-    assert!((s2.shaped_cwnd_mean - 6.0).abs() < 1e-9, "arithmetic mean of 4 and 8");
+    assert!(
+        (s2.shaped_cwnd_mean - 6.0).abs() < 1e-9,
+        "arithmetic mean of 4 and 8"
+    );
     assert_eq!(s2.shaped_samples, 2);
 
     // A sub-millisecond RTT is a loopback echo, not a wire measurement — it must not move the EWMA
@@ -662,14 +680,23 @@ fn shaped_plane_reports_real_flow_windows_and_never_drives_the_window() {
     // dropping it would bias the mean toward whichever flows happen to be slow.
     beast.fold_shaped_sample(0.0, 12);
     let s3 = beast.snapshot();
-    assert!((s3.shaped_rtt_ms - 75.0).abs() < 1e-9, "the echo sample is gated out of the EWMA");
+    assert!(
+        (s3.shaped_rtt_ms - 75.0).abs() < 1e-9,
+        "the echo sample is gated out of the EWMA"
+    );
     assert_eq!(s3.shaped_samples, 3, "but its window still counts");
     assert!((s3.shaped_cwnd_mean - 8.0).abs() < 1e-9, "mean of 4, 8, 12");
 
     // Display lane ONLY — the whole point of the separation. A forwarded flow's RTT must never
     // steer the DNS-probe window; that is exactly what the per-family floors exist to prevent.
-    assert_eq!(s3.cwnd, s0.cwnd, "shaped samples never drive the probe-plane window");
-    assert_eq!(s3.base_rtt_ms, s1.base_rtt_ms, "nor the shared base-RTT estimator");
+    assert_eq!(
+        s3.cwnd, s0.cwnd,
+        "shaped samples never drive the probe-plane window"
+    );
+    assert_eq!(
+        s3.base_rtt_ms, s1.base_rtt_ms,
+        "nor the shared base-RTT estimator"
+    );
 }
 
 /// ★ #52 — a YeAH loss REACTION on a real flow is counted apart from the I/O stall that caused it.
@@ -684,7 +711,10 @@ fn shaped_losses_count_the_reaction_not_the_io_event() {
     // A loss reaction is telemetry here — it does not move the probe-plane window either.
     assert_eq!(after.cwnd, before.cwnd);
     // And it is not a sample: the shaped mean must not be polluted by an event with no window.
-    assert_eq!(after.shaped_samples, 0, "a loss carries no window, so it is not a sample");
+    assert_eq!(
+        after.shaped_samples, 0,
+        "a loss carries no window, so it is not a sample"
+    );
 }
 
 /// F6 — the snapshot names which brains are live, so the dashboard never reads a Legacy brain's inert 0s
@@ -1424,12 +1454,16 @@ fn linerate_per_family_floors_no_cross_poison() {
     lr.apply(50.0); // fast vs its OWN 50ms floor -> slow-start doubles
     assert_eq!(lr.cwnd(), 2, "TCP at 50ms is FAST against the TCP floor");
     lr.apply_udp(5.0); // fast vs its OWN 5ms floor -> doubles again
-    // Rung D: each family doubles its OWN window ONCE. The old expectation of 4 counted the
-    // TCP doubling too, because both families wrote one shared window — the very cross-poisoning
-    // this test is named for. UDP starts at MIN_WINDOW=1 and one fast sample vs its own 5ms
-    // floor takes it to 2.
+                       // Rung D: each family doubles its OWN window ONCE. The old expectation of 4 counted the
+                       // TCP doubling too, because both families wrote one shared window — the very cross-poisoning
+                       // this test is named for. UDP starts at MIN_WINDOW=1 and one fast sample vs its own 5ms
+                       // floor takes it to 2.
     assert_eq!(lr.udp_cwnd(), 2, "UDP at 5ms is FAST against the UDP floor");
-    assert_eq!(lr.cwnd(), 2, "...and the TCP window did not move when UDP grew");
+    assert_eq!(
+        lr.cwnd(),
+        2,
+        "...and the TCP window did not move when UDP grew"
+    );
 }
 
 /// Failover clears ALL LineRate state (both floors, q_smooth, streaks): after the hard reset a
@@ -1444,11 +1478,19 @@ fn linerate_failover_clears_all_linerate_state() {
     for _ in 0..3 {
         lr.apply_udp(40.0); // congestion: q_smooth ~4.3, reno_count 3, cwnd 7
     }
-    assert_eq!(lr.udp_fair_cwnd(), 4, "the epoch seeded a fair share (8>>1)");
+    assert_eq!(
+        lr.udp_fair_cwnd(),
+        4,
+        "the epoch seeded a fair share (8>>1)"
+    );
     lr.apply_failover_penalty();
     assert_eq!(lr.udp_cwnd(), MIN_WINDOW, "failover collapses the window");
     assert_eq!(lr.mode(), YeahMode::SlowStart);
-    assert_eq!(lr.udp_fair_cwnd(), 0, "Rung C+ — the new upstreams owe no learned share");
+    assert_eq!(
+        lr.udp_fair_cwnd(),
+        0,
+        "Rung C+ — the new upstreams owe no learned share"
+    );
     for _ in 0..5 {
         lr.apply_udp(20.0); // clean re-seed + regrow to 16 (q stays 0 exactly)
     }
@@ -1481,7 +1523,11 @@ fn linerate_fair_share_floor_parks_sustained_congestion_loss_still_pierces() {
     for _ in 0..200 {
         lr.apply(10.0); // STCP regrowth 8 -> 16 (slow_start off; ZETA fills harmlessly: fair 0)
     }
-    assert_eq!(lr.cwnd(), 16, "regrown to max ahead of the congestion epoch");
+    assert_eq!(
+        lr.cwnd(),
+        16,
+        "regrown to max ahead of the congestion epoch"
+    );
     for _ in 0..30 {
         lr.apply(40.0); // the sustained congestion epoch (floor leak keeps q > threshold)
     }
@@ -1490,10 +1536,22 @@ fn linerate_fair_share_floor_parks_sustained_congestion_loss_still_pierces() {
         8,
         "the window parks AT the fair share (16>>1), not one below it"
     );
-    assert_eq!(lr.fair_cwnd(), 8, "seeded at half the window where congestion first bit");
+    assert_eq!(
+        lr.fair_cwnd(),
+        8,
+        "seeded at half the window where congestion first bit"
+    );
     lr.on_loss_or_timeout(); // reno 31 > RHO -> full Reno halve
-    assert_eq!(lr.cwnd(), 4, "a REAL loss pierces the fair floor (kernel loss floor = absolute)");
-    assert_eq!(lr.fair_cwnd(), 4, "the estimate decays with the loss (max(8>>1, 2))");
+    assert_eq!(
+        lr.cwnd(),
+        4,
+        "a REAL loss pierces the fair floor (kernel loss floor = absolute)"
+    );
+    assert_eq!(
+        lr.fair_cwnd(),
+        4,
+        "the estimate decays with the loss (max(8>>1, 2))"
+    );
 }
 
 /// Rung C+ unlearning (tcp_yeah.c:164-167): a full ZETA of consecutive fast samples proves the
@@ -1527,14 +1585,22 @@ fn linerate_fair_share_loss_decay_floors_at_min_unlearned_stays_zero() {
     lr.on_loss_or_timeout(); // fair 4 -> max(2, 2) = 2
     assert_eq!(lr.fair_cwnd(), 2, "loss halves the estimate");
     lr.on_loss_or_timeout(); // fair 2 -> max(1, 2) = 2
-    assert_eq!(lr.fair_cwnd(), 2, "…but never below LR_FAIR_MIN once learned");
+    assert_eq!(
+        lr.fair_cwnd(),
+        2,
+        "…but never below LR_FAIR_MIN once learned"
+    );
 
     let mut fresh = linerate();
     for _ in 0..5 {
         fresh.apply(10.0); // SS -> 16, zero congestion evidence
     }
     fresh.on_loss_or_timeout();
-    assert_eq!(fresh.fair_cwnd(), 0, "no congestion evidence -> nothing to decay");
+    assert_eq!(
+        fresh.fair_cwnd(),
+        0,
+        "no congestion evidence -> nothing to decay"
+    );
 }
 
 /// ★ #22 slice 3 — KERNEL RHO STRICTNESS, the headline distinction (tcp_yeah.c:194): INTERRUPTED
@@ -1557,22 +1623,43 @@ fn linerate_rho_interrupted_congestion_takes_the_surgical_backoff() {
         }
         lr.apply(10.0); // ...and ONE clean sample snaps it (fast_streak 1 < ZETA: reno survives)
     }
-    assert_eq!(lr.reno_count(), 19, "ZETA memory banked across the interrupts (1 + 6x3)");
-    assert_eq!(lr.doing_reno_now(), 0, "the consecutive counter died at each interrupt");
+    assert_eq!(
+        lr.reno_count(),
+        19,
+        "ZETA memory banked across the interrupts (1 + 6x3)"
+    );
+    assert_eq!(
+        lr.doing_reno_now(),
+        0,
+        "the consecutive counter died at each interrupt"
+    );
     for _ in 0..8 {
         lr.apply(10.0); // drain: q_smooth *= 0.75^8 (~0.1x), streak 8 < ZETA keeps reno
     }
-    assert_eq!(lr.reno_count(), 19, "8 clean samples < LR_ZETA: the memory still stands");
-    assert!(lr.q_smooth() < 1.0, "the queue estimate drained below one packet");
+    assert_eq!(
+        lr.reno_count(),
+        19,
+        "8 clean samples < LR_ZETA: the memory still stands"
+    );
+    assert!(
+        lr.q_smooth() < 1.0,
+        "the queue estimate drained below one packet"
+    );
     let before = lr.cwnd();
-    assert!(before >= 4, "the parked window is big enough to distinguish the branches");
+    assert!(
+        before >= 4,
+        "the parked window is big enough to distinguish the branches"
+    );
     lr.on_loss_or_timeout();
     assert_eq!(
         lr.cwnd(),
         before - 1,
         "surgical: clamp(q_smooth 0, cwnd>>3 max 1, cwnd>>1) = 1 packet, NOT the halve"
     );
-    assert!(lr.cwnd() > before / 2, "kernel RHO strictness: no panic-halve on interrupted evidence");
+    assert!(
+        lr.cwnd() > before / 2,
+        "kernel RHO strictness: no panic-halve on interrupted evidence"
+    );
 }
 
 /// ★ #22 slice 3 — sustained UNINTERRUPTED congestion still earns the full Reno halve, and the
@@ -1593,15 +1680,35 @@ fn linerate_rho_sustained_congestion_halves_and_the_counter_survives_the_loss() 
     for _ in 0..30 {
         lr.apply(40.0); // the sustained epoch: parks at fair 8 (headline vector pins this)
     }
-    assert_eq!(lr.doing_reno_now(), 30, "thirty uninterrupted congested samples");
+    assert_eq!(
+        lr.doing_reno_now(),
+        30,
+        "thirty uninterrupted congested samples"
+    );
     assert!(lr.doing_reno_now() >= RHO, "…clears the kernel RHO bar");
     lr.on_loss_or_timeout();
-    assert_eq!(lr.cwnd(), 4, "proven sustained contention -> full Reno halve (8 -> 4)");
-    assert_eq!(lr.reno_count(), 15, "loss kept half the ZETA memory (30 >> 1) — now under RHO");
+    assert_eq!(
+        lr.cwnd(),
+        4,
+        "proven sustained contention -> full Reno halve (8 -> 4)"
+    );
+    assert_eq!(
+        lr.reno_count(),
+        15,
+        "loss kept half the ZETA memory (30 >> 1) — now under RHO"
+    );
     lr.on_loss_or_timeout();
-    assert_eq!(lr.cwnd(), 2, "doing_reno_now survived the loss: the second loss halves again");
+    assert_eq!(
+        lr.cwnd(),
+        2,
+        "doing_reno_now survived the loss: the second loss halves again"
+    );
     lr.apply(10.0);
-    assert_eq!(lr.doing_reno_now(), 0, "one clean sample snaps the streak (tcp_yeah.c:169)");
+    assert_eq!(
+        lr.doing_reno_now(),
+        0,
+        "one clean sample snaps the streak (tcp_yeah.c:169)"
+    );
 }
 
 /// ★ #22 slice 3 — CONSECUTIVE means consecutive: the counter climbs only through the congested
@@ -1618,16 +1725,32 @@ fn linerate_rho_counter_snaps_on_fast_and_middle_zone_but_memory_survives() {
     for _ in 0..4 {
         lr.apply(40.0);
     }
-    assert_eq!(lr.doing_reno_now(), 5, "SS exit + four congested = five consecutive");
+    assert_eq!(
+        lr.doing_reno_now(),
+        5,
+        "SS exit + four congested = five consecutive"
+    );
     lr.apply(10.0); // FAST
     assert_eq!(lr.doing_reno_now(), 0, "fast sample snaps the streak");
     for _ in 0..3 {
         lr.apply(40.0);
     }
-    assert_eq!(lr.doing_reno_now(), 3, "a fresh run restarts the count from zero");
+    assert_eq!(
+        lr.doing_reno_now(),
+        3,
+        "a fresh run restarts the count from zero"
+    );
     lr.apply(14.0); // MIDDLE ZONE: not fast (l > 1/PHI), not congested (q < threshold)
-    assert_eq!(lr.doing_reno_now(), 0, "the middle zone interrupts consecutiveness too");
-    assert_eq!(lr.reno_count(), 8, "…while the ZETA memory (1+4+3) rides through untouched");
+    assert_eq!(
+        lr.doing_reno_now(),
+        0,
+        "the middle zone interrupts consecutiveness too"
+    );
+    assert_eq!(
+        lr.reno_count(),
+        8,
+        "…while the ZETA memory (1+4+3) rides through untouched"
+    );
 }
 
 /// Rung C+ THE UDP TWIN of the headline vector — the worldwide-first claim rides THIS path: the
@@ -1649,10 +1772,22 @@ fn linerate_udp_fair_share_parks_and_loss_pierces() {
     for _ in 0..30 {
         lr.apply_udp(60.0); // sustained UDP congestion epoch
     }
-    assert_eq!(lr.udp_cwnd(), 8, "UDP congestion parks AT the fair share (16>>1)");
-    assert_eq!(lr.udp_fair_cwnd(), 8, "seeded by the first congested UDP sample");
+    assert_eq!(
+        lr.udp_cwnd(),
+        8,
+        "UDP congestion parks AT the fair share (16>>1)"
+    );
+    assert_eq!(
+        lr.udp_fair_cwnd(),
+        8,
+        "seeded by the first congested UDP sample"
+    );
     lr.on_udp_loss_or_timeout(); // reno > RHO by now -> full halve
-    assert_eq!(lr.udp_cwnd(), 4, "a real loss pierces the fair floor on the UDP path too");
+    assert_eq!(
+        lr.udp_cwnd(),
+        4,
+        "a real loss pierces the fair floor on the UDP path too"
+    );
 }
 
 /// Rung C+ WINDOW-GLOBAL fairness across families: congestion evidence learned from the UDP
@@ -1681,10 +1816,22 @@ fn linerate_mixed_family_fair_shares_are_per_family() {
     }
     lr.apply_udp(12.0); // the UDP ear's FIRST sample seeds its own floor (12) and returns
     lr.apply_udp(60.0); // UDP congestion: q = 47.76·16/60 ≈ 12.7 > 8 -> SEEDS fair = 8
-    assert_eq!(lr.udp_fair_cwnd(), 0, "the UDP ear's congested sample was its slow-start EXIT");
+    assert_eq!(
+        lr.udp_fair_cwnd(),
+        0,
+        "the UDP ear's congested sample was its slow-start EXIT"
+    );
     lr.apply(40.0); // TCP congestion confirms (streak 2) -> shed 2 -> 16-2 = 14, floor 8 holds
-    assert_eq!(lr.cwnd(), 16, "a UDP congested sample is no longer TCP shed confirmation");
-    assert_eq!(lr.fair_cwnd(), 8, "TCP seeded its OWN fair share from its OWN 16-wide window");
+    assert_eq!(
+        lr.cwnd(),
+        16,
+        "a UDP congested sample is no longer TCP shed confirmation"
+    );
+    assert_eq!(
+        lr.fair_cwnd(),
+        8,
+        "TCP seeded its OWN fair share from its OWN 16-wide window"
+    );
 }
 
 /// UDP JITTER ROBUSTNESS (Formula 4 hysteresis under realistic DNS jitter): alternating
@@ -1702,8 +1849,16 @@ fn linerate_alternating_jitter_never_sheds_growth_survives() {
         lr.apply(10.0); // fast: congest streak resets, growth counter ticks
         lr.apply(40.0); // spike: streak 1 — never reaches LR_SHED_CONFIRM
     }
-    assert_eq!(lr.cwnd(), 9, "10 fast ticks = one STCP increment; zero sheds fired");
-    assert_eq!(lr.fair_cwnd(), 4, "fair seeded at 8>>1 on the first spike, then held");
+    assert_eq!(
+        lr.cwnd(),
+        9,
+        "10 fast ticks = one STCP increment; zero sheds fired"
+    );
+    assert_eq!(
+        lr.fair_cwnd(),
+        4,
+        "fair seeded at 8>>1 on the first spike, then held"
+    );
 }
 
 /// UDP PATH-IMPROVEMENT RELEASE: after a congestion episode the path heals — the true-min floor
@@ -1724,9 +1879,21 @@ fn linerate_udp_floor_releases_after_improvement() {
     for _ in 0..30 {
         lr.apply_udp(10.0); // healed path: floor snaps to 10, q = 0, half-weight growth
     }
-    assert_eq!(lr.udp_cwnd(), 9, "growth resumed through the healed path (7 -> 9 at half weight)");
-    assert_eq!(lr.udp_mode(), YeahMode::Yeah, "the UDP organism is back in fast mode");
-    assert_eq!(lr.udp_fair_cwnd(), 0, "ZETA filled during recovery — fair share unlearned");
+    assert_eq!(
+        lr.udp_cwnd(),
+        9,
+        "growth resumed through the healed path (7 -> 9 at half weight)"
+    );
+    assert_eq!(
+        lr.udp_mode(),
+        YeahMode::Yeah,
+        "the UDP organism is back in fast mode"
+    );
+    assert_eq!(
+        lr.udp_fair_cwnd(),
+        0,
+        "ZETA filled during recovery — fair share unlearned"
+    );
     assert_eq!(lr.reno_count(), 0, "…alongside the competition memory");
 }
 
@@ -1748,7 +1915,11 @@ fn yeah_nonfinite_samples_are_noops_both_ears() {
     for _ in 0..5 {
         fresh.apply(10.0); // normal seeding still works after the junk barrage
     }
-    assert_eq!(fresh.cwnd(), 16, "clean samples drive SS normally after junk");
+    assert_eq!(
+        fresh.cwnd(),
+        16,
+        "clean samples drive SS normally after junk"
+    );
 
     // Junk-after-warmup: every observable stays put and finite.
     let mut warm = linerate();
@@ -1760,8 +1931,14 @@ fn yeah_nonfinite_samples_are_noops_both_ears() {
         warm.apply_udp(j);
     }
     assert_eq!(warm.cwnd(), 16, "junk never moves a warmed window");
-    assert!(warm.q_smooth().is_finite(), "q_smooth survived the junk finite");
-    assert!(warm.udp_floor().is_finite(), "udp_floor survived the junk finite");
+    assert!(
+        warm.q_smooth().is_finite(),
+        "q_smooth survived the junk finite"
+    );
+    assert!(
+        warm.udp_floor().is_finite(),
+        "udp_floor survived the junk finite"
+    );
 }
 
 /// Rung C+ through the .so seam: the fair-share law is FFI-visible — a UDP congestion epoch fed
@@ -1772,7 +1949,11 @@ fn beast_linerate_udp_fair_share_end_to_end_batch_agrees() {
     let batch = Beast::new(YeahProfile::LineRate, TortaProfile::Baseline);
     batch.apply_udp_samples(vec![10.0; 6]); // seed + SS -> 16
     batch.apply_udp_samples(vec![40.0; 3]); // SS exit (8) -> seed fair 4 -> confirmed shed -> 7
-    assert_eq!(batch.udp_cwnd(), 7, "the congestion epoch bit through the facade");
+    assert_eq!(
+        batch.udp_cwnd(),
+        7,
+        "the congestion epoch bit through the facade"
+    );
 
     let per_sample = Beast::new(YeahProfile::LineRate, TortaProfile::Baseline);
     for _ in 0..6 {
@@ -1781,7 +1962,11 @@ fn beast_linerate_udp_fair_share_end_to_end_batch_agrees() {
     for _ in 0..3 {
         per_sample.apply_udp_sample(40.0);
     }
-    assert_eq!(per_sample.udp_cwnd(), batch.udp_cwnd(), "batch twin and per-sample twin agree");
+    assert_eq!(
+        per_sample.udp_cwnd(),
+        batch.udp_cwnd(),
+        "batch twin and per-sample twin agree"
+    );
 
     // The junk gate holds at the FFI boundary too — the display EWMA stays finite.
     batch.apply_udp_samples(vec![f64::NAN, f64::INFINITY, -1.0]);
@@ -1945,10 +2130,7 @@ fn live_feed_ignores_no_forward_and_poison_samples() {
         s.udp_base_rtt_ms, 0.0,
         "family 0 + poison never move the UDP lane"
     );
-    assert_eq!(
-        s.base_rtt_ms, 0.0,
-        "poison never seeds the shared window"
-    );
+    assert_eq!(s.base_rtt_ms, 0.0, "poison never seeds the shared window");
 }
 
 // =====================================================================================
@@ -2041,9 +2223,20 @@ fn feed_aqm_into_fail_outcome_takes_the_timeout_path_without_panic() {
     let beast = Beast::new(YeahProfile::LineRate, TortaProfile::SoftCake);
     let retain = crate::beast::AqmRetention::new();
     for i in 0..4 {
-        crate::beast::feed_aqm_into(&beast, &retain, 35, &format!("miss{i}.example."), true, false);
+        crate::beast::feed_aqm_into(
+            &beast,
+            &retain,
+            35,
+            &format!("miss{i}.example."),
+            true,
+            false,
+        );
     }
-    assert_eq!(retain.throughput(), [0, 0, 4], "4 Normal fails counted in throughput");
+    assert_eq!(
+        retain.throughput(),
+        [0, 0, 4],
+        "4 Normal fails counted in throughput"
+    );
     assert_eq!(beast.snapshot().queue_normal, 4, "4 Normal probes enqueued");
 }
 
@@ -2053,7 +2246,11 @@ fn live_beast_aqm_retention_export_is_nine_slots() {
     // path must never panic and always return that shape (positional mapping in the flat wire).
     crate::beast::feed_live_aqm(1, "smoke.example.", true, true);
     let v = crate::beast::live_beast_aqm_retention();
-    assert_eq!(v.len(), 9, "retention export is a fixed 9-slot positional vec");
+    assert_eq!(
+        v.len(),
+        9,
+        "retention export is a fixed 9-slot positional vec"
+    );
     assert!(
         v[0] >= 1,
         "the Critical (A) smoke query must show in lifetime throughput slot 0, got {}",
@@ -2079,7 +2276,10 @@ fn live_tune_surface_swaps_profiles_and_tunables() {
         TortaProfile::SoftCake,
         "queue swapped live (CoBALT == SoftCake)"
     );
-    assert_eq!(s.window_max, 32, "the max_window override bit the live controller");
+    assert_eq!(
+        s.window_max, 32,
+        "the max_window override bit the live controller"
+    );
 
     // 0 == unset -> the prior override is kept (the #51 don't-clobber idiom). Assert BEFORE any re-seed.
     beast.set_tunables(0, 0, 0);
@@ -2150,19 +2350,32 @@ fn rungd_rtt_interval_clamped_floor_and_cap() {
     floor.enqueue(probe("floor.example.", ProbePriority::Normal, 0));
     floor.enqueue(probe("floor.example.", ProbePriority::Normal, 0));
     assert_eq!(floor.dispatch(1, 10).len(), 1);
-    assert!(floor.dispatch(1, 40).is_empty(), "floor holds: shed at 40 like unfed");
+    assert!(
+        floor.dispatch(1, 40).is_empty(),
+        "floor holds: shed at 40 like unfed"
+    );
     assert_eq!(floor.shed_dropped(), 1);
 
     // CAP: rtt 500ms -> effective clamps to SOFT_RTT_INTERVAL_CAP_MS (100), never 500.
-    assert_eq!(SOFT_RTT_INTERVAL_CAP_MS, 100, "the canonical CoDel internet interval");
+    assert_eq!(
+        SOFT_RTT_INTERVAL_CAP_MS, 100,
+        "the canonical CoDel internet interval"
+    );
     let mut cap = soft_sched();
     cap.observe_rtt(500.0);
     cap.enqueue(probe("cap.example.", ProbePriority::Normal, 0));
     cap.enqueue(probe("cap.example.", ProbePriority::Normal, 60));
     cap.enqueue(probe("cap.example.", ProbePriority::Normal, 60));
-    assert_eq!(cap.dispatch(1, 10).len(), 1, "p1 served, first_above armed 110");
+    assert_eq!(
+        cap.dispatch(1, 10).len(),
+        1,
+        "p1 served, first_above armed 110"
+    );
     assert_eq!(cap.dispatch(1, 105).len(), 1, "p2 served: 105 < armed 110");
-    assert!(cap.dispatch(1, 115).is_empty(), "p3 shed: 115 >= 110 — the cap bit");
+    assert!(
+        cap.dispatch(1, 115).is_empty(),
+        "p3 shed: 115 >= 110 — the cap bit"
+    );
     assert_eq!(cap.shed_dropped(), 1);
 }
 
@@ -2183,9 +2396,21 @@ fn rungd_dango_outage_cross_tin_fails_absorbed_softcake() {
     );
     c.on_timeout_or_fail(ProbePriority::High); // same instant, different tin -> OUTAGE echo
     c.on_timeout_or_fail(ProbePriority::Normal); // same -> OUTAGE echo
-    assert_eq!(c.valve_prob_tin(ProbePriority::High), 0.0, "echo absorbed: High valve untouched");
-    assert_eq!(c.valve_prob_tin(ProbePriority::Normal), 0.0, "echo absorbed: Normal valve untouched");
-    assert_eq!(c.outage_absorbed(), 2, "both cross-tin echoes counted, never silent");
+    assert_eq!(
+        c.valve_prob_tin(ProbePriority::High),
+        0.0,
+        "echo absorbed: High valve untouched"
+    );
+    assert_eq!(
+        c.valve_prob_tin(ProbePriority::Normal),
+        0.0,
+        "echo absorbed: Normal valve untouched"
+    );
+    assert_eq!(
+        c.outage_absorbed(),
+        2,
+        "both cross-tin echoes counted, never silent"
+    );
 
     // Clock advances PAST the window -> an independent High fail punishes normally again.
     c.enqueue(probe(
@@ -2198,7 +2423,11 @@ fn rungd_dango_outage_cross_tin_fails_absorbed_softcake() {
         (c.valve_prob_tin(ProbePriority::High) - VALVE_INC).abs() < 1e-12,
         "a distinct-window fail is real congestion — the High valve moves"
     );
-    assert_eq!(c.outage_absorbed(), 2, "no new absorption outside the window");
+    assert_eq!(
+        c.outage_absorbed(),
+        2,
+        "no new absorption outside the window"
+    );
 }
 
 /// The Dango law is SoftCake-only: the pinned Baseline raises BOTH valves on cross-tin fails
@@ -2227,14 +2456,22 @@ fn rungd_beast_facade_udp_rtt_feed_couples_codel_clock() {
     fed.apply_udp_samples(vec![80.0]); // rides the SAME lock into sched.observe_rtt
     fed.enqueue_probe(probe("e2e.example.", ProbePriority::Normal, 0));
     fed.enqueue_probe(probe("e2e.example.", ProbePriority::Normal, 0));
-    assert_eq!(fed.dispatch(10).len(), 1, "p1 served (cwnd=1), armed 10+80=90");
+    assert_eq!(
+        fed.dispatch(10).len(),
+        1,
+        "p1 served (cwnd=1), armed 10+80=90"
+    );
     assert_eq!(fed.dispatch(40).len(), 1, "p2 SERVED: 40 < 90");
     assert_eq!(fed.snapshot().shed_dropped, 0);
 
     let unfed = Beast::new(YeahProfile::Legacy, TortaProfile::SoftCake);
     unfed.enqueue_probe(probe("e2e.example.", ProbePriority::Normal, 0));
     unfed.enqueue_probe(probe("e2e.example.", ProbePriority::Normal, 0));
-    assert_eq!(unfed.dispatch(10).len(), 1, "p1 served (cwnd=1), armed 10+20=30");
+    assert_eq!(
+        unfed.dispatch(10).len(),
+        1,
+        "p1 served (cwnd=1), armed 10+20=30"
+    );
     assert!(unfed.dispatch(40).is_empty(), "p2 shed: 40 >= 30");
     assert_eq!(unfed.snapshot().shed_dropped, 1);
 }
@@ -2253,12 +2490,24 @@ fn runge_overload_cap_sheds_fattest_flow_head_not_the_arrival() {
         c.enqueue(probe("bulk.example.", ProbePriority::Normal, i));
     }
     // Two enqueues past the cap — both paid by the bulk flow itself (it IS the fattest).
-    assert_eq!(c.overload_sheds(), 2, "129th + 130th arrivals each shed one bulk head");
-    assert_eq!(c.pipeline_depth(), AQM_GLOBAL_CAP, "depth pinned at the cap");
+    assert_eq!(
+        c.overload_sheds(),
+        2,
+        "129th + 130th arrivals each shed one bulk head"
+    );
+    assert_eq!(
+        c.pipeline_depth(),
+        AQM_GLOBAL_CAP,
+        "depth pinned at the cap"
+    );
 
     // A CRITICAL arrival under full overload: admitted; the bulk flow pays again.
     c.enqueue(probe("urgent.example.", ProbePriority::Critical, 500));
-    assert_eq!(c.overload_sheds(), 3, "the fat flow paid for the critical arrival");
+    assert_eq!(
+        c.overload_sheds(),
+        3,
+        "the fat flow paid for the critical arrival"
+    );
     assert_eq!(
         c.queue_depth(ProbePriority::Critical),
         1,
@@ -2293,7 +2542,11 @@ fn runge_overload_tiebreak_sheds_the_stalest_head() {
         half - 1,
         "equal-length tie → the STALEST head (enq 1000) paid, not the fresh twin"
     );
-    assert_eq!(c.queue_depth(ProbePriority::High), half, "the fresh flow untouched");
+    assert_eq!(
+        c.queue_depth(ProbePriority::High),
+        half,
+        "the fresh flow untouched"
+    );
     assert_eq!(c.queue_depth(ProbePriority::Critical), 1);
 }
 
@@ -2306,7 +2559,11 @@ fn runge_overload_law_inert_under_baseline() {
         c.enqueue(probe("bulk.example.", ProbePriority::Normal, i));
     }
     assert_eq!(c.overload_sheds(), 0, "no overload law under Baseline");
-    assert_eq!(c.pipeline_depth(), AQM_GLOBAL_CAP + 72, "unbounded, the original shape");
+    assert_eq!(
+        c.pipeline_depth(),
+        AQM_GLOBAL_CAP + 72,
+        "unbounded, the original shape"
+    );
 }
 
 // =====================================================================================
@@ -2333,11 +2590,19 @@ fn linerate_local_echo_never_poisons_floors_or_window() {
     let seeded = lr.udp_floor();
     assert!(seeded >= 20.0 - 1e-9, "real sample seeds the true-min");
     lr.apply_udp(0.3);
-    assert_eq!(lr.udp_floor(), seeded, "the echo never touched the floor (pre-guard: 0.3)");
+    assert_eq!(
+        lr.udp_floor(),
+        seeded,
+        "the echo never touched the floor (pre-guard: 0.3)"
+    );
 
     // The boundary is exact: rtt == LR_LOCAL_ECHO_MS is network evidence.
     lr.observe_udp_floor(LR_LOCAL_ECHO_MS);
-    assert_eq!(lr.udp_floor(), LR_LOCAL_ECHO_MS, "1.0ms is admissible floor material");
+    assert_eq!(
+        lr.udp_floor(),
+        LR_LOCAL_ECHO_MS,
+        "1.0ms is admissible floor material"
+    );
 }
 
 /// ★ #25 Beast dashboard lift — the LIVE-streak metrics reach the snapshot with REAL values.

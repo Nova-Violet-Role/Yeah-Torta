@@ -2,12 +2,12 @@
   "directory": "rust\\torta_core\\examples",
   "files": {
     "asn_gen.rs": {
-      "hash": "b1f4688293a0",
-      "indexed_at": "2026-07-26T19:12:57.753349+00:00",
+      "hash": "565e0a56874a",
+      "indexed_at": "2026-08-01T12:51:58.846571+00:00",
       "language": "rust",
-      "lines": 195,
-      "mtime_ns": 1785030832299604900,
-      "size": 7624,
+      "lines": 215,
+      "mtime_ns": 1785588610699044700,
+      "size": 7838,
       "symbols": [
         {
           "lines": [
@@ -50,16 +50,16 @@
           "docstring": "Merge adjacent same-name ranges, then emit start records + gap sentinels.",
           "lines": [
             78,
-            114
+            120
           ],
           "name": "emit",
-          "signature": "(path: &std::path::Path, ranges: &Ranges, key_bytes: usize, key_max: u128)",
+          "signature": "(\n    path: &std::path::Path,\n    ranges: &Ranges,\n    key_bytes: usize,\n    key_max: u128,\n)",
           "type": "function"
         },
         {
           "lines": [
-            116,
-            195
+            122,
+            215
           ],
           "name": "main",
           "signature": "()",
@@ -68,17 +68,17 @@
       ]
     },
     "geoip_gen.rs": {
-      "hash": "efb171cc5732",
-      "indexed_at": "2026-07-26T19:12:57.754809+00:00",
+      "hash": "8d8c9a0cc33c",
+      "indexed_at": "2026-08-01T12:51:59.121955+00:00",
       "language": "rust",
-      "lines": 167,
-      "mtime_ns": 1785030832309604400,
-      "size": 7330,
+      "lines": 180,
+      "mtime_ns": 1785588610702044100,
+      "size": 7461,
       "symbols": [
         {
           "lines": [
             34,
-            116
+            125
           ],
           "name": "main",
           "signature": "()",
@@ -87,8 +87,8 @@
         {
           "docstring": "not worth double-claiming). Returns 1 if dropped as an overlap.",
           "lines": [
-            121,
-            133
+            130,
+            142
           ],
           "name": "insert",
           "signature": "(map: &mut Ranges, s: u64, e: u64, cc: [u8; 2])",
@@ -97,8 +97,8 @@
         {
           "docstring": "final range). Returns (bytes, merged_range_count, gap_sentinel_count).",
           "lines": [
-            138,
-            163
+            147,
+            172
           ],
           "name": "emit",
           "signature": "(map: &Ranges, key_bytes: usize)",
@@ -106,8 +106,8 @@
         },
         {
           "lines": [
-            165,
-            167
+            174,
+            180
           ],
           "name": "key_max",
           "signature": "(key_bytes: usize)",
@@ -116,6 +116,6 @@
       ]
     }
   },
-  "generated_at": "2026-07-26T19:12:58.608725+00:00",
+  "generated_at": "2026-08-01T12:51:59.123462+00:00",
   "version": "1.0"
 }

@@ -98,12 +98,12 @@
       ]
     },
     "mod.rs": {
-      "hash": "f7906008b353",
-      "indexed_at": "2026-07-29T00:46:23.712229+00:00",
+      "hash": "2122ff63f31b",
+      "indexed_at": "2026-08-01T12:52:06.015515+00:00",
       "language": "rust",
       "lines": 1088,
-      "mtime_ns": 1785284654559338300,
-      "size": 49098,
+      "mtime_ns": 1785588611050045700,
+      "size": 48010,
       "symbols": [
         {
           "lines": [
@@ -502,7 +502,7 @@
                 693
               ],
               "name": "flag",
-              "signature": "(\r\n        id: InuPowerId,\r\n        desired: bool,\r\n        lr: bool,\r\n        d: InuBootDurabili...",
+              "signature": "(\n        id: InuPowerId,\n        desired: bool,\n        lr: bool,\n        d: InuBootDurability,\n...",
               "type": "method"
             },
             {
@@ -535,7 +535,7 @@
             {
               "lines": [
                 793,
-                804
+                807
               ],
               "name": "boot_reapply_bit_is_additive_default_false",
               "signature": "()",
@@ -543,8 +543,8 @@
             },
             {
               "lines": [
-                807,
-                831
+                810,
+                834
               ],
               "name": "single_power_and_flags_round_trip",
               "signature": "()",
@@ -552,8 +552,8 @@
             },
             {
               "lines": [
-                836,
-                880
+                839,
+                883
               ],
               "name": "fully_protected_requires_at_least_one_desired_all_held",
               "signature": "()",
@@ -561,8 +561,8 @@
             },
             {
               "lines": [
-                885,
-                887
+                888,
+                890
               ],
               "name": "empty_payload_decodes_cold",
               "signature": "()",
@@ -570,8 +570,8 @@
             },
             {
               "lines": [
-                890,
-                898
+                893,
+                901
               ],
               "name": "wrong_version_decodes_cold",
               "signature": "()",
@@ -579,8 +579,8 @@
             },
             {
               "lines": [
-                901,
-                905
+                904,
+                908
               ],
               "name": "truncated_header_decodes_cold",
               "signature": "()",
@@ -588,8 +588,8 @@
             },
             {
               "lines": [
-                908,
-                921
+                911,
+                924
               ],
               "name": "truncated_power_tail_keeps_what_parsed",
               "signature": "()",
@@ -597,8 +597,8 @@
             },
             {
               "lines": [
-                924,
-                932
+                927,
+                935
               ],
               "name": "unknown_provider_and_status_bytes_map_to_inert_defaults",
               "signature": "()",
@@ -606,8 +606,8 @@
             },
             {
               "lines": [
-                935,
-                969
+                938,
+                972
               ],
               "name": "unknown_power_key_is_skipped_not_torn",
               "signature": "()",
@@ -615,7 +615,7 @@
             },
             {
               "lines": [
-                974,
+                977,
                 1032
               ],
               "name": "power_id_key_round_trips_all_twenty_one",
@@ -669,12 +669,12 @@
       ]
     },
     "object.rs": {
-      "hash": "858133c09eb6",
-      "indexed_at": "2026-07-28T05:15:18.984011+00:00",
+      "hash": "f54233632e27",
+      "indexed_at": "2026-08-01T12:52:06.296443+00:00",
       "language": "rust",
-      "lines": 523,
-      "mtime_ns": 1785097591012200100,
-      "size": 24156,
+      "lines": 532,
+      "mtime_ns": 1785588611053045900,
+      "size": 24258,
       "symbols": [
         {
           "lines": [
@@ -905,7 +905,7 @@
             {
               "lines": [
                 391,
-                402
+                411
               ],
               "name": "set_boot_reapply_writes_through_and_survives_reopen",
               "signature": "()",
@@ -913,8 +913,8 @@
             },
             {
               "lines": [
-                405,
-                431
+                414,
+                440
               ],
               "name": "persist_normalizes_fully_protected",
               "signature": "()",
@@ -922,8 +922,8 @@
             },
             {
               "lines": [
-                434,
-                448
+                443,
+                457
               ],
               "name": "clear_forgets_the_state",
               "signature": "()",
@@ -931,8 +931,8 @@
             },
             {
               "lines": [
-                453,
-                505
+                462,
+                514
               ],
               "name": "log_event_round_trips_through_the_pillar_log",
               "signature": "()",
@@ -940,8 +940,8 @@
             },
             {
               "lines": [
-                508,
-                522
+                517,
+                531
               ],
               "name": "snapshot_does_not_write_disk",
               "signature": "()",
@@ -950,7 +950,7 @@
           ],
           "lines": [
             263,
-            523
+            532
           ],
           "name": "tests",
           "type": "module"
@@ -958,6 +958,6 @@
       ]
     }
   },
-  "generated_at": "2026-07-29T00:46:23.713770+00:00",
+  "generated_at": "2026-08-01T12:52:06.297992+00:00",
   "version": "1.0"
 }

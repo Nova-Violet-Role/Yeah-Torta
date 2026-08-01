@@ -216,13 +216,15 @@ pub fn load_lanes_from_dir(
 ) -> Vec<(UndergroundLane, Result<LaneIngest, LaneIngestFail>)> {
     UndergroundLane::ALL
         .into_iter()
-        .map(|lane| match crate::read_signed_pair(dir, lane.catalog_base()) {
-            None => (lane, Err(LaneIngestFail::AbsentPair)),
-            Some((tcat, sig)) => (
-                lane,
-                ingest_lane_catalog(lane, &tcat, &sig, pubkey, true, now_days),
-            ),
-        })
+        .map(
+            |lane| match crate::read_signed_pair(dir, lane.catalog_base()) {
+                None => (lane, Err(LaneIngestFail::AbsentPair)),
+                Some((tcat, sig)) => (
+                    lane,
+                    ingest_lane_catalog(lane, &tcat, &sig, pubkey, true, now_days),
+                ),
+            },
+        )
         .collect()
 }
 
@@ -315,8 +317,15 @@ mod tests {
 
         let got = ingest_lane_catalog(UndergroundLane::Ads, &tcat, &sig, &pubkey, true, TEST_DAY)
             .expect("genuine signature must ingest");
-        assert_eq!(got.domains, 2, "the lane matcher's own count — nothing invented");
-        assert_eq!(lane_counts()[0], 2, "ads counter = the genuinely taken ingest");
+        assert_eq!(
+            got.domains, 2,
+            "the lane matcher's own count — nothing invented"
+        );
+        assert_eq!(
+            lane_counts()[0],
+            2,
+            "ads counter = the genuinely taken ingest"
+        );
         assert!(blocklist::query("61b-ads-one.example"));
         assert!(
             blocklist::query("deep.sub.61b-ads-two.example"),
@@ -340,7 +349,14 @@ mod tests {
         let last = sig.len() - 1;
         sig[last] ^= 0x01; // one flipped bit — the whole catalog is refused
 
-        let got = ingest_lane_catalog(UndergroundLane::Malware, &tcat, &sig, &pubkey, true, TEST_DAY);
+        let got = ingest_lane_catalog(
+            UndergroundLane::Malware,
+            &tcat,
+            &sig,
+            &pubkey,
+            true,
+            TEST_DAY,
+        );
         assert_eq!(got.unwrap_err(), LaneIngestFail::BadSignature);
         assert_eq!(lane_counts()[2], 0, "refused ingest counts NOTHING");
         assert!(

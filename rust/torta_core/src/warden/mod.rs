@@ -1610,10 +1610,10 @@ impl Warden {
         // RULE2 — per-app CIDR rule (BLOCK only). SCOPED to the uid's own bucket. Family-aware (A3):
         // a v4 AND a v6 daddr are both judged — the old v4-only gate silently abstained on v6, so a
         // blocked app could slip out over IPv6.
-        if let Some(CidrHit::Block) =
-            self.rule_sets
-                .cidr
-                .lookup_app(conn.uid, conn.daddr, conn.dport, conn.proto)
+        if let Some(CidrHit::Block) = self
+            .rule_sets
+            .cidr
+            .lookup_app(conn.uid, conn.daddr, conn.dport, conn.proto)
         {
             return Some(DenyTier::App);
         }
@@ -1631,10 +1631,10 @@ impl Warden {
         }
         // RULE2D — universal CIDR block (the universal bucket ONLY). Family-aware (A3): v4 AND v6
         // daddrs are both judged.
-        if let Some(CidrHit::Block) =
-            self.rule_sets
-                .cidr
-                .lookup_universal(conn.daddr, conn.dport, conn.proto)
+        if let Some(CidrHit::Block) = self
+            .rule_sets
+            .cidr
+            .lookup_universal(conn.daddr, conn.dport, conn.proto)
         {
             return Some(DenyTier::UniversalRule);
         }
@@ -2912,11 +2912,19 @@ mod tests {
         };
         // No country armed ⇒ the block is inert (baseline allow, the geoip probe is skipped).
         let mut w = Warden::new();
-        assert_eq!(w.verdict_at(&us_conn(UID), 1), Verdict::Allow, "no geo block ⇒ allow");
+        assert_eq!(
+            w.verdict_at(&us_conn(UID), 1),
+            Verdict::Allow,
+            "no geo block ⇒ allow"
+        );
         // Arm "US" (mixed-case + garbage entries are gated out by set_geo_blocks).
         let mut w = Warden::new();
         w.set_geo_blocks(&["US".to_string(), "zz9".to_string(), "".to_string()]);
-        assert_eq!(w.geo_blocks(), vec!["us".to_string()], "only the valid 2-letter code arms, lowercased");
+        assert_eq!(
+            w.geo_blocks(),
+            vec!["us".to_string()],
+            "only the valid 2-letter code arms, lowercased"
+        );
         assert_eq!(
             w.verdict_at(&us_conn(UID), 1),
             Verdict::Deny,
@@ -2940,28 +2948,46 @@ mod tests {
         let mut w = Warden::new();
         w.add_cidr_rule(IpRule {
             uid: UID_UNIVERSAL,
-            cidr: cidr_match::CidrMatch::V4 { net: u32::from(Ipv4Addr::new(8, 8, 8, 8)), prefix: 32 },
+            cidr: cidr_match::CidrMatch::V4 {
+                net: u32::from(Ipv4Addr::new(8, 8, 8, 8)),
+                prefix: 32,
+            },
             port: PortSpec::Any,
             proto: ProtoSpec::Any,
             status: IpStatus::Block,
         });
         let mut c = dns_conn(UID, "x.example.com");
         c.daddr = IpAddr::V4(Ipv4Addr::new(8, 8, 8, 8));
-        assert_eq!(w.verdict_at(&c, 1), Verdict::Deny, "the added /32 universal block denies the host");
+        assert_eq!(
+            w.verdict_at(&c, 1),
+            Verdict::Deny,
+            "the added /32 universal block denies the host"
+        );
         // A second additive add leaves the first intact.
         w.add_cidr_rule(IpRule {
             uid: UID_UNIVERSAL,
-            cidr: cidr_match::CidrMatch::V4 { net: u32::from(Ipv4Addr::new(1, 1, 1, 1)), prefix: 32 },
+            cidr: cidr_match::CidrMatch::V4 {
+                net: u32::from(Ipv4Addr::new(1, 1, 1, 1)),
+                prefix: 32,
+            },
             port: PortSpec::Any,
             proto: ProtoSpec::Any,
             status: IpStatus::Block,
         });
         let mut c2 = dns_conn(UID, "x.example.com");
         c2.daddr = IpAddr::V4(Ipv4Addr::new(1, 1, 1, 1));
-        assert_eq!(w.verdict_at(&c2, 2), Verdict::Deny, "the 2nd added block fires");
+        assert_eq!(
+            w.verdict_at(&c2, 2),
+            Verdict::Deny,
+            "the 2nd added block fires"
+        );
         let mut c3 = dns_conn(UID, "x.example.com");
         c3.daddr = IpAddr::V4(Ipv4Addr::new(8, 8, 8, 8));
-        assert_eq!(w.verdict_at(&c3, 2), Verdict::Deny, "the 1st block SURVIVED the additive 2nd");
+        assert_eq!(
+            w.verdict_at(&c3, 2),
+            Verdict::Deny,
+            "the 1st block SURVIVED the additive 2nd"
+        );
     }
 
     #[test]
@@ -3062,18 +3088,31 @@ mod tests {
         w.bind_log_dir(dir.clone());
 
         // No durable tier was bound, so nothing may have been rehydrated.
-        assert!(w.durable.is_none(), "bind_log_dir must NOT create a durable tier");
+        assert!(
+            w.durable.is_none(),
+            "bind_log_dir must NOT create a durable tier"
+        );
 
         let mut set = DomainRuleSet::new();
-        set.insert(DomainRule { domain: "evil.example".into(), uid: 0, wildcard: true });
+        set.insert(DomainRule {
+            domain: "evil.example".into(),
+            uid: 0,
+            wildcard: true,
+        });
         set.finalize();
         w.set_domain_rules(set);
 
-        assert_eq!(w.dns_verdict_logged("evil.example", &[], 1_751_300_000_000), Verdict::Deny);
+        assert_eq!(
+            w.dns_verdict_logged("evil.example", &[], 1_751_300_000_000),
+            Verdict::Deny
+        );
 
         let body = std::fs::read_to_string(dir.join(log::QUERY_WARDEN_LOG_NAME))
             .expect("query-warden.log must exist in the log-only bound dir");
-        assert!(body.contains("evil.example"), "the denied name must appear: {body}");
+        assert!(
+            body.contains("evil.example"),
+            "the denied name must appear: {body}"
+        );
     }
 
     /// THE NEGATIVE CONTROL for the test above. An UNBOUND Warden — no durable tier AND no log dir —
@@ -3086,12 +3125,19 @@ mod tests {
         let mut w = Warden::new();
 
         let mut set = DomainRuleSet::new();
-        set.insert(DomainRule { domain: "evil.example".into(), uid: 0, wildcard: true });
+        set.insert(DomainRule {
+            domain: "evil.example".into(),
+            uid: 0,
+            wildcard: true,
+        });
         set.finalize();
         w.set_domain_rules(set);
 
         // The verdict still works — the log is a review channel, never the authority.
-        assert_eq!(w.dns_verdict_logged("evil.example", &[], 1_751_300_000_000), Verdict::Deny);
+        assert_eq!(
+            w.dns_verdict_logged("evil.example", &[], 1_751_300_000_000),
+            Verdict::Deny
+        );
         assert!(
             !dir.join(log::QUERY_WARDEN_LOG_NAME).exists(),
             "an UNBOUND warden must write no log at all"
@@ -3465,8 +3511,14 @@ mod tests {
         let mut reborn = Warden::new();
         let n = reborn.restore_state(&blob, 0);
 
-        assert_eq!(n, 1, "the single matrix row rehydrates (the returned metric)");
-        assert_eq!(reborn.toggles, w.toggles, "toggles still round-trip under V2");
+        assert_eq!(
+            n, 1,
+            "the single matrix row rehydrates (the returned metric)"
+        );
+        assert_eq!(
+            reborn.toggles, w.toggles,
+            "toggles still round-trip under V2"
+        );
         assert_eq!(
             reborn.matrix.get(10_777).cloned(),
             w.matrix.get(10_777).cloned(),
@@ -3482,7 +3534,12 @@ mod tests {
             w.rule_sets.domain.rules(),
             "every domain rule round-trips"
         );
-        let want_globs: Vec<String> = w.rule_sets.glob_domains.iter().map(|p| p.source()).collect();
+        let want_globs: Vec<String> = w
+            .rule_sets
+            .glob_domains
+            .iter()
+            .map(|p| p.source())
+            .collect();
         let got_globs: Vec<String> = reborn
             .rule_sets
             .glob_domains
@@ -3521,7 +3578,10 @@ mod tests {
         let mut w = Warden::new();
         let n = w.restore_state(&v1, 1_000);
         assert_eq!(n, 1, "the v1 row rehydrates");
-        assert_eq!(w.toggles, toggles, "v1 toggles rehydrate under the v2 codec");
+        assert_eq!(
+            w.toggles, toggles,
+            "v1 toggles rehydrate under the v2 codec"
+        );
         let row = w.matrix.get(10_808).cloned().unwrap();
         assert_eq!(row.mode, AppFirewallMode::Isolate);
         assert_eq!(row.meteredness, NetClass::Unmetered);
@@ -3537,7 +3597,10 @@ mod tests {
             w.rule_sets.glob_domains.is_empty(),
             "a v1 blob leaves globs cold"
         );
-        assert!(w.universal_rules.is_empty(), "a v1 blob leaves universal cold");
+        assert!(
+            w.universal_rules.is_empty(),
+            "a v1 blob leaves universal cold"
+        );
         assert!(w.geo_blocks.is_empty(), "a v1 blob leaves geo cold");
     }
 
@@ -3667,7 +3730,11 @@ mod tests {
             // bijection, it just renames the bits. What failed was this line ("the index IS the
             // encoding for combination 8"). The round trip proves the codec is invertible; only the
             // wire value proves it is invertible to the SAME MEANING the last version wrote.
-            assert_eq!(t.to_bits(), i, "the index IS the encoding for combination {i}");
+            assert_eq!(
+                t.to_bits(),
+                i,
+                "the index IS the encoding for combination {i}"
+            );
             assert!(
                 t.to_bits() < 512,
                 "the encoding never leaves the 9 bits the format reserves"
@@ -3683,26 +3750,92 @@ mod tests {
         // version. Measured, not assumed - that exact mutation was run against the Lean file and
         // the round-trip theorems survived it. So this test pins the WIRE VALUES instead.
         let cases: [(UniversalToggles, u16); 9] = [
-            (UniversalToggles { block_new_apps: true, ..Default::default() }, 1),
-            (UniversalToggles { block_unknown_conns: true, ..Default::default() }, 2),
-            (UniversalToggles { block_metered: true, ..Default::default() }, 4),
-            (UniversalToggles { lockdown: true, ..Default::default() }, 8),
-            (UniversalToggles { device_lock: true, ..Default::default() }, 16),
-            (UniversalToggles { block_background: true, ..Default::default() }, 32),
-            (UniversalToggles { block_udp_ntp: true, ..Default::default() }, 64),
-            (UniversalToggles { block_http: true, ..Default::default() }, 128),
-            (UniversalToggles { block_dns_bypass: true, ..Default::default() }, 256),
+            (
+                UniversalToggles {
+                    block_new_apps: true,
+                    ..Default::default()
+                },
+                1,
+            ),
+            (
+                UniversalToggles {
+                    block_unknown_conns: true,
+                    ..Default::default()
+                },
+                2,
+            ),
+            (
+                UniversalToggles {
+                    block_metered: true,
+                    ..Default::default()
+                },
+                4,
+            ),
+            (
+                UniversalToggles {
+                    lockdown: true,
+                    ..Default::default()
+                },
+                8,
+            ),
+            (
+                UniversalToggles {
+                    device_lock: true,
+                    ..Default::default()
+                },
+                16,
+            ),
+            (
+                UniversalToggles {
+                    block_background: true,
+                    ..Default::default()
+                },
+                32,
+            ),
+            (
+                UniversalToggles {
+                    block_udp_ntp: true,
+                    ..Default::default()
+                },
+                64,
+            ),
+            (
+                UniversalToggles {
+                    block_http: true,
+                    ..Default::default()
+                },
+                128,
+            ),
+            (
+                UniversalToggles {
+                    block_dns_bypass: true,
+                    ..Default::default()
+                },
+                256,
+            ),
         ];
         for (toggle, wire) in cases {
-            assert_eq!(toggle.to_bits(), wire, "the on-disk value for this toggle is fixed by the format");
-            assert_eq!(UniversalToggles::from_bits(wire), toggle, "and it decodes back to that toggle alone");
+            assert_eq!(
+                toggle.to_bits(),
+                wire,
+                "the on-disk value for this toggle is fixed by the format"
+            );
+            assert_eq!(
+                UniversalToggles::from_bits(wire),
+                toggle,
+                "and it decodes back to that toggle alone"
+            );
         }
         // The concrete confusion this prevents: RULE6 (block UDP-NTP, driven from the settings pane)
         // must never decode as RULE11 (lockdown), which blocks everything except the allow-list.
         let decoded = UniversalToggles::from_bits(64);
         assert!(decoded.block_udp_ntp, "64 is RULE6");
         assert!(!decoded.lockdown, "64 is NOT lockdown");
-        assert_eq!(UniversalToggles::default().to_bits(), 0, "no blocks set encodes to zero");
+        assert_eq!(
+            UniversalToggles::default().to_bits(),
+            0,
+            "no blocks set encodes to zero"
+        );
     }
 
     #[test]
@@ -3739,8 +3872,15 @@ mod tests {
         // First cut of this test used only dns_conn + plain_conn -- both dport 443 -- so RULE10
         // (port 80) and RULE6 (UDP/123) could never fire and two of the nine rules went untested
         // while the test still passed. Port-80 and UDP-123 connections are therefore explicit.
-        let http_conn = ConnFacts { dport: 80, ..dns_conn(UID, "example.com") };
-        let ntp_conn = ConnFacts { dport: 123, proto: 17, ..dns_conn(UID, "example.com") };
+        let http_conn = ConnFacts {
+            dport: 80,
+            ..dns_conn(UID, "example.com")
+        };
+        let ntp_conn = ConnFacts {
+            dport: 123,
+            proto: 17,
+            ..dns_conn(UID, "example.com")
+        };
         let conns = [
             dns_conn(UID, "example.com"), // resolved, 443  -- RULE7 must NOT fire
             plain_conn(UID),              // qname-less, 443 -- RULE7 fires
@@ -4328,7 +4468,9 @@ mod wa_tests {
         assert!(e.matches(v4(0xC0A8_0101)));
         assert!(!e.matches(v4(0xC0A8_0102)));
         // family isolation: a v4 CIDR NEVER matches a v6 addr (even the v4-mapped form).
-        assert!(!c.matches(IpAddr::V6(Ipv6Addr::new(0, 0, 0, 0, 0, 0xFFFF, 0x0A00, 0x0005))));
+        assert!(!c.matches(IpAddr::V6(Ipv6Addr::new(
+            0, 0, 0, 0, 0, 0xFFFF, 0x0A00, 0x0005
+        ))));
     }
 
     #[test]

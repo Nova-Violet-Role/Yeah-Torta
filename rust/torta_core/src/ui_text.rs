@@ -153,7 +153,10 @@ mod tests {
         assert_eq!(torta_text("ask_later".to_string()), "Ask later");
         assert_eq!(torta_text("app_name".to_string()), "Yeah! Tortä");
         // format string keeps its placeholder verbatim
-        assert_eq!(torta_text("wd_notif_working_step".to_string()), "Granting: %1$s");
+        assert_eq!(
+            torta_text("wd_notif_working_step".to_string()),
+            "Granting: %1$s"
+        );
         // fail-open: unknown key -> empty, never a panic
         assert_eq!(torta_text("no_such_key_zzz".to_string()), "");
     }
