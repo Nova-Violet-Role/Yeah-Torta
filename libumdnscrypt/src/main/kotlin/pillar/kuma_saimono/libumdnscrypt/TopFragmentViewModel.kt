@@ -87,13 +87,38 @@ class TopFragmentViewModel @Inject constructor(
         if (suAvailable) {
             try {
                 suVersion = Shell.SU.version(false) ?: ""
-                // The single-String overload is deprecated in libsuperuser 1.1.1; the ARRAY form
-                // is the documented replacement and is what every other Shell.SU call in this
-                // module already uses (ModulesKiller, NflogManager, ModulesStarterHelper -- none
-                // of which warn, for exactly this reason). One command per element, same shell,
-                // same result list.
-                suResult.addAll(Shell.SU.run(arrayOf("id")) ?: emptyList())
-                bbResult.addAll(Shell.SU.run(arrayOf("busybox | head -1")) ?: emptyList())
+                // TWO SHELL LIBRARIES ARE IN THIS BUILD, and that is the whole explanation.
+                //   eu.chainfire:libsuperuser:1.1.1      (build.gradle:227) -- Shell.SU.run is
+                //                                         deprecated in EVERY overload: String,
+                //                                         String[] and List all carry it.
+                //   com.jrummyapps:android-shell:1.0.1   (build.gradle:228) -- not deprecated, and
+                //                                         already used for root commands by
+                //                                         NflogManager, CommandExecutor and
+                //                                         ModulesVersions.
+                //
+                // I first "fixed" this by switching the String overload for the array one and
+                // recorded that the array form was the replacement. IT IS NOT -- the warning simply
+                // changed identity and the count stayed at 2. The files I cited as evidence were
+                // not using a better overload, they were importing the OTHER LIBRARY. Measuring
+                // which import each file used is what settled it; the overload theory never
+                // survived contact with the compiler.
+                //
+                // So the command execution moves to the non-deprecated library, fully qualified so
+                // the swap is visible at the call site. Root DETECTION (available/version, above)
+                // stays on libsuperuser deliberately: it is not deprecated, and silently changing
+                // which library decides whether this device is rooted is a behaviour change nobody
+                // asked for.
+                //
+                // jrummyapps' run() returns CommandResult, whose `stdout` is the same List<String>
+                // libsuperuser returned directly -- so the two `addAll` calls receive exactly what
+                // they received before.
+                suResult.addAll(
+                    com.jrummyapps.android.shell.Shell.SU.run("id")?.stdout ?: emptyList()
+                )
+                bbResult.addAll(
+                    com.jrummyapps.android.shell.Shell.SU.run("busybox | head -1")?.stdout
+                        ?: emptyList()
+                )
             } catch (e: java.lang.Exception) {
                 loge("TopFragmentViewModel suParam exception", e)
             }
