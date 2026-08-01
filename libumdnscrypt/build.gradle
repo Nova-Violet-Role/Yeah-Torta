@@ -155,6 +155,23 @@ android {
     kotlin {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_17
+
+            // ★ THE OPT-IN, DECLARED ONCE (2026-08-01). A CI build emitted 728 Kotlin warnings and
+            // 547 of them -- 75% -- were the SAME message: "This declaration needs opt-in. Its
+            // usage should be marked with '@kotlinx.coroutines.ExperimentalCoroutinesApi'".
+            //
+            // Kotlin offers exactly two sanctioned answers: annotate every use site with @OptIn,
+            // or declare the opt-in for the module. This is the second, and it is an
+            // ACKNOWLEDGEMENT rather than a suppression -- the compiler is asking "do you accept
+            // that this API may change?", and the honest answer for a codebase whose whole engine
+            // bridge is coroutine-based is yes, said once, where a reader will find it.
+            //
+            // The cost, stated plainly because it is real: a NEW experimental-coroutines usage
+            // added later will no longer announce itself. That is the price of the module-wide
+            // form, and it is the reason this is scoped to `optIn` for ONE named marker instead of
+            // `-Xopt-in=kotlin.RequiresOptIn` or a blanket `-nowarn`, either of which would also
+            // silence markers nobody has considered yet.
+            optIn.add("kotlinx.coroutines.ExperimentalCoroutinesApi")
         }
     }
 
