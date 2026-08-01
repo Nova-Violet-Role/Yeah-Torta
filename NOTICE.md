@@ -28,20 +28,58 @@ proof layer.
 Some people shape a project without ever appearing in `git log`. This section exists so the
 record is complete rather than merely accurate.
 
-### 🔐 [@Jesidct1](https://github.com/Jesidct1) — **Keeper of the Encrypted Hearth**
+### 🔐 [@jedisct1](https://github.com/jedisct1) — Frank Denis — **Keeper of the Encrypted Hearth**
 
 The title is chosen for a reason rather than for the sound of it. In the Roman house the
 *libum* — the cake this project's Android module is named after — was baked and offered at
 the **hearth**: the threshold where whatever enters the home is dealt with first.
 
-**DNSCrypt is that threshold here.** It is the pillar that encrypts the lookups themselves,
-so the questions a device asks stop being legible to whoever happens to be carrying them.
-That is the surface he helped shape, and his name is written into the head of
-[`rust/torta_ui/ui/dnscrypt_section.slint`](rust/torta_ui/ui/dnscrypt_section.slint) —
-inside the interface itself, not in a credits file nobody opens.
+**DNSCrypt is that threshold, and he built it.**
 
-**Thank you.** The DNSCrypt surface is better for your involvement, and the hearth is the
-right place to be remembered.
+This is not a courtesy credit. Three of his projects are load-bearing here, and the counts
+are measured from the tracked tree:
+
+| his work | what it does for Tortä | present in |
+|:--|:--|:--|
+| **[DNSCrypt](https://dnscrypt.info/) / [dnscrypt-proxy](https://github.com/DNSCrypt/dnscrypt-proxy)** | the encrypted DNS protocol and the proxy this project's whole DNSCRYPT pillar is built around | **77 files** |
+| **[minisign](https://jedisct1.github.io/minisign/)** | signature verification for Centauri's catalogue — the reason the offline CDN can trust a byte before serving it | **50 files** |
+| **[libsodium](https://libsodium.org/)** | the cryptographic floor underneath the above | **4 files** |
+
+Without DNSCrypt there is no pillar 7. Without minisign, Centauri has no way to know a
+catalogue is genuine, and the entire content-addressed design collapses into "download
+something and hope". Two of the nine pillars stand on his work.
+
+His name is written into the head of
+[`rust/torta_ui/ui/dnscrypt_section.slint`](rust/torta_ui/ui/dnscrypt_section.slint) —
+**inside the interface itself**, on the surface that configures his protocol, not in a
+credits file nobody opens.
+
+### 🦀 And the part he might actually find interesting: the client is Rust, in-process
+
+The engine does not shell out to a proxy. **DNSCrypt is implemented natively inside
+`torta_core`** — 7,002 lines across three modules, called directly by the resolution ladder
+at [`resolver/mod.rs:1165`](rust/torta_core/src/resolver/mod.rs):
+
+| | measured |
+|:--|:--|
+| `resolver/dnscrypt.rs` | 4,042 lines — the client: certificates, nonces, padding, the exchange |
+| `resolver/dnscrypt_config.rs` | 2,046 lines — the typed config, authoritative over the TOML |
+| `resolver/dnscrypt_update.rs` | 914 lines — resolver-list refresh |
+| primitives on that path | X25519 · XSalsa20 · XChaCha20 · Ed25519 · Poly1305 · Curve25519 |
+| certificate / nonce / magic handling | 568 references — cert rotation is real, not stubbed |
+| **Anonymized DNSCrypt** | relay chains supported (`set_relays`, `parse_relay_chain`) |
+| **post-quantum** | `set_pq_enabled` — PQ and classic exchanges are counted **separately**, because a counter that merges them cannot tell you which one you actually got |
+
+**Stated honestly, because the flattering version would be wrong:** the Go `dnscrypt-proxy`
+assets inherited from InviZible Pro are **still bundled** (`assets/dnscrypt.zip`), and are
+still the source of the stock TOML and the signed resolver lists that get extracted at
+install. So this is not "the Go implementation has been removed" — it is "the engine's own
+resolution path speaks DNSCrypt in Rust, in-process, with no separate binary and no
+localhost hop". Removing the legacy assets entirely is open work, and pretending otherwise
+to the protocol's author would be an odd way to say thank you.
+
+**Thank you, Frank.** The protocol is the reason this pillar exists at all, and minisign is
+the reason another one can be trusted. The hearth is the right place to be remembered.
 
 ---
 

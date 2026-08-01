@@ -410,9 +410,11 @@ See [TORTA-CODEBASE.md](TORTA-CODEBASE.md) for the full tour: where every module
 
 ## 🏅 Acknowledgements
 
-### 🔐 [@Jesidct1](https://github.com/Jesidct1) — **Keeper of the Encrypted Hearth**
+### 🔐 [@jedisct1](https://github.com/jedisct1) — Frank Denis — **Keeper of the Encrypted Hearth**
 
-An honorary title, and a deliberate one. In the Roman house the *libum* — the cake this project's Android module is named for — was baked and offered at the **hearth**, the threshold where whatever enters the home is dealt with first. **DNSCrypt is that threshold here:** the pillar that encrypts the lookups themselves, so the questions your device asks stop being legible to whoever is carrying them.
+An honorary title, and a deliberate one — for the author of **DNSCrypt**, **minisign** and **libsodium**, three projects this repository stands on. DNSCrypt is pillar 7 in its entirety; minisign is what lets Centauri trust a byte before serving it. Two of the nine pillars rest on his work.
+
+ In the Roman house the *libum* — the cake this project's Android module is named for — was baked and offered at the **hearth**, the threshold where whatever enters the home is dealt with first. **DNSCrypt is that threshold here:** the pillar that encrypts the lookups themselves, so the questions your device asks stop being legible to whoever is carrying them.
 
 His name is written into the head of [`dnscrypt_section.slint`](rust/torta_ui/ui/dnscrypt_section.slint) — **inside the interface**, not in a credits file nobody opens. Which makes the wordplay complete: the engine is a *libum*, `lib.rs` slices it, Slint plates it, and now he is in the slices too. 🍰
 

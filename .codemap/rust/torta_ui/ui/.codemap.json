@@ -5399,18 +5399,18 @@
       ]
     },
     "dnscrypt_section.slint": {
-      "hash": "56f2c9626c0e",
-      "indexed_at": "2026-08-01T04:49:11.755215+00:00",
+      "hash": "4a04f70c60c2",
+      "indexed_at": "2026-08-01T05:07:05.157841+00:00",
       "language": "slint",
-      "lines": 1515,
-      "mtime_ns": 1785559697024995300,
-      "size": 76847,
+      "lines": 1518,
+      "mtime_ns": 1785560765544090100,
+      "size": 77128,
       "symbols": [
         {
           "docstring": "\u2500\u2500 THE MANUAL PICKER ROW \u2014 one entry in the server / relay picker (the host feeds these from the pure-Rust `resolverListPickerEntries` scan of the sig",
           "lines": [
-            65,
-            74
+            68,
+            77
           ],
           "name": "PickerRow",
           "type": "struct"
@@ -5419,8 +5419,8 @@
           "children": [
             {
               "lines": [
-                92,
-                92
+                95,
+                95
               ],
               "name": "fired",
               "signature": "in-out <int>",
@@ -5428,8 +5428,8 @@
             },
             {
               "lines": [
-                93,
-                93
+                96,
+                96
               ],
               "name": "reach",
               "signature": "in <length>",
@@ -5437,8 +5437,8 @@
             },
             {
               "lines": [
-                94,
-                94
+                97,
+                97
               ],
               "name": "p",
               "signature": "<float>",
@@ -5446,8 +5446,8 @@
             },
             {
               "lines": [
-                96,
-                96
+                99,
+                99
               ],
               "name": "k",
               "signature": "<float>",
@@ -5456,8 +5456,8 @@
           ],
           "docstring": "\u2500\u2500 #32(3) TAP-BURST \u2014 the on-touch spark/star bloom. Deterministic: `fired` jumps, `p` chases it (620ms ease-out), so k = fired \u2212 p is a 1\u21920 energy en",
           "lines": [
-            91,
-            121
+            94,
+            124
           ],
           "name": "SparkBurst",
           "signature": "inherits Rectangle",
@@ -5467,8 +5467,8 @@
           "children": [
             {
               "lines": [
-                127,
-                127
+                130,
+                130
               ],
               "name": "size",
               "signature": "in <length>",
@@ -5477,8 +5477,8 @@
           ],
           "docstring": "\u2500\u2500 #32(5) GEAR SIGNATURE \u2014 the settings-pane law [[slint-17-general-settings-infinity-castle]]: every settings surface wears the gear. Ring + hub + 8",
           "lines": [
-            126,
-            162
+            129,
+            165
           ],
           "name": "GearMark",
           "signature": "inherits Rectangle",
@@ -5488,8 +5488,8 @@
           "children": [
             {
               "lines": [
-                165,
-                165
+                168,
+                168
               ],
               "name": "on",
               "signature": "in <bool>",
@@ -5497,8 +5497,8 @@
             },
             {
               "lines": [
-                166,
-                166
+                169,
+                169
               ],
               "name": "on-color",
               "signature": "in <color>",
@@ -5506,8 +5506,8 @@
             },
             {
               "lines": [
-                167,
-                167
+                170,
+                170
               ],
               "name": "toggled",
               "signature": "(bool)",
@@ -5515,8 +5515,8 @@
             }
           ],
           "lines": [
-            164,
-            193
+            167,
+            196
           ],
           "name": "ToggleSwitch",
           "signature": "inherits Rectangle",
@@ -5524,8 +5524,8 @@
         },
         {
           "lines": [
-            195,
-            204
+            198,
+            207
           ],
           "name": "SectionTitle",
           "signature": "inherits Text",
@@ -5533,8 +5533,8 @@
         },
         {
           "lines": [
-            206,
-            209
+            209,
+            212
           ],
           "name": "RowCard",
           "signature": "inherits Rectangle",
@@ -5544,8 +5544,8 @@
           "children": [
             {
               "lines": [
-                212,
-                212
+                215,
+                215
               ],
               "name": "message",
               "signature": "in <string>",
@@ -5553,8 +5553,8 @@
             },
             {
               "lines": [
-                213,
-                213
+                216,
+                216
               ],
               "name": "accent",
               "signature": "in <color>",
@@ -5562,8 +5562,8 @@
             }
           ],
           "lines": [
-            211,
-            234
+            214,
+            237
           ],
           "name": "AlertBanner",
           "signature": "inherits Rectangle",
@@ -5573,8 +5573,8 @@
           "children": [
             {
               "lines": [
-                238,
-                238
+                241,
+                241
               ],
               "name": "label",
               "signature": "in <string>",
@@ -5582,8 +5582,8 @@
             },
             {
               "lines": [
-                239,
-                239
+                242,
+                242
               ],
               "name": "hint",
               "signature": "in <string>",
@@ -5591,8 +5591,8 @@
             },
             {
               "lines": [
-                240,
-                240
+                243,
+                243
               ],
               "name": "on",
               "signature": "in <bool>",
@@ -5600,8 +5600,8 @@
             },
             {
               "lines": [
-                241,
-                241
+                244,
+                244
               ],
               "name": "on-color",
               "signature": "in <color>",
@@ -5609,8 +5609,8 @@
             },
             {
               "lines": [
-                242,
-                242
+                245,
+                245
               ],
               "name": "toggled",
               "signature": "(bool)",
@@ -5619,8 +5619,8 @@
           ],
           "docstring": "A labelled toggle row (label + plain-words hint + switch) \u2014 the section's workhorse.",
           "lines": [
-            237,
-            267
+            240,
+            270
           ],
           "name": "ToggleRow",
           "signature": "inherits RowCard",
@@ -5630,8 +5630,8 @@
           "children": [
             {
               "lines": [
-                271,
-                271
+                274,
+                274
               ],
               "name": "glyph",
               "signature": "in <string>",
@@ -5639,8 +5639,8 @@
             },
             {
               "lines": [
-                272,
-                272
+                275,
+                275
               ],
               "name": "stepped",
               "signature": "()",
@@ -5649,8 +5649,8 @@
           ],
           "docstring": "A \u00b1 stepper chip pair (the refresh-cadence dials).",
           "lines": [
-            270,
-            296
+            273,
+            299
           ],
           "name": "StepPill",
           "signature": "inherits Rectangle",
@@ -5660,8 +5660,8 @@
           "children": [
             {
               "lines": [
-                324,
-                324
+                327,
+                327
               ],
               "name": "tk",
               "signature": "<float>",
@@ -5669,8 +5669,8 @@
             },
             {
               "lines": [
-                473,
-                473
+                476,
+                476
               ],
               "name": "eye-bands",
               "signature": "<int>",
@@ -5678,8 +5678,8 @@
             },
             {
               "lines": [
-                505,
-                505
+                508,
+                508
               ],
               "name": "require-dnssec",
               "signature": "in-out <bool>",
@@ -5687,8 +5687,8 @@
             },
             {
               "lines": [
-                506,
-                506
+                509,
+                509
               ],
               "name": "require-nolog",
               "signature": "in-out <bool>",
@@ -5696,37 +5696,10 @@
             },
             {
               "lines": [
-                507,
-                507
+                510,
+                510
               ],
               "name": "require-nofilter",
-              "signature": "in-out <bool>",
-              "type": "property"
-            },
-            {
-              "lines": [
-                512,
-                512
-              ],
-              "name": "pqdnscrypt",
-              "signature": "in-out <bool>",
-              "type": "property"
-            },
-            {
-              "lines": [
-                513,
-                513
-              ],
-              "name": "dnscrypt-servers",
-              "signature": "in-out <bool>",
-              "type": "property"
-            },
-            {
-              "lines": [
-                514,
-                514
-              ],
-              "name": "doh-servers",
               "signature": "in-out <bool>",
               "type": "property"
             },
@@ -5735,7 +5708,7 @@
                 515,
                 515
               ],
-              "name": "odoh-servers",
+              "name": "pqdnscrypt",
               "signature": "in-out <bool>",
               "type": "property"
             },
@@ -5744,7 +5717,7 @@
                 516,
                 516
               ],
-              "name": "ipv4-servers",
+              "name": "dnscrypt-servers",
               "signature": "in-out <bool>",
               "type": "property"
             },
@@ -5753,7 +5726,7 @@
                 517,
                 517
               ],
-              "name": "ipv6-servers",
+              "name": "doh-servers",
               "signature": "in-out <bool>",
               "type": "property"
             },
@@ -5762,7 +5735,7 @@
                 518,
                 518
               ],
-              "name": "force-tcp",
+              "name": "odoh-servers",
               "signature": "in-out <bool>",
               "type": "property"
             },
@@ -5771,7 +5744,7 @@
                 519,
                 519
               ],
-              "name": "http3",
+              "name": "ipv4-servers",
               "signature": "in-out <bool>",
               "type": "property"
             },
@@ -5780,7 +5753,16 @@
                 520,
                 520
               ],
-              "name": "ignore-system-dns",
+              "name": "ipv6-servers",
+              "signature": "in-out <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                521,
+                521
+              ],
+              "name": "force-tcp",
               "signature": "in-out <bool>",
               "type": "property"
             },
@@ -5789,7 +5771,7 @@
                 522,
                 522
               ],
-              "name": "tunnel-only",
+              "name": "http3",
               "signature": "in-out <bool>",
               "type": "property"
             },
@@ -5798,17 +5780,8 @@
                 523,
                 523
               ],
-              "name": "proxy-enabled",
+              "name": "ignore-system-dns",
               "signature": "in-out <bool>",
-              "type": "property"
-            },
-            {
-              "lines": [
-                524,
-                524
-              ],
-              "name": "proxy-port",
-              "signature": "in-out <int>",
               "type": "property"
             },
             {
@@ -5816,8 +5789,8 @@
                 525,
                 525
               ],
-              "name": "listen-port",
-              "signature": "in-out <int>",
+              "name": "tunnel-only",
+              "signature": "in-out <bool>",
               "type": "property"
             },
             {
@@ -5825,8 +5798,8 @@
                 526,
                 526
               ],
-              "name": "bootstrap-resolvers",
-              "signature": "in-out <string>",
+              "name": "proxy-enabled",
+              "signature": "in-out <bool>",
               "type": "property"
             },
             {
@@ -5834,8 +5807,8 @@
                 527,
                 527
               ],
-              "name": "dns64-on",
-              "signature": "in-out <bool>",
+              "name": "proxy-port",
+              "signature": "in-out <int>",
               "type": "property"
             },
             {
@@ -5843,8 +5816,8 @@
                 528,
                 528
               ],
-              "name": "dns64-prefix",
-              "signature": "in-out <string>",
+              "name": "listen-port",
+              "signature": "in-out <int>",
               "type": "property"
             },
             {
@@ -5852,8 +5825,8 @@
                 529,
                 529
               ],
-              "name": "block-ipv6",
-              "signature": "in-out <bool>",
+              "name": "bootstrap-resolvers",
+              "signature": "in-out <string>",
               "type": "property"
             },
             {
@@ -5861,7 +5834,7 @@
                 530,
                 530
               ],
-              "name": "block-unqualified",
+              "name": "dns64-on",
               "signature": "in-out <bool>",
               "type": "property"
             },
@@ -5870,8 +5843,8 @@
                 531,
                 531
               ],
-              "name": "block-undelegated",
-              "signature": "in-out <bool>",
+              "name": "dns64-prefix",
+              "signature": "in-out <string>",
               "type": "property"
             },
             {
@@ -5879,7 +5852,7 @@
                 532,
                 532
               ],
-              "name": "query-log-on",
+              "name": "block-ipv6",
               "signature": "in-out <bool>",
               "type": "property"
             },
@@ -5888,7 +5861,7 @@
                 533,
                 533
               ],
-              "name": "nx-log-on",
+              "name": "block-unqualified",
               "signature": "in-out <bool>",
               "type": "property"
             },
@@ -5897,7 +5870,7 @@
                 534,
                 534
               ],
-              "name": "cache-on",
+              "name": "block-undelegated",
               "signature": "in-out <bool>",
               "type": "property"
             },
@@ -5906,8 +5879,8 @@
                 535,
                 535
               ],
-              "name": "cache-size",
-              "signature": "in-out <int>",
+              "name": "query-log-on",
+              "signature": "in-out <bool>",
               "type": "property"
             },
             {
@@ -5915,8 +5888,8 @@
                 536,
                 536
               ],
-              "name": "timeout-ms",
-              "signature": "in-out <int>",
+              "name": "nx-log-on",
+              "signature": "in-out <bool>",
               "type": "property"
             },
             {
@@ -5924,8 +5897,8 @@
                 537,
                 537
               ],
-              "name": "server-names-count",
-              "signature": "in-out <int>",
+              "name": "cache-on",
+              "signature": "in-out <bool>",
               "type": "property"
             },
             {
@@ -5933,7 +5906,7 @@
                 538,
                 538
               ],
-              "name": "relay-routes",
+              "name": "cache-size",
               "signature": "in-out <int>",
               "type": "property"
             },
@@ -5942,7 +5915,7 @@
                 539,
                 539
               ],
-              "name": "relay-hops",
+              "name": "timeout-ms",
               "signature": "in-out <int>",
               "type": "property"
             },
@@ -5951,7 +5924,7 @@
                 540,
                 540
               ],
-              "name": "sources-refresh-hours",
+              "name": "server-names-count",
               "signature": "in-out <int>",
               "type": "property"
             },
@@ -5960,14 +5933,41 @@
                 541,
                 541
               ],
+              "name": "relay-routes",
+              "signature": "in-out <int>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                542,
+                542
+              ],
+              "name": "relay-hops",
+              "signature": "in-out <int>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                543,
+                543
+              ],
+              "name": "sources-refresh-hours",
+              "signature": "in-out <int>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                544,
+                544
+              ],
               "name": "relays-refresh-hours",
               "signature": "in-out <int>",
               "type": "property"
             },
             {
               "lines": [
-                546,
-                546
+                549,
+                549
               ],
               "name": "server-entries",
               "signature": "in <[PickerRow]>",
@@ -5975,8 +5975,8 @@
             },
             {
               "lines": [
-                547,
-                547
+                550,
+                550
               ],
               "name": "relay-entries",
               "signature": "in <[PickerRow]>",
@@ -5984,8 +5984,8 @@
             },
             {
               "lines": [
-                552,
-                552
+                555,
+                555
               ],
               "name": "pairing-relay-entries",
               "signature": "in <[PickerRow]>",
@@ -5993,8 +5993,8 @@
             },
             {
               "lines": [
-                553,
-                553
+                556,
+                556
               ],
               "name": "pairing-server",
               "signature": "in-out <string>",
@@ -6002,8 +6002,8 @@
             },
             {
               "lines": [
-                554,
-                554
+                557,
+                557
               ],
               "name": "show-server-picker",
               "signature": "in-out <bool>",
@@ -6011,8 +6011,8 @@
             },
             {
               "lines": [
-                555,
-                555
+                558,
+                558
               ],
               "name": "show-relay-picker",
               "signature": "in-out <bool>",
@@ -6020,8 +6020,8 @@
             },
             {
               "lines": [
-                563,
-                563
+                566,
+                566
               ],
               "name": "live-state",
               "signature": "in-out <int>",
@@ -6029,8 +6029,8 @@
             },
             {
               "lines": [
-                564,
-                564
+                567,
+                567
               ],
               "name": "live-server",
               "signature": "in-out <string>",
@@ -6038,8 +6038,8 @@
             },
             {
               "lines": [
-                565,
-                565
+                568,
+                568
               ],
               "name": "live-queries",
               "signature": "in-out <[QueryRow]>",
@@ -6047,8 +6047,8 @@
             },
             {
               "lines": [
-                566,
-                566
+                569,
+                569
               ],
               "name": "live-query-count",
               "signature": "in-out <int>",
@@ -6056,19 +6056,10 @@
             },
             {
               "lines": [
-                576,
-                576
+                579,
+                579
               ],
               "name": "pq-exchanges",
-              "signature": "in-out <int>",
-              "type": "property"
-            },
-            {
-              "lines": [
-                577,
-                577
-              ],
-              "name": "pq-classic",
               "signature": "in-out <int>",
               "type": "property"
             },
@@ -6077,8 +6068,8 @@
                 580,
                 580
               ],
-              "name": "pq-measured",
-              "signature": "<bool>",
+              "name": "pq-classic",
+              "signature": "in-out <int>",
               "type": "property"
             },
             {
@@ -6086,14 +6077,23 @@
                 583,
                 583
               ],
+              "name": "pq-measured",
+              "signature": "<bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                586,
+                586
+              ],
               "name": "live-label",
               "signature": "out <string>",
               "type": "property"
             },
             {
               "lines": [
-                588,
-                588
+                591,
+                591
               ],
               "name": "live-accent",
               "signature": "out <color>",
@@ -6101,19 +6101,10 @@
             },
             {
               "lines": [
-                596,
-                596
+                599,
+                599
               ],
               "name": "warn-no-server-type",
-              "signature": "out <bool>",
-              "type": "property"
-            },
-            {
-              "lines": [
-                598,
-                598
-              ],
-              "name": "warn-no-ip-family",
               "signature": "out <bool>",
               "type": "property"
             },
@@ -6122,25 +6113,16 @@
                 601,
                 601
               ],
+              "name": "warn-no-ip-family",
+              "signature": "out <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                604,
+                604
+              ],
               "name": "warn-proxy-no-tcp",
-              "signature": "out <bool>",
-              "type": "property"
-            },
-            {
-              "lines": [
-                603,
-                603
-              ],
-              "name": "warn-dns64-no-prefix",
-              "signature": "out <bool>",
-              "type": "property"
-            },
-            {
-              "lines": [
-                605,
-                605
-              ],
-              "name": "note-strict-filters",
               "signature": "out <bool>",
               "type": "property"
             },
@@ -6149,14 +6131,32 @@
                 606,
                 606
               ],
+              "name": "warn-dns64-no-prefix",
+              "signature": "out <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                608,
+                608
+              ],
+              "name": "note-strict-filters",
+              "signature": "out <bool>",
+              "type": "property"
+            },
+            {
+              "lines": [
+                609,
+                609
+              ],
               "name": "warn-any",
               "signature": "out <bool>",
               "type": "property"
             },
             {
               "lines": [
-                610,
-                610
+                613,
+                613
               ],
               "name": "pool-summary",
               "signature": "out <string>",
@@ -6164,8 +6164,8 @@
             },
             {
               "lines": [
-                615,
-                615
+                618,
+                618
               ],
               "name": "requirement-toggled",
               "signature": "(string /* dnssec|nolog|nofilter */, bool)",
@@ -6173,8 +6173,8 @@
             },
             {
               "lines": [
-                616,
-                616
+                619,
+                619
               ],
               "name": "server-type-toggled",
               "signature": "(string /* dnscrypt|doh|odoh|ipv4|ipv6 */, bool)",
@@ -6182,8 +6182,8 @@
             },
             {
               "lines": [
-                617,
-                617
+                620,
+                620
               ],
               "name": "transport-toggled",
               "signature": "(string /* force_tcp|http3|ignore_system_dns|block_ipv6|block_unqualified|block_undelegated|cache...",
@@ -6191,8 +6191,8 @@
             },
             {
               "lines": [
-                618,
-                618
+                621,
+                621
               ],
               "name": "tunnel-only-toggled",
               "signature": "(bool)",
@@ -6200,37 +6200,10 @@
             },
             {
               "lines": [
-                619,
-                619
-              ],
-              "name": "listen-port-edited",
-              "signature": "(string)",
-              "type": "callback"
-            },
-            {
-              "lines": [
-                620,
-                620
-              ],
-              "name": "proxy-port-edited",
-              "signature": "(string)",
-              "type": "callback"
-            },
-            {
-              "lines": [
-                621,
-                621
-              ],
-              "name": "bootstrap-edited",
-              "signature": "(string)",
-              "type": "callback"
-            },
-            {
-              "lines": [
                 622,
                 622
               ],
-              "name": "dns64-prefix-edited",
+              "name": "listen-port-edited",
               "signature": "(string)",
               "type": "callback"
             },
@@ -6239,8 +6212,8 @@
                 623,
                 623
               ],
-              "name": "sources-refresh-stepped",
-              "signature": "(int /* \u00b1hours */)",
+              "name": "proxy-port-edited",
+              "signature": "(string)",
               "type": "callback"
             },
             {
@@ -6248,8 +6221,8 @@
                 624,
                 624
               ],
-              "name": "relays-refresh-stepped",
-              "signature": "(int /* \u00b1hours */)",
+              "name": "bootstrap-edited",
+              "signature": "(string)",
               "type": "callback"
             },
             {
@@ -6257,8 +6230,8 @@
                 625,
                 625
               ],
-              "name": "open-servers-picker",
-              "signature": "()",
+              "name": "dns64-prefix-edited",
+              "signature": "(string)",
               "type": "callback"
             },
             {
@@ -6266,7 +6239,25 @@
                 626,
                 626
               ],
-              "name": "open-relays-picker",
+              "name": "sources-refresh-stepped",
+              "signature": "(int /* \u00b1hours */)",
+              "type": "callback"
+            },
+            {
+              "lines": [
+                627,
+                627
+              ],
+              "name": "relays-refresh-stepped",
+              "signature": "(int /* \u00b1hours */)",
+              "type": "callback"
+            },
+            {
+              "lines": [
+                628,
+                628
+              ],
+              "name": "open-servers-picker",
               "signature": "()",
               "type": "callback"
             },
@@ -6275,8 +6266,8 @@
                 629,
                 629
               ],
-              "name": "pin-toggled",
-              "signature": "(string /* name */, string /* \"\" | \"\" */, bool /* pinned */)",
+              "name": "open-relays-picker",
+              "signature": "()",
               "type": "callback"
             },
             {
@@ -6284,14 +6275,23 @@
                 632,
                 632
               ],
+              "name": "pin-toggled",
+              "signature": "(string /* name */, string /* \"\" | \"\" */, bool /* pinned */)",
+              "type": "callback"
+            },
+            {
+              "lines": [
+                635,
+                635
+              ],
               "name": "pair-server-selected",
               "signature": "(string /* server name */)",
               "type": "callback"
             },
             {
               "lines": [
-                633,
-                633
+                636,
+                636
               ],
               "name": "route-relay-toggled",
               "signature": "(string /* server */, string /* relay */, bool /* on */)",
@@ -6299,8 +6299,8 @@
             },
             {
               "lines": [
-                634,
-                634
+                637,
+                637
               ],
               "name": "reload-config",
               "signature": "()",
@@ -6308,8 +6308,8 @@
             },
             {
               "lines": [
-                635,
-                635
+                638,
+                638
               ],
               "name": "apply-config",
               "signature": "()",
@@ -6318,8 +6318,8 @@
           ],
           "docstring": "================================================================================================= THE OVERHAULED DNSCRYPT SECTION \u2014 an EMBEDDABLE pane",
           "lines": [
-            303,
-            1515
+            306,
+            1518
           ],
           "name": "DnscryptSection",
           "signature": "inherits Rectangle",
@@ -23953,6 +23953,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T04:49:11.756888+00:00",
+  "generated_at": "2026-08-01T05:07:05.159500+00:00",
   "version": "1.0"
 }
