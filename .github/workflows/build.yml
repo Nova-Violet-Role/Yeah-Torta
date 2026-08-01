@@ -142,7 +142,17 @@ jobs:
       - name: NDK
         run: |
           sdkmanager --install "ndk;26.3.11579264" >/dev/null
+          # BOTH variables, deliberately. The runner image ships ANDROID_NDK_ROOT pointing at its own
+          # NDK (27.3.13750724 at the time of writing), so setting only ANDROID_NDK_HOME left the two
+          # disagreeing and cargo-ndk said so, 12 times per green run:
+          #   warning: Environment variable `ANDROID_NDK_HOME = .../26.3.11579264` doesn't match
+          #            `ANDROID_NDK_ROOT = .../27.3.13750724`
+          # That is not cosmetic. It means WHICH NDK compiles the shipped .so was ambiguous, decided
+          # by a precedence rule rather than by this file. Pointing both at the version we install
+          # makes the answer explicit and does not change which toolchain is used -- cargo-ndk was
+          # already preferring HOME, which is why it warned about ROOT rather than the reverse.
           echo "ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/26.3.11579264" >> "$GITHUB_ENV"
+          echo "ANDROID_NDK_ROOT=$ANDROID_SDK_ROOT/ndk/26.3.11579264" >> "$GITHUB_ENV"
 
       - name: cargo-ndk
         run: cargo install cargo-ndk --locked
@@ -416,7 +426,17 @@ jobs:
       - name: NDK
         run: |
           sdkmanager --install "ndk;26.3.11579264" >/dev/null
+          # BOTH variables, deliberately. The runner image ships ANDROID_NDK_ROOT pointing at its own
+          # NDK (27.3.13750724 at the time of writing), so setting only ANDROID_NDK_HOME left the two
+          # disagreeing and cargo-ndk said so, 12 times per green run:
+          #   warning: Environment variable `ANDROID_NDK_HOME = .../26.3.11579264` doesn't match
+          #            `ANDROID_NDK_ROOT = .../27.3.13750724`
+          # That is not cosmetic. It means WHICH NDK compiles the shipped .so was ambiguous, decided
+          # by a precedence rule rather than by this file. Pointing both at the version we install
+          # makes the answer explicit and does not change which toolchain is used -- cargo-ndk was
+          # already preferring HOME, which is why it warned about ROOT rather than the reverse.
           echo "ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/26.3.11579264" >> "$GITHUB_ENV"
+          echo "ANDROID_NDK_ROOT=$ANDROID_SDK_ROOT/ndk/26.3.11579264" >> "$GITHUB_ENV"
 
       # torta_ui pulls i-slint-backend-android-activity, whose build.rs resolves
       # android.jar through android-build's env_paths chain:
