@@ -525,6 +525,48 @@ jobs:
       - name: JVM unit tests
         run: ./gradlew :libumdnscrypt:test${{ matrix.flavor == 'arm64' && 'Arm64' || 'Universal' }}DebugUnitTest --stacktrace
 
+      # The suppressed-deprecation backlog must not silently grow back.
+      #
+      # Kotlin's deprecation warnings in this module are hidden behind narrowly-scoped
+      # @Suppress("DEPRECATION") annotations, each one a deliberate, documented legacy branch. That
+      # is the right call for minSdk 21 -- but it also means a NEW deprecated usage can be added
+      # under a suppression and nobody sees it. This step strips every suppression, recompiles, and
+      # asserts the count of UNGATED usages (ones NOT behind a Build.VERSION.SDK_INT branch) has not
+      # risen above the committed baseline.
+      #
+      # It is a CEILING, not an equality: fixing a deprecation PASSES and prints the slack to
+      # reclaim. Pinning the exact number would turn the build red on a correct commit and invite
+      # someone to weaken the gate, which would destroy the coverage it exists to provide.
+      #
+      # Runs only on arm64 so the two APK jobs do not duplicate a ~2 minute recompile, and runs
+      # AFTER assemble + unit tests so a stripped tree can never reach the shipped artifact.
+      - name: the suppressed-deprecation backlog must not grow
+        if: matrix.flavor == 'arm64'
+        run: |
+          set +e
+          node .avd-guard/unmute2.js strip > /dev/null
+          strip_code=$?
+          set -e
+          if [ "$strip_code" -ne 0 ]; then
+            echo "::error::unmute2.js strip failed ($strip_code) -- measurement did not happen"
+            node .avd-guard/unmute2.js restore > /dev/null 2>&1 || true
+            exit 1
+          fi
+          set +e
+          ./gradlew :libumdnscrypt:compileArm64DebugKotlin --rerun-tasks --console=plain > dep-ci.log 2>&1
+          set -e
+          # depgate itself fails if the log is empty -- a compile that did not run must never read
+          # as a clean tree.
+          set +e
+          node .avd-guard/depgate.js check dep-ci.log
+          gate_code=$?
+          set -e
+          node .avd-guard/unmute2.js restore
+          if [ "$gate_code" -ne 0 ]; then
+            echo "::error::new ungated deprecated API usage (depgate exit $gate_code). Gate it behind a version check or fix it; do not widen .avd-guard/deprecation-baseline.json to make this pass."
+            exit 1
+          fi
+
       - name: Name the APK
         id: apk
         run: |
