@@ -2,20 +2,20 @@
   "directory": "libumdnscrypt\\src\\main\\kotlin\\pillar\\kuma_saimono\\libumdnscrypt\\vpn\\service",
   "files": {
     "ServiceVPN.kt": {
-      "hash": "ff05101968c6",
-      "indexed_at": "2026-08-01T08:26:30.558882+00:00",
+      "hash": "f2cd467fcb55",
+      "indexed_at": "2026-08-01T08:49:51.227710+00:00",
       "language": "kotlin",
-      "lines": 959,
-      "mtime_ns": 1785572728128542300,
-      "size": 37655,
+      "lines": 960,
+      "mtime_ns": 1785574116784035400,
+      "size": 37726,
       "symbols": [
         {
           "children": [
             {
               "docstring": "and the native context lifecycle (`jni_init`/`stop`/`clear`/`done`). No JNI, no C, no Go.",
               "lines": [
-                172,
-                228
+                173,
+                229
               ],
               "name": "startNative",
               "signature": "(vpn: ParcelFileDescriptor, listAllowed: List<String>)",
@@ -23,8 +23,8 @@
             },
             {
               "lines": [
-                230,
-                237
+                231,
+                238
               ],
               "name": "stopNative",
               "signature": "()",
@@ -33,8 +33,8 @@
             {
               "docstring": "it is intentionally retired with this callback (the Rust loop owns verdicts inline now).",
               "lines": [
-                262,
-                295
+                263,
+                296
               ],
               "name": "addDnsToConnectionRecords",
               "signature": "(rr: ResourceRecord)",
@@ -42,8 +42,8 @@
             },
             {
               "lines": [
-                297,
-                302
+                298,
+                303
               ],
               "name": "freeSpaceInConnectionRecords",
               "signature": "()",
@@ -51,8 +51,8 @@
             },
             {
               "lines": [
-                304,
-                308
+                305,
+                309
               ],
               "name": "getSortedConnectionDataByTime",
               "signature": "()",
@@ -61,8 +61,8 @@
             {
               "docstring": "Called from native code",
               "lines": [
-                311,
-                327
+                312,
+                328
               ],
               "name": "isDomainBlocked",
               "signature": "(name: String?)",
@@ -71,8 +71,8 @@
             {
               "docstring": "Called from native code",
               "lines": [
-                330,
-                334
+                331,
+                335
               ],
               "name": "isRedirectToTor",
               "signature": "(uid: Int, destAddress: String?, destPort: Int)",
@@ -81,8 +81,8 @@
             {
               "docstring": "Called from native code",
               "lines": [
-                337,
-                362
+                338,
+                363
               ],
               "name": "isRedirectToProxy",
               "signature": "(uid: Int, destAddress: String?, destPort: Int)",
@@ -90,8 +90,8 @@
             },
             {
               "lines": [
-                364,
-                366
+                365,
+                367
               ],
               "name": "isIpInDNSRebindRange",
               "signature": "(destAddress: String)",
@@ -100,8 +100,8 @@
             {
               "docstring": "Called from native code",
               "lines": [
-                369,
-                396
+                370,
+                397
               ],
               "name": "getUidQ",
               "signature": "(version: Int, protocol: Int, saddr: String?, sport: Int, daddr: String?, dport: Int)",
@@ -110,8 +110,8 @@
             {
               "docstring": "Called from native code",
               "lines": [
-                399,
-                402
+                400,
+                403
               ],
               "name": "protectSocket",
               "signature": "(socket: Int)",
@@ -120,8 +120,8 @@
             {
               "docstring": "Called from native code",
               "lines": [
-                405,
-                408
+                406,
+                409
               ],
               "name": "isAddressAllowed",
               "signature": "(packet: Packet)",
@@ -130,8 +130,8 @@
             {
               "docstring": "Called from native code",
               "lines": [
-                411,
-                415
+                412,
+                416
               ],
               "name": "suspectTorConnectionUnavailable",
               "signature": "()",
@@ -139,8 +139,8 @@
             },
             {
               "lines": [
-                417,
-                422
+                418,
+                423
               ],
               "name": "unlockCheckingTorConnectionDelayed",
               "signature": "()",
@@ -149,8 +149,8 @@
             {
               "docstring": "Called from native code",
               "lines": [
-                425,
-                428
+                426,
+                429
               ],
               "name": "accountUsage",
               "signature": "(usage: Usage)",
@@ -158,8 +158,8 @@
             },
             {
               "lines": [
-                430,
-                481
+                431,
+                482
               ],
               "name": "onCreate",
               "signature": "()",
@@ -167,8 +167,8 @@
             },
             {
               "lines": [
-                483,
-                591
+                484,
+                592
               ],
               "name": "onStartCommand",
               "signature": "(intent: Intent?, flags: Int, startId: Int)",
@@ -176,8 +176,8 @@
             },
             {
               "lines": [
-                593,
-                602
+                594,
+                603
               ],
               "name": "onRevoke",
               "signature": "()",
@@ -185,8 +185,8 @@
             },
             {
               "lines": [
-                604,
-                611
+                605,
+                612
               ],
               "name": "sendRevokeBroadcast",
               "signature": "(revoked: Boolean)",
@@ -194,8 +194,8 @@
             },
             {
               "lines": [
-                613,
-                653
+                614,
+                654
               ],
               "name": "onDestroy",
               "signature": "()",
@@ -203,8 +203,8 @@
             },
             {
               "lines": [
-                655,
-                668
+                656,
+                669
               ],
               "name": "onBind",
               "signature": "(intent: Intent?)",
@@ -212,8 +212,8 @@
             },
             {
               "lines": [
-                670,
-                673
+                671,
+                674
               ],
               "name": "onUnbind",
               "signature": "(intent: Intent?)",
@@ -221,8 +221,8 @@
             },
             {
               "lines": [
-                675,
-                678
+                676,
+                679
               ],
               "name": "onRebind",
               "signature": "(intent: Intent?)",
@@ -230,8 +230,8 @@
             },
             {
               "lines": [
-                680,
-                692
+                681,
+                693
               ],
               "name": "onConnectionChecked",
               "signature": "(available: Boolean)",
@@ -239,8 +239,8 @@
             },
             {
               "lines": [
-                700,
-                702
+                701,
+                703
               ],
               "name": "isActive",
               "signature": "()",
@@ -248,16 +248,16 @@
             },
             {
               "lines": [
-                704,
-                707
+                705,
+                708
               ],
               "name": "VPNBinder",
               "type": "class"
             },
             {
               "lines": [
-                712,
-                729
+                713,
+                730
               ],
               "name": "clearDnsQueryRawRecords",
               "signature": "()",
@@ -265,8 +265,8 @@
             },
             {
               "lines": [
-                731,
-                771
+                732,
+                772
               ],
               "name": "addUIDtoDNSQueryRawRecords",
               "signature": "(\n        uid: Int,\n        destinationAddress: String?,\n        destinationPort: Int,\n        so...",
@@ -274,8 +274,8 @@
             },
             {
               "lines": [
-                773,
-                777
+                774,
+                778
               ],
               "name": "onLowMemory",
               "signature": "()",
@@ -283,8 +283,8 @@
             },
             {
               "lines": [
-                779,
-                791
+                780,
+                792
               ],
               "name": "onTaskRemoved",
               "signature": "(rootIntent: Intent?)",
@@ -294,8 +294,8 @@
               "children": [
                 {
                   "lines": [
-                    811,
-                    815
+                    812,
+                    816
                   ],
                   "name": "setMtu",
                   "signature": "(mtu: Int)",
@@ -303,8 +303,8 @@
                 },
                 {
                   "lines": [
-                    817,
-                    821
+                    818,
+                    822
                   ],
                   "name": "addAddress",
                   "signature": "(address: String, prefixLength: Int)",
@@ -312,8 +312,8 @@
                 },
                 {
                   "lines": [
-                    823,
-                    827
+                    824,
+                    828
                   ],
                   "name": "addRoute",
                   "signature": "(address: String, prefixLength: Int)",
@@ -321,8 +321,8 @@
                 },
                 {
                   "lines": [
-                    829,
-                    837
+                    830,
+                    838
                   ],
                   "name": "addRoute",
                   "signature": "(address: java.net.InetAddress, prefixLength: Int)",
@@ -330,8 +330,8 @@
                 },
                 {
                   "lines": [
-                    839,
-                    843
+                    840,
+                    844
                   ],
                   "name": "addDnsServer",
                   "signature": "(address: java.net.InetAddress)",
@@ -339,8 +339,8 @@
                 },
                 {
                   "lines": [
-                    845,
-                    851
+                    846,
+                    852
                   ],
                   "name": "addDisallowedApplication",
                   "signature": "(packageName: String)",
@@ -348,8 +348,8 @@
                 },
                 {
                   "lines": [
-                    853,
-                    859
+                    854,
+                    860
                   ],
                   "name": "addAllowedApplication",
                   "signature": "(packageName: String)",
@@ -357,8 +357,8 @@
                 },
                 {
                   "lines": [
-                    861,
-                    863
+                    862,
+                    864
                   ],
                   "name": "setFixTTL",
                   "signature": "(fixTTL: Boolean)",
@@ -366,8 +366,8 @@
                 },
                 {
                   "lines": [
-                    865,
-                    945
+                    866,
+                    946
                   ],
                   "name": "equals",
                   "signature": "(other: Any?)",
@@ -375,8 +375,8 @@
                 },
                 {
                   "lines": [
-                    947,
-                    949
+                    948,
+                    950
                   ],
                   "name": "hashCode",
                   "signature": "()",
@@ -384,16 +384,16 @@
                 }
               ],
               "lines": [
-                793,
-                950
+                794,
+                951
               ],
               "name": "BuilderVPN",
               "type": "class"
             }
           ],
           "lines": [
-            90,
-            959
+            91,
+            960
           ],
           "name": "ServiceVPN",
           "type": "class"
@@ -401,19 +401,19 @@
       ]
     },
     "ServiceVPNHandler.kt": {
-      "hash": "55d7b32d7a2c",
-      "indexed_at": "2026-08-01T08:26:30.867953+00:00",
+      "hash": "1ccb1a4a160a",
+      "indexed_at": "2026-08-01T08:49:51.525133+00:00",
       "language": "kotlin",
-      "lines": 590,
-      "mtime_ns": 1785572728129544400,
-      "size": 25904,
+      "lines": 591,
+      "mtime_ns": 1785574116785037300,
+      "size": 25975,
       "symbols": [
         {
           "children": [
             {
               "lines": [
-                96,
-                110
+                97,
+                111
               ],
               "name": "queue",
               "signature": "(intent: Intent)",
@@ -421,8 +421,8 @@
             },
             {
               "lines": [
-                112,
-                118
+                113,
+                119
               ],
               "name": "handleMessage",
               "signature": "(msg: Message)",
@@ -430,8 +430,8 @@
             },
             {
               "lines": [
-                120,
-                198
+                121,
+                199
               ],
               "name": "handleIntent",
               "signature": "(intent: Intent)",
@@ -439,8 +439,8 @@
             },
             {
               "lines": [
-                200,
-                250
+                201,
+                251
               ],
               "name": "start",
               "signature": "()",
@@ -448,8 +448,8 @@
             },
             {
               "lines": [
-                252,
-                393
+                253,
+                394
               ],
               "name": "reload",
               "signature": "()",
@@ -457,8 +457,8 @@
             },
             {
               "lines": [
-                395,
-                443
+                396,
+                444
               ],
               "name": "stop",
               "signature": "()",
@@ -466,8 +466,8 @@
             },
             {
               "lines": [
-                445,
-                482
+                446,
+                483
               ],
               "name": "getAllowedRules",
               "signature": "()",
@@ -475,8 +475,8 @@
             },
             {
               "lines": [
-                484,
-                500
+                485,
+                501
               ],
               "name": "startVPN",
               "signature": "(builder: VpnService.Builder)",
@@ -484,8 +484,8 @@
             },
             {
               "lines": [
-                502,
-                527
+                503,
+                528
               ],
               "name": "setUnderlyingNetwork",
               "signature": "()",
@@ -493,8 +493,8 @@
             },
             {
               "lines": [
-                529,
-                542
+                530,
+                543
               ],
               "name": "stopVPN",
               "signature": "(pfd: ParcelFileDescriptor)",
@@ -502,8 +502,8 @@
             },
             {
               "lines": [
-                544,
-                575
+                545,
+                576
               ],
               "name": "stopServiceVPN",
               "signature": "()",
@@ -511,16 +511,16 @@
             },
             {
               "lines": [
-                577,
-                577
+                578,
+                578
               ],
               "name": "StartFailedException",
               "type": "class"
             },
             {
               "lines": [
-                579,
-                581
+                580,
+                582
               ],
               "name": "getAppsList",
               "signature": "()",
@@ -528,8 +528,8 @@
             }
           ],
           "lines": [
-            72,
-            590
+            73,
+            591
           ],
           "name": "ServiceVPNHandler",
           "type": "class"
@@ -1158,6 +1158,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T08:26:30.869504+00:00",
+  "generated_at": "2026-08-01T08:49:51.526713+00:00",
   "version": "1.0"
 }

@@ -23,6 +23,7 @@ import pillar.kuma_saimono.libumdnscrypt.utils.logger.Logger.logi
 import pillar.kuma_saimono.libumdnscrypt.utils.root.RootCommands
 import pillar.kuma_saimono.libumdnscrypt.utils.root.RootCommandsMark
 import pillar.kuma_saimono.libumdnscrypt.utils.root.RootExecService
+import pillar.kuma_saimono.libumdnscrypt.utils.serializableExtraCompat
 
 class InstallerReceiver : BroadcastReceiver() {
 
@@ -36,7 +37,7 @@ class InstallerReceiver : BroadcastReceiver() {
             }
 
             @Suppress("DEPRECATION")
-            val comResult = intent.getSerializableExtra("CommandsResult") as RootCommands?
+            val comResult = intent.serializableExtraCompat<RootCommands>("CommandsResult")
 
             if (comResult == null || isRootCommandResultEmpty(comResult)) {
                 return

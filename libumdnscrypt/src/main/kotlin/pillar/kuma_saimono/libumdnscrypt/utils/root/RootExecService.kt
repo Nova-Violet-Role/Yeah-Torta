@@ -43,6 +43,7 @@ import pillar.kuma_saimono.libumdnscrypt.utils.preferences.TortaeKeys.ROOT_IS_AV
 import pillar.kuma_saimono.libumdnscrypt.utils.preferences.TortaeKeys.VPN_SERVICE_ENABLED
 import pillar.kuma_saimono.libumdnscrypt.vpn.service.ServiceVPNHelper
 import androidx.core.app.ServiceCompat
+import pillar.kuma_saimono.libumdnscrypt.utils.serializableExtraCompat
 
 @SuppressLint("UnsafeOptInUsageWarning")
 @Suppress("DEPRECATION")
@@ -106,7 +107,7 @@ class RootExecService : Service(),
         }
 
         if (action == RUN_COMMAND) {
-            val rootCommands = intent.getSerializableExtra("Commands") as RootCommands?
+            val rootCommands = intent.serializableExtraCompat<RootCommands>("Commands")
             val mark = intent.getIntExtra("Mark", 0)
 
             // Only `rootCommands.commands != null` was dropped (the compiler proved THAT term

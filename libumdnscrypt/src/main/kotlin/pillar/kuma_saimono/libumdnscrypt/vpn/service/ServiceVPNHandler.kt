@@ -68,6 +68,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 import javax.inject.Inject
 import javax.inject.Named
 import androidx.core.app.ServiceCompat
+import pillar.kuma_saimono.libumdnscrypt.utils.serializableExtraCompat
 
 class ServiceVPNHandler private constructor(
     looper: Looper,
@@ -94,7 +95,7 @@ class ServiceVPNHandler private constructor(
     }
 
     fun queue(intent: Intent) {
-        val cmd = intent.getSerializableExtra(ServiceVPN.EXTRA_COMMAND) as VPNCommand?
+        val cmd = intent.serializableExtraCompat<VPNCommand>(ServiceVPN.EXTRA_COMMAND)
         val msg = obtainMessage()
         msg.obj = intent
         if (cmd != null) {
@@ -125,7 +126,7 @@ class ServiceVPNHandler private constructor(
 
         val prefs = defaultSharedPreferences.get()
 
-        val cmd = intent.getSerializableExtra(ServiceVPN.EXTRA_COMMAND) as VPNCommand?
+        val cmd = intent.serializableExtraCompat<VPNCommand>(ServiceVPN.EXTRA_COMMAND)
         val reason = intent.getStringExtra(ServiceVPN.EXTRA_REASON)
 
         logi("VPN Handler Executing intent=" + intent + " command=" + cmd + " reason=" + reason +

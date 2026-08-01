@@ -94,6 +94,7 @@ import pillar.kuma_saimono.libumdnscrypt.utils.preferences.TortaeKeys.REFRESH_RU
 import pillar.kuma_saimono.libumdnscrypt.utils.preferences.TortaeKeys.VPN_SERVICE_ENABLED
 import pillar.kuma_saimono.libumdnscrypt.utils.preferences.TortaeKeys.WIFI_ACCESS_POINT_IS_ON
 import pillar.kuma_saimono.libumdnscrypt.utils.preferences.TortaeKeys.WIFI_ON_REQUESTED
+import pillar.kuma_saimono.libumdnscrypt.utils.stringListExtraCompat
 
 class ModulesReceiver @Inject constructor(
         private val preferenceRepository: Lazy<PreferenceRepository>,
@@ -947,11 +948,10 @@ class ModulesReceiver @Inject constructor(
 
             try {
 
-                var tetherList: List<String>? = null
-                val serializable = intent.getSerializableExtra(EXTRA_ACTIVE_TETHER)
-                if (serializable is List<*>) {
-                    tetherList = intent.getSerializableExtra(EXTRA_ACTIVE_TETHER) as List<String>?
-                }
+                // One call, not two: the old code fetched and deserialized the same extra twice
+                // (once to test it was a List, once to cast it), so a large tether list crossed
+                // the Binder boundary and was rebuilt twice per broadcast for no benefit.
+                val tetherList: List<String>? = intent.stringListExtraCompat(EXTRA_ACTIVE_TETHER)
 
                 TimeUnit.SECONDS.sleep(DELAY_BEFORE_CHECKING_INTERNET_SHARING_SEC.toLong())
 

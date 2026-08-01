@@ -86,6 +86,7 @@ import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Provider
 import androidx.core.app.ServiceCompat
+import pillar.kuma_saimono.libumdnscrypt.utils.serializableExtraCompat
 
 class ServiceVPN : VpnService(), OnInternetConnectionCheckedListener {
     // Task 4C: the legacy `static { System.loadLibrary("invizible"); }` block is GONE — the pure-Rust
@@ -557,7 +558,7 @@ class ServiceVPN : VpnService(), OnInternetConnectionCheckedListener {
             }
         }
 
-        val cmd = intent.getSerializableExtra(EXTRA_COMMAND) as VPNCommand?
+        val cmd = intent.serializableExtraCompat<VPNCommand>(EXTRA_COMMAND)
 
         if (cmd == null) {
             logi("VPN OnStart ALWAYS_ON_VPN")

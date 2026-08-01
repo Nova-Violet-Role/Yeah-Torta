@@ -33,6 +33,7 @@ import pillar.kuma_saimono.libumdnscrypt.utils.root.RootCommandsMark.Companion.I
 import pillar.kuma_saimono.libumdnscrypt.utils.root.RootExecService.Companion.COMMAND_RESULT
 import java.util.*
 import javax.inject.Inject
+import pillar.kuma_saimono.libumdnscrypt.utils.serializableExtraCompat
 
 class IptablesReceiver : BroadcastReceiver() {
 
@@ -58,7 +59,7 @@ class IptablesReceiver : BroadcastReceiver() {
 
         logi("IptablesReceiver onReceive")
 
-        val comResult = intent.getSerializableExtra("CommandsResult") as RootCommands?
+        val comResult = intent.serializableExtraCompat<RootCommands>("CommandsResult")
 
         val result = StringBuilder()
         if (comResult != null) {
