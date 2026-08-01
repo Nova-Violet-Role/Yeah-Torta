@@ -23,6 +23,28 @@ What was added since: a Rust engine (`rust/torta_core`), an interface compiled f
 via Slint (`rust/torta_ui`), a content-addressed local CDN, a UniFFI bridge, and a Lean 4
 proof layer.
 
+## 🏅 Honorary contributors
+
+Some people shape a project without ever appearing in `git log`. This section exists so the
+record is complete rather than merely accurate.
+
+### 🔐 [@Jesidct1](https://github.com/Jesidct1) — **Keeper of the Encrypted Hearth**
+
+The title is chosen for a reason rather than for the sound of it. In the Roman house the
+*libum* — the cake this project's Android module is named after — was baked and offered at
+the **hearth**: the threshold where whatever enters the home is dealt with first.
+
+**DNSCrypt is that threshold here.** It is the pillar that encrypts the lookups themselves,
+so the questions a device asks stop being legible to whoever happens to be carrying them.
+That is the surface he helped shape, and his name is written into the head of
+[`rust/torta_ui/ui/dnscrypt_section.slint`](rust/torta_ui/ui/dnscrypt_section.slint) —
+inside the interface itself, not in a credits file nobody opens.
+
+**Thank you.** The DNSCrypt surface is better for your involvement, and the hearth is the
+right place to be remembered.
+
+---
+
 ## 📦 Third-party components
 
 | component | licence | where |

@@ -152,6 +152,22 @@ The result in one sentence: **the download still gets your full speed, but it st
 2. **Faster "finding" of things.** Matchmaking, login, asset servers and CDN downloads all start with a DNS lookup. Tortä caches aggressively, keeps upstreams warm, and rolls back any upstream that goes quiet (🔄 ROTATION) — so the lookup that starts your match is not the one that times out.
 3. **Assets served from your own phone.** Game sites and launchers pull the same handful of CDN libraries over and over. 🌌 CENTAURI serves them locally after the first fetch — zero network round-trip, zero queue.
 
+### 🧬 The part that is genuinely unusual — and no kernel was harmed
+
+Congestion control normally lives in **the kernel**, it normally governs **TCP**, and changing it normally requires **root** — a custom ROM, a `sysctl`, a module. That is why "fix your bufferbloat" advice always ends with *"…so flash a new router firmware"*.
+
+Tortä does it **in userspace, on a stock phone, with no root and no kernel modification whatsoever.** Nothing is patched, nothing is loaded, no `su` is ever invoked for this. The engine sits on the VPN interface Android already gives every app, and does the queue management there — which means it works on a locked bootloader, on a carrier-branded phone, on a device you cannot unlock.
+
+Three things make that combination rare enough to name:
+
+| | |
+|:--|:--|
+| **UDP is a first-class citizen** | classic congestion control learns from TCP acknowledgements. Ours takes real round-trips from **UDP transactions** as primary evidence (`beast/mod.rs:637`) — and only when exactly one request was outstanding, so it never learns from a guess. Most of what you care about — games, QUIC, DNS — is UDP, and it is normally invisible to this kind of tuning |
+| **Bufferbloat control without a speed cap** | the usual home fix is to *throttle* — cap yourself at 80% of your line so queues stay empty. Tortä does not cap anything. The window **grows to whatever the path will carry** and only paces the burst pattern, so you keep your full throughput and lose the queue |
+| **No root, no kernel, no ROM** | it runs where any VPN app runs |
+
+> **How to phrase this honestly:** we have not found another Android application doing userspace UDP congestion control with priority queueing and no root, and we would genuinely like to know if one exists — open an issue and we will credit it here. What we will **not** write is "the world's first", because that is a claim about every piece of software ever written, and nobody can check it. *"We know of no other"* is the strongest version we can actually stand behind.
+
 ### 🚫 What it does **not** do — read this part
 
 We would rather lose the sale than lie to you:
@@ -389,6 +405,20 @@ This is a pre-release and the surface is moving. Pull requests are welcome, and 
 **One rule above the rest:** if you add a guarantee, add the instrument that would catch it failing — and try to break it before you claim it works. A green test that cannot fail is worse than no test, because it spends someone's trust.
 
 See [TORTA-CODEBASE.md](TORTA-CODEBASE.md) for the full tour: where every module lives, what it does, and the traps measured the hard way.
+
+---
+
+## 🏅 Acknowledgements
+
+### 🔐 [@Jesidct1](https://github.com/Jesidct1) — **Keeper of the Encrypted Hearth**
+
+An honorary title, and a deliberate one. In the Roman house the *libum* — the cake this project's Android module is named for — was baked and offered at the **hearth**, the threshold where whatever enters the home is dealt with first. **DNSCrypt is that threshold here:** the pillar that encrypts the lookups themselves, so the questions your device asks stop being legible to whoever is carrying them.
+
+His name is written into the head of [`dnscrypt_section.slint`](rust/torta_ui/ui/dnscrypt_section.slint) — **inside the interface**, not in a credits file nobody opens. Which makes the wordplay complete: the engine is a *libum*, `lib.rs` slices it, Slint plates it, and now he is in the slices too. 🍰
+
+**Thank you.** The DNSCrypt surface is better for your involvement.
+
+And to **[InviZible Pro](https://github.com/Gedsh/InviZible)**, which this began as a fork of — the foundation everything above was built on.
 
 ---
 
