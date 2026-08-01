@@ -186,3 +186,13 @@ kinder than most.
 *Created with ❤️ for the advancement of human understanding*
 
 </div>
+
+---
+
+<sub>
+
+**#contributing** · **#good-first-issue** · **#open-source** · **#non-profit** · **#build-from-source** · **#github-actions** · **#ci** · **#cargo-ndk** · **#uniffi** · **#gradle** · **#android-ndk** · **#yeah-torta** · **#dns** · **#dnscrypt** · **#doh** · **#odoh** · **#dnssec** · **#cdn** · **#local-cdn** · **#blocklist** · **#adblock** · **#warden** · **#rust** · **#kotlin** · **#slint** · **#lean4** · **#formal-verification** · **#mutation-testing** · **#android** · **#no-root** · **#privacy** · **#nova-violet-role** · **#alpha** · **#pre-release**
+
+*Tag source of truth: [`.github/tags.txt`](.github/tags.txt) — every tag names something present in this tree.*
+
+</sub>

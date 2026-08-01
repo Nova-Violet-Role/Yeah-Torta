@@ -101,3 +101,13 @@ This document is deliberately short. A longer one would not make anyone kinder.
 *Created with ❤️ for the advancement of human understanding*
 
 </div>
+
+---
+
+<sub>
+
+**#code-of-conduct** · **#community** · **#open-source** · **#non-profit** · **#contributor-covenant** · **#inclusive** · **#yeah-torta** · **#dns** · **#dns-privacy** · **#dnscrypt** · **#doh** · **#android** · **#rust** · **#kotlin** · **#slint** · **#privacy** · **#no-root** · **#adblock** · **#cdn** · **#lean4** · **#formal-verification** · **#nova-violet-role** · **#alpha** · **#pre-release**
+
+*Tag source of truth: [`.github/tags.txt`](.github/tags.txt) — every tag names something present in this tree.*
+
+</sub>

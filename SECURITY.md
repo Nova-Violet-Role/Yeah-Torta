@@ -120,3 +120,13 @@ something we do not do.
 *Created with ❤️ for the advancement of human understanding*
 
 </div>
+
+---
+
+<sub>
+
+**#security** · **#security-policy** · **#responsible-disclosure** · **#vulnerability-reporting** · **#threat-model** · **#network-security** · **#vpn-service** · **#tun** · **#certificate-authority** · **#tls** · **#dns-rebinding** · **#homograph** · **#dns-security** · **#fail-closed** · **#yeah-torta** · **#dns** · **#dnscrypt** · **#doh** · **#odoh** · **#dnssec** · **#cdn** · **#content-addressed** · **#minisign** · **#privacy** · **#dns-privacy** · **#android** · **#no-root** · **#rust** · **#lean4** · **#formal-verification** · **#nova-violet-role** · **#alpha** · **#pre-release**
+
+*Tag source of truth: [`.github/tags.txt`](.github/tags.txt) — every tag names something present in this tree.*
+
+</sub>

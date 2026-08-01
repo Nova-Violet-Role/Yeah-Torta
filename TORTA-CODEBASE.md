@@ -193,3 +193,13 @@ can never be misattributed.
   known-bad URL as a negative control.
 * Mutation harness: assert the needle count **before** building. A patch that fails to apply is
   `DISCARDED`, never `SURVIVED` — they mean opposite things.
+
+---
+
+<sub>
+
+**#codebase** · **#architecture** · **#codemap** · **#documentation** · **#rust** · **#kotlin** · **#slint** · **#uniffi** · **#android** · **#android-app** · **#dns** · **#dns-resolver** · **#dnscrypt** · **#doh** · **#odoh** · **#dnssec** · **#dns64** · **#svcb** · **#cdn** · **#local-cdn** · **#content-addressed** · **#blocklist** · **#adblock** · **#dns-filtering** · **#homograph** · **#rebind** · **#warden** · **#tun** · **#forwarder** · **#congestion-control** · **#no-root** · **#privacy** · **#lean4** · **#formal-verification** · **#nova-violet-role** · **#yeah-torta** · **#alpha**
+
+*Tag source of truth: [`.github/tags.txt`](.github/tags.txt) — every tag names something present in this tree.*
+
+</sub>
