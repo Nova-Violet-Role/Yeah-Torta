@@ -56,18 +56,54 @@ jobs:
         with:
           workspaces: rust/torta_core
 
-      # `--features mirror` is NOT optional. Without it the Centauri tests do not even compile in,
-      # so a green run would be reporting on a smaller suite than the one that guards the product.
-      - name: cargo test --features mirror
+      # THE SHIP RECIPE, not a subset of it (Cargo.toml:236-238: mirror,pure_rust,netstack).
+      #
+      # This step used to run `--features mirror` alone, with a comment correctly explaining that
+      # dropping `mirror` would test a smaller suite than the product. The same argument had not
+      # been carried to the other two features, and it applies with more force: without `netstack`
+      # the FORWARDER DATAPATH THAT SHIPS IS NOT COMPILED, so no test could reach it and a green
+      # run said nothing about it. MEASURED 2026-08-01 on aarch64-linux-android --all-targets:
+      # `--features mirror` = 35 warnings, `mirror,pure_rust,netstack` = 9. Twenty-six of CI's
+      # warnings were reporting on code that is only unreachable in the configuration CI invented.
+      #
+      # A CI feature set that is a SUBSET of the ship recipe is not a cheaper test, it is a test of
+      # a different program.
+      - name: cargo test --features mirror,pure_rust,netstack (the ship recipe)
         working-directory: rust/torta_core
-        run: cargo test --lib --features mirror
+        run: cargo test --lib --features mirror,pure_rust,netstack
+
+      # ZERO WARNINGS ON THE SHIPPED TARGETS, enforced rather than tracked in a document.
+      # `cargo check` on the host is the WRONG instrument for this: on a Windows dev box the same
+      # library reports 135 warnings because every #[cfg(unix)] caller is compiled out and the
+      # callee it leaves behind looks dead. Warnings are a property of the target. This gate asks
+      # the question on the four ABIs that are actually built into the APK, where the answer is 0
+      # and any regression is a real one.
+      - name: no warnings on the four shipped Android ABIs
+        working-directory: rust/torta_core
+        run: |
+          set -e
+          rustup target add aarch64-linux-android armv7-linux-androideabi \
+                            i686-linux-android x86_64-linux-android
+          fail=0
+          for t in aarch64-linux-android armv7-linux-androideabi \
+                   i686-linux-android x86_64-linux-android; do
+            # -D warnings makes cargo's OWN exit code the verdict, so it is never read through a pipe.
+            if RUSTFLAGS="-D warnings" cargo check --target "$t" \
+                 --features mirror,pure_rust,netstack --all-targets; then
+              echo "  $t: clean"
+            else
+              echo "::error::$t emits warnings under the ship recipe -- see the log above"
+              fail=1
+            fi
+          done
+          exit $fail
 
       - name: cargo fmt / clippy (advisory)
         working-directory: rust/torta_core
         continue-on-error: true
         run: |
           cargo fmt --check || echo "::warning::rustfmt differences present"
-          cargo clippy --lib --features mirror -- -W clippy::all || true
+          cargo clippy --lib --features mirror,pure_rust,netstack -- -W clippy::all || true
 
   # ---------------------------------------------------------------------------------------------
   # 2. BINDINGS DRIFT — the generated Kotlin must match the Rust surface that exists TODAY.
@@ -358,7 +394,8 @@ jobs:
             them.
 
             Gates that had to pass first:
-            - engine unit tests (`cargo test --lib --features mirror`)
+            - engine unit tests (`cargo test --lib --features mirror,pure_rust,netstack` -- the SHIP recipe)
+            - zero warnings on all four shipped Android ABIs (`RUSTFLAGS=-D warnings cargo check --target ...`)
             - UniFFI bindings match the current Rust surface (no stale generated Kotlin)
             - the built `.so` actually carries the pillar symbols (`mirror_status`,
               `centauri_serve_hits`, `resolver_doh_sinkhole_on`)

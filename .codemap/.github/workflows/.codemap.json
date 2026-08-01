@@ -265,12 +265,12 @@
       ]
     },
     "build.yml": {
-      "hash": "6e9e8819e971",
-      "indexed_at": "2026-08-01T07:01:32.080332+00:00",
+      "hash": "12d7062de157",
+      "indexed_at": "2026-08-01T08:46:42.571730+00:00",
       "language": "yaml",
-      "lines": 368,
-      "mtime_ns": 1785567679687630000,
-      "size": 18007,
+      "lines": 405,
+      "mtime_ns": 1785573978724036200,
+      "size": 20356,
       "symbols": [
         {
           "docstring": "build",
@@ -449,7 +449,7 @@
                           "docstring": "rust/torta_core",
                           "lines": [
                             57,
-                            60
+                            70
                           ],
                           "name": "workspaces",
                           "type": "key"
@@ -457,16 +457,16 @@
                       ],
                       "lines": [
                         56,
-                        60
+                        70
                       ],
                       "name": "with",
                       "type": "section"
                     },
                     {
-                      "docstring": "cargo test --features mirror",
+                      "docstring": "cargo test --features mirror,pure_rust,netstack (the ship recipe)",
                       "lines": [
-                        61,
-                        61
+                        71,
+                        71
                       ],
                       "name": "name",
                       "type": "item"
@@ -474,26 +474,26 @@
                     {
                       "docstring": "rust/torta_core",
                       "lines": [
-                        62,
-                        62
+                        72,
+                        72
                       ],
                       "name": "working-directory",
                       "type": "key"
                     },
                     {
-                      "docstring": "cargo test --lib --features mirror",
+                      "docstring": "cargo test --lib --features mirror,pure_rust,netstack",
                       "lines": [
-                        63,
-                        64
+                        73,
+                        80
                       ],
                       "name": "run",
                       "type": "key"
                     },
                     {
-                      "docstring": "cargo fmt / clippy (advisory)",
+                      "docstring": "no warnings on the four shipped Android ABIs",
                       "lines": [
-                        65,
-                        65
+                        81,
+                        81
                       ],
                       "name": "name",
                       "type": "item"
@@ -501,8 +501,34 @@
                     {
                       "docstring": "rust/torta_core",
                       "lines": [
-                        66,
-                        66
+                        82,
+                        82
+                      ],
+                      "name": "working-directory",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        83,
+                        100
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "cargo fmt / clippy (advisory)",
+                      "lines": [
+                        101,
+                        101
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "rust/torta_core",
+                      "lines": [
+                        102,
+                        102
                       ],
                       "name": "working-directory",
                       "type": "key"
@@ -510,16 +536,16 @@
                     {
                       "docstring": "true",
                       "lines": [
-                        67,
-                        67
+                        103,
+                        103
                       ],
                       "name": "continue-on-error",
                       "type": "key"
                     },
                     {
                       "lines": [
-                        68,
-                        74
+                        104,
+                        110
                       ],
                       "name": "run",
                       "type": "multiline"
@@ -527,7 +553,7 @@
                   ],
                   "lines": [
                     49,
-                    74
+                    110
                   ],
                   "name": "steps",
                   "type": "list"
@@ -535,7 +561,7 @@
               ],
               "lines": [
                 46,
-                74
+                110
               ],
               "name": "rust-tests",
               "type": "section"
@@ -545,8 +571,8 @@
                 {
                   "docstring": "uniffi bindings are not stale",
                   "lines": [
-                    76,
-                    76
+                    112,
+                    112
                   ],
                   "name": "name",
                   "type": "key"
@@ -554,8 +580,8 @@
                 {
                   "docstring": "ubuntu-latest",
                   "lines": [
-                    77,
-                    77
+                    113,
+                    113
                   ],
                   "name": "runs-on",
                   "type": "key"
@@ -565,8 +591,8 @@
                     {
                       "docstring": "actions/checkout@v4",
                       "lines": [
-                        79,
-                        79
+                        115,
+                        115
                       ],
                       "name": "uses",
                       "type": "item"
@@ -574,8 +600,8 @@
                     {
                       "docstring": "dtolnay/rust-toolchain@stable",
                       "lines": [
-                        80,
-                        80
+                        116,
+                        116
                       ],
                       "name": "uses",
                       "type": "item"
@@ -583,8 +609,8 @@
                     {
                       "docstring": "Swatinem/rust-cache@v2",
                       "lines": [
-                        81,
-                        81
+                        117,
+                        117
                       ],
                       "name": "uses",
                       "type": "item"
@@ -594,16 +620,16 @@
                         {
                           "docstring": "rust/torta_core",
                           "lines": [
-                            83,
-                            90
+                            119,
+                            126
                           ],
                           "name": "workspaces",
                           "type": "key"
                         }
                       ],
                       "lines": [
-                        82,
-                        90
+                        118,
+                        126
                       ],
                       "name": "with",
                       "type": "section"
@@ -611,8 +637,8 @@
                     {
                       "docstring": "Generate bindings from the HOST cdylib",
                       "lines": [
-                        91,
-                        91
+                        127,
+                        127
                       ],
                       "name": "name",
                       "type": "item"
@@ -620,16 +646,16 @@
                     {
                       "docstring": "rust/torta_core",
                       "lines": [
-                        92,
-                        92
+                        128,
+                        128
                       ],
                       "name": "working-directory",
                       "type": "key"
                     },
                     {
                       "lines": [
-                        93,
-                        113
+                        129,
+                        149
                       ],
                       "name": "run",
                       "type": "multiline"
@@ -637,32 +663,32 @@
                     {
                       "docstring": "Diff against the committed bindings",
                       "lines": [
-                        114,
-                        114
+                        150,
+                        150
                       ],
                       "name": "name",
                       "type": "item"
                     },
                     {
                       "lines": [
-                        115,
-                        130
+                        151,
+                        166
                       ],
                       "name": "run",
                       "type": "multiline"
                     }
                   ],
                   "lines": [
-                    78,
-                    130
+                    114,
+                    166
                   ],
                   "name": "steps",
                   "type": "list"
                 }
               ],
               "lines": [
-                75,
-                130
+                111,
+                166
               ],
               "name": "bindings-drift",
               "type": "section"
@@ -672,8 +698,8 @@
                 {
                   "docstring": "apk (${{ matrix.flavor }})",
                   "lines": [
-                    132,
-                    132
+                    168,
+                    168
                   ],
                   "name": "name",
                   "type": "key"
@@ -681,8 +707,8 @@
                 {
                   "docstring": "[rust-tests, bindings-drift]",
                   "lines": [
-                    133,
-                    133
+                    169,
+                    169
                   ],
                   "name": "needs",
                   "type": "collection"
@@ -690,8 +716,8 @@
                 {
                   "docstring": "ubuntu-latest",
                   "lines": [
-                    134,
-                    134
+                    170,
+                    170
                   ],
                   "name": "runs-on",
                   "type": "key"
@@ -701,8 +727,8 @@
                     {
                       "docstring": "false",
                       "lines": [
-                        136,
-                        136
+                        172,
+                        172
                       ],
                       "name": "fail-fast",
                       "type": "key"
@@ -714,8 +740,8 @@
                             {
                               "docstring": "arm64",
                               "lines": [
-                                139,
-                                139
+                                175,
+                                175
                               ],
                               "name": "flavor",
                               "type": "item"
@@ -723,8 +749,8 @@
                             {
                               "docstring": "arm64-v8a",
                               "lines": [
-                                140,
-                                140
+                                176,
+                                176
                               ],
                               "name": "abi",
                               "type": "key"
@@ -732,8 +758,8 @@
                             {
                               "docstring": "aarch64-linux-android",
                               "lines": [
-                                141,
-                                141
+                                177,
+                                177
                               ],
                               "name": "rust_target",
                               "type": "key"
@@ -741,8 +767,8 @@
                             {
                               "docstring": "universal",
                               "lines": [
-                                142,
-                                142
+                                178,
+                                178
                               ],
                               "name": "flavor",
                               "type": "item"
@@ -750,8 +776,8 @@
                             {
                               "docstring": "x86_64",
                               "lines": [
-                                143,
-                                143
+                                179,
+                                179
                               ],
                               "name": "abi",
                               "type": "key"
@@ -759,32 +785,32 @@
                             {
                               "docstring": "x86_64-linux-android",
                               "lines": [
-                                144,
-                                144
+                                180,
+                                180
                               ],
                               "name": "rust_target",
                               "type": "key"
                             }
                           ],
                           "lines": [
-                            138,
-                            144
+                            174,
+                            180
                           ],
                           "name": "include",
                           "type": "list"
                         }
                       ],
                       "lines": [
-                        137,
-                        144
+                        173,
+                        180
                       ],
                       "name": "matrix",
                       "type": "section"
                     }
                   ],
                   "lines": [
-                    135,
-                    144
+                    171,
+                    180
                   ],
                   "name": "strategy",
                   "type": "section"
@@ -794,8 +820,8 @@
                     {
                       "docstring": "actions/checkout@v4",
                       "lines": [
-                        146,
-                        147
+                        182,
+                        183
                       ],
                       "name": "uses",
                       "type": "item"
@@ -803,8 +829,8 @@
                     {
                       "docstring": "JDK 17",
                       "lines": [
-                        148,
-                        148
+                        184,
+                        184
                       ],
                       "name": "name",
                       "type": "item"
@@ -812,8 +838,8 @@
                     {
                       "docstring": "actions/setup-java@v4",
                       "lines": [
-                        149,
-                        149
+                        185,
+                        185
                       ],
                       "name": "uses",
                       "type": "key"
@@ -823,8 +849,8 @@
                         {
                           "docstring": "temurin",
                           "lines": [
-                            151,
-                            151
+                            187,
+                            187
                           ],
                           "name": "distribution",
                           "type": "key"
@@ -832,16 +858,16 @@
                         {
                           "docstring": "'17'",
                           "lines": [
-                            152,
-                            153
+                            188,
+                            189
                           ],
                           "name": "java-version",
                           "type": "key"
                         }
                       ],
                       "lines": [
-                        150,
-                        153
+                        186,
+                        189
                       ],
                       "name": "with",
                       "type": "section"
@@ -849,8 +875,8 @@
                     {
                       "docstring": "Node (the A14 uniffi-records guard is a node script)",
                       "lines": [
-                        154,
-                        154
+                        190,
+                        190
                       ],
                       "name": "name",
                       "type": "item"
@@ -858,8 +884,8 @@
                     {
                       "docstring": "actions/setup-node@v4",
                       "lines": [
-                        155,
-                        155
+                        191,
+                        191
                       ],
                       "name": "uses",
                       "type": "key"
@@ -869,16 +895,16 @@
                         {
                           "docstring": "'20'",
                           "lines": [
-                            157,
-                            158
+                            193,
+                            194
                           ],
                           "name": "node-version",
                           "type": "key"
                         }
                       ],
                       "lines": [
-                        156,
-                        158
+                        192,
+                        194
                       ],
                       "name": "with",
                       "type": "section"
@@ -886,8 +912,8 @@
                     {
                       "docstring": "dtolnay/rust-toolchain@stable",
                       "lines": [
-                        159,
-                        159
+                        195,
+                        195
                       ],
                       "name": "uses",
                       "type": "item"
@@ -897,16 +923,16 @@
                         {
                           "docstring": "${{ matrix.rust_target }}",
                           "lines": [
-                            161,
-                            162
+                            197,
+                            198
                           ],
                           "name": "targets",
                           "type": "key"
                         }
                       ],
                       "lines": [
-                        160,
-                        162
+                        196,
+                        198
                       ],
                       "name": "with",
                       "type": "section"
@@ -914,8 +940,8 @@
                     {
                       "docstring": "Swatinem/rust-cache@v2",
                       "lines": [
-                        163,
-                        163
+                        199,
+                        199
                       ],
                       "name": "uses",
                       "type": "item"
@@ -924,8 +950,8 @@
                       "children": [
                         {
                           "lines": [
-                            165,
-                            167
+                            201,
+                            203
                           ],
                           "name": "workspaces",
                           "type": "multiline"
@@ -933,16 +959,16 @@
                         {
                           "docstring": "${{ matrix.abi }}",
                           "lines": [
-                            168,
-                            179
+                            204,
+                            215
                           ],
                           "name": "key",
                           "type": "key"
                         }
                       ],
                       "lines": [
-                        164,
-                        179
+                        200,
+                        215
                       ],
                       "name": "with",
                       "type": "section"
@@ -950,16 +976,16 @@
                     {
                       "docstring": "Host libraries for torta_iconforge (fontconfig)",
                       "lines": [
-                        180,
-                        180
+                        216,
+                        216
                       ],
                       "name": "name",
                       "type": "item"
                     },
                     {
                       "lines": [
-                        181,
-                        193
+                        217,
+                        229
                       ],
                       "name": "run",
                       "type": "multiline"
@@ -967,8 +993,8 @@
                     {
                       "docstring": "Render Linux golden candidates (artifact, never authoritative)",
                       "lines": [
-                        194,
-                        194
+                        230,
+                        230
                       ],
                       "name": "name",
                       "type": "item"
@@ -976,16 +1002,16 @@
                     {
                       "docstring": "true",
                       "lines": [
-                        195,
-                        195
+                        231,
+                        231
                       ],
                       "name": "continue-on-error",
                       "type": "key"
                     },
                     {
                       "lines": [
-                        196,
-                        205
+                        232,
+                        241
                       ],
                       "name": "run",
                       "type": "multiline"
@@ -993,8 +1019,8 @@
                     {
                       "docstring": "Upload Linux golden candidates",
                       "lines": [
-                        206,
-                        206
+                        242,
+                        242
                       ],
                       "name": "name",
                       "type": "item"
@@ -1002,8 +1028,8 @@
                     {
                       "docstring": "true",
                       "lines": [
-                        207,
-                        207
+                        243,
+                        243
                       ],
                       "name": "continue-on-error",
                       "type": "key"
@@ -1011,8 +1037,8 @@
                     {
                       "docstring": "actions/upload-artifact@v4",
                       "lines": [
-                        208,
-                        208
+                        244,
+                        244
                       ],
                       "name": "uses",
                       "type": "key"
@@ -1022,8 +1048,8 @@
                         {
                           "docstring": "goldens-linux-${{ matrix.abi }}",
                           "lines": [
-                            210,
-                            210
+                            246,
+                            246
                           ],
                           "name": "name",
                           "type": "key"
@@ -1031,8 +1057,8 @@
                         {
                           "docstring": "/tmp/goldens-linux",
                           "lines": [
-                            211,
-                            211
+                            247,
+                            247
                           ],
                           "name": "path",
                           "type": "key"
@@ -1040,16 +1066,16 @@
                         {
                           "docstring": "warn",
                           "lines": [
-                            212,
-                            213
+                            248,
+                            249
                           ],
                           "name": "if-no-files-found",
                           "type": "key"
                         }
                       ],
                       "lines": [
-                        209,
-                        213
+                        245,
+                        249
                       ],
                       "name": "with",
                       "type": "section"
@@ -1057,8 +1083,8 @@
                     {
                       "docstring": "Android SDK",
                       "lines": [
-                        214,
-                        214
+                        250,
+                        250
                       ],
                       "name": "name",
                       "type": "item"
@@ -1066,8 +1092,8 @@
                     {
                       "docstring": "android-actions/setup-android@v3",
                       "lines": [
-                        215,
-                        216
+                        251,
+                        252
                       ],
                       "name": "uses",
                       "type": "key"
@@ -1075,16 +1101,16 @@
                     {
                       "docstring": "NDK",
                       "lines": [
-                        217,
-                        217
+                        253,
+                        253
                       ],
                       "name": "name",
                       "type": "item"
                     },
                     {
                       "lines": [
-                        218,
-                        234
+                        254,
+                        270
                       ],
                       "name": "run",
                       "type": "multiline"
@@ -1092,92 +1118,22 @@
                     {
                       "docstring": "Android platform for slint-android-activity",
                       "lines": [
-                        235,
-                        235
+                        271,
+                        271
                       ],
                       "name": "name",
                       "type": "item"
                     },
                     {
                       "lines": [
-                        236,
-                        247
-                      ],
-                      "name": "run",
-                      "type": "multiline"
-                    },
-                    {
-                      "docstring": "cargo-ndk",
-                      "lines": [
-                        248,
-                        248
-                      ],
-                      "name": "name",
-                      "type": "item"
-                    },
-                    {
-                      "docstring": "cargo install cargo-ndk --locked",
-                      "lines": [
-                        249,
-                        266
-                      ],
-                      "name": "run",
-                      "type": "key"
-                    },
-                    {
-                      "docstring": "Build torta_core (${{ matrix.abi }})",
-                      "lines": [
-                        267,
-                        267
-                      ],
-                      "name": "name",
-                      "type": "item"
-                    },
-                    {
-                      "docstring": "rust/torta_core",
-                      "lines": [
-                        268,
-                        268
-                      ],
-                      "name": "working-directory",
-                      "type": "key"
-                    },
-                    {
-                      "lines": [
-                        269,
-                        274
-                      ],
-                      "name": "run",
-                      "type": "multiline"
-                    },
-                    {
-                      "docstring": "Build torta_ui (${{ matrix.abi }})",
-                      "lines": [
-                        275,
-                        275
-                      ],
-                      "name": "name",
-                      "type": "item"
-                    },
-                    {
-                      "docstring": "rust/torta_ui",
-                      "lines": [
-                        276,
-                        276
-                      ],
-                      "name": "working-directory",
-                      "type": "key"
-                    },
-                    {
-                      "lines": [
-                        277,
+                        272,
                         283
                       ],
                       "name": "run",
                       "type": "multiline"
                     },
                     {
-                      "docstring": "Assert the pillar symbols are actually in the .so",
+                      "docstring": "cargo-ndk",
                       "lines": [
                         284,
                         284
@@ -1186,15 +1142,16 @@
                       "type": "item"
                     },
                     {
+                      "docstring": "cargo install cargo-ndk --locked",
                       "lines": [
                         285,
                         302
                       ],
                       "name": "run",
-                      "type": "multiline"
+                      "type": "key"
                     },
                     {
-                      "docstring": "Gradle assemble ${{ matrix.flavor }}Debug",
+                      "docstring": "Build torta_core (${{ matrix.abi }})",
                       "lines": [
                         303,
                         303
@@ -1203,10 +1160,79 @@
                       "type": "item"
                     },
                     {
-                      "docstring": "./gradlew :libumdnscrypt:assemble${{ matrix.flavor == 'arm64' && 'Arm64' || 'Universal' }}Debug --st...",
+                      "docstring": "rust/torta_core",
                       "lines": [
                         304,
-                        305
+                        304
+                      ],
+                      "name": "working-directory",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        305,
+                        310
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Build torta_ui (${{ matrix.abi }})",
+                      "lines": [
+                        311,
+                        311
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "rust/torta_ui",
+                      "lines": [
+                        312,
+                        312
+                      ],
+                      "name": "working-directory",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        313,
+                        319
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Assert the pillar symbols are actually in the .so",
+                      "lines": [
+                        320,
+                        320
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        321,
+                        338
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Gradle assemble ${{ matrix.flavor }}Debug",
+                      "lines": [
+                        339,
+                        339
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "./gradlew :libumdnscrypt:assemble${{ matrix.flavor == 'arm64' && 'Arm64' || 'Universal' }}Debug --st...",
+                      "lines": [
+                        340,
+                        341
                       ],
                       "name": "run",
                       "type": "key"
@@ -1214,8 +1240,8 @@
                     {
                       "docstring": "JVM unit tests",
                       "lines": [
-                        306,
-                        306
+                        342,
+                        342
                       ],
                       "name": "name",
                       "type": "item"
@@ -1223,8 +1249,8 @@
                     {
                       "docstring": "./gradlew :libumdnscrypt:test${{ matrix.flavor == 'arm64' && 'Arm64' || 'Universal' }}DebugUnitTest ...",
                       "lines": [
-                        307,
-                        308
+                        343,
+                        344
                       ],
                       "name": "run",
                       "type": "key"
@@ -1232,8 +1258,8 @@
                     {
                       "docstring": "Name the APK",
                       "lines": [
-                        309,
-                        309
+                        345,
+                        345
                       ],
                       "name": "name",
                       "type": "item"
@@ -1241,16 +1267,16 @@
                     {
                       "docstring": "apk",
                       "lines": [
-                        310,
-                        310
+                        346,
+                        346
                       ],
                       "name": "id",
                       "type": "key"
                     },
                     {
                       "lines": [
-                        311,
-                        316
+                        347,
+                        352
                       ],
                       "name": "run",
                       "type": "multiline"
@@ -1258,8 +1284,8 @@
                     {
                       "docstring": "actions/upload-artifact@v4",
                       "lines": [
-                        317,
-                        317
+                        353,
+                        353
                       ],
                       "name": "uses",
                       "type": "item"
@@ -1269,8 +1295,8 @@
                         {
                           "docstring": "yeah-torta-${{ matrix.flavor }}-alpha",
                           "lines": [
-                            319,
-                            319
+                            355,
+                            355
                           ],
                           "name": "name",
                           "type": "key"
@@ -1278,8 +1304,8 @@
                         {
                           "docstring": "${{ steps.apk.outputs.path }}",
                           "lines": [
-                            320,
-                            320
+                            356,
+                            356
                           ],
                           "name": "path",
                           "type": "key"
@@ -1287,8 +1313,8 @@
                         {
                           "docstring": "error",
                           "lines": [
-                            321,
-                            321
+                            357,
+                            357
                           ],
                           "name": "if-no-files-found",
                           "type": "key"
@@ -1296,32 +1322,32 @@
                         {
                           "docstring": "30",
                           "lines": [
-                            322,
-                            326
+                            358,
+                            362
                           ],
                           "name": "retention-days",
                           "type": "key"
                         }
                       ],
                       "lines": [
-                        318,
-                        326
+                        354,
+                        362
                       ],
                       "name": "with",
                       "type": "section"
                     }
                   ],
                   "lines": [
-                    145,
-                    326
+                    181,
+                    362
                   ],
                   "name": "steps",
                   "type": "list"
                 }
               ],
               "lines": [
-                131,
-                326
+                167,
+                362
               ],
               "name": "android",
               "type": "section"
@@ -1331,8 +1357,8 @@
                 {
                   "docstring": "publish pre-release",
                   "lines": [
-                    328,
-                    328
+                    364,
+                    364
                   ],
                   "name": "name",
                   "type": "key"
@@ -1340,8 +1366,8 @@
                 {
                   "docstring": "startsWith(github.ref, 'refs/tags/v')",
                   "lines": [
-                    329,
-                    329
+                    365,
+                    365
                   ],
                   "name": "if",
                   "type": "key"
@@ -1349,8 +1375,8 @@
                 {
                   "docstring": "[android]",
                   "lines": [
-                    330,
-                    330
+                    366,
+                    366
                   ],
                   "name": "needs",
                   "type": "collection"
@@ -1358,8 +1384,8 @@
                 {
                   "docstring": "ubuntu-latest",
                   "lines": [
-                    331,
-                    331
+                    367,
+                    367
                   ],
                   "name": "runs-on",
                   "type": "key"
@@ -1369,16 +1395,16 @@
                     {
                       "docstring": "write",
                       "lines": [
-                        333,
-                        333
+                        369,
+                        369
                       ],
                       "name": "contents",
                       "type": "key"
                     }
                   ],
                   "lines": [
-                    332,
-                    333
+                    368,
+                    369
                   ],
                   "name": "permissions",
                   "type": "section"
@@ -1388,8 +1414,8 @@
                     {
                       "docstring": "actions/checkout@v4",
                       "lines": [
-                        335,
-                        335
+                        371,
+                        371
                       ],
                       "name": "uses",
                       "type": "item"
@@ -1397,8 +1423,8 @@
                     {
                       "docstring": "actions/download-artifact@v4",
                       "lines": [
-                        336,
-                        336
+                        372,
+                        372
                       ],
                       "name": "uses",
                       "type": "item"
@@ -1408,16 +1434,16 @@
                         {
                           "docstring": "artifacts",
                           "lines": [
-                            338,
-                            339
+                            374,
+                            375
                           ],
                           "name": "path",
                           "type": "key"
                         }
                       ],
                       "lines": [
-                        337,
-                        339
+                        373,
+                        375
                       ],
                       "name": "with",
                       "type": "section"
@@ -1425,16 +1451,16 @@
                     {
                       "docstring": "Collect the APKs",
                       "lines": [
-                        340,
-                        340
+                        376,
+                        376
                       ],
                       "name": "name",
                       "type": "item"
                     },
                     {
                       "lines": [
-                        341,
-                        346
+                        377,
+                        382
                       ],
                       "name": "run",
                       "type": "multiline"
@@ -1442,8 +1468,8 @@
                     {
                       "docstring": "softprops/action-gh-release@v2",
                       "lines": [
-                        347,
-                        347
+                        383,
+                        383
                       ],
                       "name": "uses",
                       "type": "item"
@@ -1453,8 +1479,8 @@
                         {
                           "docstring": "release/*.apk",
                           "lines": [
-                            349,
-                            349
+                            385,
+                            385
                           ],
                           "name": "files",
                           "type": "key"
@@ -1462,8 +1488,8 @@
                         {
                           "docstring": "true",
                           "lines": [
-                            350,
-                            350
+                            386,
+                            386
                           ],
                           "name": "prerelease",
                           "type": "key"
@@ -1471,8 +1497,8 @@
                         {
                           "docstring": "true",
                           "lines": [
-                            351,
-                            351
+                            387,
+                            387
                           ],
                           "name": "generate_release_notes",
                           "type": "key"
@@ -1480,40 +1506,40 @@
                         {
                           "docstring": "\"Yeah! Tort\u00e4 ${{ github.ref_name }} \u2014 ALPHA\"",
                           "lines": [
-                            352,
-                            352
+                            388,
+                            388
                           ],
                           "name": "name",
                           "type": "key"
                         },
                         {
                           "lines": [
-                            353,
-                            369
+                            389,
+                            406
                           ],
                           "name": "body",
                           "type": "multiline"
                         }
                       ],
                       "lines": [
-                        348,
-                        369
+                        384,
+                        406
                       ],
                       "name": "with",
                       "type": "section"
                     }
                   ],
                   "lines": [
-                    334,
-                    369
+                    370,
+                    406
                   ],
                   "name": "steps",
                   "type": "list"
                 }
               ],
               "lines": [
-                327,
-                369
+                363,
+                406
               ],
               "name": "prerelease",
               "type": "section"
@@ -1521,7 +1547,7 @@
           ],
           "lines": [
             41,
-            369
+            406
           ],
           "name": "jobs",
           "type": "section"
@@ -1862,6 +1888,6 @@
       ]
     }
   },
-  "generated_at": "2026-08-01T08:07:17.643800+00:00",
+  "generated_at": "2026-08-01T08:46:42.573403+00:00",
   "version": "1.0"
 }
