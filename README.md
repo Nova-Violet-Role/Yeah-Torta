@@ -211,6 +211,45 @@ The long version is above. This is the version you can read in thirty seconds.
 
 ---
 
+## 🥮 What's in a name? (everything here is cake)
+
+Nothing in this project is named at random. It is all the same joke, carried further than anyone should carry a joke.
+
+### 🏛️ `libum` — the ancient Roman cake, and why the app module is called `libumdnscrypt`
+
+**Libum** *(neuter noun, Latin)* — a **sacrificial cake** offered to the household gods. Not a metaphor: a real recipe, written down by **Cato the Elder** in *De Agri Cultura* (§75, ~160 BC), and one of the oldest surviving in Europe:
+
+> Two pounds of cheese, well crushed. One pound of wheat flour. One egg. Mix into a single mass, shape it into a loaf, lay it on **bay leaves**, and bake it slowly under a hot crock.
+
+A Roman household baked one, offered it at the hearth, and *then* everyone ate it. It was an offering **and** dinner. That is precisely what a DNS engine is: something you set at the threshold of the house, quietly, so that everything which comes in has been dealt with — and which you then enjoy without thinking about it.
+
+So `libumdnscrypt` is the **cake laid at the door**. The module that sits at the boundary of the device and handles what tries to cross it.
+
+### 🍰 …and the rest of the bakery
+
+| name | what it means | what it is |
+|:--|:--|:--|
+| **Tortä** | *torta* — cake, in Latin's descendants (Italian, Spanish, Portuguese) with a German umlaut for the accent | the whole engine |
+| **libum** | the Roman offering-cake, Cato's recipe | the Android module, at the threshold |
+| **Soft-cake** | a cake that yields under pressure without breaking | the queue law — it gives way gracefully instead of collapsing |
+| **Mochi-Dango** | 🍡 pounded rice cakes on a skewer, one after another | the escalation valve — a **streak**, each step a little firmer than the last |
+| **Yeah** | YeAH-TCP, a real published congestion algorithm — and, conveniently, a thing you shout | the congestion brain. The classic loss law is the paper's (`yeah.rs:31` cites §3); the **LineRate** rung on top, which makes UDP round-trips first-class, is this project's own |
+| **WIRE CAKE INU** | 🐕 the cake that comes with a dog attached | the privilege pillar — it fetches |
+| **Centauri** | Alpha Centauri, the nearest star system | the CDN — because the closest source wins |
+| **BEAST** | it is a beast | it is a beast |
+
+### 🔪 And yes — `lib.rs` really is slices of *libum*
+
+This is the Socio's joke and it is too accurate to leave out. In Rust, **`lib.rs` is the crate root** — the single file that decides what the outside world can see. Everything the Android app is allowed to touch passes through it.
+
+So the engine is a *libum*, and `lib.rs` is where it gets **sliced**: 7,659 lines whose job is to cut the cake into portions and hand them across the boundary, one `#[uniffi::export]` at a time. **181 slices**, counted — `centauri_serve_hits`, `mirror_status`, `beast_set_yeah_profile` and 178 others. If a capability is not sliced there, the app simply cannot have any, no matter what the engine can do internally.
+
+And the plate it is served on is **[Slint](https://slint.dev)**: the entire interface is compiled Rust, so the UI is not a separate app *describing* the engine — it is the same cake, plated. **Slices of libum, served on Slint.** 🍰
+
+*(For the record: nobody has tried Cato's recipe with two pounds of cheese. If you do, the results belong in an issue.)*
+
+---
+
 ## 🗺️ Codemap — what this repository is made of
 
 Measured with `git ls-files` on the published tree, **2,437 files / 615,494 lines**:
