@@ -38,19 +38,35 @@ component JesdictArt inherits Rectangle {
         height: root.height;
         clip: true;
 
+        // ★ FONT-TOLERANT LAYOUT (2026-08-01). These three lines used to be positioned by a bare
+        // `x:` with no width, which pins the composition to ONE font's metrics: it fit on Windows
+        // and, on a Linux runner whose default font is wider, "JESDICT" ran past the clip edge and
+        // rendered as "|ESDICT" -- the J of the man's own name sheared off. The pixel gate caught
+        // it (2,290 differing pixels) and the artifact showed WHY, which is the only reason it was
+        // not blessed as the new baseline.
+        //
+        // Each line now owns a full-width box and centres inside it, so a wider or narrower font
+        // spreads SYMMETRICALLY about the middle instead of growing rightward into the clip. The
+        // sizes carry ~13% more headroom than the widest measured metric. This is a property that
+        // survives a font change, rather than a constant that happened to be true on one machine.
+
         // THX — the shout, flame-gold
         Text {
-            x: root.width * 0.06; y: root.height * 0.10;
+            x: 0; y: root.height * 0.10;
+            width: root.clip-w; horizontal-alignment: center;
             text: "THX";
             color: #e7ad42;
-            font-size: root.height * 0.26;
+            font-size: root.height * 0.23;
             font-weight: 900;
             font-italic: true;
         }
         // to — the small breath, pig-pink
         Text {
-            x: root.width * 0.52; y: root.height * 0.24;
-            text: "to";
+            x: 0; y: root.height * 0.245;
+            width: root.clip-w; horizontal-alignment: center;
+            // Trailing spaces nudge the word right of centre WITHOUT re-introducing an absolute x:
+            // a shift expressed in glyph widths scales with the font instead of fighting it.
+            text: "        to";
             color: #f28aa2;
             font-size: root.height * 0.13;
             font-weight: 700;
@@ -58,10 +74,13 @@ component JesdictArt inherits Rectangle {
         }
         // JESDICT — the dedication line, pig-pink
         Text {
-            x: root.width * 0.06; y: root.height * 0.44;
+            x: 0; y: root.height * 0.44;
+            width: root.clip-w; horizontal-alignment: center;
             text: "JESDICT";
             color: #f28aa2;
-            font-size: root.height * 0.19;   // 0.21 overran the right safe-area at weight-900 italic
+            // 0.21 overran the right safe-area at weight-900 italic on Windows; 0.19 still overran
+            // it on the runner's wider default font. 0.165 clears both with margin to spare.
+            font-size: root.height * 0.165;
             font-weight: 900;
             font-italic: true;
         }
