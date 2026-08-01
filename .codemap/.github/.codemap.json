@@ -503,8 +503,72 @@
           "type": "section"
         }
       ]
+    },
+    "topics.md": {
+      "hash": "9437964e8dc5",
+      "indexed_at": "2026-08-01T04:15:15.887866+00:00",
+      "language": "markdown",
+      "lines": 142,
+      "mtime_ns": 1785557682843431100,
+      "size": 6518,
+      "symbols": [
+        {
+          "docstring": "Topics are GitHub's own tag system. Up to **20** per repo. They are not decoration: `github.com/topics/<topic>` is a real, crawlable, ranked page, and",
+          "lines": [
+            15,
+            50
+          ],
+          "name": "Where it moved: repo TOPICS",
+          "type": "section"
+        },
+        {
+          "docstring": "| surface | limit | why it is indexed | |---|---|---| | repo **description** | ~350 chars | shown in every search result and every org listing; the si",
+          "lines": [
+            51,
+            58
+          ],
+          "name": "The other three legitimate surfaces",
+          "type": "section"
+        },
+        {
+          "docstring": "**This works, and it was measured rather than argued.** One call to GitHub's own markdown renderer (`POST https://api.github.com/markdown`, HTTP 200)",
+          "lines": [
+            59,
+            101
+          ],
+          "name": "The signature block \u2014 the forum trick, ported verbatim",
+          "type": "section"
+        },
+        {
+          "docstring": "**A \"META injector\" cannot inject meta tags into a GitHub page** \u2014 row 1 of the table above. `<meta>` is deleted before the page is served, so no craw",
+          "lines": [
+            102,
+            111
+          ],
+          "name": "What does NOT work, measured rather than assumed",
+          "type": "section"
+        },
+        {
+          "docstring": "A bot whose job is to bump a timestamp so the repo *looks* updated is **inauthentic activity** under GitHub's Acceptable Use Policies, and enforcement",
+          "lines": [
+            112,
+            125
+          ],
+          "name": "What would actively cost us the repo",
+          "type": "section"
+        },
+        {
+          "docstring": "`.github/workflows/verify.yml` runs **every Monday**. It re-proves the whole packet against whatever Lean and mathlib currently are, then writes the r",
+          "lines": [
+            126,
+            143
+          ],
+          "name": "What we ship instead, which produces the same visible effect honestly",
+          "type": "section"
+        }
+      ]
     }
   },
-  "generated_at": "2026-08-01T03:59:06.482689+00:00",
+  "generated_at": "2026-08-01T04:15:15.889345+00:00",
   "version": "1.0"
 }

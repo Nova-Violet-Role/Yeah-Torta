@@ -1,0 +1,64 @@
+# This file is part of Yeah! Tortä.
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+cff-version: 1.2.0
+title: "Yeah! Tortä - an Android DNS engine whose pillars must prove they are working"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - name: "Saimonokuma"
+    website: "https://github.com/Nova-Violet-Role"
+repository-code: "https://github.com/Nova-Violet-Role/Yeah-Torta"
+license:
+  - AGPL-3.0-or-later
+  - EUPL-1.2
+version: 1.0.0-alpha
+date-released: 2026-08-01
+abstract: >-
+  An Android DNS engine built on the principle that no claim ships without an
+  instrument that could have failed. Nine pillars - a datapath firewall, a
+  content-addressed offline CDN, a resolution ladder, an adaptive congestion
+  tuner, upstream rotation gated on answering rather than reachability,
+  reversible privilege elevation, encrypted transport, a deny plane with
+  provably distinguishable attribution labels, and a userspace tun forwarder -
+  implemented in a Rust core of roughly 116k lines with a user interface
+  compiled from Rust via Slint. Invariants that must hold for every input are
+  proved in Lean 4 rather than sampled: 84 machine-checked theorems across five
+  modules, zero sorry, zero native_decide, each re-verified by the Lean kernel
+  through leanchecker and each mutation-tested so that a theorem no mutation can
+  kill is labelled decorative rather than sold as a guarantee. The engine
+  carries 1311 unit tests, and the whole product - both shared objects, the
+  UniFFI bindings and both APKs - is built from source by GitHub Actions, with
+  gates that assert the built library actually contains its pillar symbols. The
+  project publishes its unproven claims alongside its proven ones. PRE-RELEASE.
+keywords:
+  - "dns"
+  - "dns-privacy"
+  - "dnscrypt"
+  - "doh"
+  - "odoh"
+  - "dnssec"
+  - "dns-resolver"
+  - "dns-filtering"
+  - "adblock"
+  - "blocklist"
+  - "cdn"
+  - "local-cdn"
+  - "content-addressed"
+  - "android"
+  - "android-app"
+  - "no-root"
+  - "vpn-service"
+  - "network-security"
+  - "privacy"
+  - "rust"
+  - "kotlin"
+  - "slint"
+  - "uniffi"
+  - "lean4"
+  - "formal-verification"
+  - "theorem-proving"
+  - "machine-checked"
+  - "mutation-testing"
+  - "post-quantum"
+  - "alpha"

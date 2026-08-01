@@ -35,6 +35,12 @@ Most privacy tools on Android tell you they are working. A switch turns green, a
 
 It began as a fork of [InviZible Pro](https://github.com/Gedsh/InviZible) (AGPL-3.0) and has grown a Rust engine, a Slint interface, a content-addressed local CDN and a formal-methods layer around it.
 
+**🎯 Mission** — Give people a privacy tool that can *show its work*: every protection backed by evidence they can read for themselves, and every limitation stated as plainly as every strength.
+
+**🌟 Vision** — A world where "this app protects you" is a claim with an instrument behind it, not a marketing line — and where saying *"this part is not proven yet"* is normal engineering rather than an embarrassment.
+
+Built by [Nova-Violet Role](https://github.com/Nova-Violet-Role), a non-profit working at the intersection of law, code and cognitive science. Everything we make is open, free, and meant to be taken apart.
+
 ---
 
 ## 🚧 Status: this is an ALPHA
