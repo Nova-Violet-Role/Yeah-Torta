@@ -49,7 +49,7 @@ jobs:
     name: engine tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
@@ -169,13 +169,13 @@ jobs:
     name: zero warnings on the 4 shipped ABIs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
         with:
           workspaces: rust/torta_core
 
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@v4
       - name: NDK
         run: |
           sdkmanager --install "ndk;26.3.11579264" >/dev/null
@@ -291,7 +291,7 @@ jobs:
     name: uniffi bindings are not stale
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
         with:
@@ -389,16 +389,16 @@ jobs:
             abi: x86_64
             rust_target: x86_64-linux-android
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
 
       - name: Node (the A14 uniffi-records guard is a node script)
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '20'
 
@@ -451,14 +451,14 @@ jobs:
 
       - name: Upload Linux golden candidates
         continue-on-error: true
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: goldens-linux-${{ matrix.abi }}
           path: /tmp/goldens-linux
           if-no-files-found: warn
 
       - name: Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
 
       - name: NDK
         run: |
@@ -612,7 +612,7 @@ jobs:
           echo "path=$APK" >> "$GITHUB_OUTPUT"
           echo "APK: $APK ($(du -h "$APK" | cut -f1))"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: yeah-torta-${{ matrix.flavor }}-alpha
           path: ${{ steps.apk.outputs.path }}
@@ -630,8 +630,8 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v7
         with:
           path: artifacts
 
