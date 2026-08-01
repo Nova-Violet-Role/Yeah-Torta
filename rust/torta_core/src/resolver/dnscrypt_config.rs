@@ -2000,9 +2000,22 @@ stamp = 'sdns://AQcAAAAAAAAAAAAQMi5kbnNjcnlwdC1jZXJ0Lg'
 // `libumdnscrypt/src/main/assets/dnscrypt.zip` -> `app_data/dnscrypt-proxy/dnscrypt-proxy.toml`,
 // and nothing in this crate had ever parsed it.
 //
-// `shipped/dnscrypt-proxy.toml` is that file, byte-for-byte, and `tools/check-shipped-toml.sh`
+// `shipped/dnscrypt-proxy.toml` is that file, byte-for-byte, and `tools/shipped/check-shipped-toml.js`
 // fails if the two ever diverge. So this test executes the REAL implementation against the REAL
 // shipped bytes instead of a copy of them.
+//
+// CORRECTION 2026-08-01, because the sentence above was FALSE for as long as it existed. It named
+// `tools/check-shipped-toml.sh`, and NO SUCH FILE was ever in the tree -- so nothing enforced the
+// binding, and the two copies had already drifted apart by three lines: the project-wide
+// `tordnscrypt` -> `libumdnscrypt` rename landed on this text copy and missed the one inside
+// `dnscrypt.zip`, because grep cannot see into a binary archive.
+//
+// The consequence is the exact overclaim this repo hunts. The test below was GREEN the whole time
+// while testing a file that no device ever receives -- a comment asserting a guarantee that no
+// instrument provided. The zip has been resynced and the checker now exists, reads the zip
+// directly (no unzip binary, no temp dir), has a size floor so it cannot pass on a truncated
+// entry, and runs in CI. Its negative control is the stale zip, which it rejects with the three
+// differing lines printed.
 //
 // Tortä's DNSCrypt is entirely Rust: only the .toml / .log / config files are read and rewritten,
 // through this serde model. That is why the shipped config is ~4 KB while upstream's Go

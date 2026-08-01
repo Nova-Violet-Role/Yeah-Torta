@@ -70,6 +70,18 @@ jobs:
       #
       # A CI feature set that is a SUBSET of the ship recipe is not a cheaper test, it is a test of
       # a different program.
+      # The Rust test `the_shipped_config_round_trips_through_the_live_model` parses
+      # `shipped/dnscrypt-proxy.toml` and its doc calls it "the exact bytes shipped inside
+      # assets/dnscrypt.zip". Nothing enforced that. Measured 2026-08-01: the checker the source
+      # comment named (tools/check-shipped-toml.sh) DID NOT EXIST, and the two had already drifted
+      # by three lines -- the tordnscrypt -> libumdnscrypt rename applied to the text copy and
+      # missed inside the binary zip. The test was green while testing a file no device receives.
+      #
+      # Runs BEFORE cargo test: if the corpus is not the shipped bytes, the round-trip result is
+      # meaningless and there is no point spending ten minutes proving it.
+      - name: the Rust corpus must BE the shipped asset
+        run: node tools/shipped/check-shipped-toml.js
+
       - name: cargo test --features mirror,pure_rust,netstack (the ship recipe)
         working-directory: rust/torta_core
         run: cargo test --lib --features mirror,pure_rust,netstack | tee "$RUNNER_TEMP/test.out"
