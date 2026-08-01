@@ -38,6 +38,8 @@ import uniffi.torta_core.SolverBindingStore
 import uniffi.torta_core.SolverTransport
 import javax.inject.Inject
 import javax.inject.Named
+import android.os.Build
+import android.net.wifi.WifiInfo
 
 /**
  * #19 G10 — the Stage-E Solver's **BindingCache armed + durably mirrored** (RAM ⊗ NAND): the FIRST live
@@ -256,9 +258,20 @@ class SolverCacheManager @Inject constructor(
                 ?.firstOrNull { it.isDefaultRoute && it.gateway != null }
                 ?.gateway?.hostAddress
             val ssidOrCarrier = when (linkType) {
+                // WifiManager.connectionInfo is deprecated at API 31. The supported replacement is
+                // NetworkCapabilities.transportInfo, which is already in scope here as `caps` for
+                // the very network this fingerprint describes -- and that is strictly MORE correct
+                // than the old call, which asked the WifiManager about the CURRENT Wi-Fi connection
+                // regardless of which network `caps` belongs to. On a device where those differ the
+                // old code fingerprinted one network with another's SSID.
                 NetworkFingerprint.Companion.LinkType.WIFI ->
-                    (ctx.applicationContext.getSystemService(Context.WIFI_SERVICE) as? WifiManager)
-                        ?.connectionInfo?.ssid
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        (caps.transportInfo as? WifiInfo)?.ssid
+                    } else {
+                        @Suppress("DEPRECATION")
+                        (ctx.applicationContext.getSystemService(Context.WIFI_SERVICE) as? WifiManager)
+                            ?.connectionInfo?.ssid
+                    }
                 NetworkFingerprint.Companion.LinkType.CELLULAR ->
                     (ctx.getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager)
                         ?.networkOperatorName

@@ -192,7 +192,19 @@ class WireCakeInuManager(
             }
 
             override fun onServiceResolved(info: NsdServiceInfo) {
-                val host = info.host?.hostAddress ?: return
+                // NsdServiceInfo.host is deprecated at API 34 in favour of hostAddresses, which is a
+                // LIST because one service can advertise several addresses (v4 and v6). Taking the
+                // first preserves the previous single-address behaviour exactly.
+                //
+                // The safety property does NOT rest on which address is picked: isOwnDeviceAddress
+                // below is what rejects a foreign host advertising a fake _adb-tls-pairing, and it
+                // runs on whichever address this yields, on both branches.
+                val host = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    info.hostAddresses.firstOrNull()?.hostAddress ?: return
+                } else {
+                    @Suppress("DEPRECATION")
+                    info.host?.hostAddress ?: return
+                }
                 // The adb pairing service is on THIS device — but on a real phone NsdManager resolves it to
                 // the device's own LAN/Wi-Fi address (e.g. 192.168.x.x), NOT the literal loopback. So accept
                 // the device's OWN addresses (loopback + every local-interface IP) and reject only a
