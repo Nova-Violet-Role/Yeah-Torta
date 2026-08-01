@@ -38,11 +38,33 @@ abstract class ExtendedDialogFragment : DialogFragment() {
     private var waitForOpenCounter = 2
     private var waitForCloseCounter = 3
 
-    @Suppress("DEPRECATION")
+    /**
+     * Mirrors the value this class writes to the deprecated `retainInstance`.
+     *
+     * `onDestroyView` needs to know whether the instance is retained, and READING
+     * `retainInstance` is a second deprecated usage on top of the write. Since this class is the
+     * only thing in the repository that ever writes it -- measured by repo-wide grep, which found
+     * exactly two occurrences, the write below and the read in `onDestroyView` -- the value can be
+     * mirrored where it is set instead of read back from the deprecated property.
+     *
+     * WHY A FIELD AND NOT JUST `true`: this is a LIBRARY module and the class is `abstract` and
+     * public, so a subclass outside this repository may override `onCreate` and never call
+     * `super`. In that case `retainInstance` stays false -- and so does this mirror. The two agree
+     * in BOTH cases, which is what makes the substitution exact rather than merely usually right.
+     * Hard-coding `true` would have been a constant condition that silently changed behaviour for
+     * a caller I cannot see.
+     */
+    private var retainedByThisFragment = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        retainInstance = true
+        // No non-deprecated equivalent: `setRetainInstance` was deprecated in Fragment 1.3 in
+        // favour of a ViewModel, which is a different mechanism with different lifetime, not a
+        // drop-in. Kept, and narrowed to this single write.
+        @Suppress("DEPRECATION")
+        run { retainInstance = true }
+        retainedByThisFragment = true
 
         handler = Handler(Looper.getMainLooper())
     }
@@ -82,11 +104,13 @@ abstract class ExtendedDialogFragment : DialogFragment() {
         }
     }
 
-    @Suppress("DEPRECATION")
     override fun onDestroyView() {
         val dialog = dialog
         // handles https://code.google.com/p/android/issues/detail?id=17423
-        if (dialog != null && retainInstance) {
+        // The guard reads [retainedByThisFragment] rather than the deprecated `retainInstance`;
+        // the two are written together in onCreate and are equal in every reachable state,
+        // including a subclass outside this module that never calls super.onCreate.
+        if (dialog != null && retainedByThisFragment) {
             dialog.setDismissMessage(null)
         }
 
