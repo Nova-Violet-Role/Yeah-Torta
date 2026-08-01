@@ -16,7 +16,7 @@
 [![Slint](https://img.shields.io/badge/Slint-UI-2379F4?style=flat-square)](rust/torta_ui/)
 [![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?style=flat-square&logo=android&logoColor=white)](#-building)
 [![Proved in Lean 4](https://img.shields.io/badge/Proved%20in-Lean%204-2C3E50?style=flat-square)](#-what-is-proved-not-merely-tested)
-[![Tests](https://img.shields.io/badge/engine%20tests-1311%20passing-27ae60?style=flat-square)](#-instruments)
+[![Tests](https://img.shields.io/badge/engine%20tests-1370%20passing-27ae60?style=flat-square)](#-instruments)
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-9b59b6.svg?style=flat-square)](#-contributors)
 
 </div>
@@ -65,12 +65,12 @@ That last row is the honest state of the newest pillar, and it is in the README 
 Each pillar is a distinct guarantee with its own code, its own counters and its own failure mode.
 
 ### 1. 🛡️ WARDEN — the datapath gate
-`rust/torta_core/src/warden/` · 9,751 lines
+`rust/torta_core/src/warden/` · 10,087 lines
 
 The last thing between a packet and the network. Warden holds numbered rules (`block_dns_bypass`, hardcoded-resolver denial, port policy) and decides whether a *connection* — not just a name — is allowed to exist. It is the pillar that catches an app trying to talk to `8.8.8.8:53` directly, having never asked us to resolve anything.
 
 ### 2. 🌌 CENTAURI — the offline CDN
-`rust/torta_core/src/mirror/` · 24,222 lines · `#[cfg(feature = "mirror")]`
+`rust/torta_core/src/mirror/` · 24,407 lines · `#[cfg(feature = "mirror")]`
 
 A Decentraleyes/LocalCDN idea taken further: a **content-addressed, signature-verified local mirror**. Common CDN assets (jQuery and friends) are fetched **at most once**, hash-verified against a minisign-signed catalog, and served from a loopback server afterwards. The upstream CDN sees one request ever, instead of one per site you visit.
 
@@ -82,7 +82,7 @@ It is guarded by a four-conjunct gate — TLS trust **and** something servable *
 Escalates a query through transports until something honest answers: cache → local records → DNSCrypt → DoH → plain, with retry budgets, negative caching, TTL floors and ceilings, and serve-stale. Every rung records *why* it moved to the next one, so a slow answer can be attributed instead of guessed at.
 
 ### 4. 🐺 BEAST — the adaptive tuner
-`rust/torta_core/src/beast/` · 7,785 lines
+`rust/torta_core/src/beast/` · 8,364 lines
 
 Watches live behaviour (latency, loss, cache hit rate) and tunes the engine's own knobs — window, in-flight cap, pacing. The interesting engineering is the anti-thrash work: hysteresis and invariants that stop a tuner from oscillating between two equally bad states, which is the classic way self-tuning systems make things worse.
 
@@ -109,7 +109,7 @@ Blocklists, homograph detection, rebind protection and the DoH-bypass sinkhole. 
 > The `doh-bypass` label exists because of a measurement that invalidated everything else: a fully-rendered browser page produced **zero** ledger rows. The browser had resolved its own DoH endpoint once and tunnelled every subsequent lookup to Cloudflare, blinding all nine pillars at once. Sinkholing the bootstrap apexes is what restored visibility — the ledger now shows `brave.cloudflare-dns.com … REJECT … doh-bypass`.
 
 ### 9. 🌐 NETSTACK FORWARDER — the tun datapath
-`rust/torta_core/src/forwarder/` · 3,603 lines
+`rust/torta_core/src/forwarder/` · 3,686 lines
 
 The userspace network stack behind the VPN interface: TCP/UDP forwarding, SNI inspection, and the hairpin that lets a cloaked CDN host reach the local mirror. No root, no kernel module.
 
@@ -259,7 +259,7 @@ So `libumdnscrypt` is the **cake laid at the door**. The module that sits at the
 
 This is the Socio's joke and it is too accurate to leave out. In Rust, **`lib.rs` is the crate root** — the single file that decides what the outside world can see. Everything the Android app is allowed to touch passes through it.
 
-So the engine is a *libum*, and `lib.rs` is where it gets **sliced**: 7,659 lines whose job is to cut the cake into portions and hand them across the boundary, one `#[uniffi::export]` at a time. **181 slices**, counted — `centauri_serve_hits`, `mirror_status`, `beast_set_yeah_profile` and 178 others. If a capability is not sliced there, the app simply cannot have any, no matter what the engine can do internally.
+So the engine is a *libum*, and `lib.rs` is where it gets **sliced**: 7,875 lines whose job is to cut the cake into portions and hand them across the boundary, one `#[uniffi::export]` at a time. **181 slices**, counted — `centauri_serve_hits`, `mirror_status`, `beast_set_yeah_profile` and 178 others. If a capability is not sliced there, the app simply cannot have any, no matter what the engine can do internally.
 
 And the plate it is served on is **[Slint](https://slint.dev)**: the entire interface is compiled Rust, so the UI is not a separate app *describing* the engine — it is the same cake, plated. **Slices of libum, served on Slint.** 🍰
 
@@ -269,7 +269,7 @@ And the plate it is served on is **[Slint](https://slint.dev)**: the entire inte
 
 ## 🗺️ Codemap — what this repository is made of
 
-Measured with `git ls-files` on the published tree, **2,437 files / 615,494 lines**:
+Measured with `git ls-files` on the published tree, **2,692 files / 644,211 lines** — regenerated by `node tools/readme/sync-readme-numbers.js`, and CI fails if any number on this page disagrees with the tree. Note that this total counts *every* tracked file, including the workflow that checks it, so it moves whenever anything in the repository does:
 
 | type | files | lines | share of lines | what it is |
 |:--|--:|--:|--:|:--|
@@ -281,7 +281,7 @@ Measured with `git ls-files` on the published tree, **2,437 files / 615,494 line
 | `.kts` `.toml` `.txt` `.udl` | 483 | 12,165 | 2.0% | build + interface definitions |
 | other | 165 | 69,892 | 11.4% | resources, licences, assets |
 
-**Excluding the vendored `uniffi-rs-main/` subtree (1,026 files), the project itself is:** 140 `.rs` files / 116,424 lines, 376 `.kt` / 96,797 lines, 38 `.slint` / 20,191 lines.
+**Excluding the vendored `uniffi-rs-main/` subtree (1,026 files), the project itself is:** 141 `.rs` files / 119,114 lines, 388 `.kt` / 97,771 lines, 38 `.slint` / 20,226 lines.
 
 Build output is **not** tracked. Before the first public push this repository carried 1,816 files and 1.6 GB of compiler artifacts (149 `.rlib`, 512 `.o`, a 90 MB `.pdb`) against 32.5 MB of actual project — which also made it unpushable, since GitHub rejects any push above 2 GB.
 

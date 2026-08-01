@@ -87,31 +87,45 @@ jobs:
           echo "extractor selftest: found '$probe'"
 
       # --- THE AUDIT --------------------------------------------------------
+      # This replaced an inline shell version that checked FOUR numbers and had two holes.
+      #
+      # HOLE 1 -- it measured `tests`, `files`, `rs`, `kt` and `slint` in the step above and then
+      # compared none of them. Numbers nobody checks are numbers that are wrong: the test badge
+      # said 1311 while the tree had 1370, and the headline said 2,437 files / 615,494 lines while
+      # the tree had 2,691 / 643,973. Both had been public and stale.
+      #
+      # HOLE 2 -- each comparison was guarded by `[ -n "$claim" ] && check ...`, so a claim whose
+      # grep found nothing was SKIPPED rather than failed. Rewording a line in README.md silently
+      # switched its own gate off. The replacement asserts every pattern matches EXACTLY ONCE and
+      # exits 4 if one matches zero times, because "the pattern stopped matching" and "the number
+      # is correct" must never look the same.
+      #
+      # The checker and the writer are now one file, so the number CI demands and the number the
+      # tool writes cannot drift apart: `--check` is this gate, and no flag rewrites README.md.
       - name: README numbers must match the sources
+        run: node tools/readme/sync-readme-numbers.js --check
+
+      # A gate nobody has broken on purpose is an untested alarm. This breaks it deliberately and
+      # requires it to fail, then restores the file and requires it to pass again.
+      - name: README gate negative control
         run: |
           set -uo pipefail
-          fail=0
-          check () {  # check <label> <claimed-in-readme> <measured>
-            if [ "$2" != "$3" ]; then
-              echo "::error::README claims $1 = $2 but the tree measures $3"
-              fail=1
-            else
-              echo "  ok  $1 = $3"
-            fi
-          }
-
-          # Subsystem line counts, as advertised in the pillar section.
-          claim_mirror=$(grep -oE 'src/mirror/` · [0-9,]+ lines' README.md | grep -oE '[0-9,]+' | tr -d ',' || true)
-          claim_warden=$(grep -oE 'src/warden/` · [0-9,]+ lines' README.md | grep -oE '[0-9,]+' | tr -d ',' || true)
-          claim_beast=$(grep -oE  'src/beast/` · [0-9,]+ lines'  README.md | grep -oE '[0-9,]+' | tr -d ',' || true)
-          claim_fwd=$(grep -oE    'src/forwarder/` · [0-9,]+ lines' README.md | grep -oE '[0-9,]+' | tr -d ',' || true)
-
-          [ -n "$claim_mirror" ] && check "mirror/ lines"    "$claim_mirror" "${{ steps.gt.outputs.mirror }}"
-          [ -n "$claim_warden" ] && check "warden/ lines"    "$claim_warden" "${{ steps.gt.outputs.warden }}"
-          [ -n "$claim_beast"  ] && check "beast/ lines"     "$claim_beast"  "${{ steps.gt.outputs.beast }}"
-          [ -n "$claim_fwd"    ] && check "forwarder/ lines" "$claim_fwd"    "${{ steps.gt.outputs.fwd }}"
-
-          exit "$fail"
+          cp README.md /tmp/README.orig
+          # Perturb ONE checked number. `git ls-files` cannot make this true, so the gate must fail.
+          perl -0pi -e 's/(`rust\/torta_core\/src\/beast\/` · )([\d,]+)( lines)/${1}999,999${3}/' README.md
+          if ! grep -q '999,999 lines' README.md; then
+            echo "::error::negative control did not apply -- the perturbation is not in the file"
+            cp /tmp/README.orig README.md
+            exit 3
+          fi
+          node tools/readme/sync-readme-numbers.js --check && rc=0 || rc=$?
+          cp /tmp/README.orig README.md
+          if [ "$rc" -eq 0 ]; then
+            echo "::error::the README gate PASSED on a deliberately wrong number -- it proves nothing"
+            exit 1
+          fi
+          echo "negative control ok: the gate failed on a wrong number (exit $rc)"
+          node tools/readme/sync-readme-numbers.js --check
 
       # --- THE UNPROVABLE CLAIM CHECK ---------------------------------------
       # Words that promise more than a pre-release can deliver. This is the
