@@ -544,12 +544,12 @@ jobs:
         if: matrix.flavor == 'arm64'
         run: |
           set +e
-          node .avd-guard/unmute2.js strip > /dev/null
+          node tools/deprecation/unmute2.js strip > /dev/null
           strip_code=$?
           set -e
           if [ "$strip_code" -ne 0 ]; then
             echo "::error::unmute2.js strip failed ($strip_code) -- measurement did not happen"
-            node .avd-guard/unmute2.js restore > /dev/null 2>&1 || true
+            node tools/deprecation/unmute2.js restore > /dev/null 2>&1 || true
             exit 1
           fi
           set +e
@@ -558,12 +558,12 @@ jobs:
           # depgate itself fails if the log is empty -- a compile that did not run must never read
           # as a clean tree.
           set +e
-          node .avd-guard/depgate.js check dep-ci.log
+          node tools/deprecation/depgate.js check dep-ci.log
           gate_code=$?
           set -e
-          node .avd-guard/unmute2.js restore
+          node tools/deprecation/unmute2.js restore
           if [ "$gate_code" -ne 0 ]; then
-            echo "::error::new ungated deprecated API usage (depgate exit $gate_code). Gate it behind a version check or fix it; do not widen .avd-guard/deprecation-baseline.json to make this pass."
+            echo "::error::new ungated deprecated API usage (depgate exit $gate_code). Gate it behind a version check or fix it; do not widen tools/deprecation/deprecation-baseline.json to make this pass."
             exit 1
           fi
 

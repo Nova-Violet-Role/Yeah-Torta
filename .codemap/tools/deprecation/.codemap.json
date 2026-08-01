@@ -1,0 +1,149 @@
+{
+  "directory": "tools\\deprecation",
+  "files": {
+    "depclass.js": {
+      "hash": "06e7746d1b6e",
+      "indexed_at": "2026-08-01T11:37:14.053595+00:00",
+      "language": "javascript",
+      "lines": 131,
+      "mtime_ns": 1785584175287684100,
+      "size": 6367,
+      "symbols": [
+        {
+          "lines": [
+            48,
+            48
+          ],
+          "name": "indentOf",
+          "signature": "(s)",
+          "type": "function"
+        },
+        {
+          "docstring": "The name of the function STRUCTURALLY enclosing `line` (1-based), or null. Indentation-aware, and that is not a nicety. Scanning upward for the neares",
+          "lines": [
+            61,
+            68
+          ],
+          "name": "enclosingFun",
+          "signature": "(src, line)",
+          "type": "function"
+        },
+        {
+          "docstring": "Is `line` within `win` lines below an SDK_INT test, inside the same file?",
+          "lines": [
+            71,
+            73
+          ],
+          "name": "gatedAt",
+          "signature": "(src, line, win = 15)",
+          "type": "function"
+        },
+        {
+          "docstring": "Every call site of `name` across the module, as {file, line}.",
+          "lines": [
+            76,
+            87
+          ],
+          "name": "callSites",
+          "signature": "(name)",
+          "type": "function"
+        },
+        {
+          "docstring": "Gated directly, or gated at every call site (transitively, bounded depth).",
+          "lines": [
+            90,
+            103
+          ],
+          "name": "isGated",
+          "signature": "(file, line, depth, seen)",
+          "type": "function"
+        }
+      ]
+    },
+    "depgate.js": {
+      "hash": "b19836c32864",
+      "indexed_at": "2026-08-01T11:37:14.331620+00:00",
+      "language": "javascript",
+      "lines": 143,
+      "mtime_ns": 1785584175334682900,
+      "size": 7520,
+      "symbols": [
+        {
+          "lines": [
+            46,
+            46
+          ],
+          "name": "indentOf",
+          "signature": "(s)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            47,
+            51
+          ],
+          "name": "enclosingFun",
+          "signature": "(src, line)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            52,
+            52
+          ],
+          "name": "gatedAt",
+          "signature": "(src, line, win = 15)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            53,
+            58
+          ],
+          "name": "callSites",
+          "signature": "(name)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            59,
+            67
+          ],
+          "name": "isGated",
+          "signature": "(file, line, depth, seen)",
+          "type": "function"
+        },
+        {
+          "lines": [
+            120,
+            120
+          ],
+          "name": "sum",
+          "signature": "(o)",
+          "type": "function"
+        }
+      ]
+    },
+    "unmute2.js": {
+      "hash": "77c0f2487483",
+      "indexed_at": "2026-08-01T11:37:14.606940+00:00",
+      "language": "javascript",
+      "lines": 60,
+      "mtime_ns": 1785584175334682900,
+      "size": 2489,
+      "symbols": [
+        {
+          "lines": [
+            13,
+            20
+          ],
+          "name": "walk",
+          "signature": "(dir, out = [])",
+          "type": "function"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-08-01T11:37:14.608411+00:00",
+  "version": "1.0"
+}
