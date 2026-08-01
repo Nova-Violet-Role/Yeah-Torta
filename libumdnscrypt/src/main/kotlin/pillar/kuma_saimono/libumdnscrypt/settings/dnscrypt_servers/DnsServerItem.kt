@@ -251,10 +251,10 @@ class DnsServerItem @Throws(IllegalArgumentException::class) constructor(
         this.ping = ping
     }
 
-    override fun equals(o: Any?): Boolean {
-        if (this === o) return true
-        if (o == null || javaClass != o.javaClass) return false
-        val that = o as DnsServerItem
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || javaClass != other.javaClass) return false
+        val that = other as DnsServerItem
         return dnssec == that.dnssec &&
                 nolog == that.nolog &&
                 nofilter == that.nofilter &&
@@ -288,13 +288,13 @@ class DnsServerItem @Throws(IllegalArgumentException::class) constructor(
                 '}'
     }
 
-    override fun compareTo(dnsServerItem: DnsServerItem): Int {
-        return if (!this.checked && dnsServerItem.checked) {
+    override fun compareTo(other: DnsServerItem): Int {
+        return if (!this.checked && other.checked) {
             1
-        } else if (this.checked && !dnsServerItem.checked) {
+        } else if (this.checked && !other.checked) {
             -1
         } else {
-            this.name.compareTo(dnsServerItem.name)
+            this.name.compareTo(other.name)
         }
     }
 }

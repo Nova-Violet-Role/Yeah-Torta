@@ -857,17 +857,17 @@ class ServiceVPN : VpnService(), OnInternetConnectionCheckedListener {
             this.fixTTL = fixTTL
         }
 
-        override fun equals(obj: Any?): Boolean {
+        override fun equals(other: Any?): Boolean {
 
-            if (obj == null) {
+            if (other == null) {
                 return false
             }
 
-            if (this.javaClass != obj.javaClass) {
+            if (this.javaClass != other.javaClass) {
                 return false
             }
 
-            val other = obj as BuilderVPN
+            val other = other as BuilderVPN
 
             if (this.networkInfo == null || other.networkInfo == null ||
                 this.networkInfo!!.type != other.networkInfo!!.type) {

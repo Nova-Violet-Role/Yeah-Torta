@@ -71,17 +71,17 @@ class Record {
         this.server = server
     }
 
-    override fun equals(o: Any?): Boolean {
-        if (this === o) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
             return true
         }
-        if (o !is Record) {
+        if (other !is Record) {
             return false
         }
-        return value == o.value &&
-                type == o.type &&
-                ttl == o.ttl &&
-                timeStamp == o.timeStamp
+        return value == other.value &&
+                type == other.type &&
+                ttl == other.ttl &&
+                timeStamp == other.timeStamp
     }
 
     val isA: Boolean get() = type == TYPE_A

@@ -153,7 +153,10 @@ class ServiceVPNHandler private constructor(
                             .putBoolean(VPN_SERVICE_ENABLED, false).apply()
                         stop()
                     }
-                    else -> loge("VPN Handler Unknown command=" + cmd)
+                    // The `else -> loge("Unknown command")` arm is gone: VPNCommand is exhaustively
+                    // handled above, so it could never log. Its absence is the better guard --
+                    // a new VPNCommand now fails the build here instead of being logged and dropped
+                    // at runtime on a user's device.
                 }
             }
 

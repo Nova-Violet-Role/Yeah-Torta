@@ -59,8 +59,10 @@ class ResetModuleHelper @Inject constructor(
                     "$dataDir/app_data/dnscrypt-proxy"
                 )
             }
-
-            else -> {}
+            // No `else -> {}`. ModuleName.kt:19-21 declares exactly ONE variant, so the arm was
+            // unreachable -- and its absence is now load-bearing: adding a second module makes
+            // this `when` fail to compile until the new module's reset path is written. A silent
+            // no-op else would have shipped a module that resets nothing.
         }
     }
 
@@ -70,17 +72,15 @@ class ResetModuleHelper @Inject constructor(
                 DNSCryptExtractCommand(context, dataDir).execute()
                 ChmodCommand.dirChmod("$dataDir/app_data/dnscrypt-proxy", false)
             }
-
-            else -> {}
+            // exhaustive over the single ModuleName variant -- see cleanModuleFolder above
         }
-
-
     }
 
     private fun correctAppDir(moduleName: ModuleName) {
         val path = when (moduleName) {
             ModuleName.DNSCRYPT_MODULE -> "$dataDir/app_data/dnscrypt-proxy/dnscrypt-proxy.toml"
-            else -> return
+            // `else -> return` removed: unreachable, and it silently skipped updateAppDir(). A new
+            // module would have inherited that skip; now it inherits a compile error instead.
         }
         updateAppDir(path)
     }
