@@ -123,10 +123,12 @@ something we do not do.
 
 ---
 
+<!-- TAGS:BEGIN generated from .github/tags.txt -- do not hand-edit -->
 <sub>
 
-**#security** · **#security-policy** · **#responsible-disclosure** · **#vulnerability-reporting** · **#threat-model** · **#network-security** · **#vpn-service** · **#tun** · **#certificate-authority** · **#tls** · **#dns-rebinding** · **#homograph** · **#dns-security** · **#fail-closed** · **#yeah-torta** · **#dns** · **#dnscrypt** · **#doh** · **#odoh** · **#dnssec** · **#cdn** · **#content-addressed** · **#minisign** · **#privacy** · **#dns-privacy** · **#android** · **#no-root** · **#rust** · **#lean4** · **#formal-verification** · **#nova-violet-role** · **#alpha** · **#pre-release**
+**#security** · **#security-policy** · **#responsible-disclosure** · **#vulnerability-reporting** · **#threat-model** · **#certificate-authority** · **#tls** · **#fail-closed** · **#minisign** · **#dns** · **#dns-privacy** · **#dnscrypt** · **#doh** · **#android** · **#rust** · **#kotlin** · **#slint** · **#adblock** · **#blocklist** · **#dns-server** · **#privacy** · **#cdn** · **#formal-verification** · **#lean4** · **#vpn** · **#no-root** · **#uniffi** · **#dns-resolver** · **#android-app** · **#odoh** · **#dnssec** · **#dns64** · **#svcb** · **#homograph** · **#rebind** · **#warden** · **#local-cdn** · **#content-addressed** · **#dns-filtering** · **#network-security** · **#vpn-service** · **#tun** · **#post-quantum** · **#open-source** · **#agpl** · **#eupl** · **#alpha** · **#pre-release**
 
-*Tag source of truth: [`.github/tags.txt`](.github/tags.txt) — every tag names something present in this tree.*
+*Tags are generated from [`.github/tags.txt`](.github/tags.txt) by the Meta Hashtag Manager — every one names something present in this tree.*
 
 </sub>
+<!-- TAGS:END -->

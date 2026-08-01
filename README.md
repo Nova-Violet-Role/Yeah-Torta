@@ -276,16 +276,12 @@ Derived from [InviZible Pro](https://github.com/Gedsh/InviZible) © Garmatin Ole
 
 ---
 
+<!-- TAGS:BEGIN generated from .github/tags.txt -- do not hand-edit -->
 <sub>
 
-**#dns** · **#dnscrypt** · **#doh** · **#odoh** · **#dnssec** · **#dns64** · **#svcb** · **#cdn** · **#local-cdn** · **#content-addressed** · **#blocklist** · **#adblock** · **#dns-filtering** · **#homograph** · **#rebind** · **#warden** · **#tun** · **#vpn-service** · **#network-security** · **#privacy** · **#dns-privacy** · **#dns-resolver** · **#no-root** · **#android** · **#android-app** · **#rust** · **#kotlin** · **#slint** · **#uniffi** · **#post-quantum** · **#lean4** · **#formal-verification** · **#open-source** · **#agpl** · **#eupl** · **#alpha** · **#pre-release**
+**#dns-over-https** · **#private-dns** · **#dns** · **#dns-privacy** · **#dnscrypt** · **#doh** · **#android** · **#rust** · **#kotlin** · **#slint** · **#adblock** · **#blocklist** · **#dns-server** · **#privacy** · **#cdn** · **#formal-verification** · **#lean4** · **#vpn** · **#no-root** · **#uniffi** · **#dns-resolver** · **#android-app** · **#odoh** · **#dnssec** · **#dns64** · **#svcb** · **#homograph** · **#rebind** · **#warden** · **#local-cdn** · **#content-addressed** · **#dns-filtering** · **#network-security** · **#vpn-service** · **#tun** · **#post-quantum** · **#open-source** · **#agpl** · **#eupl** · **#alpha** · **#pre-release**
 
-*Every tag above names something present in this tree — the source of truth is [`.github/tags.txt`](.github/tags.txt), which records the measured file count behind each one. A tag whose evidence reaches zero gets deleted, not kept.*
+*Tags are generated from [`.github/tags.txt`](.github/tags.txt) by the Meta Hashtag Manager — every one names something present in this tree.*
 
 </sub>
-
-© 2026 Nova-Violet Role · Non-Profit Organization
-
-*Created with ❤️ for the advancement of human understanding*
-
-</div>
+<!-- TAGS:END -->

@@ -1,6 +1,269 @@
 {
   "directory": ".github\\workflows",
   "files": {
+    "ads-manager.yml": {
+      "hash": "1ff833a18397",
+      "indexed_at": "2026-08-01T04:23:15.448768+00:00",
+      "language": "yaml",
+      "lines": 160,
+      "mtime_ns": 1785557907750243100,
+      "size": 7356,
+      "symbols": [
+        {
+          "docstring": "Ads Manager",
+          "lines": [
+            26,
+            27
+          ],
+          "name": "name",
+          "type": "key"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "docstring": "\"0 8 * * 1,3,5\"   # Mon / Wed / Fri, 08:00 UTC -- one hour after tags",
+                  "lines": [
+                    30,
+                    30
+                  ],
+                  "name": "cron",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                29,
+                30
+              ],
+              "name": "schedule",
+              "type": "list"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    32,
+                    34
+                  ],
+                  "name": "paths",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                31,
+                34
+              ],
+              "name": "push",
+              "type": "section"
+            },
+            {
+              "lines": [
+                35,
+                36
+              ],
+              "name": "workflow_dispatch",
+              "type": "section"
+            }
+          ],
+          "lines": [
+            28,
+            36
+          ],
+          "name": "on",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "read",
+              "lines": [
+                38,
+                39
+              ],
+              "name": "contents",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            37,
+            39
+          ],
+          "name": "permissions",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "ads-manager",
+              "lines": [
+                41,
+                41
+              ],
+              "name": "group",
+              "type": "key"
+            },
+            {
+              "docstring": "false",
+              "lines": [
+                42,
+                43
+              ],
+              "name": "cancel-in-progress",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            40,
+            43
+          ],
+          "name": "concurrency",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "docstring": "ubuntu-latest",
+                  "lines": [
+                    46,
+                    46
+                  ],
+                  "name": "runs-on",
+                  "type": "key"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "actions/checkout@v4",
+                      "lines": [
+                        48,
+                        51
+                      ],
+                      "name": "uses",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "Measure ground truth",
+                      "lines": [
+                        52,
+                        52
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "gt",
+                      "lines": [
+                        53,
+                        53
+                      ],
+                      "name": "id",
+                      "type": "key"
+                    },
+                    {
+                      "lines": [
+                        54,
+                        77
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Extractor selftest",
+                      "lines": [
+                        78,
+                        78
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        79,
+                        89
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "README numbers must match the sources",
+                      "lines": [
+                        90,
+                        90
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        91,
+                        119
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "No unsubstantiated superlatives",
+                      "lines": [
+                        120,
+                        120
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        121,
+                        147
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Superlative check negative control",
+                      "lines": [
+                        148,
+                        148
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        149,
+                        161
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    }
+                  ],
+                  "lines": [
+                    47,
+                    161
+                  ],
+                  "name": "steps",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                45,
+                161
+              ],
+              "name": "audit",
+              "type": "section"
+            }
+          ],
+          "lines": [
+            44,
+            161
+          ],
+          "name": "jobs",
+          "type": "section"
+        }
+      ]
+    },
     "build.yml": {
       "hash": "be48fbfda9eb",
       "indexed_at": "2026-08-01T03:59:06.780465+00:00",
@@ -1140,8 +1403,332 @@
           "type": "section"
         }
       ]
+    },
+    "tag-manager.yml": {
+      "hash": "f7296d965eff",
+      "indexed_at": "2026-08-01T04:23:15.751949+00:00",
+      "language": "yaml",
+      "lines": 267,
+      "mtime_ns": 1785557991307661500,
+      "size": 12622,
+      "symbols": [
+        {
+          "docstring": "Meta Hashtag Manager",
+          "lines": [
+            31,
+            32
+          ],
+          "name": "name",
+          "type": "key"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "docstring": "\"0 7 * * 1,3,5\"   # Mon / Wed / Fri, 07:00 UTC",
+                  "lines": [
+                    35,
+                    35
+                  ],
+                  "name": "cron",
+                  "type": "item"
+                }
+              ],
+              "lines": [
+                34,
+                35
+              ],
+              "name": "schedule",
+              "type": "list"
+            },
+            {
+              "children": [
+                {
+                  "lines": [
+                    37,
+                    38
+                  ],
+                  "name": "paths",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                36,
+                38
+              ],
+              "name": "push",
+              "type": "section"
+            },
+            {
+              "lines": [
+                39,
+                40
+              ],
+              "name": "workflow_dispatch",
+              "type": "section"
+            }
+          ],
+          "lines": [
+            33,
+            40
+          ],
+          "name": "on",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "write",
+              "lines": [
+                42,
+                43
+              ],
+              "name": "contents",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            41,
+            43
+          ],
+          "name": "permissions",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "docstring": "tag-manager",
+              "lines": [
+                45,
+                45
+              ],
+              "name": "group",
+              "type": "key"
+            },
+            {
+              "docstring": "false",
+              "lines": [
+                46,
+                47
+              ],
+              "name": "cancel-in-progress",
+              "type": "key"
+            }
+          ],
+          "lines": [
+            44,
+            47
+          ],
+          "name": "concurrency",
+          "type": "section"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "docstring": "ubuntu-latest",
+                  "lines": [
+                    50,
+                    50
+                  ],
+                  "name": "runs-on",
+                  "type": "key"
+                },
+                {
+                  "children": [
+                    {
+                      "docstring": "actions/checkout@v4",
+                      "lines": [
+                        52,
+                        60
+                      ],
+                      "name": "uses",
+                      "type": "item"
+                    },
+                    {
+                      "docstring": "Validate tags.txt",
+                      "lines": [
+                        61,
+                        61
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        62,
+                        100
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Evidence check against the tree",
+                      "lines": [
+                        101,
+                        101
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        102,
+                        127
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Evidence check negative control",
+                      "lines": [
+                        128,
+                        128
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        129,
+                        138
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Validator negative control",
+                      "lines": [
+                        139,
+                        139
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        140,
+                        156
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Suggest tags for new code",
+                      "lines": [
+                        157,
+                        157
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        158,
+                        178
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Derive every copy from tags.txt",
+                      "lines": [
+                        179,
+                        179
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        180,
+                        244
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Push repo topics",
+                      "lines": [
+                        245,
+                        245
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "children": [
+                        {
+                          "docstring": "${{ secrets.GITHUB_TOKEN }}",
+                          "lines": [
+                            247,
+                            247
+                          ],
+                          "name": "GH_TOKEN",
+                          "type": "key"
+                        }
+                      ],
+                      "lines": [
+                        246,
+                        247
+                      ],
+                      "name": "env",
+                      "type": "section"
+                    },
+                    {
+                      "lines": [
+                        248,
+                        255
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    },
+                    {
+                      "docstring": "Commit only on real drift",
+                      "lines": [
+                        256,
+                        256
+                      ],
+                      "name": "name",
+                      "type": "item"
+                    },
+                    {
+                      "lines": [
+                        257,
+                        268
+                      ],
+                      "name": "run",
+                      "type": "multiline"
+                    }
+                  ],
+                  "lines": [
+                    51,
+                    268
+                  ],
+                  "name": "steps",
+                  "type": "list"
+                }
+              ],
+              "lines": [
+                49,
+                268
+              ],
+              "name": "sync",
+              "type": "section"
+            }
+          ],
+          "lines": [
+            48,
+            268
+          ],
+          "name": "jobs",
+          "type": "section"
+        }
+      ]
     }
   },
-  "generated_at": "2026-08-01T03:59:06.781771+00:00",
+  "generated_at": "2026-08-01T04:23:15.753526+00:00",
   "version": "1.0"
 }

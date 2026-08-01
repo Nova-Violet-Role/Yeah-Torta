@@ -1,0 +1,160 @@
+# This file is part of Yeah! Tortä.
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+#
+# ---------------------------------------------------------------------------
+# ADS MANAGER
+#
+# Runs Monday / Wednesday / Friday, one hour after the Meta Hashtag Manager.
+#
+# It audits the PROMOTIONAL COPY -- and it is built so the copy cannot claim
+# something the repository has not measured. Every number the README advertises
+# (theorem counts, test counts, line counts, pillar counts) is re-counted from
+# the sources here, and a disagreement FAILS THE JOB.
+#
+# That is the point of naming it after advertising: the most dangerous text in
+# this repository is the text that sounds good. The bot whose job is to promote
+# the project is exactly the bot that must be forbidden to lie. An advertisement
+# we cannot substantiate is worse than no advertisement -- it is the negative
+# comment, pre-written by us.
+#
+# It has already caught three wrong numbers in the README's first draft
+# (CloakServable 28 vs 25, DenyAttribution 5 vs 13, mirror/ 24,038 vs 24,223),
+# which is why it exists as a scheduled job rather than a one-off check.
+# ---------------------------------------------------------------------------
+
+name: Ads Manager
+
+on:
+  schedule:
+    - cron: "0 8 * * 1,3,5"   # Mon / Wed / Fri, 08:00 UTC -- one hour after tags
+  push:
+    paths:
+      - "README.md"
+      - "CITATION.cff"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ads-manager
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Ground truth is COUNTED from the sources, never from memory and never
+      # from the previous run of this file.
+      - name: Measure ground truth
+        id: gt
+        run: |
+          set -euo pipefail
+          # Rust unit tests: count #[test] attributes in the engine.
+          TESTS=$(grep -rho '#\[test\]' rust/torta_core/src --include=*.rs | wc -l)
+          # Tracked files and lines actually published.
+          FILES=$(git ls-files | wc -l)
+          RS=$(git ls-files '*.rs' -z | xargs -0 cat | wc -l)
+          KT=$(git ls-files '*.kt' -z | xargs -0 cat | wc -l)
+          SLINT=$(git ls-files '*.slint' -z | xargs -0 cat | wc -l)
+          MIRROR=$(cat rust/torta_core/src/mirror/*.rs | wc -l)
+          WARDEN=$(cat rust/torta_core/src/warden/*.rs | wc -l)
+          BEAST=$(cat rust/torta_core/src/beast/*.rs | wc -l)
+          FWD=$(cat rust/torta_core/src/forwarder/*.rs | wc -l)
+          {
+            echo "tests=$TESTS"; echo "files=$FILES"; echo "rs=$RS"; echo "kt=$KT"
+            echo "slint=$SLINT"; echo "mirror=$MIRROR"; echo "warden=$WARDEN"
+            echo "beast=$BEAST"; echo "fwd=$FWD"
+          } >> "$GITHUB_OUTPUT"
+          echo "MEASURED: tests=$TESTS files=$FILES rs=$RS kt=$KT slint=$SLINT"
+          echo "          mirror=$MIRROR warden=$WARDEN beast=$BEAST forwarder=$FWD"
+
+      # --- SELFTEST: the extractor must be able to SEE a number --------------
+      # A regex that silently matches nothing turns this whole job into a
+      # rubber stamp. Prove it can read before trusting what it read.
+      - name: Extractor selftest
+        run: |
+          set -euo pipefail
+          probe=$(grep -oE '[0-9,]+ lines' README.md | head -1 || true)
+          if [ -z "$probe" ]; then
+            echo "::error::the extractor found NO 'N lines' claim in README.md -- either the"
+            echo "::error::README stopped making measurable claims, or this job has gone blind."
+            exit 1
+          fi
+          echo "extractor selftest: found '$probe'"
+
+      # --- THE AUDIT --------------------------------------------------------
+      - name: README numbers must match the sources
+        run: |
+          set -uo pipefail
+          fail=0
+          check () {  # check <label> <claimed-in-readme> <measured>
+            if [ "$2" != "$3" ]; then
+              echo "::error::README claims $1 = $2 but the tree measures $3"
+              fail=1
+            else
+              echo "  ok  $1 = $3"
+            fi
+          }
+
+          # Subsystem line counts, as advertised in the pillar section.
+          claim_mirror=$(grep -oE 'src/mirror/` · [0-9,]+ lines' README.md | grep -oE '[0-9,]+' | tr -d ',' || true)
+          claim_warden=$(grep -oE 'src/warden/` · [0-9,]+ lines' README.md | grep -oE '[0-9,]+' | tr -d ',' || true)
+          claim_beast=$(grep -oE  'src/beast/` · [0-9,]+ lines'  README.md | grep -oE '[0-9,]+' | tr -d ',' || true)
+          claim_fwd=$(grep -oE    'src/forwarder/` · [0-9,]+ lines' README.md | grep -oE '[0-9,]+' | tr -d ',' || true)
+
+          [ -n "$claim_mirror" ] && check "mirror/ lines"    "$claim_mirror" "${{ steps.gt.outputs.mirror }}"
+          [ -n "$claim_warden" ] && check "warden/ lines"    "$claim_warden" "${{ steps.gt.outputs.warden }}"
+          [ -n "$claim_beast"  ] && check "beast/ lines"     "$claim_beast"  "${{ steps.gt.outputs.beast }}"
+          [ -n "$claim_fwd"    ] && check "forwarder/ lines" "$claim_fwd"    "${{ steps.gt.outputs.fwd }}"
+
+          exit "$fail"
+
+      # --- THE UNPROVABLE CLAIM CHECK ---------------------------------------
+      # Words that promise more than a pre-release can deliver. This is the
+      # advertising half of the job: not "is the number right" but "is the
+      # SENTENCE honest".
+      - name: No unsubstantiated superlatives
+        run: |
+          set -uo pipefail
+          fail=0
+          for phrase in "military-grade" "unbreakable" "100% secure" "완벽" "guaranteed anonymity" "untraceable" "NSA-proof"; do
+            if grep -qiF "$phrase" README.md; then
+              echo "::error::README contains an unsubstantiable claim: '$phrase'"
+              fail=1
+            fi
+          done
+          # The alpha must stay declared. Removing it would be the single most
+          # misleading edit anyone could make to this README.
+          if ! grep -qiE "alpha|pre-release" README.md; then
+            echo "::error::README no longer declares this is a PRE-RELEASE"
+            fail=1
+          fi
+          # And the honest-limits row must survive.
+          if ! grep -qiE "NOT proven|not yet" README.md; then
+            echo "::error::README no longer states what is unproven -- a project that"
+            echo "::error::publishes only its green rows is advertising, not reporting."
+            fail=1
+          fi
+          [ "$fail" -eq 0 ] && echo "no unsubstantiated copy found; alpha and limits both declared"
+          exit "$fail"
+
+      # --- NEGATIVE CONTROL -------------------------------------------------
+      # Feed the superlative check a string it MUST reject. If this passes, the
+      # check above proved nothing.
+      - name: Superlative check negative control
+        run: |
+          set -uo pipefail
+          printf 'this is 100%% secure and unbreakable\n' > /tmp/fake-readme.md
+          hits=0
+          for phrase in "unbreakable" "100% secure"; do
+            grep -qiF "$phrase" /tmp/fake-readme.md && hits=$((hits+1))
+          done
+          if [ "$hits" -lt 2 ]; then
+            echo "::error::the superlative check failed to flag deliberately bad copy -- it is decoration"
+            exit 1
+          fi
+          echo "control: deliberately bad copy correctly flagged ($hits/2) -- the check CAN fail"

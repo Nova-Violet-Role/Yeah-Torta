@@ -189,10 +189,12 @@ kinder than most.
 
 ---
 
+<!-- TAGS:BEGIN generated from .github/tags.txt -- do not hand-edit -->
 <sub>
 
-**#contributing** · **#good-first-issue** · **#open-source** · **#non-profit** · **#build-from-source** · **#github-actions** · **#ci** · **#cargo-ndk** · **#uniffi** · **#gradle** · **#android-ndk** · **#yeah-torta** · **#dns** · **#dnscrypt** · **#doh** · **#odoh** · **#dnssec** · **#cdn** · **#local-cdn** · **#blocklist** · **#adblock** · **#warden** · **#rust** · **#kotlin** · **#slint** · **#lean4** · **#formal-verification** · **#mutation-testing** · **#android** · **#no-root** · **#privacy** · **#nova-violet-role** · **#alpha** · **#pre-release**
+**#contributing** · **#good-first-issue** · **#build-from-source** · **#github-actions** · **#ci** · **#cargo-ndk** · **#gradle** · **#android-ndk** · **#mutation-testing** · **#dns** · **#dns-privacy** · **#dnscrypt** · **#doh** · **#android** · **#rust** · **#kotlin** · **#slint** · **#adblock** · **#blocklist** · **#dns-server** · **#privacy** · **#cdn** · **#formal-verification** · **#lean4** · **#vpn** · **#no-root** · **#uniffi** · **#dns-resolver** · **#android-app** · **#odoh** · **#dnssec** · **#dns64** · **#svcb** · **#homograph** · **#rebind** · **#warden** · **#local-cdn** · **#content-addressed** · **#dns-filtering** · **#network-security** · **#vpn-service** · **#tun** · **#post-quantum** · **#open-source** · **#agpl** · **#eupl** · **#alpha** · **#pre-release**
 
-*Tag source of truth: [`.github/tags.txt`](.github/tags.txt) — every tag names something present in this tree.*
+*Tags are generated from [`.github/tags.txt`](.github/tags.txt) by the Meta Hashtag Manager — every one names something present in this tree.*
 
 </sub>
+<!-- TAGS:END -->

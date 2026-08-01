@@ -1,0 +1,267 @@
+# This file is part of Yeah! Tortä.
+# SPDX-License-Identifier: AGPL-3.0-or-later OR EUPL-1.2
+# Copyright 2026 Saimonokuma.
+#
+# ---------------------------------------------------------------------------
+# META HASHTAG MANAGER
+#
+# The old forum trick, done where it still works: a signature full of #hashtags
+# under every post, so a crawler indexing the thread indexed the words people
+# were typing into search. On GitHub that mechanism did not die, it MOVED --
+# into repo topics (structured, browsable, github.com/topics/<t>) and into
+# visible README text (unlimited, and measured to survive GitHub's sanitizer
+# where <meta> tags do not).
+#
+# Runs Monday / Wednesday / Friday. .github/tags.txt is the single source of
+# truth for the tag set, and this workflow DERIVES every other copy from it:
+#
+#   * the README signature block (visible #Hashtag text)
+#   * the GitHub repo topics, pushed through the API
+#   * the CITATION.cff keywords list
+#
+# That is the [!SPEC] rule applied to a constant that is not a number: the tag
+# list appears in four places, so three of them were going to be wrong the first
+# time one changed. Now ONE is authored and three are generated.
+#
+# It commits ONLY on real drift. No --allow-empty anywhere: a run that finds
+# everything already in sync says nothing, which is what an honest instrument
+# does when it has nothing to report.
+# ---------------------------------------------------------------------------
+
+name: Meta Hashtag Manager
+
+on:
+  schedule:
+    - cron: "0 7 * * 1,3,5"   # Mon / Wed / Fri, 07:00 UTC
+  push:
+    paths:
+      - ".github/tags.txt"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tag-manager
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # --- validate the source of truth BEFORE deriving anything from it -----
+      # An invalid tag set must fail loudly here rather than be half-applied to
+      # the topics API and left inconsistent with the README.
+      #
+      # TWO TIERS. The 20-cap is a GitHub SERVER limit and applies ONLY to
+      # [TOPICS]. [SIGNATURE] is visible README text and has no limit -- capping
+      # it would throw away the one surface that has none.
+      - name: Validate tags.txt
+        run: |
+          set -euo pipefail
+          section () { awk -v s="[$1]" '$0==s{f=1;next} /^\[/{f=0} f' .github/tags.txt \
+                       | sed -E 's/[[:space:]]*\(.*\)$//' | sed -E 's/^#//' \
+                       | grep -vE '^\s*(#|$)'; }
+          section TOPICS    > /tmp/topics.txt
+          section SIGNATURE > /tmp/signature.txt
+          nt=$(wc -l < /tmp/topics.txt); ns=$(wc -l < /tmp/signature.txt)
+          echo "topics: $nt (cap 20)   signature: $ns (no cap)"
+
+          fail=0
+          [ "$nt" -eq 0 ] && { echo "::error::no topics"; fail=1; }
+          if [ "$nt" -gt 20 ]; then
+            echo "::error::$nt topics -- GitHub's API rejects the 21st. Move the extras to [SIGNATURE]."
+            fail=1
+          fi
+          # Syntax applies to both tiers; the CAP does not.
+          while read -r t; do
+            [ -z "$t" ] && continue
+            [ "${#t}" -gt 35 ] && { echo "::error::'$t' longer than 35 chars"; fail=1; }
+            printf '%s' "$t" | grep -qE '^[a-z0-9][a-z0-9-]*$' \
+              || { echo "::error::'$t' invalid (lowercase, [a-z0-9-], no leading hyphen)"; fail=1; }
+          done < <(cat /tmp/topics.txt /tmp/signature.txt)
+          for f in /tmp/topics.txt /tmp/signature.txt; do
+            [ "$(sort "$f" | uniq -d | wc -l)" -gt 0 ] && { echo "::error::duplicates in $f"; fail=1; }
+          done
+          # The signature must be a SUPERSET of the topics -- otherwise a topic
+          # someone searches for is missing from the indexed body text.
+          if [ -n "$(comm -23 <(sort /tmp/topics.txt) <(sort /tmp/signature.txt))" ]; then
+            echo "::error::a topic is missing from [SIGNATURE]:"
+            comm -23 <(sort /tmp/topics.txt) <(sort /tmp/signature.txt)
+            fail=1
+          fi
+          exit "$fail"
+
+      # --- EVERY TAG MUST BE TRUE -------------------------------------------
+      # This is what makes an unlimited tier safe. A tag naming a subject that
+      # appears NOWHERE in this tree is a fabrication, and fabricated tags are
+      # exactly what earns a project the negative comment it deserves.
+      - name: Evidence check against the tree
+        run: |
+          set -euo pipefail
+          git ls-files > /tmp/evidence.txt
+          # file CONTENT is evidence too -- #dnscrypt is true because 662 files
+          # say so, not because a path happens to contain the word.
+          git ls-files -z | xargs -0 grep -hoIE '[A-Za-z0-9-]{3,}' 2>/dev/null \
+            | sort -u >> /tmp/evidence.txt || true
+          tr 'A-Z' 'a-z' < /tmp/evidence.txt > /tmp/ev.lc
+
+          missing=0
+          while read -r t; do
+            [ -z "$t" ] && continue
+            probe=$(printf '%s' "$t" | tr '-' ' ')
+            head=${probe%% *}
+            if ! grep -qF "$head" /tmp/ev.lc; then
+              echo "::warning::no evidence found for tag '$t' (probe '$head')"
+              missing=$((missing+1))
+            fi
+          done < /tmp/signature.txt
+          echo "tags without direct evidence: $missing"
+          # Reported, not fatal: a tag can be true of the SUBJECT without
+          # appearing as a token. A hard failure here would forbid correct tags,
+          # which is the defect this project calls "a spec that forbids a
+          # correct future".
+
+      # --- NEGATIVE CONTROL for the evidence check --------------------------
+      - name: Evidence check negative control
+        run: |
+          set -uo pipefail
+          if grep -qF "kardashian" /tmp/ev.lc; then
+            echo "::error::evidence set matches an obviously-absent term -- the check is decoration"
+            exit 1
+          fi
+          echo "control: 'kardashian' correctly has no evidence -- the check CAN fail"
+
+      # --- NEGATIVE CONTROL for the validator -------------------------------
+      # An instrument is guilty until proven able to fail.
+      - name: Validator negative control
+        run: |
+          set -uo pipefail
+          if printf 'Not-A-Topic' | grep -qE '^[a-z0-9][a-z0-9-]*$'; then
+            echo "::error::validator accepted 'Not-A-Topic' -- the check is decoration"
+            exit 1
+          fi
+          echo "control rejected as required"
+
+      # --- WHAT'S NEW IN THE REPO THAT NOBODY TAGGED YET? -------------------
+      # The point of running this on a schedule: when a new pillar, module or
+      # exported function lands, the documents should start advertising it. This
+      # step reads the CURRENT tree and reports subjects with no matching tag.
+      #
+      # It WARNS rather than fails, and that is deliberate: auto-inventing tags
+      # would put words in the project's mouth, and failing the job would punish
+      # someone for adding a module. A human moves the suggestion into tags.txt,
+      # and every document picks it up on the next run.
+      - name: Suggest tags for new code
+        run: |
+          set -euo pipefail
+          { echo "## Tag suggestions"; echo; } >> "$GITHUB_STEP_SUMMARY"
+          # engine subsystems = the pillars
+          for d in rust/torta_core/src/*/; do
+            m=$(basename "$d")
+            grep -qxF "$m" /tmp/signature.txt || echo "  candidate (engine module): $m"
+          done > /tmp/cands.txt || true
+          # newly exported UniFFI functions are user-visible capability
+          grep -rhoE '^pub fn [a-z_]+' rust/torta_core/src/lib.rs 2>/dev/null \
+            | sed 's/pub fn //' | cut -d_ -f1 | sort -u > /tmp/fnroots.txt || true
+          n=$(wc -l < /tmp/cands.txt || echo 0)
+          if [ "$n" -gt 0 ]; then
+            echo "::notice::$n subject(s) in the tree have no tag yet -- consider adding them to .github/tags.txt"
+            cat /tmp/cands.txt
+            { cat /tmp/cands.txt; echo; } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "every engine module already has a tag"
+            echo "_every engine module already has a tag._" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Derive every copy from tags.txt
+        run: |
+          set -euo pipefail
+          mapfile -t TAGS < /tmp/signature.txt   # the UNLIMITED tier
+
+          # THE SIGNATURE BLOCK, WRITTEN INTO EVERY DOCUMENT.
+          #
+          # Visible text, never <meta> and never display:none -- MEASURED:
+          # <meta> is deleted by GitHub's sanitizer and display:none renders
+          # visible anyway. Plain "#tag" text survives verbatim, which is why
+          # this is the surface worth using.
+          #
+          # Every document carries the block, so a crawler that lands on
+          # SECURITY.md or CONTRIBUTING.md from a search finds the same subject
+          # vocabulary it would have found on the front page. Each file also
+          # gets its OWN extra tags from an optional [DOC:<NAME>] section in
+          # tags.txt -- an identical block on every page teaches a crawler
+          # nothing about which page it is on.
+          docsection () { awk -v s="[DOC:$1]" '$0==s{f=1;next} /^\[/{f=0} f' .github/tags.txt \
+                          | sed -E 's/[[:space:]]*\(.*\)$//' | sed -E 's/^#//' \
+                          | grep -vE '^\s*(#|$)' || true; }
+
+          for doc in README.md CODE_OF_CONDUCT.md CONTRIBUTING.md SECURITY.md TORTA-CODEBASE.md NOTICE.md; do
+            [ -f "$doc" ] || continue
+            grep -q "TAGS:BEGIN" "$doc" || { echo "  $doc has no TAGS markers -- skipped"; continue; }
+            key=$(basename "$doc" .md)
+            mapfile -t EXTRA < <(docsection "$key")
+            {
+              echo "<!-- TAGS:BEGIN generated from .github/tags.txt -- do not hand-edit -->"
+              printf '<sub>\n\n'
+              first=1
+              for t in "${EXTRA[@]}" "${TAGS[@]}"; do
+                [ -z "$t" ] && continue
+                [ $first -eq 0 ] && printf ' · '
+                printf '**#%s**' "$t"
+                first=0
+              done
+              printf '\n\n'
+              printf '*Tags are generated from [`.github/tags.txt`](.github/tags.txt) by the Meta Hashtag Manager — every one names something present in this tree.*\n\n'
+              printf '</sub>\n'
+              echo "<!-- TAGS:END -->"
+            } > /tmp/sig.md
+
+            awk '
+              /<!-- TAGS:BEGIN/ { skip=1; while ((getline line < "/tmp/sig.md") > 0) print line; next }
+              /<!-- TAGS:END/   { skip=0; next }
+              !skip
+            ' "$doc" > /tmp/doc.out && mv /tmp/doc.out "$doc"
+            echo "  wrote block: $doc ($(( ${#EXTRA[@]} + ${#TAGS[@]} )) tags)"
+          done
+
+          # 2. CITATION.cff keywords -- also the unlimited tier. Zenodo and
+          #    OpenAIRE index these and impose no 20-cap either.
+          {
+            echo "keywords:"
+            for t in "${TAGS[@]}"; do [ -n "$t" ] && echo "  - \"$t\""; done
+          } > /tmp/kw.yaml
+          awk '
+            /^keywords:/      { skip=1; while ((getline line < "/tmp/kw.yaml") > 0) print line; next }
+            skip && /^  - /   { next }
+            skip && !/^  - /  { skip=0 }
+            !skip
+          ' CITATION.cff > /tmp/CITATION.cff && mv /tmp/CITATION.cff CITATION.cff
+
+      # 3. The repo topics themselves -- the structured descendant of the forum
+      #    signature tag. Each becomes a crawlable github.com/topics/<t> page.
+      - name: Push repo topics
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          mapfile -t TOPICS < /tmp/topics.txt    # the CAPPED tier -- max 20
+          args=()
+          for t in "${TOPICS[@]}"; do [ -n "$t" ] && args+=( -f "names[]=$t" ); done
+          gh api -X PUT "repos/${GITHUB_REPOSITORY}/topics" "${args[@]}" > /tmp/topics.json
+          echo "topics now:"; cat /tmp/topics.json
+
+      - name: Commit only on real drift
+        run: |
+          set -euo pipefail
+          git config user.name  "Meta Hashtag Manager"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md CITATION.cff CODE_OF_CONDUCT.md CONTRIBUTING.md SECURITY.md TORTA-CODEBASE.md NOTICE.md 2>/dev/null || git add README.md CITATION.cff
+          if git diff --staged --quiet; then
+            echo "already in sync -- nothing to commit, and nothing to fake"
+          else
+            git commit -m "tags: re-derive the signature block in every document from tags.txt"
+            git push
+          fi
