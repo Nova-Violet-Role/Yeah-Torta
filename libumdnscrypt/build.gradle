@@ -145,7 +145,24 @@ android {
         }
     }
 
-    ndkVersion '23.1.7779620'
+    // ndkVersion REMOVED 2026-08-01, and PROVED inert rather than assumed inert.
+    //
+    // It pinned 23.1.7779620 -- a THIRD version, agreeing with neither the 26.3.11579264 that CI
+    // installs nor the runner image ANDROID_NDK_ROOT. A reader would reasonably conclude the
+    // shipped .so is built with NDK 23. It is not: cargo-ndk builds it with 26.3.11579264 and AGP
+    // consumes the result as a prebuilt from src/main/jniLibs.
+    //
+    // THE PROOF, by mutation rather than by reading: set to '99.9.9999999', a version that cannot
+    // exist, then `:libumdnscrypt:assembleUniversalDebug` -> BUILD SUCCESSFUL, exit 0. AGP never
+    // resolves ndkVersion here because this module has NO native build to run: zero
+    // externalNativeBuild blocks in this file, zero CMakeLists.txt in the tree, zero .c/.cpp under
+    // src/main. CI has never installed 23.1.7779620 and the APK jobs have always passed, which is
+    // the same fact observed from the other side.
+    //
+    // (owner.gradle DOES declare externalNativeBuild + cmake, but it is applied by nothing --
+    // settings.gradle:4 references it only in a COMMENTED-OUT line -- and there is no CMakeLists.txt
+    // for it to drive. Left untouched: it is not on any build path, and a stale file is not this
+    // change's business.)
 
     buildFeatures {
         viewBinding true
