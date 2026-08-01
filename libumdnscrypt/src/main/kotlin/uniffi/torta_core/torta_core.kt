@@ -1020,6 +1020,10 @@ external fun uniffi_torta_core_checksum_func_torta_core_version(
 ): Int
 external fun uniffi_torta_core_checksum_func_tunnel_create(
 ): Int
+external fun uniffi_torta_core_checksum_func_tunnel_netstack_compiled(
+): Int
+external fun uniffi_torta_core_checksum_func_tunnel_netstack_feature_enabled(
+): Int
 external fun uniffi_torta_core_checksum_func_underground_events(
 ): Int
 external fun uniffi_torta_core_checksum_func_underground_ingest_lane(
@@ -2068,6 +2072,10 @@ external fun uniffi_torta_core_fn_func_torta_core_version(uniffi_out_err: Uniffi
 ): RustBuffer.ByValue
 external fun uniffi_torta_core_fn_func_tunnel_create(uniffi_out_err: UniffiRustCallStatus, 
 ): Long
+external fun uniffi_torta_core_fn_func_tunnel_netstack_compiled(uniffi_out_err: UniffiRustCallStatus, 
+): Byte
+external fun uniffi_torta_core_fn_func_tunnel_netstack_feature_enabled(uniffi_out_err: UniffiRustCallStatus, 
+): Byte
 external fun uniffi_torta_core_fn_func_underground_events(uniffi_out_err: UniffiRustCallStatus, 
 ): RustBuffer.ByValue
 external fun uniffi_torta_core_fn_func_underground_ingest_lane(`slug`: RustBuffer.ByValue,`tcat`: RustBuffer.ByValue,`sig`: RustBuffer.ByValue,`pubkey`: RustBuffer.ByValue,`nowDays`: Int,uniffi_out_err: UniffiRustCallStatus, 
@@ -2691,6 +2699,12 @@ private fun uniffiCheckApiChecksums(lib: IntegrityCheckingUniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_torta_core_checksum_func_tunnel_create() != 12083) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_torta_core_checksum_func_tunnel_netstack_compiled() != 12772) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_torta_core_checksum_func_tunnel_netstack_feature_enabled() != 40109) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_torta_core_checksum_func_underground_events() != 33220) {
@@ -26495,6 +26509,64 @@ public object FfiConverterMapStringTypeWeeklySchedule: FfiConverterRustBuffer<Ma
             return FfiConverterTypeTunnelController.lift(
     uniffiRustCall() { _status ->
     UniffiLib.uniffi_torta_core_fn_func_tunnel_create(
+    
+        _status)
+}
+    )
+    }
+    
+
+        /**
+         * ★ THE HONEST ANSWER TO "IS THE FORWARDER REAL?" (2026-08-01).
+         *
+         * `TunnelHandle::set_netstack` (`tunnel/mod.rs:933`) has a body consisting entirely of
+         * `#[cfg(all(unix, feature = "netstack"))] set_netstack_enabled(on);`. Build without the feature
+         * and that function is EMPTY: it takes `on`, carries `#[allow(unused_variables)]` so even the
+         * ignored argument is silent, returns success, and the forwarder thread `"torta-netstack"`
+         * (`tunnel/mod.rs:1159`) is never compiled, let alone spawned.
+         *
+         * Kotlin then reported the pillar as armed anyway, because `netstackForwarderArmed()`
+         * (`TortaPillarBridge.kt:409`) reads a SharedPreference that DEFAULTS TO TRUE and never asks the
+         * engine anything -- while its own comment says "the SLINT switch must show the same truth the
+         * tunnel acts on". A preference is an intention; this is the capability, and they are not the
+         * same fact. Measured on the `.so` this repo last shipped: `grep -c -a torta-netstack` = 0.
+         *
+         * This is deliberately a CAPABILITY query, not a state query. It answers "can this build ever
+         * forward?", which is a property of the binary and cannot drift, rather than "is it forwarding
+         * now?", which is a property of the runtime and would be stale the moment it was read. Callers
+         * combine it with the user's preference: armed = wants_it AND can_do_it.
+         */ fun `tunnelNetstackCompiled`(): kotlin.Boolean {
+            return FfiConverterBoolean.lift(
+    uniffiRustCall() { _status ->
+    UniffiLib.uniffi_torta_core_fn_func_tunnel_netstack_compiled(
+    
+        _status)
+}
+    )
+    }
+    
+
+        /**
+         * ★ THE FEATURE HALF, SPLIT OUT SO THE GUARD CAN BE TESTED ANYWHERE.
+         *
+         * `tunnel_netstack_compiled` above is a conjunction, and on a Windows developer host the `unix`
+         * half is false regardless -- which makes a test of it VACUOUS on this machine. Measured, not
+         * assumed: mutating that body to a constant `false` SURVIVED the test suite here, and would only
+         * have died on a unix runner. A guard whose teeth exist only on another platform is a guard you
+         * are not actually running.
+         *
+         * Reporting the feature flag on its own restores that. It is true whenever the crate was built
+         * with `--features netstack`, on every platform, so the same mutation dies immediately and the
+         * developer machine gets the same protection CI has.
+         *
+         * It is also the more USEFUL diagnostic of the two: it separates "this build has no forwarder
+         * code at all" (wrong ship recipe -- the actual defect that shipped) from "this platform cannot
+         * run it" (an Android/desktop distinction). Collapsed into one boolean, those two very different
+         * causes are indistinguishable to whoever is holding the phone.
+         */ fun `tunnelNetstackFeatureEnabled`(): kotlin.Boolean {
+            return FfiConverterBoolean.lift(
+    uniffiRustCall() { _status ->
+    UniffiLib.uniffi_torta_core_fn_func_tunnel_netstack_feature_enabled(
     
         _status)
 }

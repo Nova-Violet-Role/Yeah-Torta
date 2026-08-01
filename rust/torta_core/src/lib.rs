@@ -50,6 +50,53 @@ mod tunnel;
 #[cfg(feature = "netstack")]
 mod forwarder;
 
+/// ★ THE HONEST ANSWER TO "IS THE FORWARDER REAL?" (2026-08-01).
+///
+/// `TunnelHandle::set_netstack` (`tunnel/mod.rs:933`) has a body consisting entirely of
+/// `#[cfg(all(unix, feature = "netstack"))] set_netstack_enabled(on);`. Build without the feature
+/// and that function is EMPTY: it takes `on`, carries `#[allow(unused_variables)]` so even the
+/// ignored argument is silent, returns success, and the forwarder thread `"torta-netstack"`
+/// (`tunnel/mod.rs:1159`) is never compiled, let alone spawned.
+///
+/// Kotlin then reported the pillar as armed anyway, because `netstackForwarderArmed()`
+/// (`TortaPillarBridge.kt:409`) reads a SharedPreference that DEFAULTS TO TRUE and never asks the
+/// engine anything -- while its own comment says "the SLINT switch must show the same truth the
+/// tunnel acts on". A preference is an intention; this is the capability, and they are not the
+/// same fact. Measured on the `.so` this repo last shipped: `grep -c -a torta-netstack` = 0.
+///
+/// This is deliberately a CAPABILITY query, not a state query. It answers "can this build ever
+/// forward?", which is a property of the binary and cannot drift, rather than "is it forwarding
+/// now?", which is a property of the runtime and would be stale the moment it was read. Callers
+/// combine it with the user's preference: armed = wants_it AND can_do_it.
+#[uniffi::export]
+pub fn tunnel_netstack_compiled() -> bool {
+    // `cfg!` evaluates at compile time and mirrors the EXACT predicate guarding the call in
+    // `set_netstack`. If that predicate is ever widened or narrowed, this must move with it --
+    // the two are a pair, and a copy that drifts would restate the very lie it exists to prevent.
+    cfg!(all(unix, feature = "netstack"))
+}
+
+/// ★ THE FEATURE HALF, SPLIT OUT SO THE GUARD CAN BE TESTED ANYWHERE.
+///
+/// `tunnel_netstack_compiled` above is a conjunction, and on a Windows developer host the `unix`
+/// half is false regardless -- which makes a test of it VACUOUS on this machine. Measured, not
+/// assumed: mutating that body to a constant `false` SURVIVED the test suite here, and would only
+/// have died on a unix runner. A guard whose teeth exist only on another platform is a guard you
+/// are not actually running.
+///
+/// Reporting the feature flag on its own restores that. It is true whenever the crate was built
+/// with `--features netstack`, on every platform, so the same mutation dies immediately and the
+/// developer machine gets the same protection CI has.
+///
+/// It is also the more USEFUL diagnostic of the two: it separates "this build has no forwarder
+/// code at all" (wrong ship recipe -- the actual defect that shipped) from "this platform cannot
+/// run it" (an Android/desktop distinction). Collapsed into one boolean, those two very different
+/// causes are indistinguishable to whoever is holding the phone.
+#[uniffi::export]
+pub fn tunnel_netstack_feature_enabled() -> bool {
+    cfg!(feature = "netstack")
+}
+
 // THE WARDEN (W2) — the per-connection verdict engine: the firewall rule-set + a bounded RAM-tier
 // decision cache composed BLOCK-WINS with the blocklist matcher into one authoritative `Allow`/`Deny`.
 // A pure-logic sibling of `blocklist`/`dns`/`resolver` (module-inner `#![forbid(unsafe_code)]`, ring-

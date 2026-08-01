@@ -400,13 +400,43 @@ object TortaPillarBridge {
     }
 
     /**
-     * Read NETSTACK_FORWARDER_PREF so the SLINT switch shows HOST truth. Fail-open to the pref
-     * default (false — netstack ships OFF; the DNS-only tunnel is the birth state).
+     * Read NETSTACK_FORWARDER_PREF **and** ask the engine whether it can actually forward.
+     *
+     * ★ 2026-08-01 — this used to return the preference ALONE, and the preference defaults to
+     * `true`. The engine `.so` shipped by CI was built `--features mirror` without `netstack`, so
+     * `TunnelHandle::set_netstack` (`tunnel/mod.rs:933`) compiled to an EMPTY body, the forwarder
+     * thread `"torta-netstack"` never existed (`grep -c -a torta-netstack <so>` = 0 on the .so this
+     * repo last produced), and this function cheerfully answered `true`. The switch read ARMED
+     * while nothing could forward a single packet.
+     *
+     * A preference is what the user WANTS. `tunnelNetstackCompiled()` is what this binary CAN DO.
+     * They are different facts and only their conjunction is honest, which is exactly what the
+     * comment below already demanded: "the SLINT switch must show the same truth the tunnel acts
+     * on". It now does.
+     *
+     * The capability term fails CLOSED. If the engine call throws, we report not-armed rather than
+     * inheriting the optimistic pref default — an unreachable engine is not evidence of a working
+     * forwarder, and reporting ARMED on a failed query is how the original defect read to a user.
      */
     @JvmStatic
     @Keep
+    @Suppress("TooGenericExceptionCaught") // deliberate fail-open on the PREF, fail-closed on the capability
+    fun netstackForwarderArmed(): Boolean {
+        val canForward = try {
+            uniffi.torta_core.tunnelNetstackCompiled()
+        } catch (t: Throwable) {
+            Log.e(TAG, "pillar-drive tunnelNetstackCompiled failed — reporting NOT armed", t)
+            false
+        }
+        if (!canForward) return false
+        return netstackForwarderPreference()
+    }
+
+    /** The user's intention, separated from the capability so each can be read on its own. */
+    @JvmStatic
+    @Keep
     @Suppress("TooGenericExceptionCaught") // deliberate fail-open
-    fun netstackForwarderArmed(): Boolean =
+    fun netstackForwarderPreference(): Boolean =
         try {
             PreferenceManager.getDefaultSharedPreferences(App.instance.applicationContext)
                 // ON by default — the SLINT switch must show the same truth the tunnel acts on.
